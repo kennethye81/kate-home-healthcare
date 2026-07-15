@@ -5,7 +5,7 @@ from pathlib import Path
 from datetime import datetime, timedelta
 
 KB = Path("/Users/kennethye/workspace/kate-kb")
-HOME = KB / "pages/home.md"
+HOME = KB / "Home.md"
 MULTI_SEARCH = "/Users/kennethye/workspace/kate_quant/multi_search.py"
 
 def get_latest_rss():
