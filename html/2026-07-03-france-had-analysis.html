@@ -1,0 +1,1218 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>法国 HAD（Hospitalisation à Domicile）体系深度分析报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hadhospitalisation-a-domicile">法国 HAD（Hospitalisation à Domicile）体系深度分析报告</a><ul>
+<li><a href="#_1">摘要</a></li>
+<li><a href="#1-19512026">1. 历史演进：1951→2026 的制度变迁</a><ul>
+<li><a href="#11-ap-hp-1951-1973">1.1 起源：从 AP-HP 的实验到制度确立（1951-1973）</a></li>
+<li><a href="#12-2000-2013">1.2 扩张与规范化（2000-2013）</a></li>
+<li><a href="#13-2014-2026">1.3 近十年加速（2014-2026）</a></li>
+</ul>
+</li>
+<li><a href="#2">2. 法律框架</a><ul>
+<li><a href="#21">2.1 核心法律地位</a></li>
+<li><a href="#22">2.2 &ldquo;全时住院&rdquo;的法律含义</a></li>
+<li><a href="#23-had-vs-ssiad-vs-had-en-ehpad">2.3 关键区别：HAD vs SSIAD vs HAD en EHPAD</a></li>
+<li><a href="#24">2.4 准入与授权机制</a></li>
+</ul>
+</li>
+<li><a href="#3">3. 支付体系</a><ul>
+<li><a href="#31-t2a-had">3.1 T2A 框架下的 HAD 支付</a><ul>
+<li><a href="#311-part-tarifs-paiement-aux-journees">3.1.1 第一部分：按日付费（Part Tarifs / Paiement aux Journées）</a></li>
+<li><a href="#312">3.1.2 第二部分：药品和耗材</a></li>
+<li><a href="#313">3.1.3 支付来源与路径</a></li>
+</ul>
+</li>
+<li><a href="#32-mco-t2a">3.2 与 MCO T2A 的关键差异</a></li>
+<li><a href="#33">3.3 制度改革方向</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 覆盖规模与结构</a><ul>
+<li><a href="#41-2024">4.1 2024 年核心数据</a></li>
+<li><a href="#42-2023-2024">4.2 患者特征（2023-2024）</a></li>
+<li><a href="#43-2024">4.3 主要照护模式分布（2024 住院日占比）</a></li>
+<li><a href="#44">4.4 患者流转</a></li>
+<li><a href="#45">4.5 与欧盟的横向对比</a></li>
+</ul>
+</li>
+<li><a href="#5-vs-vs">5. 运营模式：公立 vs 私立非营利 vs 私立营利</a><ul>
+<li><a href="#51-2022-drees">5.1 三分格局（2022 DREES 数据）</a></li>
+<li><a href="#52">5.2 主要运营商</a></li>
+<li><a href="#53">5.3 关键运营特征</a><ul>
+<li><a href="#531">5.3.1 非营利主导的成因</a></li>
+<li><a href="#532-had">5.3.2 公立 HAD 的特征</a></li>
+<li><a href="#533-had">5.3.3 私立营利 HAD 的定位</a></li>
+</ul>
+</li>
+<li><a href="#54">5.4 行业治理</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 临床证据</a><ul>
+<li><a href="#61">6.1 法国本土研究</a></li>
+<li><a href="#62">6.2 国际比较文献中的法国数据</a></li>
+<li><a href="#63-had">6.3 法国 HAD 的硬数据证据</a></li>
+<li><a href="#64">6.4 证据缺口</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 与英美模式的制度差异</a><ul>
+<li><a href="#71">7.1 对比框架</a></li>
+<li><a href="#72">7.2 根本性的制度差异分析</a><ul>
+<li><a href="#721">7.2.1 法律地位的根本差异</a></li>
+<li><a href="#722">7.2.2 支付激励的差异</a></li>
+<li><a href="#723">7.2.3 运营生态的差异</a></li>
+</ul>
+</li>
+<li><a href="#73">7.3 法国模式的核心优势</a></li>
+<li><a href="#74">7.4 法国模式的结构性局限</a></li>
+</ul>
+</li>
+<li><a href="#8-hah">8. 对 HaH 全球化的启示</a><ul>
+<li><a href="#81">8.1 &ldquo;法国经验&rdquo;的十条核心教训</a></li>
+<li><a href="#82-hah">8.2 策略建议：面向中国的 HaH 政策设计</a></li>
+</ul>
+</li>
+<li><a href="#9">9. 方法说明与数据来源</a><ul>
+<li><a href="#91">9.1 数据来源</a></li>
+<li><a href="#92">9.2 检索策略</a></li>
+<li><a href="#93">9.3 局限性声明</a></li>
+</ul>
+</li>
+<li><a href="#10">10. 结论</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hadhospitalisation-a-domicile">法国 HAD（Hospitalisation à Domicile）体系深度分析报告</h1>
+<p><strong>报告日期</strong>：2026年7月3日<br />
+<strong>作者</strong>：Kenneth Ye<br />
+<strong>调研目标</strong>：对全球最古老的制度化 Hospital-at-Home 体系——法国 HAD 进行全维度剖析，为 HaH 全球化研究提供&rdquo;考古层&rdquo;参照系</p>
+<hr />
+<h2 id="_1">摘要</h2>
+<p>法国 HAD（Hospitalisation à Domicile，居家住院）是世界上第一个被纳入国家法定医疗保险体系的 HaH 模式，其制度渊源可追溯至 1951 年。与美国的 CMS Acute Hospital Care at Home（2020年疫情期间紧急授权）和英国的 Virtual Ward / Hospital at Home（NHS 近年推动）不同，法国 HAD 已经历了 70 余年的制度化演进，形成了独特的&rdquo;完全替代型住院&rdquo;法律地位、T2A 按日付费体系、以及以私立非营利机构为主体的服务供给格局。2024 年，法国 290+ 家 HAD 机构服务了 18.4 万名患者，提供了 770 万住院日。本文档从历史演进、法律框架、支付体系、覆盖规模、运营模式、临床证据、国际比较和全球化启示八个维度进行系统分析。</p>
+<hr />
+<h2 id="1-19512026">1. 历史演进：1951→2026 的制度变迁</h2>
+<h3 id="11-ap-hp-1951-1973">1.1 起源：从 AP-HP 的实验到制度确立（1951-1973）</h3>
+<p>法国 HAD 的诞生源于战后巴黎公立医院系统（AP-HP，Assistance Publique - Hôpitaux de Paris）应对床位短缺的创新实践：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>里程碑事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1951</strong></td>
+<td>巴黎首次开展 HAD 实验，目标群体为癌症患者，旨在缓解医院床位压力</td>
+</tr>
+<tr>
+<td><strong>1957</strong></td>
+<td>AP-HP 正式创立第一家 HAD 机构（Santé Service），成为全球最早制度化的 HaH 实体</td>
+</tr>
+<tr>
+<td><strong>1960</strong></td>
+<td>Santé Service 与 AP-HP HAD 共同签署首份与 Caisse Primaire d&rsquo;Assurance Maladie（疾病保险初级金库）的协议，确立医保覆盖</td>
+</tr>
+<tr>
+<td><strong>1970.12.30</strong></td>
+<td>《医院法》（Loi Hospitalière）正式承认 HAD 的法律地位，将其纳入法国医院体系</td>
+</tr>
+<tr>
+<td><strong>1973</strong></td>
+<td>成立 FNEHAD（Fédération Nationale des Établissements d&rsquo;Hospitalisation à Domicile，全国家庭住院机构联合会），行业自律组织诞生</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>关键洞察</strong>：法国 HAD 的起源比美国最早的 HaH 概念（John Burton, 1990s Johns Hopkins）早 40+ 年，其&rdquo;公立医院延伸&rdquo;的起点与&rdquo;私立市场创新&rdquo;的英美路径形成根本性制度分野。</p>
+</blockquote>
+<h3 id="12-2000-2013">1.2 扩张与规范化（2000-2013）</h3>
+<p>千禧年后，法国 HAD 进入快速扩张期：</p>
+<ul>
+<li><strong>2004.02.04</strong>：DHOS/O/2004-44 号通函系统定义了 HAD 的基本原则和标准（cahiers des charges），为全国推广建立统一规范</li>
+<li><strong>2005</strong>：HAD 被纳入 T2A（Tarification à l&rsquo;Activité，按活动付费）体系，获得与 MCO（Médecine-Chirurgie-Obstétrique，内-外-产科）同等地位的支付机制</li>
+<li><strong>2005-2009</strong>：HAD 机构数量翻倍，管制解除释放了供给端潜力</li>
+<li><strong>2007.02.22</strong>：法令授权 HAD 进入养老机构（EHPAD/EHPA）提供服务，突破&rdquo;个人住所&rdquo;限制</li>
+<li><strong>2009.07.21</strong>：HPST 法（Hôpital, Patients, Santé, Territoires）将 HAD 确认为&rdquo;完全意义上的住院形式&rdquo;（forme d&rsquo;hospitalisation à part entière），并保护&rdquo;HAD&rdquo;名称专用权</li>
+<li><strong>2012.09</strong>：法令将 HAD 范围扩展至所有含住宿的社会和医疗社会机构</li>
+<li><strong>2013.12.04</strong>：DGOS 通函明确 HAD 的战略定位与发展方向</li>
+</ul>
+<h3 id="13-2014-2026">1.3 近十年加速（2014-2026）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>患者数</th>
+<th>住院日（百万）</th>
+<th>同期可服务患者容量</th>
+<th>机构数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2006</td>
+<td>~60,000（估）</td>
+<td>1.9</td>
+<td>6,900</td>
+<td>170</td>
+</tr>
+<tr>
+<td>2016</td>
+<td>~105,000（估）</td>
+<td>4.9</td>
+<td>16,300</td>
+<td>313</td>
+</tr>
+<tr>
+<td>2022</td>
+<td>158,927</td>
+<td>6.8</td>
+<td>23,149</td>
+<td>293</td>
+</tr>
+<tr>
+<td>2023</td>
+<td>168,000</td>
+<td>7.2</td>
+<td>24,100</td>
+<td>288</td>
+</tr>
+<tr>
+<td><strong>2024</strong></td>
+<td><strong>184,400</strong></td>
+<td><strong>7.7</strong></td>
+<td>~25,000（估）</td>
+<td><strong>290+</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>2006→2016 十年间，HAD 占短期/中期住院总量的比例从 2% 升至 5%，十年翻倍</li>
+<li>2021-2026 年&rdquo;HAD 战略路线图&rdquo;（Feuille de Route HAD）提出了进一步扩面、深化与 GHT（医院领土集团）协同、强化在疫情应对中的缓冲角色等目标</li>
+<li>2024 年 ARS（区域卫生局）授权制度改革（Valletoux 法令配套措施），将 HAD 纳入一般授权法律框架</li>
+</ul>
+<hr />
+<h2 id="2">2. 法律框架</h2>
+<h3 id="21">2.1 核心法律地位</h3>
+<p>法国 HAD 的法律本质在《公共卫生法典》（Code de la Santé Publique, CSP）中明确界定：</p>
+<ul>
+<li><strong>Article L. 6125-2 CSP</strong>：规定&rdquo;hospitalisation à domicile&rdquo;名称专属于持有 ARS 颁发的医疗活动授权（autorisation d&rsquo;activité de soins，依 L. 6122-1）的机构</li>
+<li><strong>Article R. 6121-4 CSP</strong>：定义 HAD 为&rdquo;在患者住所进行的、有期限但可续延的全时住院，旨在避免或缩短传统住院&rdquo;</li>
+<li><strong>Articles D. 6124-194 → D. 6124-201 CSP</strong>：详细规定 HAD 机构的技术运行条件，包括：</li>
+<li>远程通信系统确保 24/7 联络</li>
+<li>医疗项目（projet médical）必须覆盖的照护领域</li>
+<li>与医疗机构、城市自由执医者的合作协议</li>
+<li>药物管理制度（PUI 合作）</li>
+<li>感染控制和质量安全体系</li>
+</ul>
+<h3 id="22">2.2 &ldquo;全时住院&rdquo;的法律含义</h3>
+<p>法国 HAD 的法律定位是<strong>hospitalisation à temps complet</strong>（全时住院），与 MCO 住院在法律层面<strong>完全等同</strong>。这意味着：</p>
+<ol>
+<li>HAD 患者的医保报销权利与传统住院完全一致（100% 按住院标准）</li>
+<li>HAD 提供的照护不受&rdquo;门诊/城市医疗&rdquo;限制，可使用仅限住院使用的药物和技术</li>
+<li>HAD 机构必须满足与传统医院同等的质量、安全和认证标准（HAS 认证，每 4 年一次）</li>
+</ol>
+<h3 id="23-had-vs-ssiad-vs-had-en-ehpad">2.3 关键区别：HAD vs SSIAD vs HAD en EHPAD</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>HAD</th>
+<th>SSIAD（护理服务）</th>
+<th>HAD en EHPAD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>法律性质</td>
+<td>全时住院</td>
+<td>门诊护理服务</td>
+<td>全时住院（地点在机构）</td>
+</tr>
+<tr>
+<td>照护强度</td>
+<td>复杂、高频、多学科</td>
+<td>基础护理</td>
+<td>同 HAD 标准</td>
+</tr>
+<tr>
+<td>处方来源</td>
+<td>医院医师</td>
+<td>社区医师</td>
+<td>医院/协调医师</td>
+</tr>
+<tr>
+<td>支付方</td>
+<td>Assurance Maladie（T2A）</td>
+<td>医保预算拨款</td>
+<td>Assurance Maladie（T2A）</td>
+</tr>
+<tr>
+<td>24/7 要求</td>
+<td>是</td>
+<td>否</td>
+<td>是</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="24">2.4 准入与授权机制</h3>
+<ul>
+<li><strong>授权主体</strong>：ARS（Agence Régionale de Santé，区域卫生局）</li>
+<li><strong>授权条件</strong>（CSP L. 6122-2）：满足人口健康需求、符合区域卫生规划（SROS）、满足技术和人力条件</li>
+<li><strong>地理范围</strong>：每个 HAD 机构对应一个明确的地理区域（aire géographique），由授权文件界定</li>
+<li><strong>显著特点</strong>：HAD 机构一旦获得授权，可在其辖区内自由扩展业务量，<strong>不受数量目标上限</strong>约束（这是与英美 HaH 的关键差异）</li>
+</ul>
+<hr />
+<h2 id="3">3. 支付体系</h2>
+<h3 id="31-t2a-had">3.1 T2A 框架下的 HAD 支付</h3>
+<p>法国 HAD 自 2005 年起纳入 T2A 体系，支付机制包含<strong>两大资金包</strong>：</p>
+<h4 id="311-part-tarifs-paiement-aux-journees">3.1.1 第一部分：按日付费（Part Tarifs / Paiement aux Journées）</h4>
+<ul>
+<li><strong>计费单位</strong>：GHT（Groupement Homogène de Tarifs，同质费率组），基于主要照护模式（Mode de Prise en Charge Principal, MPCP）</li>
+<li><strong>核心 GHT 类别</strong>（2024）：</li>
+<li>姑息治疗（Soins Palliatifs）— 占 29% 住院日</li>
+<li>复杂伤口护理（Pansements Complexes）</li>
+<li>重度护理（Soins de Nursing Lourd）</li>
+<li>呼吸辅助（Assistance Respiratoire）</li>
+<li>疼痛管理（Prise en Charge de la Douleur）</li>
+<li>产后护理（Post-Partum）</li>
+<li>肿瘤化疗/监测（Oncologie）</li>
+<li>康复（Rééducation）</li>
+<li>
+<p>老年综合评估（Évaluation Gériatrique）</p>
+</li>
+<li>
+<p><strong>费率跨度</strong>：约 €150-€350/日（根据照护强度和 MPCP）</p>
+</li>
+<li><strong>对比</strong>：传统 MCO 住院约 €500-€1,500/日，HAD 成本显著低于同病种的传统住院</li>
+</ul>
+<h4 id="312">3.1.2 第二部分：药品和耗材</h4>
+<ul>
+<li>列入&rdquo;liste en sus&rdquo;的昂贵药品和植入式医疗器械按实际成本额外结算</li>
+<li>常规药品含在 GHT 日费率内</li>
+</ul>
+<h4 id="313">3.1.3 支付来源与路径</h4>
+<pre><code>Parlement（议会）
+    │ 确定 ONDAM（国家健康保险支出目标）
+    ▼
+ODMCO（MCO 支出子目标）← HAD 份额含在其中
+    │
+    ▼
+ARS（区域卫生局）← 区域分配
+    │
+    ▼
+HAD 机构 ← 按 GHT × 实际住院日结算
+    │         + Liste en sus 药品/耗材
+    ▼
+患者 ← 0 自付（全由 Assurance Maladie + Mutuelle 覆盖）
+</code></pre>
+<h3 id="32-mco-t2a">3.2 与 MCO T2A 的关键差异</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>特征</th>
+<th>MCO（传统住院）</th>
+<th>HAD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>计费单位</td>
+<td>GHS（按住院）</td>
+<td>GHT（按日）</td>
+</tr>
+<tr>
+<td>时长效应</td>
+<td>短期更有利可图</td>
+<td>无激励偏差</td>
+</tr>
+<tr>
+<td>医生费用</td>
+<td>含在 GHS（公立）</td>
+<td>不含（ex-OQN 需补加）</td>
+</tr>
+<tr>
+<td>资本成本</td>
+<td>高（建筑/设备）</td>
+<td>低（流动运营）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="33">3.3 制度改革方向</h3>
+<ul>
+<li><strong>2024 PLFSS（社会保障融资法）</strong>：HAD 被纳入更广泛的&rdquo;按质量付费&rdquo;（paiement à la qualité）改革</li>
+<li>逐步提高固定拨款（dotation populationnelle）占比，降低纯 T2A 活动付费的比重，以减少&rdquo;量驱动&rdquo;激励</li>
+<li>但 HAD 因其天然的低成本优势，在改革中处于相对有利位置</li>
+</ul>
+<hr />
+<h2 id="4">4. 覆盖规模与结构</h2>
+<h3 id="41-2024">4.1 2024 年核心数据</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HAD 机构数（地理）</td>
+<td><strong>290+</strong></td>
+</tr>
+<tr>
+<td>服务患者数</td>
+<td><strong>184,400</strong></td>
+</tr>
+<tr>
+<td>住院日总计</td>
+<td><strong>7,700,000</strong></td>
+</tr>
+<tr>
+<td>同期可服务最大容量</td>
+<td><strong>~25,000 患者</strong></td>
+</tr>
+<tr>
+<td>住院次数</td>
+<td><strong>300,000+</strong></td>
+</tr>
+<tr>
+<td>平均住院时长</td>
+<td><strong>25-37 日/患者/年</strong></td>
+</tr>
+<tr>
+<td>全国覆盖率</td>
+<td><strong>27.5 患者/日/10万居民</strong></td>
+</tr>
+<tr>
+<td>HAD 占全时住院比例</td>
+<td><strong>~5-6%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="42-2023-2024">4.2 患者特征（2023-2024）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年龄组</th>
+<th>2023 年患者数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>80岁及以上</td>
+<td>56,000</td>
+</tr>
+<tr>
+<td>70-79岁</td>
+<td>35,000</td>
+</tr>
+<tr>
+<td>60-69岁</td>
+<td>24,000</td>
+</tr>
+<tr>
+<td>40-59岁</td>
+<td>23,000</td>
+</tr>
+<tr>
+<td>18-39岁</td>
+<td>8,000</td>
+</tr>
+<tr>
+<td>4-17岁</td>
+<td>3,000</td>
+</tr>
+<tr>
+<td>0-3岁</td>
+<td>19,000</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>关键发现</strong>：HAD 不是&rdquo;老年专属&rdquo;——0-3 岁新生儿占比超过 11%，主要用于产后早期出院延续护理（post-partum）。</p>
+</blockquote>
+<h3 id="43-2024">4.3 主要照护模式分布（2024 住院日占比）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>照护模式</th>
+<th>住院日占比</th>
+<th>住院日（百万）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>姑息治疗</strong></td>
+<td>29%</td>
+<td>2.17</td>
+</tr>
+<tr>
+<td><strong>复杂伤口</strong></td>
+<td>~28%</td>
+<td>2.10</td>
+</tr>
+<tr>
+<td>重度护理</td>
+<td>~10%</td>
+<td>0.78</td>
+</tr>
+<tr>
+<td>呼吸辅助</td>
+<td>~9%</td>
+<td>0.71</td>
+</tr>
+<tr>
+<td>疼痛管理</td>
+<td>~9%</td>
+<td>0.68</td>
+</tr>
+<tr>
+<td>肿瘤（非姑息）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>产后护理</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>康复</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>IV 抗生素</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="44">4.4 患者流转</h3>
+<ul>
+<li><strong>入院路径</strong>：44% 来自 MCO/SSR/HAD 传统住院 → 54% 出院回家</li>
+<li><strong>结局</strong>：35% 在 HAD 中去世（多为姑息治疗患者），避免终末期传统住院</li>
+<li><strong>替代效果</strong>：</li>
+<li>初诊直接入 HAD 者，<strong>避免 90% 的传统住院</strong></li>
+<li>传统住院后转入 HAD 者，<strong>避免 66% 的再住院</strong></li>
+</ul>
+<h3 id="45">4.5 与欧盟的横向对比</h3>
+<p>法国 5-6% 的住院日由 HAD 承担，在欧盟中处于<strong>中高水平</strong>。相比而言，英国 NHS Virtual Ward 覆盖率仍低于 2%。法国 27.5 患者/日/10万居民的使用率是欧洲 HAD 密度最高的国家之一。</p>
+<hr />
+<h2 id="5-vs-vs">5. 运营模式：公立 vs 私立非营利 vs 私立营利</h2>
+<h3 id="51-2022-drees">5.1 三分格局（2022 DREES 数据）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>机构数</th>
+<th>占比</th>
+<th>同期患者容量</th>
+<th>住院日（百万）</th>
+<th>住院次数（千）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>私立非营利</strong>（ESPIC + 协会）</td>
+<td>111</td>
+<td>38%</td>
+<td>13,139</td>
+<td>3.85</td>
+<td>153.8</td>
+</tr>
+<tr>
+<td><strong>公立</strong>（CHR/CH）</td>
+<td>120</td>
+<td>41%</td>
+<td>5,229</td>
+<td>1.54</td>
+<td>75.9</td>
+</tr>
+<tr>
+<td><strong>私立营利</strong></td>
+<td>62</td>
+<td>21%</td>
+<td>4,781</td>
+<td>1.42</td>
+<td>44.9</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td><strong>293</strong></td>
+<td><strong>100%</strong></td>
+<td><strong>23,149</strong></td>
+<td><strong>6.82</strong></td>
+<td><strong>274.6</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>核心发现</strong>：私立非营利机构以 38% 的机构数量承担了 56% 的住院日和 56% 的患者容量——这是法国 HAD 体系最突出的结构特征。</p>
+</blockquote>
+<h3 id="52">5.2 主要运营商</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>运营商</th>
+<th>类型</th>
+<th>规模特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fondation Santé Service</strong></td>
+<td>私立非营利（公共事业基金会）</td>
+<td>法国 HAD 领导者，日服务 2,000+ 患者，覆盖肿瘤/姑息/复杂伤口/康复/围产期/老年医学</td>
+</tr>
+<tr>
+<td><strong>AP-HP HAD</strong></td>
+<td>公立（大学医院附属）</td>
+<td>历史最悠久（1957），巴黎大区主导</td>
+</tr>
+<tr>
+<td><strong>HAD Maymard</strong></td>
+<td>私立非营利（协会）</td>
+<td>区域性标杆</td>
+</tr>
+<tr>
+<td><strong>Clariane (ex-Korian) HAD</strong></td>
+<td>私立营利 → 2024 出售给 Santé Service</td>
+<td>2024 年 5 月签署出售协议，反映营利性 HAD 的整合趋势</td>
+</tr>
+<tr>
+<td><strong>CLCC（抗癌中心）附属 HAD</strong></td>
+<td>私立非营利</td>
+<td>3 家机构，专注于肿瘤 HAD</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="53">5.3 关键运营特征</h3>
+<h4 id="531">5.3.1 非营利主导的成因</h4>
+<p>法国 HAD 的私立非营利主导格局并非偶然，是以下因素共同作用的结果：</p>
+<ol>
+<li><strong>历史渊源</strong>：Santé Service 自 1950s 即以非营利协会形式运作，成为行业模板</li>
+<li><strong>支付结构</strong>：HAD 日费率相对固定，缺乏超额利润空间，营利资本天然兴趣有限</li>
+<li><strong>文化契合</strong>：姑息治疗和临终关怀（占 HAD 30% 住院日）与营利逻辑存在伦理张力</li>
+<li><strong>授权体制</strong>：ARS 授权偏好能承担公共服务的非营利/公立机构</li>
+</ol>
+<h4 id="532-had">5.3.2 公立 HAD 的特征</h4>
+<ul>
+<li>公立 HAD 机构数量最多（120）但单机构规模较小（平均 43.6 患者容量 vs 私立非营利 118.4）</li>
+<li>多为 CH（综合医院）附属，服务农村/偏远地区</li>
+<li>平均住院时长较短（公立 21 日 vs 私立非营利 27 日 vs 私立营利 35 日）</li>
+</ul>
+<h4 id="533-had">5.3.3 私立营利 HAD 的定位</h4>
+<ul>
+<li>62 家机构，平均规模小于私立非营利</li>
+<li>最长平均住院日（35 日），倾向于重度护理和长期照护</li>
+<li>2024 年 Clariane 的退出是行业标志性事件：<strong>营利性资本在法国 HAD 面临结构性瓶颈</strong></li>
+</ul>
+<h3 id="54">5.4 行业治理</h3>
+<ul>
+<li><strong>FNEHAD</strong>：代表所有类型 HAD 机构的行业联合会，参与政策制定和支付标准谈判</li>
+<li><strong>FEHAP</strong>：代表私立非营利医院和照护机构（含 HAD），1,600+ 成员</li>
+<li><strong>HAS（Haute Autorité de Santé）</strong>：制定 HAD 临床实践指南和质量标准（2011 年发布围产期 HAD 指南）</li>
+</ul>
+<hr />
+<h2 id="6">6. 临床证据</h2>
+<h3 id="61">6.1 法国本土研究</h3>
+<p>法国 HAD 领域虽不如英美那样有大量 RCT（随机对照试验）文献，但基于 PMSI（医疗信息系统项目）的国家级真实世界数据（RWD）体系提供了独特的证据来源：</p>
+<ol>
+<li>
+<p><strong>PMSI-HAD 数据库</strong>（ATIH 维护）：覆盖 100% HAD 住院数据，可实现：
+   - 全国范围的治疗模式分析
+   - 与传统 MCO 住院的倾向评分匹配比较
+   - 再住院率和死亡率追踪</p>
+</li>
+<li>
+<p><strong>IRDES（健康经济研究所）</strong>研究：
+   - 2003 年 QES n°67 报告：产后 HAD 日均成本仅 €57-80，高度同质化
+   - 终末期姑息治疗 HAD 日均成本约 €198，远低于医院姑息单元（USP）的 €497/日</p>
+</li>
+<li>
+<p><strong>HAS 评估</strong>（2011-2018）：
+   - 围产期 HAD 安全性与住院相当
+   - 姑息治疗 HAD 提高患者满意度，降低终末期医疗化程度</p>
+</li>
+</ol>
+<h3 id="62">6.2 国际比较文献中的法国数据</h3>
+<ul>
+<li><strong>BMJ Open 2021 系统性综述</strong>（Comparison of Hospital-at-Home models）：HaH 总体与住院治疗的临床结局相似或更优</li>
+<li><strong>Springer 2019 患者体验研究</strong>：法国 HAD 在 2015 年占全国总住院日的 4.6%，308 家机构</li>
+<li><strong>ResearchGate 成本研究</strong>：HaH 患者成本较同类住院患者低 19%，结局相当或更优</li>
+</ul>
+<h3 id="63-had">6.3 法国 HAD 的硬数据证据</h3>
+<ul>
+<li><strong>再住院避免</strong>：HAD 初诊替代 90% 传统住院，HAD 过渡避免 66% 再住院（EpiDcliC 2024）</li>
+<li><strong>临终质量</strong>：35% HAD 患者在家庭环境中离世，符合多数终末期患者的偏好</li>
+<li><strong>感染控制</strong>：HAD 避免了医院获得性感染的风险，在 COVID-19 期间体现尤为突出</li>
+</ul>
+<h3 id="64">6.4 证据缺口</h3>
+<ul>
+<li>缺乏大型多中心 RCT（这是全球 HaH 领域的共性缺陷，非法国特有）</li>
+<li>患者选择偏倚难以完全控制（入 HAD 者本身病情相对稳定）</li>
+<li>经济学评估以成本最小化为主，缺少完整的 CUA（成本效用分析）</li>
+</ul>
+<hr />
+<h2 id="7">7. 与英美模式的制度差异</h2>
+<h3 id="71">7.1 对比框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th><strong>法国 HAD</strong></th>
+<th><strong>美国 CMS Acute HaH</strong></th>
+<th><strong>英国 NHS Virtual Ward</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>起源年份</strong></td>
+<td>1951（制度化 1957）</td>
+<td>2020（COVID 豁免）</td>
+<td>2020s（NHS Long Term Plan）</td>
+</tr>
+<tr>
+<td><strong>法律地位</strong></td>
+<td>完全等同于住院</td>
+<td>豁免/替代住院</td>
+<td>介于住院和社区之间</td>
+</tr>
+<tr>
+<td><strong>支付模式</strong></td>
+<td>T2A 按日付费（GHT）</td>
+<td>DRG 按次 + 日附加费</td>
+<td>NHS 区块预算 + 按人头</td>
+</tr>
+<tr>
+<td><strong>支付方</strong></td>
+<td>Assurance Maladie（单一法定医保）</td>
+<td>CMS + Medicare Advantage + 商业保险</td>
+<td>NHS（单一支付方）</td>
+</tr>
+<tr>
+<td><strong>运营主体</strong></td>
+<td>私立非营利主导（56%）</td>
+<td>医院系统 + 私立运营商（Medically Home, DispatchHealth）</td>
+<td>NHS Trusts + 私立供应商</td>
+</tr>
+<tr>
+<td><strong>核心患者群</strong></td>
+<td>姑息/肿瘤/伤口/老年</td>
+<td>急性感染（肺炎、蜂窝织炎、CHF、COPD）</td>
+<td>急性照护 + 长期病管理</td>
+</tr>
+<tr>
+<td><strong>24/7 要求</strong></td>
+<td>法定必须</td>
+<td>有要求但执行不一</td>
+<td>因地区而异</td>
+</tr>
+<tr>
+<td><strong>准入限制</strong></td>
+<td>无业务量上限</td>
+<td>CMS 有容量上限</td>
+<td>无统一上限</td>
+</tr>
+<tr>
+<td><strong>EHR 整合</strong></td>
+<td>通过 DMP（Dossier Médical Partagé）</td>
+<td>碎片化（Epic/Cerner 等）</td>
+<td>NHS Spine → 统一</td>
+</tr>
+<tr>
+<td><strong>家庭照护者角色</strong></td>
+<td>默认存在但不强制</td>
+<td>部分模式要求</td>
+<td>鼓励但非必须</td>
+</tr>
+<tr>
+<td><strong>覆盖规模（占住院比例）</strong></td>
+<td>5-6%</td>
+<td>&lt;1%（2024）</td>
+<td>&lt;2%（2024）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72">7.2 根本性的制度差异分析</h3>
+<h4 id="721">7.2.1 法律地位的根本差异</h4>
+<p>法国 HAD 的&rdquo;完全住院&rdquo;法律地位是英美模式所不具备的。这导致：</p>
+<ul>
+<li><strong>法国</strong>：HAD 与 MCO 住院之间是<strong>水平替代</strong>关系——医生在两种&rdquo;住院模式&rdquo;中选择，而非在&rdquo;住院 vs 在家&rdquo;之间选择</li>
+<li><strong>美国</strong>：HaH 是 CMS 的<strong>豁免/例外</strong>——需要逐案判断是否符合住院标准，支付水平低于传统 DRG</li>
+<li><strong>英国</strong>：Virtual Ward 是<strong>过渡性概念</strong>——法律上并非住院，在资源配置和支付上处于尴尬地带</li>
+</ul>
+<h4 id="722">7.2.2 支付激励的差异</h4>
+<ul>
+<li>法国 T2A GHT 按日付费<strong>天然不偏向短期住院</strong>（与 MCO 的 GHS 按次付费形成对比），消除了&rdquo;快进快出&rdquo;的激励扭曲</li>
+<li>美国 DRG 按次付费在 HaH 场景下缺乏天然的长期照护激励</li>
+<li>英国 NHS 预算制下，Virtual Ward 面临&rdquo;证明节约&rdquo;的证据负担</li>
+</ul>
+<h4 id="723">7.2.3 运营生态的差异</h4>
+<ul>
+<li>法国私立非营利主导格局在英美几乎不存在——美国由 for-profit VC 支持的初创公司驱动（Medically Home 估值超 $1B），英国由 NHS 内部创新推动</li>
+<li>法国行业协会（FNEHAD）在政策制定中的深度参与，在英美缺少对等机制</li>
+</ul>
+<h3 id="73">7.3 法国模式的核心优势</h3>
+<ol>
+<li><strong>制度化深度最深</strong>：70 年不间断演进，已形成完整的法律-支付-质量-数据生态</li>
+<li><strong>支付稳定性最高</strong>：单一法定医保覆盖，不存在美国的多方支付博弈</li>
+<li><strong>姑息/临终照护整合最佳</strong>：35% HAD 患者在家庭环境离世，远高于英美</li>
+<li><strong>无容量上限</strong>：机构可自由扩展，不受 CMS 限制式的天花板约束</li>
+</ol>
+<h3 id="74">7.4 法国模式的结构性局限</h3>
+<ol>
+<li><strong>创新速度慢</strong>：公立/非营利主导 + 强监管导致技术采纳和模式创新慢于美国市场</li>
+<li><strong>急性病覆盖不足</strong>：HAD 主要集中在慢病/姑息/伤口，对感染性疾病（如肺炎、蜂窝织炎）的覆盖低于美国 HaH</li>
+<li><strong>远程监测渗透率低</strong>：美国 HaH 大量使用 RPM（远程患者监测）+ AI 风险预测，法国 HAD 仍以人工巡诊为主</li>
+<li><strong>国际合作输出薄弱</strong>：法国人很少以英语推广 HAD 经验，在全球 HaH 政策讨论中话语权不足</li>
+</ol>
+<hr />
+<h2 id="8-hah">8. 对 HaH 全球化的启示</h2>
+<h3 id="81">8.1 &ldquo;法国经验&rdquo;的十条核心教训</h3>
+<ol>
+<li>
+<p><strong>制度化需要时间——70 年不是一个可加速的过程</strong>
+   - 法国从 1951 年实验到 2009 年取得&rdquo;完全住院&rdquo;地位，耗时 58 年
+   - 试图在 3-5 年内&rdquo;建成 HaH 体系&rdquo;的政策冲动可能低估了制度化的复杂性</p>
+</li>
+<li>
+<p><strong>法律地位决定一切</strong>
+   - 法国 HAD 成功的首要因素是 CSP 赋予的&rdquo;完全住院&rdquo;地位
+   - 英美&rdquo;豁免/试点/例外&rdquo;式法律定位天然限制了规模化</p>
+</li>
+<li>
+<p><strong>按日付费优于按次付费</strong>
+   - T2A GHT 的按日计费消除了短期激励扭曲
+   - 美国 DRG 式按次付费不适用于需要持续照护的 HaH</p>
+</li>
+<li>
+<p><strong>单一支付方降低交易成本</strong>
+   - Assurance Maladie 的统一覆盖消除了多方支付博弈
+   - 多支付方体系（如美国）的 HaH 面临巨大的行政复杂性</p>
+</li>
+<li>
+<p><strong>非营利主导有其合理性——但需要混合生态</strong>
+   - 法国私立非营利 56% 的份额表明 HaH 不等于营利性创新
+   - 但公立和营利部门的互补角色也不可或缺</p>
+</li>
+<li>
+<p><strong>姑息/临终照护是 HaH 的天然锚点</strong>
+   - 法国 HAD 30% 住院日为姑息治疗，形成了稳定的需求基本盘
+   - 过度聚焦&rdquo;急性病替代&rdquo;可能错过 HaH 最大的价值区间</p>
+</li>
+<li>
+<p><strong>EHPAD 整合是独特的法国创新</strong>
+   - 将 HAD 延伸至养老机构是兼顾效率与公平的制度设计
+   - 全球老龄化背景下具有重要参考价值</p>
+</li>
+<li>
+<p><strong>数据基础设施是体系运行的血液</strong>
+   - PMSI-HAD 的全覆盖数据库是政策评估和支付定价的基础
+   - 缺乏国家级 HaH 数据基础设施是英美当前的关键瓶颈</p>
+</li>
+<li>
+<p><strong>行业协会的角色不可替代</strong>
+   - FNEHAD 在 50+ 年间持续推动政策改革和质量标准
+   - 新兴 HaH 市场需要建立对等的行业治理机制</p>
+</li>
+<li>
+<p><strong>不要忽视&rdquo;考古层&rdquo;——制度基因决定演化路径</strong></p>
+<ul>
+<li>法国 1951 年的&rdquo;公立医院延伸&rdquo;起点，塑造了其后 70 年的非营利主导格局</li>
+<li>美国 2020 年的&rdquo;CMS 豁免&rdquo;起点，正在塑造技术驱动、资本密集的美国 HaH 路径</li>
+<li>这两种路径不是&rdquo;谁更好&rdquo;的问题，而是&rdquo;起点不可逆&rdquo;的问题</li>
+</ul>
+</li>
+</ol>
+<h3 id="82-hah">8.2 策略建议：面向中国的 HaH 政策设计</h3>
+<p>基于法国经验，对中国 HaH 政策的策略建议摘要：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>法国经验</th>
+<th>中国适用性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>法律地位</td>
+<td>&ldquo;完全住院&rdquo;写入法律</td>
+<td>可参考——在《基本医疗卫生法》框架下界定</td>
+</tr>
+<tr>
+<td>支付设计</td>
+<td>T2A 按日付费</td>
+<td>可参考——DIP/DRG + 日间附加费率</td>
+</tr>
+<tr>
+<td>运营载体</td>
+<td>私立非营利主导</td>
+<td>适度——中国公立医院主导格局下需探索混合模式</td>
+</tr>
+<tr>
+<td>优先病种</td>
+<td>姑息/肿瘤/伤口</td>
+<td>高度适用——老龄化背景下需求巨大</td>
+</tr>
+<tr>
+<td>养老机构整合</td>
+<td>HAD en EHPAD</td>
+<td>高度适用——医养结合政策框架下已有接口</td>
+</tr>
+<tr>
+<td>数据体系</td>
+<td>PMSI-HAD</td>
+<td>需建设——当前缺乏国家级 HaH 数据基础设施</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="9">9. 方法说明与数据来源</h2>
+<h3 id="91">9.1 数据来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>类型</th>
+<th>覆盖范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ATIH（Agence Technique de l&rsquo;Information sur l&rsquo;Hospitalisation）</td>
+<td>官方统计</td>
+<td>100% HAD 机构</td>
+</tr>
+<tr>
+<td>DREES（Direction de la Recherche, des Études, de l&rsquo;Évaluation et des Statistiques）</td>
+<td>官方统计</td>
+<td>全国医疗机构</td>
+</tr>
+<tr>
+<td>FNEHAD</td>
+<td>行业数据</td>
+<td>成员机构</td>
+</tr>
+<tr>
+<td>Legifrance（CSP）</td>
+<td>法律条文</td>
+<td>全部现行法律</td>
+</tr>
+<tr>
+<td>HAS</td>
+<td>临床指南</td>
+<td>国家层面</td>
+</tr>
+<tr>
+<td>PMSI-HAD / SNDS</td>
+<td>个案数据库</td>
+<td>100% HAD 住院记录</td>
+</tr>
+<tr>
+<td>学术文献（BMJ Open, Springer, IRDES）</td>
+<td>研究论文</td>
+<td>选择性</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 检索策略</h3>
+<ul>
+<li>法语关键词：hospitalisation à domicile, HAD, FNEHAD, T2A, GHT, PMSI, ARS, Santé Service</li>
+<li>英语关键词：France hospital at home, HAD payment, French HaH comparison</li>
+<li>法律检索：Legifrance CSP L. 6125-2, D. 6124-194</li>
+<li>统计检索：ATIH AAH 2023/2024, DREES Panoramas</li>
+</ul>
+<h3 id="93">9.3 局限性声明</h3>
+<ol>
+<li>部分法语原始文献（IRDES QES、DREES 报告）未能完整下载全文分析</li>
+<li>2025-2026 年最新数据可能尚未完全公开</li>
+<li>临床证据部分以系统性综述和 RWD 为主，缺乏 RCT 级证据</li>
+<li>中国 HaH 政策建议为分析性推演，未经实地验证</li>
+</ol>
+<hr />
+<h2 id="10">10. 结论</h2>
+<p>法国 HAD 体系是 Hospital-at-Home 全球演化史的&rdquo;基础层&rdquo;——它是第一个完成&rdquo;从实验→法律承认→医保支付→全国推广→质量认证&rdquo;全周期制度化的 HaH 模式。其核心制度遗产包括：</p>
+<ol>
+<li><strong>&ldquo;完全住院&rdquo;法律地位</strong>为 HaH 提供了不再被视为&rdquo;替代品&rdquo;的身份认同</li>
+<li><strong>T2A 按日付费</strong>消除了短期激励扭曲</li>
+<li><strong>非营利主导的混合生态</strong>证明了 HaH 不必依赖营利性资本驱动</li>
+<li><strong>姑息/临终照护的深度整合</strong>定义了 HaH 在老龄化社会中不可替代的价值</li>
+<li><strong>PMSI-HAD 全数据覆盖</strong>为循证决策提供了英美迄今不具备的基础设施</li>
+</ol>
+<p>法国 HAD 的<strong>最大教训</strong>可能是：<strong>HaH 的制度化不是一个技术问题，而是一个政治经济学问题</strong>——需要法律身份、支付激励、运营生态、数据体系和行业协会五者的协同演进，而这一过程无法被压缩到五年或十年内完成。</p>
+<hr />
+<p><em>本报告为 Kate 调研体系的法国 HAD 模块，后续应通过深度访谈（FNEHAD、Santé Service）、法语文献全文分析和 PMSI-HAD 微观数据挖掘进一步深化。</em></p>
+<hr />
+<p><strong>引用</strong></p>
+<ol>
+<li>ATIH, &ldquo;Analyse de l&rsquo;Activité Hospitalière 2024 – HAD&rdquo;, 2025</li>
+<li>ATIH, &ldquo;Chiffres Clés HAD 2023&rdquo;</li>
+<li>DREES, &ldquo;Les établissements d&rsquo;hospitalisation à domicile – Édition 2024&rdquo;</li>
+<li>DREES, &ldquo;Dix ans d&rsquo;hospitalisation à domicile (2006-2016)&rdquo;, Dossiers DREES n°23, 2017</li>
+<li>Legifrance, Code de la Santé Publique, Articles L. 6125-2, D. 6124-194 à D. 6124-201</li>
+<li>FNEHAD, &ldquo;Hospital Care at Home in France&rdquo;, fnehad.fr</li>
+<li>Ministère de la Santé, &ldquo;Feuille de Route HAD 2021-2026&rdquo;</li>
+<li>La Revue du Praticien, &ldquo;Hospitalisation à domicile&rdquo;, 2024</li>
+<li>BMJ Open, &ldquo;Comparison of Hospital-at-Home models: a systematic review&rdquo;, 2021</li>
+<li>IRDES, &ldquo;Le coût de prise en charge en HAD&rdquo;, QES n°67, 2003</li>
+<li>SNDS Documentation, &ldquo;Valorisation de l&rsquo;activité HAD dans le PMSI&rdquo;, Health Data Hub</li>
+<li>Clariane Press Release, &ldquo;Disposal of HAD activity&rdquo;, May 2024</li>
+<li>EpiDcliC eSanté Centre, &ldquo;Activité PMSI HAD 2015-2024&rdquo;, 2025</li>
+</ol>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

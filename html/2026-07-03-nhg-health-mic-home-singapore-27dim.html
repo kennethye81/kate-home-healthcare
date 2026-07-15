@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S4 NHG Health MIC@Home (新加坡) — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#s4-nhg-health-michome-27">S4 NHG Health MIC@Home (新加坡) — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4">D4 — 商业模式</a></li>
+<li><a href="#d5">D5 — 服务产品线</a></li>
+<li><a href="#d6">D6 — 客户/支付方</a></li>
+<li><a href="#d7">D7 — 财务</a></li>
+<li><a href="#d8">D8 — 工作流</a></li>
+<li><a href="#d9">D9 — 技术</a></li>
+<li><a href="#d10">D10 — 竞争对标</a></li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势 (TAM/SAM)</a></li>
+<li><a href="#d12">D12 — 盈利模型与路径</a></li>
+<li><a href="#d13">D13 — 风险</a></li>
+<li><a href="#d14">D14 — 管理层</a></li>
+<li><a href="#d15">D15 — 估值</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a></li>
+<li><a href="#d17">D17 — 政策</a></li>
+<li><a href="#d18">D18 — 单元经济模型</a></li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略深度评估</a></li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a></li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a></li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a></li>
+<li><a href="#v20">v2.0 完备性审计</a></li>
+<li><a href="#_1">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="s4-nhg-health-michome-27">S4 NHG Health MIC@Home (新加坡) — 27 维度深度尽调</h1>
+<p><strong>调研人：Kenneth Ye / 调研日期：2026.7.3 / 分类：Track S 新加坡 / 国家：新加坡</strong></p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否 HaH？</td>
+<td>✅ MIC@Home 三大创始试点之一</td>
+</tr>
+<tr>
+<td>实体类型</td>
+<td>🏥 公立医院项目——NHG/KTPH</td>
+</tr>
+<tr>
+<td>对 iHomeCare 相关性</td>
+<td>🟢 中-高——老年医学根基+2026.8 全国 H@H Symposium</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>定位</strong>：🏥 新加坡北部集群 MIC@Home——KTPH(795床)+YCH 社区医院一体化/老年医学驱动/<strong>2026.8.21 主办全国 Hospital at Home Scientific Symposium</strong></p>
+<p><strong>核心差异化</strong>：① KTPH+YCH 2025.1 合并→急症+社区医院统一运营 ② 老年医学顾问领导 ③ H@H Symposium——新加坡 HaH 学术制高点</p>
+<p><strong>启动</strong>：2019（概念验证）→2022.4（MIC@Home）。<strong>判断</strong>：🟡 稳扎稳打型——学术产出不及 NUHS，创新不及 SGH，但 H@H Symposium 表明其在成为学术枢纽。</p>
+<h2 id="d2">D2 — 公司全貌</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>品牌</td>
+<td>NHG Health MIC@Home / Yishun Health Medical Home</td>
+</tr>
+<tr>
+<td>系统</td>
+<td>NHG（国立健保集团——中部+北部~150 万人口）</td>
+</tr>
+<tr>
+<td>医院</td>
+<td>KTPH (795床) + Yishun Community Hospital (2025.1 合并)</td>
+</tr>
+<tr>
+<td>启动</td>
+<td>2019 概念验证→2022.4 MIC@Home</td>
+</tr>
+<tr>
+<td>ADC</td>
+<td>「未公开」</td>
+</tr>
+<tr>
+<td>临床 Lead</td>
+<td>Geriatric Medicine Consultant</td>
+</tr>
+<tr>
+<td>2026 事件</td>
+<td><strong>H@H Scientific Symposium (8月21日)</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>治理</strong>：❌ 不适用。</p>
+</blockquote>
+<h2 id="d3">D3 — 战略定位</h2>
+<p><strong>核心逻辑</strong>：NHG 的 MIC@Home 以老年医学为根基——通过 KTPH+YCH 合并实现急症医院+社区医院一体化→HaH 成为这一体化的自然延伸。2026 年通过举办全国 H@H Symposium 定位为学术枢纽。</p>
+<p><strong>与 S1/S2 差异</strong>：NUHS=学术领先 / SGH=创新扩展 / <strong>NHG=老年根基+学术枢纽</strong></p>
+<h2 id="d4">D4 — 商业模式</h2>
+<p>NHG → KTPH+YCH 一体 → MIC@Home + Healthier SG + NHG Health App + Community Health Post。支付：MediSave+MediShield+补贴。</p>
+<h2 id="d5">D5 — 服务产品线</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>急性 HaH (Medical Home)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>过渡护理</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>社区健康站</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>NHG Health App</td>
+<td>✅ (ED@Bedside)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d6">D6 — 客户/支付方</h2>
+<p>NHG 中部+北部 ~150 万人口。单一支付方。</p>
+<h2 id="d7">D7 — 财务</h2>
+<blockquote>
+<p>⚠️ 公立非营利——不公开。</p>
+</blockquote>
+<h2 id="d8">D8 — 工作流</h2>
+<p>ED/住院→KTPH MIC@Home 评估→远程+上门→老年医学团队</p>
+<h2 id="d9">D9 — 技术</h2>
+<p>NGEMR (Epic) / NHG Health App / ED@Bedside / Synapxe HIT</p>
+<h2 id="d10">D10 — 竞争对标</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>NHG</th>
+<th>NUHS</th>
+<th>SGH</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定位</td>
+<td><strong>老年+学术枢纽</strong></td>
+<td>最多论文</td>
+<td>HaNH+AI</td>
+</tr>
+<tr>
+<td>2026 事件</td>
+<td><strong>H@H Symposium</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>医院合并</td>
+<td>KTPH+YCH 2025.1</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势 (TAM/SAM)</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场层级</th>
+<th>估算</th>
+<th>逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TAM</td>
+<td>新加坡 65+ ~21%（2026，约 120 万）</td>
+<td>全民健保覆盖</td>
+</tr>
+<tr>
+<td>SAM</td>
+<td>NHG 集群 ~60 万老年人口</td>
+<td>集群人口 × 急性住院率</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<blockquote>
+<p>⚠️ 公立非营利——系统级成本节省为目标。具体数字不公开。</p>
+</blockquote>
+<h2 id="d13">D13 — 风险</h2>
+<p>公开数据最少/ADC 不知/学术产出低于 NUHS/人力的全国性短缺</p>
+<h2 id="d14">D14 — 管理层</h2>
+<p>Geriatric Medicine Consultant 领导/2026.8.21 H@H Symposium 由 NNA 主办</p>
+<h2 id="d15">D15 — 估值</h2>
+<blockquote>
+<p>❌ 不适用。</p>
+</blockquote>
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<ol>
+<li><strong>KTPH+YCH 合并模式</strong>：急症+社区医院一体化是 HaH 理想组织架构</li>
+<li><strong>老年医学根基</strong>：HaH 应以老年医学为核心——不是&rdquo;科技项目&rdquo;而是&rdquo;老年服务&rdquo;</li>
+<li><strong>H@H Symposium</strong>：iHomeCare 可考虑在香港举办类似学术活动</li>
+</ol>
+<h2 id="d17">D17 — 政策</h2>
+<p>MIC@Home 主流化/Healthier SG/Central Region Trauma Services</p>
+<h2 id="d18">D18 — 单元经济模型</h2>
+<blockquote>
+<p>⚠️ 公立非营利——不公开。</p>
+</blockquote>
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<p>✅ NHG 中部+北部集群 ~150 万人口。</p>
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<blockquote>
+<p>❌ 不适用——新加坡公立系统间非竞争关系。</p>
+</blockquote>
+<h2 id="d21">D21 — 跨境/跨区域战略深度评估</h2>
+<blockquote>
+<p>❌ 不适用——仅服务新加坡本地。</p>
+</blockquote>
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<blockquote>
+<p>❌ 不适用——公立系统内部项目。</p>
+</blockquote>
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环境</td>
+<td>🟢 HaH 减碳</td>
+</tr>
+<tr>
+<td>社会</td>
+<td>🟢 改善北部住宅区老年可及性</td>
+</tr>
+<tr>
+<td>治理</td>
+<td>🟢 政府监管</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d24">D24 — 组织与人才</h2>
+<p>⚠️ 多学科老年医学团队。KTPH+YCH 合并→组织协同。护理人力全国性短缺。</p>
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<blockquote>
+<p>❌ 不适用——政府预算拨款。</p>
+</blockquote>
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<blockquote>
+<p>❌ 不适用——100% 系统内转诊。</p>
+</blockquote>
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<p>⚠️ 未公开发表独立临床数据。<strong>2026.8.21 H@H Scientific Symposium</strong> 可能首次发表 NHG MIC@Home 结果。证据强度待观察。</p>
+<h2 id="v20">v2.0 完备性审计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>16</td>
+</tr>
+<tr>
+<td>⚠️</td>
+<td>7</td>
+</tr>
+<tr>
+<td>❌ 不适用</td>
+<td>7</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="_1">参考文献</h2>
+<p>NHG Health/MOHT/NNA/KTPH Wikipedia/SGDI</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

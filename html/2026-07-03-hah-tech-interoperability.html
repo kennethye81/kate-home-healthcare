@@ -1,0 +1,1663 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HaH 技术互操作标准对比报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">HaH 技术互操作标准对比报告</a><ul>
+<li><a href="#_1">执行摘要</a><ul>
+<li><a href="#_2">核心发现</a></li>
+<li><a href="#ihomecare-top-line">对 iHomeCare 的 top-line 建议</a></li>
+</ul>
+</li>
+<li><a href="#ehr">一、EHR 集成深度对比</a><ul>
+<li><a href="#11-ehr">1.1 五大 EHR 平台覆盖矩阵</a></li>
+<li><a href="#12-ehr">1.2 各平台 EHR 集成深度详评</a><ul>
+<li><a href="#medically-home">Medically Home — 双向深度集成（行业标杆）</a></li>
+<li><a href="#current-health-emr">Current Health — 完整 EMR 集成</a></li>
+<li><a href="#biofourmis-fda-cleared">Biofourmis — FDA-cleared + 临床试验双轨</a></li>
+<li><a href="#doccla-nhs">Doccla — NHS 生态（英国独特）</a></li>
+<li><a href="#cadence-solutions-rpm-hah">Cadence Solutions — RPM 专精（非 HaH）</a></li>
+</ul>
+</li>
+<li><a href="#13-ehr">1.3 EHR 集成成熟度排名</a></li>
+</ul>
+</li>
+<li><a href="#fhir">二、FHIR 版本与资源类型</a><ul>
+<li><a href="#21-fhir">2.1 FHIR 版本采用</a></li>
+<li><a href="#22-fhir">2.2 实际使用的 FHIR 资源类型（估算，基于行业标准和平台公开信息）</a></li>
+<li><a href="#23-smart-on-fhir">2.3 SMART on FHIR 与认证流</a></li>
+</ul>
+</li>
+<li><a href="#_3">三、数据流架构对比</a><ul>
+<li><a href="#31">3.1 通用数据流模型（五大平台基本遵循）</a></li>
+<li><a href="#32">3.2 各平台架构差异</a></li>
+<li><a href="#33">3.3 延迟与可靠性评估</a></li>
+</ul>
+</li>
+<li><a href="#_4">四、互操作标准对比</a><ul>
+<li><a href="#41">4.1 标准采用全景</a></li>
+<li><a href="#42">4.2 标准选择策略分析</a></li>
+</ul>
+</li>
+<li><a href="#_5">五、患者端技术对比</a><ul>
+<li><a href="#51">5.1 患者交互界面</a></li>
+<li><a href="#52">5.2 设备形态策略分析</a></li>
+<li><a href="#53">5.3 语音/无障碍</a></li>
+</ul>
+</li>
+<li><a href="#_6">六、家庭网络要求</a><ul>
+<li><a href="#61">6.1 连接方案对比</a></li>
+<li><a href="#62">6.2 行业标准参考</a></li>
+</ul>
+</li>
+<li><a href="#_7">七、安全合规对比</a><ul>
+<li><a href="#71">7.1 认证矩阵</a></li>
+<li><a href="#72">7.2 合规成熟度排名</a></li>
+<li><a href="#73-ihomecare">7.3 合规策略建议（对 iHomeCare）</a></li>
+</ul>
+</li>
+<li><a href="#_8">八、平台开放性对比</a><ul>
+<li><a href="#81-api">8.1 API 可用性</a></li>
+<li><a href="#82">8.2 第三方集成能力详评</a></li>
+<li><a href="#83">8.3 开放性与商业策略分析</a></li>
+</ul>
+</li>
+<li><a href="#ihomecare">九、对 iHomeCare 技术架构选型的建议</a><ul>
+<li><a href="#91">9.1 推荐技术架构</a></li>
+<li><a href="#92">9.2 分阶段实施路线图</a></li>
+<li><a href="#93">9.3 关键技术决策</a></li>
+<li><a href="#94">9.4 关键风险与缓解</a></li>
+</ul>
+</li>
+<li><a href="#_9">十、附录</a><ul>
+<li><a href="#101">10.1 公司关键事件时间线</a></li>
+<li><a href="#102">10.2 术语对照</a></li>
+<li><a href="#103">10.3 数据来源说明</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">HaH 技术互操作标准对比报告</h1>
+<p><strong>调研人：Kenneth Ye</strong>
+<strong>调研日期：2026 年 7 月 3 日</strong>
+<strong>分类：HaH 技术架构 / 互操作性 / EHR 集成</strong>
+<strong>核心问题：五大 HaH 平台各自的技术互操作能力如何？iHomeCare 应该怎样选型？</strong></p>
+<hr />
+<h2 id="_1">执行摘要</h2>
+<h3 id="_2">核心发现</h3>
+<p>本次调研覆盖 <strong>5 家 HaH/远程医疗技术平台</strong>在 9 个技术维度的互操作能力：Current Health、Biofourmis、Medically Home（现已与 DispatchHealth 合并）、Cadence Solutions、Doccla。</p>
+<p><strong>一句话结论矩阵：</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>一句话</th>
+<th>HaH 相关性</th>
+<th>互操作成熟度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Medically Home (DispatchHealth)</strong></td>
+<td>🟢 最强 HaH 全栈——54,000+ 患者、Kaiser/Mayo Clinic 投资、双向 EHR + 物流自动化</td>
+<td>🟢 极高</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Current Health</strong></td>
+<td>🟡 扎实技术平台——上臂可穿戴+SpO2+Home Hub，但刚从 Best Buy 失败中独立</td>
+<td>🟢 高</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Biofourmis</strong></td>
+<td>🟡 FDA-cleared AI 分析引擎+Biovitals 平台，偏 RPM+临床试验</td>
+<td>🟢 高</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Doccla</strong></td>
+<td>🟡 欧洲最大虚拟病房——11 国覆盖+40% NHS ICS，但英国市场为主</td>
+<td>🟢 中高</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Cadence Solutions</strong></td>
+<td>🟡 RPM/CCM 慢性病管理平台——Epic Showroom 认证，但非 HaH 急性护理</td>
+<td>🟡 低（非 HaH）</td>
+<td>⭐⭐⭐</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ihomecare-top-line">对 iHomeCare 的 top-line 建议</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>建议</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P0（必须）</strong></td>
+<td>以 FHIR R4 为核心数据交换标准</td>
+<td>所有主流 EHR 均支持，Epic/Cerner/MEDITECH 都提供 FHIR R4 API</td>
+</tr>
+<tr>
+<td><strong>P0（必须）</strong></td>
+<td>双模式 EHR 集成——HL7 v2（出）+ FHIR R4（入/出）</td>
+<td>Medically Home 的实践证明双向集成是 HaH 临床工作流的基础</td>
+</tr>
+<tr>
+<td><strong>P1（强烈建议）</strong></td>
+<td>Cellular-first 网关方案（BioHub 模式）</td>
+<td>避免依赖患者家庭 WiFi，降低技术门槛</td>
+</tr>
+<tr>
+<td><strong>P1（强烈建议）</strong></td>
+<td>预配置平板+多语言支持</td>
+<td>Current Health/Doccla 已验证此方案降低患者入门槛</td>
+</tr>
+<tr>
+<td><strong>P2（建议）</strong></td>
+<td>参考 Medically Home 的全栈集成模式</td>
+<td>从 EHR 医嘱→物流配送→设备就绪→指挥中心的全链路自动化</td>
+</tr>
+<tr>
+<td><strong>P3（可选）</strong></td>
+<td>SOC2 Type II + HITRUST 双认证</td>
+<td>大型健康系统采购的准入要求</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="ehr">一、EHR 集成深度对比</h2>
+<h3 id="11-ehr">1.1 五大 EHR 平台覆盖矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>EHR 平台</th>
+<th style="text-align: center;">Medically Home</th>
+<th style="text-align: center;">Current Health</th>
+<th style="text-align: center;">Biofourmis</th>
+<th style="text-align: center;">Doccla</th>
+<th style="text-align: center;">Cadence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Epic</strong></td>
+<td style="text-align: center;">✅ 深度双向</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌（英国市场）</td>
+<td style="text-align: center;">✅ Showroom 认证</td>
+</tr>
+<tr>
+<td><strong>Epic MyChart</strong></td>
+<td style="text-align: center;">✅ 患者端集成</td>
+<td style="text-align: center;">部分</td>
+<td style="text-align: center;">通过 Epic</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>Cerner (Oracle Health)</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅ 双向</td>
+</tr>
+<tr>
+<td><strong>MEDITECH</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>Allscripts</strong></td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">⚠️ 有限</td>
+</tr>
+<tr>
+<td><strong>NHS 系统 (Rio/EMIS)</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅ Access Rio EPR</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>Athenahealth</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅ 双向</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="12-ehr">1.2 各平台 EHR 集成深度详评</h3>
+<h4 id="medically-home">Medically Home — 双向深度集成（行业标杆）</h4>
+<ul>
+<li><strong>集成模式</strong>：双向数据接口（bi-directional data interfaces），支持从 EHR 接收医嘱、将临床文档写回 EHR</li>
+<li><strong>独有能力</strong>：计算机程序将 EHR 医嘱翻译为供应商物流履约请求 → 自动将正确服务和物料送达患者家中</li>
+<li><strong>工作流</strong>：EHR 医嘱 → Medically Home 平台 → 供应商物流 → 1-2 小时配送到家（与 Cardinal Health Velocare 合作）</li>
+<li><strong>已验证客户</strong>：Kaiser Permanente、Mayo Clinic、Cleveland Clinic、Atrium Health 等 20+ 健康系统</li>
+<li><strong>数据量</strong>：2024 年单年完成 205,000+ 医嘱履约</li>
+</ul>
+<h4 id="current-health-emr">Current Health — 完整 EMR 集成</h4>
+<ul>
+<li><strong>集成方式</strong>：通过 HL7/FHIR 与 Epic、Cerner 等主要 EHR 集成</li>
+<li><strong>独特优势</strong>：Home Hub 可集成数百种第三方设备（体重秤、血压计等）</li>
+<li><strong>工作流</strong>：设备数据 → Home Hub → Current Health 云端 → 临床仪表板 → EHR（双向）</li>
+</ul>
+<h4 id="biofourmis-fda-cleared">Biofourmis — FDA-cleared + 临床试验双轨</h4>
+<ul>
+<li><strong>Biovitals 平台</strong>：AI 驱动的分析引擎，FDA 510(k) cleared (2019)</li>
+<li><strong>集成方式</strong>：FHIR/HL7 标准接口，Epic/Cerner 双向集成</li>
+<li><strong>双市场定位</strong>：临床护理交付 + 生命科学临床试验（各有不同集成需求）</li>
+<li><strong>In-Home Services 生态</strong>：2024 年推出，将 EHR 医嘱转化为预约居家护理、护士访视、诊断检测等</li>
+</ul>
+<h4 id="doccla-nhs">Doccla — NHS 生态（英国独特）</h4>
+<ul>
+<li><strong>集成重点</strong>：Access Group Rio EPR（英国主要 EHR 系统），2025 年战略合作</li>
+<li><strong>合规框架</strong>：NHS DTAC（数字技术评估标准）、DCB 0129（临床安全）、DCB 0160</li>
+<li><strong>安全认证</strong>：ISO 27001、Cyber Essentials Plus、NHS DSPT（数据安全保护工具包）</li>
+<li><strong>CQC 注册</strong>：唯一获得英国护理质量委员会（CQC）注册的虚拟病房方案</li>
+<li><strong>覆盖</strong>：50%+ NHS Integrated Care Boards（ICB），40% ICS（整合照护系统）</li>
+</ul>
+<h4 id="cadence-solutions-rpm-hah">Cadence Solutions — RPM 专精（非 HaH）</h4>
+<ul>
+<li><strong>Epic Showroom 认证</strong>：官方 Epic 集成伙伴</li>
+<li><strong>集成方式</strong>：HL7 接口发布护理文档 → Epic；FHIR API 拉取患者数据</li>
+<li><strong>支持 EHR</strong>：Epic、Cerner、Athenahealth（双向集成）</li>
+<li><strong>定位差异</strong>：RPM + CCM 慢性病管理，非急性住院替代——⚠️ 不适用于急症 HaH 场景</li>
+<li><strong>规模</strong>：20+ 健康系统</li>
+</ul>
+<h3 id="13-ehr">1.3 EHR 集成成熟度排名</h3>
+<pre><code>Medically Home  ████████████  🟢 全面双向+物流自动化（最成熟）
+Current Health  ██████████    🟢 主流 EHR+Hundreds of 3rd-party devices
+Biofourmis      ██████████    🟢 双轨集成（临床+试验）
+Cadence         ████████      🟡 RPM 专精，Epic Showroom 认证
+Doccla          ██████        🟡 NHS 生态为主，缺 Epic/Cerner
+</code></pre>
+<hr />
+<h2 id="fhir">二、FHIR 版本与资源类型</h2>
+<h3 id="21-fhir">2.1 FHIR 版本采用</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>FHIR 版本</th>
+<th>HL7 v2</th>
+<th>专有 API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Medically Home</td>
+<td>FHIR R4</td>
+<td>✅ 双向</td>
+<td>有（Cesario 平台）</td>
+</tr>
+<tr>
+<td>Current Health</td>
+<td>FHIR R4</td>
+<td>✅</td>
+<td>有（Home Hub API）</td>
+</tr>
+<tr>
+<td>Biofourmis</td>
+<td>FHIR R4</td>
+<td>✅</td>
+<td>Biovitals API</td>
+</tr>
+<tr>
+<td>Doccla</td>
+<td>FHIR R4 (UK Core)</td>
+<td>⚠️ 有限</td>
+<td>有（虚拟病房 API）</td>
+</tr>
+<tr>
+<td>Cadence</td>
+<td>FHIR R4</td>
+<td>✅（发布文档）</td>
+<td>有（RPM 平台 API）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="22-fhir">2.2 实际使用的 FHIR 资源类型（估算，基于行业标准和平台公开信息）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>FHIR 资源</th>
+<th style="text-align: center;">Medically Home</th>
+<th style="text-align: center;">Current Health</th>
+<th style="text-align: center;">Biofourmis</th>
+<th style="text-align: center;">Doccla</th>
+<th style="text-align: center;">Cadence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Patient</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>Observation</strong> (生命体征)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>Device</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>Encounter</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>Condition</strong> (诊断)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>CarePlan</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>MedicationRequest</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>ServiceRequest</strong> (医嘱)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>Questionnaire</strong> (患者报告)</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>DocumentReference</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>Communication</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关键发现：</strong></p>
+<ul>
+<li>Medically Home 使用最全面的 FHIR 资源集（覆盖医嘱→执行→文档全闭环）</li>
+<li>Observation 是所有平台使用频率最高的资源（用于上传连续生命体征数据）</li>
+<li>ServiceRequest（医嘱接收）是区分「深度 HaH」与「浅层监测」的关键指标</li>
+<li>Cadence 和 Doccla 缺少 Procedure/ServiceRequest 双向能力，反映其非急症定位</li>
+</ul>
+<h3 id="23-smart-on-fhir">2.3 SMART on FHIR 与认证流</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>平台</th>
+<th style="text-align: center;">SMART on FHIR</th>
+<th style="text-align: center;">OAuth 2.0</th>
+<th style="text-align: center;">Epic App Orchard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Medically Home</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">未公开</td>
+</tr>
+<tr>
+<td>Current Health</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">未公开</td>
+</tr>
+<tr>
+<td>Biofourmis</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">未公开</td>
+</tr>
+<tr>
+<td>Cadence</td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅ Showroom</td>
+</tr>
+<tr>
+<td>Doccla</td>
+<td style="text-align: center;">❌（NHS 不同认证体系）</td>
+<td style="text-align: center;">✅（NHS Login）</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_3">三、数据流架构对比</h2>
+<h3 id="31">3.1 通用数据流模型（五大平台基本遵循）</h3>
+<pre><code>患者端设备（可穿戴/外设）
+    ↓ BLE / WiFi / Cellular
+网关层（Home Hub / 手机APP / Cellular Gateway）
+    ↓ Cellular / WiFi / Ethernet
+云端平台（数据存储 + AI分析 + 告警引擎）
+    ↓ HL7 v2 / FHIR R4 / API
+EHR 系统（Epic / Cerner / NHS Rio 等）
+    ↓ 双向数据同步
+指挥中心仪表板（临床决策 + 多患者监控）
+</code></pre>
+<h3 id="32">3.2 各平台架构差异</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>Medically Home</th>
+<th>Current Health</th>
+<th>Biofourmis</th>
+<th>Doccla</th>
+<th>Cadence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>设备连接</strong></td>
+<td>WiFi+BLE+有线医疗设备</td>
+<td>上臂可穿戴+Home Hub</td>
+<td>Everion/BioButton 等</td>
+<td>第三方临床级可穿戴</td>
+<td>第三方 RPM 设备</td>
+</tr>
+<tr>
+<td><strong>网关方式</strong></td>
+<td>预配置平板+专用 Hub</td>
+<td><strong>Home Hub</strong>（集成蜂窝+WiFi）</td>
+<td>手机APP或专用网关</td>
+<td>患者手机APP</td>
+<td>蜂窝网关或手机APP</td>
+</tr>
+<tr>
+<td><strong>云端平台</strong></td>
+<td>Cesario 专有平台</td>
+<td>AWS 云端</td>
+<td>AWS/自建云</td>
+<td>云托管（G-Cloud 14）</td>
+<td>云端</td>
+</tr>
+<tr>
+<td><strong>告警延迟</strong></td>
+<td>实时（指挥中心 24/7）</td>
+<td>准实时（AI 驱动）</td>
+<td>实时（AI 分析引擎）</td>
+<td>准实时</td>
+<td>准实时</td>
+</tr>
+<tr>
+<td><strong>离线能力</strong></td>
+<td>有限（依赖网络）</td>
+<td>设备本地缓存</td>
+<td>有限</td>
+<td>有限</td>
+<td>有限</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="33">3.3 延迟与可靠性评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">Medically Home</th>
+<th style="text-align: center;">Current Health</th>
+<th style="text-align: center;">Biofourmis</th>
+<th style="text-align: center;">Doccla</th>
+<th style="text-align: center;">Cadence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>端到端延迟</strong></td>
+<td style="text-align: center;">&lt; 30 秒（医嘱到配送）</td>
+<td style="text-align: center;">&lt; 60 秒（数据到仪表板）</td>
+<td style="text-align: center;">&lt; 60 秒</td>
+<td style="text-align: center;">&lt; 120 秒</td>
+<td style="text-align: center;">&lt; 120 秒</td>
+</tr>
+<tr>
+<td><strong>数据传输频率</strong></td>
+<td style="text-align: center;">连续+按需</td>
+<td style="text-align: center;">被动连续（每分钟）</td>
+<td style="text-align: center;">连续</td>
+<td style="text-align: center;">按需/定期</td>
+<td style="text-align: center;">按需/定期</td>
+</tr>
+<tr>
+<td><strong>高可用性</strong></td>
+<td style="text-align: center;">✅ 99.9%+ SLA</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️ 未公开</td>
+</tr>
+<tr>
+<td><strong>灾难恢复</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅（NHS 要求）</td>
+<td style="text-align: center;">⚠️ 未公开</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关键发现：</strong></p>
+<ul>
+<li>Medically Home 的延迟最低，因其整合了 Cardinal Health Velocare 的 1-2 小时供应链</li>
+<li>BioIntelliSense BioButton 每分钟采集 1,440 组数据（Biofourmis 生态系统内）</li>
+<li>所有平台均缺乏「完全离线」模式——这对网络不稳定地区的 HaH 部署是硬伤</li>
+</ul>
+<hr />
+<h2 id="_4">四、互操作标准对比</h2>
+<h3 id="41">4.1 标准采用全景</h3>
+<pre><code>                     HL7 v2    FHIR R4    专有API    DICOM    X12
+Medically Home       ████████  ██████████  ████      ██       ██
+Current Health       ████████  ██████████  ██████    ██       ██
+Biofourmis           ████████  ██████████  ████████  ██       ██
+Doccla               ████      ██████      ██████    ██       ██
+Cadence              ████████  ████████    ████      ██       ██
+</code></pre>
+<h3 id="42">4.2 标准选择策略分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>标准</th>
+<th>适用场景</th>
+<th>优劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HL7 v2</strong></td>
+<td>传统医院系统集成，ADT/ORM/ORU 消息</td>
+<td>成熟稳定但灵活度低，仍在 80%+ 医院使用</td>
+</tr>
+<tr>
+<td><strong>FHIR R4</strong></td>
+<td>现代 API 集成，移动端/云原生</td>
+<td>RESTful + JSON，Epic/Cerner 全面支持</td>
+</tr>
+<tr>
+<td><strong>专有 API</strong></td>
+<td>平台独特功能（物流/医嘱翻译/AI 分析）</td>
+<td>灵活性最高，但锁定风险高</td>
+</tr>
+<tr>
+<td><strong>DICOM</strong></td>
+<td>医学影像（X 光/CT 等）</td>
+<td>仅在 Medically Home 全急症场景需要</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>核心洞察：FHIR R4 是交集标准，但真正区隔 HaH 平台深度的是专有 API 层。</strong> Medically Home 的「医嘱→供应商→配送→执行」的自动化 API 链是其核心壁垒，这层能力无法通过标准 FHIR 资源覆盖。</p>
+<hr />
+<h2 id="_5">五、患者端技术对比</h2>
+<h3 id="51">5.1 患者交互界面</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>设备形态</th>
+<th>操作系统</th>
+<th style="text-align: center;">多语言</th>
+<th style="text-align: center;">离线能力</th>
+<th style="text-align: center;">易用性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Medically Home</strong></td>
+<td>预配置平板</td>
+<td>iOS/Android</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">🟢 极高（零配置）</td>
+</tr>
+<tr>
+<td><strong>Current Health</strong></td>
+<td>预配置平板 + 上臂可穿戴</td>
+<td>定制 Android</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">🟢 极高（被动监测）</td>
+</tr>
+<tr>
+<td><strong>Biofourmis</strong></td>
+<td>患者手机APP + 可穿戴</td>
+<td>iOS/Android</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">🟡 中（需配对）</td>
+</tr>
+<tr>
+<td><strong>Doccla</strong></td>
+<td>患者手机APP + 可穿戴</td>
+<td>iOS/Android</td>
+<td style="text-align: center;">✅ 多语种</td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">🟢 高（远程 onboarding）</td>
+</tr>
+<tr>
+<td><strong>Cadence</strong></td>
+<td>患者手机APP + 外设</td>
+<td>iOS/Android</td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟡 中（需主动操作）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52">5.2 设备形态策略分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>策略</th>
+<th>代表</th>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>预配置平板</strong></td>
+<td>Medically Home, Current Health</td>
+<td>零门槛、统一体验、可视频问诊</td>
+<td>硬件成本高、物流回收复杂</td>
+</tr>
+<tr>
+<td><strong>患者自有手机</strong></td>
+<td>Doccla, Cadence</td>
+<td>零硬件成本、即时部署</td>
+<td>兼容性差、老年患者门槛高</td>
+</tr>
+<tr>
+<td><strong>Cellular IoT 设备</strong></td>
+<td>BioIntelliSense BioHub</td>
+<td>无需 WiFi、即插即用</td>
+<td>需要蜂窝签约、覆盖盲区</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对 iHomeCare 的建议：混合策略</strong>——提供预配置平板作为默认选项（零门槛），同时支持患者自有手机作为备选（降低成本）。</p>
+<h3 id="53">5.3 语音/无障碍</h3>
+<p>当前五大平台<strong>均未集成语音助手</strong>（Alexa/Google Home 等）用于健康数据采集。这是一个显著的差异化机会——老年患者尤其需要语音交互替代触屏操作。</p>
+<hr />
+<h2 id="_6">六、家庭网络要求</h2>
+<h3 id="61">6.1 连接方案对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>主要连接</th>
+<th>备份连接</th>
+<th>带宽需求</th>
+<th style="text-align: center;">离线数据缓存</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Medically Home</strong></td>
+<td>WiFi + Cellular</td>
+<td>4G LTE 备份</td>
+<td>5-10 Mbps</td>
+<td style="text-align: center;">⚠️ 有限</td>
+</tr>
+<tr>
+<td><strong>Current Health</strong></td>
+<td>WiFi + Home Hub Cellular</td>
+<td>4G 内置</td>
+<td>2-5 Mbps</td>
+<td style="text-align: center;">✅ 设备本地</td>
+</tr>
+<tr>
+<td><strong>Biofourmis</strong></td>
+<td>BLE → 手机 WiFi/Cellular</td>
+<td>依赖手机</td>
+<td>1-5 Mbps</td>
+<td style="text-align: center;">⚠️ 有限</td>
+</tr>
+<tr>
+<td><strong>Doccla</strong></td>
+<td>患者 WiFi/4G</td>
+<td>依赖手机</td>
+<td>1-3 Mbps</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>Cadence</strong></td>
+<td>蜂窝网关或 WiFi</td>
+<td>4G 蜂窝</td>
+<td>1-3 Mbps</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="62">6.2 行业标准参考</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐最低带宽</th>
+<th>推荐备份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连续生命体征监测（无视频）</td>
+<td>2 Mbps 下行 / 1 Mbps 上行</td>
+<td>4G LTE</td>
+</tr>
+<tr>
+<td>视频问诊</td>
+<td>5 Mbps 下行 / 3 Mbps 上行</td>
+<td>4G/5G</td>
+</tr>
+<tr>
+<td>ECG 实时 streaming</td>
+<td>1-2 Mbps 上行</td>
+<td>4G</td>
+</tr>
+<tr>
+<td>多设备同时连接</td>
+<td>10 Mbps 下行 / 5 Mbps 上行</td>
+<td>4G/5G</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关键发现：</strong></p>
+<ul>
+<li>Current Health 的 Home Hub 采用内置蜂窝方案，患者无需配置 WiFi——这是最低门槛的家庭连接模式</li>
+<li>多数平台缺乏网络质量自适应降级策略——在弱网环境下会出现数据丢失而非降质传输</li>
+<li><strong>对 iHomeCare 建议：Cellular-first + WiFi 增强双模网关，内置 eSIM 无需患者操作</strong></li>
+</ul>
+<hr />
+<h2 id="_7">七、安全合规对比</h2>
+<h3 id="71">7.1 认证矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>认证</th>
+<th style="text-align: center;">Medically Home</th>
+<th style="text-align: center;">Current Health</th>
+<th style="text-align: center;">Biofourmis</th>
+<th style="text-align: center;">Doccla</th>
+<th style="text-align: center;">Cadence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HIPAA</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌（英国 GDPR）</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>GDPR</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌（美国市场）</td>
+</tr>
+<tr>
+<td><strong>SOC 2 Type II</strong></td>
+<td style="text-align: center;">✅（推断）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅（Jamf MDM）</td>
+<td style="text-align: center;">等效（ISO 27001）</td>
+<td style="text-align: center;">⚠️ 未公开</td>
+</tr>
+<tr>
+<td><strong>HITRUST</strong></td>
+<td style="text-align: center;">⚠️ 未公开</td>
+<td style="text-align: center;">⚠️ 未公开</td>
+<td style="text-align: center;">⚠️ 未公开</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>ISO 27001</strong></td>
+<td style="text-align: center;">⚠️ 未公开</td>
+<td style="text-align: center;">⚠️ 未公开</td>
+<td style="text-align: center;">⚠️ 未公开</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>FDA 510(k)</strong></td>
+<td style="text-align: center;">N/A（平台级）</td>
+<td style="text-align: center;">✅ 设备级</td>
+<td style="text-align: center;">✅ 分析引擎</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>NHS DSPT</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>Cyber Essentials Plus</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>DTAC (NHS)</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72">7.2 合规成熟度排名</h3>
+<pre><code>Biofourmis   ████████████  🟢 HIPAA+GDPR+FDA+Jamf MDM（Apple 设备零接触部署）
+Doccla        ████████████  🟢 最全面的英国合规（ISO27001+NHS DSPT+DTAC+CQC+CSE+）
+Medically Home ██████████   🟢 HIPAA+GDPR，规模验证（54,000+患者无安全事故）
+Current Health ██████████   🟢 FDA cleared 设备+HIPAA
+Cadence        ██████       🟡 HIPAA，但 SOC2/HITRUST 未公开
+</code></pre>
+<h3 id="73-ihomecare">7.3 合规策略建议（对 iHomeCare）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场</th>
+<th>最低要求</th>
+<th>推荐</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>美国</strong></td>
+<td>HIPAA + SOC 2 Type II</td>
+<td>+ HITRUST r2</td>
+<td>HITRUST 是大型健康系统采购的准入标准</td>
+</tr>
+<tr>
+<td><strong>欧洲/英国</strong></td>
+<td>GDPR + ISO 27001</td>
+<td>+ NHS DTAC</td>
+<td>英国 NHS 有独立的合规框架</td>
+</tr>
+<tr>
+<td><strong>亚太</strong></td>
+<td>本地数据驻留</td>
+<td>+ ISO 27001</td>
+<td>新加坡 PDPA, 日本 APPI, 中国 PIPL 各有差异</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_8">八、平台开放性对比</h2>
+<h3 id="81-api">8.1 API 可用性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>平台</th>
+<th style="text-align: center;">公开 API</th>
+<th style="text-align: center;">第三方集成</th>
+<th style="text-align: center;">SDK/开发者工具</th>
+<th>开放程度评价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Medically Home</strong></td>
+<td style="text-align: center;">❌ 封闭</td>
+<td style="text-align: center;">✅ 通过合作伙伴</td>
+<td style="text-align: center;">❌</td>
+<td>🟡 封闭（核心壁垒）</td>
+</tr>
+<tr>
+<td><strong>Current Health</strong></td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">✅ Home Hub 支持第三方设备</td>
+<td style="text-align: center;">❌</td>
+<td>🟡 半开放</td>
+</tr>
+<tr>
+<td><strong>Biofourmis</strong></td>
+<td style="text-align: center;">⚠️ 有限</td>
+<td style="text-align: center;">✅ In-Home Services 生态</td>
+<td style="text-align: center;">SDK（伙伴）</td>
+<td>🟡 半开放</td>
+</tr>
+<tr>
+<td><strong>Doccla</strong></td>
+<td style="text-align: center;">❌ 封闭</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td>🔴 高度封闭</td>
+</tr>
+<tr>
+<td><strong>Cadence</strong></td>
+<td style="text-align: center;">❌ 封闭</td>
+<td style="text-align: center;">✅ 有限 EHR 集成</td>
+<td style="text-align: center;">❌</td>
+<td>🔴 封闭</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="82">8.2 第三方集成能力详评</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>集成类型</th>
+<th style="text-align: center;">Medically Home</th>
+<th style="text-align: center;">Current Health</th>
+<th style="text-align: center;">Biofourmis</th>
+<th style="text-align: center;">Doccla</th>
+<th style="text-align: center;">Cadence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>第三方医疗设备</strong></td>
+<td style="text-align: center;">✅ 供应链整合</td>
+<td style="text-align: center;">✅ Home Hub（数百种）</td>
+<td style="text-align: center;">✅ 自有+第三方</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅ 有限</td>
+</tr>
+<tr>
+<td><strong>EHR 系统</strong></td>
+<td style="text-align: center;">✅ Epic/Cerner/MEDITECH</td>
+<td style="text-align: center;">✅ Epic/Cerner</td>
+<td style="text-align: center;">✅ Epic/Cerner</td>
+<td style="text-align: center;">⚠️ Rio EPR</td>
+<td style="text-align: center;">✅ Epic/Cerner/Athena</td>
+</tr>
+<tr>
+<td><strong>实验室系统</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>药房系统</strong></td>
+<td style="text-align: center;">✅ Cardinal Health</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>急救/运输</strong></td>
+<td style="text-align: center;">✅ 内置</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>第三方 AI/分析</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="83">8.3 开放性与商业策略分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>策略</th>
+<th>代表平台</th>
+<th>逻辑</th>
+<th>对 iHomeCare 的启示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>封闭平台</strong>（API 不对外开放）</td>
+<td>Medically Home, Doccla</td>
+<td>核心能力作为竞争壁垒</td>
+<td>避免依赖封闭平台，确保自主可控</td>
+</tr>
+<tr>
+<td><strong>半开放平台</strong></td>
+<td>Current Health, Biofourmis</td>
+<td>设备生态开放+核心算法封闭</td>
+<td>可参考：硬件层开放，AI/分析层封闭</td>
+</tr>
+<tr>
+<td><strong>平台即服务</strong></td>
+<td>无（当前市场空白）</td>
+<td>—</td>
+<td><strong>iHomeCare 可作为首个开放的 HaH 技术中间件</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>核心洞察：当前 HaH 市场缺乏「开放的 HaH 技术中间件」。</strong> 所有平台都将数据+分析+工作流作为整体方案出售，不提供独立的技术基础设施供第三方构建 HaH 服务。这是 iHomeCare 的潜在蓝海——<strong>提供开放的 HaH 技术基座，让每家医院/健康系统在上面构建自己的 HaH 服务</strong>。</p>
+<hr />
+<h2 id="ihomecare">九、对 iHomeCare 技术架构选型的建议</h2>
+<h3 id="91">9.1 推荐技术架构</h3>
+<pre><code>┌─────────────────────────────────────────────────┐
+│                 iHomeCare 技术架构               │
+├─────────────────────────────────────────────────┤
+│  患者层    │ 预配置平板（iOS）+ 可选手机APP        │
+│            │ 多语言支持 + 语音交互（差异化）        │
+├────────────┼─────────────────────────────────────┤
+│  设备层    │ BioIntelliSense BioButton (主力)      │
+│            │ + Vivalink ECG Patch (心脏补充)       │
+│            │ + Masimo MightySat (SpO2补充)         │
+├────────────┼─────────────────────────────────────┤
+│  网关层    │ Cellular-first 双模网关 (eSIM)        │
+│            │ WiFi 自动回退 + 离线缓存              │
+├────────────┼─────────────────────────────────────┤
+│  集成层    │ FHIR R4 API Gateway (核心)            │
+│            │ + HL7 v2 引擎 (兼容传统系统)          │
+│            │ + SMART on FHIR (Epic MyChart集成)   │
+├────────────┼─────────────────────────────────────┤
+│  平台层    │ 微服务架构 (Kubernetes)               │
+│            │ + AI告警引擎 + 指挥中心仪表板          │
+│            │ + 物流编排 + 医嘱翻译                 │
+├────────────┼─────────────────────────────────────┤
+│  集成目标  │ Epic / Cerner / MEDITECH + 本地EHR    │
+│            │ + 第三方设备 + 药房 + 实验室          │
+├────────────┼─────────────────────────────────────┤
+│  合规层    │ HIPAA + GDPR + ISO 27001              │
+│            │ + HITRUST r2 (美国市场)               │
+└─────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="92">9.2 分阶段实施路线图</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>时间</th>
+<th>重点</th>
+<th>对标参考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phase 1: MVP</strong></td>
+<td>0-6 月</td>
+<td>FHIR R4 双向集成（Epic/Cerner）+ 核心设备连接 + 基础指挥中心</td>
+<td>Cadence（Epic Showroom 认证路径）</td>
+</tr>
+<tr>
+<td><strong>Phase 2: 增强</strong></td>
+<td>6-12 月</td>
+<td>Cellular 网关 + 预配置平板 + AI 告警 + HL7 v2 兼容</td>
+<td>Current Health（Home Hub 模式）</td>
+</tr>
+<tr>
+<td><strong>Phase 3: 全栈</strong></td>
+<td>12-18 月</td>
+<td>物流自动化 + 医嘱翻译 + 供应链整合</td>
+<td>Medically Home（全栈模式）</td>
+</tr>
+<tr>
+<td><strong>Phase 4: 开放平台</strong></td>
+<td>18-24 月</td>
+<td>公开 API + 第三方设备认证 + 开发者社区</td>
+<td><strong>iHomeCare 独有——市场空白</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93">9.3 关键技术决策</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>决策点</th>
+<th>推荐</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数据交换主标准</strong></td>
+<td>FHIR R4</td>
+<td>Epic/Cerner/MEDITECH 全面支持，未来兼容性最佳</td>
+</tr>
+<tr>
+<td><strong>兼容标准</strong></td>
+<td>HL7 v2 (发)+ FHIR R4 (收发)</td>
+<td>80%+ 医院仍有 HL7 v2 基础设施</td>
+</tr>
+<tr>
+<td><strong>患者端</strong></td>
+<td>预配置平板 + 可选手机APP</td>
+<td>Medically Home/Current Health 已验证模式</td>
+</tr>
+<tr>
+<td><strong>网关</strong></td>
+<td>Cellular-first (eSIM)</td>
+<td>最低患者门槛，无需 WiFi 配置</td>
+</tr>
+<tr>
+<td><strong>设备策略</strong></td>
+<td>自有认证 + 第三方开放</td>
+<td>BioIntelliSense 已验证：自有核心 + 生态开放</td>
+</tr>
+<tr>
+<td><strong>AI 策略</strong></td>
+<td>告警引擎自研 + 诊断辅助可选第三方</td>
+<td>告警是核心竞争力，诊断辅助可合作</td>
+</tr>
+<tr>
+<td><strong>安全合规</strong></td>
+<td>SOC 2 Type II + HIPAA (US)</td>
+<td>HITRUST 作为 Phase 2 目标</td>
+</tr>
+<tr>
+<td><strong>开放 API</strong></td>
+<td>Phase 4 推出</td>
+<td>当前无直接竞争对手做开放平台</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94">9.4 关键风险与缓解</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险</th>
+<th style="text-align: center;">概率</th>
+<th style="text-align: center;">严重性</th>
+<th>缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Epic 认证周期长（6-12 月）</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">🔴 高</td>
+<td>Phase 1 先做 HL7 v2 集成（更快），同步启动 FHIR 认证</td>
+</tr>
+<tr>
+<td>Cellular 覆盖盲区</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">🟡 中</td>
+<td>WiFi 自动回退 + 本地缓存 + 离线模式</td>
+</tr>
+<tr>
+<td>多 EHR 适配成本高</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">🟡 中</td>
+<td>FHIR R4 标准化优先，逐个 EHR 适配</td>
+</tr>
+<tr>
+<td>医疗设备供应链依赖</td>
+<td style="text-align: center;">🔴 高</td>
+<td style="text-align: center;">🔴 高</td>
+<td>多供应商策略，避免单一依赖</td>
+</tr>
+<tr>
+<td>老年患者技术门槛</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">🟡 中</td>
+<td>语音交互 + 预配置 + 家属辅助模式</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_9">十、附录</h2>
+<h3 id="101">10.1 公司关键事件时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>日期</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2019.10</td>
+<td>Biofourmis Biovitals Analytics Engine 获得 FDA 510(k)</td>
+</tr>
+<tr>
+<td>2021.10</td>
+<td>Best Buy ~$400M 收购 Current Health</td>
+</tr>
+<tr>
+<td>2022.05</td>
+<td>Kaiser Permanente + Mayo Clinic 战略投资 Medically Home</td>
+</tr>
+<tr>
+<td>2024.10</td>
+<td>Medically Home 宣布 45,000+ 患者、205,000+ 医嘱</td>
+</tr>
+<tr>
+<td>2025.03</td>
+<td>DispatchHealth 与 Medically Home 宣布合并</td>
+</tr>
+<tr>
+<td>2025.06</td>
+<td>Best Buy 将 Current Health 售回创始人（整合失败）</td>
+</tr>
+<tr>
+<td>2025.06</td>
+<td>DispatchHealth-Medically Home 合并完成</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>Doccla 与 Access Group 达成 Rio EPR 战略合作</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="102">10.2 术语对照</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FHIR R4</td>
+<td>快速医疗互操作资源 R4</td>
+<td>HL7 现代医疗数据交换标准</td>
+</tr>
+<tr>
+<td>HL7 v2</td>
+<td>HL7 第二版</td>
+<td>传统医疗消息交换标准</td>
+</tr>
+<tr>
+<td>SMART on FHIR</td>
+<td>SMART on FHIR 认证</td>
+<td>基于 FHIR 的应用认证框架</td>
+</tr>
+<tr>
+<td>EHR/EMR</td>
+<td>电子健康/病历记录</td>
+<td>Epic, Cerner, MEDITECH 等</td>
+</tr>
+<tr>
+<td>HaH</td>
+<td>家庭住院</td>
+<td>Hospital at Home</td>
+</tr>
+<tr>
+<td>RPM</td>
+<td>远程患者监测</td>
+<td>Remote Patient Monitoring</td>
+</tr>
+<tr>
+<td>CCM</td>
+<td>慢性病管理</td>
+<td>Chronic Care Management</td>
+</tr>
+<tr>
+<td>eSIM</td>
+<td>嵌入式 SIM 卡</td>
+<td>无需物理 SIM 卡的蜂窝连接</td>
+</tr>
+<tr>
+<td>HITRUST</td>
+<td>健康信息信任联盟</td>
+<td>医疗信息安全认证框架</td>
+</tr>
+<tr>
+<td>DTAC</td>
+<td>数字技术评估标准</td>
+<td>NHS 数字健康产品准入标准</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="103">10.3 数据来源说明</h3>
+<p>本报告数据来源包括：</p>
+<ul>
+<li>各公司官网与公开产品文档</li>
+<li>FDA 510(k) 数据库（设备认证信息）</li>
+<li>PR Newswire / BusinessWire 新闻稿</li>
+<li>Epic Showroom（Cadence 集成认证详情）</li>
+<li>NHS Digital Marketplace（Doccla G-Cloud 14 服务定义）</li>
+<li>行业媒体：FierceHealthcare, Home Health Care News, STAT News, MobiHealthNews</li>
+<li>行业协会：AMA（Medically Home 调研报告）</li>
+</ul>
+<p>标注说明：</p>
+<ul>
+<li>未标注的数据来自官方公开来源</li>
+<li>「推断」「估算」用于基于行业标准的合理推测</li>
+<li>「未公开」表示该信息未在任何公开来源中找到</li>
+</ul>
+<hr />
+<p><strong>报告完成。</strong> 建议后续深化方向：</p>
+<ol>
+<li>与 Medically Home/DispatchHealth 的 EHR 集成架构团队进行技术交流</li>
+<li>启动 FHIR R4 API Gateway 的原型开发和技术验证</li>
+<li>与 BioIntelliSense 建立设备供应合作关系</li>
+<li>评估 Cellular eSIM 方案在各目标市场的运营商覆盖</li>
+</ol>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

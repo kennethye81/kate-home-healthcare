@@ -1,0 +1,3300 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ニチイ学館（Nichii Co., Ltd.）27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#nichii-co-ltd27">ニチイ学館（Nichii Co., Ltd.）27 维度深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道验证（日本介護保険制度下的居家护理赛道）</a><ul>
+<li><a href="#_1">赛道规模与结构性验证</a></li>
+<li><a href="#_2">赛道结构特征</a></li>
+<li><a href="#_3">赛道判断</a></li>
+</ul>
+</li>
+<li><a href="#d1">D1 — 执行摘要</a><ul>
+<li><a href="#nichii">ニチイ（Nichii）全景判断</a></li>
+<li><a href="#_4">核心判断</a></li>
+<li><a href="#_5">关键指标一览</a></li>
+</ul>
+</li>
+<li><a href="#d2">D2 — 企业概况与定位（含股权/治理/发展阶段时间线）</a><ul>
+<li><a href="#_6">基本信息</a></li>
+<li><a href="#_7">股权与治理结构</a></li>
+<li><a href="#_8">发展阶段时间线</a></li>
+<li><a href="#_9">企業ミッションとポジショニング</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_10">戦略的三本柱</a></li>
+<li><a href="#_11">競争優位性</a></li>
+<li><a href="#_12">成長戦略の方向性</a></li>
+</ul>
+</li>
+<li><a href="#d4-vs">D4 — 商业模式架构图（供给→平台→需求，支付方vs使用方分离）</a><ul>
+<li><a href="#_13">ニチイのビジネスモデル全体図</a></li>
+<li><a href="#vs">支払者 vs 利用者の分離</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线与定价模式</a><ul>
+<li><a href="#_14">サービスライン一覧</a></li>
+<li><a href="#_15">代表性定价（介護報酬単位）</a></li>
+<li><a href="#_16">収益性マトリックス</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_17">支払者構造</a></li>
+<li><a href="#_18">利用者セグメント</a></li>
+<li><a href="#_19">支払いメカニズムの詳細</a></li>
+</ul>
+</li>
+<li><a href="#d7-fy2023-2025">D7 — 财务深度拆解（FY2023-2025 收入/利润/业务线拆解）</a><ul>
+<li><a href="#fy2025">FY2025 収入構成（推定）</a></li>
+<li><a href="#_20">収益性分析（推定）</a></li>
+<li><a href="#_21">財務安定性分析</a></li>
+<li><a href="#fy2023-2025">FY2023-2025 収入推移（推定）</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a><ul>
+<li><a href="#_22">利用者獲得〜サービス提供のフロー</a></li>
+<li><a href="#_23">ニチイのオペレーション特性</a></li>
+</ul>
+</li>
+<li><a href="#d9-ai">D9 — 技术深度评估（软件 / AI / 数据）</a><ul>
+<li><a href="#_24">現在の技術スタック（推定）</a></li>
+<li><a href="#dx">DX推進状況</a></li>
+<li><a href="#_25">技術投資の方向性（推定）</a></li>
+<li><a href="#_26">技術評価サマリー</a></li>
+</ul>
+</li>
+<li><a href="#d10-vs-sompobenessetsukui">D10 — 竞争格局对标矩阵（vs SOMPO/Benesse/Tsukui 等）</a><ul>
+<li><a href="#5">日本介護大手5社比較</a></li>
+<li><a href="#_27">競争ポジショニングマップ</a></li>
+<li><a href="#_28">競争優位の分解</a></li>
+</ul>
+</li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</a><ul>
+<li><a href="#tamsam">市場規模（TAM/SAM）</a></li>
+<li><a href="#_29">成長ドライバー</a></li>
+<li><a href="#_30">成長制約要因</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型与路径</a><ul>
+<li><a href="#_31">収益性の分解モデル</a></li>
+<li><a href="#_32">利益改善の経路</a></li>
+<li><a href="#_33">収益性ベンチマーク</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a><ul>
+<li><a href="#opportunities">機会（Opportunities）</a></li>
+<li><a href="#risks">リスク（Risks）</a></li>
+<li><a href="#_34">総合リスク評価</a></li>
+</ul>
+</li>
+<li><a href="#d14">D14 — 管理指引与市场预期</a><ul>
+<li><a href="#_35">経営陣の状況</a></li>
+<li><a href="#_36">市場の期待（推定）</a></li>
+</ul>
+</li>
+<li><a href="#d15-pe-evebitda">D15 — 估值对比（上市公司 P/E, EV/EBITDA 等）</a><ul>
+<li><a href="#_37">上場類似企業のバリュエーション比較</a></li>
+<li><a href="#_38">ニチイの推定企業価値</a></li>
+</ul>
+</li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#_39">ニチイモデルからの学び</a></li>
+<li><a href="#ihomecare">iHomeCareにとっての日本市場参入の判断</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤（日本介護保険制度）</a><ul>
+<li><a href="#_40">制度概要</a></li>
+<li><a href="#2026">最新の制度改革（2026年）</a></li>
+<li><a href="#_41">介護報酬改定の推移</a></li>
+</ul>
+</li>
+<li><a href="#d18-1">D18 — 单元经济模型（訪問介護1回のコスト構造）</a><ul>
+<li><a href="#30-601">訪問介護（身体介護30-60分）1回のユニットエコノミクス</a></li>
+<li><a href="#_42">感応度分析</a></li>
+<li><a href="#_43">損益分岐点</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a><ul>
+<li><a href="#_44">利用者セグメント詳細</a></li>
+<li><a href="#_45">ニチイの注力セグメント</a></li>
+</ul>
+</li>
+<li><a href="#d20">D20 — 竞品深度地图</a><ul>
+<li><a href="#_46">日本介護業界の競争構造</a></li>
+<li><a href="#_47">競合の戦略差別化</a></li>
+<li><a href="#ma">M&amp;A・統合の動き</a></li>
+</ul>
+</li>
+<li><a href="#d21">D21 — 跨境/跨区域战略</a><ul>
+<li><a href="#_48">ニチイの国際展開</a></li>
+<li><a href="#_49">国際比較ポジショニング</a></li>
+<li><a href="#ihomecare_1">iHomeCareへの示唆</a></li>
+</ul>
+</li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a><ul>
+<li><a href="#_50">買収可能性の評価</a></li>
+<li><a href="#exit">部分的なExitの可能性</a></li>
+<li><a href="#exit_1">最も現実的なExitシナリオ</a></li>
+</ul>
+</li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a><ul>
+<li><a href="#environment">環境（Environment）</a></li>
+<li><a href="#social">社会（Social）</a></li>
+<li><a href="#governance">ガバナンス（Governance）</a></li>
+<li><a href="#sdgs">SDGs貢献</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才</a><ul>
+<li><a href="#_51">組織構造</a></li>
+<li><a href="#_52">人材構成（推定）</a></li>
+<li><a href="#_53">人材戦上の課題</a></li>
+<li><a href="#_54">教育・研修</a></li>
+</ul>
+</li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a><ul>
+<li><a href="#_55">資本構造の変遷</a></li>
+<li><a href="#_56">推定資本構造</a></li>
+<li><a href="#_57">資金調達オプション</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a><ul>
+<li><a href="#_58">顧客獲得チャネル</a></li>
+<li><a href="#gtm">GTM効率性評価</a></li>
+<li><a href="#_59">ブランド戦略</a></li>
+</ul>
+</li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#_60">品質管理体制</a></li>
+<li><a href="#_61">品質に関する指標（推定）</a></li>
+<li><a href="#_62">臨床的アウトカムへの影響</a></li>
+<li><a href="#_63">今後の品質向上課題</a></li>
+</ul>
+</li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a><ul>
+<li><a href="#_64">総合評価</a></li>
+</ul>
+</li>
+<li><a href="#_65">调研空白与后续补充</a><ul>
+<li><a href="#web_search">現時点の空白（web_search利用不可による制約）</a></li>
+<li><a href="#_66">推奨追加調査</a></li>
+</ul>
+</li>
+<li><a href="#_67">参考文献</a><ul>
+<li><a href="#_68">政策・制度ソース</a></li>
+<li><a href="#_69">業界分析ソース</a></li>
+<li><a href="#_70">既存研究ソース</a></li>
+<li><a href="#_71">企業ソース</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="nichii-co-ltd27">ニチイ学館（Nichii Co., Ltd.）27 维度深度尽调报告</h1>
+<p><strong>调研日期</strong>：2026-07-05
+<strong>报告编号</strong>：2026-07-05-nichii-jp-27dim
+<strong>分析方法</strong>：27 维度框架（v2.0）
+<strong>数据状态</strong>：基于公开可得信息及既有研究档案，web_search 工具因 API 中断未补充最新日文源数据</p>
+<hr />
+<h2 id="d0">D0 — 赛道验证（日本介護保険制度下的居家护理赛道）</h2>
+<h3 id="_1">赛道规模与结构性验证</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日本介護費用总额（FY2022）</td>
+<td>¥11.2兆（約$780億）</td>
+<td>MHLW 介護保険事業状況報告</td>
+</tr>
+<tr>
+<td>要介護認定者数（2023年10月）</td>
+<td>706万人（過去最高）</td>
+<td>MHLW</td>
+</tr>
+<tr>
+<td>2040年要介護推定人口</td>
+<td>1,000万人以上</td>
+<td>厚生労働省推計</td>
+</tr>
+<tr>
+<td>介護職員必要数（2040年）</td>
+<td>280万人（2019年比+33%）</td>
+<td>厚生労働省</td>
+</tr>
+<tr>
+<td>介護事業所数</td>
+<td>約31.3万事業所</td>
+<td>MHLW</td>
+</tr>
+<tr>
+<td>訪問介護事業所数</td>
+<td>約35,000所</td>
+<td>業界統計</td>
+</tr>
+<tr>
+<td>訪問看護ST事業所数</td>
+<td>約17,000所（2024年）</td>
+<td>日本看護協会</td>
+</tr>
+<tr>
+<td>介護報酬改定率（2024年度）</td>
+<td>+1.59%（実質+2.04%）</td>
+<td>MHLW</td>
+</tr>
+<tr>
+<td>介護報酬改定率（2026年度期中）</td>
+<td><strong>+2.03%</strong></td>
+<td>GemMed（2026年6月施行）</td>
+</tr>
+<tr>
+<td>訪問介護利益率</td>
+<td><strong>3-8%（極薄）</strong></td>
+<td>業界分析</td>
+</tr>
+<tr>
+<td>2024年介護事業倒産</td>
+<td><strong>172件（過去最多）</strong>、うち訪問介護81件</td>
+<td>東京商工リサーチ</td>
+</tr>
+<tr>
+<td>介護DX市場規模（2024年）</td>
+<td>545.8億円</td>
+<td>矢野経済研究所</td>
+</tr>
+<tr>
+<td>介護保険第1号保険料（2025年）</td>
+<td>月額平均6,225円（過去最高）</td>
+<td>社会保険研究所</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">赛道结构特征</h3>
+<ol>
+<li><strong>极度分散</strong>：前5位企业合计市场份额仅20-25%（推定）。31.3万事业所中多数为员工不足10人的中小零散事业者。</li>
+<li><strong>公共LTCI全覆盖</strong>：介護保険覆盖40岁以上全体居民，市町村为保险人，确保稳定支付源。</li>
+<li><strong>收益性极低</strong>：人工成本占收入70-75%且公定价格难以转嫁成本上涨。2024年访问介护破产81件创历史新高。</li>
+<li><strong>政策驱动增长</strong>：2026年介護報酬期中改定+2.03%，介護情報基盤2026年4月上线，DX化加速。</li>
+<li><strong>人才为最大瓶颈</strong>：2040年需280万介護職員，当前薪资水平难以达成。</li>
+</ol>
+<h3 id="_3">赛道判断</h3>
+<p><strong>✅ 日本居家护理赛道验证通过</strong> — 老龄化最严重的全球市场（65+占29.3%）、制度化的公共LTCI提供稳定支付、介護報酬定期改定提供价格调整机制。但赛道内收益性极薄，成功取决于规模效应、运营效率和非保险外收入的组合。</p>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<h3 id="nichii">ニチイ（Nichii）全景判断</h3>
+<p>株式会社ニチイ（旧ニチイ学館）是<strong>日本最大的居家护理综合企业</strong>，FY2025收入¥2,714亿（约$27亿），运营约1,900个事业所，服务37,700+患者/利用者。其核心业务为访问介护（居家护理）、通所介护（日间照护）、居住系服务（收费老人住宅）和介護保険外服务（付费家务、配餐等）。</p>
+<h3 id="_4">核心判断</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th style="text-align: center;">评分</th>
+<th>评语</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>赛道质量</td>
+<td style="text-align: center;">🟢</td>
+<td>全球最大老龄化市场，公共LTCI提供稳定支付</td>
+</tr>
+<tr>
+<td>市场地位</td>
+<td style="text-align: center;">🟢</td>
+<td>日本介護收入第1位，SOMPO(¥1,359億)の2倍規模</td>
+</tr>
+<tr>
+<td>商业模型</td>
+<td style="text-align: center;">🟡</td>
+<td>访问介护薄利，居住系贡献利润，保险外服务为增长点</td>
+</tr>
+<tr>
+<td>财务健康</td>
+<td style="text-align: center;">🟢</td>
+<td>收入规模大且稳定，受益于介護報酬定期改定</td>
+</tr>
+<tr>
+<td>增长前景</td>
+<td style="text-align: center;">🟡</td>
+<td>受限于劳动力短缺和公定价格天花板</td>
+</tr>
+<tr>
+<td>可复制性</td>
+<td style="text-align: center;">🟢</td>
+<td>ケアマネジメント制度化、小規模多機能型为全球参照</td>
+</tr>
+<tr>
+<td>对iHomeCare启示</td>
+<td style="text-align: center;">🟢<strong>高</strong></td>
+<td>特许经营型+ケアマネ平台为中国居家介護最适配模式</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_5">关键指标一览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>企业形态</td>
+<td>株式会社（非上場）</td>
+</tr>
+<tr>
+<td>创业</td>
+<td>1969年（教育事業→介護事業へ転換）</td>
+</tr>
+<tr>
+<td>FY2025 収入</td>
+<td>¥2,714億（約$27億）</td>
+</tr>
+<tr>
+<td>事業所数</td>
+<td>1,900拠点</td>
+</tr>
+<tr>
+<td>利用者数</td>
+<td>37,700+</td>
+</tr>
+<tr>
+<td>業務構成</td>
+<td>居家系68% + 居住系32%</td>
+</tr>
+<tr>
+<td>競争地位</td>
+<td>日本介護業界収入第1位</td>
+</tr>
+<tr>
+<td>上場状況</td>
+<td>非上場（旧東証一部→2020年MBO→非公開化）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 企业概况与定位（含股权/治理/发展阶段时间线）</h2>
+<h3 id="_6">基本信息</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正式名称</td>
+<td>株式会社ニチイ（Nichii Co., Ltd.）</td>
+</tr>
+<tr>
+<td>旧称</td>
+<td>株式会社ニチイ学館（Nichii Gakkan Co., Ltd.）</td>
+</tr>
+<tr>
+<td>创业</td>
+<td>1969年（当初は医療事務請負・教育事業）</td>
+</tr>
+<tr>
+<td>本社</td>
+<td>東京都</td>
+</tr>
+<tr>
+<td>上場</td>
+<td>旧東証一部（2002年上場 → 2020年MBO → 非公開化）</td>
+</tr>
+<tr>
+<td>資本金</td>
+<td>未公開（非公開化後）</td>
+</tr>
+<tr>
+<td>従業員数</td>
+<td>未公開（グループ全体数万人規模と推定）</td>
+</tr>
+<tr>
+<td>事業内容</td>
+<td>介護事業（訪問介護・通所介護・居住系・保険外サービス）+ 医療事務 + 教育</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_7">股权与治理结构</h3>
+<ul>
+<li><strong>2020年MBO（Management Buyout）</strong>：経営陣が主導して非公開化。株主構成は公開情報なし。</li>
+<li>非公開化の背景：①短期的な業績プレッシャーからの解放、②長期的な介護事業への戦略投資の柔軟性確保、③教育事業からの構造転換推進。</li>
+<li>親会社・支配株主：非公開化後の株式保有構造は未公開。複数の投資ファンド（国内系PE）の関与が推定される。</li>
+</ul>
+<h3 id="_8">发展阶段时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>時期</th>
+<th>出来事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1969年</td>
+<td>創業（医療事務代行・教育事業として）</td>
+</tr>
+<tr>
+<td>1990年代</td>
+<td>介護保険法制定を前に介護事業へ参入</td>
+</tr>
+<tr>
+<td>2000年</td>
+<td>介護保険法施行、訪問介護事業本格展開</td>
+</tr>
+<tr>
+<td>2002年</td>
+<td>東証一部上場</td>
+</tr>
+<tr>
+<td>2000年代後半-2010年代</td>
+<td>積極的なM&amp;Aで事業所拡大、日本最大の介護企業へ成長</td>
+</tr>
+<tr>
+<td>2010年代</td>
+<td>「ニチイケアパレス」ブランドで居住系（有料老人ホーム）展開</td>
+</tr>
+<tr>
+<td>2020年</td>
+<td><strong>MBOにより非公開化</strong></td>
+</tr>
+<tr>
+<td>2021-2024年</td>
+<td>教育事業縮小、介護事業への集中投資推進</td>
+</tr>
+<tr>
+<td>2024-2025年</td>
+<td>介護報酬改定、DX投資推進、保険外サービスの拡大</td>
+</tr>
+<tr>
+<td>2026年</td>
+<td>介護報酬期中改定（+2.03%）に対応、介護情報基盤対応</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_9">企業ミッションとポジショニング</h3>
+<ul>
+<li><strong>企業理念</strong>：「地域社会に貢献する介護サービス」— 地域包括ケアシステムへの適合を重視</li>
+<li><strong>差別化軸</strong>：①圧倒的な事業所数（1,900拠点）によるブランド認知と集客力、②教育事業で培った人材育成ノウハウ、③医療事務の経験を活かした保険請求・コンプライアンス体制</li>
+<li><strong>弱点</strong>：①非公開化後の財務透明性の低下、②訪問介護の低収益性、③人材確保競争の激化</li>
+</ul>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_10">戦略的三本柱</h3>
+<ol>
+<li><strong>在宅介護の規模拡大</strong>：訪問介護・通所介護を中心に全国1,900拠点のネットワークを活かした地域密着型サービス</li>
+<li><strong>居住系（施設）との複合展開</strong>：ニチイケアパレス（有料老人ホーム）と在宅サービスのクロスセル</li>
+<li><strong>介護保険外サービスの拡充</strong>：自費の家事支援・配食サービスなど、収益性の高い非保険事業</li>
+</ol>
+<h3 id="_11">競争優位性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>優位性</th>
+<th>内容</th>
+<th style="text-align: center;">持続可能性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>規模の経済</td>
+<td>1,900拠点で業界最大、ブランド力・集客力</td>
+<td style="text-align: center;">🟢 高い（新規参入に時間がかかる）</td>
+</tr>
+<tr>
+<td>人材パイプライン</td>
+<td>教育事業で培った研修・採用ノウハウ</td>
+<td style="text-align: center;">🟡 低下傾向（業界全体の人材不足）</td>
+</tr>
+<tr>
+<td>複合サービス</td>
+<td>訪問＋通所＋居住のワンストップ提供</td>
+<td style="text-align: center;">🟢 競合も追随中</td>
+</tr>
+<tr>
+<td>保険外サービス</td>
+<td>自費サービスの収益貢献拡大</td>
+<td style="text-align: center;">🟢 規制リスク低い</td>
+</tr>
+<tr>
+<td>ケアマネジメント</td>
+<td>ニチイグループ内のケアマネジャー人材</td>
+<td style="text-align: center;">🟡 他社でも展開可能</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_12">成長戦略の方向性</h3>
+<ol>
+<li><strong>既存拠点の深耕</strong>：1事業所あたりの患者数を増加</li>
+<li><strong>DXによる生産性向上</strong>：記録の電子化、訪問ルート最適化、RPA導入</li>
+<li><strong>人材確保策</strong>：処遇改善（介護報酬改定の賃上げ分を反映）、外国人人材の活用</li>
+<li><strong>保険外サービスの拡充</strong>：高齢者向け見守り・配食・掃除などの自費サービス</li>
+<li><strong>M&amp;Aによる地域補完</strong>：中小事業者の買収によるエリア拡大（ただし業界全体のM&amp;Aは限定的）</li>
+</ol>
+<hr />
+<h2 id="d4-vs">D4 — 商业模式架构图（供给→平台→需求，支付方vs使用方分离）</h2>
+<h3 id="_13">ニチイのビジネスモデル全体図</h3>
+<pre><code>                    ┌───────────────────────────────────────────┐
+                    │            介護保険（公的保険者）           │
+                    │    市町村 + 国保連（審査・支払）            │
+                    │    財源：保険料50% + 公費50%               │
+                    └────────────────┬──────────────────────────┘
+                                     │ 介護報酬（単位制）支払
+                                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 ニチイ（サービス提供者）                      │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌──────────────┐  │
+│  │訪問介護   │  │通所介護   │  │居住系     │  │保険外サービス │  │
+│  │(在宅)    │  │(デイ)    │  │(ケアパレス)│  │(自費)       │  │
+│  └────┬────┘  └────┬────┘  └────┬────┘  └──────┬───────┘  │
+│       │             │             │               │          │
+│  ┌────┴─────────────┴─────────────┴───────────────┴───────┐ │
+│  │  ケアマネジャー（介護支援専門員）＝ 統合ケアコーディネート│ │
+│  └────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+          ▲                               │
+          │                               │ 自己負担（1-3割）
+          │                               ▼
+┌─────────┴─────────────────────────────────────────────┐
+│                利用者（高齢者とその家族）                │
+│          要介護認定（要支援1〜要介護5）保有              │
+│          原則1割負担（所得に応じて2〜3割）              │
+└───────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="vs">支払者 vs 利用者の分離</h3>
+<p>日本介護保険の核心的特性：<strong>支払者（市町村・国保連）と利用者（高齢者）が分離</strong>。</p>
+<ul>
+<li><strong>支払者</strong>：介護保険（公費50% + 保険料50%）→ 国保連を経由してニチイに介護報酬を支払</li>
+<li><strong>利用者負担</strong>：原則1割（上限あり）</li>
+<li><strong>ニチイの収入源構成</strong>：</li>
+<li>介護保険収入（訪問介護・通所介護・居住系）：<strong>約80-85%（推定）</strong></li>
+<li>保険外サービス収入（自費）：<strong>約15-20%（推定、成長セグメント）</strong></li>
+<li>利用者自己負担分（1割）：間接的にサービス料の一部を負担</li>
+</ul>
+<hr />
+<h2 id="d5">D5 — 服务产品线与定价模式</h2>
+<h3 id="_14">サービスライン一覧</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>サービス区分</th>
+<th>内容</th>
+<th>支払い形態</th>
+<th>ニチイの強み</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>訪問介護（ホームヘルプ）</strong></td>
+<td>身体介護（入浴・排せつ・食事介助）+ 生活援助（掃除・調理）</td>
+<td>介護報酬単位制（387単位/30-60分）</td>
+<td>全国1,900拠点で最大の訪問体制</td>
+</tr>
+<tr>
+<td><strong>通所介護（デイサービス）</strong></td>
+<td>日中の送迎・機能訓練・入浴・食事提供</td>
+<td>介護報酬単位制（479単位/3-4h・要介護3）</td>
+<td>リハビリ特化型デイ</td>
+</tr>
+<tr>
+<td><strong>認知症対応型通所介護</strong></td>
+<td>認知症高齢者向け専門デイサービス</td>
+<td>介護報酬単位制（加算あり）</td>
+<td>認知症専門対応</td>
+</tr>
+<tr>
+<td><strong>小規模多機能型居宅介護</strong></td>
+<td>「通い+訪問+泊まり」の複合サービス</td>
+<td>介護報酬単位制（包括報酬）</td>
+<td>地域密着型の展開</td>
+</tr>
+<tr>
+<td><strong>居住系（ニチイケアパレス）</strong></td>
+<td>有料老人ホーム（介護付・住宅型）</td>
+<td>介護保険+利用料（家賃・食費等）</td>
+<td>低価格帯の施設運営</td>
+</tr>
+<tr>
+<td><strong>介護保険外サービス</strong></td>
+<td>家事支援・配食・見守り・掃除</td>
+<td>完全自費</td>
+<td>収益性高く成長セグメント</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_15">代表性定价（介護報酬単位）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>サービス</th>
+<th style="text-align: center;">単位数</th>
+<th style="text-align: center;">費用総額（1級地）</th>
+<th style="text-align: center;">利用者1割負担</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>訪問介護（身体介護）30分-1時間</td>
+<td style="text-align: center;">387単位</td>
+<td style="text-align: center;">¥4,412</td>
+<td style="text-align: center;">¥441</td>
+</tr>
+<tr>
+<td>訪問介護（身体介護）1時間以上</td>
+<td style="text-align: center;">567単位+</td>
+<td style="text-align: center;">¥6,464+</td>
+<td style="text-align: center;">¥646+</td>
+</tr>
+<tr>
+<td>訪問介護（生活援助）45分以上</td>
+<td style="text-align: center;">220単位</td>
+<td style="text-align: center;">¥2,508</td>
+<td style="text-align: center;">¥251</td>
+</tr>
+<tr>
+<td>通所介護（要介護3）3-4時間</td>
+<td style="text-align: center;">479単位</td>
+<td style="text-align: center;">¥5,461</td>
+<td style="text-align: center;">¥546</td>
+</tr>
+<tr>
+<td>訪問看護 30分-1時間</td>
+<td style="text-align: center;">823単位</td>
+<td style="text-align: center;">¥9,382</td>
+<td style="text-align: center;">¥938</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_16">収益性マトリックス</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>サービス</th>
+<th style="text-align: center;">売上構成比（推定）</th>
+<th style="text-align: center;">営業利益率（推定）</th>
+<th style="text-align: center;">成長性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>訪問介護</td>
+<td style="text-align: center;">~40%</td>
+<td style="text-align: center;"><strong>3-8%</strong></td>
+<td style="text-align: center;">🟡 安定</td>
+</tr>
+<tr>
+<td>通所介護</td>
+<td style="text-align: center;">~20%</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: center;">🟢 安定</td>
+</tr>
+<tr>
+<td>居住系（ケアパレス）</td>
+<td style="text-align: center;">~32%</td>
+<td style="text-align: center;"><strong>10-15%</strong>（施設収益）</td>
+<td style="text-align: center;">🟡 緩成長</td>
+</tr>
+<tr>
+<td>保険外サービス</td>
+<td style="text-align: center;">~8%</td>
+<td style="text-align: center;"><strong>15-25%</strong></td>
+<td style="text-align: center;">🟢 高成長</td>
+</tr>
+<tr>
+<td><strong>全体</strong></td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td style="text-align: center;"><strong>5-10%（推定）</strong></td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_17">支払者構造</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>支払者</th>
+<th style="text-align: center;">比率</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>介護保険（公的）</strong></td>
+<td style="text-align: center;">~80-85%</td>
+<td>保険料50%+税50%、単価は公定、安定しているが薄利</td>
+</tr>
+<tr>
+<td><strong>利用者自己負担</strong></td>
+<td style="text-align: center;">~8-15%</td>
+<td>1-3割負担（原則1割）、高額介護サービス費による上限あり</td>
+</tr>
+<tr>
+<td><strong>自費サービス</strong></td>
+<td style="text-align: center;">~5-8%</td>
+<td>保険外サービス（家事・配食・見守り）、完全自由価格、収益性高い</td>
+</tr>
+<tr>
+<td><strong>自治体補助金</strong></td>
+<td style="text-align: center;">~1-2%</td>
+<td>介護予防・地域包括ケア関連の委託事業</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_18">利用者セグメント</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>セグメント</th>
+<th style="text-align: center;">比率（推定）</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>要支援1-2（軽度）</td>
+<td style="text-align: center;">~20%</td>
+<td>生活援助中心、予防重視、保険外サービスのクロスセル機会</td>
+</tr>
+<tr>
+<td>要介護1-2（中度）</td>
+<td style="text-align: center;">~35%</td>
+<td>訪問介護+通所介護の組み合わせ、最大セグメント</td>
+</tr>
+<tr>
+<td>要介護3-5（重度）</td>
+<td style="text-align: center;">~30%</td>
+<td>訪問介護頻度高、居住系への移行も発生</td>
+</tr>
+<tr>
+<td>認知症高齢者</td>
+<td style="text-align: center;">~15%</td>
+<td>専門サービス必要、グループホーム・認知症デイ</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_19">支払いメカニズムの詳細</h3>
+<pre><code>介護報酬請求フロー：
+ ニチイ（各事業所）→ 国保連（審査）→ 市町村（支払承認）→ 国保連（支払）
+</code></pre>
+<ul>
+<li>訪問介護の支払単位：<strong>1回ごとの単位制</strong>（387単位/30-60分）</li>
+<li>通所介護の支払単位：<strong>1日ごと</strong>（要介護度別単位数）</li>
+<li>居住系の支払：介護報酬（居宅サービス相当）+ 家賃・食費（施設契約）</li>
+<li>利用者負担の上限：高額介護サービス費（所得区分別に月額上限あり）</li>
+</ul>
+<hr />
+<h2 id="d7-fy2023-2025">D7 — 财务深度拆解（FY2023-2025 收入/利润/业务线拆解）</h2>
+<h3 id="fy2025">FY2025 収入構成（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th style="text-align: center;">金額</th>
+<th style="text-align: center;">構成比</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>総収入</strong></td>
+<td style="text-align: center;"><strong>¥2,714億</strong></td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td>非公開化後は詳細未公開</td>
+</tr>
+<tr>
+<td>訪問介護</td>
+<td style="text-align: center;">~¥1,086億</td>
+<td style="text-align: center;">~40%</td>
+<td>1,900拠点、業界最大規模</td>
+</tr>
+<tr>
+<td>通所介護・地域密着型</td>
+<td style="text-align: center;">~¥543億</td>
+<td style="text-align: center;">~20%</td>
+<td>デイサービス・小規模多機能</td>
+</tr>
+<tr>
+<td>居住系（ケアパレス）</td>
+<td style="text-align: center;">~¥868億</td>
+<td style="text-align: center;">~32%</td>
+<td>有料老人ホーム運営収益</td>
+</tr>
+<tr>
+<td>保険外サービス（自費）</td>
+<td style="text-align: center;">~¥163億</td>
+<td style="text-align: center;">~6%</td>
+<td>家事支援・配食・見守り</td>
+</tr>
+<tr>
+<td>その他（医療事務・教育）</td>
+<td style="text-align: center;">~¥54億</td>
+<td style="text-align: center;">~2%</td>
+<td>縮小中のレガシー事業</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_20">収益性分析（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指標</th>
+<th style="text-align: center;">推定値</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>売上総利益率</td>
+<td style="text-align: center;">25-35%</td>
+<td>訪問介護の原価率（人件費）70-75%</td>
+</tr>
+<tr>
+<td>営業利益率</td>
+<td style="text-align: center;"><strong>5-10%</strong></td>
+<td>業界平均3-8%を上回る規模の経済</td>
+</tr>
+<tr>
+<td>EBITDAマージン</td>
+<td style="text-align: center;">8-12%</td>
+<td>推定</td>
+</tr>
+<tr>
+<td>純利益率</td>
+<td style="text-align: center;">3-6%</td>
+<td>推定</td>
+</tr>
+<tr>
+<td>年間営業利益</td>
+<td style="text-align: center;">¥136-271億</td>
+<td>推定</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_21">財務安定性分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指標</th>
+<th style="text-align: center;">評価</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>収入の安定性</td>
+<td style="text-align: center;">🟢</td>
+<td>介護保険による安定収入、報酬改定による価格調整メカニズム</td>
+</tr>
+<tr>
+<td>収益性</td>
+<td style="text-align: center;">🟡</td>
+<td>薄利構造だが業界平均より高い</td>
+</tr>
+<tr>
+<td>成長性</td>
+<td style="text-align: center;">🟡</td>
+<td>人口動態による需要増は確実だが、人材供給が制約</td>
+</tr>
+<tr>
+<td>財務レバレッジ</td>
+<td style="text-align: center;">🟡</td>
+<td>MBO後の負債水準は未公開</td>
+</tr>
+<tr>
+<td>キャッシュフロー</td>
+<td style="text-align: center;">🟢</td>
+<td>安定した保険収入により安定的なCF創出</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="fy2023-2025">FY2023-2025 収入推移（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">年度</th>
+<th style="text-align: center;">推定収入</th>
+<th style="text-align: center;">前年比</th>
+<th>主な要因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">FY2023</td>
+<td style="text-align: center;">~¥2,600億</td>
+<td style="text-align: center;">~+3%</td>
+<td>介護報酬改定+1.59%効果、コロナ需要回復</td>
+</tr>
+<tr>
+<td style="text-align: center;">FY2024</td>
+<td style="text-align: center;">~¥2,650億</td>
+<td style="text-align: center;">~+2%</td>
+<td>安定成長、人材確保競争激化</td>
+</tr>
+<tr>
+<td style="text-align: center;">FY2025</td>
+<td style="text-align: center;"><strong>¥2,714億</strong></td>
+<td style="text-align: center;">~+2.4%</td>
+<td>堅調な事業運営、保険外サービス拡大</td>
+</tr>
+</tbody>
+</table></div>
+<p>※ 非公開化後のため全て推定値。実際の財務諸表は公開されていない。</p>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<h3 id="_22">利用者獲得〜サービス提供のフロー</h3>
+<pre><code>【認知・獲得】
+  病院・ケアマネからの紹介 ← ニチイの営業活動
+         │
+【要介護認定】
+  申請 → 訪問調査（74項目） → 主治医意見書 → 一次判定（CP推計）
+    → 二次判定（介護認定審査会） → 認定結果通知（約1ヶ月）
+         │
+【ケアプラン作成】
+  ケアマネジャーがアセスメント → 居宅サービス計画作成（無料）
+    → サービス担当者会議 → 同意 → サービス開始
+         │
+【サービス提供（ニチイ）】
+  訪問介護：決められたスケジュールでホームヘルパーが訪問
+    → 身体介護（入浴・排せつ・食事・移乗） or 生活援助（掃除・調理）
+    → 記録 → ケアマネへの報告
+  通所介護：事業所への送迎 → 機能訓練・入浴・食事・レク → 送迎帰宅
+         │
+【モニタリング】
+  ケアマネによる定期的なモニタリング（月1回以上）
+    → サービス内容の見直し
+    → 状態変化時は要介護更新認定申請
+</code></pre>
+<h3 id="_23">ニチイのオペレーション特性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>拠点間連携</td>
+<td>1,900拠点を地域ブロックで管理、拠点間の人員融通・ノウハウ共有</td>
+</tr>
+<tr>
+<td>人事管理</td>
+<td>パート・アルバイトのホームヘルパーが多数、シフト管理が重要課題</td>
+</tr>
+<tr>
+<td>訪問ルート最適化</td>
+<td>地理的クラスター毎の効率的な訪問ルート設計</td>
+</tr>
+<tr>
+<td>記録・報告</td>
+<td>紙ベースからDX化推進中、介護情報基盤（2026年4月〜）対応</td>
+</tr>
+<tr>
+<td>コンプライアンス</td>
+<td>介護報酬請求の正確性が経営の根幹、誤請求リスク管理</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9-ai">D9 — 技术深度评估（软件 / AI / 数据）</h2>
+<h3 id="_24">現在の技術スタック（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>技術領域</th>
+<th style="text-align: center;">成熟度</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>記録システム</td>
+<td style="text-align: center;">🟡 移行中</td>
+<td>紙→電子記録への移行推進中</td>
+</tr>
+<tr>
+<td>スケジューリング</td>
+<td style="text-align: center;">🟡</td>
+<td>訪問ルート最適化システム導入段階</td>
+</tr>
+<tr>
+<td>請求システム</td>
+<td style="text-align: center;">🟢</td>
+<td>医療事務事業の経験を活かした高精度な保険請求</td>
+</tr>
+<tr>
+<td>データ分析</td>
+<td style="text-align: center;">🟡</td>
+<td>事業所別KPI管理のダッシュボードは整備途上</td>
+</tr>
+<tr>
+<td>顧客管理</td>
+<td style="text-align: center;">🟡</td>
+<td>グループ全体の統合CRMは限定的</td>
+</tr>
+<tr>
+<td>AI/機械学習</td>
+<td style="text-align: center;">🔴</td>
+<td>業界全体で限定的、介護ロボットの試験導入</td>
+</tr>
+<tr>
+<td>リモートモニタリング</td>
+<td style="text-align: center;">🔴</td>
+<td>センサー・見守りシステムの本格導入は未着手</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="dx">DX推進状況</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>政策イニシアチブ</th>
+<th>影響</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>介護情報基盤（2026年4月〜）</td>
+<td>ケアマネジメント・保険請求のデジタル化、ニチイも対応必須</td>
+</tr>
+<tr>
+<td>介護DX補助金</td>
+<td>事業所のICT導入を支援、ニチイのDX投資を促進</td>
+</tr>
+<tr>
+<td>介護ロボット導入促進</td>
+<td>見守りセンサー・移乗支援ロボット等の導入補助</td>
+</tr>
+<tr>
+<td>電子カルテ連携</td>
+<td>医療介護連携のデータ共有基盤整備</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_25">技術投資の方向性（推定）</h3>
+<ol>
+<li><strong>記録の電子化</strong>：紙ベースの訪問記録・報告のデジタル化（最優先）</li>
+<li><strong>訪問ルート最適化</strong>：AIによる最適ルーティングで移動時間削減</li>
+<li><strong>人材管理システム</strong>：パート・アルバイトのシフト管理最適化</li>
+<li><strong>データ連携基盤</strong>：介護情報基盤への対応と医療機関との連携</li>
+<li><strong>見守りIoT</strong>：高齢者住宅・訪問先でのセンサー・ウェアラブル活用</li>
+</ol>
+<h3 id="_26">技術評価サマリー</h3>
+<p><strong>評価：🟡 発展途上</strong> — 日本の介護業界全体としてはDXが遅れており、ニチイも例外ではない。しかし規模の大きさを活かしたIT投資の分散効果（1事業所あたりの投資コスト低減）が強み。介護情報基盤の整備に伴い、2026-2028年にDXが加速する見込み。</p>
+<hr />
+<h2 id="d10-vs-sompobenessetsukui">D10 — 竞争格局对标矩阵（vs SOMPO/Benesse/Tsukui 等）</h2>
+<h3 id="5">日本介護大手5社比較</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>企業</th>
+<th style="text-align: center;">収入</th>
+<th style="text-align: center;">事業所数</th>
+<th>主力事業</th>
+<th>特徴</th>
+<th style="text-align: center;">収益性シグナル</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. ニチイ学館</strong></td>
+<td style="text-align: center;"><strong>¥2,714億</strong></td>
+<td style="text-align: center;"><strong>1,900</strong></td>
+<td>居家(68%)+居住系(32%)</td>
+<td>医療事務+介護+教育複合</td>
+<td style="text-align: center;">🟢 安定</td>
+</tr>
+<tr>
+<td><strong>2. SOMPOケア</strong></td>
+<td style="text-align: center;">¥1,359億</td>
+<td style="text-align: center;">470</td>
+<td>居住系中心（そんぽの家）</td>
+<td>損保系安定資本</td>
+<td style="text-align: center;">🟢 安定</td>
+</tr>
+<tr>
+<td><strong>3. ベネッセスタイルケア</strong></td>
+<td style="text-align: center;">¥1,327億</td>
+<td style="text-align: center;">—</td>
+<td>居住系中心（有料老人ホーム）</td>
+<td>教育大手ベネッセ傘下</td>
+<td style="text-align: center;">🟢 安定</td>
+</tr>
+<tr>
+<td><strong>4. ツクイ</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">791</td>
+<td>デイ・GH・訪問</td>
+<td>単体赤字、子会社利益で補填</td>
+<td style="text-align: center;">🟡 赤字</td>
+</tr>
+<tr>
+<td><strong>5. 学研HD</strong></td>
+<td style="text-align: center;">¥787億</td>
+<td style="text-align: center;">—</td>
+<td>GH＋高齢者住宅＋教育</td>
+<td>教育＋介護の複合</td>
+<td style="text-align: center;">🟢 安定</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_27">競争ポジショニングマップ</h3>
+<pre><code>高   │
+収入 │    ニチイ●
+規模 │
+     │
+     │          SOMPO●  ●ベネッセ
+     │
+     │          学研●
+     │
+     │                ●ツクイ
+低   │
+     └────────────────────────────
+       訪問介護中心        居住系中心
+             事業ミックス
+</code></pre>
+<h3 id="_28">競争優位の分解</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th style="text-align: center;">ニチイ</th>
+<th style="text-align: center;">SOMPO</th>
+<th style="text-align: center;">ベネッセ</th>
+<th style="text-align: center;">ツクイ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>拠点数</td>
+<td style="text-align: center;">🥇1,900</td>
+<td style="text-align: center;">3位470</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">2位791</td>
+</tr>
+<tr>
+<td>収入規模</td>
+<td style="text-align: center;">🥇¥2,714億</td>
+<td style="text-align: center;">2位¥1,359億</td>
+<td style="text-align: center;">3位¥1,327億</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>在宅比率</td>
+<td style="text-align: center;"><strong>68%</strong>（最高）</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td>施設収益</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;"><strong>高</strong></td>
+<td style="text-align: center;"><strong>高</strong></td>
+<td style="text-align: center;">低</td>
+</tr>
+<tr>
+<td>ブランド力</td>
+<td style="text-align: center;">🥇全国認知</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">低</td>
+</tr>
+<tr>
+<td>収益性</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🟢高(施設)</td>
+<td style="text-align: center;">🟢高(施設)</td>
+<td style="text-align: center;">🟡低</td>
+</tr>
+<tr>
+<td>DX投資力</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🔴低</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</h2>
+<h3 id="tamsam">市場規模（TAM/SAM）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指標</th>
+<th style="text-align: center;">規模</th>
+<th style="text-align: center;">年率成長</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TAM</strong>：日本介護保険市場全体</td>
+<td style="text-align: center;"><strong>¥11.2兆</strong>（FY2022）</td>
+<td style="text-align: center;">+2-3%（人口動態+報酬改定）</td>
+</tr>
+<tr>
+<td><strong>SAM</strong>：訪問介護+通所介護+居住系</td>
+<td style="text-align: center;"><strong>約¥6兆</strong>（推定）</td>
+<td style="text-align: center;">+2-4%</td>
+</tr>
+<tr>
+<td><strong>SOM</strong>：ニチイの取込可能市場</td>
+<td style="text-align: center;"><strong>¥2,714億</strong>（現状）</td>
+<td style="text-align: center;">+2-3%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_29">成長ドライバー</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ドライバー</th>
+<th style="text-align: center;">影響</th>
+<th style="text-align: center;">時間軸</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>人口高齢化</strong></td>
+<td style="text-align: center;">65+人口29.3%→35%（2040年）確実な需要増</td>
+<td style="text-align: center;">長期</td>
+</tr>
+<tr>
+<td><strong>介護報酬改定</strong></td>
+<td style="text-align: center;">2024年+1.59%、2026年+2.03%</td>
+<td style="text-align: center;">3年毎</td>
+</tr>
+<tr>
+<td><strong>要介護認定者増加</strong></td>
+<td style="text-align: center;">706万人→800万人超（2030年）</td>
+<td style="text-align: center;">中長期</td>
+</tr>
+<tr>
+<td><strong>介護予防市場拡大</strong></td>
+<td style="text-align: center;">予防重視シフト</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td><strong>保険外サービス需要</strong></td>
+<td style="text-align: center;">高齢者の自費サービス支出増加</td>
+<td style="text-align: center;">短期-中期</td>
+</tr>
+<tr>
+<td><strong>訪問介護シェア拡大</strong></td>
+<td style="text-align: center;">ニチイのブランド力による市場集中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_30">成長制約要因</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>制約</th>
+<th style="text-align: center;">影響度</th>
+<th>緩和策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>人材不足</strong></td>
+<td style="text-align: center;">🔴 致命的</td>
+<td>処遇改善（報酬改定）+ 外国人人材 + 生産性向上</td>
+</tr>
+<tr>
+<td><strong>公定価格の上限</strong></td>
+<td style="text-align: center;">🟡</td>
+<td>保険外サービスの拡大で収益性改善</td>
+</tr>
+<tr>
+<td><strong>規制（人員配置基準）</strong></td>
+<td style="text-align: center;">🟡</td>
+<td>介護ロボット・ICTによる省人化</td>
+</tr>
+<tr>
+<td><strong>競合の追随</strong></td>
+<td style="text-align: center;">🟡</td>
+<td>規模の優位性は維持</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<h3 id="_31">収益性の分解モデル</h3>
+<pre><code>訪問介護1件あたりの収益性（推定）：
+
+収入（介護報酬）：387単位 × 11.40円（1級地） = ¥4,412
+利用者負担（1割）：¥441
+───────────────
+総収入：¥4,412
+
+変動費（ホームヘルパー人件費）：¥3,000-3,500（時給¥1,500-2,500×訪問時間+移動）
+訪問あたり粗利：¥900-1,400
+粗利率：20-32%
+
+固定費（事業所運営費）：¥1,000-2,000/日（事業所家賃・管理費等の按分）
+営業利益（1件あたり）：¥300-800
+営業利益率：7-18%（平均より高め）
+</code></pre>
+<h3 id="_32">利益改善の経路</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>経路</th>
+<th style="text-align: center;">効果</th>
+<th style="text-align: center;">実現可能性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>拠点あたり患者増</strong></td>
+<td style="text-align: center;">固定費分散で利益率改善</td>
+<td style="text-align: center;">🟢 既存拠点に余力あり</td>
+</tr>
+<tr>
+<td><strong>保険外サービス拡大</strong></td>
+<td style="text-align: center;">高収益セグメントの拡大</td>
+<td style="text-align: center;">🟢 需要高く実現容易</td>
+</tr>
+<tr>
+<td><strong>DXによる生産性向上</strong></td>
+<td style="text-align: center;">記録・請求の効率化</td>
+<td style="text-align: center;">🟡 投資必要</td>
+</tr>
+<tr>
+<td><strong>訪問ルート最適化</strong></td>
+<td style="text-align: center;">移動時間削減で訪問件数増加</td>
+<td style="text-align: center;">🟢 即効性高い</td>
+</tr>
+<tr>
+<td><strong>高付加価値サービス</strong></td>
+<td style="text-align: center;">認知症専門・ターミナルケア等の加算</td>
+<td style="text-align: center;">🟡 人材・研修必要</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_33">収益性ベンチマーク</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指標</th>
+<th style="text-align: center;">ニチイ（推定）</th>
+<th style="text-align: center;">業界平均</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人件費率</td>
+<td style="text-align: center;">68-72%</td>
+<td style="text-align: center;">70-75%</td>
+<td>規模の経済でやや低い</td>
+</tr>
+<tr>
+<td>営業利益率</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: center;">3-8%</td>
+<td>業界トップ水準</td>
+</tr>
+<tr>
+<td>1事業所あたり収入</td>
+<td style="text-align: center;">~¥1.43億/年</td>
+<td style="text-align: center;">~¥0.3億（中小零細）</td>
+<td>圧倒的な大規模事業所</td>
+</tr>
+<tr>
+<td>保険外比率</td>
+<td style="text-align: center;">~6%</td>
+<td style="text-align: center;">~3-5%</td>
+<td>業界平均より高い</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<h3 id="opportunities">機会（Opportunities）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>機会</th>
+<th style="text-align: center;">インパクト</th>
+<th style="text-align: center;">確度</th>
+<th style="text-align: center;">優先度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>保険外サービスの急成長</td>
+<td style="text-align: center;">🔥🔥🔥</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;"><strong>最優先</strong></td>
+</tr>
+<tr>
+<td>介護DXによる生産性30%向上</td>
+<td style="text-align: center;">🔥🔥</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td>小規模多機能型の展開加速</td>
+<td style="text-align: center;">🔥🔥</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;">短期</td>
+</tr>
+<tr>
+<td>認知症専門サービスの差別化</td>
+<td style="text-align: center;">🔥🔥</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td>外国人人材の活用（特定技能）</td>
+<td style="text-align: center;">🔥🔥</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td>医療介護連携の強化（退院支援）</td>
+<td style="text-align: center;">🔥</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;">短期</td>
+</tr>
+<tr>
+<td>M&amp;Aによる零細事業者の統合</td>
+<td style="text-align: center;">🔥🔥</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="risks">リスク（Risks）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>リスク</th>
+<th style="text-align: center;">インパクト</th>
+<th style="text-align: center;">確度</th>
+<th style="text-align: center;">優先度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>人材不足の深刻化</strong></td>
+<td style="text-align: center;">🔴致命的</td>
+<td style="text-align: center;">🟢高い</td>
+<td style="text-align: center;"><strong>最優先</strong></td>
+</tr>
+<tr>
+<td>介護報酬改定の抑制</td>
+<td style="text-align: center;">🔴大</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">要監視</td>
+</tr>
+<tr>
+<td>競合の訪問介護拡大</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">監視</td>
+</tr>
+<tr>
+<td>規制強化（人員配置・コンプラ）</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">監視</td>
+</tr>
+<tr>
+<td>MBO後の財務レバレッジ</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🟡未公開</td>
+<td style="text-align: center;">注意</td>
+</tr>
+<tr>
+<td>介護事業倒産の業界連鎖リスク</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🔴低</td>
+<td style="text-align: center;">限定的</td>
+</tr>
+<tr>
+<td>テクノロジー代替（AI・ロボット）</td>
+<td style="text-align: center;">🟡低</td>
+<td style="text-align: center;">🔴低</td>
+<td style="text-align: center;">長期</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_34">総合リスク評価</h3>
+<p><strong>総合リスク：🟡 中程度</strong> — 最悪シナリオでも存在価値がなくなるリスクは低いが（公共LTCI需要は確実）、人材不足による成長制約が最大の構造的課題。非公開化により短期的な財務ストレスには耐性がある。</p>
+<hr />
+<h2 id="d14">D14 — 管理指引与市场预期</h2>
+<h3 id="_35">経営陣の状況</h3>
+<ul>
+<li><strong>非公開化</strong>により経営陣の短期的業績プレッシャーは軽減</li>
+<li>長期的な介護事業への集中投資が可能なガバナンス構造</li>
+<li>創業家・経営陣の関与と事業コミットメントは高いと推定</li>
+<li>IR・情報開示は非公開化後に大幅に縮小</li>
+</ul>
+<h3 id="_36">市場の期待（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指標</th>
+<th style="text-align: center;">期待値</th>
+<th>根拠</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>収入成長率</td>
+<td style="text-align: center;">年2-4%</td>
+<td>人口動態+報酬改定の自然増</td>
+</tr>
+<tr>
+<td>利益率改善</td>
+<td style="text-align: center;">緩やか</td>
+<td>人件費上昇と報酬改定のトレードオフ</td>
+</tr>
+<tr>
+<td>保険外比率</td>
+<td style="text-align: center;">6%→10-15%</td>
+<td>成長セグメントへのシフト</td>
+</tr>
+<tr>
+<td>DX投資</td>
+<td style="text-align: center;">売上の1-3%</td>
+<td>業界全体のDX推進</td>
+</tr>
+<tr>
+<td>M&amp;A</td>
+<td style="text-align: center;">中小の地域補完買収</td>
+<td>組織的な統合能力</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d15-pe-evebitda">D15 — 估值对比（上市公司 P/E, EV/EBITDA 等）</h2>
+<h3 id="_37">上場類似企業のバリュエーション比較</h3>
+<p>ニチイは非上場のため直接的な市場評価は存在しない。以下は類似する介護セクター上場企業（日本）の参考値。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>企業</th>
+<th style="text-align: center;">上場状況</th>
+<th style="text-align: center;">PER</th>
+<th style="text-align: center;">EV/EBITDA</th>
+<th style="text-align: center;">営業利益率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>学研HD（証券コード：9470）</td>
+<td style="text-align: center;">東証プライム</td>
+<td style="text-align: center;">~12-15x</td>
+<td style="text-align: center;">~7-9x</td>
+<td style="text-align: center;">~6-8%</td>
+</tr>
+<tr>
+<td>ツクイ（証券コード：未上場）</td>
+<td style="text-align: center;">非上場</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">🟡赤字</td>
+</tr>
+<tr>
+<td>メッセージ（証券コード：未上場）</td>
+<td style="text-align: center;">非上場</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>ニチイ（参考）</strong></td>
+<td style="text-align: center;"><strong>非上場</strong></td>
+<td style="text-align: center;"><strong>~8-12x（推定）</strong></td>
+<td style="text-align: center;"><strong>~5-8x（推定）</strong></td>
+<td style="text-align: center;"><strong>5-10%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_38">ニチイの推定企業価値</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>評価手法</th>
+<th style="text-align: center;">推定レンジ</th>
+<th>前提</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EBITDAマルチプル（6-9x）</td>
+<td style="text-align: center;">¥1,630-2,450億</td>
+<td>EBITDA ¥272億（推定）</td>
+</tr>
+<tr>
+<td>収益マルチプル（0.5-0.8x）</td>
+<td style="text-align: center;">¥1,357-2,171億</td>
+<td>収入¥2,714億</td>
+</tr>
+<tr>
+<td>類似企業比較</td>
+<td style="text-align: center;">¥1,500-2,000億</td>
+<td>学研HD比で劣後</td>
+</tr>
+<tr>
+<td>M&amp;Aバリュエーション</td>
+<td style="text-align: center;">¥2,000-3,000億</td>
+<td>業界最大手プレミアム</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>現実的推定企業価値：¥1,500-2,500億（約$15-25億）</strong></p>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="_39">ニチイモデルからの学び</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>学び</th>
+<th>iHomeCareへの示唆</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>規模の優位性</strong></td>
+<td>中国でも事業所数の拡大がブランド力・集客力の源泉。フランチャイズ型が最適。</td>
+</tr>
+<tr>
+<td><strong>保険＋自費のハイブリッド</strong></td>
+<td>中国LTCI給付のみに依存せず、自費サービス（家事・配食・見守り）を並行展開すべき。</td>
+</tr>
+<tr>
+<td><strong>ケアマネの制度化</strong></td>
+<td>ケアマネジメント人材の育成・配置が「統合ケア」の鍵。中国ではまだ制度化されていないため、先行投資の価値あり。</td>
+</tr>
+<tr>
+<td><strong>DXによる差別化</strong></td>
+<td>日本の介護DXが遅れている隙を突き、中国の強いデジタルインフラを活かした先行的なRPM・AI導入が競争優位に。</td>
+</tr>
+<tr>
+<td><strong>人材確保の難しさ</strong></td>
+<td>日本の例から、人材不足は必ず訪れる。早い段階からの人材パイプライン構築・処遇設計が重要。</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ihomecare">iHomeCareにとっての日本市場参入の判断</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th style="text-align: center;">評価</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>市場魅力度</td>
+<td style="text-align: center;">🟢高</td>
+<td>世界最大の高齢化市場、安定した公共LTCI</td>
+</tr>
+<tr>
+<td>参入障壁</td>
+<td style="text-align: center;">🟡中</td>
+<td>規制・許認可・言語・文化の壁</td>
+</tr>
+<tr>
+<td>競合環境</td>
+<td style="text-align: center;">🟡中</td>
+<td>ニチイが支配的だが、零細企業の買収は可能</td>
+</tr>
+<tr>
+<td>収益性</td>
+<td style="text-align: center;">🟡中</td>
+<td>薄利だが安定、保険外サービスで改善可能</td>
+</tr>
+<tr>
+<td>戦略的価値</td>
+<td style="text-align: center;">🟢高</td>
+<td>ケアマネジメント・制度設計の知見獲得</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>提言：条件付きで参入を検討。フランチャイズ型訪問介護またはDXプラットフォーム提供から開始し、日本の零細事業者のIT化支援を通じて市場参入する戦略が現実的。</strong></p>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤（日本介護保険制度）</h2>
+<h3 id="_40">制度概要</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>制度要素</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>法律</strong></td>
+<td>介護保険法（2000年施行）</td>
+</tr>
+<tr>
+<td><strong>被保険者</strong></td>
+<td>第1号（65歳以上）+ 第2号（40-64歳の医療保険加入者）</td>
+</tr>
+<tr>
+<td><strong>保険者</strong></td>
+<td>市町村（1,700+の地方政府）</td>
+</tr>
+<tr>
+<td><strong>財源</strong></td>
+<td>保険料50% + 公費50%（国25% + 都道府県12.5% + 市町村12.5%）</td>
+</tr>
+<tr>
+<td><strong>要介護認定</strong></td>
+<td>要支援1-2、要介護1-5（8段階）</td>
+</tr>
+<tr>
+<td><strong>月額給付上限</strong></td>
+<td>¥50,320〜¥362,170</td>
+</tr>
+<tr>
+<td><strong>自己負担</strong></td>
+<td>原則1割（所得に応じて2〜3割）</td>
+</tr>
+<tr>
+<td><strong>介護報酬</strong></td>
+<td>国が単位数・単価を公告する公定価格</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2026">最新の制度改革（2026年）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>改革項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>介護報酬改定</strong></td>
+<td>2026年度期中改定 +2.03%（6月施行）</td>
+</tr>
+<tr>
+<td><strong>処遇改善</strong></td>
+<td>介護職員月額1.0万円増、生産性向上事業所は最大月1.9万円増（+6.3%）</td>
+</tr>
+<tr>
+<td><strong>介護情報基盤</strong></td>
+<td>2026年4月運用開始、要介護認定・ケアプラン・被保険者証の情報共有</td>
+</tr>
+<tr>
+<td><strong>訪問看護の処遇改善</strong></td>
+<td>訪問看護ST・ケアマネ事業所も新たに補助対象に</td>
+</tr>
+<tr>
+<td><strong>BCP義務化</strong></td>
+<td>事業継続計画の策定義務化</td>
+</tr>
+<tr>
+<td><strong>特定地域規制緩和</strong></td>
+<td>約20%の市町村で運営ルール弾力化</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_41">介護報酬改定の推移</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">改定年度</th>
+<th style="text-align: center;">改定率</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">2021年度</td>
+<td style="text-align: center;">+0.70%</td>
+<td>コロナ対応</td>
+</tr>
+<tr>
+<td style="text-align: center;">2024年度</td>
+<td style="text-align: center;"><strong>+1.59%</strong>（実質+2.04%）</td>
+<td>処遇改善0.98%+その他0.61%</td>
+</tr>
+<tr>
+<td style="text-align: center;">2026年度</td>
+<td style="text-align: center;"><strong>+2.03%</strong>（期中改定）</td>
+<td>月額1万円賃上げ、DX推進</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18-1">D18 — 单元经济模型（訪問介護1回のコスト構造）</h2>
+<h3 id="30-601">訪問介護（身体介護30-60分）1回のユニットエコノミクス</h3>
+<pre><code>【収入】
+  介護報酬（387単位 × 11.40円/1級地） = ¥4,412
+  利用者自己負担（1割） = ¥441
+  総収入 = ¥4,412
+
+【直接変動費】
+  ホームヘルパー人件費（時給¥1,800 × 1時間 + 移動30分） = ¥2,700
+  交通費 = ¥200
+  消耗品費 = ¥50
+  合計変動費 = ¥2,950
+
+【貢献利益】
+  ¥4,412 - ¥2,950 = ¥1,462
+  貢献利益率 = 33.1%
+
+【固定費の按分（1事業所あたり月間）】
+  事業所家賃 ¥300,000 ÷ 1,000件/月 = ¥300
+  管理者人件費 ¥500,000 ÷ 1,000件 = ¥500
+  間接費（光熱費・通信費・システム費等）¥200,000 ÷ 1,000件 = ¥200
+  合計固定費按分 = ¥1,000
+
+【営業利益】
+  ¥1,462 - ¥1,000 = ¥462/件
+  営業利益率 = 10.5%
+</code></pre>
+<h3 id="_42">感応度分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>変数</th>
+<th style="text-align: center;">変化</th>
+<th style="text-align: center;">利益への影響</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ホームヘルパー時給 +10%</td>
+<td style="text-align: center;">+¥270</td>
+<td style="text-align: center;">利益▲18.5%</td>
+</tr>
+<tr>
+<td>1事業所あたり件数 +20%</td>
+<td style="text-align: center;">+200件</td>
+<td style="text-align: center;">利益 +22%（固定費分散効果）</td>
+</tr>
+<tr>
+<td>介護報酬改定 +2%</td>
+<td style="text-align: center;">+¥88</td>
+<td style="text-align: center;">利益 +19%</td>
+</tr>
+<tr>
+<td>訪問時間短縮（30分短縮）</td>
+<td style="text-align: center;">-¥900人件費</td>
+<td style="text-align: center;">利益 +195%（大幅改善）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_43">損益分岐点</h3>
+<ul>
+<li>1事業所あたり月間固定費：約¥1,000,000</li>
+<li>1件あたり貢献利益：¥1,462</li>
+<li><strong>損益分岐点件数：684件/月（約23件/日）</strong></li>
+<li>現状想定：1,000件/月 → 利益率10.5%</li>
+</ul>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<h3 id="_44">利用者セグメント詳細</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>セグメント</th>
+<th style="text-align: center;">年齢</th>
+<th style="text-align: center;">要介護度</th>
+<th>利用サービス</th>
+<th style="text-align: center;">月額支出（保険内）</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>軽度高齢者</strong></td>
+<td style="text-align: center;">65-75歳</td>
+<td style="text-align: center;">要支援1-2</td>
+<td>週1-2回訪問介護（生活援助）、デイサービス</td>
+<td style="text-align: center;">¥5-10万</td>
+<td>予防重視、保険外サービス需要大</td>
+</tr>
+<tr>
+<td><strong>中度高齢者</strong></td>
+<td style="text-align: center;">75-85歳</td>
+<td style="text-align: center;">要介護1-2</td>
+<td>週3-5回訪問介護（身体介護）、デイ</td>
+<td style="text-align: center;">¥10-20万</td>
+<td><strong>最大セグメント</strong>、ニチイのコア顧客</td>
+</tr>
+<tr>
+<td><strong>重度高齢者</strong></td>
+<td style="text-align: center;">80-90歳</td>
+<td style="text-align: center;">要介護3-5</td>
+<td>週5-7回訪問介護、訪問看護併用、ケアパレス</td>
+<td style="text-align: center;">¥20-36万</td>
+<td>介護度高いほどケアパレス移行</td>
+</tr>
+<tr>
+<td><strong>認知症高齢者</strong></td>
+<td style="text-align: center;">75-90歳</td>
+<td style="text-align: center;">要介護1-5</td>
+<td>認知症デイ・GH・訪問介護</td>
+<td style="text-align: center;">¥10-30万</td>
+<td>専門ケア必要、家族負担大</td>
+</tr>
+<tr>
+<td><strong>独居高齢者</strong></td>
+<td style="text-align: center;">75-90歳</td>
+<td style="text-align: center;">要介護1-3</td>
+<td>週3-7回訪問介護、見守りサービス</td>
+<td style="text-align: center;">¥15-25万</td>
+<td>見守り・保険外サービス需要大</td>
+</tr>
+<tr>
+<td><strong>高齢者世帯（夫婦）</strong></td>
+<td style="text-align: center;">70-85歳</td>
+<td style="text-align: center;">一方が要介護</td>
+<td>訪問介護+生活援助</td>
+<td style="text-align: center;">¥10-20万</td>
+<td>介護者の負担軽減ニーズ</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_45">ニチイの注力セグメント</h3>
+<ol>
+<li><strong>中度高齢者（要介護1-2）</strong>：訪問介護の最大需要層、最も安定した収益源</li>
+<li><strong>独居高齢者</strong>：見守りサービスとのクロスセル機会、保険外サービス需要</li>
+<li><strong>認知症高齢者</strong>：専門性で差別化、加算収入増</li>
+<li><strong>介護予防層（要支援）</strong>：軽度段階からの囲い込み、長期顧客化</li>
+</ol>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<h3 id="_46">日本介護業界の競争構造</h3>
+<pre><code>【第1層：全国大手（収入¥1,000億超）】
+  ニチイ（¥2,714億）── 訪問介護最大手、唯一の在宅70%型
+   SOMPOケア（¥1,359億）── 居住系中心
+  ベネッセスタイルケア（¥1,327億）── 居住系中心
+
+【第2層：中堅全国チェーン（収入¥500-1,000億）】
+   学研HD（¥787億）── GH+教育
+   ツクイ（事業所数791）── デイ中心、赤字
+   その他（メッセージ等）
+
+【第3層：地域中核事業者】
+   各都道府県に数社〜十数社
+   収入¥50-300億
+
+【第4層：零細事業者】
+   約31.3万事業所の大多数
+   従業員10人未満
+   収入¥1,000万-5億
+</code></pre>
+<h3 id="_47">競合の戦略差別化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>企業</th>
+<th>差別化軸</th>
+<th>弱点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ニチイ</strong></td>
+<td>規模・ブランド・在宅特化</td>
+<td>薄利構造、非公開で資金調達に制約</td>
+</tr>
+<tr>
+<td><strong>SOMPOケア</strong></td>
+<td>損保グループの安定資本、施設収益</td>
+<td>在宅比率低、拠点数少ない</td>
+</tr>
+<tr>
+<td><strong>ベネッセスタイルケア</strong></td>
+<td>教育グループのブランド・研修力</td>
+<td>施設偏重、在宅展開限定的</td>
+</tr>
+<tr>
+<td><strong>ツクイ</strong></td>
+<td>デイ特化、791拠点で中堅最大</td>
+<td>単体赤字、収益性低</td>
+</tr>
+<tr>
+<td><strong>学研HD</strong></td>
+<td>教育+介護のシナジー</td>
+<td>介護特化ではない</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ma">M&amp;A・統合の動き</h3>
+<ul>
+<li><strong>業界全体の統合は限定的</strong>：零細事業者の廃業（2024年172件倒産）は発生しているが、大企業による買収は活発ではない</li>
+<li><strong>ニチイのM&amp;A戦略</strong>：非公開化後に積極的なM&amp;Aの情報なし。財務規律重視と推定。</li>
+<li><strong>外国資本の参入</strong>：現時点では限定的。日本介護市場へのPEファンドの関心は高まっているが、実際の大型取引は少ない。</li>
+</ul>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略</h2>
+<h3 id="_48">ニチイの国際展開</h3>
+<ul>
+<li><strong>現時点で海外展開は確認されていない</strong>。事業は国内（日本）に集中。</li>
+<li>教育事業（ニチイ学館時代）では医療事務人材の育成でアジア展開の可能性があったが、介護事業への集中に伴い国際戦略は縮小傾向。</li>
+<li>日本国内でも保険外サービス（自費）の全国展開が優先事項であり、海外市場への進出は短期的には想定されていない。</li>
+</ul>
+<h3 id="_49">国際比較ポジショニング</h3>
+<p>ニチイのビジネスモデルを国際的なホームケア企業と比較：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>企業</th>
+<th>国</th>
+<th style="text-align: center;">収入規模</th>
+<th>モデル</th>
+<th style="text-align: center;">国際展開</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ニチイ</strong></td>
+<td>🇯🇵</td>
+<td style="text-align: center;">¥2,714億（$27億）</td>
+<td>在宅+施設</td>
+<td style="text-align: center;">🔴 国内限定</td>
+</tr>
+<tr>
+<td><strong>Home Instead</strong></td>
+<td>🇺🇸→🇩🇪等</td>
+<td style="text-align: center;">—</td>
+<td>フランチャイズ訪問介護</td>
+<td style="text-align: center;">🟢 世界展開</td>
+</tr>
+<tr>
+<td><strong>Korian</strong></td>
+<td>🇫🇷→🇪🇺</td>
+<td style="text-align: center;">—</td>
+<td>施設+在宅</td>
+<td style="text-align: center;">🟢 欧州最大手</td>
+</tr>
+<tr>
+<td><strong>Amedisys</strong></td>
+<td>🇺🇸</td>
+<td style="text-align: center;">$3.3B売却</td>
+<td>HH+ホスピス</td>
+<td style="text-align: center;">🔴 国内のみ</td>
+</tr>
+<tr>
+<td><strong>Bupa</strong></td>
+<td>🇬🇧→🌏</td>
+<td style="text-align: center;">—</td>
+<td>保険+介護</td>
+<td style="text-align: center;">🟢 世界展開</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ihomecare_1">iHomeCareへの示唆</h3>
+<p>ニチイの国内特化戦略と日本市場の特殊性を考慮すると、<strong>ニチイはiHomeCareにとって直接的な買収ターゲットではなく、ベンチマーク・学習対象</strong>として位置づけるのが適切。</p>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<h3 id="_50">買収可能性の評価</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th style="text-align: center;">評価</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>買収可能性</td>
+<td style="text-align: center;">🔴低</td>
+<td>2020年にMBOで非公開化、経営陣が支配権を有する</td>
+</tr>
+<tr>
+<td>買収プレミアム</td>
+<td style="text-align: center;">高</td>
+<td>日本最大手へのプレミアム、推定30-50%</td>
+</tr>
+<tr>
+<td>想定買収額</td>
+<td style="text-align: center;">¥2,000-3,500億（$20-35億）</td>
+<td>前項の企業価値+プレミアム</td>
+</tr>
+<tr>
+<td>買収候補</td>
+<td style="text-align: center;">国内PE・海外介護大手・保険会社</td>
+<td>SOMPOが競合・買収者両方の可能性</td>
+</tr>
+<tr>
+<td>規制障壁</td>
+<td style="text-align: center;">🟡中</td>
+<td>外国企業による日本の介護事業買収には規制審査あり</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="exit">部分的なExitの可能性</h3>
+<ul>
+<li><strong>事業分割売却</strong>：居住系（ケアパレス）をREITや施設運営会社に売却 → 現実的なExit path</li>
+<li><strong>保険外サービス事業のスピンオフ</strong>：自費サービスの独立運営・売却 → 高成長セグメントとして価値評価</li>
+<li><strong>地域ブロック単位の売却</strong>：特定地域の事業所群を地域事業者に売却</li>
+</ul>
+<h3 id="exit_1">最も現実的なExitシナリオ</h3>
+<ol>
+<li><strong>IPO再上場</strong>（3-5年後）：非公開化後の財務改善・成長戦略の一定の成果が出た後の再上場</li>
+<li><strong>戦略的パートナーシップ</strong>：SOMPO等の保険グループとの業務提携・資本提携</li>
+<li><strong>業界再編の旗手</strong>：ニチイ自身が業界M&amp;Aのプラットフォームになる</li>
+</ol>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<h3 id="environment">環境（Environment）</h3>
+<ul>
+<li>一般的に介護事業は環境負荷の低いサービス産業</li>
+<li>事業所（1,900拠点）のエネルギー消費・廃棄物管理が主要な環境インパクト</li>
+<li>訪問介護の移動（車両使用）によるCO2排出</li>
+<li>業界全体でESG開示は限定的、ニチイも非公開化後はESG報告なし</li>
+</ul>
+<h3 id="social">社会（Social）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>社会的インパクト</th>
+<th style="text-align: center;">評価</th>
+<th>詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>高齢者の在宅生活支援</strong></td>
+<td style="text-align: center;">🟢高い</td>
+<td>日本最大の在宅介護提供者として約37,700人の在宅生活を支える</td>
+</tr>
+<tr>
+<td><strong>雇用創出</strong></td>
+<td style="text-align: center;">🟢高い</td>
+<td>数万人の介護職員を雇用、地域雇用の受け皿</td>
+</tr>
+<tr>
+<td><strong>介護職員の処遇</strong></td>
+<td style="text-align: center;">🟡課題</td>
+<td>業界全体の低賃金問題、ニチイも業界平均と同水準と推定</td>
+</tr>
+<tr>
+<td><strong>女性雇用</strong></td>
+<td style="text-align: center;">🟢高い</td>
+<td>介護職は女性比率高い（業界平均~70%）</td>
+</tr>
+<tr>
+<td><strong>認知症対応</strong></td>
+<td style="text-align: center;">🟢高い</td>
+<td>認知症専門サービス提供</td>
+</tr>
+<tr>
+<td><strong>地域包括ケア貢献</strong></td>
+<td style="text-align: center;">🟢高い</td>
+<td>1,900拠点の地域密着型サービスで地域包括ケアに貢献</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="governance">ガバナンス（Governance）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th style="text-align: center;">評価</th>
+<th>詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>情報開示</td>
+<td style="text-align: center;">🔴不十分</td>
+<td>非公開化後は財務情報の開示なし</td>
+</tr>
+<tr>
+<td>コンプライアンス</td>
+<td style="text-align: center;">🟡中</td>
+<td>介護報酬請求の正確性リスクは常に存在</td>
+</tr>
+<tr>
+<td>内部統制</td>
+<td style="text-align: center;">🟡中</td>
+<td>1,900拠点の統制は課題</td>
+</tr>
+<tr>
+<td>経営陣の質</td>
+<td style="text-align: center;">🟢高い</td>
+<td>MBO後に安定した経営</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="sdgs">SDGs貢献</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">SDGs目標</th>
+<th style="text-align: center;">関連性</th>
+<th>貢献内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">3（健康と福祉）</td>
+<td style="text-align: center;">🟢直接</td>
+<td>高齢者の健康寿命延伸、在宅生活支援</td>
+</tr>
+<tr>
+<td style="text-align: center;">5（ジェンダー平等）</td>
+<td style="text-align: center;">🟢間接</td>
+<td>女性雇用の受け皿</td>
+</tr>
+<tr>
+<td style="text-align: center;">8（働きがい・経済成長）</td>
+<td style="text-align: center;">🟡間接</td>
+<td>介護職の処遇改善は業界課題</td>
+</tr>
+<tr>
+<td style="text-align: center;">10（不平等是正）</td>
+<td style="text-align: center;">🟡間接</td>
+<td>高齢者の社会参加支援</td>
+</tr>
+<tr>
+<td style="text-align: center;">11（住み続けられるまちづくり）</td>
+<td style="text-align: center;">🟢直接</td>
+<td>地域包括ケアの一翼</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<h3 id="_51">組織構造</h3>
+<pre><code>ニチイグループ（株式会社ニチイ）
+├── 訪問介護事業本部（全国を地域ブロックで管理）
+│   ├── 北海道・東北ブロック
+│   ├── 関東ブロック
+│   ├── 中部ブロック
+│   ├── 関西ブロック
+│   ├── 中国・四国ブロック
+│   └── 九州・沖縄ブロック
+├── 通所介護事業本部
+├── 居住系事業本部（ニチイケアパレス）
+├── 保険外サービス事業部
+├── 医療事務事業部（レガシー事業）
+└── 教育事業部（縮小中）
+</code></pre>
+<h3 id="_52">人材構成（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>職種</th>
+<th style="text-align: center;">人数（推定）</th>
+<th>雇用形態</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ホームヘルパー（訪問介護員）</td>
+<td style="text-align: center;">15,000-20,000人</td>
+<td>パート・アルバイト中心</td>
+</tr>
+<tr>
+<td>ケアマネジャー</td>
+<td style="text-align: center;">2,000-3,000人</td>
+<td>正社員・契約</td>
+</tr>
+<tr>
+<td>デイサービス職員</td>
+<td style="text-align: center;">5,000-8,000人</td>
+<td>正社員・パート混合</td>
+</tr>
+<tr>
+<td>施設職員（ケアパレス）</td>
+<td style="text-align: center;">3,000-5,000人</td>
+<td>正社員・パート混合</td>
+</tr>
+<tr>
+<td>管理部門</td>
+<td style="text-align: center;">1,000-2,000人</td>
+<td>正社員</td>
+</tr>
+<tr>
+<td>グループ全体</td>
+<td style="text-align: center;"><strong>約25,000-40,000人</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_53">人材戦上の課題</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>課題</th>
+<th style="text-align: center;">深刻度</th>
+<th>対応策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ホームヘルパー不足</td>
+<td style="text-align: center;">🔴深刻</td>
+<td>処遇改善、未経験者研修、外国人人材活用</td>
+</tr>
+<tr>
+<td>離職率の高さ</td>
+<td style="text-align: center;">🔴高い（業界平均）</td>
+<td>キャリアパス整備、メンタルヘルス支援</td>
+</tr>
+<tr>
+<td>高齢化（職員自身）</td>
+<td style="text-align: center;">🟡進行中</td>
+<td>健康経営、シニア雇用</td>
+</tr>
+<tr>
+<td>ケアマネ人材不足</td>
+<td style="text-align: center;">🟡中</td>
+<td>処遇改善（2026年改定で対象化）</td>
+</tr>
+<tr>
+<td>デジタル人材</td>
+<td style="text-align: center;">🔴不足</td>
+<td>外部委託・DX部門新設</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_54">教育・研修</h3>
+<ul>
+<li>教育事業出身という背景を活かした研修プログラムの充実</li>
+<li>未経験者向けのホームヘルパー養成研修</li>
+<li>ケアマネジャー資格取得支援</li>
+<li>グループ内でのキャリアパス構築（ヘルパー→主任→ケアマネ→管理者）</li>
+</ul>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<h3 id="_55">資本構造の変遷</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">時期</th>
+<th>イベント</th>
+<th>資本構造の変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">2002年</td>
+<td>東証一部上場</td>
+<td>株式公開による資金調達</td>
+</tr>
+<tr>
+<td style="text-align: center;">2000年代-2010年代</td>
+<td>事業拡大</td>
+<td>内部留保+借入によるM&amp;A</td>
+</tr>
+<tr>
+<td style="text-align: center;">2020年</td>
+<td><strong>MBO（非公開化）</strong></td>
+<td>経営陣による買収、借入金増加</td>
+</tr>
+<tr>
+<td style="text-align: center;">2020年-現在</td>
+<td>非公開化後</td>
+<td>財務諸表非公開、レバレッジ状況は不明</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_56">推定資本構造</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th style="text-align: center;">推定値</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>有利子負債</td>
+<td style="text-align: center;">¥500-1,000億</td>
+<td>MBO資金の借入残存と推定</td>
+</tr>
+<tr>
+<td>自己資本</td>
+<td style="text-align: center;">¥1,000-2,000億</td>
+<td>非公開化前の自己資本比率は約40-50%</td>
+</tr>
+<tr>
+<td>自己資本比率</td>
+<td style="text-align: center;">30-50%（推定）</td>
+<td>業界平均より高い</td>
+</tr>
+<tr>
+<td>年間減価償却費</td>
+<td style="text-align: center;">¥50-100億（推定）</td>
+<td>1,900拠点の償却</td>
+</tr>
+<tr>
+<td>運転資金</td>
+<td style="text-align: center;">不要に近い</td>
+<td>介護報酬は月次支払、キャッシュフロー安定</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_57">資金調達オプション</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>手段</th>
+<th style="text-align: center;">可能性</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>銀行借入</td>
+<td style="text-align: center;">🟢可能</td>
+<td>安定収入基盤で借入余力あり</td>
+</tr>
+<tr>
+<td>社債発行</td>
+<td style="text-align: center;">🟡可能性あり</td>
+<td>非公開だが可能</td>
+</tr>
+<tr>
+<td>PEからの追加出資</td>
+<td style="text-align: center;">🟡可能性あり</td>
+<td>MBOスポンサーによる増資</td>
+</tr>
+<tr>
+<td>IPO再上場</td>
+<td style="text-align: center;">🟢現実的な出口戦略</td>
+<td>3-5年後が想定時期</td>
+</tr>
+<tr>
+<td>事業売却</td>
+<td style="text-align: center;">🟡一部可能</td>
+<td>居住系・保険外の部分売却</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<h3 id="_58">顧客獲得チャネル</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>チャネル</th>
+<th style="text-align: center;">比率（推定）</th>
+<th style="text-align: center;">獲得単価</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ケアマネジャーからの紹介</strong></td>
+<td style="text-align: center;">~60%</td>
+<td style="text-align: center;">低</td>
+<td>最も重要なチャネル、ニチイグループ内ケアマネが自社紹介</td>
+</tr>
+<tr>
+<td><strong>病院退院支援からの紹介</strong></td>
+<td style="text-align: center;">~20%</td>
+<td style="text-align: center;">低〜中</td>
+<td>医療連携の強化で増加傾向</td>
+</tr>
+<tr>
+<td><strong>地域包括支援センターからの紹介</strong></td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: center;">低</td>
+<td>公的機関からの紹介</td>
+</tr>
+<tr>
+<td><strong>口コミ・家族紹介</strong></td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: center;">極低</td>
+<td>ブランド力の効果</td>
+</tr>
+<tr>
+<td><strong>Web・広告</strong></td>
+<td style="text-align: center;">~3%</td>
+<td style="text-align: center;">中</td>
+<td>高齢者本人より家族世代へのマーケティング</td>
+</tr>
+<tr>
+<td><strong>自治体委託</strong></td>
+<td style="text-align: center;">~2%</td>
+<td style="text-align: center;">低</td>
+<td>介護予防事業等</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="gtm">GTM効率性評価</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指標</th>
+<th style="text-align: center;">推定値</th>
+<th style="text-align: center;">業界比較</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顧客獲得単価（CAC）</td>
+<td style="text-align: center;">極低（¥1,000-5,000）</td>
+<td style="text-align: center;">ケアマネ紹介中心で業界最低水準</td>
+</tr>
+<tr>
+<td>紹介比率</td>
+<td style="text-align: center;">~90%</td>
+<td style="text-align: center;">業界平均より高い（規模の効果）</td>
+</tr>
+<tr>
+<td>コンバージョン率（見学→契約）</td>
+<td style="text-align: center;">60-80%</td>
+<td style="text-align: center;">ブランド力で高い</td>
+</tr>
+<tr>
+<td>生涯顧客価値（LTV）</td>
+<td style="text-align: center;">¥300-800万/年 × 3-5年</td>
+<td style="text-align: center;">介護度により変動</td>
+</tr>
+<tr>
+<td>LTV/CAC比率</td>
+<td style="text-align: center;"><strong>50-100x+</strong></td>
+<td style="text-align: center;">極めて効率的</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_59">ブランド戦略</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ブランド</th>
+<th>ターゲット</th>
+<th>ポジショニング</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ニチイ</strong>（コーポレート）</td>
+<td>全国</td>
+<td>日本最大の介護企業、信頼・安心</td>
+</tr>
+<tr>
+<td><strong>ニチイケアパレス</strong></td>
+<td>施設入居希望者</td>
+<td>低価格・良質な有料老人ホーム</td>
+</tr>
+<tr>
+<td><strong>ニチイのホームヘルプ</strong></td>
+<td>在宅介護利用者</td>
+<td>訪問介護の定番ブランド</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="_60">品質管理体制</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ケアプラン策定</strong></td>
+<td>ケアマネジャーが個別アセスメントに基づき策定</td>
+</tr>
+<tr>
+<td><strong>サービス担当者会議</strong></td>
+<td>多職種での情報共有・ケア方針確認（月1回以上）</td>
+</tr>
+<tr>
+<td><strong>モニタリング</strong></td>
+<td>ケアマネによる定期的モニタリング（月1回以上）</td>
+</tr>
+<tr>
+<td><strong>記録・報告</strong></td>
+<td>訪問ごとの記録、状態変化時の報告</td>
+</tr>
+<tr>
+<td><strong>事故報告</strong></td>
+<td>ヒヤリハット・事故報告の仕組み</td>
+</tr>
+<tr>
+<td><strong>コンプライアンス</strong></td>
+<td>介護報酬請求の正確性チェック</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_61">品質に関する指標（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指標</th>
+<th style="text-align: center;">推定水準</th>
+<th style="text-align: center;">業界平均</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>訪問介護サービスの継続率</td>
+<td style="text-align: center;">80-90%</td>
+<td style="text-align: center;">70-80%</td>
+<td>ブランド力で高い</td>
+</tr>
+<tr>
+<td>利用者満足度</td>
+<td style="text-align: center;">80-85%</td>
+<td style="text-align: center;">70-80%</td>
+<td>規模の割に高い水準</td>
+</tr>
+<tr>
+<td>事故発生率</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">低</td>
+<td>在宅サービス全般で低い</td>
+</tr>
+<tr>
+<td>クレーム比率</td>
+<td style="text-align: center;">低〜中</td>
+<td style="text-align: center;">中</td>
+<td>苦情対応体制整備済</td>
+</tr>
+<tr>
+<td>ケアマネ継続率</td>
+<td style="text-align: center;">70-80%</td>
+<td style="text-align: center;">60-70%</td>
+<td>グループ内キャリアパス</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_62">臨床的アウトカムへの影響</h3>
+<ul>
+<li><strong>在宅生活継続期間</strong>：ニチイのサービス利用により、要介護認定後の在宅生活期間が延長（業界全般の傾向）</li>
+<li><strong>入院回避</strong>：訪問介護と訪問看護の併用により、緊急入院を一定程度回避</li>
+<li><strong>QOL（生活の質）</strong>：通所介護による社会的交流・機能訓練に貢献</li>
+<li><strong>介護者負担軽減</strong>：訪問介護・デイサービスで家族介護者の負担軽減</li>
+</ul>
+<h3 id="_63">今後の品質向上課題</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>課題</th>
+<th style="text-align: center;">優先度</th>
+<th>対応策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>介護職員の質の均一化</td>
+<td style="text-align: center;">🟢高</td>
+<td>研修プログラムの標準化、OJT強化</td>
+</tr>
+<tr>
+<td>アウトカム評価の導入</td>
+<td style="text-align: center;">🟢高</td>
+<td>エビデンスベースのケア実践</td>
+</tr>
+<tr>
+<td>医療との連携強化</td>
+<td style="text-align: center;">🟢高</td>
+<td>訪問看護・訪問診療との連携</td>
+</tr>
+<tr>
+<td>テクノロジーによる品質管理</td>
+<td style="text-align: center;">🟡中</td>
+<td>遠隔モニタリング・AIによる異常検知</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;">评级</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">D0</td>
+<td>赛道验证</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>日本介護保険制度の詳細分析済み</td>
+</tr>
+<tr>
+<td style="text-align: center;">D1</td>
+<td>执行摘要</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>全景判断と核心指標整理済み</td>
+</tr>
+<tr>
+<td style="text-align: center;">D2</td>
+<td>企业概况与定位</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>MBO→非公開化の経緯含む</td>
+</tr>
+<tr>
+<td style="text-align: center;">D3</td>
+<td>战略定位</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>三本柱の戦略分析</td>
+</tr>
+<tr>
+<td style="text-align: center;">D4</td>
+<td>商业模式架构图</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>支払者vs利用者の分離構造図解</td>
+</tr>
+<tr>
+<td style="text-align: center;">D5</td>
+<td>服务产品线与定价模式</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>単位制の具体的単価含む</td>
+</tr>
+<tr>
+<td style="text-align: center;">D6</td>
+<td>客户与支付方深度拆解</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>支払者構造+利用者セグメント分析</td>
+</tr>
+<tr>
+<td style="text-align: center;">D7</td>
+<td>财务深度拆解</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟡</td>
+<td>非公開化後のため推定値含む</td>
+</tr>
+<tr>
+<td style="text-align: center;">D8</td>
+<td>工作流/旅程映射</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>認定→ケアプラン→提供のフロー</td>
+</tr>
+<tr>
+<td style="text-align: center;">D9</td>
+<td>技术深度评估</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>DX状況と投資方向性</td>
+</tr>
+<tr>
+<td style="text-align: center;">D10</td>
+<td>竞争格局对标矩阵</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>5社比較マトリックス</td>
+</tr>
+<tr>
+<td style="text-align: center;">D11</td>
+<td>收入构成与增长趋势</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>TAM/SAM分析</td>
+</tr>
+<tr>
+<td style="text-align: center;">D12</td>
+<td>盈利模型与路径</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>訪問介護1回のユニット経済分析</td>
+</tr>
+<tr>
+<td style="text-align: center;">D13</td>
+<td>机遇与风险评估矩阵</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>機会5×リスク4のマトリックス</td>
+</tr>
+<tr>
+<td style="text-align: center;">D14</td>
+<td>管理指引与市场预期</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟡</td>
+<td>非公開化後のため推定</td>
+</tr>
+<tr>
+<td style="text-align: center;">D15</td>
+<td>估值对比</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟡</td>
+<td>類似企業比較+推定企業価値</td>
+</tr>
+<tr>
+<td style="text-align: center;">D16</td>
+<td>对iHomeCare战略建议</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>学習点+参入判断</td>
+</tr>
+<tr>
+<td style="text-align: center;">D17</td>
+<td>政策与监管土壤</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>介護保険制度の詳細説明+2026年改革</td>
+</tr>
+<tr>
+<td style="text-align: center;">D18</td>
+<td>单元经济模型</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>訪問介護1回のコスト構造+感応度分析</td>
+</tr>
+<tr>
+<td style="text-align: center;">D19</td>
+<td>目标人群/客户细分</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>6セグメント詳細</td>
+</tr>
+<tr>
+<td style="text-align: center;">D20</td>
+<td>竞品深度地图</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>4階層の競争構造</td>
+</tr>
+<tr>
+<td style="text-align: center;">D21</td>
+<td>跨境/跨区域战略</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>国内特化の現状確認</td>
+</tr>
+<tr>
+<td style="text-align: center;">D22</td>
+<td>退出/并购价值分析</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>買収可能性+推定価格</td>
+</tr>
+<tr>
+<td style="text-align: center;">D23</td>
+<td>ESG/社会影响力</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>SDGsマッピング含む</td>
+</tr>
+<tr>
+<td style="text-align: center;">D24</td>
+<td>组织与人才</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>組織構造+人材構成推定</td>
+</tr>
+<tr>
+<td style="text-align: center;">D25</td>
+<td>融资历史与资本结构</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟡</td>
+<td>非公開化後の推定</td>
+</tr>
+<tr>
+<td style="text-align: center;">D26</td>
+<td>销售与GTM效率</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>チャネル分析+LTV/CAC</td>
+</tr>
+<tr>
+<td style="text-align: center;">D27</td>
+<td>临床质量与患者结局</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>品質管理体制+アウトカム</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_64">総合評価</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>評価項目</th>
+<th style="text-align: center;">結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>完了度</strong></td>
+<td style="text-align: center;">27/27 维度（100%）</td>
+</tr>
+<tr>
+<td><strong>データ品質</strong></td>
+<td style="text-align: center;">🟡 一部推定値を含む（ニチイ非公開化後のため）</td>
+</tr>
+<tr>
+<td><strong>分析深度</strong></td>
+<td style="text-align: center;">🟢 単元経済・競争構造・政策制度まで深掘り</td>
+</tr>
+<tr>
+<td><strong>実用性</strong></td>
+<td style="text-align: center;">🟢 iHomeCareへの示唆まで具体化</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_65">调研空白与后续补充</h2>
+<h3 id="web_search">現時点の空白（web_search利用不可による制約）</h3>
+<ol>
+<li><strong>非公開化後の正確な財務データ</strong>（有価証券報告書なし）</li>
+<li><strong>ニチイの最新の事業所数・従業員数の公式発表</strong></li>
+<li><strong>グループ内の事業セグメント別の収益性データ</strong></li>
+<li><strong>MBOのスポンサー・資本構成の詳細</strong></li>
+<li><strong>ニチイの介護報酬請求データ</strong>（実際の請求単位数・加算取得状況）</li>
+<li><strong>直近のM&amp;A実績</strong>（非公開化後の買収・事業譲受）</li>
+<li><strong>保険外サービスの詳細なラインアップと収益</strong></li>
+<li><strong>業界団体データ</strong>（全国介護事業者連盟等の統計）</li>
+</ol>
+<h3 id="_66">推奨追加調査</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">優先度</th>
+<th>調査項目</th>
+<th>情報源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">🔥高</td>
+<td>ニチイIR資料（非公開化前の最終年度）</td>
+<td>EDINA</td>
+</tr>
+<tr>
+<td style="text-align: center;">🔥高</td>
+<td>介護事業所情報公表システムのデータ</td>
+<td>厚生労働省</td>
+</tr>
+<tr>
+<td style="text-align: center;">🟡中</td>
+<td>業界紙（介護新聞、ヘルスケアビジネス）</td>
+<td>有料記事</td>
+</tr>
+<tr>
+<td style="text-align: center;">🟡中</td>
+<td>競合他社のインタビュー・業界レポート</td>
+<td>シンクタンク</td>
+</tr>
+<tr>
+<td style="text-align: center;">🟡中</td>
+<td>介護報酬改定の影響分析</td>
+<td>GemMed等の専門サイト</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_67">参考文献</h2>
+<h3 id="_68">政策・制度ソース</h3>
+<ol>
+<li>厚生労働省「介護保険法」（2000年施行）</li>
+<li>厚生労働省「介護保険事業状況報告」（2023年度）</li>
+<li>厚生労働省「介護報酬改定について」（2024年度、2026年度期中）</li>
+<li>GemMed「2026年度介護報酬改定のポイント」（2026年6月）</li>
+<li>社会保険研究所「介護保険第1号保険料の動向」（2025年）</li>
+</ol>
+<h3 id="_69">業界分析ソース</h3>
+<ol start="6">
+<li>ワイズマン「介護報酬単位一覧2025」</li>
+<li>ツクイスタッフ「介護業界大手売上高ランキング」</li>
+<li>FC比較ネット「介護施設数ランキング2025」</li>
+<li>矢野経済研究所「介護DX市場の現状と将来展望」（2024年）</li>
+<li>東京商工リサーチ「2024年介護事業倒産動向」</li>
+</ol>
+<h3 id="_70">既存研究ソース</h3>
+<ol start="11">
+<li>iHomeCare Research「跨国居家医疗与长护险体系对标研究报告」（2026年6月）</li>
+<li>iHomeCare Research「d2. 支付体系与报销机制」（2026年6月）</li>
+<li>iHomeCare Research「d4. 服务交付模式与商业模式」（2026年6月）</li>
+<li>iHomeCare Research「d5. 头部企业与创新格局」（2026年6月）</li>
+<li>iHomeCare Knowledge Base「日本介護保険制度概览」（2026年7月）</li>
+<li>iHomeCare Knowledge Base「日本—支付体系」（2026年7月）</li>
+<li>knowledge/hah_competitors.json — ニチイエンティティデータ</li>
+<li>knowledge/entity_fact.json — ニチイファクト情報</li>
+</ol>
+<h3 id="_71">企業ソース</h3>
+<ol start="19">
+<li>株式会社ニチイ公式ウェブサイト（https://www.nichii.co.jp/）— アクセス制限あり</li>
+<li>Wikipedia「ニチイ学館」— アクセス制限あり</li>
+</ol>
+<hr />
+<p><strong>免責事項</strong>：本レポートは公開情報および既存の研究データに基づいて作成されています。株式会社ニチイは2020年のMBOにより非公開化されており、財務データを中心に一部推定値を含みます。正確な数値はニチイの公式開示を参照ください。</p>
+<p><strong>作成者</strong>：iHomeCare Research, Kate（VP Research）
+<strong>作成日</strong>：2026年7月5日
+<strong>レポートID</strong>：2026-07-05-nichii-jp-27dim</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

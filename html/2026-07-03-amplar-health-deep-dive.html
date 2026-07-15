@@ -1,0 +1,1266 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amplar Health (Medibank) 深度分析报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#amplar-health-medibank">Amplar Health (Medibank) 深度分析报告</a><ul>
+<li><a href="#hah">支付方自营 HaH 的亚太范本</a></li>
+<li><a href="#_1">执行摘要</a></li>
+<li><a href="#1-medibank-hah">1. Medibank 战略定位——支付方为什么必须拥有 HaH</a><ul>
+<li><a href="#11">1.1 战略演变三阶段</a></li>
+<li><a href="#12-hah">1.2 支付方为什么必须拥有 HaH——核心战略逻辑</a></li>
+<li><a href="#13-kpmg">1.3 KPMG 报告——规模化的经济效益</a></li>
+</ul>
+</li>
+<li><a href="#2-hith">2. HITH 澳大利亚的监管与支付框架</a><ul>
+<li><a href="#21">2.1 公私混合体系——独特但复杂的土壤</a></li>
+<li><a href="#22-abfactivity-based-funding-hith">2.2 ABF（Activity Based Funding）与 HITH 的错位</a></li>
+<li><a href="#23-phi-hith-medibank">2.3 私人保险 (PHI) 的 HITH 覆盖——Medibank 的先发优势</a></li>
+<li><a href="#24-mbsmedicare-benefits-schedule">2.4 MBS（Medicare Benefits Schedule）编码现状</a></li>
+<li><a href="#25-ihacpa">2.5 IHACPA 虚拟护理报告——正在推进的定价改革</a></li>
+</ul>
+</li>
+<li><a href="#3-amplar-health">3. Amplar Health 覆盖规模与业务版图</a><ul>
+<li><a href="#31-amplar-health">3.1 Amplar Health 服务线架构</a></li>
+<li><a href="#32-my-home-hospital-hith">3.2 My Home Hospital——旗舰 HITH 项目</a></li>
+<li><a href="#33">3.3 全国覆盖范围</a></li>
+<li><a href="#34">3.4 关键合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 运营模式深度拆解</a><ul>
+<li><a href="#41-my-home-hospital">4.1 My Home Hospital 的标准运营流程</a></li>
+<li><a href="#42">4.2 临床团队结构</a></li>
+<li><a href="#43">4.3 技术栈</a></li>
+<li><a href="#44-amwell-20242">4.4 与 Amwell 的合作（2024年2月宣布）</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 临床结果与质量证据</a><ul>
+<li><a href="#51-my-home-hospital">5.1 My Home Hospital 同行评审研究</a></li>
+<li><a href="#52-amplar">5.2 Amplar 官方临床宣称</a></li>
+<li><a href="#53-deakin-private-hospital">5.3 Deakin Private Hospital 心理健康结果</a></li>
+<li><a href="#54-covid-care-at-home">5.4 COVID Care at Home 项目</a></li>
+<li><a href="#55">5.5 认证与质量标准</a></li>
+</ul>
+</li>
+<li><a href="#6-medibank">6. 与 Medibank 保险业务的数据/财务协同</a><ul>
+<li><a href="#61-fy2023-fy2025">6.1 财务协同——从 FY2023 到 FY2025</a></li>
+<li><a href="#62">6.2 数据协同——保险+服务的闭环</a></li>
+<li><a href="#63">6.3 资本配置——从「保险资本」到「健康资本」</a></li>
+<li><a href="#64-medibank">6.4 跨支付方合作——不限于 Medibank 会员</a></li>
+</ul>
+</li>
+<li><a href="#7-ihomecare-hah">7. 对 iHomeCare 借鉴：支付方主导 HaH 的亚太范本</a><ul>
+<li><a href="#71-amplar">7.1 Amplar 模式的五个核心借鉴</a><ul>
+<li><a href="#1">借鉴 1: 支付方从「被动理赔」到「主动管理」</a></li>
+<li><a href="#2">借鉴 2: 政府合同是最稳定的收入锚</a></li>
+<li><a href="#3">借鉴 3: 「轻度」到「重度」的光谱覆盖</a></li>
+<li><a href="#4_1">借鉴 4: 技术平台的「自研+外采」混合策略</a></li>
+<li><a href="#5_1">借鉴 5: 保险数据是核心竞争力</a></li>
+</ul>
+</li>
+<li><a href="#72-7">7.2 7个维度的直接对标</a></li>
+<li><a href="#73">7.3 三点警示</a></li>
+</ul>
+</li>
+<li><a href="#_2">维度完备性审计</a></li>
+<li><a href="#_3">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="amplar-health-medibank">Amplar Health (Medibank) 深度分析报告</h1>
+<h2 id="hah">支付方自营 HaH 的亚太范本</h2>
+<p><strong>作者</strong>: Kenneth Ye<br />
+<strong>日期</strong>: 2026年7月3日<br />
+<strong>版本</strong>: v1.0<br />
+<strong>调研目的</strong>: 分析 Medibank 旗下 Amplar Health 的 HaH 战略，为 iHomeCare 提供支付方主导居家医疗的亚太区域范本</p>
+<hr />
+<h2 id="_1">执行摘要</h2>
+<p><strong>一句话定位</strong>: Amplar Health 是澳大利亚最大私人健康保险公司 Medibank（ASX: MPL）的全资健康服务交付部门，运营 HITH 超 30 年，是支付方自营 HaH 的全球少数成熟范本——保险公司不仅为居家医疗买单，更亲自下场运营。</p>
+<p><strong>核心矛盾</strong>: Medibank 作为支付方，同时是医疗服务提供者——这打破了传统&rdquo;支付方-提供者&rdquo;分离模式。它的终极赌注是：当保险公司拥有服务交付能力，可以通过数据闭环、预防导向、精准分诊实现&rdquo;少理赔→多利润&rdquo;的正飞轮。</p>
+<p><strong>关键数据速览</strong>:
+| 指标 | 数值 | 说明 |
+|:&mdash;|:&mdash;|:&mdash;|
+| Medibank 集团总收入 (FY2025) | ~A$80亿+ | 核心为健康保险保费 |
+| Medibank Health 分部收入 (FY2025) | A$3.39亿（不含 Myhealth） | 同比+16.8% |
+| Medibank Health 分部利润 (FY2025) | A$7,670万 | 同比+27.0% |
+| Amplar 员工规模 | 1,000-1,750人 | 含护士、GP、精神健康专业人员、联合健康 |
+| My Home Hospital 累计患者 | ~25,000人 (SA) | 自 2021年1月至2026年 |
+| COVID Care at Home | ~200,000患者 | 全国范围 |
+| Medibank Health 利润目标 (FY2030) | ≥A$2亿 | Oct 2025 公布 |</p>
+<p><strong>总体判断</strong>: Amplar Health 是亚太地区支付方自营 HaH 的唯一大规模范本。其&rdquo;保险+服务&rdquo;的垂直整合模式对 iHomeCare 的借鉴意义极高——尤其是在支付方数字化转型、数据驱动预防、以及政府合作模式三个维度。但需注意：澳大利亚独特的公私混合支付体系与香港/中国内地差异显著，模式不能直接复制。</p>
+<hr />
+<h2 id="1-medibank-hah">1. Medibank 战略定位——支付方为什么必须拥有 HaH</h2>
+<h3 id="11">1.1 战略演变三阶段</h3>
+<p><strong>Phase 1 (1990s–2014): 传统保险时代的萌芽</strong><br />
+Medibank 原为国有保险公司（1976年成立），2014年完成私有化并在 ASX 上市。其健康服务部门前身「Medibank Health Solutions」早在 1990 年代就开始提供健康管理服务，包括 HITH 项目原始形态——已运营超 <strong>30 年</strong>。</p>
+<p><strong>Phase 2 (2015–2023): 标准化与品牌整合</strong>  </p>
+<ul>
+<li>2015–2018: 逐步将收购的健康服务品牌（Home Support Services → Amplar Home Health, HealthStrong → Amplar Allied Health）整合为统一服务线  </li>
+<li>2021年1月: 与 Calvary Health Care 成立合资企业（CAHJV），获得 SA Health「My Home Hospital」合约，成为南澳州公立 HITH 服务独家运营商  </li>
+<li>2022年: COVID Care at Home 项目全国推广，覆盖近 20 万患者</li>
+</ul>
+<p><strong>Phase 3 (2024–2030): 从「保险附属」到「健康公司」的质变</strong>  </p>
+<ul>
+<li><strong>2024年</strong>: Amplar Health 作为独立品牌正式推出，Medibank「健康服务」业务统一命名  </li>
+<li><strong>2024年7月</strong>: 阿德莱德 Amplar Health Hub 开幕  </li>
+<li><strong>2024年10月</strong>: 委托 KPMG 发布《虚拟医院经济效益》报告，呼吁全国推广  </li>
+<li><strong>2025年2月</strong>: Calvary 退出合资（CVHJV），Amplar 全资接管 My Home Hospital  </li>
+<li><strong>2025年10月</strong>: Medibank 投资者日公布战略转型——Medibank Health 利润目标 FY2030 达 A$2亿（较 FY2025 A$7,670万翻2.6倍），资本投入从 A$4.5亿增至 A$7亿  </li>
+<li><strong>2025年11月</strong>: 收购 GP 网络 Better Medical（61家诊所，A$1.59亿），使 Amplar 的初级保健诊所总数达 166家（含 Myhealth 的 105家）  </li>
+<li><strong>2025–2027年</strong>: 获联邦政府合同，为 30 家养老院提供虚拟护理试点</li>
+</ul>
+<h3 id="12-hah">1.2 支付方为什么必须拥有 HaH——核心战略逻辑</h3>
+<p>Medibank 的赌注建立在以下商业逻辑上：</p>
+<pre><code>传统保险模式: 收保费 → 理赔 → 利润 = 保费 - 理赔 - 运营成本
+Amplar 模式:   收保费 → 自有服务 → 减少不必要住院 → 理赔下降 → 利润↑
+                ↓
+              自有服务本身产生利润
+</code></pre>
+<p><strong>三个正反馈飞轮</strong>：</p>
+<ol>
+<li><strong>预防飞轮</strong>: 保险数据识别高风险客户 → Amplar 主动干预 → 减少急性事件 → 理赔下降 → 更多资金投入预防</li>
+<li><strong>服务飞轮</strong>: 自有 HITH/GPs/远程医疗 → 替代昂贵私立医院 → 单位成本下降 → 产品更有竞争力 → 会员增长</li>
+<li><strong>数据飞轮</strong>: 理赔数据 + 服务数据 + 临床数据 → 精准风险分层 → 个性化干预 → 更好的临床结果 → 更多数据</li>
+</ol>
+<h3 id="13-kpmg">1.3 KPMG 报告——规模化的经济效益</h3>
+<p>2024年10月，Medibank 委托 KPMG 发布研究，量化了 HaH 的宏观经济学：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">2030年预测（30% 替代场景）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">可替代物理床位天数</td>
+<td style="text-align: left;"><strong>120万天</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">医疗系统成本节省</td>
+<td style="text-align: left;"><strong>A$10亿</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">基建资本支出节省</td>
+<td style="text-align: left;"><strong>A$64亿</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">可居家治疗患者数</td>
+<td style="text-align: left;"><strong>约35万</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">患者自付费用节省</td>
+<td style="text-align: left;"><strong>A$1.02亿</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">30% 住院条件</td>
+<td style="text-align: left;">可通过虚拟医院/家庭治疗</td>
+</tr>
+</tbody>
+</table></div>
+<p>这不仅是学术报告，更是 Medibank 向联邦/州政府争取政策支持的「游说武器」。</p>
+<hr />
+<h2 id="2-hith">2. HITH 澳大利亚的监管与支付框架</h2>
+<h3 id="21">2.1 公私混合体系——独特但复杂的土壤</h3>
+<p>澳大利亚的 HITH 不同于美国（CMS Acute Hospital Care at Home waiver）的单一支付方试点模式，而是在<strong>三个并行的支付体系</strong>下运行：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">支付体系</th>
+<th style="text-align: left;">资金来源</th>
+<th style="text-align: left;">管理机构</th>
+<th style="text-align: left;">HITH 融合状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>公立医院 ABF 体系</strong></td>
+<td style="text-align: left;">联邦+州政府</td>
+<td style="text-align: left;">IHACPA</td>
+<td style="text-align: left;">⚠️ HITH 无独立 DRG/ABF 分类，按原 DRG 付费</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Medicare (MBS)</strong></td>
+<td style="text-align: left;">联邦政府</td>
+<td style="text-align: left;">Department of Health</td>
+<td style="text-align: left;">❌ 无专门 HITH MBS 编码；GP/专科远程医疗编码可用</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>私人健康保险 (PHI)</strong></td>
+<td style="text-align: left;">保费+自付</td>
+<td style="text-align: left;">APRA 监管</td>
+<td style="text-align: left;">✅ Medibank/Bupa 等定制「居家治疗」覆盖</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="22-abfactivity-based-funding-hith">2.2 ABF（Activity Based Funding）与 HITH 的错位</h3>
+<p><strong>关键矛盾</strong>: 澳大利亚公立医院通过 <strong>IHACPA</strong> 制定的 NWAU（National Weighted Activity Unit）进行 ABF 拨款。但 HITH 目前<strong>没有独立的 AR-DRG 分类</strong>——患者被视同「住院患者」，按原始诊断编码（如心衰、COPD）计费。</p>
+<p>这意味着：</p>
+<ul>
+<li>HITH 节省的成本体现在「医院少用了一天床位」，而非「HITH 服务本身有定价优势」</li>
+<li>公立医院有动力开设 HITH（释放床位），但无动力优化 HITH 运营（因为收入不变）</li>
+<li>Amplar 作为第三方运营商的优势在于：<strong>它不拥有医院床位，节省的是州政府/公立医院的成本</strong></li>
+</ul>
+<h3 id="23-phi-hith-medibank">2.3 私人保险 (PHI) 的 HITH 覆盖——Medibank 的先发优势</h3>
+<p>Medibank 作为私人保险公司，可以直接在产品中<strong>设计 HITH 覆盖</strong>：</p>
+<ul>
+<li><strong>No Gap 项目</strong>: 部分手术/治疗通过 Amplar 居家完成，Medibank 会员零自付</li>
+<li><strong>HCF 合作</strong>: HCF（另一家私保公司）也与 Amplar 签约，为会员提供静脉抗生素/复杂伤口居家治疗</li>
+<li><strong>After Hospital Home Care (AHHC)</strong>: Medibank 会员出院后 30 天免费居家康复服务</li>
+</ul>
+<h3 id="24-mbsmedicare-benefits-schedule">2.4 MBS（Medicare Benefits Schedule）编码现状</h3>
+<p><strong>明确结论</strong>: 澳大利亚目前 <strong>没有专门为 HITH 设立的 MBS item numbers</strong>。HITH 支付通过：</p>
+<ul>
+<li>公立体系: 州政府直接采购（如 SA Health 的 My Home Hospital 合同）</li>
+<li>私人体系: 保险公司定制产品 + GP/专科 consultation 代码</li>
+<li>联邦养老: 虚拟护理试点由 Department of Health 直接资助</li>
+</ul>
+<h3 id="25-ihacpa">2.5 IHACPA 虚拟护理报告——正在推进的定价改革</h3>
+<p>2025年，IHACPA 发布了虚拟护理最终报告，提出五项建议，旨在建立统一的虚拟护理/虚拟医院定价框架。这对 Amplar Health 是重大利好——一旦 HITH 获得独立的 ABF 分类，其作为全国最大运营商的市场地位将被进一步强化。</p>
+<hr />
+<h2 id="3-amplar-health">3. Amplar Health 覆盖规模与业务版图</h2>
+<h3 id="31-amplar-health">3.1 Amplar Health 服务线架构</h3>
+<p>Amplar Health 由五大业务线组成，覆盖从预防到急性护理的完整光谱：</p>
+<pre><code>                    Amplar Health
+                         │
+        ┌────────────────┼────────────────┐
+        │                │                │
+  Amplar Virtual    Amplar Home     Amplar Health
+     Health            Health        Home Hospital
+  (24/7 telehealth   (In-home        (HITH/RITH)
+   nurse triage      nursing,
+   GP online,        allied health)
+   Mental Health)
+
+  Amplar Allied Health            Amplar Preventative Health
+  (Physio, OT, Podiatry,          (CareComplete: CareFirst,
+   Dietetics)                      CarePoint, chronic disease)
+</code></pre>
+<p><strong>Hospital Investments 板块</strong>:
+| 投资 | 模式 | 说明 |
+|:&mdash;|:&mdash;|:&mdash;|
+| <strong>iMH</strong> (3家精神健康医院) | JV with Aurora Healthcare | Deakin Private (Canberra), Hirondelle (Sydney), Nundah (Brisbane) |
+| <strong>Adeney Private Hospital</strong> | JV with 医生集团 | 澳洲首家「No Gap」私立医院 |
+| <strong>East Sydney Private Hospital</strong> | 投资 | 短住院+居家康复模式 |
+| <strong>Myhealth Medical Group</strong> (105家) | 多数股权 | 初级保健诊所网络 |
+| <strong>Better Medical</strong> (61家) | 全资收购 A$1.59亿 | 2025年12月完成，扩展到 166 家 GP 诊所 |</p>
+<h3 id="32-my-home-hospital-hith">3.2 My Home Hospital——旗舰 HITH 项目</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>启动时间</strong></td>
+<td style="text-align: left;">2021年1月</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>累计治疗患者</strong></td>
+<td style="text-align: left;">~25,000人 (截至2026年)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>覆盖地域</strong></td>
+<td style="text-align: left;">阿德莱德大都会区 + Gawler / Mount Barker / Southern Fleurieu</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>覆盖条件数</strong></td>
+<td style="text-align: left;">160种健康条件</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>入院增长率</strong></td>
+<td style="text-align: left;">+38% (2022–2026)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>运营方</strong></td>
+<td style="text-align: left;">Amplar Health（2025年2月起全资，此前为 Calvary Amplar Health JV）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>付费方</strong></td>
+<td style="text-align: left;">SA Health（南澳州卫生部）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>认证</strong></td>
+<td style="text-align: left;">国家卫生服务质量标准 (NSQHS) 认证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>附加服务</strong></td>
+<td style="text-align: left;">Transition Care Service（与 Pullman Adelaide 酒店合作，出院后过渡护理）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>远程医疗设备</strong></td>
+<td style="text-align: left;">Visionflex 远程医疗推车（虚拟护理）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关键合作</strong>: 2025年与 Visionflex 合作推出养老院虚拟护理，30家养老机构、2025年3月–2027年6月试点。</p>
+<h3 id="33">3.3 全国覆盖范围</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">服务线</th>
+<th style="text-align: left;">覆盖范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Amplar Home Health (HITH/RITH)</td>
+<td style="text-align: left;">SA, QLD, VIC（通过 HCF 合同）+ 全国居家护理</td>
+</tr>
+<tr>
+<td style="text-align: left;">Amplar Home Health（居家护理）</td>
+<td style="text-align: left;">全国，FY23 完成 14.5万+ 次家访</td>
+</tr>
+<tr>
+<td style="text-align: left;">Amplar Allied Health</td>
+<td style="text-align: left;">全国，包括养老机构</td>
+</tr>
+<tr>
+<td style="text-align: left;">Amplar Virtual Health</td>
+<td style="text-align: left;">全国 24/7 在线</td>
+</tr>
+<tr>
+<td style="text-align: left;">My Home Hospital</td>
+<td style="text-align: left;">SA 大阿德莱德地区</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>员工规模</strong>: 1,000–1,750 名健康专业人员（来源：LinkedIn 1,001-5,000，官网 1,750+）</p>
+<h3 id="34">3.4 关键合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">合作伙伴</th>
+<th style="text-align: left;">合作性质</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">SA Health</td>
+<td style="text-align: left;">政府合同</td>
+<td style="text-align: left;">My Home Hospital 独家运营</td>
+</tr>
+<tr>
+<td style="text-align: left;">Australian Government (DoHAC)</td>
+<td style="text-align: left;">政府合同</td>
+<td style="text-align: left;">虚拟养老护理试点（30家）</td>
+</tr>
+<tr>
+<td style="text-align: left;">HCF</td>
+<td style="text-align: left;">私保合作</td>
+<td style="text-align: left;">居家 IV 抗生素/伤口护理</td>
+</tr>
+<tr>
+<td style="text-align: left;">Amwell</td>
+<td style="text-align: left;">技术合作</td>
+<td style="text-align: left;">SilverCloud 心理健康 + Automated Care 平台</td>
+</tr>
+<tr>
+<td style="text-align: left;">Visionflex</td>
+<td style="text-align: left;">硬件合作</td>
+<td style="text-align: left;">远程医疗推车</td>
+</tr>
+<tr>
+<td style="text-align: left;">Calvary Health Care</td>
+<td style="text-align: left;">前 JV 伙伴</td>
+<td style="text-align: left;">2021-2025，2025年2月退出</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4">4. 运营模式深度拆解</h2>
+<h3 id="41-my-home-hospital">4.1 My Home Hospital 的标准运营流程</h3>
+<pre><code>Phase 0: 患者识别
+  公立医院急诊/住院患者 → SA Health 临床团队评估 → HITH 适用判断
+  （160种条件，包括: 静脉抗生素、呼吸道恶化、心衰、术后恢复等）
+
+Phase 1: 入组与激活 (Day 0)
+  → Amplar 临床团队接诊
+  → 远程监测设备部署（血压/血氧/体温等）
+  → 药物配送至家中
+  → 首次护理家访（护士）
+
+Phase 2: 主动管理 (Day 1–N)
+  → 每日护士家访（按需，IV 给药/伤口护理/评估）
+  → GP/专科远程查房（视频/电话）
+  → 24/7 远程监测中心持续追踪生命体征
+  → 联合健康（物理治疗/职业治疗等）按需介入
+  → 异常预警 → 临床团队升级（GP判断/急诊转诊）
+
+Phase 3: 脱组/出院 (Day N+)
+  → 临床评估达标 → 出院
+  → 药物/护理计划转回 GP
+  → AHHC（After Hospital Home Care）可选 30天跟踪
+
+Phase 4: 随访
+  → Medibank 保险数据追踪（再入院监测）
+</code></pre>
+<h3 id="42">4.2 临床团队结构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">角色</th>
+<th style="text-align: left;">功能</th>
+<th style="text-align: left;">模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>临床护士 (RN)</strong></td>
+<td style="text-align: left;">每日家访、IV 给药、伤口护理、生命体征</td>
+<td style="text-align: left;">上门</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GP / 医生</strong></td>
+<td style="text-align: left;">医学监管、查房、升级决策</td>
+<td style="text-align: left;">远程为主 + 必要时上门</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>专科医生</strong></td>
+<td style="text-align: left;">特定条件（心衰/呼吸道等）会诊</td>
+<td style="text-align: left;">远程</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>联合健康</strong></td>
+<td style="text-align: left;">物理治疗、职业治疗、营养</td>
+<td style="text-align: left;">上门+远程</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>24/7 操作中心</strong></td>
+<td style="text-align: left;">远程监测、分诊、调度</td>
+<td style="text-align: left;">远程（阿德莱德 Hub）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>药剂师</strong></td>
+<td style="text-align: left;">药物审查、配送</td>
+<td style="text-align: left;">远程+物流</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关键洞察</strong>: Amplar 的模式是「高触达低住院」——护士每日家访频率远超传统居家护理（通常每周 1–3 次），确保「在家的医院级别护理」。</p>
+<h3 id="43">4.3 技术栈</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: left;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>远程患者监测 (RPM)</strong></td>
+<td style="text-align: left;">生命体征设备（血压/血氧/体温/心率）+ 实时数据传输</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>远程医疗平台</strong></td>
+<td style="text-align: left;">GP/专科视频会诊 + Visionflex 推车（养老院虚拟护理）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>24/7 指挥中心</strong></td>
+<td style="text-align: left;">阿德莱德 Amplar Health Hub，中央监控+调度</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数字心理健康</strong></td>
+<td style="text-align: left;">Amwell SilverCloud（CBT 自助平台）+ Automated Care 预防程序</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据/分析层</strong></td>
+<td style="text-align: left;">Medibank 理赔数据 + 临床数据 → 风险分层 + 主动干预</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="44-amwell-20242">4.4 与 Amwell 的合作（2024年2月宣布）</h3>
+<p>Amplar Health 成为 Amwell 在澳大利亚的<strong>独家经销商</strong>，将：</p>
+<ul>
+<li>SilverCloud® by Amwell® 数字心理健康平台嵌入预防计划</li>
+<li>Amwell Automated Care 平台用于自动化患者旅程管理</li>
+<li>目标: 将数字化预防扩展到慢性病高风险人群</li>
+</ul>
+<hr />
+<h2 id="5">5. 临床结果与质量证据</h2>
+<h3 id="51-my-home-hospital">5.1 My Home Hospital 同行评审研究</h3>
+<p>2024年发表在同行评审期刊上的研究（PubMed ID: 39074838），分析了 2,095 名 SA HITH 患者：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">HITH 组</th>
+<th style="text-align: left;">对照/基准</th>
+<th style="text-align: left;">解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>住院期间死亡率</strong></td>
+<td style="text-align: left;"><strong>0.2%</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">极低，证明安全性</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>返回实体医院率</strong></td>
+<td style="text-align: left;"><strong>2.3%</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">在 HITH 期间需返回实体医院的比例低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>安全性</strong></td>
+<td style="text-align: left;">未发现质量/安全问题</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">研究明确结论</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者/照护者体验</strong></td>
+<td style="text-align: left;">正面</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">解放医院资源给更急需患者</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52-amplar">5.2 Amplar 官方临床宣称</h3>
+<p>根据 Amplar Health CEO Robert Read 在 2026 LEADERS SUMMIT 发言：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">HITH vs 传统住院</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>医院获得性并发症</strong></td>
+<td style="text-align: left;">HITH 患者是传统住院的 <strong>1/3</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>再入院率</strong></td>
+<td style="text-align: left;">HITH 患者是传统住院的 <strong>1/4</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="53-deakin-private-hospital">5.3 Deakin Private Hospital 心理健康结果</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">Deakin Private</th>
+<th style="text-align: left;">行业基准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>12月再入院率</strong></td>
+<td style="text-align: left;">显著低于行业</td>
+<td style="text-align: left;">&gt;45% (私保患者)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>累计治疗患者</strong></td>
+<td style="text-align: left;">1,300+</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>模式</strong></td>
+<td style="text-align: left;">短住院 + 社区密集包裹式护理</td>
+<td style="text-align: left;">传统长期住院</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="54-covid-care-at-home">5.4 COVID Care at Home 项目</h3>
+<p>在 COVID-19 大流行期间，Amplar Health 运营全国性的 COVID Care at Home 项目，为近 <strong>200,000</strong> 名 COVID-19 患者提供远程监测和居家护理支持——这是澳大利亚最大规模的远程监测实践经验。</p>
+<h3 id="55">5.5 认证与质量标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: left;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NSQHS（国家卫生服务质量标准）</td>
+<td style="text-align: left;">✅ 认证</td>
+</tr>
+<tr>
+<td style="text-align: left;">Amplar Home Health</td>
+<td style="text-align: left;">✅ 三年续认证</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="6-medibank">6. 与 Medibank 保险业务的数据/财务协同</h2>
+<h3 id="61-fy2023-fy2025">6.1 财务协同——从 FY2023 到 FY2025</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">财务指标</th>
+<th style="text-align: left;">FY2023</th>
+<th style="text-align: left;">FY2024</th>
+<th style="text-align: left;">FY2025</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Medibank Health 分部利润</td>
+<td style="text-align: left;">A$4,420万</td>
+<td style="text-align: left;">A$6,040万</td>
+<td style="text-align: left;"><strong>A$7,670万</strong></td>
+<td style="text-align: left;">↑ +73.6% (2年)</td>
+</tr>
+<tr>
+<td style="text-align: left;">健康分部收入（不含 Myhealth）</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"><strong>A$3.39亿</strong></td>
+<td style="text-align: left;">↑ +16.8% YoY</td>
+</tr>
+<tr>
+<td style="text-align: left;">有机运营利润增长（不含 Myhealth）</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">+23.0%</td>
+<td style="text-align: left;">强劲</td>
+</tr>
+<tr>
+<td style="text-align: left;">Medibank 集团 NPAT</td>
+<td style="text-align: left;">A$5.11亿</td>
+<td style="text-align: left;">A$5.70亿</td>
+<td style="text-align: left;">A$5.008亿</td>
+<td style="text-align: left;">稳定</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关键洞察</strong>: 健康分部虽然仅占集团利润约 12%，但增速远超保险业务（+27% vs +7.1%），且 Medibank 设定了 FY2030 A$2亿的目标——这意味着未来 5 年复合增长率需达 21%。</p>
+<h3 id="62">6.2 数据协同——保险+服务的闭环</h3>
+<p>Medibank 拥有澳大利亚约 <strong>210 万</strong> 健康保险会员的数据（理赔、健康状况、风险评分）。Amplar Health 的服务数据反馈回保险端：</p>
+<pre><code>保险端数据（谁花了多少钱、什么病）
+          ↓
+    Amplar 风险分层引擎
+          ↓
+   主动干预（CareComplete/CareFirst/CarePoint）
+          ↓
+   临床结果（减少住院、降低理赔）
+          ↓
+   保险端反馈（保费定价优化、产品设计）
+</code></pre>
+<p>这个闭环是纯保险公司或纯 HaH 运营商都无法独立实现的。</p>
+<h3 id="63">6.3 资本配置——从「保险资本」到「健康资本」</h3>
+<p>Medibank 明确向投资者表示：</p>
+<ul>
+<li>FY2025–FY2030 累计 M&amp;A 预算: A$1.5–2.5亿（目前已花 A$2.18亿）</li>
+<li>健康分部资本投入: 从 A$4.5亿增至 <strong>A$7亿</strong> (FY2030)</li>
+<li>目标: 「从保险公司转型为健康公司」</li>
+</ul>
+<h3 id="64-medibank">6.4 跨支付方合作——不限于 Medibank 会员</h3>
+<p>值得注意的是，Amplar Health 的客户<strong>并非全是 Medibank 会员</strong>：</p>
+<ul>
+<li>My Home Hospital: SA Health（州政府），任何南澳居民</li>
+<li>HCF 合同: HCF 会员</li>
+<li>政府虚拟养老试点: 30 家养老院</li>
+<li>COVID Care at Home: 所有澳大利亚人</li>
+</ul>
+<p>这证明「支付方自营 HaH」的潜在市场远大于自身保险会员池。</p>
+<hr />
+<h2 id="7-ihomecare-hah">7. 对 iHomeCare 借鉴：支付方主导 HaH 的亚太范本</h2>
+<h3 id="71-amplar">7.1 Amplar 模式的五个核心借鉴</h3>
+<h4 id="1">借鉴 1: 支付方从「被动理赔」到「主动管理」</h4>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">传统保险</th>
+<th style="text-align: left;">Amplar 模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">角色</td>
+<td style="text-align: left;">事后赔付</td>
+<td style="text-align: left;">事前干预+事中服务</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据</td>
+<td style="text-align: left;">理赔数据（滞后）</td>
+<td style="text-align: left;">理赔+临床+远程监测（实时）</td>
+</tr>
+<tr>
+<td style="text-align: left;">客户接触</td>
+<td style="text-align: left;">参保→生病→理赔</td>
+<td style="text-align: left;">持续健康管理</td>
+</tr>
+<tr>
+<td style="text-align: left;">价值定位</td>
+<td style="text-align: left;">「生病时我付钱」</td>
+<td style="text-align: left;">「我让你的会员少生病」</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对 iHomeCare 的启示</strong>: 若能对接支付方（保险公司/政府医保），iHomeCare 的价值主张应从「省床位」扩展到「降理赔」——这才是支付方听得懂的语言。</p>
+<h4 id="2">借鉴 2: 政府合同是最稳定的收入锚</h4>
+<p>My Home Hospital 是 SA Health 独家采购——这意味着：</p>
+<ul>
+<li>长期合同（4年+续约）</li>
+<li>按人头/按条件定价</li>
+<li>不依赖个人消费者的支付意愿</li>
+</ul>
+<p><strong>对 iHomeCare 的启示</strong>: 香港的医院管理局（HA）是最重要的付费方。若能获得医管局合约，商业模式将大幅度稳定。</p>
+<h4 id="3">借鉴 3: 「轻度」到「重度」的光谱覆盖</h4>
+<p>Amplar 从 CareComplete（预防）→ HITH（急性替代）→ iMH（住院心理）→ Transition Care（出院过渡），构建了「健康管理的全光谱」。这允许它：</p>
+<ul>
+<li>早期低成本接触（预防）</li>
+<li>中期替代高成本住院（HITH）</li>
+<li>后期减少再入院（过渡护理）</li>
+</ul>
+<p><strong>对 iHomeCare 的启示</strong>: 不要只做 HITH 单点——考虑「预防→急性→康复」的服务连续体，增加客户粘性。</p>
+<h4 id="4_1">借鉴 4: 技术平台的「自研+外采」混合策略</h4>
+<p>Amplar 不走全自研路线：</p>
+<ul>
+<li><strong>自研/所有</strong>: 核心 RPM 平台、调度系统、数据引擎</li>
+<li><strong>外采</strong>: Amwell SilverCloud（数字心理健康）、Visionflex（远程医疗推车）</li>
+<li><strong>白标</strong>: Amwell Automated Care</li>
+</ul>
+<p><strong>对 iHomeCare 的启示</strong>: 不需要所有技术都自研。核心数据/调度能力自建，成熟临床模块引进即可。</p>
+<h4 id="5_1">借鉴 5: 保险数据是核心竞争力</h4>
+<p>Medibank 210万会员的理赔数据使 Amplar 能做到：</p>
+<ul>
+<li>精准识别高风险人群（谁最可能在 30 天内再入院？）</li>
+<li>个性化预防干预</li>
+<li>实时监测干预效果（理赔曲线是否下降？）</li>
+</ul>
+<p><strong>对 iHomeCare 的启示</strong>: 若能获得保险公司/医管局数据合作，iHomeCare 的 AI 分诊/预警能力将产生质变。</p>
+<h3 id="72-7">7.2 7个维度的直接对标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">对标维度</th>
+<th style="text-align: left;">Amplar Health</th>
+<th style="text-align: left;">iHomeCare 潜在对标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>支付方关系</strong></td>
+<td style="text-align: left;">母公司在体内（Medibank）</td>
+<td style="text-align: left;">需外部合作（保险公司/医管局）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>政府合同</strong></td>
+<td style="text-align: left;">SA Health 独家运营</td>
+<td style="text-align: left;">医管局合约（最重要）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>运营年资</strong></td>
+<td style="text-align: left;">30+ 年</td>
+<td style="text-align: left;">初创期</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>核心技术</strong></td>
+<td style="text-align: left;">自研 RPM + 外采心理健康</td>
+<td style="text-align: left;">自研 AI 分诊 + 远程监测</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>服务光谱</strong></td>
+<td style="text-align: left;">预防 → 急性 → 康复 → 心理</td>
+<td style="text-align: left;">急性 HaH 为主</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据闭环</strong></td>
+<td style="text-align: left;">保险理赔数据 ↔ 临床数据</td>
+<td style="text-align: left;">待建立</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>规模化路径</strong></td>
+<td style="text-align: left;">单州起跑 → 全国扩展</td>
+<td style="text-align: left;">香港 → GBA</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="73">7.3 三点警示</h3>
+<ol>
+<li>
+<p><strong>澳大利亚的「混合支付」为 Amplar 提供了多重收入来源（政府+私保+自付），香港的体系更单一（医管局主导）——iHomeCare 的支付方合作模式需要重新设计</strong></p>
+</li>
+<li>
+<p><strong>Amplar 有 Medibank 210万会员的「压舱石」，iHomeCare 作为独立公司无法一次性获取同等级别的数据/客户池——必须通过「政府合同→验证→私保合作」逐步建立</strong></p>
+</li>
+<li>
+<p><strong>Amplar 30年的品牌积累和监管关系不可复制——iHomeCare 需要更聪明的策略（如技术差异化、GBA 跨境优势）来缩短信任建立周期</strong></p>
+</li>
+</ol>
+<hr />
+<h2 id="_2">维度完备性审计</h2>
+<p>本报告采用精简框架（7个核心维度），各维度覆盖状态：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Medibank 战略定位</td>
+<td style="text-align: left;">✅ 完整</td>
+<td style="text-align: left;">含三阶段演变、战略逻辑、KPMG 报告</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">HITH 监管/支付框架</td>
+<td style="text-align: left;">✅ 完整</td>
+<td style="text-align: left;">含 ABF/MBS/PHI三体系分析、IHACPA进展</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">覆盖规模</td>
+<td style="text-align: left;">✅ 完整</td>
+<td style="text-align: left;">含五大业务线、地理覆盖、员工规模</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">运营模式</td>
+<td style="text-align: left;">✅ 完整</td>
+<td style="text-align: left;">含标准流程、临床团队、技术栈、Amwell合作</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">临床结果</td>
+<td style="text-align: left;">✅ 完整</td>
+<td style="text-align: left;">含同行评审研究、CEO公开数据、心理健康结果</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">数据/财务协同</td>
+<td style="text-align: left;">✅ 完整</td>
+<td style="text-align: left;">含FY2023-2025财务数据、数据闭环、资本配置</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">对 iHomeCare 借鉴</td>
+<td style="text-align: left;">✅ 完整</td>
+<td style="text-align: left;">含五大借鉴、七维对标、三点警示</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_3">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">内容</th>
+<th style="text-align: left;">日期/版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Amplar Health 官网</td>
+<td style="text-align: left;">About Amplar Health</td>
+<td style="text-align: left;">2026.07 访问</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Amplar Health 官网</td>
+<td style="text-align: left;">Amplar Health Home Hospital 页面</td>
+<td style="text-align: left;">2026.07 访问</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Medibank Newsroom</td>
+<td style="text-align: left;">&ldquo;Medibank calls for expansion of hospital care in the home&rdquo;</td>
+<td style="text-align: left;">2024.10</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">KPMG / Medibank</td>
+<td style="text-align: left;">&ldquo;The economic impact of the broader adoption of virtual hospitals in Australia&rdquo;</td>
+<td style="text-align: left;">2024.10</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Medibank FY2025 Annual Report</td>
+<td style="text-align: left;">全年财务报告</td>
+<td style="text-align: left;">2025.08</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Medibank FY2025 Results Presentation</td>
+<td style="text-align: left;">投资者演示</td>
+<td style="text-align: left;">2025.08.28</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">ASX Announcement</td>
+<td style="text-align: left;">&ldquo;Medibank sets new ambition in health&rdquo; (Investor Day)</td>
+<td style="text-align: left;">2025.10.29</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">AFR</td>
+<td style="text-align: left;">&ldquo;Medibank eyes $200m in health earnings amid strategy overhaul&rdquo;</td>
+<td style="text-align: left;">2025.10.28</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">PubMed (ID: 39074838)</td>
+<td style="text-align: left;">&ldquo;Patient experiences and outcomes in a South Australian stand-alone HITH program&rdquo;</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">The Weekly Source</td>
+<td style="text-align: left;">&ldquo;Amplar Health&rsquo;s My Home Hospital a virtual care winner&rdquo; (LEADERS SUMMIT)</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">Amplar Health Newsroom</td>
+<td style="text-align: left;">&ldquo;My Home Hospital service continues&rdquo;</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">Amplar Health Newsroom</td>
+<td style="text-align: left;">&ldquo;Amplar Health and Calvary Health Care announce joint venture transition&rdquo;</td>
+<td style="text-align: left;">2025.02</td>
+</tr>
+<tr>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">Amplar Health Newsroom</td>
+<td style="text-align: left;">&ldquo;Canberra mental health hospital delivers game changing results&rdquo;</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">Amplar Health Newsroom</td>
+<td style="text-align: left;">&ldquo;Medibank grows primary care support with acquisition of Better Medical&rdquo;</td>
+<td style="text-align: left;">2025.11</td>
+</tr>
+<tr>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">Capital Brief</td>
+<td style="text-align: left;">&ldquo;Medibank to buy GP network Better Medical from Livingbridge for $159m&rdquo;</td>
+<td style="text-align: left;">2025.11.05</td>
+</tr>
+<tr>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">Amwell Press Release</td>
+<td style="text-align: left;">&ldquo;Amwell Expands Presence in Australia with Amplar Health Partnership&rdquo;</td>
+<td style="text-align: left;">2024.02.21</td>
+</tr>
+<tr>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">Healthcare IT News</td>
+<td style="text-align: left;">&ldquo;Australia taps Medibank&rsquo;s Amplar Health for virtual aged care nursing trial&rdquo;</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">Informa Connect</td>
+<td style="text-align: left;">&ldquo;What does Amplar Health&rsquo;s new Group Lead have in store&rdquo; (Robert Read interview)</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">Pulse+IT</td>
+<td style="text-align: left;">&ldquo;Expand virtual hospitals and save $1 billion: KPMG report&rdquo;</td>
+<td style="text-align: left;">2024.10</td>
+</tr>
+<tr>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">SMH</td>
+<td style="text-align: left;">&ldquo;Australia could save $7 billion by turning homes into hospitals&rdquo;</td>
+<td style="text-align: left;">2024.10.21</td>
+</tr>
+<tr>
+<td style="text-align: left;">21</td>
+<td style="text-align: left;">Medibank FY2023 Results Media Release</td>
+<td style="text-align: left;">财务对比基线</td>
+<td style="text-align: left;">2023.08</td>
+</tr>
+<tr>
+<td style="text-align: left;">22</td>
+<td style="text-align: left;">IHACPA</td>
+<td style="text-align: left;">&ldquo;Pricing framework for Australian public hospital services 2025-26&rdquo;</td>
+<td style="text-align: left;">2024–2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">23</td>
+<td style="text-align: left;">Visionflex</td>
+<td style="text-align: left;">&ldquo;Visionflex and Amplar Health join forces to transform aged care&rdquo;</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">24</td>
+<td style="text-align: left;">LinkedIn (Amplar Health)</td>
+<td style="text-align: left;">公司主页——员工规模、业务描述</td>
+<td style="text-align: left;">2026.07 访问</td>
+</tr>
+<tr>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">SA Health</td>
+<td style="text-align: left;">My Home Hospital 服务页面</td>
+<td style="text-align: left;">2026.07 访问</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><em>本报告基于公开可获取的英文资料完成。涉及非公开财务/运营数据的部分已标注「推测」或「无可靠公开数据源」。所有财务数据来源为 Medibank ASX 公告及年报。</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

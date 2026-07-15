@@ -1,0 +1,2546 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Birdie — 27 维度公司深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#birdie-27">Birdie — 27 维度公司深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4">D4 — 商业模式架构图</a></li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a></li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a></li>
+<li><a href="#d7">D7 — 财务深度拆解</a></li>
+<li><a href="#d8">D8 — 工作流 / 旅程映射</a></li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构总览</a></li>
+<li><a href="#92">9.2 软件架构深度</a></li>
+<li><a href="#93-iot">9.3 硬件/IoT 设备</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+<li><a href="#96">9.6 技术风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a></li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</a></li>
+<li><a href="#d12">D12 — 盈利模型与路径</a></li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a></li>
+<li><a href="#d14">D14 — 管理层指引与可信度</a></li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1-ai">1. 统一数据模型是 AI 的前提</a></li>
+<li><a href="#2-saas">2. 社区是 SaaS 的隐形护城河</a></li>
+<li><a href="#3-ai">3. AI 安全第一——行业标准尚未建立</a></li>
+<li><a href="#4-ai-ai">4. 免费 AI→付费 AI 的过渡策略</a></li>
+<li><a href="#5">5. &ldquo;从纸张到像素再到智能&rdquo;的十年窗口</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a></li>
+<li><a href="#d18">D18 — 单元经济模型</a></li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略深度评估</a></li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a></li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a><ul>
+<li><a href="#251">25.1 融资历史全览</a></li>
+<li><a href="#252">25.2 投资者质量评估</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271">27.1 客户效率改善指标</a></li>
+<li><a href="#272">27.2 间接临床影响</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#_1">调研空白与后续补充</a></li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_2">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="birdie-27">Birdie — 27 维度公司深度尽调报告</h1>
+<p><strong>调研人</strong>: Kate, VP Research
+<strong>报告日期</strong>: 2026-07-07
+<strong>报告状态</strong>: 终稿</p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<p><strong>验证结论</strong>: ✅ Birdie 属于 <strong>居家护理 SaaS + AI 平台</strong>赛道。</p>
+<p>Birdie 不直接提供护理服务——它是 700+ 护理机构的 B2B SaaS 技术供应商。其核心产品是&rdquo;居家护理界的 Salesforce&rdquo;：统一的数字化平台整合护理管理、排班、财务、评估和家属沟通。2026 年推出 SmartPlans（AI 护理计划生成），标志着从&rdquo;数字化工具&rdquo;向&rdquo;AI 驱动智能平台&rdquo;的跨越。</p>
+<ul>
+<li><strong>对 iHomeCare 的相关性</strong>: 🟢🟢 <strong>高</strong> —— Birdie 展示了如何为分散的居家护理市场提供统一的数字化基础设施。如果 iHomeCare 未来考虑平台化扩展（让其他护理机构基于 iHomeCare 平台运营），Birdie 是最佳参照。</li>
+</ul>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>一句话定位</strong>: Birdie 是英国领先的居家护理 SaaS 平台，为 700+ 护理机构提供统一的数字化运营基础设施——从护理管理到排班、财务、家属沟通和 AI 驱动的护理计划生成。2024 年支持 6,000 万次入户服务，号称&rdquo;居家护理界的 Salesforce&rdquo;。</p>
+<p><strong>核心矛盾</strong>: Birdie 正处在从&rdquo;数字化工具&rdquo;向&rdquo;AI 智能平台&rdquo;的战略转型期——SmartPlans（2026.6）是其首个 AI 产品。如何将 AI 能力从护理计划扩展到预测分析、排班优化等更多场景，同时证明客户愿意为 AI 功能支付溢价，是下一阶段的关键。</p>
+<p><strong>关键数据速览</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立</td>
+<td style="text-align: left;">2017 年</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">伦敦，英国</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">CEO/联合创始人</td>
+<td style="text-align: left;">Max Parmentier</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">收入</td>
+<td style="text-align: left;">$75.7M（2023/2024）</td>
+<td style="text-align: left;">Latka</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工</td>
+<td style="text-align: left;">236 人（2026），从 142（2022）</td>
+<td style="text-align: left;">Latka</td>
+</tr>
+<tr>
+<td style="text-align: left;">总融资</td>
+<td style="text-align: left;">$52M+</td>
+<td style="text-align: left;">TechCrunch / Crunchbase</td>
+</tr>
+<tr>
+<td style="text-align: left;">客户</td>
+<td style="text-align: left;">700+ 护理机构</td>
+<td style="text-align: left;">TechCrunch</td>
+</tr>
+<tr>
+<td style="text-align: left;">平台规模</td>
+<td style="text-align: left;">6,000 万次入户/年（2024）</td>
+<td style="text-align: left;">THIIS / 官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理对象</td>
+<td style="text-align: left;">117,000+ 新护理对象（2024）</td>
+<td style="text-align: left;">THIIS</td>
+</tr>
+<tr>
+<td style="text-align: left;">家属用户</td>
+<td style="text-align: left;">120,000+ 家属 App 用户</td>
+<td style="text-align: left;">THIIS</td>
+</tr>
+<tr>
+<td style="text-align: left;">B-Corp</td>
+<td style="text-align: left;">✅ 认证</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 产品</td>
+<td style="text-align: left;">SmartPlans（2026.6 发布）</td>
+<td style="text-align: left;">官方博客</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>总体判断</strong>: Birdie 是英国居家护理 SaaS 赛道中跑得最快的公司——6,000 万次/年入户规模证明了产品市场匹配。从&rdquo;SaaS 工具&rdquo;向&rdquo;AI 平台&rdquo;的战略转型若能成功，Birdie 将建立更深的数据护城河。对 iHomeCare 而言，Birdie 提供了&rdquo;如何为分散的护理市场构建统一数字基础设施&rdquo;的最佳参照。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: center;">22</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 不适用</td>
+<td style="text-align: center;">2</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<p><strong>基本事实表</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">全称</td>
+<td style="text-align: left;">Birdie Care Services Limited</td>
+</tr>
+<tr>
+<td style="text-align: left;">品牌名</td>
+<td style="text-align: left;">Birdie</td>
+</tr>
+<tr>
+<td style="text-align: left;">成立年份</td>
+<td style="text-align: left;">2017</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">伦敦，英国</td>
+</tr>
+<tr>
+<td style="text-align: left;">联合创始人</td>
+<td style="text-align: left;">Max Parmentier (CEO)、Raj、Abeed、Gwen</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工规模</td>
+<td style="text-align: left;">236 人（2026），从 142（2022）</td>
+</tr>
+<tr>
+<td style="text-align: left;">上市状态</td>
+<td style="text-align: left;">私募，未上市</td>
+</tr>
+<tr>
+<td style="text-align: left;">B-Corp</td>
+<td style="text-align: left;">✅ 认证</td>
+</tr>
+<tr>
+<td style="text-align: left;">行业</td>
+<td style="text-align: left;">HealthTech / Home Care SaaS</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>发展时间线</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">年份</th>
+<th style="text-align: left;">关键事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2017</td>
+<td style="text-align: left;">Max、Raj、Abeed、Gwen 创立 Birdie——使命&rdquo;用技术改善老年人居家生活&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;">2018.5</td>
+<td style="text-align: left;">首个护理管理产品上线</td>
+</tr>
+<tr>
+<td style="text-align: left;">2019.7</td>
+<td style="text-align: left;">家属护理圈 App 发布——让家人实时了解护理情况</td>
+</tr>
+<tr>
+<td style="text-align: left;">2020-2021</td>
+<td style="text-align: left;">Series A $11.5M——Index Ventures 领投；COVID 加速数字化需求</td>
+</tr>
+<tr>
+<td style="text-align: left;">2022.4</td>
+<td style="text-align: left;">排班模块上线</td>
+</tr>
+<tr>
+<td style="text-align: left;">2022.5</td>
+<td style="text-align: left;">数据分析模块上线</td>
+</tr>
+<tr>
+<td style="text-align: left;">2022.6</td>
+<td style="text-align: left;">Series B <strong>$30M</strong>——Sofina 领投，Omers Ventures + Index 跟投</td>
+</tr>
+<tr>
+<td style="text-align: left;">2022.9</td>
+<td style="text-align: left;">财务模块上线</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024.2</td>
+<td style="text-align: left;">Flock 社区上线——&ldquo;社会护理界的社交网络&rdquo;（2,000+ 成员）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">平台支持 6,000 万次入户服务（+100% YoY）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Deloitte EMEA Fast 500 #21；Tech Nation Future Fifty 2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">Sunday Times 100 Tech #23</td>
+</tr>
+<tr>
+<td style="text-align: left;">2026.6</td>
+<td style="text-align: left;"><strong>SmartPlans 发布</strong>——首个 AI 产品（护理计划自动生成）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2026</td>
+<td style="text-align: left;">客户护理机构利润率平均提升 40%，运营效率提升 50%+</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>管理层表</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">姓名</th>
+<th style="text-align: left;">职务</th>
+<th style="text-align: left;">背景要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Max Parmentier</td>
+<td style="text-align: left;">联合创始人 &amp; CEO</td>
+<td style="text-align: left;">创业者——Birdie 前曾在科技和咨询领域工作</td>
+</tr>
+<tr>
+<td style="text-align: left;">Dr Jo Barlow</td>
+<td style="text-align: left;">AI 产品负责人</td>
+<td style="text-align: left;">领导 Birdie AI 团队，负责 SmartPlans 等 AI 产品</td>
+</tr>
+<tr>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">CTO</td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">联合创始人（Raj、Abeed、Gwen）</td>
+<td style="text-align: left;">具体角色未公开</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>股权结构</strong>: 私募公司，未公开 Cap Table。已知投资者：Sofina、Omers Ventures、Index Ventures、Kamet Ventures（AXA 旗下）。</p>
+<p><strong>公司治理</strong>: 私募公司。B-Corp 认证意味着在治理、员工、社区、环境方面达到高标准。</p>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<p><strong>一句话核心逻辑</strong>: Birdie 赌的是&rdquo;居家护理行业需要自己的 Salesforce&rdquo;——一个整合了护理管理、排班、财务、家属沟通和 AI 的统一平台。700+ 护理机构将其核心运营托付给 Birdie 平台，形成高粘性的 SaaS 收入基础。SmartPlans 的发布标志着从&rdquo;记录系统&rdquo;向&rdquo;智能系统&rdquo;的跨越。</p>
+<p><strong>战略差异化要素表</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Birdie 定位</th>
+<th style="text-align: left;">差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">平台架构</td>
+<td style="text-align: left;">统一数据模型——护理+排班+财务+评估+家属，全部打通</td>
+<td style="text-align: left;">竞品通常为单模块或松散集成</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 策略</td>
+<td style="text-align: left;">&ldquo;先建基础，再上 AI&rdquo;——统一数据模型是 AI 的前提</td>
+<td style="text-align: left;">区分于&rdquo;为 AI 而 AI&rdquo;的竞品</td>
+</tr>
+<tr>
+<td style="text-align: left;">社区生态</td>
+<td style="text-align: left;">Flock——2,000+ 护理专业人士社区</td>
+<td style="text-align: left;">竞品无类似社区</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 安全</td>
+<td style="text-align: left;">三层次临床安全模型——高风险问题禁用 AI</td>
+<td style="text-align: left;">行业最严格的 AI 安全标准</td>
+</tr>
+<tr>
+<td style="text-align: left;">B-Corp</td>
+<td style="text-align: left;">认证 B-Corp</td>
+<td style="text-align: left;">社会使命 + 商业并重</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>战略演变三阶段</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">时期</th>
+<th style="text-align: left;">战略重点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Phase 1: 数字化工具</td>
+<td style="text-align: left;">2017-2022</td>
+<td style="text-align: left;">核心模块逐个上线（护理→家属→排班→分析→财务）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 2: 统一平台</td>
+<td style="text-align: left;">2022-2025</td>
+<td style="text-align: left;">所有模块基于统一数据模型深度整合；规模化扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 3: AI 智能平台</td>
+<td style="text-align: left;">2026+</td>
+<td style="text-align: left;">SmartPlans → 预测分析 → AI 排班 → AI 护理决策支持</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<pre><code>┌──────────────────────────────────────────────────────┐
+│               Birdie 统一数据模型（核心）               │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌───────┐│
+│  │ 护理管理  │  │ 排班     │  │ 财务     │  │ 评估  ││
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └───┬───┘│
+└───────┼────────────┼─────────────┼───────────┼─────┘
+        │            │             │           │
+        ▼            ▼             ▼           ▼
+┌──────────────────────────────────────────────────────┐
+│                  AI 智能层（2026+）                    │
+│  ┌──────────────┐  ┌─────────────┐  ┌─────────────┐ │
+│  │ SmartPlans   │  │ 预测分析     │  │ AI 排班      │ │
+│  │ (护理计划AI) │  │ (风险预警)   │  │ (未来)       │ │
+│  └──────────────┘  └─────────────┘  └─────────────┘ │
+└──────────────────────────────────────────────────────┘
+                         │
+        ┌────────────────┼────────────────┐
+        ▼                ▼                ▼
+┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+│ 护工 App     │ │ 护理机构后台 │ │ 家属 App     │
+│ (一线护理记录)│ │ (运营管理)   │ │ (实时可见性) │
+└──────────────┘ └──────────────┘ └──────────────┘
+                         │
+                         ▼
+              ┌──────────────────┐
+              │ 700+ 护理机构客户 │
+              │ (B2B SaaS 订阅)  │
+              └──────────────────┘
+</code></pre>
+<p><strong>价值链定位</strong>: Birdie 位于<strong>技术基础设施层</strong>——为护理机构提供运营系统，不直接提供护理服务。类比：Birdie : 居家护理 = Shopify : 电商。</p>
+<p><strong>战略合作伙伴生态</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">伙伴类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: left;">合作性质</th>
+<th style="text-align: center;">收入贡献</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">护理机构客户</td>
+<td style="text-align: left;">700+ 机构</td>
+<td style="text-align: left;">核心收入来源（SaaS 订阅）</td>
+<td style="text-align: center;">🟢 100%</td>
+</tr>
+<tr>
+<td style="text-align: left;">投资者</td>
+<td style="text-align: left;">Sofina/Omers/Index/Kamet</td>
+<td style="text-align: left;">资本+战略资源</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">IoT 设备商</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">设备数据集成</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">社区</td>
+<td style="text-align: left;">Flock（2,000+ 成员）</td>
+<td style="text-align: left;">生态粘性</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">政府/监管</td>
+<td style="text-align: left;">CQC/NHS Digital</td>
+<td style="text-align: left;">合规标准参与</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">产品线</th>
+<th style="text-align: left;">客户类型</th>
+<th style="text-align: left;">功能</th>
+<th style="text-align: left;">定价模式</th>
+<th style="text-align: center;">上线时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">护理管理</td>
+<td style="text-align: left;">护理机构</td>
+<td style="text-align: left;">护理记录、任务分配、用药管理</td>
+<td style="text-align: left;">SaaS 订阅（按用户/按规模）</td>
+<td style="text-align: center;">2018.5</td>
+</tr>
+<tr>
+<td style="text-align: left;">家属 App</td>
+<td style="text-align: left;">患者家属</td>
+<td style="text-align: left;">实时查看护理情况、照片、更新</td>
+<td style="text-align: left;">含在平台费中</td>
+<td style="text-align: center;">2019.7</td>
+</tr>
+<tr>
+<td style="text-align: left;">排班</td>
+<td style="text-align: left;">护理机构</td>
+<td style="text-align: left;">护工排班、考勤、空缺管理</td>
+<td style="text-align: left;">SaaS 订阅</td>
+<td style="text-align: center;">2022.4</td>
+</tr>
+<tr>
+<td style="text-align: left;">分析</td>
+<td style="text-align: left;">护理机构</td>
+<td style="text-align: left;">运营仪表盘、质量指标、CQC 检查准备</td>
+<td style="text-align: left;">SaaS 订阅</td>
+<td style="text-align: center;">2022.5</td>
+</tr>
+<tr>
+<td style="text-align: left;">财务</td>
+<td style="text-align: left;">护理机构</td>
+<td style="text-align: left;">发票、工资、收款</td>
+<td style="text-align: left;">SaaS 订阅</td>
+<td style="text-align: center;">2022.9</td>
+</tr>
+<tr>
+<td style="text-align: left;">SmartPlans</td>
+<td style="text-align: left;">护理机构</td>
+<td style="text-align: left;">AI 自动生成护理计划（80% 接受率）</td>
+<td style="text-align: left;">2026.6 免费试用→预计额外收费</td>
+<td style="text-align: center;">2026.6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flock 社区</td>
+<td style="text-align: left;">护理专业人士</td>
+<td style="text-align: left;">行业交流、经验分享</td>
+<td style="text-align: left;">免费（生态粘性工具）</td>
+<td style="text-align: center;">2024.2</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>定价参照</strong>: 未公开具体定价。典型居家护理 SaaS 定价为 £50-200/月/护理员或 £500-2,000/月/机构（按规模分级）。Birdie 的&rdquo;护理机构利润率提升 40%&rdquo;叙事支持其定价能力。</p>
+<p><strong>研发与创新管线</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">在研产品/功能</th>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">AI 预测分析</td>
+<td style="text-align: left;">开发中</td>
+<td style="text-align: left;">跌倒/住院风险预警（基于统一数据模型）</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 排班优化</td>
+<td style="text-align: left;">规划中</td>
+<td style="text-align: left;">智能匹配护工与患者</td>
+</tr>
+<tr>
+<td style="text-align: left;">更多 AI 产品</td>
+<td style="text-align: left;">2026 年陆续发布</td>
+<td style="text-align: left;">CEO 称&rdquo;SmartPlans 只是开始&rdquo;</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>专利布局</strong>: 核心 IP 集中在统一数据模型架构和 SmartPlans 的三层次临床安全 AI 设计。具体专利数未公开。</p>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<p><strong>客户结构</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户类别</th>
+<th style="text-align: center;">占比（估）</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">中小型护理机构（&lt;50 护工）</td>
+<td style="text-align: center;">~40-50%</td>
+<td style="text-align: left;">数字化从零开始，粘性极高</td>
+<td style="text-align: left;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">中型护理机构（50-200 护工）</td>
+<td style="text-align: center;">~30-35%</td>
+<td style="text-align: left;">替换旧系统或从纸质升级</td>
+<td style="text-align: left;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">大型护理机构/连锁（200+ 护工）</td>
+<td style="text-align: center;">~15-20%</td>
+<td style="text-align: left;">企业级需求，定制化</td>
+<td style="text-align: left;">↑ 关键增长方向</td>
+</tr>
+<tr>
+<td style="text-align: left;">大型客户标杆</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">Home Instead UK（2025 年选择 Birdie）</td>
+<td style="text-align: left;">🟢 旗舰</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>客户获取渠道</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">渠道</th>
+<th style="text-align: center;">效率</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">B2B 内容营销（博客/指南/白皮书）</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">护理机构数字化指南、行业报告</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flock 社区转介绍</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">2,000+ 护理专业人士→口碑传播</td>
+</tr>
+<tr>
+<td style="text-align: left;">行业展会/会议</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">英国社会护理行业活动</td>
+</tr>
+<tr>
+<td style="text-align: left;">合作伙伴推荐</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">CQC/NHS Digital 生态</td>
+</tr>
+<tr>
+<td style="text-align: left;">直销团队</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">面向中大型机构的 Enterprise 销售</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>集中度风险</strong>: 700+ 客户分散，单一客户收入占比 &lt;2%。但若核心大客户（如 Home Instead UK）流失，品牌影响大于财务影响。</p>
+<p><strong>品牌与声誉</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">评估</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">行业排名</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: left;">Sunday Times 100 Tech #23 / Deloitte Fast 500 #21</td>
+</tr>
+<tr>
+<td style="text-align: left;">客户满意度</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">护理机构利润率提升 40%</td>
+</tr>
+<tr>
+<td style="text-align: left;">B-Corp</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">社会使命验证</td>
+</tr>
+<tr>
+<td style="text-align: left;">NPS</td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">近期声誉事件</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">正面——SmartPlans 发布获行业关注</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ Birdie 为英国私募 SaaS 公司，无公开上市财报。以下数据基于 Latka、TechCrunch、THIIS 等公开渠道。Latka 数据存在矛盾（称&rdquo;无融资&rdquo;但实际已融资 $52M+），已以 TechCrunch 和 Crunchbase 为准。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">2022</th>
+<th style="text-align: center;">2023</th>
+<th style="text-align: center;">2024</th>
+<th style="text-align: center;">2025</th>
+<th style="text-align: center;">2026</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">收入</td>
+<td style="text-align: center;">~$20-30M（估）</td>
+<td style="text-align: center;"><strong>$75.7M</strong></td>
+<td style="text-align: center;">~$75.7M（估）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工数</td>
+<td style="text-align: center;">142</td>
+<td style="text-align: center;">150+</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>236</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">人均收入</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">~$500K</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">融资</td>
+<td style="text-align: center;">$30M Series B</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">平台入户次数</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">~3,000 万</td>
+<td style="text-align: center;"><strong>6,000 万</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>收入增长</strong>: 从 2022 年 ~$20-30M → 2023 $75.7M ≈ <strong>150-280% 增长</strong></p>
+<p><strong>利润状态</strong>: 未公开。作为成长阶段 SaaS 公司，推测尚未实现盈利——Series B 资金主要用于扩张和 AI 研发。</p>
+<p><strong>关键 SaaS 指标</strong>（基于可比公司推算）:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">估算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ARR</td>
+<td style="text-align: left;">~$75-80M</td>
+</tr>
+<tr>
+<td style="text-align: left;">客户数</td>
+<td style="text-align: left;">700+</td>
+</tr>
+<tr>
+<td style="text-align: left;">ARPU</td>
+<td style="text-align: left;">~$100-110K/年/机构</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gross Margin</td>
+<td style="text-align: left;">~70-80%（SaaS 典型）</td>
+</tr>
+<tr>
+<td style="text-align: left;">NDR</td>
+<td style="text-align: left;">未公开——推测 &gt;100%（模块扩展+增购）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8">D8 — 工作流 / 旅程映射</h2>
+<p><strong>护理机构使用 Birdie 的典型工作流</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Phase</th>
+<th style="text-align: left;">动作</th>
+<th style="text-align: left;">Birdie 平台角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Phase 0: 获客</td>
+<td style="text-align: left;">家属联系护理机构</td>
+<td style="text-align: left;">官网/内容营销吸引→试用</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 1: 评估</td>
+<td style="text-align: left;">护理评估员上门评估</td>
+<td style="text-align: left;"><strong>SmartPlans AI</strong> 录音→转录→自动填充评估（省 75% 时间）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 2: 排班</td>
+<td style="text-align: left;">匹配合适护工</td>
+<td style="text-align: left;">排班模块自动匹配+空缺预警</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 3: 日常服务</td>
+<td style="text-align: left;">护工入户提供护理</td>
+<td style="text-align: left;">护工 App——记录生命体征+症状+用药+任务完成</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 4: 家属可见</td>
+<td style="text-align: left;">家属查看护理情况</td>
+<td style="text-align: left;">家属 App——实时更新、照片、沟通</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 5: 质量监测</td>
+<td style="text-align: left;">护理管理者审查</td>
+<td style="text-align: left;">分析仪表盘——CQC 检查准备、质量指标追踪</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 6: 结算</td>
+<td style="text-align: left;">发票+收款</td>
+<td style="text-align: left;">财务模块——自动生成发票+工资计算</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>SmartPlans 工作流细节</strong>（2026.6 发布）:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">步骤</th>
+<th style="text-align: left;">传统方式</th>
+<th style="text-align: left;">SmartPlans</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">评估访谈</td>
+<td style="text-align: left;">1 小时+</td>
+<td style="text-align: left;">1 小时+（不变）</td>
+</tr>
+<tr>
+<td style="text-align: left;">书面整理</td>
+<td style="text-align: left;">2-4 小时</td>
+<td style="text-align: left;"><strong>30 分钟</strong>——AI 自动转录+建议</td>
+</tr>
+<tr>
+<td style="text-align: left;">建议接受率</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"><strong>80%</strong> 直接采纳或小幅修改</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床安全</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">高风险问题禁用 AI；所有答案需人工确认</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构总览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">自研/外采</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. AI 智能层</td>
+<td style="text-align: center;">✅ 2026 上线</td>
+<td style="text-align: left;">自研</td>
+<td style="text-align: left;">SmartPlans（GPT 驱动）+ 预测分析（开发中）</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 应用层</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">自研</td>
+<td style="text-align: left;">护理管理/排班/财务/分析/家属 App</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 统一数据模型</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">自研</td>
+<td style="text-align: left;"><strong>核心差异化</strong>——护理+排班+财务+评估全部打通</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. API/集成层</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">自研</td>
+<td style="text-align: left;">IoT 设备集成 + 第三方互操作</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 云基础设施</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">外采（云平台）</td>
+<td style="text-align: left;">云端部署</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">云原生 SaaS + 统一数据模型（所有模块共享底层数据）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要技术栈</strong></td>
+<td style="text-align: left;">未公开——推测现代 Web 架构（React/Node.js 等）+ 云端</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">IoT 设备集成（具体标准未公开）；开放 API</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">NHS DSPT 合规（客户服务 NHS 患者）；GDPR 合规</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>开发实践</strong></td>
+<td style="text-align: left;">敏捷开发——从 2018 年起持续快速迭代（几乎每季度一个新模块）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件/IoT 设备</h3>
+<p><strong>不适用。</strong> Birdie 是纯软件/SaaS 平台公司，不自研硬件。平台集成第三方可穿戴设备和医疗设备数据。</p>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AI 模型类型</strong></td>
+<td style="text-align: left;">LLM/GPT 驱动（SmartPlans）+ 未来机器学习预测模型</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 应用场景</strong></td>
+<td style="text-align: left;">① SmartPlans：评估对话→自动护理计划（2026.6）② 预测分析（开发中）③ AI 排班（规划中）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>训练数据</strong></td>
+<td style="text-align: left;">6,000 万次入户/年 × 多年的结构化护理数据——基于统一数据模型</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>算法性能</strong></td>
+<td style="text-align: left;">SmartPlans 建议 80% 直接采纳或小幅修改</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 安全模型</strong></td>
+<td style="text-align: left;"><strong>三层次临床安全</strong>：① 高风险临床问题禁用 AI ② 所有 AI 建议需人工确认 ③ 透明可追溯</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 哲学</strong></td>
+<td style="text-align: left;">&ldquo;Visible, explainable, controllable&rdquo;——可见、可解释、可控制</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 团队</strong></td>
+<td style="text-align: left;">专职 AI 团队（Dr Jo Barlow 领衔）——SmartPlans 是其首个产品</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据治理</strong></td>
+<td style="text-align: left;">符合 UK GDPR + NHS 数据标准；B-Corp 治理标准</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>CEO 关于 AI 的关键见解</strong>（SmartPlans 发布会）:</p>
+<blockquote>
+<p>&ldquo;我们之所以能快速、安全地构建 AI，是因为近十年前 Birdie 就建立在统一数据模型之上——护理、排班、财务、评估都在同一基础上。这就是我们能在数月内而非数年内交付 AI 功能的原因。&rdquo;</p>
+</blockquote>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">能力维度</th>
+<th style="text-align: center;">Birdie 状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差异化评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">统一数据模型</td>
+<td style="text-align: center;">🟢 所有模块打通</td>
+<td style="text-align: center;">🟡 多数竞品为松散集成</td>
+<td style="text-align: center;">🟢🟢 核心壁垒</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 安全性</td>
+<td style="text-align: center;">🟢🟢 三层次安全模型</td>
+<td style="text-align: center;">🟡 行业无统一标准</td>
+<td style="text-align: center;">🟢🟢 领先</td>
+</tr>
+<tr>
+<td style="text-align: left;">模块完整度</td>
+<td style="text-align: center;">🟢 全模块覆盖</td>
+<td style="text-align: center;">🟡 多数竞品缺部分模块</td>
+<td style="text-align: center;">🟢 领先</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 能力</td>
+<td style="text-align: center;">🟡 SmartPlans（首个）</td>
+<td style="text-align: center;">🟡 行业早期</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据资产</td>
+<td style="text-align: center;">🟢 6,000 万次入户/年</td>
+<td style="text-align: center;">🟡 取决于客户规模</td>
+<td style="text-align: center;">🟢 护城河</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>技术护城河总体评估</strong>: 🟢 <strong>强</strong>——&ldquo;统一数据模型 × 700+ 客户 × 6,000 万入户/年数据&rdquo; 构成三层技术壁垒。竞品难以复制统一数据模型的架构优势。</p>
+<h3 id="96">9.6 技术风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险类别</th>
+<th style="text-align: center;">严重度</th>
+<th style="text-align: left;">触发条件</th>
+<th style="text-align: left;">缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">AI 临床安全事件</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">SmartPlans 建议错误→护理计划偏差→患者伤害</td>
+<td style="text-align: left;">三层次安全模型 + 人工确认</td>
+</tr>
+<tr>
+<td style="text-align: left;">统一数据模型单点故障</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">平台宕机→700+ 机构运营瘫痪</td>
+<td style="text-align: left;">云冗余 + SLA 保障</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据隐私泄露</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">6,000 万入户/年的敏感健康数据</td>
+<td style="text-align: left;">UK GDPR + NHS DSPT + B-Corp 治理</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 过度依赖第三方 LLM</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">OpenAI API 中断或暴涨</td>
+<td style="text-align: left;">推测多模型策略（未公开）</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术债务</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">2018 年起的代码库→快速迭代的遗留问题</td>
+<td style="text-align: left;">模块化架构缓解</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<p><strong>对标矩阵（Birdie vs 主要竞品）</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;"><strong>Birdie</strong></th>
+<th style="text-align: left;"><strong>Access HSC</strong></th>
+<th style="text-align: left;"><strong>Person Centred Software</strong></th>
+<th style="text-align: left;"><strong>CarePlanner</strong></th>
+<th style="text-align: left;"><strong>AlayaCare</strong> (Canada)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">英国</td>
+<td style="text-align: left;">英国</td>
+<td style="text-align: left;">英国</td>
+<td style="text-align: left;">英国</td>
+<td style="text-align: left;">加拿大</td>
+</tr>
+<tr>
+<td style="text-align: left;">定位</td>
+<td style="text-align: left;">统一平台+AI</td>
+<td style="text-align: left;">大型企业 HSC</td>
+<td style="text-align: left;">护理记录数字化</td>
+<td style="text-align: left;">排班+运营</td>
+<td style="text-align: left;">统一平台</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 能力</td>
+<td style="text-align: left;">🟢 SmartPlans</td>
+<td style="text-align: left;">🟡</td>
+<td style="text-align: left;">🟡</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">统一数据模型</td>
+<td style="text-align: left;">🟢🟢</td>
+<td style="text-align: left;">🟡</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">模块覆盖</td>
+<td style="text-align: left;">🟢 全模块</td>
+<td style="text-align: left;">🟢 全模块</td>
+<td style="text-align: left;">🟡 护理为主</td>
+<td style="text-align: left;">🟡 排班为主</td>
+<td style="text-align: left;">🟢 全模块</td>
+</tr>
+<tr>
+<td style="text-align: left;">客户规模</td>
+<td style="text-align: left;">~700+</td>
+<td style="text-align: left;">~2,000+（估）</td>
+<td style="text-align: left;">~1,000+（估）</td>
+<td style="text-align: left;">~500+（估）</td>
+<td style="text-align: left;">~500+（估）</td>
+</tr>
+<tr>
+<td style="text-align: left;">B-Corp</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Birdie 的独特定位</strong>: 在居家护理 SaaS 市场中，Birdie 通过&rdquo;统一数据模型 + AI 安全领先 + B-Corp 使命&rdquo;三位一体建立差异化。最大的直接竞争对手是 Access HSC（更大的集团背景）和 Person Centred Software（更老牌但单一功能）。</p>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</h2>
+<p><strong>TAM/SAM/渗透率估算</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: left;">计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TAM（英国居家护理机构数字化）</strong></td>
+<td style="text-align: center;">~£500M-1B/年</td>
+<td style="text-align: left;">~10,000 英国居家护理机构 × £50-100K/年 SaaS</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TAM（欧洲居家护理 SaaS）</strong></td>
+<td style="text-align: center;">~€2-5B/年</td>
+<td style="text-align: left;">欧洲大陆市场（已进入西班牙/爱尔兰）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SAM</strong></td>
+<td style="text-align: center;">~£200-400M</td>
+<td style="text-align: left;">中大型机构（&gt;20 护工）——Birdie 的核心目标</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>当前渗透</strong></td>
+<td style="text-align: center;">~$75.7M (£60M)</td>
+<td style="text-align: left;">SAM 渗透率 ~15-30%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>国际 TAM</strong></td>
+<td style="text-align: center;">~$5-10B</td>
+<td style="text-align: left;">全球居家护理数字化市场</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>增长驱动力</strong>:</p>
+<ol>
+<li>居家护理行业从纸质→数字化的结构性转型（目前仅 ~30-40% 数字化）</li>
+<li>从数字化→智能化的第二波升级（AI 功能创造新的付费意愿）</li>
+<li>欧洲大陆市场扩展（西班牙/爱尔兰已进入，法国/德国/北欧在计划中）</li>
+<li>从中小企业向大型企业客户的升级（Home Instead UK 是标杆）</li>
+</ol>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<blockquote>
+<p>⚠️ Birdie 未公开利润数据。以下为基于 SaaS 行业可比公司的推算。</p>
+</blockquote>
+<p><strong>成本结构推算</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">占收入比（估）</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">人员（工程+产品+销售+支持）</td>
+<td style="text-align: center;">50-60%</td>
+<td style="text-align: left;">236 人→伦敦工程人才成本高</td>
+</tr>
+<tr>
+<td style="text-align: left;">云基础设施</td>
+<td style="text-align: center;">8-12%</td>
+<td style="text-align: left;">AWS/GCP + LLM API 调用成本</td>
+</tr>
+<tr>
+<td style="text-align: left;">销售与营销</td>
+<td style="text-align: center;">20-25%</td>
+<td style="text-align: left;">B2B SaaS 典型——内容营销+直销</td>
+</tr>
+<tr>
+<td style="text-align: left;">管理与行政</td>
+<td style="text-align: center;">8-12%</td>
+<td style="text-align: left;">总部+合规</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>估计总成本</strong></td>
+<td style="text-align: center;"><strong>~90-100%</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>估计利润</strong></td>
+<td style="text-align: center;"><strong>~0-10%</strong></td>
+<td style="text-align: left;">推测接近盈亏平衡（成长阶段）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>盈利路径</strong>: </p>
+<ol>
+<li>SaaS 订阅的规模效应（新客户零边际成本）</li>
+<li>AI 功能创造额外 ARPU（SmartPlans 从免费→付费）</li>
+<li>国际市场（欧洲大陆）扩展 ARPU 更高的客户</li>
+<li>向大型企业客户的升级提高 ARPU</li>
+</ol>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期（0-12月）</strong></td>
+<td style="text-align: left;">① SmartPlans 从免费到付费的变现 ② Home Instead UK 标杆效应带来企业客户流 ③ AI 功能矩阵扩展</td>
+<td style="text-align: left;">① AI 竞争（Access HSC 等可能跟进）② 英国护理行业劳动力短缺→客户预算收缩</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期（1-3年）</strong></td>
+<td style="text-align: left;">① 欧洲大陆市场规模化 ② AI 预测分析成为新收入支柱 ③ 从 SaaS 转向数据/AI 平台型估值</td>
+<td style="text-align: left;">① 美国/加拿大竞品（AlayaCare）进入欧洲 ② 大型 EHR 厂商（Epic/Cerner）向下延伸</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">① 全球老龄化不可逆→居家护理需求暴增 ② &ldquo;从纸张到像素再到智能&rdquo;的十年转型窗口</td>
+<td style="text-align: left;">① SaaS 市场竞争激烈→价格战压缩利润 ② AI 监管收紧可能限制医疗 AI</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>法律与诉讼</strong>: 无公开重大诉讼记录。</p>
+<p><strong>宏观敏感性</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">宏观情景</th>
+<th style="text-align: center;">影响</th>
+<th style="text-align: left;">传导机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">经济衰退</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">护理机构预算收缩→SaaS 续约率下降（但居家护理需求刚性）</td>
+</tr>
+<tr>
+<td style="text-align: left;">利率上升</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">私募融资环境恶化→估值压缩</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 监管（UK/EU）</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">三层次安全模型已是最严标准→应对充分</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引与可信度</h2>
+<p><strong>CEO Max Parmentier 核心公开声明</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">声明</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">验证状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">&ldquo;居家护理过去十年在数字化，未来十年在智能化&rdquo;</td>
+<td style="text-align: left;">2026.6</td>
+<td style="text-align: left;">⚠️ 前瞻性判断</td>
+</tr>
+<tr>
+<td style="text-align: left;">&ldquo;我们能在数月内交付 AI 功能因为我们有统一数据模型&rdquo;</td>
+<td style="text-align: left;">2026.6</td>
+<td style="text-align: left;">✅ SmartPlans 已交付</td>
+</tr>
+<tr>
+<td style="text-align: left;">&ldquo;SmartPlans 只是 AI 的开始——更多产品今年上线&rdquo;</td>
+<td style="text-align: left;">2026.6</td>
+<td style="text-align: left;">⏳ 待验证</td>
+</tr>
+<tr>
+<td style="text-align: left;">&ldquo;我们的 AI 是可见、可解释、可控制的&rdquo;</td>
+<td style="text-align: left;">2026.6</td>
+<td style="text-align: left;">✅ 三层次安全模型公开</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>可信度评估</strong>: 🟢 <strong>高</strong>。CEO 的历史声明按期兑现，产品迭代速度（几乎每季度一个新模块）证明执行力。</p>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">估值指标</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">最新估值</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">2022 Series B $30M 后未披露新估值</td>
+</tr>
+<tr>
+<td style="text-align: left;">总融资</td>
+<td style="text-align: left;">$52M+</td>
+<td style="text-align: left;">累计</td>
+</tr>
+<tr>
+<td style="text-align: left;">估值/收入（2023）</td>
+<td style="text-align: left;">估 8-15x</td>
+<td style="text-align: left;">$75.7M 收入 × 高增长 SaaS 倍数</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>合理估值范围</strong></td>
+<td style="text-align: left;"><strong>$600M-$1.1B</strong></td>
+<td style="text-align: left;">基于可比 SaaS 倍数</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>估值判断</strong>: Birdie 若保持 &gt;50% 增长+AI 功能变现验证，有望在 1-2 年内进入独角兽俱乐部（$1B+）。</p>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1-ai">1. 统一数据模型是 AI 的前提</h3>
+<p>Birdie 的核心洞察：<strong>如果没有统一数据模型（护理+排班+财务+评估全部打通），AI 只能是碎片化的噱头</strong>。iHomeCare 应该从第一天就确保所有数据（患者、护理、排班、支付）存储在统一的底层模型上——即使初期只有几十个患者。</p>
+<h3 id="2-saas">2. 社区是 SaaS 的隐形护城河</h3>
+<p>Birdie 的 Flock 社区（2,000+ 成员）创造了不可复制的关系粘性。<strong>iHomeCare 可以考虑建立&rdquo;香港居家医疗专业人士社区&rdquo;</strong>——即使初期规模小，但长期将成为获客和品牌的双重引擎。</p>
+<h3 id="3-ai">3. AI 安全第一——行业标准尚未建立</h3>
+<p>Birdie 的三层次 AI 安全模型（高风险禁用/人工确认/可追溯）可能成为行业标准。<strong>iHomeCare 在引入 AI 时应采用同等标准</strong>，并以此作为与医管局沟通 AI 安全性的框架。</p>
+<h3 id="4-ai-ai">4. 免费 AI→付费 AI 的过渡策略</h3>
+<p>SmartPlans 初期免费试用→收集反馈和数据→验证价值→转为付费功能。<strong>iHomeCare 的 AI 功能可以采用相同的&rdquo;先免费验证价值，再收费&rdquo;策略</strong>。</p>
+<h3 id="5">5. &ldquo;从纸张到像素再到智能&rdquo;的十年窗口</h3>
+<p>英国居家护理行业仅 30-40% 实现真正数字化，香港可能更低。这意味着<strong>iHomeCare 面对的不仅是技术市场，更是&rdquo;教育市场&rdquo;</strong>——需要帮助客户理解数字化和 AI 的价值。</p>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策/监管</th>
+<th style="text-align: left;">内容</th>
+<th style="text-align: left;">对 Birdie 的影响</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">UK GDPR</td>
+<td style="text-align: left;">患者健康数据保护</td>
+<td style="text-align: left;">🟡 合规成本但也是数据护城河</td>
+<td style="text-align: left;">UK Gov</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS DSPT</td>
+<td style="text-align: left;">数据安全和保护工具包</td>
+<td style="text-align: left;">🟢 合规要求</td>
+<td style="text-align: left;">NHS Digital</td>
+</tr>
+<tr>
+<td style="text-align: left;">CQC 数字化</td>
+<td style="text-align: left;">护理质量委员会鼓励数字化记录</td>
+<td style="text-align: left;">🟢 推动客户采购 SaaS</td>
+<td style="text-align: left;">CQC</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 监管（UK）</td>
+<td style="text-align: left;">&ldquo;支持创新&rdquo;框架</td>
+<td style="text-align: left;">🟢 相比 EU AI Act 更宽松</td>
+<td style="text-align: left;">UK Gov</td>
+</tr>
+<tr>
+<td style="text-align: left;">B-Corp 认证</td>
+<td style="text-align: left;">社会与环境绩效标准</td>
+<td style="text-align: left;">🟢 品牌差异化</td>
+<td style="text-align: left;">B Lab</td>
+</tr>
+<tr>
+<td style="text-align: left;">社会护理改革</td>
+<td style="text-align: left;">英国政府 2028 年前报告</td>
+<td style="text-align: left;">🟡 政策不确定性</td>
+<td style="text-align: left;">UK Gov</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<blockquote>
+<p>⚠️ Birdie 未公开具体单元经济。以下为基于行业标准的推算。</p>
+</blockquote>
+<p><strong>典型客户（中型护理机构，50 护工）单元经济</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">收入/成本项</th>
+<th style="text-align: center;">金额（年）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">年 SaaS 订阅费</td>
+<td style="text-align: center;">£30,000-60,000</td>
+<td style="text-align: left;">~£50-100/月/护工</td>
+</tr>
+<tr>
+<td style="text-align: left;">客户获取成本（CAC）</td>
+<td style="text-align: center;">£10,000-20,000</td>
+<td style="text-align: left;">内容营销+销售团队</td>
+</tr>
+<tr>
+<td style="text-align: left;">CAC 回收期</td>
+<td style="text-align: center;">4-8 个月</td>
+<td style="text-align: left;">SaaS 健康标准 ≤12 个月</td>
+</tr>
+<tr>
+<td style="text-align: left;">年客户维护成本</td>
+<td style="text-align: center;">£3,000-5,000</td>
+<td style="text-align: left;">支持+服务器</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>客户年贡献毛利</strong></td>
+<td style="text-align: center;"><strong>£25,000-55,000</strong></td>
+<td style="text-align: left;">毛利率 ~80-90%</td>
+</tr>
+<tr>
+<td style="text-align: left;">LTV</td>
+<td style="text-align: center;">£150,000-300,000</td>
+<td style="text-align: left;">假设 5 年生命周期</td>
+</tr>
+<tr>
+<td style="text-align: left;">LTV/CAC</td>
+<td style="text-align: center;"><strong>7.5-30x</strong></td>
+<td style="text-align: left;">🟢 健康</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>客户效率提升 ROI</strong>（Birdie 宣称）:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">运营时间节省</td>
+<td style="text-align: left;"><strong>50%+</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">利润率提升</td>
+<td style="text-align: left;"><strong>40%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">护理计划编写时间</td>
+<td style="text-align: left;">2-4 小时→<strong>30 分钟</strong>（SmartPlans）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: center;">ARPU（估）</th>
+<th style="text-align: center;">数量（估）</th>
+<th style="text-align: center;">战略优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">A: 大型连锁</td>
+<td style="text-align: left;">200+ 护工，多分支机构，企业级需求</td>
+<td style="text-align: center;">£100-300K/年</td>
+<td style="text-align: center;">~20-50</td>
+<td style="text-align: center;">🔴 最高——ARP 高+品牌效应</td>
+</tr>
+<tr>
+<td style="text-align: left;">B: 中型机构</td>
+<td style="text-align: left;">50-200 护工，数字化意愿强</td>
+<td style="text-align: center;">£30-100K/年</td>
+<td style="text-align: center;">~200-400</td>
+<td style="text-align: center;">🟢 核心——Birdie 的主力市场</td>
+</tr>
+<tr>
+<td style="text-align: left;">C: 小型机构</td>
+<td style="text-align: left;">&lt;50 护工，从纸质→数字化</td>
+<td style="text-align: center;">£5-30K/年</td>
+<td style="text-align: center;">~300-500</td>
+<td style="text-align: center;">🟢 增长——长期价值</td>
+</tr>
+<tr>
+<td style="text-align: left;">D: 欧洲市场</td>
+<td style="text-align: left;">西班牙/爱尔兰/法国/德国</td>
+<td style="text-align: center;">£30-100K/年</td>
+<td style="text-align: center;">新兴</td>
+<td style="text-align: center;">🟢 扩张引擎</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<p><strong>英国居家护理 SaaS 竞争全景</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: left;">模式</th>
+<th style="text-align: center;">客户数（估）</th>
+<th style="text-align: center;">AI</th>
+<th style="text-align: center;">威胁等级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Access HSC</strong></td>
+<td style="text-align: left;">企业级全套</td>
+<td style="text-align: center;">2,000+</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">更大集团背景，但缺乏 AI 创新速度</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Person Centred Software</strong></td>
+<td style="text-align: left;">护理记录</td>
+<td style="text-align: center;">1,000+</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">老牌（2007），功能单一</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CarePlanner</strong></td>
+<td style="text-align: left;">排班+运营</td>
+<td style="text-align: center;">500+</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">排班专精</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Nourish</strong></td>
+<td style="text-align: left;">护理记录</td>
+<td style="text-align: center;">500+</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">细分</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Log my Care</strong></td>
+<td style="text-align: left;">护理记录 App</td>
+<td style="text-align: center;">300+</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">小型</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AlayaCare</strong> (Canada)</td>
+<td style="text-align: left;">统一平台</td>
+<td style="text-align: center;">500+</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">跨大西洋进入风险</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略深度评估</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">区域</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">机会</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">英国</td>
+<td style="text-align: center;">🟢 核心</td>
+<td style="text-align: left;">10,000 护理机构中仅 30-40% 数字化</td>
+<td style="text-align: left;">渗透空间巨大</td>
+</tr>
+<tr>
+<td style="text-align: left;">西班牙</td>
+<td style="text-align: center;">🟢 已进入</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">爱尔兰</td>
+<td style="text-align: center;">🟢 已进入</td>
+<td style="text-align: left;">英语市场，文化相近</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">法国</td>
+<td style="text-align: center;">🟡 计划中</td>
+<td style="text-align: left;">欧洲最大居家护理市场之一</td>
+<td style="text-align: left;">语言/文化壁垒</td>
+</tr>
+<tr>
+<td style="text-align: left;">德国</td>
+<td style="text-align: center;">🟡 计划中</td>
+<td style="text-align: left;">老龄化严重，市场大</td>
+<td style="text-align: left;">语言/文化壁垒</td>
+</tr>
+<tr>
+<td style="text-align: left;">北欧</td>
+<td style="text-align: center;">🟡 计划中</td>
+<td style="text-align: left;">数字化程度高</td>
+<td style="text-align: left;">市场小</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<p><strong>退出路径评估</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">路径</th>
+<th style="text-align: center;">可能性</th>
+<th style="text-align: left;">估值范围</th>
+<th style="text-align: left;">时间窗口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>战略收购（Access Group / Person Centred Software 等）</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">$500M-1B</td>
+<td style="text-align: left;">任何时间</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>战略收购（全球 EHR/SaaS 巨头）</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">$1-2B</td>
+<td style="text-align: left;">2027+</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IPO（伦敦）</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">$1-2B</td>
+<td style="text-align: left;">2028+</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>继续私募</strong></td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">当前路径</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>环境</strong></td>
+<td style="text-align: left;">🟡 中性——纯 SaaS，碳足迹低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社会</strong></td>
+<td style="text-align: left;">🟢🟢 极正面——① B-Corp 认证 ② 改善老年人生活质量 ③ 帮助 700+ 护理机构提效 ④ Flock 社区支持护理专业人士</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理</strong></td>
+<td style="text-align: left;">🟢——B-Corp 标准治理 + 创始人团队稳定</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ESG 争议</strong></td>
+<td style="text-align: left;">无</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">功能制——工程+产品（AI 团队在内）+销售+客户成功+市场+运营</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">236 人（2026），从 142（2022）——<strong>66% 增长</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人才密度</strong></td>
+<td style="text-align: left;">🟢 高——伦敦科技人才市场 + 专职 AI 团队</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🟡 中等——CEO Max Parmentier 是核心，但团队结构成熟</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工留存</strong></td>
+<td style="text-align: left;">未公开——但持续招聘扩张意味着留存良好</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">🟢 B-Corp 使命驱动——&ldquo;帮助老年人活得更长更好&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>多元化与包容</strong></td>
+<td style="text-align: left;">B-Corp 认证要求涵盖，具体未公开</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>组织健康度综合评级</strong>: 🟢 <strong>强</strong>——持续扩张 + B-Corp 文化 + 产品快速迭代证明执行力。</p>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<h3 id="251">25.1 融资历史全览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">轮次</th>
+<th style="text-align: left;">日期</th>
+<th style="text-align: left;">金额</th>
+<th style="text-align: left;">估值</th>
+<th style="text-align: left;">领投方</th>
+<th style="text-align: left;">跟投方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Seed</td>
+<td style="text-align: left;">2017-2019</td>
+<td style="text-align: left;">~$10M（估）</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Kamet Ventures (AXA)</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series A</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: left;">$11.5M</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Index Ventures</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series B</td>
+<td style="text-align: left;">2022.6</td>
+<td style="text-align: left;"><strong>$30M</strong></td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">Sofina</td>
+<td style="text-align: left;">Omers Ventures + Index</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>累计</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>$52M+</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="252">25.2 投资者质量评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">领投方品牌</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: left;">Sofina（比利时顶级投资公司）、Index Ventures（欧洲顶级 VC）、Omers（加拿大养老金）</td>
+</tr>
+<tr>
+<td style="text-align: left;">投后参与度</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">长期资本，不急于退出</td>
+</tr>
+<tr>
+<td style="text-align: left;">后续跟投意愿</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">Index 从 Series A→B 跟投</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">B2B SaaS——内容营销（博客/指南/白皮书）+ 直销 + Flock 社区转介绍</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售团队结构</strong></td>
+<td style="text-align: left;">推测 30-50 人销售+客户成功团队</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC</strong></td>
+<td style="text-align: left;">估 $15-25K/中型客户</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LTV/CAC</strong></td>
+<td style="text-align: left;">估 7.5-30x——非常健康</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC 回收期</strong></td>
+<td style="text-align: left;">估 4-8 个月——健康</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDR</strong></td>
+<td style="text-align: left;">未公开——推测 &gt;100%（模块扩展+交叉销售）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GTM 阶段诊断</strong></td>
+<td style="text-align: left;">🟢 <strong>规模化扩张期</strong>——PMF 已验证，现在扩展客户基数和进入新市场</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<blockquote>
+<p>⚠️ Birdie 是技术平台供应商，不直接提供临床护理服务。临床结局取决于使用 Birdie 的护理机构。</p>
+</blockquote>
+<h3 id="271">27.1 客户效率改善指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">效果</th>
+<th style="text-align: left;">数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">护理机构运营时间节省</td>
+<td style="text-align: center;"><strong>50%+</strong></td>
+<td style="text-align: left;">Birdie 2024 Year in Review</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理机构利润率提升</td>
+<td style="text-align: center;"><strong>40%</strong></td>
+<td style="text-align: left;">Birdie 2024 Year in Review</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理计划编写时间</td>
+<td style="text-align: center;">2-4 小时→<strong>30 分钟</strong></td>
+<td style="text-align: left;">SmartPlans 发布</td>
+</tr>
+<tr>
+<td style="text-align: left;">SmartPlans 建议采纳率</td>
+<td style="text-align: center;"><strong>80%</strong></td>
+<td style="text-align: left;">SmartPlans 发布</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="272">27.2 间接临床影响</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">影响维度</th>
+<th style="text-align: left;">逻辑链</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">护理质量</td>
+<td style="text-align: left;">数字化记录→更完整的信息→更精准的护理→更好的患者结局</td>
+</tr>
+<tr>
+<td style="text-align: left;">家属参与</td>
+<td style="text-align: left;">家属 App 实时可见→家庭支持增强→患者心理/社会健康改善</td>
+</tr>
+<tr>
+<td style="text-align: left;">CQC 检查</td>
+<td style="text-align: left;">分析仪表盘→检查准备度提升→更好的评级</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理连续性</td>
+<td style="text-align: left;">排班优化→减少护工空缺→更一致的护理体验</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<p><strong>证据强度总体评级</strong>: 🟡 <strong>中等（间接）</strong>。Birdie 的&rdquo;有效性&rdquo;主要通过客户运营指标（利润率提升 40%、时间节省 50%）而非患者临床结局指标。作为 SaaS 平台，其临床影响是间接的。</p>
+<hr />
+<h2 id="_1">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">精确利润/亏损数据</td>
+<td style="text-align: left;">Companies House 最新年报</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Cap Table 详细结构（创始人持股）</td>
+<td style="text-align: left;">非上市——难以获取</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">客户续约率/NDR/Churn</td>
+<td style="text-align: left;">一手调研</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">欧洲市场（西班牙/爱尔兰）具体收入</td>
+<td style="text-align: left;">一手调研</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">SmartPlans 付费转化率</td>
+<td style="text-align: left;">等待官方披露</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">AI 预测分析（开发中）上线时间</td>
+<td style="text-align: left;">等待官方公告</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">员工满意度/文化健康度</td>
+<td style="text-align: left;">Glassdoor/LinkedIn</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">D0 — 赛道验证</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">居家护理 SaaS + AI</td>
+</tr>
+<tr>
+<td style="text-align: left;">D1 — 执行摘要</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D2 — 公司全貌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D3 — 战略定位</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D4 — 商业模式</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D5 — 产品线 &amp; 定价</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D6 — 客户与支付方</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D7 — 财务拆解</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">私募 SaaS，详细利润未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">D8 — 工作流映射</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D9 — 技术深度评估</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D10 — 竞争格局</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D11 — TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D12 — 盈利模型</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">基于 SaaS 可比推算</td>
+</tr>
+<tr>
+<td style="text-align: left;">D13 — 机遇与风险</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D14 — 管理层指引</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D15 — 估值对比</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">估值未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">D16 — 战略建议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D17 — 政策与监管</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D18 — 单元经济</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">基于行业推算</td>
+</tr>
+<tr>
+<td style="text-align: left;">D19 — 客户细分</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D20 — 竞品地图</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D21 — 跨境战略</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D22 — 退出分析</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D23 — ESG</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D24 — 组织与人才</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D25 — 融资/Cap Table</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D26 — GTM 效率</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D27 — 临床质量</td>
+<td style="text-align: center;">❌ 不适用</td>
+<td style="text-align: left;">SaaS 平台——不直接提供临床服务</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: center;">22</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: center;">4（D7/D12/D15/D18）</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 不适用</td>
+<td style="text-align: center;">1（D27——SaaS 平台不直接提供临床服务）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总计</strong></td>
+<td style="text-align: center;"><strong>27</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_2">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">TechCrunch</td>
+<td style="text-align: left;">Social care SaaS maker Birdie tops up with $30M</td>
+<td style="text-align: left;">2022.6.28</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Birdie 官方</td>
+<td style="text-align: left;">About Us</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Birdie 官方</td>
+<td style="text-align: left;">SmartPlans launch announcement</td>
+<td style="text-align: left;">2026.6.9</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Birdie 官方</td>
+<td style="text-align: left;">How Birdie&rsquo;s building responsible AI for social care</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Birdie 官方</td>
+<td style="text-align: left;">Year in Review 2024</td>
+<td style="text-align: left;">2025.1</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">THIIS Magazine</td>
+<td style="text-align: left;">Birdie reveals 40% increase in profit using smart care tech</td>
+<td style="text-align: left;">2025.1.30</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">THIIS Magazine</td>
+<td style="text-align: left;">Smart tech platform Birdie delivers 23 million home care visits</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Latka</td>
+<td style="text-align: left;">Birdie Home Care Software Revenue &amp; Valuation</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">Eightception</td>
+<td style="text-align: left;">Birdie Startup Case Study</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">PR Newswire</td>
+<td style="text-align: left;">Birdie raises $30M Series B</td>
+<td style="text-align: left;">2022</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">Crunchbase</td>
+<td style="text-align: left;">Birdie — Company Profile &amp; Funding</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">CureTalent</td>
+<td style="text-align: left;">Home Instead Selects Birdie</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">CareTalk Business</td>
+<td style="text-align: left;">Cera becomes UK&rsquo;s largest domiciliary care provider</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">Alexander Jarvis</td>
+<td style="text-align: left;">Birdie Pitch Deck to Raise $11.5M Series-A</td>
+<td style="text-align: left;">2021</td>
+</tr>
+<tr>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">Sunday Times</td>
+<td style="text-align: left;">100 Tech 2025 (#23 Birdie)</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">Deloitte</td>
+<td style="text-align: left;">EMEA Fast 500 (#21 Birdie)</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">Tech Nation</td>
+<td style="text-align: left;">Future Fifty 2024 cohort</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">Access Group</td>
+<td style="text-align: left;">Access HSC vs Birdie comparison</td>
+<td style="text-align: left;">2026</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><em>报告终</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

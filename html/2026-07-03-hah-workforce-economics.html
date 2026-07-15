@@ -1,0 +1,1695 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HaH 人力经济学模型</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">HaH 人力经济学模型</a><ul>
+<li><a href="#_1">执行摘要</a></li>
+<li><a href="#1-nurse-to-patient-ratio">1. 各模型人护比（Nurse-to-Patient Ratio）</a><ul>
+<li><a href="#11">1.1 横向对比</a></li>
+<li><a href="#12">1.2 与传统医院对比</a></li>
+</ul>
+</li>
+<li><a href="#2-skill-mix">2. Skill Mix（临床团队配比）</a><ul>
+<li><a href="#21-skill-mix">2.1 各模型 Skill Mix 对比</a></li>
+<li><a href="#22-skill-mix">2.2 Skill Mix 策略分析</a></li>
+<li><a href="#23-20242025">2.3 各类人员年薪基准（美国，2024–2025）</a></li>
+</ul>
+</li>
+<li><a href="#3-shift-on-call">3. 排班逻辑（Shift &amp; On-Call 模式）</a><ul>
+<li><a href="#31">3.1 三层次排班模型</a></li>
+<li><a href="#32">3.2 各模型排班特点</a></li>
+<li><a href="#33-12h-vs-8h">3.3 12h vs 8h 排班的经济学</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 每患者日均护理时数</a><ul>
+<li><a href="#41">4.1 各模型对比</a></li>
+<li><a href="#42">4.2 与传统医院对比</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 人力成本占比总运营成本</a><ul>
+<li><a href="#51">5.1 各模型估算</a></li>
+<li><a href="#52-hah-atrium">5.2 HaH 人力成本结构拆解（Atrium 模型推算）</a></li>
+<li><a href="#53-aha-20242025">5.3 与医院对比（AHA 2024–2025 数据）</a></li>
+</ul>
+</li>
+<li><a href="#6-community-paramedic">6. 社区急救员（Community Paramedic）的角色和成本</a><ul>
+<li><a href="#61">6.1 角色定义</a></li>
+<li><a href="#62">6.2 成本效益分析</a></li>
+<li><a href="#63-atrium-health-cp">6.3 Atrium Health CP 模型案例</a></li>
+</ul>
+</li>
+<li><a href="#7-rn-burnout">7. RN Burnout / 流失率数据</a><ul>
+<li><a href="#71">7.1 美国护理行业基准</a></li>
+<li><a href="#72-rn">7.2 RN 流失成本</a></li>
+<li><a href="#73-hah">7.3 HaH 环境中的特殊因素</a></li>
+<li><a href="#74-rn">7.4 居家护理 RN 流失的特殊性</a></li>
+</ul>
+</li>
+<li><a href="#8">8. 培训投入（每位临床人员的初始培训天数+成本）</a><ul>
+<li><a href="#81">8.1 各角色培训基准</a></li>
+<li><a href="#82">8.2 与传统医院对比</a></li>
+<li><a href="#83-hah-mount-sinai">8.3 HaH 培训内容框架（Mount Sinai 公开指南）</a></li>
+</ul>
+</li>
+<li><a href="#9-it">9. 各模型的间接成本率对比（管理层+行政+IT/总成本）</a><ul>
+<li><a href="#91">9.1 间接成本定义</a></li>
+<li><a href="#92">9.2 横向对比</a></li>
+<li><a href="#93">9.3 间接成本结构对比</a></li>
+<li><a href="#94">9.4 关键洞察</a></li>
+</ul>
+</li>
+<li><a href="#10-fte">10. 人力效率指标（每 FTE 服务患者数 / 每日访视数）</a><ul>
+<li><a href="#101">10.1 核心效率指标对比</a></li>
+<li><a href="#102">10.2 居家护理行业生产力基准</a></li>
+<li><a href="#103-hah">10.3 HaH 特有的效率因素</a></li>
+<li><a href="#104">10.4 效率优化路径</a></li>
+</ul>
+</li>
+<li><a href="#11_1">11. 综合人力经济模型总结</a><ul>
+<li><a href="#111-hah-vs-adc100">11.1 HaH vs 传统医院人力成本对比（标准化每 ADC=100）</a></li>
+<li><a href="#112">11.2 各模型人力经济学评分</a></li>
+<li><a href="#113-ihomecare">11.3 对 iHomeCare 的关键启示</a></li>
+</ul>
+</li>
+<li><a href="#12_1">12. 数据来源与局限性</a><ul>
+<li><a href="#_2">来源层级</a></li>
+<li><a href="#_3">关键局限性</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">HaH 人力经济学模型</h1>
+<p><strong>分析师：Kenneth Ye</strong>
+<strong>报告日期：2026 年 7 月 3 日</strong>
+<strong>分类：运营模型 / 人力经济学</strong>
+<strong>覆盖范围：美国 Hospital at Home 主要模型横向对比 + 全球对标</strong></p>
+<hr />
+<h2 id="_1">执行摘要</h2>
+<p>Hospital at Home（HaH）的人力经济学是决定模型能否规模化的核心变量。与传统医院相比，HaH 通过<strong>社区急救员（Community Paramedic）替代部分 RN</strong>、<strong>虚拟指挥中心集中化管理</strong>、<strong>居家环境降低间接成本</strong>三条路径，实现结构性人力成本优势。</p>
+<p>本报告覆盖 10 个维度的人力经济学分析，横向对比 <strong>Atrium Health、Contessa Health、DispatchHealth、Mass General Brigham（MGB）、Mayo Clinic、Mount Sinai</strong> 六大模型的劳动力配置，并引入 <strong>Buurtzorg（荷兰）</strong> 作为低成本人力模型的国际对标。</p>
+<p><strong>核心发现：</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>发现</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最佳人护比区间</td>
+<td>RN 1:4–6（日间），夜班 1:8–12（远程监控）</td>
+</tr>
+<tr>
+<td>人力成本占比</td>
+<td>HaH 55–65% vs 传统医院 60–70%（AHA 2025）</td>
+</tr>
+<tr>
+<td>RN 年流失率</td>
+<td>传统医院 ~20%，居家护理 ~27–30%（2024 数据）</td>
+</tr>
+<tr>
+<td>每 FTE 日均访视</td>
+<td>4.5–6.0（居家护理行业基准）</td>
+</tr>
+<tr>
+<td>社区急救员成本</td>
+<td>约为 RN 的 50–65%</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="1-nurse-to-patient-ratio">1. 各模型人护比（Nurse-to-Patient Ratio）</h2>
+<h3 id="11">1.1 横向对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>日均患者数 (ADC)</th>
+<th>RN/患者比 (日间)</th>
+<th>夜间覆盖模式</th>
+<th>总临床 FTE/ADC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Atrium Health HaH</strong></td>
+<td>80–100</td>
+<td>1:5–6（社区急救员+RN）</td>
+<td>24/7 虚拟 RN + 指挥中心</td>
+<td>~0.6–0.8</td>
+</tr>
+<tr>
+<td><strong>MGB Home Hospital</strong></td>
+<td>25–33</td>
+<td>1:4–5</td>
+<td>24/7 虚拟监控 + on-call</td>
+<td>~0.8–1.0</td>
+</tr>
+<tr>
+<td><strong>Mount Sinai HaH</strong></td>
+<td>~20–30</td>
+<td>1:4–5</td>
+<td>24/7 NP/MD 值班 + RN on-call</td>
+<td>~0.7–0.9</td>
+</tr>
+<tr>
+<td><strong>Contessa Recovery Care</strong></td>
+<td>因合作伙伴而异</td>
+<td>1:5–6（虚拟+上门组合）</td>
+<td>24/7 虚拟指挥中心</td>
+<td>~0.5–0.7</td>
+</tr>
+<tr>
+<td><strong>DispatchHealth</strong></td>
+<td>N/A（按需上门）</td>
+<td>每 NP/PA 日均 6–8 次上门</td>
+<td>N/A</td>
+<td>~0.3–0.5（仅日间）</td>
+</tr>
+<tr>
+<td><strong>Mayo Advanced Care at Home</strong></td>
+<td>「未公开」</td>
+<td>1:4–5（推测）</td>
+<td>24/7 Medically Home 指挥中心</td>
+<td>~0.7–0.9</td>
+</tr>
+<tr>
+<td><strong>Buurtzorg（荷兰）</strong></td>
+<td>每团队 50–60 患者</td>
+<td>1:6–8（社区护士，非急性）</td>
+<td>On-call 轮值</td>
+<td>~0.2–0.3</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="12">1.2 与传统医院对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>传统医院人护比</th>
+<th>HaH 等效人护比</th>
+<th>差异说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通内科病房</td>
+<td>1:4–6（RN）</td>
+<td>1:5–8（RN + 急救员混合）</td>
+<td>HaH 依靠 RPM 降低直接观察需求</td>
+</tr>
+<tr>
+<td>ICU/Step-down</td>
+<td>1:1–2</td>
+<td>HaH 不收治 ICU 级患者</td>
+<td>入组标准自动过滤</td>
+</tr>
+<tr>
+<td>夜班</td>
+<td>1:6–8（传统）</td>
+<td>1:8–12（虚拟监控）</td>
+<td>HaH 虚拟监控大幅降低夜班人力</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关键洞察：</strong> HaH 通过 RPM 远程监控 + 虚拟查房，将传统 1:4–6 的人护比扩展至 1:5–8，夜间差距更显著（1:8–12 vs 1:6–8）。等效节省 25–40% 的护理人力。</p>
+<hr />
+<h2 id="2-skill-mix">2. Skill Mix（临床团队配比）</h2>
+<h3 id="21-skill-mix">2.1 各模型 Skill Mix 对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>MD/NP/PA</th>
+<th>RN</th>
+<th>LPN/LVN</th>
+<th>社区急救员</th>
+<th>SW/PT/OT/其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Atrium Health</strong></td>
+<td>10–15%</td>
+<td>30–40%</td>
+<td>—</td>
+<td>35–45%</td>
+<td>5–10%</td>
+</tr>
+<tr>
+<td><strong>MGB Home Hospital</strong></td>
+<td>15–20%</td>
+<td>50–60%</td>
+<td>5–10%</td>
+<td>10–15%</td>
+<td>10–15%</td>
+</tr>
+<tr>
+<td><strong>Mount Sinai</strong></td>
+<td>20–25%（NP+MD 共担 Lead）</td>
+<td>45–55%</td>
+<td>—</td>
+<td>10–15%</td>
+<td>10–15%</td>
+</tr>
+<tr>
+<td><strong>Contessa</strong></td>
+<td>15–20%</td>
+<td>40–50%</td>
+<td>5–10%</td>
+<td>10–15%</td>
+<td>10–15%</td>
+</tr>
+<tr>
+<td><strong>DispatchHealth</strong></td>
+<td>30–40%（NP/PA 主导）</td>
+<td>—</td>
+<td>—</td>
+<td>40–50%（EMT）</td>
+<td>10–20%</td>
+</tr>
+<tr>
+<td><strong>Buurtzorg</strong></td>
+<td>5–10%（社区护士自主管理）</td>
+<td>85–90%（含社区护士）</td>
+<td>—</td>
+<td>—</td>
+<td>5%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="22-skill-mix">2.2 Skill Mix 策略分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>策略</th>
+<th>代表模型</th>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>社区急救员重配</strong></td>
+<td>Atrium Health</td>
+<td>人力成本降低 25–35%；急救员上门效率高</td>
+<td>复杂临床判断受限；监管因地而异</td>
+</tr>
+<tr>
+<td><strong>NP 主导</strong></td>
+<td>Mount Sinai</td>
+<td>降低 MD 成本；NP 可独立决策</td>
+<td>NP 供给有限；薪资 $120–150K</td>
+</tr>
+<tr>
+<td><strong>纯 RN 模型</strong></td>
+<td>MGB</td>
+<td>最高临床质量；适合学术医学中心</td>
+<td>人力成本最高</td>
+</tr>
+<tr>
+<td><strong>NP/EMT 混合</strong></td>
+<td>DispatchHealth</td>
+<td>极低人力成本；快速响应</td>
+<td>非真正 HaH（更接近高级紧急护理）</td>
+</tr>
+<tr>
+<td><strong>社区护士自主</strong></td>
+<td>Buurtzorg</td>
+<td>极低管理层成本；高工作满意度</td>
+<td>不适合急性 HaH；仅适用低急性居家护理</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="23-20242025">2.3 各类人员年薪基准（美国，2024–2025）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>年薪范围 (USD)</th>
+<th>时薪约当</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MD（HaH 医学主任）</td>
+<td>$250,000–350,000</td>
+<td>$120–170/h</td>
+</tr>
+<tr>
+<td>NP（Nurse Practitioner）</td>
+<td>$120,000–150,000</td>
+<td>$58–72/h</td>
+</tr>
+<tr>
+<td>PA（Physician Assistant）</td>
+<td>$115,000–140,000</td>
+<td>$55–67/h</td>
+</tr>
+<tr>
+<td>RN（Registered Nurse）</td>
+<td>$80,000–110,000</td>
+<td>$38–53/h</td>
+</tr>
+<tr>
+<td>LPN/LVN</td>
+<td>$50,000–65,000</td>
+<td>$24–31/h</td>
+</tr>
+<tr>
+<td>Community Paramedic</td>
+<td>$45,000–65,000</td>
+<td>$22–31/h</td>
+</tr>
+<tr>
+<td>EMT</td>
+<td>$35,000–50,000</td>
+<td>$17–24/h</td>
+</tr>
+<tr>
+<td>SW（Social Worker）</td>
+<td>$60,000–85,000</td>
+<td>$29–41/h</td>
+</tr>
+<tr>
+<td>PT/OT</td>
+<td>$85,000–105,000</td>
+<td>$41–50/h</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="3-shift-on-call">3. 排班逻辑（Shift &amp; On-Call 模式）</h2>
+<h3 id="31">3.1 三层次排班模型</h3>
+<pre><code>┌──────────────────────────────────────────────┐
+│              HaH 三层排班架构                   │
+│                                               │
+│  Layer 1: 日间上门 (07:00–19:00)                │
+│  · 2 次/日：AM 轮 (07:00–11:00)                │
+│              PM 轮 (15:00–19:00)               │
+│  · 12h 覆盖（Atrium/MGB）/ 8h 覆盖（Mount Sinai）│
+│  · 每 RN/急救员：4–6 患者/日                     │
+│                                               │
+│  Layer 2: 虚拟指挥中心 (24/7)                    │
+│  · 三班倒：07–15 / 15–23 / 23–07               │
+│  · 每 RN 监控：12–20 患者                        │
+│  · MD/NP 值班：on-call 或虚拟驻场                │
+│                                               │
+│  Layer 3: 夜间 On-Call (19:00–07:00)            │
+│  · Atrium: 虚拟 RN + 按需上门急救员               │
+│  · MGB: 虚拟 RN + on-call RN 可上门              │
+│  · Contessa: 24/7 虚拟 RN + 当地合作急救         │
+└──────────────────────────────────────────────┘
+</code></pre>
+<h3 id="32">3.2 各模型排班特点</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>日间模式</th>
+<th>夜间模式</th>
+<th>On-Call 响应</th>
+<th>周末安排</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Atrium</strong></td>
+<td>12h (07–19)，自宅出发直达患者</td>
+<td>虚拟 RN + 急救员 on-call</td>
+<td>&lt;30 min 上门（如需）</td>
+<td>轮班制，与平日同</td>
+</tr>
+<tr>
+<td><strong>MGB</strong></td>
+<td>8–10h，部分从指挥中心出发</td>
+<td>虚拟 RN + 上门 RN on-call</td>
+<td>&lt;60 min 上门</td>
+<td>减员（~70% 平日）</td>
+</tr>
+<tr>
+<td><strong>Mount Sinai</strong></td>
+<td>8h 班次，NP/MD 共享 Lead</td>
+<td>24/7 NP/MD 电话值班</td>
+<td>电话优先，上门按需</td>
+<td>减员轮班</td>
+</tr>
+<tr>
+<td><strong>Contessa</strong></td>
+<td>8–10h，虚拟+上门混合</td>
+<td>24/7 虚拟 RN + 当地急救合作</td>
+<td>按 SLA</td>
+<td>标准覆盖</td>
+</tr>
+<tr>
+<td><strong>DispatchHealth</strong></td>
+<td>8–12h（按需响应）</td>
+<td>非 24/7（部分市场）</td>
+<td>N/A</td>
+<td>有限覆盖</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="33-12h-vs-8h">3.3 12h vs 8h 排班的经济学</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>12h 排班</th>
+<th>8h 排班</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>交接班次数</td>
+<td>2 次/日</td>
+<td>3 次/日</td>
+</tr>
+<tr>
+<td>人力需求</td>
+<td>2 组/24h</td>
+<td>3 组/24h</td>
+</tr>
+<tr>
+<td>人力成本节省</td>
+<td>基线</td>
+<td>+30–50%（排班效率损失）</td>
+</tr>
+<tr>
+<td>护士满意度</td>
+<td>偏好（更多连续休息日）</td>
+<td>部分偏好（疲劳度低）</td>
+</tr>
+<tr>
+<td>患者安全</td>
+<td>后段疲劳风险 ↑</td>
+<td>疲劳度更均匀</td>
+</tr>
+<tr>
+<td><strong>HaH 适用性</strong></td>
+<td>✅ <strong>Atrium/MGB</strong> 首选</td>
+<td>Mount Sinai 采用</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>研究证据：</strong> Dall&rsquo;Ora et al (2015) 对 12 国 31,627 名 RN 的调查发现，12h 排班护士的职业倦怠和不满率显著高于 8h 排班。但 HaH 环境中，护士从自宅出发且每日仅 4–6 次上门（vs 传统病房持续护理），疲劳风险低于传统医院。</p>
+<hr />
+<h2 id="4">4. 每患者日均护理时数</h2>
+<h3 id="41">4.1 各模型对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>日均直接上门时数</th>
+<th>日均虚拟护理时数</th>
+<th>总护理时数/患者/日</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Atrium Health</strong></td>
+<td>0.8–1.2h（2 次 × 30min）</td>
+<td>0.3–0.5h（RPM + 虚拟查房）</td>
+<td>1.1–1.7h</td>
+</tr>
+<tr>
+<td><strong>MGB</strong></td>
+<td>1.0–1.5h（2–3 次 × 30–40min）</td>
+<td>0.3–0.5h</td>
+<td>1.3–2.0h</td>
+</tr>
+<tr>
+<td><strong>Mount Sinai</strong></td>
+<td>1.0–1.5h（含 NP 查房）</td>
+<td>0.3–0.5h</td>
+<td>1.3–2.0h</td>
+</tr>
+<tr>
+<td><strong>DispatchHealth</strong></td>
+<td>0.5–0.8h（单次按需上门）</td>
+<td>0.1–0.2h</td>
+<td>0.6–1.0h</td>
+</tr>
+<tr>
+<td><strong>传统医院内科</strong></td>
+<td>3.0–4.0h（直接护理）</td>
+<td>—</td>
+<td>3.0–4.0h</td>
+</tr>
+<tr>
+<td><strong>CMS 最低标准</strong></td>
+<td>—</td>
+<td>—</td>
+<td>3.48 HPRD（护理院标准，2024 规则）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="42">4.2 与传统医院对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>传统医院内科</th>
+<th>HaH（中位数）</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日均直接护理时数</td>
+<td>3.0–4.0h</td>
+<td>1.0–1.5h</td>
+<td><strong>-60%</strong></td>
+</tr>
+<tr>
+<td>日均间接护理时数（文档/协调）</td>
+<td>1.0–1.5h</td>
+<td>0.5–0.8h</td>
+<td><strong>-50%</strong></td>
+</tr>
+<tr>
+<td>患者自助/家属辅助</td>
+<td>少量</td>
+<td>显著（家属参与护理）</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关键洞察：</strong> HaH 人均护理时数比传统医院低 50–60%，原因包括：(1) RPM 替代持续床边观察；(2) 患者自身和家属参与护理；(3) 排除高急性 ICU 级患者；(4) 无物理转运/病房管理等 overhead 活动。</p>
+<hr />
+<h2 id="5">5. 人力成本占比总运营成本</h2>
+<h3 id="51">5.1 各模型估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>人力成本占比</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>传统医院</strong>（AHA 2025）</td>
+<td><strong>60–70%</strong></td>
+<td>美国医院中位数；含合同工</td>
+</tr>
+<tr>
+<td><strong>Atrium Health HaH</strong></td>
+<td><strong>55–65%</strong>（推算）</td>
+<td>社区急救员模型降低 5–10pp</td>
+</tr>
+<tr>
+<td><strong>MGB Home Hospital</strong></td>
+<td><strong>60–68%</strong></td>
+<td>RN 重模型，接近传统</td>
+</tr>
+<tr>
+<td><strong>DispatchHealth</strong></td>
+<td><strong>50–55%</strong></td>
+<td>轻资产 + NP/EMT 主导</td>
+</tr>
+<tr>
+<td><strong>HaH 行业中位数</strong></td>
+<td><strong>55–65%</strong></td>
+<td>低于传统医院 5–10pp</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52-hah-atrium">5.2 HaH 人力成本结构拆解（Atrium 模型推算）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>成本项</th>
+<th>占比总人力成本</th>
+<th>占营收估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>社区急救员（一线上门）</td>
+<td>25–30%</td>
+<td>14–20%</td>
+</tr>
+<tr>
+<td>RN（上门+虚拟指挥中心）</td>
+<td>30–35%</td>
+<td>17–23%</td>
+</tr>
+<tr>
+<td>MD/NP（虚拟查房+监督）</td>
+<td>15–20%</td>
+<td>8–13%</td>
+</tr>
+<tr>
+<td>指挥中心运营（含 IT 支持）</td>
+<td>10–15%</td>
+<td>6–10%</td>
+</tr>
+<tr>
+<td>管理层+行政</td>
+<td>5–10%</td>
+<td>3–7%</td>
+</tr>
+<tr>
+<td><strong>总人力成本</strong></td>
+<td><strong>100%</strong></td>
+<td><strong>55–65%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="53-aha-20242025">5.3 与医院对比（AHA 2024–2025 数据）</h3>
+<ul>
+<li>美国医院中位数：工资+福利占运营成本 <strong>56.1%</strong>（AHA 2025 Costs of Caring）</li>
+<li>医院平均时薪（2024.6 BLS）：<strong>$67.64/h</strong>（含福利）</li>
+<li>2022–2024 年医院薪资增长：<strong>+8.2%</strong>（中位数 FTE 薪资 $79,500 → $86,003）</li>
+<li>2023 年美国医院总劳动支出：<strong>$839B</strong>，其中合同工 <strong>$51.1B</strong></li>
+</ul>
+<hr />
+<h2 id="6-community-paramedic">6. 社区急救员（Community Paramedic）的角色和成本</h2>
+<h3 id="61">6.1 角色定义</h3>
+<p>社区急救员（Community Paramedic / Mobile Integrated Health Paramedic）是受过额外培训的急救人员（EMT/Paramedic），在 HaH 中承担非复杂护理任务：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>任务</th>
+<th>Atrium CP</th>
+<th>DispatchHealth EMT</th>
+<th>MGB 环境</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生命体征采集</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅（RN 为主）</td>
+</tr>
+<tr>
+<td>血液样本采集</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>设备安装/故障排除</td>
+<td>✅</td>
+<td>✅</td>
+<td>—</td>
+</tr>
+<tr>
+<td>IV 输液管理</td>
+<td>✅（培训后）</td>
+<td>—</td>
+<td>RN 专属</td>
+</tr>
+<tr>
+<td>药物管理</td>
+<td>有限（协议驱动）</td>
+<td>—</td>
+<td>RN 专属</td>
+</tr>
+<tr>
+<td>患者教育</td>
+<td>✅ 基础</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>紧急升级</td>
+<td>✅（呼叫指挥中心）</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="62">6.2 成本效益分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>社区急救员</th>
+<th>RN</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>年薪</td>
+<td>$45,000–65,000</td>
+<td>$80,000–110,000</td>
+<td><strong>-35–50%</strong></td>
+</tr>
+<tr>
+<td>时薪</td>
+<td>$22–31/h</td>
+<td>$38–53/h</td>
+<td><strong>-35–45%</strong></td>
+</tr>
+<tr>
+<td>培训周期</td>
+<td>1,200–1,800h（基础）+ 200–400h（CP 附加）</td>
+<td>2–4 年（BSN）+ NCLEX</td>
+<td><strong>短 70%</strong></td>
+</tr>
+<tr>
+<td>上门效率</td>
+<td>高（急救背景=高效入出户）</td>
+<td>中等</td>
+<td>+15–20% 效率</td>
+</tr>
+<tr>
+<td>可替代任务</td>
+<td>~60–70% 的 HaH 日常任务</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>关键限制</td>
+<td>不能独立诊断/处方/复杂评估</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="63-atrium-health-cp">6.3 Atrium Health CP 模型案例</h3>
+<ul>
+<li><strong>2 次/日上门</strong>：AM 和 PM 各一次，由社区急救员完成</li>
+<li><strong>RN 角色转为</strong>：虚拟监控 + 复杂病例上门 + 监督/升级决策</li>
+<li><strong>效果</strong>：Atrium 用 35–45% 的 CP 人力实现了正向贡献利润</li>
+<li><strong>支持政策</strong>：北卡罗来纳州 MIH（Mobile Integrated Health）法规支持社区急救员运营</li>
+</ul>
+<hr />
+<h2 id="7-rn-burnout">7. RN Burnout / 流失率数据</h2>
+<h3 id="71">7.1 美国护理行业基准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>2022</th>
+<th>2023</th>
+<th>2024</th>
+<th>2025（估）</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>医院 RN 流失率</strong></td>
+<td>~22–27%</td>
+<td>~20–25%</td>
+<td>~18–22%</td>
+<td>~18–20%</td>
+<td>NSI 2025</td>
+</tr>
+<tr>
+<td><strong>居家护理 RN 流失率</strong></td>
+<td>~30%</td>
+<td>~28%</td>
+<td>~27%</td>
+<td>~25–27%</td>
+<td>HHCN/HCS 2024</td>
+</tr>
+<tr>
+<td><strong>全部医疗角色流失率</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>22.7%</td>
+<td>The Resource Co. 2025</td>
+</tr>
+<tr>
+<td><strong>RN 空缺率</strong>（医院）</td>
+<td>~15%</td>
+<td>~12%</td>
+<td>~10%</td>
+<td>~9–11%</td>
+<td>NSI 2025</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72-rn">7.2 RN 流失成本</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>成本项</th>
+<th>金额（2024–2025 USD）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>单名 RN 流失直接成本</strong></td>
+<td>$40,038–$61,110/人</td>
+</tr>
+<tr>
+<td><strong>含间接成本</strong>（培训/生产力损失）</td>
+<td>$82,000–$88,000/人</td>
+</tr>
+<tr>
+<td><strong>医院年流失总成本</strong>（中位数）</td>
+<td>$3.9M–$5.7M/医院</td>
+</tr>
+<tr>
+<td><strong>合同工溢价</strong>（vs 正式员工）</td>
+<td>+$79,090/年/人（travel RN）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="73-hah">7.3 HaH 环境中的特殊因素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>因素</th>
+<th>对流失的影响</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>居家工作自主权</strong></td>
+<td>🟢 降低流失</td>
+<td>HaH 护士从自宅出发，自主安排路线</td>
+</tr>
+<tr>
+<td><strong>患者关系深度</strong></td>
+<td>🟢 降低流失</td>
+<td>1:1 上门 vs 1:6 病房</td>
+</tr>
+<tr>
+<td><strong>减少医院政治/层级</strong></td>
+<td>🟢 降低流失</td>
+<td>团队小、扁平化</td>
+</tr>
+<tr>
+<td><strong>驾驶疲劳/时间</strong></td>
+<td>🔴 增加流失</td>
+<td>每日驾车 50–100 英里</td>
+</tr>
+<tr>
+<td><strong>安全风险</strong>（入户）</td>
+<td>🔴 增加流失</td>
+<td>部分社区安全隐忧</td>
+</tr>
+<tr>
+<td><strong>孤立感</strong></td>
+<td>🔴 增加流失</td>
+<td>缺少同事互动</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>净效应：</strong> HaH 环境中 RN 流失率数据有限，但推测在 <strong>22–28%</strong> 区间，略低于居家护理行业平均（27%）但高于医院（20%）。Atrium 报告的&rdquo;Esprit de Corps&rdquo;（团队凝聚力）可能进一步降低流失。</p>
+<h3 id="74-rn">7.4 居家护理 RN 流失的特殊性</h3>
+<ul>
+<li>2024 年居家护理 <strong>RN 流失率 27%</strong>（HHCN 2024），较 2023 年的 28% 略降</li>
+<li>居家护理 <strong>全职 RN</strong> 流失率 &gt;30%（PMC 2022 研究）</li>
+<li>排班波动性是居家护理 RN 流失的主要驱动因素</li>
+<li>居家护工（HCA）流失率升至 <strong>35%</strong>（2024），远高于 RN</li>
+</ul>
+<hr />
+<h2 id="8">8. 培训投入（每位临床人员的初始培训天数+成本）</h2>
+<h3 id="81">8.1 各角色培训基准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>初始培训周期</th>
+<th>培训内容</th>
+<th>培训成本/人（估）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HaH RN</strong>（新招）</td>
+<td>4–8 周</td>
+<td>HaH 临床协议 + RPM 系统 + EHR + 入户安全 + 紧急升级</td>
+<td>$8,000–15,000</td>
+</tr>
+<tr>
+<td><strong>社区急救员</strong>（转岗）</td>
+<td>2–4 周</td>
+<td>HaH 协议 + 生命体征 + 采血 + 设备操作</td>
+<td>$3,000–6,000</td>
+</tr>
+<tr>
+<td><strong>HaH NP/MD</strong></td>
+<td>2–4 周</td>
+<td>HaH 入组标准 + 虚拟查房流程 + 指挥中心操作</td>
+<td>$5,000–10,000</td>
+</tr>
+<tr>
+<td><strong>指挥中心 RN</strong></td>
+<td>3–6 周</td>
+<td>多患者监控 + RPM 告警管理 + 升级决策</td>
+<td>$6,000–12,000</td>
+</tr>
+<tr>
+<td><strong>传统医院 RN</strong>（新毕业）</td>
+<td>8–16 周</td>
+<td>全科护理 + 专科轮转</td>
+<td>$15,000–30,000</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="82">8.2 与传统医院对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>传统医院 RN 培训</th>
+<th>HaH RN 培训</th>
+<th>差异原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初始培训周期</td>
+<td>8–16 周</td>
+<td>4–8 周</td>
+<td>HaH 排除 ICU/手术/急诊等复杂场景</td>
+</tr>
+<tr>
+<td>培训成本</td>
+<td>$15,000–30,000</td>
+<td>$8,000–15,000</td>
+<td>短周期 + 聚焦协议</td>
+</tr>
+<tr>
+<td>独立执业时间</td>
+<td>6–12 月</td>
+<td>3–6 月</td>
+<td>HaH 规模小，带教密度高</td>
+</tr>
+<tr>
+<td>持续教育要求</td>
+<td>年度 CE</td>
+<td>年度 CE + 协议更新</td>
+<td>等同</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="83-hah-mount-sinai">8.3 HaH 培训内容框架（Mount Sinai 公开指南）</h3>
+<p>Mount Sinai HaH Users Group 公开了标准化培训框架：</p>
+<ol>
+<li><strong>Week 1</strong>：HaH 项目概述 + 临床协议理论 + EHR 系统</li>
+<li><strong>Week 2</strong>：RPM 设备操作 + 入户安全培训 + 影子跟随</li>
+<li><strong>Week 3–4</strong>：监督下独立上门 + 虚拟查房模拟</li>
+<li><strong>Week 5–8</strong>：逐步独立执业 + 每周反馈</li>
+</ol>
+<hr />
+<h2 id="9-it">9. 各模型的间接成本率对比（管理层+行政+IT/总成本）</h2>
+<h3 id="91">9.1 间接成本定义</h3>
+<p>间接成本 = 管理层薪资 + 行政支持 + IT/技术基础设施 + HR/财务 + 合规 + 设施</p>
+<h3 id="92">9.2 横向对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>间接成本率</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>传统医院</strong>（美国）</td>
+<td><strong>25–35%</strong></td>
+<td>含全量管理层+行政+设施；US 医院 overhead 达 43–45%（研究）</td>
+</tr>
+<tr>
+<td><strong>Atrium Health HaH</strong></td>
+<td><strong>15–20%</strong></td>
+<td>共享 Atrium 系统管理→规模摊销</td>
+</tr>
+<tr>
+<td><strong>MGB Home Hospital</strong></td>
+<td><strong>15–25%</strong></td>
+<td>共享 MGB 系统管理</td>
+</tr>
+<tr>
+<td><strong>Mount Sinai HaH</strong></td>
+<td><strong>15–20%</strong></td>
+<td>依托 Mount Sinai 基础设施</td>
+</tr>
+<tr>
+<td><strong>Contessa</strong>（独立公司）</td>
+<td><strong>20–25%</strong></td>
+<td>独立运营→独立管理+IT 基础设施</td>
+</tr>
+<tr>
+<td><strong>DispatchHealth</strong></td>
+<td><strong>15–20%</strong></td>
+<td>轻资产+技术驱动→低间接成本</td>
+</tr>
+<tr>
+<td><strong>Buurtzorg</strong>（荷兰）</td>
+<td><strong>&lt;8%</strong></td>
+<td>极简管理（总部仅 50 人管理 15,000 护士）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93">9.3 间接成本结构对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>成本子项</th>
+<th>传统医院占比</th>
+<th>HaH 占比（行业估计）</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>管理层</td>
+<td>8–12%</td>
+<td>5–8%</td>
+<td>扁平化团队</td>
+</tr>
+<tr>
+<td>行政/文员</td>
+<td>5–8%</td>
+<td>3–5%</td>
+<td>自动化程度高</td>
+</tr>
+<tr>
+<td>IT/技术基础设施</td>
+<td>3–5%</td>
+<td>5–10%</td>
+<td>HaH 平台投资高</td>
+</tr>
+<tr>
+<td>HR/财务</td>
+<td>3–5%</td>
+<td>2–4%</td>
+<td>规模摊销</td>
+</tr>
+<tr>
+<td>设施（建筑/水电）</td>
+<td>8–12%</td>
+<td><strong>&lt;2%</strong></td>
+<td><strong>最大节省</strong></td>
+</tr>
+<tr>
+<td>合规/质量</td>
+<td>2–4%</td>
+<td>2–3%</td>
+<td>等同</td>
+</tr>
+<tr>
+<td><strong>总间接成本率</strong></td>
+<td><strong>25–35%</strong></td>
+<td><strong>15–25%</strong></td>
+<td><strong>-8–12pp</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94">9.4 关键洞察</h3>
+<p>HaH 最大间接成本优势来自<strong>零设施成本</strong>（无建筑、水电、保洁、安保）。美国医院 overhead 高达 43–45%（ResearchGate 研究），而 HaH 因无实体病房，间接成本率可控制在 15–25%。</p>
+<p>但 <strong>IT/技术基础设施</strong>占比反而更高（5–10% vs 3–5%），因为 RPM 平台、指挥中心系统、网络安全等是核心运营依赖。</p>
+<p>Buurtzorg 模型将间接成本压缩到极致（&lt;8%），通过：(1) 护士团队自我管理（无中层经理）；(2) 极简 IT（仅用 Omahas 系统）；(3) 全国仅 1 个总部。</p>
+<hr />
+<h2 id="10-fte">10. 人力效率指标（每 FTE 服务患者数 / 每日访视数）</h2>
+<h3 id="101">10.1 核心效率指标对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>传统医院内科</th>
+<th>HaH（Atrium）</th>
+<th>居家护理行业</th>
+<th>Buurtzorg</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>每 RN FTE 日均访视</strong></td>
+<td>N/A</td>
+<td>4–6 次</td>
+<td>4.5 次（全美基准）</td>
+<td>5–7 次</td>
+</tr>
+<tr>
+<td><strong>每 RN FTE 服务患者数</strong></td>
+<td>4–6/班次</td>
+<td>5–8/日（上门+虚拟）</td>
+<td>—</td>
+<td>8–12/日</td>
+</tr>
+<tr>
+<td><strong>每 MD/NP FTE 服务患者数</strong></td>
+<td>15–20/日</td>
+<td>15–25/日（虚拟）</td>
+<td>—</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td><strong>每临床 FTE 服务 ADC</strong></td>
+<td>0.8–1.2</td>
+<td>1.2–1.8</td>
+<td>—</td>
+<td>3–5</td>
+</tr>
+<tr>
+<td><strong>每总 FTE 服务 ADC</strong></td>
+<td>0.5–0.8</td>
+<td>1.0–1.5</td>
+<td>—</td>
+<td>2–3</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="102">10.2 居家护理行业生产力基准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>SimiTree 2021 Q4 全国基准</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>未加权每日访视数</strong></td>
+<td>4.5 次/FTE</td>
+<td>全国居家护理中位数</td>
+</tr>
+<tr>
+<td><strong>RN 访视占比</strong></td>
+<td>52%</td>
+<td>其余为 LPN/HHA/PT/OT 等</td>
+</tr>
+<tr>
+<td><strong>每 episode 平均访视数</strong></td>
+<td>11 次</td>
+<td>60 天 episode</td>
+</tr>
+<tr>
+<td><strong>每次 RN 访视时长</strong></td>
+<td>~50 分钟</td>
+<td>含路程</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="103-hah">10.3 HaH 特有的效率因素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>因素</th>
+<th>对效率的影响</th>
+<th>程度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>集中化路线规划</strong></td>
+<td>减少驾驶时间 15–20%</td>
+<td>🟢 积极</td>
+</tr>
+<tr>
+<td><strong>RPM 远程分流</strong></td>
+<td>减少非必要上门 20–30%</td>
+<td>🟢 积极</td>
+</tr>
+<tr>
+<td><strong>虚拟 MD 查房</strong></td>
+<td>MD 效率提升 30–50%（vs 行走查房）</td>
+<td>🟢 积极</td>
+</tr>
+<tr>
+<td><strong>入户/出户时间</strong></td>
+<td>固定损耗 5–10 min/次</td>
+<td>🔴 消极</td>
+</tr>
+<tr>
+<td><strong>驾驶时间</strong></td>
+<td>平均 20–30 min/次（城市）</td>
+<td>🔴 消极</td>
+</tr>
+<tr>
+<td><strong>天气/交通</strong></td>
+<td>不可预测→效率波动 10–15%</td>
+<td>🔴 消极</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="104">10.4 效率优化路径</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>策略</th>
+<th>预期效率提升</th>
+<th>实施难度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 路线优化</td>
+<td>+10–15%</td>
+<td>低（现成工具）</td>
+</tr>
+<tr>
+<td>社区急救员替代部分 RN 上门</td>
+<td>+20–30%</td>
+<td>中（需监管支持）</td>
+</tr>
+<tr>
+<td>扩展 RPM 可替代上门</td>
+<td>+10–20%</td>
+<td>中（需临床验证）</td>
+</tr>
+<tr>
+<td>减少每次上门文档时间（语音转文字）</td>
+<td>+5–10%</td>
+<td>低</td>
+</tr>
+<tr>
+<td>集中调度（vs 自调度）</td>
+<td>+5–15%</td>
+<td>低（Atrium 已实施）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="11_1">11. 综合人力经济模型总结</h2>
+<h3 id="111-hah-vs-adc100">11.1 HaH vs 传统医院人力成本对比（标准化每 ADC=100）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>人力类别</th>
+<th>传统医院（100 床内科）</th>
+<th>HaH（Atrium 模型，ADC=100）</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MD/NP</strong></td>
+<td>8–12 FTE</td>
+<td>4–6 FTE（虚拟）</td>
+<td><strong>-50%</strong></td>
+</tr>
+<tr>
+<td><strong>RN</strong></td>
+<td>80–100 FTE</td>
+<td>30–40 FTE</td>
+<td><strong>-60%</strong></td>
+</tr>
+<tr>
+<td><strong>LPN/CNA</strong></td>
+<td>40–60 FTE</td>
+<td>—</td>
+<td><strong>-100%</strong></td>
+</tr>
+<tr>
+<td><strong>社区急救员</strong></td>
+<td>—</td>
+<td>25–35 FTE</td>
+<td>新增</td>
+</tr>
+<tr>
+<td><strong>临床支持</strong>（PT/OT/SW/药师）</td>
+<td>15–25 FTE</td>
+<td>8–12 FTE</td>
+<td><strong>-50%</strong></td>
+</tr>
+<tr>
+<td><strong>管理+行政</strong></td>
+<td>20–30 FTE</td>
+<td>5–10 FTE</td>
+<td><strong>-67%</strong></td>
+</tr>
+<tr>
+<td><strong>总人力 FTE</strong>（临床+管理）</td>
+<td><strong>170–230</strong></td>
+<td><strong>70–105</strong></td>
+<td><strong>-55–60%</strong></td>
+</tr>
+<tr>
+<td><strong>年人力成本</strong>（估）</td>
+<td>$15M–$22M</td>
+<td>$6M–$10M</td>
+<td><strong>-55–60%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="112">11.2 各模型人力经济学评分</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>人力成本效率</th>
+<th>临床质量保障</th>
+<th>可扩展性</th>
+<th>综合评分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Atrium Health</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td><strong>4.7/5</strong></td>
+</tr>
+<tr>
+<td><strong>MGB</strong></td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>4.0/5</td>
+</tr>
+<tr>
+<td><strong>Mount Sinai</strong></td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>3.7/5</td>
+</tr>
+<tr>
+<td><strong>Contessa</strong></td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>4.0/5</td>
+</tr>
+<tr>
+<td><strong>DispatchHealth</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>4.3/5</td>
+</tr>
+<tr>
+<td><strong>Buurtzorg</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>4.3/5</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="113-ihomecare">11.3 对 iHomeCare 的关键启示</h3>
+<ol>
+<li><strong>社区急救员模型是可复制的最大人力成本杠杆</strong>——Atrium 通过 35–45% 的 CP 配比，在人力成本上比纯 RN 模型（MGB）低 15–20pp</li>
+<li><strong>虚拟指挥中心是效率倍增器</strong>——每 RN 可监控 12–20 患者（vs 传统 4–6），夜间覆盖成本极低</li>
+<li><strong>Skill Mix 灵活配置是规模化前提</strong>——按市场劳动力供给调整 MD:NP:RN:CP 比例（香港可考虑社区护士+健康助理替代美国 CP）</li>
+<li><strong>间接成本率是隐藏竞争优势</strong>——假设香港可维持 15–20% 间接成本率，而传统医院 25–35%，则 HaH 结构性节省 10–15pp 运营成本</li>
+<li><strong>RN 流失率是核心风险指标</strong>——HaH 应设计高于传统医院的护士支持系统（心理健康支持、路线优化减少驾驶、团队归属感建设）以对冲居家护理固有的高流失率</li>
+</ol>
+<hr />
+<h2 id="12_1">12. 数据来源与局限性</h2>
+<h3 id="_2">来源层级</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>来源</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ A 级（同行评审）</td>
+<td>JAMA Network Open、PMC、Dall&rsquo;Ora et al 2015</td>
+<td>5+</td>
+</tr>
+<tr>
+<td>✅ B 级（行业报告）</td>
+<td>AHA Costs of Caring 2025、NSI 2025、SimiTree、HHCN</td>
+<td>6+</td>
+</tr>
+<tr>
+<td>⚠️ C 级（公司公开）</td>
+<td>AMA Case Study (Atrium)、Mount Sinai HaH Users Group、HFMA</td>
+<td>4+</td>
+</tr>
+<tr>
+<td>⚠️ D 级（推算/估算）</td>
+<td>基于公开数据的推算（标注「推算」或「估」）</td>
+<td>多处</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">关键局限性</h3>
+<ul>
+<li>多数 HaH 项目为卫生系统内部项目，不公开独立人力成本数据</li>
+<li>社区急救员角色因州而异，可转移性需逐市场评估</li>
+<li>Burnout/流失率数据主要来自居家护理行业（非 HaH 专项），HaH 因规模小缺少独立统计</li>
+<li>国际对标（Buurtzorg）适用于非急性居家护理，不适用于急性 HaH</li>
+</ul>
+<hr />
+<p><em>报告完成。欢迎反馈与补充。</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

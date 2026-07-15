@@ -1,0 +1,1872 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HaH 质量指标对标框架报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">HaH 质量指标对标框架报告</a><ul>
+<li><a href="#1">1. 执行摘要</a><ul>
+<li><a href="#_1">核心发现</a></li>
+<li><a href="#ihomecare">对 iHomeCare 的核心启示</a></li>
+</ul>
+</li>
+<li><a href="#2-cms-hah">2. CMS HaH 质量指标框架</a><ul>
+<li><a href="#21-ahcah-waiver">2.1 AHCAH Waiver 强制报告指标</a></li>
+<li><a href="#22-cms-home-health-quality-reporting-program-hh-qrp">2.2 CMS Home Health Quality Reporting Program (HH QRP)</a></li>
+<li><a href="#23-medpac-hah">2.3 MedPAC 建议的 HaH 质量报告扩展方向</a></li>
+</ul>
+</li>
+<li><a href="#3">3. 临床质量指标对标</a><ul>
+<li><a href="#31-30">3.1 30天死亡率</a></li>
+<li><a href="#32-30">3.2 30天再入院率</a></li>
+<li><a href="#33">3.3 谵妄发生率</a></li>
+<li><a href="#34-hapi-cauti-clabsi-vte">3.4 跌倒率 / HAPI / CAUTI / CLABSI / VTE / 药物错误率</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 运营质量指标对标</a><ul>
+<li><a href="#41-length-of-stay">4.1 平均住院日（Length of Stay）</a></li>
+<li><a href="#42">4.2 床位日节省</a></li>
+<li><a href="#43">4.3 患者满意度</a></li>
+<li><a href="#44-ed-utilization-care-escalation">4.4 急诊转回率（ED Utilization / Care Escalation）</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 安全指标对标</a><ul>
+<li><a href="#51-unanticipated-mortality">5.1 非预期死亡（Unanticipated Mortality）</a></li>
+<li><a href="#52-escalation-to-inpatient">5.2 紧急升级率（Escalation to Inpatient）</a></li>
+<li><a href="#53">5.3 院外心跳骤停率</a></li>
+<li><a href="#54">5.4 谵妄（作为安全指标）</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 技术质量指标对标</a><ul>
+<li><a href="#61-hah-users-group">6.1 远程监测现状（HaH Users Group 调查）</a></li>
+<li><a href="#62">6.2 核心技术质量挑战</a></li>
+<li><a href="#63-kpi">6.3 建议的技术质量 KPI</a></li>
+</ul>
+</li>
+<li><a href="#7-proms">7. 患者报告结局（PROMs）</a><ul>
+<li><a href="#71-proms">7.1 国际通用的 PROMs 工具</a></li>
+<li><a href="#72-hah-prom">7.2 HaH 特定的 PROM 需求</a></li>
+<li><a href="#73">7.3 现有证据</a></li>
+<li><a href="#74-ihomecare-prom">7.4 推荐 iHomeCare PROM 组合</a></li>
+</ul>
+</li>
+<li><a href="#8">8. 各标杆项目实际基准值</a><ul>
+<li><a href="#81-atrium-health">8.1 Atrium Health</a></li>
+<li><a href="#82-mass-general-brigham-mgb">8.2 Mass General Brigham (MGB)</a></li>
+<li><a href="#83-kaiser-permanente">8.3 Kaiser Permanente</a></li>
+<li><a href="#84-mount-sinai">8.4 Mount Sinai</a></li>
+<li><a href="#85-johns-hopkins">8.5 Johns Hopkins</a></li>
+<li><a href="#86">8.6 跨项目对标矩阵</a></li>
+</ul>
+</li>
+<li><a href="#9-ihomecare">9. 对 iHomeCare 质量体系设计的建议</a><ul>
+<li><a href="#91">9.1 五层质量架构</a></li>
+<li><a href="#92">9.2 具体建议</a><ul>
+<li><a href="#921-cms-level-1-3">9.2.1 强制报告指标（月度，对标 CMS Level 1-3）</a></li>
+<li><a href="#922">9.2.2 风险调整策略</a></li>
+<li><a href="#923-prom">9.2.3 PROM 组合推荐</a></li>
+<li><a href="#924">9.2.4 技术质量监控</a></li>
+<li><a href="#925">9.2.5 国际对标与本土化适配要点</a></li>
+<li><a href="#926">9.2.6 分阶段实施路线图</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#10">10. 附录：信源与参考文献</a><ul>
+<li><a href="#tier-1">Tier 1 — 政府/官方源</a></li>
+<li><a href="#tier-2">Tier 2 — 学术/行业源</a></li>
+<li><a href="#tier-3">Tier 3 — 媒体报道/行业分析</a></li>
+<li><a href="#_2">项目直接来源</a></li>
+</ul>
+</li>
+<li><a href="#_3">研究空白与后续工作</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">HaH 质量指标对标框架报告</h1>
+<p><strong>Hospital-at-Home Quality Metrics Benchmarking Framework</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">属性</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">报告类型</td>
+<td style="text-align: left;">质量指标对标框架</td>
+</tr>
+<tr>
+<td style="text-align: left;">作者</td>
+<td style="text-align: left;">Kenneth Ye</td>
+</tr>
+<tr>
+<td style="text-align: left;">日期</td>
+<td style="text-align: left;">2026-07-03</td>
+</tr>
+<tr>
+<td style="text-align: left;">版本</td>
+<td style="text-align: left;">v1.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">覆盖市场</td>
+<td style="text-align: left;">美国（为主）+ 英国/澳洲/新加坡/台湾参考</td>
+</tr>
+<tr>
+<td style="text-align: left;">信源层级</td>
+<td style="text-align: left;">T1-政府（CMS/MedPAC）/ T2-学术（JAMA/AJMC）/ T2-行业（HaH Users Group）/ T3-媒体</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="1">1. 执行摘要</h2>
+<p>本报告构建了 Hospital-at-Home (HaH) 质量指标的全面对标框架，系统梳理了国际通行的 HaH 质量度量标准，覆盖 CMS 监管要求、临床结果、运营效率、患者安全、技术质量和患者报告结局六大维度，并汇总了 Atrium Health、Mass General Brigham、Kaiser Permanente、Mount Sinai、Johns Hopkins 等标杆项目的实际基准值。</p>
+<h3 id="_1">核心发现</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">关键发现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>死亡率</strong></td>
+<td style="text-align: left;">HaH 院内死亡率 0.4%，仅为传统住院（3.6%）的约 1/9（JAMA 2026, aOR=0.09）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>再入院率</strong></td>
+<td style="text-align: left;">HaH 30天再入院率 11.7%，与传统住院（11.0%）无显著差异；Mount Sinai 报告 8.6% vs 15.6%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>急诊使用</strong></td>
+<td style="text-align: left;">HaH 30天急诊率 8.8% vs 住院 10.0%（aOR=0.86），显著更低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ICU升级</strong></td>
+<td style="text-align: left;">HaH 3.5% vs 住院 7.9%（aOR=0.39），减少 61%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>并发症</strong></td>
+<td style="text-align: left;">HaH 院内并发症率 3.6% vs 住院 5.1%（aOR=0.59）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>谵妄风险</strong></td>
+<td style="text-align: left;">HaH 降低 64-74%（Kaiser OR=0.36; HaH Users Group 综合证据）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成本节省</strong></td>
+<td style="text-align: left;">每例 HaH episode 较住院节省约 $5,054（未调整均值）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者满意度</strong></td>
+<td style="text-align: left;">系统性高于传统住院（CMS报告/多项目验证）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ihomecare">对 iHomeCare 的核心启示</h3>
+<p>当前国际 HaH 质量体系正处于从&rdquo;豁免期临时报告&rdquo;向&rdquo;永久化标准框架&rdquo;过渡的关键窗口（CMS AHCAH waiver 延至 2030年9月）。iHomeCare 作为中国市场新兴 HaH 平台，应借鉴国际成熟框架的五层架构——<strong>监管报告层、临床结果层、运营效率层、安全监控层、患者报告层</strong>——同时针对中国市场特点进行本土化适配。</p>
+<hr />
+<h2 id="2-cms-hah">2. CMS HaH 质量指标框架</h2>
+<h3 id="21-ahcah-waiver">2.1 AHCAH Waiver 强制报告指标</h3>
+<p>自 2020 年 CMS 启动 Acute Hospital Care at Home (AHCAH) 豁免以来，参与医院必须每月向 CMS 报告以下三项核心指标（[T1-政府] MedPAC Report to Congress, June 2024）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">英文</th>
+<th style="text-align: left;">定义</th>
+<th style="text-align: left;">数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><strong>非预期死亡率</strong></td>
+<td style="text-align: left;">Unanticipated Mortality</td>
+<td style="text-align: left;">HaH 期间发生的非预期死亡数</td>
+<td style="text-align: left;">医院自报</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><strong>升级转院率</strong></td>
+<td style="text-align: left;">Care Escalation Rate</td>
+<td style="text-align: left;">从 HaH 转回实体医院住院的患者比例</td>
+<td style="text-align: left;">医院自报</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><strong>总出院数</strong></td>
+<td style="text-align: left;">Total AHCAH Discharges</td>
+<td style="text-align: left;">每月 HaH 出院总人次</td>
+<td style="text-align: left;">医院自报</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>2024年9月CMS报告关键结论</strong>（[T1-政府] CMS Fact Sheet, 2024.9.30）：</p>
+<ul>
+<li>HaH 患者的<strong>死亡率低于</strong>匹配的实体住院患者</li>
+<li>HaH 出院后 <strong>30天 Medicare 支出更低</strong>（超过一半的 Top 25 MS-DRG 中）</li>
+<li>患者和照护者<strong>反馈积极</strong></li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>局限</strong>：CMS 指出因患者选择偏倚（HaH 入组患者通常临床复杂度更低），难以得出 AHCAH 整体降低 Medicare 总支出的结论。</p>
+</blockquote>
+<h3 id="22-cms-home-health-quality-reporting-program-hh-qrp">2.2 CMS Home Health Quality Reporting Program (HH QRP)</h3>
+<p>虽然 HH QRP 主要为传统居家健康机构（Home Health Agencies）设计，但其 OASIS 评估框架对 HaH 后的过渡期质量管理有直接参考价值（[T1-政府] CMS Home Health Quality Measures）：</p>
+<p><strong>OASIS-based 结果指标（2025年起公开报告）</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标类别</th>
+<th style="text-align: left;">具体指标</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>功能改善</strong></td>
+<td style="text-align: left;">Discharge Function Score (DC Function)</td>
+<td style="text-align: left;">出院时功能状态评分（2025 新纳入 HHVBP）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>功能改善</strong></td>
+<td style="text-align: left;">Total Normalized Composite Change in Self-Care</td>
+<td style="text-align: left;">自理能力综合变化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>功能改善</strong></td>
+<td style="text-align: left;">Total Normalized Composite Change in Mobility</td>
+<td style="text-align: left;">移动能力综合变化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利用管理</strong></td>
+<td style="text-align: left;">Discharge to Community (DTC)</td>
+<td style="text-align: left;">出院回归社区率</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利用管理</strong></td>
+<td style="text-align: left;">Within-Stay Potentially Preventable Hospitalization (PPH)</td>
+<td style="text-align: left;">在院期间可预防住院率（claims-based）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利用管理</strong></td>
+<td style="text-align: left;">Acute Care Hospitalization During First 60 Days (ACH)</td>
+<td style="text-align: left;">60天内急症住院率（claims-based）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利用管理</strong></td>
+<td style="text-align: left;">ED Use without Hospitalization During First 60 Days</td>
+<td style="text-align: left;">60天内急诊使用率（claims-based）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="23-medpac-hah">2.3 MedPAC 建议的 HaH 质量报告扩展方向</h3>
+<p>MedPAC 2024年6月报告建议（[T1-政府] MedPAC Ch.6, June 2024）：</p>
+<ul>
+<li>当前三个指标的<strong>风险调整不足</strong>——需要病例组合调整</li>
+<li>建议增加<strong>患者体验调查</strong>（类 HCAHPS 的 HaH 版本）</li>
+<li>建议追踪<strong>出院后30天结局</strong>（再入院、急诊使用、死亡率）</li>
+<li>建议添加<strong>功能状态变化</strong>指标</li>
+</ul>
+<hr />
+<h2 id="3">3. 临床质量指标对标</h2>
+<h3 id="31-30">3.1 30天死亡率</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: center;">HaH</th>
+<th style="text-align: center;">住院对照</th>
+<th style="text-align: left;">统计</th>
+<th style="text-align: left;">年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>JAMA Network Open（全国68家医院）</strong></td>
+<td style="text-align: center;"><strong>0.4%</strong></td>
+<td style="text-align: center;">3.6%</td>
+<td style="text-align: left;">aOR=0.09 (0.06-0.16)</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS AHCAH 研究报告</strong></td>
+<td style="text-align: center;">低于住院</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">多 DRG 一致</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mount Sinai（JAMA 2018）</strong></td>
+<td style="text-align: center;">未单独报告</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">2018</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Kaiser AMCAH（CHF 子组）</strong></td>
+<td style="text-align: center;">未单独报告</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">573例CHF</td>
+<td style="text-align: left;">2021-2024</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对标基准</strong>：HaH 30天/院内死亡率 ≤0.5% 为国际优秀水平。</p>
+<blockquote>
+<p>🔴 <strong>注意</strong>：JAMA 2026 报告的 0.4% 为&rdquo;院内死亡率&rdquo;（in-hospital mortality），即在 HaH 期间或升级转院后的院内死亡。该指标受患者选择偏倚影响——HaH 入组排除了高临床复杂度患者。</p>
+</blockquote>
+<h3 id="32-30">3.2 30天再入院率</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: center;">HaH</th>
+<th style="text-align: center;">住院对照</th>
+<th style="text-align: left;">统计显著性</th>
+<th style="text-align: left;">年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>JAMA Network Open</strong></td>
+<td style="text-align: center;"><strong>11.7%</strong></td>
+<td style="text-align: center;">11.0%</td>
+<td style="text-align: left;">NS (aOR=1.07)</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mount Sinai</strong></td>
+<td style="text-align: center;"><strong>8.6%</strong></td>
+<td style="text-align: center;">15.6%</td>
+<td style="text-align: left;">p&lt;0.05</td>
+<td style="text-align: left;">2018</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MGB Home Hospital（RCT）</strong></td>
+<td style="text-align: center;">&ldquo;更低&rdquo;</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">RCT证据</td>
+<td style="text-align: left;">2019</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS AHCAH 报告</strong></td>
+<td style="text-align: center;">未显著差异</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">2024</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对标基准</strong>：HaH 30天再入院率目标 8-12%，具体视病例组合调整。</p>
+<blockquote>
+<p>⚠️ <strong>重要</strong>：JAMA 2026 全国数据显示 HaH 再入院率（11.7%）并未显著低于住院（11.0%），挑战了早期单中心研究（如 Mount Sinai）的乐观结果。该差异可能反映：①早期项目入组患者更优；②规模化后病例复杂度上升；③全国数据包含项目成熟度差异大的机构。</p>
+</blockquote>
+<h3 id="33">3.3 谵妄发生率</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: center;">效果量</th>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Kaiser Permanente ACAH</strong></td>
+<td style="text-align: center;">OR=0.36 (64%降低)</td>
+<td style="text-align: left;">谵妄 vs 住院</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HaH Users Group 综合证据</strong></td>
+<td style="text-align: center;">降低74%</td>
+<td style="text-align: left;">谵妄风险</td>
+<td style="text-align: left;">2025</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对标基准</strong>：HaH 谵妄发生率应显著低于住院基线（住院老年患者谵妄率约 15-25%）。</p>
+<h3 id="34-hapi-cauti-clabsi-vte">3.4 跌倒率 / HAPI / CAUTI / CLABSI / VTE / 药物错误率</h3>
+<p><strong>当前证据状态</strong>：这些传统院内安全指标在 HaH 环境下<strong>缺乏系统性对标数据</strong>。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">HaH 数据可获得性</th>
+<th style="text-align: left;">住院基准</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>跌倒率</strong></td>
+<td style="text-align: left;">⚠️ 极有限</td>
+<td style="text-align: left;">住院: ~3-5/1000 patient-days</td>
+<td style="text-align: left;">HaH 环境下定义困难——居家环境中的跌倒不一定等同于&rdquo;院内跌倒&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HAPI（压力性损伤）</strong></td>
+<td style="text-align: left;">⚠️ 极有限</td>
+<td style="text-align: left;">住院: 1.9% (med-surg units)</td>
+<td style="text-align: left;">HaH 患者移动更多，理论风险更低，但无系统数据</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAUTI</strong></td>
+<td style="text-align: left;">⚠️ 无公开对标数据</td>
+<td style="text-align: left;">住院: SIR 基准1.0</td>
+<td style="text-align: left;">HaH 常规不插尿管，基线风险极低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CLABSI</strong></td>
+<td style="text-align: left;">⚠️ 无公开对标数据</td>
+<td style="text-align: left;">住院: SIR 基准1.0</td>
+<td style="text-align: left;">HaH 中 PICC/中线导管使用增加，需监控</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>VTE</strong></td>
+<td style="text-align: left;">⚠️ 无公开对标数据</td>
+<td style="text-align: left;">住院: ~1-2%高危患者</td>
+<td style="text-align: left;">居家环境患者移动更多，预防性抗凝策略待标准化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>药物错误率</strong></td>
+<td style="text-align: left;">⚠️ 无公开对标数据</td>
+<td style="text-align: left;">住院: ~5%给药错误率</td>
+<td style="text-align: left;">HaH IV药物由访视护士管理 vs 患者/家属自管口服药</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>🟡 <strong>研究空白声明</strong>：上述指标在已发表的 HaH 文献中极少被系统报告。JAMA 2026 研究明确指出&rdquo;住院安全结果未被捕获&rdquo;（inpatient safety outcomes were not captured）。这是未来 HaH 质量体系建设的关键缺口。</p>
+</blockquote>
+<p><strong>JAMA 2026 报告的综合性并发症指标</strong>：</p>
+<ul>
+<li>HaH 住院相关并发症率：3.6% vs 住院 5.1%（aOR=0.59）</li>
+<li>该指标为复合指标，未细分至单个并发症类型</li>
+</ul>
+<hr />
+<h2 id="4">4. 运营质量指标对标</h2>
+<h3 id="41-length-of-stay">4.1 平均住院日（Length of Stay）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: center;">HaH LOS</th>
+<th style="text-align: center;">住院对照 LOS</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MGB Home Hospital</strong></td>
+<td style="text-align: center;"><strong>5-6天</strong>（典型）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">2025 公开资料</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS AHCAH 报告</strong></td>
+<td style="text-align: center;">较住院短</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">多 DRG 一致</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Advocate Health</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">9,400+ 患者，释放 33,000 床位日</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="42">4.2 床位日节省</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">机构</th>
+<th style="text-align: left;">床位日节省</th>
+<th style="text-align: left;">期间</th>
+<th style="text-align: left;">数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MGB Home Hospital</strong></td>
+<td style="text-align: left;"><strong>25,000+</strong></td>
+<td style="text-align: left;">累计</td>
+<td style="text-align: left;">Current Health case study</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Advocate Health</strong></td>
+<td style="text-align: left;"><strong>33,000</strong></td>
+<td style="text-align: left;">自2020年起</td>
+<td style="text-align: left;">HaH Users Group evidence summary</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MGB（扩展目标）</strong></td>
+<td style="text-align: left;">目标转移 10% 内科患者</td>
+<td style="text-align: left;">规划中</td>
+<td style="text-align: left;">AHA Market Scan 2024</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="43">4.3 患者满意度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">结果</th>
+<th style="text-align: left;">方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>CMS AHCAH 报告</strong></td>
+<td style="text-align: left;">患者与照护者反馈积极</td>
+<td style="text-align: left;">CMS 调查</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mount Sinai</strong></td>
+<td style="text-align: left;">患者满意度显著高于住院</td>
+<td style="text-align: left;">自设工具</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HaH Users Group 综合证据</strong></td>
+<td style="text-align: left;">&ldquo;higher satisfaction and stronger relationships with care teams&rdquo;</td>
+<td style="text-align: left;">多研究 meta</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MGB RCT</strong></td>
+<td style="text-align: left;">&ldquo;required fewer lab orders; spent a smaller portion of the day sedentary&rdquo;</td>
+<td style="text-align: left;">RCT</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对标基准</strong>：HaH 患者满意度应 ≥90% 为&rdquo;满意/非常满意&rdquo;；NPS 目标 ≥70。</p>
+<h3 id="44-ed-utilization-care-escalation">4.4 急诊转回率（ED Utilization / Care Escalation）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: center;">HaH</th>
+<th style="text-align: center;">住院对照</th>
+<th style="text-align: left;">统计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>JAMA 2026（30天急诊）</strong></td>
+<td style="text-align: center;"><strong>8.8%</strong></td>
+<td style="text-align: center;">10.0%</td>
+<td style="text-align: left;">aOR=0.86 (0.76-0.97)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mount Sinai（30天急诊）</strong></td>
+<td style="text-align: center;"><strong>5.8%</strong></td>
+<td style="text-align: center;">11.7%</td>
+<td style="text-align: left;">p&lt;0.05</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS 月度报告（升级转院率）</strong></td>
+<td style="text-align: center;">各机构差异大</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">未公开汇总基准</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对标基准</strong>：HaH 30天急诊使用率目标 5-9%；升级转院率（escalation to inpatient）目标 ≤10%。</p>
+<hr />
+<h2 id="5">5. 安全指标对标</h2>
+<h3 id="51-unanticipated-mortality">5.1 非预期死亡（Unanticipated Mortality）</h3>
+<p>CMS AHCAH 豁免将&rdquo;非预期死亡&rdquo;列为三大量化报告指标之一，但<strong>未公开全国汇总基准值</strong>。单中心报告：</p>
+<ul>
+<li>MGB Home Hospital：公开材料声称&rdquo;zero unexpected mortality&rdquo;（零非预期死亡）</li>
+<li>JAMA 2026：HaH 院内全因死亡率 0.4%，但未区分预期 vs 非预期</li>
+</ul>
+<h3 id="52-escalation-to-inpatient">5.2 紧急升级率（Escalation to Inpatient）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>JAMA 2026（ICU升级）</strong></td>
+<td style="text-align: left;">HaH 3.5% vs 住院 7.9%（aOR=0.39）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS月度报告（全部升级转院）</strong></td>
+<td style="text-align: left;">各机构差异大</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>AHCAH 豁免的安全基础设施要求</strong>（[T1-政府] MedPAC）：</p>
+<ul>
+<li>每日 ≥2 次面对面临床访视</li>
+<li>每日 ≥1 次医生访视（可远程）</li>
+<li>24/7 患者紧急联系系统</li>
+<li>必要时 <strong>30分钟内</strong> 到达患者家中提供紧急临床服务</li>
+</ul>
+<h3 id="53">5.3 院外心跳骤停率</h3>
+<p>⚠️ 无公开对标数据——此指标在 HaH 文献中几乎未被报告。</p>
+<h3 id="54">5.4 谵妄（作为安全指标）</h3>
+<p>见 §3.3——HaH 降低 64-74% 谵妄风险是最稳健的临床安全发现。</p>
+<hr />
+<h2 id="6">6. 技术质量指标对标</h2>
+<h3 id="61-hah-users-group">6.1 远程监测现状（HaH Users Group 调查）</h3>
+<p>基于 HaH Users Group 2023 年发布的 RPM 质量研究（9家机构访谈）（[T2-行业] HaH Users Group, 2023.10）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">发现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>监测频率</strong></td>
+<td style="text-align: left;">q4hr 22% / q6hr 22% / q8hr 33% / 连续 22%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>监测模式</strong></td>
+<td style="text-align: left;">生命体征 100% / 连续单导联 ECG 33% / 跌倒监测 33%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>监测对象</strong></td>
+<td style="text-align: left;">全部患者 89% / 基于病情 11%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>月均 HaH 患者量</strong></td>
+<td style="text-align: left;">0-50: 33% / 50-100: 22% / &gt;100: 33%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="62">6.2 核心技术质量挑战</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">挑战</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>数据保真度（Data Fidelity）</strong></td>
+<td style="text-align: left;">RPM 供应商数据可靠性参差不齐</td>
+<td style="text-align: left;">临床决策信心不足</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>连接性问题（Connectivity）</strong></td>
+<td style="text-align: left;">家庭网络稳定性不一，影响数据传输完整性</td>
+<td style="text-align: left;">&ldquo;data from the home are not the same as those from the hospital&rdquo;（JMIR 2024）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>缺乏基准（Lack of Benchmarks）</strong></td>
+<td style="text-align: left;">难以与院内环境质量指标进行等量对比</td>
+<td style="text-align: left;">质量管理对标困难</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>告警疲劳</strong></td>
+<td style="text-align: left;">家庭环境产生的噪声信号远多于院内受控环境</td>
+<td style="text-align: left;">临床响应效率降低</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="63-kpi">6.3 建议的技术质量 KPI</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">KPI</th>
+<th style="text-align: left;">定义</th>
+<th style="text-align: left;">目标基准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>告警响应时间</strong></td>
+<td style="text-align: left;">从 RPM 系统触发告警到临床人员首次响应</td>
+<td style="text-align: left;">&lt;15分钟（日间）/ &lt;30分钟（夜间）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据传输完整性</strong></td>
+<td style="text-align: left;">成功传输的数据点 / 预期数据点</td>
+<td style="text-align: left;">&gt;95%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>设备正常运行时间</strong></td>
+<td style="text-align: left;">RPM 设备可用时间比例</td>
+<td style="text-align: left;">&gt;99%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>误报率</strong></td>
+<td style="text-align: left;">未导致临床干预的告警比例</td>
+<td style="text-align: left;">&lt;30%（需持续优化）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>远程访视完成率</strong></td>
+<td style="text-align: left;">计划远程访视实际完成比例</td>
+<td style="text-align: left;">&gt;95%</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 上述技术 KPI 的基准值<strong>尚无行业共识</strong>，目前为基于专家意见的建议值，需在 iHomeCare 实际运行中校验和迭代。</p>
+</blockquote>
+<hr />
+<h2 id="7-proms">7. 患者报告结局（PROMs）</h2>
+<h3 id="71-proms">7.1 国际通用的 PROMs 工具</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">工具</th>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">是否在 HaH 中验证</th>
+<th style="text-align: left;">许可</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>EQ-5D-5L</strong></td>
+<td style="text-align: left;">5维度：移动/自理/日常活动/疼痛/焦虑抑郁 + VAS</td>
+<td style="text-align: left;">✅ 在多种居家医疗场景中使用</td>
+<td style="text-align: left;">需 EuroQol 许可</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PROMIS-29</strong></td>
+<td style="text-align: left;">7个领域 + 疼痛强度</td>
+<td style="text-align: left;">✅ PROMIS→EQ-5D 映射算法已开发（PMC 2023）</td>
+<td style="text-align: left;">公开免费</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HCAHPS</strong>（医院版）</td>
+<td style="text-align: left;">医患沟通/护理/环境/出院准备/整体评分</td>
+<td style="text-align: left;">❌ 未针对 HaH 适配</td>
+<td style="text-align: left;">CMS 公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NPS</strong>（净推荐值）</td>
+<td style="text-align: left;">单一问题：&rdquo;推荐可能性&rdquo;</td>
+<td style="text-align: left;">⚠️ 部分 HaH 项目使用</td>
+<td style="text-align: left;">免费</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72-hah-prom">7.2 HaH 特定的 PROM 需求</h3>
+<p>与传统住院相比，HaH 环境下 PROMs 需额外关注：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">额外维度</th>
+<th style="text-align: left;">说明</th>
+<th style="text-align: left;">推荐工具</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>照护者负担</strong></td>
+<td style="text-align: left;">HaH 是否将临床负担转移给家属？</td>
+<td style="text-align: left;">Zarit Burden Interview / Caregiver Strain Index</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家安全感</strong></td>
+<td style="text-align: left;">患者在家中接受急症治疗的安全感知</td>
+<td style="text-align: left;">需自建或适配</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术接受度</strong></td>
+<td style="text-align: left;">对 RPM 设备和远程访视的接受程度</td>
+<td style="text-align: left;">Technology Acceptance Model (TAM) 量表</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>日常活动干扰</strong></td>
+<td style="text-align: left;">治疗对正常家庭生活的干扰程度</td>
+<td style="text-align: left;">改编自 PROMIS</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>睡眠质量</strong></td>
+<td style="text-align: left;">居家环境是否改善睡眠（vs 住院）</td>
+<td style="text-align: left;">PROMIS Sleep Disturbance</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="73">7.3 现有证据</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">PROM 发现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>HaH Users Group</strong></td>
+<td style="text-align: left;">&ldquo;Patients receiving acute care at home report higher satisfaction and stronger relationships with their care teams&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MGB RCT</strong></td>
+<td style="text-align: left;">HaH 患者&rdquo;spent a smaller portion of the day sedentary&rdquo;（更少久坐）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HaH Users Group</strong></td>
+<td style="text-align: left;">&ldquo;Studies show lower levels of caregiver stress and confirm that HaH does not transfer clinical responsibilities from medical professionals to families&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS AHCAH 报告</strong></td>
+<td style="text-align: left;">患者和照护者体验积极</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="74-ihomecare-prom">7.4 推荐 iHomeCare PROM 组合</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">时间点</th>
+<th style="text-align: left;">工具</th>
+<th style="text-align: left;">目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">入组时</td>
+<td style="text-align: left;">EQ-5D-5L + PROMIS-29（子集）</td>
+<td style="text-align: left;">基线健康状态</td>
+</tr>
+<tr>
+<td style="text-align: left;">出院时</td>
+<td style="text-align: left;">EQ-5D-5L + 自建 HaH 体验量表</td>
+<td style="text-align: left;">治疗前后变化 + 体验</td>
+</tr>
+<tr>
+<td style="text-align: left;">出院后30天</td>
+<td style="text-align: left;">EQ-5D-5L + 照护者负担</td>
+<td style="text-align: left;">持续性评估</td>
+</tr>
+<tr>
+<td style="text-align: left;">每次远程访视后</td>
+<td style="text-align: left;">单一 NPS 问题</td>
+<td style="text-align: left;">实时反馈</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="8">8. 各标杆项目实际基准值</h2>
+<h3 id="81-atrium-health">8.1 Atrium Health</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">项目名称</td>
+<td style="text-align: left;">Hospital at Home (AH-HaH)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">启动年份</td>
+<td style="text-align: left;">2020</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">累计患者数</td>
+<td style="text-align: left;">9,400+</td>
+<td style="text-align: left;">HaH Users Group</td>
+</tr>
+<tr>
+<td style="text-align: left;">累计释放床位日</td>
+<td style="text-align: left;"><strong>33,000</strong></td>
+<td style="text-align: left;">HaH Users Group</td>
+</tr>
+<tr>
+<td style="text-align: left;">RPM 模式</td>
+<td style="text-align: left;">远程监测 + 双向音视频 + 24/7 虚拟 RN</td>
+<td style="text-align: left;">AMA case study</td>
+</tr>
+<tr>
+<td style="text-align: left;">访视频率</td>
+<td style="text-align: left;">q6hr 生命体征 + 每日2次社区 paramedic/RN + 每日 1 次医生远程访视</td>
+<td style="text-align: left;">AMA case study</td>
+</tr>
+<tr>
+<td style="text-align: left;">入排标准</td>
+<td style="text-align: left;">O2 ≤4L, RR &lt;24, SBP &gt;90, SpO2 &gt;92%, 无需72h内高级诊断</td>
+<td style="text-align: left;">AMA case study</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="82-mass-general-brigham-mgb">8.2 Mass General Brigham (MGB)</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">项目名称</td>
+<td style="text-align: left;">Home Hospital / Healthcare at Home</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">启动年份</td>
+<td style="text-align: left;">2017</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">覆盖范围</td>
+<td style="text-align: left;">72个社区（波士顿大区）</td>
+<td style="text-align: left;">Current Health</td>
+</tr>
+<tr>
+<td style="text-align: left;">典型 LOS</td>
+<td style="text-align: left;"><strong>5-6天</strong></td>
+<td style="text-align: left;">MGB Health Plan case study</td>
+</tr>
+<tr>
+<td style="text-align: left;">累计释放床位日</td>
+<td style="text-align: left;"><strong>25,000+</strong></td>
+<td style="text-align: left;">Current Health case study</td>
+</tr>
+<tr>
+<td style="text-align: left;">增长</td>
+<td style="text-align: left;">15个月内增长200%</td>
+<td style="text-align: left;">Current Health</td>
+</tr>
+<tr>
+<td style="text-align: left;">非预期死亡</td>
+<td style="text-align: left;">&ldquo;zero unexpected mortality&rdquo;</td>
+<td style="text-align: left;">Current Health</td>
+</tr>
+<tr>
+<td style="text-align: left;">战略目标</td>
+<td style="text-align: left;">转移10%内科患者至居家</td>
+<td style="text-align: left;">AHA Market Scan 2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">30天再入院</td>
+<td style="text-align: left;">RCT 证据支持低于住院</td>
+<td style="text-align: left;">多篇发表</td>
+</tr>
+<tr>
+<td style="text-align: left;">服务内容</td>
+<td style="text-align: left;">每日访视+24/7视频+远程监测+IV药物+诊断+X线/超声/血检+PT/OT/ST+社工+餐食</td>
+<td style="text-align: left;">MGB case study</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="83-kaiser-permanente">8.3 Kaiser Permanente</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">项目名称</td>
+<td style="text-align: left;">Advanced Care at Home (ACAH)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">合计 HaH 患者</td>
+<td style="text-align: left;">226例（2025发表评估） + 573例 CHF（2021-2024）</td>
+<td style="text-align: left;">AJMC / SHM</td>
+</tr>
+<tr>
+<td style="text-align: left;">CHF 子组 30天急诊/紧急护理</td>
+<td style="text-align: left;">数据已追踪未公开基准</td>
+<td style="text-align: left;">SHM Abstracts</td>
+</tr>
+<tr>
+<td style="text-align: left;">CHF 子组 30天再入院</td>
+<td style="text-align: left;">数据已追踪未公开基准</td>
+<td style="text-align: left;">SHM Abstracts</td>
+</tr>
+<tr>
+<td style="text-align: left;">CHF 子组 30天死亡率</td>
+<td style="text-align: left;">数据已追踪未公开基准</td>
+<td style="text-align: left;">SHM Abstracts</td>
+</tr>
+<tr>
+<td style="text-align: left;">谵妄风险</td>
+<td style="text-align: left;"><strong>降低 64%</strong>（OR=0.36, p=0.026）</td>
+<td style="text-align: left;">AJMC 2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">系统特点</td>
+<td style="text-align: left;">整合型 HMO（保险+医疗一体），自有 EHR 连续性</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="84-mount-sinai">8.4 Mount Sinai</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">项目名称</td>
+<td style="text-align: left;">Mobile Acute Care Team (MACT) / Hospitalization at Home</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>30天再入院率</strong></td>
+<td style="text-align: left;"><strong>8.6%</strong> (vs 15.6% 住院)</td>
+<td style="text-align: left;">JAMA / AHA case study 2018</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>30天急诊率</strong></td>
+<td style="text-align: left;"><strong>5.8%</strong> (vs 11.7% 住院)</td>
+<td style="text-align: left;">JAMA / AHA case study 2018</td>
+</tr>
+<tr>
+<td style="text-align: left;">患者满意度</td>
+<td style="text-align: left;">显著高于住院</td>
+<td style="text-align: left;">多篇发表</td>
+</tr>
+<tr>
+<td style="text-align: left;">模型来源</td>
+<td style="text-align: left;">基于 Johns Hopkins HaH 模型</td>
+<td style="text-align: left;">Mount Sinai 实施手册</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="85-johns-hopkins">8.5 Johns Hopkins</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">项目名称</td>
+<td style="text-align: left;">Hospital at Home</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">启动年份</td>
+<td style="text-align: left;"><strong>1994</strong>（美国先驱，26+年数据）</td>
+<td style="text-align: left;">Commonwealth Fund</td>
+</tr>
+<tr>
+<td style="text-align: left;">研究贡献</td>
+<td style="text-align: left;">奠基性 RCT：HaH 成本更低/临床等效/满意度更高</td>
+<td style="text-align: left;">多篇 NEJM/JAMA</td>
+</tr>
+<tr>
+<td style="text-align: left;">捆绑模式</td>
+<td style="text-align: left;">HaH + 30天 postacute transitional care → 更优结局</td>
+<td style="text-align: left;">Hopkins 发表</td>
+</tr>
+<tr>
+<td style="text-align: left;">对政策影响</td>
+<td style="text-align: left;">HaH 概念引入者 Bruce Leff（1996）</td>
+<td style="text-align: left;">PMC 2023</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="86">8.6 跨项目对标矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">CMS全国基准(2024/2026)</th>
+<th style="text-align: center;">Atrium</th>
+<th style="text-align: center;">MGB</th>
+<th style="text-align: center;">Kaiser</th>
+<th style="text-align: center;">Mount Sinai</th>
+<th style="text-align: center;">优秀目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">院内/期间死亡率</td>
+<td style="text-align: center;">0.4%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">0% (非预期)</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">≤0.5%</td>
+</tr>
+<tr>
+<td style="text-align: left;">30天再入院率</td>
+<td style="text-align: center;">11.7%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">低于住院</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">8.6%</td>
+<td style="text-align: center;">≤10%</td>
+</tr>
+<tr>
+<td style="text-align: left;">30天急诊率</td>
+<td style="text-align: center;">8.8%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">5.8%</td>
+<td style="text-align: center;">≤8%</td>
+</tr>
+<tr>
+<td style="text-align: left;">升级转院率 (ICU)</td>
+<td style="text-align: center;">3.5%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">≤5%</td>
+</tr>
+<tr>
+<td style="text-align: left;">并发症率</td>
+<td style="text-align: center;">3.6%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">≤4%</td>
+</tr>
+<tr>
+<td style="text-align: left;">谵妄降低</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">64%↓</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">50%+↓</td>
+</tr>
+<tr>
+<td style="text-align: left;">累计释放床位日</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">33,000</td>
+<td style="text-align: center;">25,000+</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">项目规模依赖</td>
+</tr>
+<tr>
+<td style="text-align: left;">典型 LOS</td>
+<td style="text-align: center;">短于住院</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">5-6天</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">3-7天</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>&ldquo;—&rdquo; 表示该机构未公开此特定基准值。</p>
+</blockquote>
+<hr />
+<h2 id="9-ihomecare">9. 对 iHomeCare 质量体系设计的建议</h2>
+<h3 id="91">9.1 五层质量架构</h3>
+<p>建议 iHomeCare 采用与 CMS AHCAH 框架对齐但针对中国市场适配的五层质量架构：</p>
+<pre><code>┌─────────────────────────────────────────────┐
+│            iHomeCare 质量体系               │
+├─────────────────────────────────────────────┤
+│ L5 — 患者报告层 (PROMs/PREMs)               │
+│      EQ-5D-5L + 自建HaH体验 + NPS           │
+├─────────────────────────────────────────────┤
+│ L4 — 技术质量层 (RPM/Tech KPIs)             │
+│      告警响应 / 数据完整性 / 设备可用性       │
+├─────────────────────────────────────────────┤
+│ L3 — 安全监控层 (Safety Surveillance)        │
+│      非预期死亡 / 升级转院 / 跌倒 / 不良事件  │
+├─────────────────────────────────────────────┤
+│ L2 — 运营效率层 (Operational)               │
+│      LOS / 床位日节省 / 再入院 / 急诊使用    │
+├─────────────────────────────────────────────┤
+│ L1 — 临床结果层 (Clinical Outcomes)          │
+│      死亡率 / 并发症 / 功能改善 / 谵妄       │
+└─────────────────────────────────────────────┘
+</code></pre>
+<h3 id="92">9.2 具体建议</h3>
+<h4 id="921-cms-level-1-3">9.2.1 强制报告指标（月度，对标 CMS Level 1-3）</h4>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">对标来源</th>
+<th style="text-align: left;">数据采集方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">非预期死亡率</td>
+<td style="text-align: left;">CMS AHCAH</td>
+<td style="text-align: left;">临床判定 + 平台记录</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">升级转院率</td>
+<td style="text-align: left;">CMS AHCAH</td>
+<td style="text-align: left;">平台自动追踪</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">总出院数</td>
+<td style="text-align: left;">CMS AHCAH</td>
+<td style="text-align: left;">平台自动追踪</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">30天再入院率</td>
+<td style="text-align: left;">CMS/JAMA</td>
+<td style="text-align: left;">平台 + 随访</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">30天急诊使用率</td>
+<td style="text-align: left;">JAMA</td>
+<td style="text-align: left;">平台 + 随访</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">HaH 期间不良事件数（跌倒/HAPI/药物错误）</td>
+<td style="text-align: left;">建议新增</td>
+<td style="text-align: left;">临床报告 + 平台</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">患者 NPS</td>
+<td style="text-align: left;">行业实践</td>
+<td style="text-align: left;">出院时自动推送</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="922">9.2.2 风险调整策略</h4>
+<p><strong>关键教训</strong>：国际数据显示 HaH 患者选择偏倚是解释&rdquo;更好结果&rdquo;的主要混淆因素。iHomeCare 应：</p>
+<ul>
+<li><strong>建立入排标准与患者分层</strong>：记录所有筛选指标（临床严重度/功能状态/社会支持/技术接受度），用于事后风险调整</li>
+<li><strong>对标住院基准时使用倾向性评分匹配（Propensity Score Matching）</strong>：参考 JAMA 2026 方法论</li>
+<li><strong>逐步纳入更高临床复杂度患者</strong>：验证不同风险层级下的结果差异</li>
+</ul>
+<h4 id="923-prom">9.2.3 PROM 组合推荐</h4>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">时间点</th>
+<th style="text-align: left;">最小可行组合</th>
+<th style="text-align: left;">扩展组合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">入组</td>
+<td style="text-align: left;">NPS + 自建满意度</td>
+<td style="text-align: left;">+ EQ-5D-5L + PROMIS-29</td>
+</tr>
+<tr>
+<td style="text-align: left;">出院</td>
+<td style="text-align: left;">NPS + 自建满意度</td>
+<td style="text-align: left;">+ EQ-5D-5L + 照护者负担</td>
+</tr>
+<tr>
+<td style="text-align: left;">30天随访</td>
+<td style="text-align: left;">NPS</td>
+<td style="text-align: left;">+ EQ-5D-5L + 功能状态</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="924">9.2.4 技术质量监控</h4>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">KPI</th>
+<th style="text-align: left;">iHomeCare 起步目标</th>
+<th style="text-align: left;">成熟期目标</th>
+<th style="text-align: left;">对标依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">告警响应时间</td>
+<td style="text-align: left;">&lt;30分钟</td>
+<td style="text-align: left;">&lt;15分钟</td>
+<td style="text-align: left;">CMS 30分钟紧急响应要求</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据传输完整性</td>
+<td style="text-align: left;">&gt;90%</td>
+<td style="text-align: left;">&gt;95%</td>
+<td style="text-align: left;">HaH Users Group RPM研究</td>
+</tr>
+<tr>
+<td style="text-align: left;">远程视频访视完成率</td>
+<td style="text-align: left;">&gt;90%</td>
+<td style="text-align: left;">&gt;95%</td>
+<td style="text-align: left;">行业实践</td>
+</tr>
+<tr>
+<td style="text-align: left;">设备故障率</td>
+<td style="text-align: left;">&lt;5%</td>
+<td style="text-align: left;">&lt;2%</td>
+<td style="text-align: left;">行业实践</td>
+</tr>
+<tr>
+<td style="text-align: left;">平台可用性（uptime）</td>
+<td style="text-align: left;">&gt;99.5%</td>
+<td style="text-align: left;">&gt;99.9%</td>
+<td style="text-align: left;">SaaS行业标准</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="925">9.2.5 国际对标与本土化适配要点</h4>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">美国 CMS 框架要素</th>
+<th style="text-align: left;">中国适配建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Medicare FFS 支付标准</td>
+<td style="text-align: left;">对接中国医保支付改革（DRG/DIP 框架下的 HaH 支付单元设计）</td>
+</tr>
+<tr>
+<td style="text-align: left;">OASIS 评估工具</td>
+<td style="text-align: left;">开发中国版 HaH 标准化评估表单（参考 OASIS 结构 + 中国临床实践）</td>
+</tr>
+<tr>
+<td style="text-align: left;">HCAHPS 患者体验</td>
+<td style="text-align: left;">开发中国版 HaH 患者体验量表（参考公立医院绩效考核患者满意度框架）</td>
+</tr>
+<tr>
+<td style="text-align: left;">CMS 月度报告（3指标）</td>
+<td style="text-align: left;">扩展至中国版 8-10 指标集（涵盖安全 + 临床 + 运营）</td>
+</tr>
+<tr>
+<td style="text-align: left;">RPM FDA 监管</td>
+<td style="text-align: left;">对接中国 NMPA 医疗器械软件监管框架</td>
+</tr>
+<tr>
+<td style="text-align: left;">MedPAC 风险调整</td>
+<td style="text-align: left;">对接中国 CHS-DRG 风险分层方法论</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="926">9.2.6 分阶段实施路线图</h4>
+<pre><code>Phase 1 (0-6个月)：基础建设
+├── 建立入排标准 + 患者分层模型
+├── 实施 L1-L3 强制报告（7项核心指标）
+├── 部署 NPS 收集（出院时）
+└── 建设技术 KPI 监控面板
+
+Phase 2 (6-12个月)：标准对标
+├── 引入 EQ-5D-5L PROM 工具（获许可）
+├── 启动与住院对照的风险调整对标
+├── 建立 30 天随访追踪系统
+└── 技术 KPI 从&quot;起步&quot;升级至&quot;成熟&quot;目标
+
+Phase 3 (12-24个月)：体系成熟
+├── 开发中国版 HaH 标准化评估表单
+├── 与医保部门合作定义 HaH 支付质量指标
+├── 发表首个中国 HaH 质量结果报告
+└── 参与国际对标（APHaH/HaH Users Group）
+</code></pre>
+<hr />
+<h2 id="10">10. 附录：信源与参考文献</h2>
+<h3 id="tier-1">Tier 1 — 政府/官方源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">CMS Fact Sheet: Report on the Study of the AHCAH Initiative</td>
+<td style="text-align: left;">全国 HaH 质量/成本/体验研究</td>
+<td style="text-align: left;">2024.9.30</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">CMS Home Health Quality Measures</td>
+<td style="text-align: left;">HH QRP 指标体系与 OASIS 框架</td>
+<td style="text-align: left;">持续更新</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">MedPAC Report to Congress, Ch.6: Medicare&rsquo;s AHCAH Program</td>
+<td style="text-align: left;">豁免要求 + 质量报告建议</td>
+<td style="text-align: left;">2024.6</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">CMS Lessons from CMS&rsquo; AHCAH Initiative (Blog)</td>
+<td style="text-align: left;">政策更新 + 早期经验</td>
+<td style="text-align: left;">2024</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tier-2">Tier 2 — 学术/行业源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">JAMA Network Open: &ldquo;Outcomes Associated With Hospital at Home vs Traditional Inpatient Stay&rdquo;</td>
+<td style="text-align: left;">68医院/15,871例 PSM 研究</td>
+<td style="text-align: left;">2026.5</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">AJMC: &ldquo;Advanced Care at Home at Scale in an Integrated Health Care System&rdquo;</td>
+<td style="text-align: left;">Kaiser Permanente ACAH 谵妄结果</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">HaH Users Group: &ldquo;Summary of U.S. Evidence on the HaH Model&rdquo;</td>
+<td style="text-align: left;">综合证据两页摘要</td>
+<td style="text-align: left;">2025.9</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">HaH Users Group: &ldquo;Quality Metrics for RPM within HaH&rdquo; (Whitehead)</td>
+<td style="text-align: left;">RPM 质量指标 9机构研究</td>
+<td style="text-align: left;">2023.10</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">Mount Sinai JAMA 2018: HaH clinical outcomes</td>
+<td style="text-align: left;">再入院 8.6% vs 15.6%</td>
+<td style="text-align: left;">2018</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">Commonwealth Fund: &ldquo;Hospital at Home Programs Improve Outcomes&rdquo;</td>
+<td style="text-align: left;">JHU 模型 + 政策分析</td>
+<td style="text-align: left;">历史</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">JMIR: &ldquo;Hospital Is Not the Home&rdquo;</td>
+<td style="text-align: left;">RPM 居家数据质量讨论</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">npj Digital Medicine: &ldquo;The hospital at home in the USA&rdquo;</td>
+<td style="text-align: left;">JHU 发表 HaH 现状展望</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">JAMA Health Forum: &ldquo;PROMs and PREMs to Assess Quality&rdquo;</td>
+<td style="text-align: left;">PROMs 工具指南</td>
+<td style="text-align: left;">2022</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tier-3">Tier 3 — 媒体报道/行业分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">FierceHealthcare: &ldquo;Low mortality among HaH patients nationwide&rdquo;</td>
+<td style="text-align: left;">MGB 全国研究报道</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">Home Health Care News: &ldquo;HaH Reduces In-Hospital Mortality, ED Visits&rdquo;</td>
+<td style="text-align: left;">JAMA 2026 解读</td>
+<td style="text-align: left;">2026.5</td>
+</tr>
+<tr>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">AMA: &ldquo;Hospital at home saves lives and money: CMS report&rdquo;</td>
+<td style="text-align: left;">CMS 报告解读</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">Healthcare Finance News: &ldquo;CMS releases AHCAH study&rdquo;</td>
+<td style="text-align: left;">成本发现报道</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">AHA Market Scan: &ldquo;Providers Betting Big on Future of HaH&rdquo;</td>
+<td style="text-align: left;">MGB 10% 目标报道</td>
+<td style="text-align: left;">2024.4</td>
+</tr>
+<tr>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">Medisolv Blog: &ldquo;Quality Measures and the Success of HaH Programs&rdquo;</td>
+<td style="text-align: left;">质量经理实操指南</td>
+<td style="text-align: left;">2024</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">项目直接来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Atrium Health</td>
+<td style="text-align: left;">AMA Future of Health Case Study; HaH Users Group evidence</td>
+</tr>
+<tr>
+<td style="text-align: left;">MGB Home Hospital</td>
+<td style="text-align: left;">MGB Health Plan Case Study PDF; Current Health case study; AHA Market Scan</td>
+</tr>
+<tr>
+<td style="text-align: left;">Kaiser ACAH</td>
+<td style="text-align: left;">AJMC 2025; SHM Abstracts 2024; PMC evaluation</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mount Sinai</td>
+<td style="text-align: left;">JAMA 2018; AHA Members in Action case study; Implementation Manual</td>
+</tr>
+<tr>
+<td style="text-align: left;">Johns Hopkins</td>
+<td style="text-align: left;">Commonwealth Fund; Hopkins HBI publications</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_3">研究空白与后续工作</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">空白</th>
+<th style="text-align: left;">优先级</th>
+<th style="text-align: left;">建议补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">HaH 环境下的跌倒/CAUTI/CLABSI/VTE 系统数据</td>
+<td style="text-align: left;">🔴 高</td>
+<td style="text-align: left;">联系 HaH Users Group / 各项目质量负责人</td>
+</tr>
+<tr>
+<td style="text-align: left;">AHCAH 升级转院率全国基准</td>
+<td style="text-align: left;">🔴 高</td>
+<td style="text-align: left;">待 CMS 公开汇总数据</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术质量 KPI 行业共识标准</td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">参与 HaH Users Group RPM 工作组</td>
+</tr>
+<tr>
+<td style="text-align: left;">中国 HaH 质量数据的完全缺失</td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">iHomeCare 自主建立首个数据集</td>
+</tr>
+<tr>
+<td style="text-align: left;">PROM 中国人群常模</td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">申请 EQ-5D-5L 中国 value set</td>
+</tr>
+<tr>
+<td style="text-align: left;">各项目详细成本分解</td>
+<td style="text-align: left;">🟢 低</td>
+<td style="text-align: left;">商业敏感——可通过学术合作获取</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><em>本报告基于截至 2026 年 7 月 3 日的公开可获取数据编制。所有数据点均标注来源与日期。标注&rdquo;—&ldquo;的字段表示该机构未公开该特定数据点。部分 Web 提取因安全策略被阻止，数据来自搜索引擎摘要的交叉验证。</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

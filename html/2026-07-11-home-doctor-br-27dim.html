@@ -1,0 +1,3266 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home Doctor（巴西）27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#home-doctor27">Home Doctor（巴西）27 维度深度尽调报告</a><ul>
+<li><a href="#0">🔴 前置步骤 0 — 赛道真实性验证</a><ul>
+<li><a href="#vs">原导航卡描述 vs 实际情况</a></li>
+<li><a href="#_1">🚨 赛道真实定位</a></li>
+</ul>
+</li>
+<li><a href="#d0">D0 — 导航卡错误修正说明</a></li>
+<li><a href="#d1">D1 — 执行摘要</a><ul>
+<li><a href="#_2">一句话定位</a></li>
+<li><a href="#_3">核心矛盾</a></li>
+<li><a href="#_4">关键数据速览</a></li>
+<li><a href="#_5">总体判断</a></li>
+<li><a href="#_6">完备性审计表</a></li>
+</ul>
+</li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_7">基本事实表</a></li>
+<li><a href="#_8">发展时间线</a></li>
+<li><a href="#_9">管理层</a></li>
+<li><a href="#_10">公司治理</a></li>
+<li><a href="#_11">股权结构</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_12">一句话核心逻辑</a></li>
+<li><a href="#_13">战略差异化要素表</a></li>
+<li><a href="#_14">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#_15">可视化架构图</a></li>
+<li><a href="#vs_1">支付方 vs 使用方分离</a></li>
+<li><a href="#_16">价值链定位</a></li>
+<li><a href="#_17">战略合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#_18">产品线概览</a></li>
+<li><a href="#_19">定价参照</a></li>
+<li><a href="#_20">研发与创新管线</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_21">客户结构估算</a></li>
+<li><a href="#_22">支付方来源</a></li>
+<li><a href="#_23">客户获取渠道</a></li>
+<li><a href="#_24">品牌与声誉</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a><ul>
+<li><a href="#_25">收入估算框架</a></li>
+<li><a href="#_26">收入结构推测</a></li>
+<li><a href="#_27">利润表关键比率推测</a></li>
+<li><a href="#_28">资产负债表重点（推测）</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a><ul>
+<li><a href="#internacao-domiciliar">患者全旅程（以 Internação Domiciliar 为例）</a></li>
+<li><a href="#_29">关键运营指标（推测）</a></li>
+</ul>
+</li>
+<li><a href="#d9-ai">D9 — 技术深度评估（软件 · 硬件 · AI/数据）</a><ul>
+<li><a href="#91">9.1 平台架构总览（五层模型）</a></li>
+<li><a href="#92">9.2 软件架构深度</a></li>
+<li><a href="#93-iot">9.3 硬件/IoT 设备</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+<li><a href="#96">9.6 技术风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a><ul>
+<li><a href="#_30">主要竞品</a></li>
+<li><a href="#_31">跨界潜在进入者</a></li>
+</ul>
+</li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</a><ul>
+<li><a href="#tam">巴西居家医疗护理市场 TAM 估算</a></li>
+<li><a href="#_32">增长驱动力</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型与路径</a><ul>
+<li><a href="#_33">成本结构拆解</a></li>
+<li><a href="#_34">盈利路径分析</a></li>
+<li><a href="#_35">综合判断</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a><ul>
+<li><a href="#_36">法律与诉讼</a></li>
+<li><a href="#_37">宏观敏感性</a></li>
+</ul>
+</li>
+<li><a href="#d14">D14 — 管理层指引与市场沟通</a><ul>
+<li><a href="#_38">公开渠道管理层观点</a></li>
+<li><a href="#_39">管理层可信度评估</a></li>
+</ul>
+</li>
+<li><a href="#d15">D15 — 估值对比</a><ul>
+<li><a href="#_40">可比交易参考（巴西医疗健康领域）</a></li>
+</ul>
+</li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1">1. 对潜在投资者（若考虑巴西市场）</a></li>
+<li><a href="#2-ihomecare">2. 对 iHomeCare 的关键借鉴</a></li>
+<li><a href="#3-ihomecare">3. 差异化切入点（若 iHomeCare 进入巴西）</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a><ul>
+<li><a href="#atencao-domiciliar">巴西居家医疗护理（Atenção Domiciliar）政策框架</a></li>
+<li><a href="#_41">政策趋势判断</a></li>
+</ul>
+</li>
+<li><a href="#d18">D18 — 单元经济模型</a><ul>
+<li><a href="#internacao-domiciliar-30">典型案例：Internação Domiciliar（居家住院替代）— 30 天周期</a></li>
+<li><a href="#_42">与传统住院对比</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a><ul>
+<li><a href="#_43">分层矩阵</a></li>
+<li><a href="#_44">对公司战略的推导含义</a></li>
+</ul>
+</li>
+<li><a href="#d20">D20 — 竞品深度地图</a><ul>
+<li><a href="#_45">已确认竞品</a></li>
+<li><a href="#_46">最大威胁扫描</a></li>
+<li><a href="#_47">跨界进入者</a></li>
+</ul>
+</li>
+<li><a href="#d21">D21 — 跨境/跨区域战略深度评估</a></li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a><ul>
+<li><a href="#_48">潜在买家画像</a></li>
+<li><a href="#_49">估值参考</a></li>
+</ul>
+</li>
+<li><a href="#d23-esg">D23 — ESG/社会影响力</a><ul>
+<li><a href="#esg">ESG 披露状态</a></li>
+<li><a href="#esg_1">关键 ESG 指标</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a><ul>
+<li><a href="#_50">融资历史全览</a></li>
+<li><a href="#cap-table">Cap Table 推测</a></li>
+<li><a href="#_51">现金状况</a></li>
+<li><a href="#_52">投资者质量</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证体系</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_53">调研空白与后续补充</a></li>
+<li><a href="#_54">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="home-doctor27">Home Doctor（巴西）27 维度深度尽调报告</h1>
+<blockquote>
+<p><strong>报告日期</strong>：2026-07-11
+<strong>调研对象</strong>：Home Doctor（Grupo Home Doctor） — 巴西领先传统居家医疗护理运营商
+<strong>调研语言</strong>：简体中文
+<strong>框架版本</strong>：27 维度 v2.0</p>
+</blockquote>
+<hr />
+<h2 id="0">🔴 前置步骤 0 — 赛道真实性验证</h2>
+<h3 id="vs">原导航卡描述 vs 实际情况</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">导航卡原描述</th>
+<th style="text-align: left;">实际验证结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">业务模式</td>
+<td style="text-align: left;">&ldquo;通过 App 连接患者与医生/护士&rdquo;</td>
+<td style="text-align: left;">❌ <strong>不准确</strong> — 非平台型撮合模式，而是自建临床团队的重资产服务商</td>
+</tr>
+<tr>
+<td style="text-align: left;">赛道定位</td>
+<td style="text-align: left;">数字平台 + 上门医护</td>
+<td style="text-align: left;">⚠️ <strong>部分准确</strong> — 本质是传统 Atenção Domiciliar (Home Care)，辅以数字工具</td>
+</tr>
+<tr>
+<td style="text-align: left;">投资者</td>
+<td style="text-align: left;">&ldquo;包括软银拉丁美洲基金&rdquo;</td>
+<td style="text-align: left;">❌ <strong>无证据</strong> — LinkedIn/官网/Crunchbase 均未显示任何风投融资。可能混淆了波兰同名公司 HomeDoctor（获 $4.3M）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_1">🚨 赛道真实定位</h3>
+<p>Home Doctor <strong>不是</strong> telehealth SaaS 平台或按需医生撮合 App。它是：</p>
+<ul>
+<li><strong>核心赛道</strong>：传统 Atenção Domiciliar（居家医疗护理），即 <strong>Home Health / Home Hospitalization</strong></li>
+<li><strong>与美国 HaH 的区别</strong>：HaH 侧重急性期住院替代（30-60 天），Home Doctor 覆盖从高急性（Internação Domiciliar）到长期慢性护理的完整谱系</li>
+<li><strong>与数字 HealthTech 的区别</strong>：数字工具（App/EMR/远程医疗）是运营支撑层，非核心产品</li>
+<li><strong>对 iHomeCare 相关性</strong>：🟡 <strong>中等</strong> — 模式对标价值高（重资产运营闭环），但非直接竞品（非平台模式）</li>
+</ul>
+<hr />
+<h2 id="d0">D0 — 导航卡错误修正说明</h2>
+<blockquote>
+<p><strong>原始导航卡存在两处关键错误，本报告予以修正</strong>：
+1. &ldquo;软银拉丁美洲基金&rdquo; → 无可靠公开数据源支撑，已移除
+2. &ldquo;通过 App 连接患者与医生/护士&rdquo; → 应为 &ldquo;自建多学科临床团队的全国性居家医疗护理运营商&rdquo;</p>
+</blockquote>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<h3 id="_2">一句话定位</h3>
+<p>Home Doctor 是巴西最大的居家医疗护理（Atenção Domiciliar）运营商之一，由三名外科医生于 1994 年创立，拥有 28 个分支机构覆盖 550+ 城市，以重资产自营模式提供从高急性住院替代到长期慢病护理的全谱系居家医疗服务。</p>
+<h3 id="_3">核心矛盾</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">正面</th>
+<th style="text-align: left;">负面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">巴西人口老龄化+慢性病负担 → 居家护理需求结构性增长</td>
+<td style="text-align: left;">非上市公司，财务数据完全不透明</td>
+</tr>
+<tr>
+<td style="text-align: left;">30 年行业深耕+国际顶级认证（加拿大 Accreditation Diamond）</td>
+<td style="text-align: left;">重资产模式（自建设备园区、药房、物流中心），扩张成本高</td>
+</tr>
+<tr>
+<td style="text-align: left;">与 60+ 健康保险计划合作 → 支付端稳定</td>
+<td style="text-align: left;">巴西公共医保 SUS 对居家护理覆盖有限，主要依赖私立保险</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">关键数据速览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立时间</td>
+<td style="text-align: left;">1994 年</td>
+<td style="text-align: left;">官网 sobre 页面</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">São Paulo, SP</td>
+<td style="text-align: left;">LinkedIn/官网</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工规模</td>
+<td style="text-align: left;">1,001–5,000（LinkedIn），约 9,000 专业人员（2023 年自述）</td>
+<td style="text-align: left;">LinkedIn/官网新闻</td>
+</tr>
+<tr>
+<td style="text-align: left;">分支机构</td>
+<td style="text-align: left;">28 个</td>
+<td style="text-align: left;">官网</td>
+</tr>
+<tr>
+<td style="text-align: left;">覆盖城市</td>
+<td style="text-align: left;">550+</td>
+<td style="text-align: left;">官网</td>
+</tr>
+<tr>
+<td style="text-align: left;">累计患者</td>
+<td style="text-align: left;">65,000+</td>
+<td style="text-align: left;">官网 sobre 页面</td>
+</tr>
+<tr>
+<td style="text-align: left;">机械通气患者</td>
+<td style="text-align: left;">5,000+（当前占 20%）</td>
+<td style="text-align: left;">官网 sobre 页面</td>
+</tr>
+<tr>
+<td style="text-align: left;">合作保险计划</td>
+<td style="text-align: left;">60+</td>
+<td style="text-align: left;">官网 FAQ</td>
+</tr>
+<tr>
+<td style="text-align: left;">融资状态</td>
+<td style="text-align: left;">无公开风投融资记录</td>
+<td style="text-align: left;">LinkedIn/Crunchbase</td>
+</tr>
+<tr>
+<td style="text-align: left;">商业模式</td>
+<td style="text-align: left;">B2B2C（保险计划付费）+ B2C（自费 e-commerce）</td>
+<td style="text-align: left;">官网</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_5">总体判断</h3>
+<p>🟡 <strong>稳健的传统运营商，非高增长 HealthTech 标的</strong>。对 iHomeCare 的核心借鉴价值在于：重资产临床运营闭环的搭建经验、国际质量认证体系的导入路径、以及巴西多层次支付体系的适配策略。</p>
+<h3 id="_6">完备性审计表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: center;">18</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 数据缺失</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_7">基本事实表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">字段</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>全称</strong></td>
+<td style="text-align: left;">Home Doctor Fornecimento de Infraestrutura de Apoio e Assistência ao Paciente no Domicílio Ltda.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>品牌名</strong></td>
+<td style="text-align: left;">Home Doctor / Grupo Home Doctor</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成立时间</strong></td>
+<td style="text-align: left;">1994 年（具体日期：12 月 6 日为周年纪念日）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总部地址</strong></td>
+<td style="text-align: left;">R. Cap. Francisco Teixeira Nogueira, 154 - Água Branca, São Paulo, SP 05037-030</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>法律形式</strong></td>
+<td style="text-align: left;">Sociedade Limitada (Ltda.) — 有限责任公司</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>上市状态</strong></td>
+<td style="text-align: left;">❌ 非上市，私人持有</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">LinkedIn 显示 1,001–5,000；2023 年自述约 9,000 专业人员</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LinkedIn 关注者</strong></td>
+<td style="text-align: left;">42,644</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网站</strong></td>
+<td style="text-align: left;">homedoctor.com.br</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>App</strong></td>
+<td style="text-align: left;">HD Família（App Store + Google Play）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E-commerce</strong></td>
+<td style="text-align: left;">store.homedoctor.com.br（50+ 服务可在线购买）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_8">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">年份</th>
+<th style="text-align: left;">里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1994</strong></td>
+<td style="text-align: left;">三名年轻外科医生创立 Home Doctor，开创巴西 Atenção Domiciliar 行业</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1994-2000s</strong></td>
+<td style="text-align: left;">首位机械通气患者、向 Vale do Paraíba、Baixada Santista 等地扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2008-2010</strong></td>
+<td style="text-align: left;">进入 Salvador、Rio de Janeiro、Campinas 等大城市</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>~2012</strong></td>
+<td style="text-align: left;">ONA Nível III 认证（巴西本土最高级别医院认证）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>~2015</strong></td>
+<td style="text-align: left;">进入 Brasília；ONA Nível III 再认证；自建医疗设备园区</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>~2018</strong></td>
+<td style="text-align: left;">进入 Alagoinhas；推出 Home Doctor GO! 服务</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>~2020</strong></td>
+<td style="text-align: left;">进入 Volta Redonda</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2022</strong></td>
+<td style="text-align: left;">获 Accreditation Canada Qmentum 钻石级认证（行业首家）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2023</strong></td>
+<td style="text-align: left;">创立 IEP（Instituto de Ensino e Pesquisa）；进入 Recife、Uberlândia</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2024</strong></td>
+<td style="text-align: left;">🎉 30 周年庆典；进入 Fortaleza、Goiânia、Belo Horizonte、Curitiba</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2024-25</strong></td>
+<td style="text-align: left;">Reacreditação Canadense 钻石级；进入 Aracaju、Cuiabá、João Pessoa 等</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2025-26</strong></td>
+<td style="text-align: left;">持续扩展至 28 城市；获 NEWPALEX 姑息治疗认证 + Elder Care Review 国际认证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026.4</strong></td>
+<td style="text-align: left;">IEP 第二期 Pós-Graduação em Atenção Domiciliar 开课</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>说明</strong>：年份细节基于官网时间线图表推断。部分年份为估算，精确到年。</p>
+</blockquote>
+<h3 id="_9">管理层</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">姓名</th>
+<th style="text-align: left;">职务</th>
+<th style="text-align: left;">背景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Dr. Cláudio Flauzino de Oliveira</strong></td>
+<td style="text-align: left;">Diretor Executivo（执行董事）/ Responsável Técnico</td>
+<td style="text-align: left;">CRM nº 93851；2026 年入选 &ldquo;100 Mais Influentes da Saúde&rdquo; 预提名</td>
+</tr>
+<tr>
+<td style="text-align: left;">三位创始医生</td>
+<td style="text-align: left;">创始人</td>
+<td style="text-align: left;">均为年轻外科医生（1994 年时），具体姓名未公开</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>关键人依赖风险</strong>：🟡 中等 — 公司由医生创立并管理，但具体管理层架构未完全公开。Dr. Cláudio Flauzino 作为执行董事和法定技术负责人，是关键人物。</p>
+</blockquote>
+<h3 id="_10">公司治理</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>董事会组成</strong></td>
+<td style="text-align: left;">无公开信息（私人公司）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>委员会结构</strong></td>
+<td style="text-align: left;">设有 Comitês Técnicos（技术委员会）和 Comissão de Ética Médica（医学伦理委员会）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关联交易</strong></td>
+<td style="text-align: left;">无公开数据</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理争议</strong></td>
+<td style="text-align: left;">无公开记录</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_11">股权结构</h3>
+<ul>
+<li>私人持有，由创始医生控制（具体持股比例未公开）</li>
+<li>无公开风投/PE 投资记录</li>
+<li>Crunchbase 无融资记录</li>
+</ul>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_12">一句话核心逻辑</h3>
+<p>Home Doctor 赌的是：<strong>巴西人口老龄化 + 私立医保降本压力 → 居家医疗护理替代住院的长期结构性趋势</strong>。30 年深耕建立的重资产运营壁垒（设备园区/药房/物流/培训体系）和顶级国际认证是无法被短期复制的护城河。</p>
+<h3 id="_13">战略差异化要素表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">公司定位</th>
+<th style="text-align: left;">差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">服务模式</td>
+<td style="text-align: left;">自建临床团队，非平台撮合</td>
+<td style="text-align: left;">全职多学科团队（医/护/心理/营养/PT/言语治疗）</td>
+</tr>
+<tr>
+<td style="text-align: left;">质量认证</td>
+<td style="text-align: left;">行业最高标准</td>
+<td style="text-align: left;">Accreditation Canada Diamond（首家）+ ONA III + NEWPALEX + Elder Care Review</td>
+</tr>
+<tr>
+<td style="text-align: left;">基础设施</td>
+<td style="text-align: left;">重资产全链条</td>
+<td style="text-align: left;">自有设备园区、临床药房、物流中心、24h 电话分诊、空中医疗转运</td>
+</tr>
+<tr>
+<td style="text-align: left;">教育与研究</td>
+<td style="text-align: left;">产业链上游延伸</td>
+<td style="text-align: left;">IEP — MEC 认可的 Pós-Graduação + 100+ EAD 课程</td>
+</tr>
+<tr>
+<td style="text-align: left;">地理覆盖</td>
+<td style="text-align: left;">全国性网络</td>
+<td style="text-align: left;">28 分支 550+ 城市，覆盖所有大区</td>
+</tr>
+<tr>
+<td style="text-align: left;">服务深度</td>
+<td style="text-align: left;">全谱系覆盖</td>
+<td style="text-align: left;">从机械通气高急性到轻症门诊级</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_14">战略演变三阶段</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">战略重点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Phase 1: 创业验证</strong></td>
+<td style="text-align: left;">1994–2008</td>
+<td style="text-align: left;">在圣保罗验证居家医疗护理模式；建立基本运营体系；获得 ONA 认证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Phase 2: 全国扩张</strong></td>
+<td style="text-align: left;">2008–2022</td>
+<td style="text-align: left;">逐城复制模式；建设自有设备园区；获得国际认证；建立培训体系</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Phase 3: 生态化+数字化</strong></td>
+<td style="text-align: left;">2023–现在</td>
+<td style="text-align: left;">上线 e-commerce 直接获客；App + 远程医疗数字渠道；创办 IEP 教育研究院；向学术/教育端延伸影响力</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<h3 id="_15">可视化架构图</h3>
+<pre><code>┌─────────────────────────────────────────────────────┐
+│                   HOME DOCTOR                        │
+│                                                      │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
+│  │ 医疗设备 │  │ 临床药房 │  │ 物流中心 +       │  │
+│  │ 园区     │  │ + 药物警戒│  │ 空中医疗转运     │  │
+│  └──────────┘  └──────────┘  └──────────────────┘  │
+│                                                      │
+│  ┌──────────────────────────────────────────────┐   │
+│  │         多学科临床团队（自营）                  │   │
+│  │  医生 │ 护士 │ 心理 │ 营养 │ PT │ 言语治疗     │   │
+│  └──────────────────────────────────────────────┘   │
+│                                                      │
+│  ┌─────────────┐  ┌──────────┐  ┌──────────────┐   │
+│  │ 24h 电话    │  │ EMR      │  │ 远程医疗 +   │   │
+│  │ 分诊中心    │  │ 实时记录 │  │ HD Família App│   │
+│  └─────────────┘  └──────────┘  └──────────────┘   │
+│                                                      │
+│  ┌──────────────────────────────────────────────┐   │
+│  │     IEP 教育研究院（MEC 认证研究生课程）        │   │
+│  └──────────────────────────────────────────────┘   │
+└──────────────────────┬──────────────────────────────┘
+                       │
+        ┌──────────────┼──────────────┐
+        ▼              ▼              ▼
+   ┌─────────┐   ┌─────────┐   ┌──────────┐
+   │ 60+ 健康│   │ 自费患者 │   │ 企业客户 │
+   │ 保险计划│   │ (e-com) │   │ (推测)   │
+   └─────────┘   └─────────┘   └──────────┘
+        │              │
+        ▼              ▼
+   ┌─────────────────────────┐
+   │   患者（居家）           │
+   │   65,000+ 累计           │
+   │   主要：60-80 岁老年人   │
+   └─────────────────────────┘
+</code></pre>
+<h3 id="vs_1">支付方 vs 使用方分离</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">角色</th>
+<th style="text-align: left;">谁</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>支付方</strong></td>
+<td style="text-align: left;">私立健康保险计划（60+ 合作）</td>
+<td style="text-align: left;">B2B2C 主收入来源，按 Plano de Atenção Domiciliar (PAD) 结算</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>支付方</strong></td>
+<td style="text-align: left;">自费患者</td>
+<td style="text-align: left;">通过 store.homedoctor.com.br 或 App 直接购买</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>使用方</strong></td>
+<td style="text-align: left;">患者（以 60-80 岁老年人为主）</td>
+<td style="text-align: left;">高急性（机械通气 20%）+ 慢性 + 儿科（7,000+）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>决策方</strong></td>
+<td style="text-align: left;">医院出院规划 + 保险计划审批 + 家属</td>
+<td style="text-align: left;">三方决策链路</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_16">价值链定位</h3>
+<pre><code>纯中介/撮合平台          ⬜                   ⬛ 自建医疗体系
+(如中国互联网医疗平台)                        (Home Doctor 在此)
+</code></pre>
+<p>Home Doctor 处于<strong>重度自营端</strong>：拥有自有设备、药房、物流、临床团队和培训体系，属于垂直整合度最高的居家医疗模式。</p>
+<h3 id="_17">战略合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">伙伴类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: left;">合作性质</th>
+<th style="text-align: center;">排他性</th>
+<th style="text-align: center;">收入贡献占比</th>
+<th style="text-align: center;">关系健康度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">保险/支付方</td>
+<td style="text-align: left;">60+ 私立健康保险计划</td>
+<td style="text-align: left;">网络内服务提供</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">主要收入来源</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">Home Angels</td>
+<td style="text-align: left;">居家看护公司</td>
+<td style="text-align: left;">联合服务（日常看护+医疗护理）</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">未知</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">学术/教育</td>
+<td style="text-align: left;">MEC（教育部）</td>
+<td style="text-align: left;">IEP 研究生课程认证</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">次要</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">认证机构</td>
+<td style="text-align: left;">Accreditation Canada / New Health Foundation</td>
+<td style="text-align: left;">质量认证</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">无直接收入</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">媒体</td>
+<td style="text-align: left;">CNN Brasil, Valor Econômico</td>
+<td style="text-align: left;">品牌报道</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">无直接收入</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>伙伴集中度风险</strong>：🟡 依赖私立保险计划体系，若巴西医保政策大变（如加强 SUS 公立体系直接覆盖），可能受影响</li>
+<li><strong>伙伴切换成本</strong>：中等 — 保险计划网络准入有一定门槛，但认证资质（Accreditation Diamond）提供差异化议价力</li>
+</ul>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<h3 id="_18">产品线概览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">产品线</th>
+<th style="text-align: left;">客户类型</th>
+<th style="text-align: left;">服务内容</th>
+<th style="text-align: left;">定价模式</th>
+<th style="text-align: center;">占收入（估）</th>
+<th style="text-align: left;">利润率特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Internação Domiciliar</strong>（居家住院替代）</td>
+<td style="text-align: left;">高急性患者（机械通气等）</td>
+<td style="text-align: left;">全套医疗设备+多学科团队+日间监护</td>
+<td style="text-align: left;">保险按 PAD 计费/自费按天</td>
+<td style="text-align: center;">估计最高（核心业务）</td>
+<td style="text-align: left;">高固定成本（设备/人力）、规模化后边际改善</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Assistência Domiciliar</strong>（居家辅助护理）</td>
+<td style="text-align: left;">中低复杂性患者</td>
+<td style="text-align: left;">定期医护上门、康复、营养等</td>
+<td style="text-align: left;">保险按次/按周期</td>
+<td style="text-align: center;">估计中</td>
+<td style="text-align: left;">人力密集型</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Emergências Médicas</strong>（医疗急救）</td>
+<td style="text-align: left;">急性突发需求</td>
+<td style="text-align: left;">24h 急救上门、GPS 定位、分诊评分</td>
+<td style="text-align: left;">保险或按次计费</td>
+<td style="text-align: center;">估计低</td>
+<td style="text-align: left;">高可变成本（24h 待命）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E-commerce 自费服务</strong></td>
+<td style="text-align: left;">自费个人客户</td>
+<td style="text-align: left;">50+ 服务可选（单次诊疗/护理等）</td>
+<td style="text-align: left;">线上标价直销</td>
+<td style="text-align: center;">估计低但增长快</td>
+<td style="text-align: left;">高毛利（无保险中间环节）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IEP 教育课程</strong></td>
+<td style="text-align: left;">医护专业人员</td>
+<td style="text-align: left;">Pós-Graduação + 100+ EAD 课程</td>
+<td style="text-align: left;">学费收入</td>
+<td style="text-align: center;">估计微量</td>
+<td style="text-align: left;">高毛利（内容边际成本低）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_19">定价参照</h3>
+<ul>
+<li>保险合作定价不公开，按 PAD（个人护理计划）定制</li>
+<li>自费 e-commerce 价格不公开，但 FAQ 提示需通过保险或自费渠道询价</li>
+<li>对比公立 SUS：SUS 提供 Melhor em Casa 免费居家护理，Home Doctor 定位私立中高端市场</li>
+</ul>
+<h3 id="_20">研发与创新管线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">在研项目</th>
+<th style="text-align: center;">阶段</th>
+<th style="text-align: left;">目标市场</th>
+<th style="text-align: left;">潜在影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">HD Família App 功能迭代</td>
+<td style="text-align: center;">持续更新</td>
+<td style="text-align: left;">患者/家属自助服务</td>
+<td style="text-align: left;">降低客服成本</td>
+</tr>
+<tr>
+<td style="text-align: left;">远程医疗整合</td>
+<td style="text-align: center;">已上线</td>
+<td style="text-align: left;">减少不必要上门</td>
+<td style="text-align: left;">运营效率提升</td>
+</tr>
+<tr>
+<td style="text-align: left;">IEP Pós-Graduação 第二期</td>
+<td style="text-align: center;">2026.4 开课</td>
+<td style="text-align: left;">人才培养+行业影响力</td>
+<td style="text-align: left;">品牌+人才储备</td>
+</tr>
+<tr>
+<td style="text-align: left;">IV Fórum Científico Internacional</td>
+<td style="text-align: center;">2025/2026 举办</td>
+<td style="text-align: left;">学术影响力</td>
+<td style="text-align: left;">行业话语权</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>R&amp;D 支出</strong>：无公开数据</li>
+<li><strong>专利布局</strong>：未检索到医疗技术相关专利（属于服务型企业）</li>
+<li><strong>创新文化</strong>：设有 IEP，有学术论坛和持续教育投入</li>
+</ul>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_21">客户结构估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户类别</th>
+<th style="text-align: center;">收入占比估</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">私立健康保险计划患者</td>
+<td style="text-align: center;">70-80%</td>
+<td style="text-align: left;">通过 60+ 保险计划转介，B2B2C</td>
+<td style="text-align: left;">稳定，取决于保险覆盖扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;">自费个人客户</td>
+<td style="text-align: center;">10-20%</td>
+<td style="text-align: left;">通过 e-commerce/App 直接购买</td>
+<td style="text-align: left;">🟢 增长（数字化获客发力）</td>
+</tr>
+<tr>
+<td style="text-align: left;">企业客户/其他</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: left;">推测：企业员工福利计划等</td>
+<td style="text-align: left;">未知</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">支付方来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">支付方</th>
+<th style="text-align: left;">支付方式</th>
+<th style="text-align: center;">占比估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">私立健康保险（60+ 计划）</td>
+<td style="text-align: left;">按 PAD 结算，可能含按人头/按项目付费</td>
+<td style="text-align: center;">70-80%</td>
+</tr>
+<tr>
+<td style="text-align: left;">患者自费</td>
+<td style="text-align: left;">线上购买/直接付款</td>
+<td style="text-align: center;">10-20%</td>
+</tr>
+<tr>
+<td style="text-align: left;">企业</td>
+<td style="text-align: left;">推测：团体健康福利</td>
+<td style="text-align: center;">&lt;10%</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 巴西 SUS（统一医疗系统）是潜在支付方但覆盖有限。SUS 的 Melhor em Casa 项目是公立体系下的竞争/补充服务。</p>
+</blockquote>
+<h3 id="_23">客户获取渠道</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">渠道</th>
+<th style="text-align: center;">效率评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">保险计划转介网络</td>
+<td style="text-align: center;">🟢 高效</td>
+<td style="text-align: left;">核心获客渠道，60+ 合作计划带来稳定流量</td>
+</tr>
+<tr>
+<td style="text-align: left;">医院出院转诊</td>
+<td style="text-align: center;">🟢 高效</td>
+<td style="text-align: left;">高急性患者出院后直接转入居家护理</td>
+</tr>
+<tr>
+<td style="text-align: left;">E-commerce (store.homedoctor.com.br)</td>
+<td style="text-align: center;">🟡 增长中</td>
+<td style="text-align: left;">2023 年后新增渠道，覆盖自费市场</td>
+</tr>
+<tr>
+<td style="text-align: left;">HD Família App</td>
+<td style="text-align: center;">🟡 增长中</td>
+<td style="text-align: left;">提升现有客户粘性+服务可达性</td>
+</tr>
+<tr>
+<td style="text-align: left;">品牌/内容营销（博客、社交媒体）</td>
+<td style="text-align: center;">🟡 辅助</td>
+<td style="text-align: left;">LinkedIn 42K 关注，品牌建设</td>
+</tr>
+<tr>
+<td style="text-align: left;">学术渠道（IEP、论坛）</td>
+<td style="text-align: center;">🟡 长期</td>
+<td style="text-align: left;">间接获客，影响医生/护士转介决策</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>集中度风险</strong>：🟡 中 — 高度依赖私立保险体系，单一保险计划集中度未知</li>
+<li><strong>最大客户占比</strong>：无公开数据，需补充一手调研</li>
+</ul>
+<h3 id="_24">品牌与声誉</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">公司数据</th>
+<th style="text-align: center;">行业基准</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>NPS</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>在线评分</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社交媒体情绪</strong></td>
+<td style="text-align: center;">LinkedIn 活跃正面（帖子获 10-100+ 赞）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">LinkedIn</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>媒体报道</strong></td>
+<td style="text-align: center;">CNN Brasil 正面报道；Valor Econômico 引用</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">官网新闻链接</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>品牌搜索量</strong></td>
+<td style="text-align: center;">未检索</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>近期声誉事件</strong>：2026 年 Dr. Cláudio Flauzino 获 &ldquo;100 Mais Influentes da Saúde&rdquo; 预提名（正面）；Transparência Salarial 报告公开发布（正面）</li>
+<li><strong>品牌定位</strong>：&rdquo;pioneiros em Atenção Domiciliar&rdquo;（居家医疗先驱）— 强调 30 年历史+国际认证</li>
+</ul>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>🚨 <strong>Home Doctor 为非上市私人公司，无公开财务报表。以下为基于间接数据的合理推断，标注了假设条件。</strong></p>
+</blockquote>
+<h3 id="_25">收入估算框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">估算范围</th>
+<th style="text-align: left;">推算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">年收入</td>
+<td style="text-align: center;">R$ 500M–1.5B（约 $100M–300M）</td>
+<td style="text-align: left;">基于 9,000 专业人员×人均服务产出；对比巴西同类企业规模</td>
+</tr>
+<tr>
+<td style="text-align: left;">收入增速</td>
+<td style="text-align: center;">10–20% 年化（估）</td>
+<td style="text-align: left;">基于地理扩张速度（28 城→持续增加）和自费渠道增量</td>
+</tr>
+<tr>
+<td style="text-align: left;">毛利率</td>
+<td style="text-align: center;">25–40%（估）</td>
+<td style="text-align: left;">人力密集型服务，但高复杂性服务（机械通气）溢价能力较强</td>
+</tr>
+<tr>
+<td style="text-align: left;">EBITDA 利润率</td>
+<td style="text-align: center;">10–20%（估）</td>
+<td style="text-align: left;">重资产（设备折旧、租金）但成熟运营应有一定规模效应</td>
+</tr>
+<tr>
+<td style="text-align: left;">现金状况</td>
+<td style="text-align: center;">未知</td>
+<td style="text-align: left;">私人公司</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ <strong>以上估算存在显著不确定性</strong>，仅供方向性参考。实际数据需通过商业数据库（如 Serasa Experian）或一手调研获取。</p>
+</blockquote>
+<h3 id="_26">收入结构推测</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">业务线</th>
+<th style="text-align: center;">收入占比估</th>
+<th style="text-align: left;">利润率特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Internação Domiciliar</td>
+<td style="text-align: center;">50-60%</td>
+<td style="text-align: left;">高客单价，设备+人力重投入</td>
+</tr>
+<tr>
+<td style="text-align: left;">Assistência Domiciliar</td>
+<td style="text-align: center;">25-35%</td>
+<td style="text-align: left;">人力密集型，中等毛利</td>
+</tr>
+<tr>
+<td style="text-align: left;">Emergências Médicas</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: left;">高可变成本</td>
+</tr>
+<tr>
+<td style="text-align: left;">E-commerce 自费</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: left;">高毛利，增长快</td>
+</tr>
+<tr>
+<td style="text-align: left;">IEP 教育</td>
+<td style="text-align: center;">&lt;3%</td>
+<td style="text-align: left;">高毛利，收入体量小</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_27">利润表关键比率推测</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">比率</th>
+<th style="text-align: center;">估算</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">人力成本/收入</td>
+<td style="text-align: center;">50-65%</td>
+<td style="text-align: left;">劳动密集型行业特征</td>
+</tr>
+<tr>
+<td style="text-align: left;">设备折旧/收入</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: left;">自有设备园区折旧</td>
+</tr>
+<tr>
+<td style="text-align: left;">管理费用/收入</td>
+<td style="text-align: center;">10-15%</td>
+<td style="text-align: left;">28 分支管理成本</td>
+</tr>
+<tr>
+<td style="text-align: left;">净利润率</td>
+<td style="text-align: center;">5-15%（估）</td>
+<td style="text-align: left;">成熟运营商应有正向利润</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_28">资产负债表重点（推测）</h3>
+<ul>
+<li><strong>资产端</strong>：自有医疗设备园区（重大固定资产）、物流车队、药房库存</li>
+<li><strong>负债端</strong>：可能含银行借贷用于扩张（无公开数据）</li>
+<li><strong>资本支出</strong>：设备采购+新城市分支开设</li>
+</ul>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<h3 id="internacao-domiciliar">患者全旅程（以 Internação Domiciliar 为例）</h3>
+<pre><code>Phase 0: 需求触发
+  ├─ 医院出院建议 → 保险计划审批 → 转介至 Home Doctor
+  ├─ 家属/患者主动联系（电话/WhatsApp/e-commerce）
+  └─ 企业员工福利转介
+
+Phase 1: 评估与匹配
+  ├─ 护士入户评估（临床标准+居住环境）
+  ├─ 制定 PAD（Plano de Atenção Domiciliar）
+  │    ├─ 确定专业人员配置（医/护/PT/营养等）
+  │    ├─ 确定设备/药品需求清单
+  │    └─ 确定访视频率
+  └─ EMR 建档 → 保险审批确认
+
+Phase 2: 服务交付
+  ├─ 设备配送（自有物流中心）→ 安装调试
+  ├─ 药品配送（临床药房）→ 药物警戒监控
+  ├─ 按 PAD 执行定期访视
+  │    ├─ 医生查房
+  │    ├─ 护士日常护理
+  │    ├─ PT/营养/心理等按需
+  │    └─ 所有数据实时录入 EMR
+  └─ 远程医疗补充（减少不必要上门）
+
+Phase 3: 紧急响应
+  ├─ 24h 电话分诊（1-2 线：紧急 / 日常）
+  ├─ 急救上门（GPS 定位+分诊评分）
+  └─ 空中医疗转运（如需要）
+
+Phase 4: 持续监测与调整
+  ├─ 技术委员会定期审核病例
+  ├─ PAD 动态调整
+  ├─ 家属沟通（App/WhatsApp/电话）
+  └─ 医学伦理委员会监督
+
+Phase 5: 结算与闭环
+  ├─ 保险按 PAD 周期结算
+  ├─ 患者满意度收集
+  └─ 结局数据进入质量数据库
+</code></pre>
+<h3 id="_29">关键运营指标（推测）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">推测状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">平均 PAD 持续天数</td>
+<td style="text-align: left;">高急性 30-90 天，慢性 6 个月+</td>
+</tr>
+<tr>
+<td style="text-align: left;">护士人均负责患者</td>
+<td style="text-align: left;">5-10 人（高复杂性）/ 15-25 人（低复杂性）</td>
+</tr>
+<tr>
+<td style="text-align: left;">急救响应时间</td>
+<td style="text-align: left;">GPS &ldquo;on time&rdquo; 系统，推测 &lt;30 分钟城区</td>
+</tr>
+<tr>
+<td style="text-align: left;">EMR 覆盖率</td>
+<td style="text-align: left;">100%（自建系统）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9-ai">D9 — 技术深度评估（软件 · 硬件 · AI/数据）</h2>
+<h3 id="91">9.1 平台架构总览（五层模型）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">自研/外采</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 财务/行政</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">未知</td>
+<td style="text-align: left;">支撑 28 分支的 ERP/财务系统</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 业务运营</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研为主</td>
+<td style="text-align: left;">EMR (Prontuário Eletrônico)、PAD 管理系统</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 调度/运营中心</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研+外采</td>
+<td style="text-align: left;">24h 电话分诊、GPS 急救调度、物流配送系统</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 用户端（多端）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研</td>
+<td style="text-align: left;">HD Família App（患者端）、WhatsApp 企业、远程医疗</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据与 AI 层</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">基础</td>
+<td style="text-align: left;">EMR 数据积累、但未见公开 AI/ML 能力</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">未知 — 基于 WordPress 官网 + 自研 App，推测为模块化架构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要技术栈</strong></td>
+<td style="text-align: left;">App: iOS + Android（原生或跨平台）；后端未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">与 60+ 保险计划的数据对接；巴西 TISS 标准（推测）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">LGPD 合规（巴西数据保护法）；具体认证未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>软件 IP/专利</strong></td>
+<td style="text-align: left;">未见公开的软件专利</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>开发实践</strong></td>
+<td style="text-align: left;">持续迭代（App 更新、数字化渠道扩展）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术债务</strong></td>
+<td style="text-align: left;">历史较长（1994 成立），可能存在遗留系统</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件/IoT 设备</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>设备品类</strong></td>
+<td style="text-align: left;">呼吸机、监护仪、输液泵、病床等住院级设备</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>设备来源</strong></td>
+<td style="text-align: left;">自有医疗设备园区（Parque de Equipamentos Médicos）→ 自购/租赁给患者</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>连接协议</strong></td>
+<td style="text-align: left;">推测含基础远程监控（呼吸机参数等），非全部 IoT 化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>供应链</strong></td>
+<td style="text-align: left;">巴西境内采购为主，无公开芯片/地缘风险暴露</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>硬件成本</strong></td>
+<td style="text-align: left;">重资产 — 自有设备园区意味大量 CapEx</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<blockquote>
+<p>⚠️ <strong>不适用</strong> — Home Doctor 为传统服务型运营商，未见公开 AI/ML 能力。其临床决策依赖人工分诊评分+技术委员会审核，非 AI 驱动。</p>
+</blockquote>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">能力维度</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差距</th>
+<th style="text-align: center;">差异化评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">软件全栈能力</td>
+<td style="text-align: center;">中等</td>
+<td style="text-align: center;">行业中等</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">硬件整合/自研</td>
+<td style="text-align: center;">较高（自有设备园区）</td>
+<td style="text-align: center;">行业中等</td>
+<td style="text-align: center;">领先</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 临床级能力</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">行业低（非必需）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作性/集成</td>
+<td style="text-align: center;">良好（60+ 保险对接）</td>
+<td style="text-align: center;">行业中等</td>
+<td style="text-align: center;">持平</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据资产规模</td>
+<td style="text-align: center;">较高（65K+ 患者记录）</td>
+<td style="text-align: center;">行业高</td>
+<td style="text-align: center;">持平</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术专利/IP</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">行业低</td>
+<td style="text-align: center;">持平</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>技术护城河总体评估</strong>：🟡 <strong>运营壁垒 &gt; 技术壁垒</strong> — 核心竞争优势来自 30 年临床运营经验+设备/物流重资产+国际认证，而非软件/AI 能力</li>
+<li><strong>技术竞争对标</strong>：与巴西同类传统 home care 企业相比，数字渠道（App + e-commerce + WhatsApp）处于行业前列，但与纯 HealthTech 公司不可比</li>
+</ul>
+<h3 id="96">9.6 技术风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险类别</th>
+<th style="text-align: left;">具体风险</th>
+<th style="text-align: center;">严重度</th>
+<th style="text-align: left;">缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">技术团队流失</td>
+<td style="text-align: left;">非科技公司文化可能难以吸引顶级工程师</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">IEP 培养内部人才</td>
+</tr>
+<tr>
+<td style="text-align: left;">网络安全事件</td>
+<td style="text-align: left;">患者数据泄露</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">LGPD 合规框架</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作性壁垒</td>
+<td style="text-align: left;">保险计划间标准不统一</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">60+ 计划已有对接经验</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术债务</td>
+<td style="text-align: left;">30 年历史可能遗留系统问题</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">持续数字化投入</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<h3 id="_30">主要竞品</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Home Doctor</th>
+<th style="text-align: left;">ProLar Home Care</th>
+<th style="text-align: left;">Vip Home Care</th>
+<th style="text-align: left;">Pronep Life Care</th>
+<th style="text-align: left;">Grupo Global Care</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>成立</strong></td>
+<td style="text-align: left;">1994</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总部</strong></td>
+<td style="text-align: left;">São Paulo</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">São Paulo</td>
+<td style="text-align: left;">Rio de Janeiro</td>
+<td style="text-align: left;">São Paulo</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>覆盖</strong></td>
+<td style="text-align: left;">28 分支/550+ 城市</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>国际认证</strong></td>
+<td style="text-align: left;">✅ Accreditation Diamond + NEWPALEX + Elder Care</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>教育机构</strong></td>
+<td style="text-align: left;">✅ IEP</td>
+<td style="text-align: left;">❓</td>
+<td style="text-align: left;">❓</td>
+<td style="text-align: left;">❓</td>
+<td style="text-align: left;">❓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数字化</strong></td>
+<td style="text-align: left;">App + E-commerce + Telemed</td>
+<td style="text-align: left;">❓</td>
+<td style="text-align: left;">❓</td>
+<td style="text-align: left;">❓</td>
+<td style="text-align: left;">❓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业规模</strong></td>
+<td style="text-align: left;">1,001-5,000</td>
+<td style="text-align: left;">❓</td>
+<td style="text-align: left;">❓</td>
+<td style="text-align: left;">❓</td>
+<td style="text-align: left;">❓</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 竞品数据非常有限 — 巴西居家护理行业高度碎片化，大量中小企业无公开信息。上述竞品来自 LinkedIn &ldquo;Similar Companies&rdquo; 列表。</p>
+</blockquote>
+<h3 id="_31">跨界潜在进入者</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">代表</th>
+<th style="text-align: center;">威胁等级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>大型医院集团</strong></td>
+<td style="text-align: left;">Rede D&rsquo;Or, Hapvida</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">拥有患者流量+品牌，可自建 home care 部门</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>保险计划自营</strong></td>
+<td style="text-align: left;">Amil, Bradesco Saúde</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">垂直整合控费，可能自建或收购</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数字 HealthTech</strong></td>
+<td style="text-align: left;">远程医疗平台</td>
+<td style="text-align: center;">🟢（低）</td>
+<td style="text-align: left;">缺乏重资产运营能力，更可能成为合作方</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>国际进入者</strong></td>
+<td style="text-align: left;">美国 HaH 公司</td>
+<td style="text-align: center;">🟢（低）</td>
+<td style="text-align: left;">巴西监管/支付体系差异大，进入壁垒高</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</h2>
+<h3 id="tam">巴西居家医疗护理市场 TAM 估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: left;">计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TAM（总可寻址市场）</strong></td>
+<td style="text-align: center;">R$ 15-30B（~$3-6B）</td>
+<td style="text-align: left;">巴西私立医保覆盖约 5,000 万人，按年均 home care 支出 R$300-600/人估算</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SAM（可服务市场）</strong></td>
+<td style="text-align: center;">R$ 5-10B</td>
+<td style="text-align: left;">28 城市覆盖区域内私立保险人群</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Home Doctor 渗透率</strong></td>
+<td style="text-align: center;">约 5-15%（基于 R$ 500M-1.5B 收入）</td>
+<td style="text-align: left;">行业领先地位</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_32">增长驱动力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">驱动力</th>
+<th style="text-align: center;">影响程度</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">人口老龄化</td>
+<td style="text-align: center;">🔴 强</td>
+<td style="text-align: left;">巴西 60 岁以上人口占比从 2010 年 11% → 2030 年估计 18%</td>
+</tr>
+<tr>
+<td style="text-align: left;">慢性病负担</td>
+<td style="text-align: center;">🔴 强</td>
+<td style="text-align: left;">糖尿病/高血压/COPD 患病率持续上升</td>
+</tr>
+<tr>
+<td style="text-align: left;">私立医保降本压力</td>
+<td style="text-align: center;">🔴 强</td>
+<td style="text-align: left;">居家护理比住院节省 30-50% 成本</td>
+</tr>
+<tr>
+<td style="text-align: left;">数字化获客</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">E-commerce + App 打开自费增量市场</td>
+</tr>
+<tr>
+<td style="text-align: left;">城市扩张</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">每年增加 3-5 个新城市</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<h3 id="_33">成本结构拆解</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">金额（估）</th>
+<th style="text-align: center;">占收入比（估）</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">临床人员薪酬</td>
+<td style="text-align: center;">最大单项</td>
+<td style="text-align: center;">40-55%</td>
+<td style="text-align: left;">医生/护士/治疗师薪酬+福利</td>
+</tr>
+<tr>
+<td style="text-align: left;">设备折旧/租赁</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">8-15%</td>
+<td style="text-align: left;">自有医疗设备园区折旧</td>
+</tr>
+<tr>
+<td style="text-align: left;">药品/耗材</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">10-15%</td>
+<td style="text-align: left;">临床药房采购成本</td>
+</tr>
+<tr>
+<td style="text-align: left;">物流运输</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">5-8%</td>
+<td style="text-align: left;">急救车队+设备配送+空中转运</td>
+</tr>
+<tr>
+<td style="text-align: left;">分支管理</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">8-12%</td>
+<td style="text-align: left;">28 分支场地+行政人员</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部/IT</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">3-5%</td>
+<td style="text-align: left;">ERP/EMR/App 维护</td>
+</tr>
+<tr>
+<td style="text-align: left;">市场营销</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">2-4%</td>
+<td style="text-align: left;">品牌/论坛/线上</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_34">盈利路径分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>当前</strong></td>
+<td style="text-align: left;">估计已实现正向净利润（30 年成熟运营），但利润率受重资产拖累</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>短期优化</strong></td>
+<td style="text-align: left;">已有城市分支的密度提升（同一城市增加患者数，摊薄固定成本）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中期增长</strong></td>
+<td style="text-align: left;">新城市扩张（前期亏损 → 2-3 年爬坡至盈亏平衡 → 盈利贡献）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>长期价值</strong></td>
+<td style="text-align: left;">品牌+认证+教育（IEP）构筑的行业标准制定者地位 → 定价权</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_35">综合判断</h3>
+<p>✅ 大概率盈利的成熟运营商，非烧钱型创业公司。增长驱动力来自地理扩张+服务线延伸，而非资本补贴。</p>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期（0-12月）</strong></td>
+<td style="text-align: left;">🟢 自费 e-commerce 渠道快速增长；IEP 第二期开课增强品牌</td>
+<td style="text-align: left;">🟡 巴西经济波动影响私立保险参保率；竞争加剧</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期（1-3年）</strong></td>
+<td style="text-align: left;">🟢 新城市扩张复制模式；可能被大型医院/保险集团收购</td>
+<td style="text-align: left;">🟡 关键人依赖（创始人/执行董事）；人才竞争白热化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">🟢 老龄化+慢病+医保降本三重顺风</td>
+<td style="text-align: left;">🔴 若巴西推行更积极的 SUS 公立居家护理政策，私立市场份额可能受挤压</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_36">法律与诉讼</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">案件</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">潜在影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">未检索到公开法律纠纷</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_37">宏观敏感性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">宏观情景</th>
+<th style="text-align: center;">影响评估</th>
+<th style="text-align: left;">传导机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>经济衰退</strong></td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">私立保险参保人数下降 → 潜在患者减少；但老龄化需求刚性较强</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利率上升</strong></td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">若依赖银行借贷扩张，融资成本上升</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>汇率波动</strong></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">收入几乎全部以雷亚尔计价，进口设备成本受汇率影响</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>通胀</strong></td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">人力成本为主要成本项，通胀直接推高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>疫情/大流行</strong></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">COVID 期间居家医疗需求暴增 → 行业利好</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引与市场沟通</h2>
+<blockquote>
+<p>⚠️ 非上市公司，无定期业绩发布会/投资者电话会。</p>
+</blockquote>
+<h3 id="_38">公开渠道管理层观点</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">关键表述</th>
+<th style="text-align: left;">信号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2023.12 29 周年新闻</td>
+<td style="text-align: left;">&ldquo;consolidados como uma das maiores e mais respeitadas empresas do setor&rdquo;</td>
+<td style="text-align: left;">行业领导地位声明</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024-25 LinkedIn 帖子</td>
+<td style="text-align: left;">持续强调 Accreditation Diamond、NEWPALEX、Elder Care Review 认证</td>
+<td style="text-align: left;">质量差异化是核心叙事</td>
+</tr>
+<tr>
+<td style="text-align: left;">2026 LinkedIn</td>
+<td style="text-align: left;">Dr. Cláudio Flauzino 100 Mais Influentes 预提名</td>
+<td style="text-align: left;">个人品牌露出增加</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025-26</td>
+<td style="text-align: left;">IV Fórum Científico Internacional 持续举办</td>
+<td style="text-align: left;">行业意见领袖定位</td>
+</tr>
+<tr>
+<td style="text-align: left;">2026</td>
+<td style="text-align: left;">透明度薪酬报告公开发布</td>
+<td style="text-align: left;">企业治理透明度提升</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_39">管理层可信度评估</h3>
+<ul>
+<li>✅ 一致性较高 — 30 年持续聚焦居家医疗，无战略漂移</li>
+<li>✅ 认证体系扎实 — Accreditation Canada Diamond 是全球顶级认证，非自封称号</li>
+<li>⚠️ 财务透明度为零 — 私人公司天然限制</li>
+</ul>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<blockquote>
+<p>❌ <strong>不适用</strong> — Home Doctor 为非上市私人公司，无公开估值数据，无可比上市公司直接对标。</p>
+</blockquote>
+<h3 id="_40">可比交易参考（巴西医疗健康领域）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">交易</th>
+<th style="text-align: left;">年份</th>
+<th style="text-align: left;">金额</th>
+<th style="text-align: left;">估值倍数参考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Hapvida 与 Intermédica 合并</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">R$ 54B</td>
+<td style="text-align: left;">~20x EV/EBITDA</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rede D&rsquo;Or IPO</td>
+<td style="text-align: left;">2020</td>
+<td style="text-align: left;">R$ 11.4B</td>
+<td style="text-align: left;">~15-20x EV/EBITDA</td>
+</tr>
+<tr>
+<td style="text-align: left;">中小型 home care 并购</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">不公开</td>
+<td style="text-align: left;">估计 6-10x EV/EBITDA</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>若 Home Doctor EBITDA 约 R$ 100-200M，按 8-12x 保守估值，市值约 R$ 800M-2.4B（$160-480M）。</p>
+</blockquote>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1">1. 对潜在投资者（若考虑巴西市场）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>估值判断</strong></td>
+<td style="text-align: left;">若有机会收购少数股权，参考 8-12x EBITDA，关注实际财务数据验证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>核心指标</strong></td>
+<td style="text-align: left;">城市级盈利爬坡速度、保险计划续约率、PAD 平均收入/患者</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>催化剂</strong></td>
+<td style="text-align: left;">新城市加速扩张、大型保险计划独家合作、政策利好</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>下行风险</strong></td>
+<td style="text-align: left;">创始人风险（关键人）、巴西经济衰退、SUS 政策挤压</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2-ihomecare">2. 对 iHomeCare 的关键借鉴</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">借鉴点</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>重资产运营闭环</strong></td>
+<td style="text-align: left;">自有设备园区+药房+物流+临床团队 → 质量控制力远超平台模式</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>认证体系构建</strong></td>
+<td style="text-align: left;">Accreditation Canada Diamond 级认证 → 国际支付方/保险的信任门槛</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>教育生态延伸</strong></td>
+<td style="text-align: left;">IEP 研究院 → 既培养人才供给，又建立行业标准制定者地位</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>保险合作深度</strong></td>
+<td style="text-align: left;">60+ 保险计划 + PAD 模式 → B2B2C 稳定获客 vs 纯 C 端获客的高成本</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数字化渐进策略</strong></td>
+<td style="text-align: left;">不追求颠覆式 tech，而是将 App/e-commerce/远程医疗作为运营效率工具</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-ihomecare">3. 差异化切入点（若 iHomeCare 进入巴西）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Home Doctor 优势</th>
+<th style="text-align: left;">iHomeCare 可能差异化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">模式</td>
+<td style="text-align: left;">重资产自营</td>
+<td style="text-align: left;">轻资产平台+标准化加盟/合作</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术</td>
+<td style="text-align: left;">传统+数字化辅助</td>
+<td style="text-align: left;">AI 驱动分诊/预测预警</td>
+</tr>
+<tr>
+<td style="text-align: left;">速度</td>
+<td style="text-align: left;">30 年逐步扩张</td>
+<td style="text-align: left;">资本+技术驱动快速规模化</td>
+</tr>
+<tr>
+<td style="text-align: left;">价格</td>
+<td style="text-align: left;">中高端</td>
+<td style="text-align: left;">中端/可及性导向</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<h3 id="atencao-domiciliar">巴西居家医疗护理（Atenção Domiciliar）政策框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策/法规</th>
+<th style="text-align: left;">发布时间</th>
+<th style="text-align: left;">发布机构</th>
+<th style="text-align: left;">核心内容</th>
+<th style="text-align: left;">对 Home Doctor 影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Melhor em Casa</strong></td>
+<td style="text-align: left;">2011</td>
+<td style="text-align: left;">Ministério da Saúde (SUS)</td>
+<td style="text-align: left;">公立系统居家护理计划，覆盖基础护理</td>
+<td style="text-align: left;">⚠️ 互补而非竞争 — 公立市场与私立市场分层</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RDC/ANVISA 相关法规</strong></td>
+<td style="text-align: left;">持续更新</td>
+<td style="text-align: left;">ANVISA</td>
+<td style="text-align: left;">医疗器械/药品监管，居家使用标准</td>
+<td style="text-align: left;">合规成本</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LGPD（巴西 GDPR）</strong></td>
+<td style="text-align: left;">2018/2020 生效</td>
+<td style="text-align: left;">国会</td>
+<td style="text-align: left;">数据保护法</td>
+<td style="text-align: left;">患者隐私合规</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ANS 健康保险管理局规范</strong></td>
+<td style="text-align: left;">持续更新</td>
+<td style="text-align: left;">ANS</td>
+<td style="text-align: left;">医疗保险覆盖范围规定（含 home care 纳入要求）</td>
+<td style="text-align: left;">🔴 关键 — 保险覆盖政策直接影响收入来源</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TISS 标准</strong></td>
+<td style="text-align: left;">持续更新</td>
+<td style="text-align: left;">ANS</td>
+<td style="text-align: left;">医疗信息交换标准</td>
+<td style="text-align: left;">保险数据对接要求</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_41">政策趋势判断</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">趋势</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">私立保险 home care 覆盖扩大</td>
+<td style="text-align: center;">🟢 正面</td>
+<td style="text-align: left;">2010 年代已有趋势，ANS 逐步扩大强制覆盖范围</td>
+</tr>
+<tr>
+<td style="text-align: left;">SUS 公立 home care 扩展</td>
+<td style="text-align: center;">⚠️ 中性/略负面</td>
+<td style="text-align: left;">可能分流部分患者，但公立服务能力有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">数字健康监管</td>
+<td style="text-align: center;">🟡 关注中</td>
+<td style="text-align: left;">远程医疗/App 使用受 CFM（联邦医学委员会）规范</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<h3 id="internacao-domiciliar-30">典型案例：Internação Domiciliar（居家住院替代）— 30 天周期</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">估算月成本 (R$)</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">呼吸机租赁/折旧</td>
+<td style="text-align: center;">2,000-4,000</td>
+<td style="text-align: left;">自有设备园区提供</td>
+</tr>
+<tr>
+<td style="text-align: left;">监护设备</td>
+<td style="text-align: center;">500-1,000</td>
+<td style="text-align: left;">血氧/心电等</td>
+</tr>
+<tr>
+<td style="text-align: left;">护士（日间 12h）</td>
+<td style="text-align: center;">8,000-12,000</td>
+<td style="text-align: left;">1:1 或 1:2 配比</td>
+</tr>
+<tr>
+<td style="text-align: left;">医生查房（每周 2 次）</td>
+<td style="text-align: center;">2,000-3,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">PT/营养/心理（按需）</td>
+<td style="text-align: center;">1,000-2,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">药品/耗材</td>
+<td style="text-align: center;">3,000-8,000</td>
+<td style="text-align: left;">临床药房提供</td>
+</tr>
+<tr>
+<td style="text-align: left;">物流/管理分摊</td>
+<td style="text-align: center;">1,000-2,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>月总成本</strong></td>
+<td style="text-align: center;"><strong>R$ 17,500-32,000</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>月收费（保险/自费）</strong></td>
+<td style="text-align: center;"><strong>R$ 25,000-50,000</strong></td>
+<td style="text-align: left;">估计</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>毛利率</strong></td>
+<td style="text-align: center;"><strong>30-40%</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_42">与传统住院对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: center;">Home Doctor (30 天)</th>
+<th style="text-align: center;">住院 (30 天)</th>
+<th style="text-align: center;">节省</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">月均成本</td>
+<td style="text-align: center;">R$ 25,000-50,000</td>
+<td style="text-align: center;">R$ 40,000-100,000+</td>
+<td style="text-align: center;">30-50%</td>
+</tr>
+<tr>
+<td style="text-align: left;">院内感染风险</td>
+<td style="text-align: center;">几乎为零</td>
+<td style="text-align: center;">显著</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">患者满意度</td>
+<td style="text-align: center;">高（居家）</td>
+<td style="text-align: center;">中-低</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 以上为简化模型，实际因患者复杂度、城市、保险定价差异大。</p>
+</blockquote>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<h3 id="_43">分层矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: left;">人群描述</th>
+<th style="text-align: left;">规模</th>
+<th style="text-align: left;">支付能力</th>
+<th style="text-align: left;">产品匹配度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>A 级</strong></td>
+<td style="text-align: left;">高复杂性（机械通气、ICU 后）老年患者</td>
+<td style="text-align: left;">占患者 20%</td>
+<td style="text-align: left;">高（保险全覆盖）</td>
+<td style="text-align: left;">🟢 核心匹配</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B 级</strong></td>
+<td style="text-align: left;">中复杂性慢性病老年患者（60-80 岁）</td>
+<td style="text-align: left;">占患者 50-60%</td>
+<td style="text-align: left;">中（保险覆盖）</td>
+<td style="text-align: left;">🟢 匹配</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>C 级</strong></td>
+<td style="text-align: left;">术后/康复短期需求</td>
+<td style="text-align: left;">占患者 10-15%</td>
+<td style="text-align: left;">中</td>
+<td style="text-align: left;">🟢 匹配</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D 级</strong></td>
+<td style="text-align: left;">儿科特殊需求患者</td>
+<td style="text-align: left;">累计 7,000+（占 ~11%）</td>
+<td style="text-align: left;">中-高</td>
+<td style="text-align: left;">🟢 匹配</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E 级</strong></td>
+<td style="text-align: left;">轻症自费用户（e-commerce）</td>
+<td style="text-align: left;">增长中</td>
+<td style="text-align: left;">中（自费）</td>
+<td style="text-align: left;">🟡 部分匹配</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_44">对公司战略的推导含义</h3>
+<ol>
+<li><strong>A 级是利润核心</strong>：高客单价+高粘性，应继续巩固</li>
+<li><strong>E 级是增长引擎</strong>：e-commerce 打开自费市场，边际获客成本低</li>
+<li><strong>儿科是差异化标签</strong>：7,000+ 儿科患者积累 → 专业化细分品牌</li>
+</ol>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<h3 id="_45">已确认竞品</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">名称</th>
+<th style="text-align: left;">模式</th>
+<th style="text-align: left;">规模</th>
+<th style="text-align: left;">差异化</th>
+<th style="text-align: center;">威胁等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>ProLar Home Care</strong></td>
+<td style="text-align: left;">传统 home care</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Vip Home Care</strong></td>
+<td style="text-align: left;">传统 home care</td>
+<td style="text-align: left;">São Paulo 地区</td>
+<td style="text-align: left;">本地化深耕</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pronep Life Care</strong></td>
+<td style="text-align: left;">传统 home care</td>
+<td style="text-align: left;">Rio de Janeiro 地区</td>
+<td style="text-align: left;">区域强</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Grupo Global Care</strong></td>
+<td style="text-align: left;">传统 home care</td>
+<td style="text-align: left;">São Paulo</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Home Angels</strong></td>
+<td style="text-align: left;">居家看护（非医疗）</td>
+<td style="text-align: left;">多城市</td>
+<td style="text-align: left;">与 Home Doctor 互补合作</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pleno Saúde</strong></td>
+<td style="text-align: left;">混合（保险+服务）</td>
+<td style="text-align: left;">Rio de Janeiro</td>
+<td style="text-align: left;">保险端整合</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_46">最大威胁扫描</h3>
+<ul>
+<li><strong>医院集团自建 home care</strong>（Rede D&rsquo;Or, Hapvida）：拥有患者流量入口+资本实力，若决定大规模自建将是最大威胁</li>
+<li><strong>保险计划垂直整合</strong>：若 Amil 等大保险商收购 home care 公司，可能改变竞争格局</li>
+</ul>
+<h3 id="_47">跨界进入者</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类型</th>
+<th style="text-align: center;">可能性</th>
+<th style="text-align: left;">时间线</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">美国 HaH 公司（如 DispatchHealth 模式）</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: left;">3-5 年+</td>
+</tr>
+<tr>
+<td style="text-align: left;">中国/国际远程医疗平台</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: left;">监管壁垒高</td>
+</tr>
+<tr>
+<td style="text-align: left;">本地 HealthTech 创业公司</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: left;">1-3 年（轻资产模式）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略深度评估</h2>
+<blockquote>
+<p>❌ <strong>不适用</strong> — Home Doctor 完全聚焦巴西国内市场，无跨境扩张迹象。拉丁美洲其他国家（阿根廷、哥伦比亚等）居家医疗市场仍处早期，Home Doctor 暂无国际化动机。</p>
+</blockquote>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<h3 id="_48">潜在买家画像</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">买家类型</th>
+<th style="text-align: left;">代表</th>
+<th style="text-align: left;">动机</th>
+<th style="text-align: center;">可能性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>大型医院集团</strong></td>
+<td style="text-align: left;">Rede D&rsquo;Or, Hapvida, DASA</td>
+<td style="text-align: left;">纵向整合，补充出院后护理环节</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>健康保险集团</strong></td>
+<td style="text-align: left;">Amil, Bradesco Saúde, SulAmérica</td>
+<td style="text-align: left;">控费+差异化服务</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>国际医疗集团</strong></td>
+<td style="text-align: left;">UnitedHealth/Optum, Bupa</td>
+<td style="text-align: left;">进入巴西市场</td>
+<td style="text-align: center;">🟢 低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>私募股权基金</strong></td>
+<td style="text-align: left;">本地/国际 PE</td>
+<td style="text-align: left;">整合碎片化市场</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_49">估值参考</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">方法</th>
+<th style="text-align: center;">估值范围</th>
+<th style="text-align: left;">假设</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>EV/EBITDA 8-12x</strong></td>
+<td style="text-align: center;">R$ 800M-2.4B</td>
+<td style="text-align: left;">假设 EBITDA R$ 100-200M</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>P/S 1.5-3x</strong></td>
+<td style="text-align: center;">R$ 750M-4.5B</td>
+<td style="text-align: left;">假设收入 R$ 500M-1.5B</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>近期可比交易</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">巴西 home care 并购多为私有交易，无公开倍数</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d23-esg">D23 — ESG/社会影响力</h2>
+<h3 id="esg">ESG 披露状态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>公开 ESG 报告</strong></td>
+<td style="text-align: left;">❌ 无独立的 ESG/可持续发展报告</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>薪酬透明度</strong></td>
+<td style="text-align: left;">✅ 2026 年首次发布 Relatório de Transparência e Igualdade Salarial（按巴西劳动部要求）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者安全</strong></td>
+<td style="text-align: left;">✅ 设有 Comitês Técnicos + Comissão de Ética Médica + Canal Seguro（安全举报通道）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社会影响力</strong></td>
+<td style="text-align: left;">✅ 核心业务即社会价值 — 65K+ 患者的居家医疗，减少住院感染，提升生命质量</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="esg_1">关键 ESG 指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">环境 (E)</td>
+<td style="text-align: left;">无公开数据</td>
+<td style="text-align: left;">医疗废物管理应合规（ANVISA 要求）</td>
+</tr>
+<tr>
+<td style="text-align: left;">社会 (S)</td>
+<td style="text-align: left;">65K+ 患者服务；薪酬透明度报告；EAD 平台 100+ 课程（教育可及）</td>
+<td style="text-align: left;">社会价值显著</td>
+</tr>
+<tr>
+<td style="text-align: left;">治理 (G)</td>
+<td style="text-align: left;">医学伦理委员会；技术委员会；安全举报通道</td>
+<td style="text-align: left;">基本治理框架存在</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">推测为按地理分支的事业部制 + 总部职能部门（28 个分支 + São Paulo 总部）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">LinkedIn 1,001-5,000；2023 年自述 ~9,000 专业人员（含合同制专业人员）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人才密度</strong></td>
+<td style="text-align: left;">医生管理+多学科临床团队；设有 IEP 自主培养；无公开工程师/数据科学家比例</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🔴 高 — Dr. Cláudio Flauzino 是执行董事+法定技术负责人；三位创始医生掌控战略方向</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工留存</strong></td>
+<td style="text-align: left;">30 周年纪念页展示多名 29 年资深员工（如 Rosineide Sanches, 29 年），核心稳定性高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>招聘速度</strong></td>
+<td style="text-align: left;">每年新增 3-5 城市需大量招聘本地临床人员</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>薪酬哲学</strong></td>
+<td style="text-align: left;">按巴西劳动部要求发布薪酬透明度报告（2026），重视性别平等</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">&ldquo;cuidado humanizado&rdquo;（人性化关怀）；员工评价正面（LinkedIn 帖子互动积极）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DEI</strong></td>
+<td style="text-align: left;">公开发布薪酬平等报告；未公开女性高管比例</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>组织健康度综合评级</strong>：🟢 强 — 30 年稳定运营，低流失率，员工故事展示强烈归属感</li>
+<li><strong>组织风险</strong>：过度依赖创始人 / 快速扩张稀释质量文化</li>
+</ul>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<blockquote>
+<p>⚠️ <strong>无公开风投/PE 融资记录</strong>。Home Doctor 为私人持有的创始人控股公司，可能从未进行外部股权融资。</p>
+</blockquote>
+<h3 id="_50">融资历史全览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">轮次</th>
+<th style="text-align: left;">日期</th>
+<th style="text-align: left;">金额</th>
+<th style="text-align: left;">投资者</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">无公开融资记录</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Crunchbase/LinkedIn/官网均未显示</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>🚨 <strong>重要修正</strong>：原始导航卡称&rdquo;投资者包括软银拉丁美洲基金&rdquo;，经多渠道验证（Brave/Bocha/Serper/Tavily/Crunchbase/LinkedIn），<strong>无任何证据支持此说法</strong>。此信息可能来自：
+1. 与波兰 HomeDoctor（获 $4.3M 风投）混淆
+2. 与巴西 MadeiraMadeira（获 SoftBank $110M）混淆
+3. 纯粹的信息错误</p>
+</blockquote>
+<h3 id="cap-table">Cap Table 推测</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">股东类别</th>
+<th style="text-align: center;">持股比例（估）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">创始医生团队</td>
+<td style="text-align: center;">控制性股权</td>
+<td style="text-align: left;">&ldquo;administrada por médicos&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;">管理层持股</td>
+<td style="text-align: center;">少量</td>
+<td style="text-align: left;">推测含期权激励</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_51">现金状况</h3>
+<ul>
+<li>无公开数据</li>
+<li>30 年成熟运营推测现金流为正</li>
+<li>扩张资金可能来自经营现金流 + 银行借贷</li>
+</ul>
+<h3 id="_52">投资者质量</h3>
+<blockquote>
+<p>❌ 不适用 — 无外部机构投资者。</p>
+</blockquote>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">B2B2C 为主（保险计划转介），B2C 为辅（e-commerce/App 直销）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售团队</strong></td>
+<td style="text-align: left;">设有 Departamento Comercial（电话 (11) 3897-2931），规模未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC</strong></td>
+<td style="text-align: left;">极低 — 保险转介几乎零获客成本（流量来自合作计划）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LTV/CAC</strong></td>
+<td style="text-align: left;">极高 — 高急性患者 PAD 月均 R$25K-50K × 3-6 月平均周期</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC 回收期</strong></td>
+<td style="text-align: left;">首月即可回收（保险转介模式）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDR</strong></td>
+<td style="text-align: left;">未知，但慢性患者留存率推测较高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>地推/线下</strong></td>
+<td style="text-align: left;">无需地推 — 依赖医院出院转诊 + 保险网络</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售周期</strong></td>
+<td style="text-align: left;">B2B（保险计划准入）：6-12 个月 / B2C（自费）：即时在线购买</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>GTM 阶段诊断</strong>：🟡 <strong>成熟扩张期</strong> — 核心获客渠道（保险转诊）稳定成熟，增量来自新城市扩张 + 自费渠道</li>
+<li><strong>GTM 瓶颈</strong>：地理扩张速度（新城市开设涉及设备/人员/保险准入，复制周期 6-18 个月）</li>
+</ul>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="271">27.1 核心临床指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">公司数据</th>
+<th style="text-align: center;">对照标准</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>30 天再入院率</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">无公开临床报告</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>不良事件率</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">设有 Canal Seguro 安全举报</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者满意度</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">30 周年患者故事展示正面情感</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NPS</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: center;">行业 ~40</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>死亡率</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="272">27.2 质量认证体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Accreditation Canada Qmentum Diamond</strong></td>
+<td style="text-align: center;">✅ 获得</td>
+<td style="text-align: left;">行业首家，2022 年首获，2024-25 再认证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ONA Nível III</strong></td>
+<td style="text-align: center;">✅ 获得+再认证</td>
+<td style="text-align: left;">巴西本土最高级别（Nível III = Acreditado com Excelência）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NEWPALEX®</strong></td>
+<td style="text-align: center;">✅ 获得</td>
+<td style="text-align: left;">西班牙 New Health Foundation 姑息治疗认证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Elder Care Review</strong></td>
+<td style="text-align: center;">✅ 获得</td>
+<td style="text-align: left;">国际老年护理卓越认证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>JCI</strong></td>
+<td style="text-align: center;">❌ 未知</td>
+<td style="text-align: left;">未见 JCI 认证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ISO 13485</strong></td>
+<td style="text-align: center;">❌ 未知</td>
+<td style="text-align: left;">医疗器械相关</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证据类型</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">代表性研究</th>
+<th style="text-align: left;">影响力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">RCT</td>
+<td style="text-align: center;">未知</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">前瞻性队列研究</td>
+<td style="text-align: center;">未知</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">同行评审论文</td>
+<td style="text-align: center;">未知</td>
+<td style="text-align: left;">可能有 IEP 产出</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">白皮书/行业报告</td>
+<td style="text-align: center;">确认有</td>
+<td style="text-align: left;">IV Fórum Científico Internacional</td>
+<td style="text-align: left;">🟡 行业影响力</td>
+</tr>
+<tr>
+<td style="text-align: left;">媒体报道</td>
+<td style="text-align: center;">确认有</td>
+<td style="text-align: left;">CNN Brasil 报道 Hospitalização Domiciliar 模式</td>
+<td style="text-align: left;">🟡 公众认知</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>证据强度总体评级</strong>：🟡 <strong>中</strong> — 认证体系强大（Accreditation Diamond + ONA III），但公开的同行评审临床研究较少。IEP 的建立可能改变此状况。</li>
+<li><strong>临床差异化</strong>：多重国际认证 + 30 年高复杂性经验（5,000+ 机械通气患者）构成临床能力的间接证据</li>
+</ul>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">D0 — 赛道验证</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">赛道定位修正为传统 Home Care</td>
+</tr>
+<tr>
+<td style="text-align: left;">D1 — 执行摘要</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D2 — 公司全貌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">时间线基于官网推断</td>
+</tr>
+<tr>
+<td style="text-align: left;">D3 — 战略定位</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D4 — 商业模式</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D5 — 服务产品线</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">定价细节不公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">D6 — 客户与支付方</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">收入结构为推测</td>
+</tr>
+<tr>
+<td style="text-align: left;">D7 — 财务分析</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">非上市无公开财报，全部为估算</td>
+</tr>
+<tr>
+<td style="text-align: left;">D8 — 工作流/旅程</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D9 — 技术评估</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">技术细节不公开；AI 能力标注不适用</td>
+</tr>
+<tr>
+<td style="text-align: left;">D10 — 竞争格局</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">竞品公开信息极有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">D11 — TAM/SAM</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">市场数据为估算</td>
+</tr>
+<tr>
+<td style="text-align: left;">D12 — 盈利模型</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">全部为推测</td>
+</tr>
+<tr>
+<td style="text-align: left;">D13 — 机遇风险</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D14 — 管理层指引</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">非上市公司，信息有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">D15 — 估值</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">私人公司不适用</td>
+</tr>
+<tr>
+<td style="text-align: left;">D16 — 战略建议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D17 — 政策监管</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D18 — 单元经济</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">简化估算模型</td>
+</tr>
+<tr>
+<td style="text-align: left;">D19 — 客户细分</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D20 — 竞品地图</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">竞品信息高度有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">D21 — 跨境</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">无跨境业务，不适用</td>
+</tr>
+<tr>
+<td style="text-align: left;">D22 — 退出/并购</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">估值范围为推测</td>
+</tr>
+<tr>
+<td style="text-align: left;">D23 — ESG</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">无独立 ESG 报告</td>
+</tr>
+<tr>
+<td style="text-align: left;">D24 — 组织人才</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D25 — 融资/Cap Table</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">无公开融资，但覆盖了无融资的分析</td>
+</tr>
+<tr>
+<td style="text-align: left;">D26 — GTM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D27 — 临床质量</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">认证丰富但临床结局数据未公开</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: center;">14</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 数据缺失/不适用</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_53">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>实际财务数据</strong>（收入/利润/现金流）</td>
+<td style="text-align: left;">Serasa Experian 商业数据库查询；一手访谈</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>创始人姓名及持股结构</strong></td>
+<td style="text-align: left;">巴西商业登记处 (JUCESP) 查询公司章程</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>保险合作具体条款</strong>（分成比例、排他性）</td>
+<td style="text-align: left;">一手访谈或行业报告</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>竞品详细对比</strong>（ProLar/Vip/Global Care 规模）</td>
+<td style="text-align: left;">巴西医疗行业分析报告</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><strong>临床结局数据</strong>（再入院率、感染率、死亡率）</td>
+<td style="text-align: left;">IEP 可能发表的研究；直接询问</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><strong>城市级盈利数据</strong></td>
+<td style="text-align: left;">仅内部可见</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><strong>实际员工总数</strong>（LinkedIn 1K-5K vs 自述 9K）</td>
+<td style="text-align: left;">澄清&rdquo;专业人员&rdquo;是否含合同制非全职</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><strong>巴西 home care 行业总市场规模</strong>（权威第三方）</td>
+<td style="text-align: left;">ANS/IBGE 行业报告</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><strong>软银拉丁美洲基金关联</strong></td>
+<td style="text-align: left;">确认是否为完全错误信息（证据指向错误）</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;"><strong>Home Angels 合作深度</strong></td>
+<td style="text-align: left;">是否涉及股权？排他性？</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_54">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题/内容</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">homedoctor.com.br</td>
+<td style="text-align: left;">Home Doctor 官网首页 — 服务介绍、认证展示</td>
+<td style="text-align: left;">2026 访问</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">homedoctor.com.br/sobre/</td>
+<td style="text-align: left;">Quem Somos — 公司历史、愿景使命、差异优势、时间线</td>
+<td style="text-align: left;">2026 访问</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">homedoctor.com.br/grupo-home-doctor-comemora-29-anos/</td>
+<td style="text-align: left;">29 周年新闻 — 62K+ 患者、9K 专业人员、Accreditation Diamond</td>
+<td style="text-align: left;">2023.12.06</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">30anos.homedoctor.com.br</td>
+<td style="text-align: left;">30 周年纪念页 — &ldquo;Três jovens médicos cirurgiões&rdquo; 创立故事</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">br.linkedin.com/company/homedoctorbrasil</td>
+<td style="text-align: left;">LinkedIn 公司页面 — 42,644 关注者、1,001-5,000 员工、地址、竞品列表</td>
+<td style="text-align: left;">2026 访问</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">store.homedoctor.com.br</td>
+<td style="text-align: left;">E-commerce 平台 — 50+ 服务可在线购买</td>
+<td style="text-align: left;">2026 访问</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">CNN Brasil</td>
+<td style="text-align: left;">Hospitalização Domiciliar 模式专题报道</td>
+<td style="text-align: left;">约 2023</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">Valor Econômico</td>
+<td style="text-align: left;">Home Angels + Home Doctor 合作报道引用</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">gov.br/saude — Atenção Domiciliar</td>
+<td style="text-align: left;">巴西卫生部居家护理政策框架（Melhor em Casa）</td>
+<td style="text-align: left;">持续</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">ANS (Agência Nacional de Saúde Suplementar)</td>
+<td style="text-align: left;">私立健康保险 home care 覆盖规范</td>
+<td style="text-align: left;">持续</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">Accreditation Canada</td>
+<td style="text-align: left;">Qmentum International Diamond 认证标准</td>
+<td style="text-align: left;">2022/2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">New Health Foundation (Espanha)</td>
+<td style="text-align: left;">NEWPALEX 姑息治疗认证标准</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">Elder Care Review</td>
+<td style="text-align: left;">老年护理卓越认证</td>
+<td style="text-align: left;">2026.01</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">Crunchbase</td>
+<td style="text-align: left;">Home Doctor 公司页面 — 无融资记录</td>
+<td style="text-align: left;">2026 访问</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">LinkedIn — Home Doctor Posts</td>
+<td style="text-align: left;">管理层公开发言（Dr. Cláudio Flauzino 100+ Influentes、薪酬透明度等）</td>
+<td style="text-align: left;">2025-2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">ONA (Organização Nacional de Acreditação)</td>
+<td style="text-align: left;">Nível III 认证标准</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: left;">Ministério do Trabalho e Emprego</td>
+<td style="text-align: left;">Relatório de Transparência Salarial 要求</td>
+<td style="text-align: left;">2026</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

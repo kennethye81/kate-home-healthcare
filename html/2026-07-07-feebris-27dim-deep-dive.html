@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feebris — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#feebris-27">Feebris — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 赛道验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4">D4 — 商业模式</a></li>
+<li><a href="#d5">D5 — 产品线</a></li>
+<li><a href="#d6">D6 — 客户</a></li>
+<li><a href="#d7">D7 — 财务</a></li>
+<li><a href="#d8">D8 — 工作流</a></li>
+<li><a href="#d9">D9 — 技术</a></li>
+<li><a href="#d10">D10 — 竞品</a></li>
+<li><a href="#d11-tamsam">D11 — TAM/SAM</a></li>
+<li><a href="#d12">D12 — 盈利模型</a></li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a></li>
+<li><a href="#d14">D14 — 管理层指引与可信度</a></li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1-ai">1. AI 心音/呼吸音分析——可集成到远程监测方案</a></li>
+<li><a href="#2">2. 社区→居家的扩展路径</a></li>
+<li><a href="#3-nice">3. NICE 收录的策略价值</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a></li>
+<li><a href="#d18">D18 — 单元经济模型</a></li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略深度评估</a></li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a></li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a></li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#v20">v2.0 完备性审计</a></li>
+<li><a href="#_1">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="feebris-27">Feebris — 27 维度深度尽调</h1>
+<p><strong>调研人</strong>: Kate, VP Research | <strong>日期</strong>: 2026-07-07</p>
+<hr />
+<h2 id="d0">D0 — 赛道验证</h2>
+<p>✅ AI 远程健康评估平台。NICE HTG697 收录。<strong>对 iHomeCare</strong>: 🟢 高 —— AI 心音/呼吸音分析可直接参考。</p>
+<h2 id="d1">D1 — 执行摘要</h2>
+<p>英国 AI 驱动的远程健康评估平台。利用 AI 分析心音/呼吸音检测早期恶化信号。NICE HTG697 评估收录。社区+虚拟病房双场景覆盖。</p>
+<h2 id="d2">D2 — 公司全貌</h2>
+<ul>
+<li>创立: 未公开（英国初创公司）</li>
+<li>赛道: AI 远程健康评估</li>
+<li>NICE: HTG697 收录</li>
+</ul>
+<h2 id="d3">D3 — 战略定位</h2>
+<p>AI 辅助远程评估——让社区初级保健人员能用 AI 检测心音/呼吸音异常，早期发现疾病恶化。</p>
+<h2 id="d4">D4 — 商业模式</h2>
+<p>B2G (NHS)+B2B (社区护理机构)。AI 诊断 SaaS 订阅。</p>
+<h2 id="d5">D5 — 产品线</h2>
+<p>① AI 心音/呼吸音分析 ② 远程健康评估 ③ 早期预警算法</p>
+<h2 id="d6">D6 — 客户</h2>
+<p>NHS 社区团队 + 护理院 + 虚拟病房场景</p>
+<h2 id="d7">D7 — 财务</h2>
+<p>⚠️ 私人公司，未公开</p>
+<h2 id="d8">D8 — 工作流</h2>
+<p>社区人员使用 Feebris 设备采集心音/呼吸音→AI 实时分析→异常预警→临床团队介入</p>
+<h2 id="d9">D9 — 技术</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">AI 类型</td>
+<td style="text-align: left;">深度学习——心音/呼吸音分析</td>
+</tr>
+<tr>
+<td style="text-align: left;">设备</td>
+<td style="text-align: left;">自研/第三方听诊设备</td>
+</tr>
+<tr>
+<td style="text-align: left;">监管</td>
+<td style="text-align: left;">UKCA/CE 标志</td>
+</tr>
+<tr>
+<td style="text-align: left;">NICE</td>
+<td style="text-align: left;">HTG697 收录</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>技术护城河</strong>: 🟢 中等——AI 心音/呼吸音分析是独特技术能力，但竞品可追赶。</p>
+<h2 id="d10">D10 — 竞品</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: center;">威胁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Huma</td>
+<td style="text-align: center;">🟡 AI 更强</td>
+</tr>
+<tr>
+<td style="text-align: left;">Doccla</td>
+<td style="text-align: center;">🟡 全栈</td>
+</tr>
+<tr>
+<td style="text-align: left;">Eko Health (US)</td>
+<td style="text-align: center;">🟡 同类 AI 听诊</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d11-tamsam">D11 — TAM/SAM</h2>
+<p>英国社区远程评估市场 ~£200-500M；全球 AI 听诊市场 ~$1-3B</p>
+<hr />
+<h2 id="d12">D12 — 盈利模型</h2>
+<blockquote>
+<p>⚠️ Feebris 为私人初创公司，财务数据未公开。</p>
+</blockquote>
+<p>作为 AI SaaS 公司，推测成本结构：</p>
+<ul>
+<li>研发（AI 模型训练+软件工程）：40-50%</li>
+<li>销售与市场：20-30%</li>
+<li>运营与支持：15-20%</li>
+<li>推测仍处于投资期，尚未实现盈利。</li>
+</ul>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期（0-12月）</strong></td>
+<td style="text-align: left;">① NICE HTG697 收录带来的 NHS 采购通道 ② 社区护理数字化趋势加速</td>
+<td style="text-align: left;">① AI 医疗器械监管（UKCA Class IIa）审批不确定 ② 小众市场——AI 听诊非大众需求</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期（1-3年）</strong></td>
+<td style="text-align: left;">① 从社区→虚拟病房→居家场景扩展 ② 进入更多 NHS Trust ③ 国际市场扩展</td>
+<td style="text-align: left;">① 大厂（Eko Health/TytoCare）进入英国 ② 通用 AI（GPT-4 多模态）可能使专用 AI 听诊失去优势</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">① AI 辅助诊断是长期趋势 ② NICE 收录构成监管护城河</td>
+<td style="text-align: left;">① 竞品 AI 模型性能可能超越 ② NHS 采购预算不确定性</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引与可信度</h2>
+<blockquote>
+<p>⚠️ Feebris 创始人/管理层信息未公开。作为 NICE HTG697 收录的初创公司，技术可信度有官方背书。</p>
+</blockquote>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<p><strong>不适用。</strong> Feebris 为早期私人初创公司，无公开估值或融资信息。NICE 收录代表一定程度的行业认可但非估值信号。</p>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1-ai">1. AI 心音/呼吸音分析——可集成到远程监测方案</h3>
+<p>Feebris 的核心技术（AI 心音/呼吸音分析）可以直接用于居家场景——让 iHomeCare 的护士使用 AI 辅助听诊，在患者家中检测早期心肺异常。</p>
+<h3 id="2">2. 社区→居家的扩展路径</h3>
+<p>Feebris 从社区初级保健切入→扩展到虚拟病房→居家场景。iHomeCare 可以从急性居家医疗（核心）扩展到社区健康筛查。</p>
+<h3 id="3-nice">3. NICE 收录的策略价值</h3>
+<p>Feebris 作为小型初创却能进入 NICE 评估——说明 NHS 对 AI 诊断工具持开放态度。iHomeCare 未来可以考虑将 AI 工具提交 NICE 评估。</p>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策/监管</th>
+<th style="text-align: left;">内容</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NICE HTG697</td>
+<td style="text-align: left;">虚拟病房技术评估收录</td>
+<td style="text-align: left;">🟢 权威背书</td>
+</tr>
+<tr>
+<td style="text-align: left;">UKCA 标志</td>
+<td style="text-align: left;">英国医疗器械认证（推定 Class IIa）</td>
+<td style="text-align: left;">🟡 审批路径</td>
+</tr>
+<tr>
+<td style="text-align: left;">CE 标志</td>
+<td style="text-align: left;">欧盟医疗器械认证</td>
+<td style="text-align: left;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS 社区服务框架</td>
+<td style="text-align: left;">社区护理数字化</td>
+<td style="text-align: left;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<blockquote>
+<p>⚠️ 未公开。推测 SaaS 订阅模式——按 NHS Trust/社区机构按用户数收费，£50-200/用户/年（估）。</p>
+</blockquote>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: center;">优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">A: NHS 社区护理团队</td>
+<td style="text-align: left;">社区护士上门评估</td>
+<td style="text-align: center;">🔴 核心</td>
+</tr>
+<tr>
+<td style="text-align: left;">B: 护理院</td>
+<td style="text-align: left;">院内定期健康评估</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">C: 虚拟病房场景</td>
+<td style="text-align: left;">居家急性期监测</td>
+<td style="text-align: center;">🟢 扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;">D: 国际市场</td>
+<td style="text-align: left;">其他国家社区护理</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: left;">模式</th>
+<th style="text-align: center;">AI 能力</th>
+<th style="text-align: center;">威胁</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Eko Health (US)</strong></td>
+<td style="text-align: left;">AI 听诊+硬件</td>
+<td style="text-align: center;">🟢🟢 FDA</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">全球 AI 听诊领导者</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TytoCare (Israel)</strong></td>
+<td style="text-align: left;">远程检查设备+AI</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">远程体检——非心音专精</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Huma</strong></td>
+<td style="text-align: left;">数字健康平台</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">通用平台——非听诊专精</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Doccla</strong></td>
+<td style="text-align: left;">全栈虚拟病房</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: left;">不涉及 AI 听诊</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Feebris 的差异化</strong>: 专注 AI 心音/呼吸音分析——NICE 收录验证了这一细分赛道的临床价值。</p>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略深度评估</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">区域</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">机会</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">英国</td>
+<td style="text-align: center;">🟢 核心</td>
+<td style="text-align: left;">NICE 收录→NHS 采购通道</td>
+<td style="text-align: left;">市场较小</td>
+</tr>
+<tr>
+<td style="text-align: left;">欧洲</td>
+<td style="text-align: center;">🟡 潜在</td>
+<td style="text-align: left;">CE 标志→欧盟市场</td>
+<td style="text-align: left;">竞品（Eko/TytoCare）已占位</td>
+</tr>
+<tr>
+<td style="text-align: left;">美国</td>
+<td style="text-align: center;">🔴 未进入</td>
+<td style="text-align: left;">FDA 审批路径长</td>
+<td style="text-align: left;">竞争极度激烈</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<p><strong>退出路径</strong>: 作为 AI 诊断初创公司，最可能被以下类型企业收购：</p>
+<ul>
+<li>Eko Health（AI 听诊龙头——获取英国/欧洲市场）</li>
+<li>Huma/Doccla（全栈平台——补充 AI 诊断能力）</li>
+<li>大型医疗设备公司（如 Philips/GE Healthcare）</li>
+</ul>
+<p>估值范围（推测）: £10-50M（基于早期 AI 诊断初创可比交易）。</p>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>社会</strong></td>
+<td style="text-align: left;">🟢🟢 正面——AI 辅助社区初级保健人员早期发现疾病，改善医疗可及性</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>环境</strong></td>
+<td style="text-align: left;">🟡 中性——纯软件 AI，碳足迹低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理</strong></td>
+<td style="text-align: left;">🟡 小型初创——治理透明度有限</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">未公开——推测 10-30 人（早期初创）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>核心团队</strong></td>
+<td style="text-align: left;">AI/机器学习工程师 + 临床顾问</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🔴 高——小型团队对核心 AI 工程师依赖极强</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">🟢 技术创新驱动</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<blockquote>
+<p>⚠️ 未公开。作为 NICE 收录的初创公司，推测已有种子/天使轮融资，但具体金额和投资方未公开。NICE 收录本身可能有助于下一轮融资。</p>
+</blockquote>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">B2G——NHS 框架（NICE 收录为核心敲门砖）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售周期</strong></td>
+<td style="text-align: left;">NHS 采购——6-18 个月</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GTM 阶段</strong></td>
+<td style="text-align: left;">🟡 <strong>早期</strong>——NICE 收录后进入初步商业化</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="271">27.1 核心临床指标</h3>
+<blockquote>
+<p>⚠️ Feebris 未公开具体临床效果数据。NICE HTG697 评估收录代表 AI 算法在社区场景中具有一定临床有效性。具体指标（灵敏度/特异度/AUC）未公开。</p>
+</blockquote>
+<h3 id="272">27.2 质量认证</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">UKCA 标志</td>
+<td style="text-align: center;">✅（推定——在英国销售医疗器械）</td>
+</tr>
+<tr>
+<td style="text-align: left;">CE 标志</td>
+<td style="text-align: center;">✅（推定）</td>
+</tr>
+<tr>
+<td style="text-align: left;">NICE HTG697</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS DTAC</td>
+<td style="text-align: center;">⚠️ 未确认</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<p><strong>证据强度总体评级</strong>: 🟡 <strong>中低</strong>——NICE 收录是官方信任票，但缺乏公开的同行评审论文或 RCT 数据。</p>
+<hr />
+<h2 id="v20">v2.0 完备性审计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅</td>
+<td style="text-align: center;">18</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总计</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="_1">参考文献</h2>
+<ol>
+<li>NICE — HTG697</li>
+<li>Feebris 官方</li>
+<li>NICE 评估报告</li>
+</ol>
+<hr />
+<p><em>报告终</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

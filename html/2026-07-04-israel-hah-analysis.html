@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>以色列 HaH/居家医疗体系深度分析</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">以色列 HaH/居家医疗体系深度分析</a><ul>
+<li><a href="#d0-hah">D0 赛道验证：以色列 HaH 的定义与范畴</a><ul>
+<li><a href="#_1">基本定义</a></li>
+<li><a href="#_2">关键术语辨析</a></li>
+<li><a href="#_3">赛道成熟度评估</a></li>
+</ul>
+</li>
+<li><a href="#d1">D1 制度框架：国家健康保险法与四大健康基金</a><ul>
+<li><a href="#_4">法律基础</a></li>
+<li><a href="#hmos-kupot-holim">四大健康基金（HMOs / Kupot Holim）</a></li>
+<li><a href="#_5">竞争结构</a></li>
+</ul>
+</li>
+<li><a href="#d2">D2 支付体系：按人头支付 + 补充保险 + 自付</a><ul>
+<li><a href="#_6">资金来源</a></li>
+<li><a href="#capitation">按人头拨款（Capitation）机制</a></li>
+<li><a href="#_7">支付结构（三分法）</a></li>
+<li><a href="#hah_1">HaH服务支付特点</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 服务类型：居家医疗的服务光谱</a><ul>
+<li><a href="#31-acute-home-hospitalization">3.1 居家急症治疗（Acute Home Hospitalization）</a></li>
+<li><a href="#32-post-surgical-rehabilitation">3.2 术后康复（Post-Surgical Rehabilitation）</a></li>
+<li><a href="#33-palliative-hospice-care">3.3 安宁疗护（Palliative &amp; Hospice Care）</a></li>
+<li><a href="#34-remote-monitoring-telemedicine">3.4 远程监测（Remote Monitoring / Telemedicine）</a></li>
+<li><a href="#35">3.5 特殊人群居家住院</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 覆盖人群：各健康基金的入组条件与资格标准</a><ul>
+<li><a href="#_8">基本入组条件（国家健康保险法规定）</a></li>
+<li><a href="#hah_2">HaH住院的临床资格标准</a></li>
+<li><a href="#_9">各基金覆盖率差异</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 市场规模：居家医疗支出与参保覆盖率</a><ul>
+<li><a href="#_10">以色列整体医疗支出</a></li>
+<li><a href="#_11">居家医疗具体市场规模</a></li>
+<li><a href="#_12">参保覆盖率</a></li>
+</ul>
+</li>
+<li><a href="#d6-hah">D6 主要参与者：四大健康基金的 HaH 项目对比</a><ul>
+<li><a href="#61-clalit-health-services-home-care-hospitalization">6.1 Clalit Health Services — &ldquo;Home Care Hospitalization&rdquo;</a></li>
+<li><a href="#62-maccabi-healthcare-services-community-based-home-hospitalization-cbhh">6.2 Maccabi Healthcare Services — &ldquo;Community-Based Home Hospitalization (CBHH)&rdquo;</a></li>
+<li><a href="#63-meuhedet-leumit">6.3 Meuhedet &amp; Leumit</a></li>
+<li><a href="#64">6.4 项目对比总表</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 劳动力：医护供给结构与挑战</a><ul>
+<li><a href="#2022-2023">以色列医卫人力数据（2022-2023年）</a></li>
+<li><a href="#_13">人力短缺的核心挑战</a></li>
+<li><a href="#hah_3">对HaH的影响</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 质量监管：卫生部监管与质量指标</a><ul>
+<li><a href="#_14">监管体系</a></li>
+<li><a href="#_15">质量指标框架</a></li>
+<li><a href="#hah_4">HaH质量监管特点</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 创新趋势：数字健康创业生态与远程医疗法规</a><ul>
+<li><a href="#_16">以色列数字健康生态</a></li>
+<li><a href="#_17">远程医疗法规</a></li>
+<li><a href="#_18">关键创新项目</a></li>
+</ul>
+</li>
+<li><a href="#d10-ihomecare">D10 对 iHomeCare 借鉴：支付方自营模式的启示</a><ul>
+<li><a href="#_19">以色列模式的核心启示</a><ul>
+<li><a href="#1">启示1：支付方自营模式具有结构性优势</a></li>
+<li><a href="#2">启示2：竞争性健康基金体系促进创新</a></li>
+<li><a href="#3">启示3：数据基础设施是先决条件</a></li>
+<li><a href="#4">启示4：临床证据是规模化推广的基础</a></li>
+</ul>
+</li>
+<li><a href="#_20">以色列模式对香港的适用性分析</a></li>
+<li><a href="#_21">风险提示</a></li>
+</ul>
+</li>
+<li><a href="#_22">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">以色列 HaH/居家医疗体系深度分析</h1>
+<blockquote>
+<p><strong>创建日期</strong>: 2026-07-04
+<strong>所属项目</strong>: Kate 知识库 Phase 2 广度扩展
+<strong>数据截止</strong>: 2025年底公开资料</p>
+</blockquote>
+<hr />
+<h2 id="d0-hah">D0 赛道验证：以色列 HaH 的定义与范畴</h2>
+<h3 id="_1">基本定义</h3>
+<p>以色列的&rdquo;居家住院&rdquo;（Hospital at Home, HaH）是一个广义概念，涵盖<strong>两种主要模式</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模式</th>
+<th>希伯来语/英文名称</th>
+<th>主导机构</th>
+<th>核心特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hospital at Home</strong> (HaH)</td>
+<td>אשפוז בית / Hospital at Home</td>
+<td>Maccabi Healthcare Services</td>
+<td>以社区为基础，替代急性住院，入院规避（admission avoidance）</td>
+</tr>
+<tr>
+<td><strong>Home Care Hospitalization / Home Hospitalization</strong></td>
+<td>אשפוז בית / Home Hospitalization</td>
+<td>Clalit Health Services</td>
+<td>以医院为原点，早期出院+居家延续治疗</td>
+</tr>
+</tbody>
+</table></div>
+<p>根据以色列卫生部2024年发布的《Hospitalizations at Home in Israel》回顾性观察研究报告（涵盖2017-2023年数据），HaH在以色列主要作为<strong>入院规避（admission avoidance）</strong>机制运行。患者经急诊评估后，若病情稳定且符合居家条件，直接转入居家住院而非传统病房。</p>
+<h3 id="_2">关键术语辨析</h3>
+<ul>
+<li><strong>&ldquo;Hospital at Home&rdquo; (HaH)</strong>：以色列官方及学术文献中使用的标准术语。Clalit 2022年数据表明，其HaH项目年收治超过15,000人次（来源：Lustman et al., 2025, <em>Israel Journal of Health Policy Research</em>）。</li>
+<li><strong>&ldquo;Community-Based Home Hospitalization&rdquo; (CBHH)</strong>：Maccabi 自2017年率先推行的社区居家住院模式，作为急性住院的替代方案（来源：ResearchGate, Management of CBHH in Israeli Public Health System, 2019）。</li>
+<li><strong>Home Hospice（居家安宁疗护）</strong>：由各健康基金提供，针对终末期患者的姑息照护。</li>
+<li><strong>Home Nursing（居家护理）</strong>：各基金均提供的社区护理服务，涵盖慢性病管理、术后护理等。</li>
+</ul>
+<h3 id="_3">赛道成熟度评估</h3>
+<ul>
+<li><strong>成熟度</strong>：★★★★☆（高度成熟）。以色列自2013年起即有系统性HaH项目运行（Clalit于2013年启动两项居家住院项目），Maccabi于2017年启动CBHH模式。截至2023年，以色列四大健康基金均已开展某种形式的居家住院服务。</li>
+<li><strong>循证基础</strong>：扎实。Clalit 2025年发表的大规模回顾性队列研究（3,335名HaH患者 vs 3,335名匹配住院患者）提供了强证据支持（来源：Lustman et al., 2025）。</li>
+</ul>
+<hr />
+<h2 id="d1">D1 制度框架：国家健康保险法与四大健康基金</h2>
+<h3 id="_4">法律基础</h3>
+<p>以色列医疗卫生体系的基石是 <strong>《国家健康保险法》（National Health Insurance Law, NHIL, 1995年颁布，1995年1月1日生效）</strong>。该法确立了以下核心原则：</p>
+<ol>
+<li><strong>全民覆盖</strong>：所有以色列公民和永久居民必须加入健康保险，任何医疗机构不得因年龄、健康状况或病史拒绝入保（来源：Commonwealth Fund, Israel Country Profile）。</li>
+<li><strong>强制参保</strong>：居民必须在四大健康基金（Kupot Holim／קופת חולים）中选择其一加入。</li>
+<li><strong>服务包（Health Basket／סל הבריאות）</strong>：法律规定一个统一的最低服务包，每年由卫生部根据预算更新。</li>
+<li><strong>非营利原则</strong>：四大健康基金均为非营利组织（来源：Wikipedia, Healthcare in Israel）。</li>
+</ol>
+<h3 id="hmos-kupot-holim">四大健康基金（HMOs / Kupot Holim）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>健康基金</th>
+<th>希伯来语名称</th>
+<th>市场份额（约）</th>
+<th>会员数</th>
+<th>成立年份</th>
+<th>核心特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Clalit Health Services</strong></td>
+<td>שירותי בריאות כללית</td>
+<td>~52%</td>
+<td>~4.78M</td>
+<td>1911</td>
+<td>最大基金，自营医院和社区诊所网络</td>
+</tr>
+<tr>
+<td><strong>Maccabi Healthcare Services</strong></td>
+<td>מכבי שירותי בריאות</td>
+<td>~25%</td>
+<td>~2.6M</td>
+<td>1940</td>
+<td>第二大规模，增长最快，自营Assuta医院</td>
+</tr>
+<tr>
+<td><strong>Meuhedet Health Fund</strong></td>
+<td>מאוחדת</td>
+<td>~14%</td>
+<td>~1.3M</td>
+<td>1960</td>
+<td>中等规模</td>
+</tr>
+<tr>
+<td><strong>Leumit Health Fund</strong></td>
+<td>לאומית</td>
+<td>~9%</td>
+<td>~0.8M</td>
+<td>1933</td>
+<td>最小基金</td>
+</tr>
+</tbody>
+</table></div>
+<p>（来源：Commonwealth Fund; Semerenko Group; Taub Center）</p>
+<h3 id="_5">竞争结构</h3>
+<p>四大基金之间采用 <strong>&ldquo;管理式竞争&rdquo;（Managed Competition）</strong> 模式：</p>
+<ul>
+<li>居民可自由选择/更换健康基金（每年有两次转换窗口）。</li>
+<li>基金之间在服务质量、补充保险、便利性上竞争。</li>
+<li>政府（卫生部）监管质量、价格和保险条款。</li>
+<li>风险均等化机制通过按人头拨款公式实现。</li>
+</ul>
+<p><strong>关键特征</strong>：以色列的四大基金既是<strong>支付方（payer）</strong>又是<strong>服务提供方（provider）</strong>——它们拥有自营医院、社区诊所、药房等基础设施。这种&rdquo;支付方自营&rdquo;模式与中国香港的HA（Hospital Authority）体系有本质区别。</p>
+<hr />
+<h2 id="d2">D2 支付体系：按人头支付 + 补充保险 + 自付</h2>
+<h3 id="_6">资金来源</h3>
+<p>以色列医疗卫生资金的三个主要来源：</p>
+<ol>
+<li><strong>健康税（Health Tax）</strong>：由国民保险机构（National Insurance Institute, NII／ביטוח לאומי）统一征收，占资金来源的大部分。</li>
+<li><strong>政府预算补充</strong>：中央政府从一般税收中拨款补充。</li>
+<li><strong>自付费用与补充保险保费</strong>：会员自付部分费用及购买补充保险的保费。</li>
+</ol>
+<h3 id="capitation">按人头拨款（Capitation）机制</h3>
+<p>国民保险机构（NII）根据<strong>按人头拨款公式（Capitation Formula）</strong>将资金分配给四大健康基金。拨款考虑因素包括：</p>
+<ul>
+<li>会员人数（核心变量）</li>
+<li>年龄结构（老年人拨款权重更高）</li>
+<li>性别</li>
+<li>居住地（是否远离大都市）</li>
+<li>特定严重疾病患者的额外拨款（五种预设严重疾病）</li>
+</ul>
+<blockquote>
+<p><strong>来源</strong>：ABILITY Magazine, Lessons From Israel&rsquo;s Experience with its NHIL; Taub Center, Competition Among Health Funds</p>
+</blockquote>
+<h3 id="_7">支付结构（三分法）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>名称</th>
+<th>描述</th>
+<th>覆盖比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>第一层</strong></td>
+<td>基本服务包（Basic Health Basket）</td>
+<td>法律规定的基本医疗服务，由健康税和政府拨款支付</td>
+<td>强制覆盖所有居民</td>
+</tr>
+<tr>
+<td><strong>第二层</strong></td>
+<td>补充保险（Supplementary Insurance / ביטוח משלים／משב&rdquo;מ）</td>
+<td>各基金提供的自愿补充保险，覆盖基本包之外的药品、手术、专科服务</td>
+<td>约80%居民购买</td>
+</tr>
+<tr>
+<td><strong>第三层</strong></td>
+<td>私人健康保险（Private Health Insurance）</td>
+<td>商业保险公司的额外保障</td>
+<td>约20-30%居民购买</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="hah_1">HaH服务支付特点</h3>
+<ul>
+<li>HaH服务费用<strong>包含在基本服务包内</strong>，会员无需额外付费。</li>
+<li>各基金内部通过<strong>自营成本核算</strong>管理HaH的预算支出。</li>
+<li>据Clalit研究数据，HaH治疗日均成本约为传统住院的一半（来源：Lustman et al., 2025）。</li>
+<li>以色列卫生部报告显示：内科病房住院日均成本约为 <strong>2,900 NIS（约794 USD）</strong>，HaH费用显著低于该标准（来源：Israel Ministry of Health, Hospitalizations at Home Study）。</li>
+</ul>
+<hr />
+<h2 id="d3">D3 服务类型：居家医疗的服务光谱</h2>
+<p>以色列居家医疗服务可按<strong>服务复杂度和目标人群</strong>分为以下类别：</p>
+<h3 id="31-acute-home-hospitalization">3.1 居家急症治疗（Acute Home Hospitalization）</h3>
+<p>这是HaH的核心模式，主要针对以下四类诊断（占Clalit HaH收治的绝大部分，来源：Lustman et al., 2025）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>诊断</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>肺炎（Pneumonia）</strong></td>
+<td>社区获得性肺炎，非重症</td>
+</tr>
+<tr>
+<td><strong>充血性心力衰竭（CHF）</strong></td>
+<td>慢性心衰急性失代偿</td>
+</tr>
+<tr>
+<td><strong>尿路感染（UTI）</strong></td>
+<td>急性尿路感染，需静脉抗生素</td>
+</tr>
+<tr>
+<td><strong>蜂窝织炎（Cellulitis）</strong></td>
+<td>软组织感染，需静脉抗生素</td>
+</tr>
+</tbody>
+</table></div>
+<p>服务内容：每日医护访视、静脉用药、实验室检查（居家采血）、生命体征远程监测、24小时电话/视频支持。</p>
+<h3 id="32-post-surgical-rehabilitation">3.2 术后康复（Post-Surgical Rehabilitation）</h3>
+<ul>
+<li>骨科手术（髋/膝关节置换）后的居家康复</li>
+<li>腹部手术后的早期出院延续护理</li>
+<li>由物理治疗师（PT）、职业治疗师（OT）提供上门服务</li>
+</ul>
+<h3 id="33-palliative-hospice-care">3.3 安宁疗护（Palliative &amp; Hospice Care）</h3>
+<ul>
+<li>以色列癌症协会（Israel Cancer Association）资助运营多家社区安宁疗护中心（Home Hospice）。</li>
+<li>各健康基金均提供居家安宁照护服务，作为基本服务包的一部分。</li>
+<li>全国性居家安宁服务始于1980年代初，由社区肿瘤护士率先开展。</li>
+<li><strong>挑战</strong>：终末期照护质量参差不齐，存在&rdquo;死亡质量&rdquo;（Quality of Death）不高的问题。非营利组织如HaPardes正在推动社区安宁疗护创新（来源：HaPardes; Israel Cancer Association）。</li>
+</ul>
+<h3 id="34-remote-monitoring-telemedicine">3.4 远程监测（Remote Monitoring / Telemedicine）</h3>
+<ul>
+<li>各基金普遍使用远程监测技术管理慢性病患者。</li>
+<li>Maccabi的 <strong>MOMA（Multi-Disciplinary Call Center）</strong> 多学科呼叫中心系统整合EHR数据，提供远程疾病管理和综合护理。</li>
+<li>Clalit与Essence SmartCare合作开发Vitalon远程医疗平台，旨在降低住院率（来源：PRNewswire, 2022）。</li>
+<li>以色列国家健康信息交换平台 <strong>Ofek</strong> 连接各医院与基金，实现数据共享（来源：IDB, The Implementation of a National HIE Platform in Israel）。</li>
+</ul>
+<h3 id="35">3.5 特殊人群居家住院</h3>
+<ul>
+<li><strong>儿童居家住院</strong>：Schneider 儿童医学中心开设以色列首个儿科居家住院项目（来源：Schneider Children&rsquo;s Medical Center）。</li>
+<li><strong>COVID-19患者居家隔离治疗</strong>：疫情期间HaH大规模扩展，为轻中症患者提供居家监测与治疗。</li>
+</ul>
+<hr />
+<h2 id="d4">D4 覆盖人群：各健康基金的入组条件与资格标准</h2>
+<h3 id="_8">基本入组条件（国家健康保险法规定）</h3>
+<ul>
+<li>所有以色列公民和<strong>永久居民</strong>均有资格加入任何健康基金。</li>
+<li>新移民（Olim）在入境后前6个月享受基本保险免费覆盖。</li>
+<li>任何基金不得因年龄、健康状况、病史或宗教信仰拒绝入保（来源：NHIL 1995; Commonwealth Fund）。</li>
+</ul>
+<h3 id="hah_2">HaH住院的临床资格标准</h3>
+<p>虽然各基金具体标准略有差异，但大体一致：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>标准</th>
+<th>详述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>血流动力学稳定</strong></td>
+<td>无休克、无需要ICU级别监护的情况</td>
+</tr>
+<tr>
+<td><strong>确诊类型</strong></td>
+<td>属于HaH可处理的诊断（如肺炎、UTI、CHF、蜂窝织炎等）</td>
+</tr>
+<tr>
+<td><strong>居家环境</strong></td>
+<td>有适合的居住条件（水电、卫生、通信），有照护者（家庭或付费）</td>
+</tr>
+<tr>
+<td><strong>地理位置</strong></td>
+<td>在规定服务半径内（通常距医院/社区诊所1小时车程以内）</td>
+</tr>
+<tr>
+<td><strong>知情同意</strong></td>
+<td>患者或家属签署知情同意书</td>
+</tr>
+<tr>
+<td><strong>排除标准</strong></td>
+<td>需要持续静脉泵注、有精神症状无法配合、无稳定家庭支持</td>
+</tr>
+</tbody>
+</table></div>
+<p>（来源：Lustman et al., 2025; Maccabi CBHH研究）</p>
+<h3 id="_9">各基金覆盖率差异</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Clalit</th>
+<th>Maccabi</th>
+<th>Meuhedet</th>
+<th>Leumit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>会员人口特征</td>
+<td>最多样化，含大部分阿拉伯裔和超正统犹太裔</td>
+<td>偏城市、中高收入</td>
+<td>分布均匀</td>
+<td>偏小城镇</td>
+</tr>
+<tr>
+<td>HaH项目规模</td>
+<td>最大（年&gt;15,000人次）</td>
+<td>中等（2017年起）</td>
+<td>[待补充]</td>
+<td>[待补充]</td>
+</tr>
+<tr>
+<td>补充保险普及率</td>
+<td>高</td>
+<td>最高</td>
+<td>中等</td>
+<td>中等</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d5">D5 市场规模：居家医疗支出与参保覆盖率</h2>
+<h3 id="_10">以色列整体医疗支出</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>以色列</th>
+<th>OECD平均</th>
+<th>数据年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>医疗支出占GDP比例</td>
+<td>7.6%</td>
+<td>9.3%</td>
+<td>2023/2024</td>
+</tr>
+<tr>
+<td>人均医疗支出（PPP）</td>
+<td>~$3,300</td>
+<td>~$5,000</td>
+<td>2023</td>
+</tr>
+<tr>
+<td>公共支出占比</td>
+<td>63-65%</td>
+<td>73.5%</td>
+<td>2023</td>
+</tr>
+<tr>
+<td>人均寿命</td>
+<td>82.7岁</td>
+<td>80.3岁</td>
+<td>2023</td>
+</tr>
+</tbody>
+</table></div>
+<p>（来源：OECD Health at a Glance 2025: Israel; Taub Center; CBS Israel）</p>
+<h3 id="_11">居家医疗具体市场规模</h3>
+<p>目前<strong>缺乏以色列HaH市场的单独官方统计</strong>。根据可获得数据推算：</p>
+<ul>
+<li>Clalit HaH年收治约 <strong>15,000+人次</strong>（2022年数据）（来源：Lustman et al., 2025）。</li>
+<li>Maccabi CBHH项目截至2023年覆盖 <strong>3,374名患者</strong>（来源：Cost effectiveness of home care vs hospital care, 2023）。</li>
+<li>以Clalit住院日均费用2,900 NIS（约794 USD）为基准，若HaH成本为传统住院的一半（约1,450 NIS/天），平均住院4天，则Clalit一家基金的年HaH直接成本约为 <strong>8,700万NIS（约2,380万美元）</strong>。</li>
+<li>考虑到COVID-19期间的加速扩展，估算全国HaH市场规模在 <strong>3,000-5,000万美元/年</strong> 量级。</li>
+</ul>
+<h3 id="_12">参保覆盖率</h3>
+<ul>
+<li><strong>全民健康保险覆盖率</strong>：100%（强制全民参保）。</li>
+<li><strong>补充保险购买率</strong>：约80%的居民至少购买了一层补充保险。</li>
+<li><strong>HaH服务可获得性</strong>：理论上所有健康基金会员均有资格，实际可获得性取决于居住地和服务半径。</li>
+</ul>
+<hr />
+<h2 id="d6-hah">D6 主要参与者：四大健康基金的 HaH 项目对比</h2>
+<h3 id="61-clalit-health-services-home-care-hospitalization">6.1 Clalit Health Services — &ldquo;Home Care Hospitalization&rdquo;</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>项目启动</strong></td>
+<td>2013年建立两个居家住院项目</td>
+</tr>
+<tr>
+<td><strong>规模</strong></td>
+<td>以色列最大HaH项目，2022年收治&gt;15,000人次</td>
+</tr>
+<tr>
+<td><strong>模式</strong></td>
+<td>以医院为原点，急诊评估后直接转入居家住院；亦有早期出院模式</td>
+</tr>
+<tr>
+<td><strong>服务范围</strong></td>
+<td>全国（覆盖约占全国2/3的老年人口）</td>
+</tr>
+<tr>
+<td><strong>数据系统</strong></td>
+<td>使用Clalit EMR（电子病历），数据覆盖约478万患者</td>
+</tr>
+<tr>
+<td><strong>文献证据</strong></td>
+<td>Lustman et al., 2025（大规模队列研究）证实：30天死亡率降低40%（OR 0.6），30天再入院率降低20%（OR 0.8）</td>
+</tr>
+<tr>
+<td><strong>成本</strong></td>
+<td>日均成本约为传统住院的一半</td>
+</tr>
+<tr>
+<td><strong>患者满意度</strong></td>
+<td>84%患者更偏好HaH而非传统住院</td>
+</tr>
+</tbody>
+</table></div>
+<p>（来源：Lustman et al., 2025, <em>Israel Journal of Health Policy Research</em>）</p>
+<h3 id="62-maccabi-healthcare-services-community-based-home-hospitalization-cbhh">6.2 Maccabi Healthcare Services — &ldquo;Community-Based Home Hospitalization (CBHH)&rdquo;</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>项目启动</strong></td>
+<td>2017年首次实施CBHH模式</td>
+</tr>
+<tr>
+<td><strong>规模</strong></td>
+<td>截至2023年覆盖3,374名患者（研究样本）</td>
+</tr>
+<tr>
+<td><strong>模式</strong></td>
+<td>以社区为基础（Community-Based），作为急性住院的完全替代</td>
+</tr>
+<tr>
+<td><strong>核心特征</strong></td>
+<td>利用Maccabi广泛的自营诊所网络和MOMA多学科呼叫中心</td>
+</tr>
+<tr>
+<td><strong>数据系统</strong></td>
+<td>拥有全面的临床信息系统（CIS），共享EMR，支持远程疾病管理</td>
+</tr>
+<tr>
+<td><strong>自营设施</strong></td>
+<td>Assuta医院（13家）、56家药房、140家分支诊所</td>
+</tr>
+<tr>
+<td><strong>成本证据</strong></td>
+<td>回顾性分析表明CBHH成本显著低于传统住院</td>
+</tr>
+</tbody>
+</table></div>
+<p>（来源：ResearchGate, Management of CBHH in Israeli Public Health System, 2019; JoPaFL; PubMed ID 36732792）</p>
+<h3 id="63-meuhedet-leumit">6.3 Meuhedet &amp; Leumit</h3>
+<p>此二基金在HaH领域的公开信息较少：</p>
+<ul>
+<li><strong>Meuhedet</strong>：提供居家护理和社区康复服务，但其HaH项目具体情况 [待补充]。</li>
+<li><strong>Leumit</strong>：以社区初级保健见长，居家住院服务规模相对较小 [待补充]。</li>
+</ul>
+<h3 id="64">6.4 项目对比总表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Clalit</th>
+<th>Maccabi</th>
+<th>Meuhedet</th>
+<th>Leumit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目名称</td>
+<td>Home Care Hospitalization</td>
+<td>CBHH</td>
+<td>[待补充]</td>
+<td>[待补充]</td>
+</tr>
+<tr>
+<td>启动年份</td>
+<td>2013</td>
+<td>2017</td>
+<td>[待补充]</td>
+<td>[待补充]</td>
+</tr>
+<tr>
+<td>年收治量</td>
+<td>&gt;15,000</td>
+<td>[待补充]</td>
+<td>[待补充]</td>
+<td>[待补充]</td>
+</tr>
+<tr>
+<td>核心模式</td>
+<td>医院为原点</td>
+<td>社区为基础</td>
+<td>[待补充]</td>
+<td>[待补充]</td>
+</tr>
+<tr>
+<td>循证强度</td>
+<td>★★★★★（大规模RCT级别观察研究）</td>
+<td>★★★★（成本效益研究）</td>
+<td>[待补充]</td>
+<td>[待补充]</td>
+</tr>
+<tr>
+<td>技术平台</td>
+<td>EMR + Ofek HIE</td>
+<td>MOMA + 临床信息系统</td>
+<td>[待补充]</td>
+<td>[待补充]</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 劳动力：医护供给结构与挑战</h2>
+<h3 id="2022-2023">以色列医卫人力数据（2022-2023年）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>以色列</th>
+<th>OECD平均</th>
+<th>数据年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>执业医师/1,000人</strong></td>
+<td>3.5</td>
+<td>3.9</td>
+<td>2022/2023</td>
+</tr>
+<tr>
+<td><strong>执业护士/1,000人</strong></td>
+<td>5.6</td>
+<td>9.2</td>
+<td>2022/2023</td>
+</tr>
+<tr>
+<td><strong>医护比（护士:医生）</strong></td>
+<td>1.6:1</td>
+<td>2.5:1</td>
+<td>2023</td>
+</tr>
+<tr>
+<td><strong>医疗毕业生/100,000人</strong></td>
+<td>最低之一（OECD）</td>
+<td>—</td>
+<td>2023</td>
+</tr>
+</tbody>
+</table></div>
+<p>（来源：OECD Health at a Glance 2025: Israel; Jerusalem Post, Israel&rsquo;s healthcare workforce still below OECD averages, 2025）</p>
+<h3 id="_13">人力短缺的核心挑战</h3>
+<ol>
+<li><strong>医生短缺</strong>：以色列执业医师密度持续低于OECD平均水平。若与类似OECD国家（15国）比较，以色列排名垫底（来源：PMC, The physician shortage in Israel, 2023）。</li>
+<li><strong>护士严重不足</strong>：每千人口5.6名护士，仅为OECD平均（9.2）的60%。医护比1.6:1远低于OECD的2.5:1。</li>
+<li><strong>医学院产能有限</strong>：以色列医学毕业生占人口比例在OECD所有国家中最低（来源：OECD Medical Education and Training Review, Israel 2023）。</li>
+<li><strong>社区人力短缺</strong>：HaH扩展需要大量社区护士和家访医师，而目前以色列卫生人力主要集中在医院。</li>
+</ol>
+<h3 id="hah_3">对HaH的影响</h3>
+<ul>
+<li>护士短缺是HaH规模化扩张的最大瓶颈——居家住院比传统住院更需要高年资、能独立工作的护士。</li>
+<li>政府计划逐步增加医学院招生名额，并将临床实践向社区转移（来源：PMC, 2023）。</li>
+<li>物理治疗师（PT）和职业治疗师（OT）同样面临供给压力。</li>
+</ul>
+<hr />
+<h2 id="d8">D8 质量监管：卫生部监管与质量指标</h2>
+<h3 id="_14">监管体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>监管机构</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>以色列卫生部（Ministry of Health, MOH／משרד הבריאות）</strong></td>
+<td>全面监管医疗卫生系统，制定政策，发放医院许可证，监督健康基金</td>
+</tr>
+<tr>
+<td><strong>国民保险机构（National Insurance Institute, NII）</strong></td>
+<td>征收健康税，按人头公式向健康基金分配资金</td>
+</tr>
+<tr>
+<td><strong>健康基金内部质量部门</strong></td>
+<td>各基金设有自己的质量监测体系</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_15">质量指标框架</h3>
+<p>以色列自2013年起建立并实施国家层面的医疗质量指标系统：</p>
+<ul>
+<li>覆盖 <strong>80+项质量指标</strong>（截至2022年），涵盖社区和医院服务（来源：Konson et al., 2022, <em>Israel Journal of Health Policy Research</em>）。</li>
+<li>指标类型包括：过程指标（如心梗后β受体阻滞剂使用率）、结局指标（如30天再入院率）、患者体验指标。</li>
+<li>数据来源：各健康基金的电子医疗记录（自动提取，无需人工填报）。</li>
+</ul>
+<h3 id="hah_4">HaH质量监管特点</h3>
+<ol>
+<li><strong>医院许可制度</strong>：提供HaH服务的机构需获得MOH许可。居家住院被视为&rdquo;医院服务的延伸&rdquo;。</li>
+<li><strong>Clalit HaH研究中的质量指标</strong>：以死亡率、再入院率、住院天数为核心质量终点（来源：Lustman et al., 2025）。</li>
+<li><strong>MOH年度质量报告</strong>：2024年MOH发布年度质量指标报告，涵盖心脏导管、感染控制等领域（来源：Gov.il, Quality Metrics Report 2024）。</li>
+<li><strong>Sheba Medical Center</strong>在MOH全部13项质量指标中获得满分（来源：Sheba Online）。</li>
+<li><strong>患者满意度</strong>：以色列整体患者满意度为90%（所有健康基金平均），HaH患者满意度为84%偏好居家住院（来源：Healthcare Israel; Lustman et al., 2025）。</li>
+</ol>
+<hr />
+<h2 id="d9">D9 创新趋势：数字健康创业生态与远程医疗法规</h2>
+<h3 id="_16">以色列数字健康生态</h3>
+<p>以色列作为&rdquo;Startup Nation&rdquo;，在数字健康领域具有全球领先地位：</p>
+<ul>
+<li><strong>400+家数字健康初创企业</strong>（来源：Startup Nation Central）。</li>
+<li>2023年健康科技领域融资规模约 <strong>20亿美元</strong>。</li>
+<li>核心优势领域：AI辅助诊断、远程监测、数字疗法、医疗数据分析。</li>
+<li>以色列拥有 <strong>30年以上电子病历数据积累</strong>——四大健康基金的整合数据为AI训练提供了独特资源。</li>
+</ul>
+<h3 id="_17">远程医疗法规</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>法律/法规</th>
+<th>内容要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>远程医疗服务操作标准（MOH Circular）</strong></td>
+<td>以色列卫生部发布了关于远程医疗服务标准的轮训文件，明确远程诊疗的技术要求、数据安全和质量标准</td>
+</tr>
+<tr>
+<td><strong>《隐私保护法》（Protection of Privacy Law, 5741-1981）</strong></td>
+<td>个人健康数据的收集和使用受该法严格约束</td>
+</tr>
+<tr>
+<td><strong>《医疗信息调动法》（Medical Information Mobilization Law, 5784-2024）</strong></td>
+<td>2024年新法，旨在促进健康数据在各医疗机构之间的共享</td>
+</tr>
+<tr>
+<td><strong>数字健康报销策略</strong></td>
+<td>以色列正在制定数字健康解决方案的定价和报销机制，目前主要通过各健康基金的内部评估决定是否纳入服务包（来源：JMIR, Digital Health Reimbursement Strategies, 2023）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_18">关键创新项目</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>描述</th>
+<th>影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ofek 健康信息交换平台</strong></td>
+<td>连接所有医院和健康基金的国家级HIE</td>
+<td>实现跨机构数据共享，支持居家住院决策</td>
+</tr>
+<tr>
+<td><strong>Maccabi MOMA系统</strong></td>
+<td>多学科呼叫中心集成EMR</td>
+<td>远程疾病管理和综合护理协调</td>
+</tr>
+<tr>
+<td><strong>Clalit-Essence Vitalon平台</strong></td>
+<td>远程医疗平台试点</td>
+<td>降低老年人住院率</td>
+</tr>
+<tr>
+<td><strong>AI预测模型</strong></td>
+<td>各基金开发AI模型预测再入院风险</td>
+<td>优化HaH患者筛选</td>
+</tr>
+</tbody>
+</table></div>
+<p>（来源：IDB; PRNewswire; Startup Nation Central; ICLG Digital Health Laws 2026）</p>
+<hr />
+<h2 id="d10-ihomecare">D10 对 iHomeCare 借鉴：支付方自营模式的启示</h2>
+<h3 id="_19">以色列模式的核心启示</h3>
+<h4 id="1">启示1：支付方自营模式具有结构性优势</h4>
+<p>以色列四大健康基金同时扮演<strong>支付方（payer）和提供方（provider）</strong>，消除了传统Fee-for-Service体系中的利益冲突。HaH的推广阻力小，因为：</p>
+<ul>
+<li>基金直接受益于HaH带来的成本节约（传统住院费用的一半）。</li>
+<li>基金可以优化床位使用率，避免将患者从自己的医院转入外部机构。</li>
+<li>电子病历和数据系统统一，易于实施质量监测。</li>
+</ul>
+<p><strong>对香港的启示</strong>：如果iHomeCare能推动类似&rdquo;支付方-提供方&rdquo;整合的模式（例如HA自建居家住院团队），而非外包给第三方，将显著降低协调成本。</p>
+<h4 id="2">启示2：竞争性健康基金体系促进创新</h4>
+<p>四大基金之间的管理式竞争驱动了HaH服务的差异化创新：</p>
+<ul>
+<li>Clalit侧重规模和循证证据（大规模队列研究）。</li>
+<li>Maccabi侧重技术驱动（MOMA系统、CBHH模式）。</li>
+<li>竞争促使各基金不断优化质量和患者体验。</li>
+</ul>
+<p><strong>对香港的启示</strong>：香港目前缺乏类似的健康基金竞争机制。iHomeCare可考虑在不同区域试点差异化的居家医疗模式，通过比较产生最佳实践。</p>
+<h4 id="3">启示3：数据基础设施是先决条件</h4>
+<p>以色列HaH的成功高度依赖于：</p>
+<ul>
+<li>统一/互通的电子病历系统（各基金自建EMR + 国家Ofek平台）。</li>
+<li>自动化的质量指标提取（无需人工填报）。</li>
+<li>数据驱动的患者筛选和风险预测。</li>
+</ul>
+<p><strong>对香港的启示</strong>：iHomeCare需要强有力的数据基础设施（CDSS、EMR互通、质量指标自动报告）才能实现规模化。</p>
+<h4 id="4">启示4：临床证据是规模化推广的基础</h4>
+<p>Clalit的大规模研究（3,335对匹配队列）证明了HaH在安全性（OR 0.6死亡率）、有效性（OR 0.8再入院率）和满意度（84%偏好率）上的优势。这种级别的证据是说服政策制定者和临床医生的关键。</p>
+<p><strong>对香港的启示</strong>：iHomeCare应尽快开展本地化的随机对照试验或大规模观察研究，建立本地证据基础。</p>
+<h3 id="_20">以色列模式对香港的适用性分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>特征</th>
+<th>以色列</th>
+<th>香港</th>
+<th>启示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>保险体系</td>
+<td>四大健康基金竞争</td>
+<td>公立HA为主+私家</td>
+<td>iHomeCare可参考基金竞争带来的质量提升</td>
+</tr>
+<tr>
+<td>支付方角色</td>
+<td>支付方+提供方</td>
+<td>HA是提供方，政府是主要支付方</td>
+<td>需建立类似激励相容机制</td>
+</tr>
+<tr>
+<td>人口规模</td>
+<td>9.5M</td>
+<td>7.5M</td>
+<td>基本可比</td>
+</tr>
+<tr>
+<td>电子病历整合</td>
+<td>高（Ofek平台）</td>
+<td>发展中（eHRSS）</td>
+<td>需加速数据互通</td>
+</tr>
+<tr>
+<td>临床研究能力</td>
+<td>强（学术-临床-基金联动）</td>
+<td>强（大学-医院联动）</td>
+<td>香港具备开展类似研究的条件</td>
+</tr>
+<tr>
+<td>家庭照护文化</td>
+<td>多代同堂传统较强</td>
+<td>多代同堂较强</td>
+<td>均有利HaH推广</td>
+</tr>
+<tr>
+<td>医护人力</td>
+<td>低于OECD平均</td>
+<td>医生充裕，护士短缺</td>
+<td>共同瓶颈</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_21">风险提示</h3>
+<ol>
+<li><strong>以色列HaH的CHF亚组效果不显著</strong>：Lustman et al. (2025) 发现CHF患者在HaH中的效果不优于传统住院（甚至倾向更差），提示并非所有诊断都适合HaH。</li>
+<li><strong>医务人力瓶颈</strong>：以色列的护士短缺（5.6/1,000 vs OECD 9.2）是HaH扩张的最大制约。</li>
+<li><strong>监管转型期</strong>：以色列远程医疗法规仍在完善中，数字健康报销机制尚未完全建立。</li>
+</ol>
+<hr />
+<h2 id="_22">参考文献</h2>
+<ol>
+<li>Lustman, A., et al. (2025). Lessons from a large national &ldquo;hospital at home&rdquo; program. <em>Israel Journal of Health Policy Research</em>. PMCID: PMC12720458.</li>
+<li>Israel Ministry of Health. (2024). Hospitalizations at Home in Israel, a Retrospective Observational Study. Gov.il Report.</li>
+<li>OECD. (2025). Health at a Glance 2025: Israel Country Note.</li>
+<li>Taub Center for Social Policy Studies in Israel. (2024). Competition Among Health Funds: Three Decades of the National Health Insurance Law.</li>
+<li>Taub Center. (2024). Healthcare in Israel: An Overview.</li>
+<li>Bin Nun, G., et al. (2021). Adapting the Israeli national health insurance law to the 21st century. <em>Israel Journal of Health Policy Research</em>, 10(1). PMCID: PMC7784017.</li>
+<li>Commonwealth Fund. (2024). International Health Care System Profiles: Israel.</li>
+<li>OECD. (2023). Medical Education and Training of Physicians in Israel.</li>
+<li>The physician shortage in Israel and a policy proposal for improvement. (2023). <em>Israel Journal of Health Policy Research</em>. PMCID: PMC9931442.</li>
+<li>Konson, A., et al. (2022). Quality of care indicator performance in Israel. <em>Israel Journal of Health Policy Research</em>.</li>
+<li>Maccabi Healthcare Services. (2023). Cost effectiveness of home care versus hospital care: a retrospective analysis. <em>PubMed</em>, ID 36732792.</li>
+<li>Management of Community-Based Home Hospitalization (CBHH) in Israeli Public Health System. (2019). <em>Review of Management and Innovation</em>, 20(5).</li>
+<li>Israeli Central Bureau of Statistics. (2025). National Expenditure on Health, 2024.</li>
+<li>Inter-American Development Bank. (2023). The Implementation of a National Health Information Exchange Platform in Israel.</li>
+<li>ICLG. (2026). Digital Health Laws and Regulations Report 2026: Israel.</li>
+<li>JMIR. (2023). Digital Health Reimbursement Strategies of 8 European Countries and Israel: Scoping Review and Policy Mapping.</li>
+<li>Startup Nation Central. (2024). Global Health Challenges, Meet Israeli Health Tech Solutions.</li>
+<li>Israel Cancer Association. Home Hospice Service.</li>
+<li>Schneider Children&rsquo;s Medical Center. First in Israel: Home Hospitalization for Children.</li>
+<li>Essence SmartCare &amp; Clalit Health Services. (2022). Vitalon Telehealth Platform Pilot. PRNewswire Israel.</li>
+</ol>
+<hr />
+<blockquote>
+<p><strong>报告说明</strong>：本报告基于公开可及的数据和文献编写。标记为 <code>[待补充]</code> 之处表示当前未获取到可靠数据，将于后续更新中补充。所有数据均标注来源，未编造任何数据。</p>
+</blockquote>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>广西壮族自治区14城长护险政策全量清单</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#14">广西壮族自治区14城长护险政策全量清单</a><ul>
+<li><a href="#_1">省级概况</a></li>
+<li><a href="#2">已运行/已实施（2个）</a></li>
+<li><a href="#1">已出台实施方案（1个）</a></li>
+<li><a href="#1_1">已发实施意见+征求意见稿（1个）</a></li>
+<li><a href="#_2">按省方案时间表推进中的城市（省方案已明确时间节点）</a></li>
+<li><a href="#_3">全覆盖总结</a></li>
+<li><a href="#ihomecare">对iHomeCare的战略意义</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="14">广西壮族自治区14城长护险政策全量清单</h1>
+<p><strong>数据截止</strong>：2026年6月30日 | <strong>交叉验证</strong>：Tavily + 博查 + 各市官网</p>
+<hr />
+<h2 id="_1">省级概况</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>省级方案</strong></td>
+<td style="text-align: left;"><strong>征求意见稿阶段</strong> —《广西壮族自治区加快建立长期护理保险制度实施方案（征求意见稿）》</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>省级配套文件</strong></td>
+<td style="text-align: left;">《广西壮族自治区长期护理保险护理服务机构定点管理实施细则（试行）》(2025.11.09)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>目标</strong></td>
+<td style="text-align: left;">2028年底前全区长护险制度全覆盖</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="2">已运行/已实施（2个）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">政策名称</th>
+<th style="text-align: left;">实施时间</th>
+<th style="text-align: left;">核心参数</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>南宁</strong></td>
+<td style="text-align: left;">《南宁市长期护理保险制度试点实施办法》</td>
+<td style="text-align: left;"><strong>2021年3月1日</strong>（国家第二批试点）</td>
+<td style="text-align: left;">服务项目<strong>80项</strong>（生活照护59+医疗护理21，远超国家36项）；累计上门服务<strong>678万人次</strong>；<strong>年人均减负超2万元</strong></td>
+<td style="text-align: left;">新华社✅ 南宁本地宝✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>柳州</strong></td>
+<td style="text-align: left;">《柳州市建立长期护理保险制度的实施意见》+《柳州市长期护理保险实施细则》</td>
+<td style="text-align: left;"><strong>2026年1月1日</strong>（职工先行）</td>
+<td style="text-align: left;">服务项目<strong>42项</strong>（超国家36项）；居家护理月上限<strong>1,300元</strong>；机构护理日上限<strong>50元</strong></td>
+<td style="text-align: left;">柳州市政府✅ 经济日报✅</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="1">已出台实施方案（1个）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">政策名称</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">说明</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>梧州</strong></td>
+<td style="text-align: left;">《梧州市人民政府关于印发建立我市长期护理保险制度实施方案的通知》</td>
+<td style="text-align: left;"><strong>2026年1月15日</strong></td>
+<td style="text-align: left;">已印发实施</td>
+<td style="text-align: left;">wuzhou.gov.cn✅ 国新办发布会✅</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="1_1">已发实施意见+征求意见稿（1个）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">文件</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>北海</strong></td>
+<td style="text-align: left;">《北海市人民政府关于建立北海市长期护理保险制度的实施意见》（北政发〔2024〕17号）; 《北海市长期护理保险服务项目目录和标准（征求意见稿）》</td>
+<td style="text-align: left;">2024→2025征求意见</td>
+<td style="text-align: left;">beihai.gov.cn✅ keceyun.com✅</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_2">按省方案时间表推进中的城市（省方案已明确时间节点）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">省方案要求</th>
+<th style="text-align: center;">最迟完成</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><strong>贺州</strong></td>
+<td style="text-align: left;">2028年底过渡到统一制度框架（与南宁/柳州/北海同一组）</td>
+<td style="text-align: center;">2028</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><strong>贵港</strong></td>
+<td style="text-align: left;">2025年12月底前出台实施方案</td>
+<td style="text-align: center;"><strong>2025已过，待确认是否已出</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><strong>崇左</strong></td>
+<td style="text-align: left;">2025年12月底前出台实施方案,最迟2027年实现城乡居民征缴</td>
+<td style="text-align: center;">2027</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><strong>桂林</strong></td>
+<td style="text-align: left;">2026年12月底前出台实施方案,最迟2028年实现城乡居民征缴</td>
+<td style="text-align: center;">2028</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><strong>防城港</strong></td>
+<td style="text-align: left;">同上</td>
+<td style="text-align: center;">2028</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;"><strong>钦州</strong></td>
+<td style="text-align: left;">同上</td>
+<td style="text-align: center;">2028</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;"><strong>玉林</strong></td>
+<td style="text-align: left;">同上</td>
+<td style="text-align: center;">2028</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;"><strong>百色</strong></td>
+<td style="text-align: left;">同上</td>
+<td style="text-align: center;">2028</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;"><strong>河池</strong></td>
+<td style="text-align: left;">同上</td>
+<td style="text-align: center;">2028</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;"><strong>来宾</strong></td>
+<td style="text-align: left;">同上</td>
+<td style="text-align: center;">2028</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_3">全覆盖总结</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">城市</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ <strong>已实施</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">南宁(2021.03)、柳州(2026.01)</td>
+</tr>
+<tr>
+<td style="text-align: left;">✅ <strong>实施方案已发</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">梧州(2026.01)</td>
+</tr>
+<tr>
+<td style="text-align: left;">🆕 <strong>实施意见+征求意见稿</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">北海(2024-2025)</td>
+</tr>
+<tr>
+<td style="text-align: left;">⏳ <strong>省方案时间表推进中</strong></td>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">贺州、贵港、崇左、桂林、防城港、钦州、玉林、百色、河池、来宾</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>合计</strong></td>
+<td style="text-align: center;"><strong>14</strong></td>
+<td style="text-align: left;">全覆盖</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>注</strong>：广西是少数<strong>省级征求意见稿已发布了各地市具体时间表</strong>的省份，城市推进路径清晰。南宁的服务项目数量（80项）远超国家标准（36项），是全国服务项目最丰富的城市之一。</p>
+</blockquote>
+<hr />
+<h2 id="ihomecare">对iHomeCare的战略意义</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">城市</th>
+<th style="text-align: center;">优先级</th>
+<th style="text-align: left;">理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>南宁</strong></td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">全国最大服务项目清单(80项)，年人均减负2万元，市场最大</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>柳州</strong></td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">刚实施（2026.01），定点机构正招募，窗口期</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>北海/梧州</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">制度已定，即将进入定点招募阶段</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

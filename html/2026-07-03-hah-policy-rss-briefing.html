@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HaH 全球政策 RSS 监控简报</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah-rss">HaH 全球政策 RSS 监控简报</a><ul>
+<li><a href="#4">🔴 一、重大政策动态（4 条）</a><ul>
+<li><a href="#1-cms-cy-2026-13-vs">1. CMS 发布 CY 2026 居家健康拟议规则：支付缩减 -1.3% vs 欺诈担忧并存</a></li>
+<li><a href="#2-infinity-home-care-hhs-3400-medicare">2. Infinity Home Care 起诉 HHS，涉 $3,400 万 Medicare 追偿纠纷</a></li>
+<li><a href="#3-13">3. 深圳家庭病床管理办法：13 类患者可申请上门住院服务</a></li>
+<li><a href="#4-20">4. 抢滩&rdquo;中医+养老&rdquo;：超半数用户愿为中医多付 20%</a></li>
+</ul>
+</li>
+<li><a href="#3">🟡 二、值得关注动态（3 条）</a><ul>
+<li><a href="#5-comfort-keepers-ai">5. Comfort Keepers 推出 AI 照护工具包：照护人员工作范式正在重塑</a></li>
+<li><a href="#6-harmonycares-2-ma">6. HarmonyCares 获 $2 亿融资，扩张 MA 居家初级护理版图</a></li>
+<li><a href="#7-humana-curo-health-services">7. Humana 完成对 Curo Health Services 的收购（历史回溯）</a></li>
+</ul>
+</li>
+<li><a href="#3_1">📊 三、行业动态（3 条）</a><ul>
+<li><a href="#8-healthscope">8. Healthscope 合同终止：部分患者住院费用将上涨</a></li>
+<li><a href="#9-cihi">9. 加拿大肺炎住院量骤增——CIHI 最新数据</a></li>
+<li><a href="#10-covid">10. 加拿大私立长期护理机构强制员工接种 COVID 疫苗</a></li>
+</ul>
+</li>
+<li><a href="#_1">📊 监控统计</a></li>
+<li><a href="#2026-07-03-13">附录：2026-07-03 第二轮扫描（新增 13 篇，全部已读）</a><ul>
+<li><a href="#_2">🟡 值得关注</a><ul>
+<li><a href="#1-hospital-at-home">1. 新泽西州将 Hospital at Home 正式纳入州立法体系</a></li>
+<li><a href="#2-cms-medicare-advantage">2. CMS 就 Medicare Advantage 营销佣金纠纷表态</a></li>
+<li><a href="#3-cms">3. 家庭健康服务商与 CMS 共同警示服务可及性延迟</a></li>
+</ul>
+</li>
+<li><a href="#_3">📊 行业动态</a></li>
+<li><a href="#_4">📋 本轮统计</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah-rss">HaH 全球政策 RSS 监控简报</h1>
+<p><strong>Kate | 调研 VP 级别 | 2026-07-03 扫描</strong></p>
+<hr />
+<h2 id="4">🔴 一、重大政策动态（4 条）</h2>
+<h3 id="1-cms-cy-2026-13-vs">1. CMS 发布 CY 2026 居家健康拟议规则：支付缩减 -1.3% vs 欺诈担忧并存</h3>
+<p><strong>来源</strong>：HHCN via Google News | 发布时间：2026-07-02
+<strong>原文标题</strong>：<em>CMS Elicits Tempered Payment Optimism, Stokes Fraud Fears With Proposed Medicare Rule</em></p>
+<p><strong>交叉验证结果</strong>（CMS 官网 + AHA + LeadingAge 多方数据）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>核心参数</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMS CY 2026 最终费率调整</td>
+<td>较 2025 年减少约 1.3%（约 -$2.2 亿）</td>
+</tr>
+<tr>
+<td>初始提案降幅</td>
+<td>拟议 -6.4%（约 -$11.35 亿），后经行业游说大幅收窄</td>
+</tr>
+<tr>
+<td>PDGM 永久性前瞻调整</td>
+<td>确认 -1.023%，回溯 CY 2020-2022 行为变化</td>
+</tr>
+<tr>
+<td>HHCAHPS 调查改革</td>
+<td>2026 年 4 月起缩短版问卷上线</td>
+</tr>
+<tr>
+<td>面对面会诊政策扩展</td>
+<td>允许 NP/CNS/PA 独立完成，不限既往医患关系</td>
+</tr>
+<tr>
+<td>VBP 项目更新</td>
+<td>测量指标重赋权，OASIS 数据采集减少 COVID 疫苗 &amp; SDOH 评估项</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Kate 研判</strong>：</p>
+<ul>
+<li>CMS 最终规则（2025.11.28 发布）将支付缩减从 -6.4% 压缩至 -1.3%，行业游说效果显著但压力仍在</li>
+<li>欺诈担忧源于拟议规则中对 Medicare 计费监督的强化信号，行业合规成本将上升</li>
+<li>对居家健康企业利润率构成持续压缩，中小型机构承压尤为显著</li>
+</ul>
+<hr />
+<h3 id="2-infinity-home-care-hhs-3400-medicare">2. Infinity Home Care 起诉 HHS，涉 $3,400 万 Medicare 追偿纠纷</h3>
+<p><strong>来源</strong>：HHCN via Google News | 发布时间：2025-09-08
+<strong>原文标题</strong>：<em>Home Health Agency Sues HHS Over $34M Medicare Payment Recoupment</em></p>
+<p><strong>交叉验证结果</strong>（HHCN 原文 + LinkedIn 行业解读）：</p>
+<ul>
+<li>HHS 通过行政审计认定 Infinity Home Care（得克萨斯州）在 2014–2019 年期间 Medicare 计费存在超额支付，要求追回约 $3,400 万</li>
+<li>Infinity 指控 HHS 审计使用&rdquo;草率专家工作&rdquo;（shoddy expert work），且行政上诉流程存在严重拖延和管理失误</li>
+<li>该案进入联邦地方法院审理阶段，罕见地突破了行政调解层级</li>
+</ul>
+<p><strong>Kate 研判</strong>：</p>
+<ul>
+<li>CMS 对居家健康计费的审计力度正在系统性收紧，2026 年拟议规则进一步释放强化监督信号</li>
+<li>此类案件可能成为行业先例，影响 Medicare 计费合规风控的行业标准</li>
+<li>建议关注的合规风向：OIG 居家健康专项审计频率、Medicare 行政上诉积压情况</li>
+</ul>
+<hr />
+<h3 id="3-13">3. 深圳家庭病床管理办法：13 类患者可申请上门住院服务</h3>
+<p><strong>来源</strong>：CN HaH News（人民网）| 发布时间：2021-02-20（取数策略覆盖历史政策回溯）
+<strong>原文标题</strong>：<em>深圳：糖尿病足等13类患者可把病床安在家里</em></p>
+<p><strong>交叉验证结果</strong>（深圳卫健委 + 国家中医药管理局）：</p>
+<ul>
+<li>适用病种/人群：糖尿病足、恶性肿瘤、慢性阻塞性肺疾病等 13 类</li>
+<li>服务主体：社康中心及其举办医院</li>
+<li>建床费：100 元，可使用医保支付</li>
+<li>2024 年 6 月《深圳市家庭病床管理办法》启动修订征求意见，进一步扩大覆盖范围</li>
+<li>2026 年 5 月国家中医药管理局发布《家庭病床服务指南（试行）》，标志家庭病床正式进入国家级标准制定阶段</li>
+</ul>
+<p><strong>Kate 研判</strong>：</p>
+<ul>
+<li>深圳模式是中国在宅医疗（HaH）落地的标杆样本，先行先试后已进入国家推广阶段</li>
+<li>2026 年国家指南出台，标志从地方试点→全国标准化的转折点</li>
+<li>与 CMS 美国模式对比：中国走&rdquo;基层社康+医保打包付费&rdquo;路径，具有强医保控费和基层赋能特征</li>
+</ul>
+<hr />
+<h3 id="4-20">4. 抢滩&rdquo;中医+养老&rdquo;：超半数用户愿为中医多付 20%</h3>
+<p><strong>来源</strong>：CN HaH News（AgeClub）| 发布时间：2026-05-28
+<strong>原文标题</strong>：<em>抢滩&rdquo;中医+养老&rdquo;：超半数用户愿为中医多付20%，拆解落地路径与盈利逻辑</em></p>
+<p><strong>交叉验证结果</strong>（间接匹配）：</p>
+<ul>
+<li>该文章为 AgeClub 行业深度分析，探讨中医服务嵌入养老场景（社区养老/居家养老/机构养老）的商业路径</li>
+<li>核心发现：用户对中医增值养老服务的支付意愿显著高于基础服务</li>
+</ul>
+<p><strong>Kate 研判</strong>：</p>
+<ul>
+<li>&ldquo;医养结合&rdquo;（中医药+养老）是中国养老政策鼓励方向，2026 年家庭病床国家指南出台后，中医居家服务渗透率有提升空间</li>
+<li>支付意愿信号利好居家中医服务产品的商业化落地</li>
+</ul>
+<hr />
+<h2 id="3">🟡 二、值得关注动态（3 条）</h2>
+<h3 id="5-comfort-keepers-ai">5. Comfort Keepers 推出 AI 照护工具包：照护人员工作范式正在重塑</h3>
+<p><strong>来源</strong>：HHCN via Google News | 2026-07-02
+<strong>要点</strong>：AI 工具覆盖排班优化、居家连续监测、行为异常早期检测三个核心场景。HHCN 称其为照护行业的&rdquo;范式转变&rdquo;。
+<strong>Kate 点评</strong>：AI 驱动的非临床照护效率提升正在从概念走向规模化落地，值得持续追踪其实际投入产出数据。</p>
+<h3 id="6-harmonycares-2-ma">6. HarmonyCares 获 $2 亿融资，扩张 MA 居家初级护理版图</h3>
+<p><strong>来源</strong>：MedCity via Google News | 2024-07-09
+<strong>要点</strong>：资金用于扩大 15 州的居家初级护理网络，主要通过 Medicare Advantage 价值型合同和 Medicare ACO 项目落地。当前服务超 70,000 名患者。
+<strong>Kate 点评</strong>：价值型支付（VBC）模式下的居家护理资本吸引力持续增强，MA 计划退潮背景下居家场景反而成为资本避风港。</p>
+<h3 id="7-humana-curo-health-services">7. Humana 完成对 Curo Health Services 的收购（历史回溯）</h3>
+<p><strong>来源</strong>：HHCN via Google News | 2018-07-11
+<strong>要点</strong>：Humana 联合 TPG Capital 和 WCAS 以约 $14 亿收购全美第二大临终关怀运营商 Curo（245 个网点/22 州），整合居家健康+姑息治疗+临终关怀全链条。
+<strong>Kate 点评</strong>：此条为历史追溯，但体现了 Humana 自 2018 年起布局居家护理闭环的战略意图——与近年大型支付方垂直整合居家护理趋势一脉相承。</p>
+<hr />
+<h2 id="3_1">📊 三、行业动态（3 条）</h2>
+<h3 id="8-healthscope">8. Healthscope 合同终止：部分患者住院费用将上涨</h3>
+<p><strong>来源</strong>：AU HaH News（ABC Australia）| 2024-11-21
+<strong>要点</strong>：Healthscope 终止与部分保险公司的医院合同，部分患者的自付住院费用将显著上升。
+<strong>关联性</strong>：间接影响 HaH 场景——住院费用上涨将推动支付方和使用者加速寻找替代方案（包括在宅/居家护理）。</p>
+<h3 id="9-cihi">9. 加拿大肺炎住院量骤增——CIHI 最新数据</h3>
+<p><strong>来源</strong>：CA HaH News（CityNews Toronto）| 2026-02-19
+<strong>要点</strong>：加拿大健康信息研究所（CIHI）数据显示 2025 年肺炎住院率同比大幅攀升，具体增幅未在 RSS 摘要中披露。
+<strong>关联性</strong>：急性病住院率攀升从需求端强化了对 Hospital at Home 替代方案的政策关注度。</p>
+<h3 id="10-covid">10. 加拿大私立长期护理机构强制员工接种 COVID 疫苗</h3>
+<p><strong>来源</strong>：CA HaH News（CBC）| 2021-08-26
+<strong>要点</strong>：多家加拿大私立 LTC 机构宣布员工强制疫苗接种政策。
+<strong>备注</strong>：属历史回溯（疫情期政策），与当前 HaH 政策直接关联有限。</p>
+<hr />
+<h2 id="_1">📊 监控统计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RSS 监测源数</td>
+<td><strong>12</strong> 个（AU/CA/CN/HK/US/JP/UK/SG/TW 覆盖）</td>
+</tr>
+<tr>
+<td>本期新增文章</td>
+<td><strong>10</strong> 篇</td>
+</tr>
+<tr>
+<td>扫描时间</td>
+<td><strong>2026-07-03</strong>（Cron 自动执行）</td>
+</tr>
+<tr>
+<td>🔴 重大政策分级</td>
+<td>4 篇（CMS 2026 规则、$34M 追偿诉讼、深圳家庭病床、中医+养老）</td>
+</tr>
+<tr>
+<td>🟡 关注分级</td>
+<td>3 篇（AI 照护工具包、HarmonyCares $2 亿融资、Humana 收购历史）</td>
+</tr>
+<tr>
+<td>📊 行业动态</td>
+<td>3 篇（澳洲合同/CAD 肺炎住院/LTC 疫苗强制）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><strong>数据来源说明</strong>：</p>
+<ul>
+<li>RSS 扫描引擎：blogwatcher-cli（Google News RSS / 原始源直接订阅）</li>
+<li>交叉验证源：CMS 官网 Fact Sheet、AHA News、LeadingAge、HHCN、人民网、深圳卫健委、国家中医药管理局、MedCity News、SEC、PRNewswire</li>
+<li>无可靠公开数据支撑的判断已标注为&rdquo;Kate 研判&rdquo;（逻辑推演），与客观事实分开呈现</li>
+</ul>
+<p><strong>风险提示</strong>：部分文章原文受 Cloudflare 防护，通过 Google News RSS 代理获取摘要；完整内容需通过浏览器访问原始链接。AI 工具包及 HarmonyCares 融资等数据抽离自文章摘要，建议核实完整原文以获取定量经营数据。</p>
+<hr />
+<h2 id="2026-07-03-13">附录：2026-07-03 第二轮扫描（新增 13 篇，全部已读）</h2>
+<h3 id="_2">🟡 值得关注</h3>
+<h4 id="1-hospital-at-home">1. 新泽西州将 Hospital at Home 正式纳入州立法体系</h4>
+<p><strong>来源：</strong> HealthLeaders Media（RSS 抓取） | 发布时间：2024-01-26（历史文章，首次 RSS 收录）
+<strong>原文：</strong> <em>New Jersey Makes Hospital at Home a State Program</em></p>
+<p><strong>交叉验证（Stevens &amp; Lee / Open Minds / NJ State Law 多源确认）：</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>核心参数</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>州法律编号</td>
+<td>P.L. 2023, c.163 → N.J.S.A. 26:2H-165</td>
+</tr>
+<tr>
+<td>覆盖范围</td>
+<td>从 CMS Medicare only 扩展至 <strong>Medicaid（NJ FamilyCare）+ 商业保险</strong></td>
+</tr>
+<tr>
+<td>NJ 参与医院</td>
+<td>8 家系统（Holy Name, Cooper, Virtua, Hackensack Meridian, Salem Medical, Jefferson, CareWell, Inspira）</td>
+</tr>
+<tr>
+<td>全美 CMS 豁免覆盖</td>
+<td><strong>373 家医院 / 139 个系统 / 39 州</strong>（截至 2024.11.06）</td>
+</tr>
+<tr>
+<td>CMS 研究结论</td>
+<td>HaH 患者院内感染 &amp; 死亡率更低；30 天再入院率无显著差异；住院时间略长；出院后 30 天 Medicare 支出更低</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Kate 研判：</strong> NJ 是全美率先将 HaH 从 CMS 临时豁免<strong>上升为州法层面常态化</strong>的州。该法突破了 Medicare-only 限制，将 HaH 支付方基础大幅扩大。<strong>核心悬点</strong>：该法案与 CMS 豁免期限绑定——若 CMS 豁免未获联邦延期（原定 2024.12.31 到期已获数次短期延期），NJ 州法同步失效。</p>
+<hr />
+<h4 id="2-cms-medicare-advantage">2. CMS 就 Medicare Advantage 营销佣金纠纷表态</h4>
+<p><strong>来源：</strong> Modern Healthcare（RSS 抓取） | 发布时间：2025-12-08
+<strong>原文：</strong> <em>CMS weighs in on Medicare Advantage marketing commission disputes</em></p>
+<p><strong>交叉验证：</strong> CMS 发布声明认定联邦 MA 营销法规优先于州法；背景为联邦法院暂缓执行 CMS 代理/经纪人薪酬上限规则。CMS 在 CY2025 final rule 中重新定义&rdquo;薪酬&rdquo;，将行政费用纳入监管范围。</p>
+<p><strong>Kate 研判：</strong> 非直接 HaH 政策，但 MA 市场佣金结构不确定性将影响 Medicare 管理式医疗对 HaH 的渠道推广意愿。</p>
+<hr />
+<h4 id="3-cms">3. 家庭健康服务商与 CMS 共同警示服务可及性延迟</h4>
+<p><strong>来源：</strong> Modern Healthcare（RSS 抓取） | 发布时间：2024-10-11
+<strong>原文：</strong> <em>Home health providers, CMS raise red flags over delayed access</em></p>
+<p><strong>交叉验证：</strong> CMS 收到的受益人投诉增加，Beneficiaries 难以找到可接诊 HHA。背景：CY2025 家庭健康 PPS 最终规则仅增 0.5%（$8,500 万），AHA 持续呼吁重新评估支付削减对可及性的影响。</p>
+<p><strong>Kate 研判：</strong> 家庭健康服务网络收缩是 HaH 模式的&rdquo;基础设施风险&rdquo;——HaH 急性期后过渡和持续护理衔接可能断裂。</p>
+<hr />
+<h3 id="_3">📊 行业动态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>文章</th>
+<th>来源</th>
+<th>时间</th>
+<th>核心</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Patient Experience is Crucial to HaH</td>
+<td>HealthLeaders</td>
+<td>2023-12-10</td>
+<td>患者体验是 HaH 可持续性核心驱动</td>
+</tr>
+<tr>
+<td>Patients thrive under hospital care at home</td>
+<td>ABC Australia</td>
+<td>2021-05-21</td>
+<td>澳洲 HaH 患者体验正面反馈</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">📋 本轮统计</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RSS 监测源数</td>
+<td>12</td>
+</tr>
+<tr>
+<td>本轮新增文章</td>
+<td>13</td>
+</tr>
+<tr>
+<td>扫描时间</td>
+<td>2026-07-03 13:12 UTC</td>
+</tr>
+<tr>
+<td>🔴 重大政策</td>
+<td>0</td>
+</tr>
+<tr>
+<td>🟡 值得关注</td>
+<td>3</td>
+</tr>
+<tr>
+<td>📊 行业动态</td>
+<td>2</td>
+</tr>
+<tr>
+<td>其他/不相关</td>
+<td>8（MHLW 日常公告等）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>备注：</strong> 本轮多数新增为历史文章（2021-2024），RSS 源首次收录所致。MHLW 7 条为 2026 年 7 月最新但非 HaH 相关。</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

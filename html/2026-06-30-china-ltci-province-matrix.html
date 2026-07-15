@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>全国省级长护险政策图谱 — 交叉验证终版</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#_1">全国省级长护险政策图谱 — 交叉验证终版</a><ul>
+<li><a href="#28">总览：28个省级行政区</a></li>
+<li><a href="#_2">博查搜索增值统计</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="_1">全国省级长护险政策图谱 — 交叉验证终版</h1>
+<p><strong>数据截止</strong>：2026年6月30日 | <strong>来源</strong>：国家医保局官网(29条)+博查搜索+省级政府官网 | <strong>核查人</strong>：Kate</p>
+<hr />
+<h2 id="28">总览：28个省级行政区</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">省份</th>
+<th style="text-align: left;">省级方案/文件</th>
+<th style="text-align: left;">发布/实施时间</th>
+<th style="text-align: left;">确认方式</th>
+<th style="text-align: left;">关键数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">北京</td>
+<td style="text-align: left;">全面推广实施</td>
+<td style="text-align: left;">2022起</td>
+<td style="text-align: left;">NHSA✅ 博查✅</td>
+<td style="text-align: left;">单位+个人分担；长护险全面运行</td>
+</tr>
+<tr>
+<td style="text-align: left;">天津</td>
+<td style="text-align: left;">试点运行中；2026年10月将发全面方案</td>
+<td style="text-align: left;">2020试点/2026.10</td>
+<td style="text-align: left;">天津市政府✅ 博查✅</td>
+<td style="text-align: left;">辅具租赁试点</td>
+</tr>
+<tr>
+<td style="text-align: left;">河北</td>
+<td style="text-align: left;"><strong>《河北省建立长期护理保险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2026.04.07</strong></td>
+<td style="text-align: left;"><strong>NHSA✅ 博查✅</strong></td>
+<td style="text-align: left;">省医保局等10部门联合发</td>
+</tr>
+<tr>
+<td style="text-align: left;">山西</td>
+<td style="text-align: left;"><strong>《山西省加快建立长期护理保险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2026.05.29</strong></td>
+<td style="text-align: left;"><strong>NHSA✅ 博查✅</strong></td>
+<td style="text-align: left;">省委+省政府联合发文</td>
+</tr>
+<tr>
+<td style="text-align: left;">内蒙古</td>
+<td style="text-align: left;"><strong>《内蒙古自治区建立长期护理保险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2026.06.24</strong></td>
+<td style="text-align: left;"><strong>🔍博查唯一发现</strong></td>
+<td style="text-align: left;">医药网转载；NHSA未收录</td>
+</tr>
+<tr>
+<td style="text-align: left;">辽宁</td>
+<td style="text-align: left;"><strong>《辽宁省建立长期护理保险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2026.04.18</strong></td>
+<td style="text-align: left;"><strong>NHSA✅ 博查✅</strong></td>
+<td style="text-align: left;">沈阳/省直2026先启；盘锦试点过渡</td>
+</tr>
+<tr>
+<td style="text-align: left;">吉林</td>
+<td style="text-align: left;"><strong>吉政办发〔2026〕3号《吉林省完善长护险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2026</strong></td>
+<td style="text-align: left;"><strong>🔍博查首次发现</strong></td>
+<td style="text-align: left;">全国首批联系省份</td>
+</tr>
+<tr>
+<td style="text-align: left;">黑龙江</td>
+<td style="text-align: left;">征求意见稿《黑龙江省建立长期护理保险制度实施方案》</td>
+<td style="text-align: left;">2025.11</td>
+<td style="text-align: left;"><strong>🔍博查首次发现</strong></td>
+<td style="text-align: left;">省医保局发布征求中</td>
+</tr>
+<tr>
+<td style="text-align: left;">上海</td>
+<td style="text-align: left;">全面运行</td>
+<td style="text-align: left;">2017起</td>
+<td style="text-align: left;">NHSA✅ 博查✅</td>
+<td style="text-align: left;">27个连锁品牌；年均40-50万申请</td>
+</tr>
+<tr>
+<td style="text-align: left;">江苏</td>
+<td style="text-align: left;">省级未发统一方案；以城市试点为主（南通/苏州/南京）</td>
+<td style="text-align: left;">城市级运行</td>
+<td style="text-align: left;">✅确认无省级统一方案</td>
+<td style="text-align: left;">南通368家定点机构；苏州已公布缴费标准</td>
+</tr>
+<tr>
+<td style="text-align: left;">浙江</td>
+<td style="text-align: left;"><strong>《浙江省构建多层次长期护理保障体系实施方案》</strong></td>
+<td style="text-align: left;"><strong>2024.03.28</strong></td>
+<td style="text-align: left;"><strong>🔍博查首次发现</strong></td>
+<td style="text-align: left;">省级框架已建立；宁波839万参保</td>
+</tr>
+<tr>
+<td style="text-align: left;">安徽</td>
+<td style="text-align: left;"><strong>征求意见稿</strong>《安徽省关于建立长期护理保险制度的实施方案》</td>
+<td style="text-align: left;">征求中</td>
+<td style="text-align: left;"><strong>🔍博查首次发现</strong></td>
+<td style="text-align: left;">省医保局公开征求</td>
+</tr>
+<tr>
+<td style="text-align: left;">福建</td>
+<td style="text-align: left;"><strong>《福建省建立长期护理保险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2026.06.26</strong></td>
+<td style="text-align: left;"><strong>NHSA✅ 博查✅</strong></td>
+<td style="text-align: left;">省级基准+市级实施</td>
+</tr>
+<tr>
+<td style="text-align: left;">江西</td>
+<td style="text-align: left;"><strong>《江西省建立长期护理保险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2026.04.17</strong></td>
+<td style="text-align: left;"><strong>NHSA✅ 博查✅</strong></td>
+<td style="text-align: left;">居家职工75%/居民55%；上饶试点3年过渡</td>
+</tr>
+<tr>
+<td style="text-align: left;">山东</td>
+<td style="text-align: left;"><strong>省府办《关于建立完善长期护理保险制度的实施意见》</strong></td>
+<td style="text-align: left;"><strong>2026.03.31</strong></td>
+<td style="text-align: left;"><strong>NHSA✅ 博查✅</strong></td>
+<td style="text-align: left;">5570万参保；109亿支出；7市辅具纳入</td>
+</tr>
+<tr>
+<td style="text-align: left;">河南</td>
+<td style="text-align: left;"><strong>征求意见稿</strong>《河南省建立长期护理保险制度实施方案》</td>
+<td style="text-align: left;">征求中</td>
+<td style="text-align: left;"><strong>🔍博查首次发现</strong></td>
+<td style="text-align: left;">郑州本地宝等转载</td>
+</tr>
+<tr>
+<td style="text-align: left;">湖北</td>
+<td style="text-align: left;">未发布省级方案；省医保局设专题页</td>
+<td style="text-align: left;">推进中</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">荆门为全人群共济模式先行者</td>
+</tr>
+<tr>
+<td style="text-align: left;">湖南</td>
+<td style="text-align: left;">起草中（官方确认2026就业人群启动）</td>
+<td style="text-align: left;">2026起草</td>
+<td style="text-align: left;">✅湖南医保局红网专访</td>
+<td style="text-align: left;">湘潭已试点</td>
+</tr>
+<tr>
+<td style="text-align: left;">广东</td>
+<td style="text-align: left;">省级未发统一方案；广州试点中</td>
+<td style="text-align: left;">城市级运行</td>
+<td style="text-align: left;">✅确认无省级统一方案</td>
+<td style="text-align: left;">清远拟定2026.07实施</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">省级未发；<strong>柳州2026.01.01已实施</strong></td>
+<td style="text-align: left;">2026.01</td>
+<td style="text-align: left;">博查✅</td>
+<td style="text-align: left;">柳州42项服务超国家标准</td>
+</tr>
+<tr>
+<td style="text-align: left;">海南</td>
+<td style="text-align: left;"><strong>《海南省建立长期护理保险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2025.11.20</strong></td>
+<td style="text-align: left;"><strong>NHSA✅ 博查✅</strong></td>
+<td style="text-align: left;"><strong>首个省级统筹</strong>；跨省结算；居家最高1449元/月</td>
+</tr>
+<tr>
+<td style="text-align: left;">重庆</td>
+<td style="text-align: left;">全面运行</td>
+<td style="text-align: left;">2017起</td>
+<td style="text-align: left;">渝中区2026协议✅</td>
+<td style="text-align: left;">璧山区网格化+智能筛查</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;"><strong>《四川省建立长期护理保险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2026.04.03</strong></td>
+<td style="text-align: left;"><strong>NHSA✅ 博查✅</strong></td>
+<td style="text-align: left;">省政府办公厅发布</td>
+</tr>
+<tr>
+<td style="text-align: left;">贵州</td>
+<td style="text-align: left;"><strong>《贵州省关于加快建立长期护理保险制度的实施意见》</strong></td>
+<td style="text-align: left;"><strong>2026.06.24</strong></td>
+<td style="text-align: left;"><strong>NHSA✅ 博查✅</strong></td>
+<td style="text-align: left;">市州统筹→2028.12全省</td>
+</tr>
+<tr>
+<td style="text-align: left;">云南</td>
+<td style="text-align: left;"><strong>《云南省建立长期护理保险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2026.01.06</strong></td>
+<td style="text-align: left;"><strong>NHSA✅ 博查✅</strong></td>
+<td style="text-align: left;">3年建制：≥7统筹区2026→扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;">陕西</td>
+<td style="text-align: left;">未发省级方案；<strong>定点管理实施细则已发(2025.10)</strong></td>
+<td style="text-align: left;">推进中</td>
+<td style="text-align: left;"><strong>🔍博查首次发现</strong></td>
+<td style="text-align: left;">汉中为2020试点城市</td>
+</tr>
+<tr>
+<td style="text-align: left;">甘肃</td>
+<td style="text-align: left;">省级方案已报国家备案；<strong>经办规程已发(2026.04)</strong></td>
+<td style="text-align: left;">2026</td>
+<td style="text-align: left;">✅甘肃省医保局</td>
+<td style="text-align: left;">长照师3批次546人</td>
+</tr>
+<tr>
+<td style="text-align: left;">宁夏</td>
+<td style="text-align: left;"><strong>&ldquo;八统一&rdquo;统筹方案已审定</strong>；服务目录已发(2025.12)</td>
+<td style="text-align: left;">2026</td>
+<td style="text-align: left;">✅宁夏医保局</td>
+<td style="text-align: left;">定点管理细则2026.01施行</td>
+</tr>
+<tr>
+<td style="text-align: left;">青海</td>
+<td style="text-align: left;"><strong>《青海省建立长期护理保险制度实施方案》</strong></td>
+<td style="text-align: left;"><strong>2026.06.12</strong></td>
+<td style="text-align: left;"><strong>NHSA✅</strong></td>
+<td style="text-align: left;">2026职工→2027居民→2028全覆盖</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>排除</strong>：港澳台、西藏、新疆（含兵团）</p>
+<hr />
+<h2 id="_2">博查搜索增值统计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: center;">仅用NHSA</th>
+<th style="text-align: center;">NHSA+博查</th>
+<th style="text-align: center;">博查增量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">省级正式方案</td>
+<td style="text-align: center;">10个</td>
+<td style="text-align: center;">17个</td>
+<td style="text-align: center;"><strong>+7个</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">征求意见稿</td>
+<td style="text-align: center;">0个</td>
+<td style="text-align: center;">4个</td>
+<td style="text-align: center;"><strong>+4个</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">城市级实施</td>
+<td style="text-align: center;">部分</td>
+<td style="text-align: center;">8个城市</td>
+<td style="text-align: center;"><strong>+3个</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">总计覆盖</td>
+<td style="text-align: center;">10省</td>
+<td style="text-align: center;">28省</td>
+<td style="text-align: center;"><strong>+18个</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>博查发现的7个增量文件</strong>：</p>
+<ol>
+<li>内蒙古实施方案(2026.06.24)</li>
+<li>吉林吉政办发〔2026〕3号</li>
+<li>浙江省级框架方案(2024.03)</li>
+<li>河南省征求意见稿</li>
+<li>安徽省征求意见稿</li>
+<li>黑龙江省征求意见稿</li>
+<li>陕西省定点管理实施细则(2025.10)</li>
+</ol>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

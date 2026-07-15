@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中国四大直辖市长期护理保险政策深挖报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#_1">中国四大直辖市长期护理保险政策深挖报告</a><ul>
+<li><a href="#_2">执行摘要</a></li>
+<li><a href="#_3">一、上海</a><ul>
+<li><a href="#11">1.1 政策框架</a></li>
+<li><a href="#12">1.2 参保筹资</a></li>
+<li><a href="#13">1.3 评估与待遇</a></li>
+<li><a href="#14">1.4 关键数据</a></li>
+</ul>
+</li>
+<li><a href="#_4">二、北京</a><ul>
+<li><a href="#21">2.1 政策框架</a></li>
+<li><a href="#22">2.2 参保筹资</a></li>
+<li><a href="#23">2.3 评估与待遇</a></li>
+<li><a href="#24">2.4 最新动态</a></li>
+</ul>
+</li>
+<li><a href="#_5">三、天津</a><ul>
+<li><a href="#31">3.1 政策框架</a></li>
+<li><a href="#32">3.2 参保筹资</a></li>
+<li><a href="#33">3.3 评估与待遇</a></li>
+<li><a href="#34">3.4 核心特色</a></li>
+</ul>
+</li>
+<li><a href="#_6">四、重庆</a><ul>
+<li><a href="#41">4.1 政策框架</a></li>
+<li><a href="#42-20251">4.2 现存试点（截至2025.1）</a></li>
+<li><a href="#43">4.3 新方案筹资（征求意见稿）</a></li>
+<li><a href="#44">4.4 新方案待遇（征求意见稿）</a></li>
+<li><a href="#45">4.5 实施路径</a></li>
+</ul>
+</li>
+<li><a href="#_7">五、四大直辖市横向对比</a></li>
+<li><a href="#_8">六、数据来源</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="_1">中国四大直辖市长期护理保险政策深挖报告</h1>
+<p><strong>调研人</strong>: Kenneth Ye<br />
+<strong>日期</strong>: 2026-07-15<br />
+<strong>调研范围</strong>: 上海、北京、天津、重庆四大直辖市 LTCI 政策<br />
+<strong>数据截止</strong>: 2026年7月最新公开信息</p>
+<hr />
+<h2 id="_2">执行摘要</h2>
+<p>四大直辖市 LTCI 推进节奏分化显著：</p>
+<ul>
+<li><strong>上海</strong>最成熟：2017年试点→2021年全市推开（沪府办规〔2021〕15号），覆盖职工+60岁以上居民，评估二至六级均可享待，居家基金支付90%</li>
+<li><strong>北京</strong>最滞后：仅石景山区试点（2020年起），尚未全市推开，2026年3月国新办发布会后有望加速</li>
+<li><strong>天津</strong>中规中矩：2022年二期试点方案（津政办规〔2022〕17号），仅覆盖职工，亲情照护+专业护理双轨制</li>
+<li><strong>重庆</strong>最激进扩张中：2026年4月发布征求意见稿，从仅职工→2027年覆盖居民，费率0.3%（全国最高档）</li>
+</ul>
+<hr />
+<h2 id="_3">一、上海</h2>
+<h3 id="11">1.1 政策框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心文件</td>
+<td>沪府办规〔2021〕15号《上海市长期护理保险试点办法》</td>
+</tr>
+<tr>
+<td>延期文件</td>
+<td>沪府办〔2023〕32号，有效期延至2025.12.31</td>
+</tr>
+<tr>
+<td>试点起源</td>
+<td>2017年（人社厅发〔2016〕80号首批试点）</td>
+</tr>
+<tr>
+<td>主管机构</td>
+<td>市医保局</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="12">1.2 参保筹资</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>人员类别</th>
+<th>参保条件</th>
+<th>筹资方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一类人员</td>
+<td>职工医保参保人</td>
+<td>从职工医保统筹基金按<strong>0.5%</strong>缴费基数按季调剂</td>
+</tr>
+<tr>
+<td>第二类人员</td>
+<td>居民医保60周岁以上</td>
+<td>略低于第一类人均筹资，从居民医保统筹基金调剂</td>
+</tr>
+<tr>
+<td>个人缴费</td>
+<td>—</td>
+<td>职工：90元/年（单位45+个人45）；居民：个人30元/年+财政60元</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="13">1.3 评估与待遇</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>评估标准</td>
+<td>老年照护统一需求评估（二至六级可享待）</td>
+</tr>
+<tr>
+<td>评估费用</td>
+<td>基金支付80%</td>
+</tr>
+<tr>
+<td>居家上门照护</td>
+<td><strong>基金支付90%</strong>；二三级每周3次、四级5次、五六级7次（每次1小时）</td>
+</tr>
+<tr>
+<td>社区日间照护</td>
+<td>基金支付85%；二三级每周3天、四级5天</td>
+</tr>
+<tr>
+<td>养老机构照护</td>
+<td>基金支付85%</td>
+</tr>
+<tr>
+<td>居家激励</td>
+<td>五六级连续居家1-6月：+1小时/月或40元现金；6月+：+2小时/月或80元</td>
+</tr>
+<tr>
+<td>长三角延伸</td>
+<td>支持异地结算</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="14">1.4 关键数据</h3>
+<ul>
+<li>覆盖人群：全市职工+60岁以上居民</li>
+<li>护理人员：执业护士或持证养老护理员</li>
+<li>服务形式：居家上门、社区日间、养老机构三种</li>
+</ul>
+<hr />
+<h2 id="_4">二、北京</h2>
+<h3 id="21">2.1 政策框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心文件</td>
+<td>京医保发〔2020〕30号《北京市长期护理保险制度扩大试点方案》</td>
+</tr>
+<tr>
+<td>实施细则</td>
+<td>《北京市石景山区扩大长期护理保险制度试点实施细则》(2020.11.13施行)</td>
+</tr>
+<tr>
+<td>试点范围</td>
+<td><strong>仅石景山区</strong>（2020年9月列入国家第二批试点）</td>
+</tr>
+<tr>
+<td>主管机构</td>
+<td>市医保局+石景山区试点领导小组</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="22">2.2 参保筹资</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参保对象</td>
+<td>石景山区职工医保+城乡居民医保（暂不含学生儿童）</td>
+</tr>
+<tr>
+<td>筹资标准</td>
+<td><strong>180元/人/年</strong></td>
+</tr>
+<tr>
+<td>职工分担</td>
+<td>单位90元（医保统筹划转）+个人90元（医保个账代扣）</td>
+</tr>
+<tr>
+<td>居民分担</td>
+<td>财政90元+个人90元（困难人群财政全额补助）</td>
+</tr>
+<tr>
+<td>缴费时间</td>
+<td>集中参保期：每年10-12月；零散参保期：1-9月</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="23">2.3 评估与待遇</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>服务方式</th>
+<th>支付标准</th>
+<th>基金支付</th>
+<th>个人支付</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>机构护理</td>
+<td>90元/天</td>
+<td>70%</td>
+<td>30%</td>
+<td>养老机构内</td>
+</tr>
+<tr>
+<td>机构上门</td>
+<td>90元/小时</td>
+<td>80%</td>
+<td>20%</td>
+<td>月上限30小时</td>
+</tr>
+<tr>
+<td>居家护理（亲属）</td>
+<td>60元/小时</td>
+<td>70%</td>
+<td>30%</td>
+<td>月上限30小时</td>
+</tr>
+<tr>
+<td>居家护理（机构上门部分）</td>
+<td>90元/小时</td>
+<td>80%</td>
+<td>20%</td>
+<td>每月12小时</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>失能评估</td>
+<td>石景山区失能评估量表，总分&lt;40分为重度失能</td>
+</tr>
+<tr>
+<td>评估时效</td>
+<td>5个工作日内完成上门评估</td>
+</tr>
+<tr>
+<td>评估费用</td>
+<td>申请人自理</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="24">2.4 最新动态</h3>
+<ul>
+<li>2026.3.27 国新办发布会：拟用3年基本建立长护险制度</li>
+<li>北京可能在石景山区试点基础上全市推开（具体方案待发布）</li>
+</ul>
+<hr />
+<h2 id="_5">三、天津</h2>
+<h3 id="31">3.1 政策框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心文件</td>
+<td>津政办规〔2022〕17号《天津市深入开展长期护理保险制度试点实施方案》</td>
+</tr>
+<tr>
+<td>实施细则</td>
+<td>津医保规〔2022〕3号（市医保局等七部门）</td>
+</tr>
+<tr>
+<td>施行时间</td>
+<td>2022.12.15 — 2027.12.14</td>
+</tr>
+<tr>
+<td>试点起源</td>
+<td>2020年列入国家第二批试点</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="32">3.2 参保筹资</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参保对象</td>
+<td><strong>仅职工医保参保人</strong></td>
+</tr>
+<tr>
+<td>费率</td>
+<td>单位：工资总额0.12%；个人：职工平均工资0.12%</td>
+</tr>
+<tr>
+<td>试点期简化</td>
+<td>单位90元/人/年 + 个人90元/人/年</td>
+</tr>
+<tr>
+<td>征收方式</td>
+<td>单位从医保费按月划出，个人从大额医疗救助费按月划出</td>
+</tr>
+<tr>
+<td>居民参保</td>
+<td>尚未覆盖，方案明确&rdquo;逐步扩大&rdquo;</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="33">3.3 评估与待遇</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>服务方式</th>
+<th style="text-align: center;">最高支付限额</th>
+<th style="text-align: center;">基金支付</th>
+<th style="text-align: center;">个人支付</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>机构护理</td>
+<td style="text-align: center;">70元/天</td>
+<td style="text-align: center;">70%</td>
+<td style="text-align: center;">30%</td>
+</tr>
+<tr>
+<td>居家（专业全部）</td>
+<td style="text-align: center;">2,100元/月</td>
+<td style="text-align: center;">75%</td>
+<td style="text-align: center;">25%</td>
+</tr>
+<tr>
+<td>居家（亲情基本生活）</td>
+<td style="text-align: center;">750元/月</td>
+<td style="text-align: center;">100%（支付给亲情照护人）</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>居家（专业护理叠加）</td>
+<td style="text-align: center;">1,100元/月</td>
+<td style="text-align: center;">75%</td>
+<td style="text-align: center;">25%</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>评定标准</td>
+<td>国家医保办发〔2021〕37号</td>
+</tr>
+<tr>
+<td>评定结论有效期</td>
+<td>≤2年</td>
+</tr>
+<tr>
+<td>亲情照护</td>
+<td>自主选定照护人→培训考核→纳入亲情照护人员管理</td>
+</tr>
+<tr>
+<td>辅助器具</td>
+<td>逐步纳入</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="34">3.4 核心特色</h3>
+<ul>
+<li><strong>亲情照护双轨制</strong>：全国少数明确将亲属照护纳入基金支付的方案</li>
+<li>家属不是简单&rdquo;挂靠&rdquo;，需通过定点护理机构管理</li>
+</ul>
+<hr />
+<h2 id="_6">四、重庆</h2>
+<h3 id="41">4.1 政策框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>现行文件</td>
+<td>渝医保发〔2021〕63号《扩大长期护理保险制度试点的实施意见》</td>
+</tr>
+<tr>
+<td>新方案</td>
+<td>《重庆市建立健全长期护理保险制度实施方案（征求意见稿）》</td>
+</tr>
+<tr>
+<td>征求意见</td>
+<td>2026年4月30日发布，截止2026年5月12日</td>
+</tr>
+<tr>
+<td>试点起源</td>
+<td>2019年大渡口/巴南/石柱/垫江4区县</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="42-20251">4.2 现存试点（截至2025.1）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>覆盖人群</td>
+<td>仅职工医保，约<strong>800万人</strong></td>
+</tr>
+<tr>
+<td>累计享待</td>
+<td><strong>5.1万人</strong></td>
+</tr>
+<tr>
+<td>累计减负</td>
+<td><strong>7亿元</strong></td>
+</tr>
+<tr>
+<td>居民覆盖</td>
+<td>尚未（正积极研究）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="43">4.3 新方案筹资（征求意见稿）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>人群</th>
+<th style="text-align: center;">费率</th>
+<th>分担</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单位职工</td>
+<td style="text-align: center;"><strong>0.3%</strong></td>
+<td>单位0.15%+个人0.15%</td>
+<td>单位部分从医保费率8.5%→8.35%平移</td>
+</tr>
+<tr>
+<td>退休人员</td>
+<td style="text-align: center;">0.15%</td>
+<td>个人缴费（基数=基本养老金）</td>
+<td>原单位不缴费</td>
+</tr>
+<tr>
+<td>灵活就业</td>
+<td style="text-align: center;">0.3%</td>
+<td>个人全额</td>
+<td>基数为上年职工医保实际平均缴费基数</td>
+</tr>
+<tr>
+<td>居民</td>
+<td style="text-align: center;">0.15%起→5年过渡至0.3%</td>
+<td>个人:政府=1:1</td>
+<td>18岁以下跟随父母，不单独筹资</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="44">4.4 新方案待遇（征求意见稿）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>起付标准</td>
+<td><strong>无起付标准</strong></td>
+</tr>
+<tr>
+<td>职工支付比例</td>
+<td><strong>基金支付70%左右</strong></td>
+</tr>
+<tr>
+<td>居民支付比例</td>
+<td><strong>基金支付50%左右</strong></td>
+</tr>
+<tr>
+<td>年最高限额</td>
+<td>≤上年居民人均可支配收入50%</td>
+</tr>
+<tr>
+<td>激励</td>
+<td>居家和社区护理在支付比例上倾斜</td>
+</tr>
+<tr>
+<td>等待期</td>
+<td>2027年起未参保/断保：固定等待期6个月+变动等待期（多断1年+1月）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="45">4.5 实施路径</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>时间</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一阶段</td>
+<td>2026年</td>
+<td>职工+居民启动筹资</td>
+</tr>
+<tr>
+<td>第二阶段</td>
+<td>2027年</td>
+<td>居民开始享待，职工按国家规定调整</td>
+</tr>
+<tr>
+<td>第三阶段</td>
+<td>2028年+</td>
+<td>健全制度体系</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_7">五、四大直辖市横向对比</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>上海</th>
+<th>北京</th>
+<th>天津</th>
+<th>重庆</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>覆盖人群</td>
+<td>职工+60+居民</td>
+<td>仅石景山区职工+居民</td>
+<td>仅职工</td>
+<td>仅职工→2027年扩居民</td>
+</tr>
+<tr>
+<td>筹资标准</td>
+<td>职工0.5%（统筹划转）</td>
+<td>180元/人/年</td>
+<td>0.12%费率（90+90元）</td>
+<td>0.3%费率（新方案）</td>
+</tr>
+<tr>
+<td>个人年缴费</td>
+<td>职工45/居民30</td>
+<td>90元</td>
+<td>90元</td>
+<td>按基数×0.15%</td>
+</tr>
+<tr>
+<td>评估等级</td>
+<td>二至六级</td>
+<td>重度失能（&lt;40分）</td>
+<td>重度失能（国标）</td>
+<td>待新方案明确</td>
+</tr>
+<tr>
+<td>居家基金支付</td>
+<td><strong>90%</strong></td>
+<td>70-80%</td>
+<td>75%</td>
+<td>70%（职工）/ 50%（居民）</td>
+</tr>
+<tr>
+<td>机构基金支付</td>
+<td>85%</td>
+<td>70%</td>
+<td>70%</td>
+<td>待定</td>
+</tr>
+<tr>
+<td>亲情照护</td>
+<td>居家激励（现金/时间）</td>
+<td>亲属护理60元/h</td>
+<td><strong>750元/月+专业叠加</strong></td>
+<td>待定</td>
+</tr>
+<tr>
+<td>居民参保</td>
+<td>✅已覆盖</td>
+<td>✅（石景山）</td>
+<td>❌待扩</td>
+<td>🔄2027年</td>
+</tr>
+<tr>
+<td>政策成熟度</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐🔄</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_8">六、数据来源</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>来源</th>
+<th>文号/链接</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>上海市政府</td>
+<td>沪府办规〔2021〕15号</td>
+<td>2021.12</td>
+</tr>
+<tr>
+<td>2</td>
+<td>上海市政府</td>
+<td>沪府办〔2023〕32号（延期）</td>
+<td>2023.11</td>
+</tr>
+<tr>
+<td>3</td>
+<td>北京市医保局/财政局</td>
+<td>京医保发〔2020〕30号</td>
+<td>2020</td>
+</tr>
+<tr>
+<td>4</td>
+<td>石景山区医保局</td>
+<td>实施细则全文</td>
+<td>2020.11</td>
+</tr>
+<tr>
+<td>5</td>
+<td>天津市政府</td>
+<td>津政办规〔2022〕17号</td>
+<td>2022.12</td>
+</tr>
+<tr>
+<td>6</td>
+<td>天津市医保局等七部门</td>
+<td>津医保规〔2022〕3号</td>
+<td>2023.1</td>
+</tr>
+<tr>
+<td>7</td>
+<td>重庆市医保局</td>
+<td>渝医保发〔2021〕63号</td>
+<td>2021</td>
+</tr>
+<tr>
+<td>8</td>
+<td>重庆市医保局</td>
+<td>征求意见稿</td>
+<td>2026.4.30</td>
+</tr>
+<tr>
+<td>9</td>
+<td>重庆市政府</td>
+<td>医保热点问答（800万/5.1万/7亿）</td>
+<td>2025.1.17</td>
+</tr>
+<tr>
+<td>10</td>
+<td>国新办</td>
+<td>加快建立长护险制度发布会</td>
+<td>2026.3.27</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

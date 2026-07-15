@@ -1,0 +1,1415 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>香港 Hospital-at-Home 战略规划 · P2 核心工作文件</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hospital-at-home-p2">香港 Hospital-at-Home 战略规划 · P2 核心工作文件</a></li>
+<li><a href="#dispatchhealth">工作文件十：DispatchHealth 失败教训提炼与规避方案</a><ul>
+<li><a href="#101">10.1 教训提炼方法论</a></li>
+<li><a href="#102">10.2 八大失败教训</a><ul>
+<li><a href="#_1">教训一：过度扩张 — &ldquo;先占地再盈利&rdquo;的战略陷阱</a></li>
+<li><a href="#3">教训二：合并整合失败 — &ldquo;3个月后裁员&rdquo;的整合灾难</a></li>
+<li><a href="#_2">教训三：核心能力出售 — &ldquo;卖影像业务换现金&rdquo;的战略性失误</a></li>
+<li><a href="#cms-waiver">教训四：政策依赖症 — &ldquo;CMS waiver 短期延期&rdquo;的不确定性</a></li>
+<li><a href="#2021-17b-2025">教训五：估值泡沫 — &ldquo;2021 $1.7B → 2025 估值腰斩&rdquo;的资本教训</a></li>
+<li><a href="#ceoceo">教训六：创始人转型管理失败 — &ldquo;创始CEO退场+外部CEO空降&rdquo;的阵痛</a></li>
+<li><a href="#x">教训七：技术整合困境 — &ldquo;两个平台X两种文化&rdquo;的系统性内耗</a></li>
+<li><a href="#optumhumana">教训八：支付方利益冲突 — &ldquo;Optum+Humana 双投资&rdquo;的两难</a></li>
+</ul>
+</li>
+<li><a href="#103">10.3 教训优先级矩阵</a></li>
+<li><a href="#104-hk-hah">10.4 合成为&rdquo;HK HaH 十大铁律&rdquo;</a></li>
+</ul>
+</li>
+<li><a href="#hk">工作文件十一：患者旅程映射（HK 定制版）</a><ul>
+<li><a href="#111">11.1 方法论</a></li>
+<li><a href="#112-hah">11.2 心衰 HaH 患者旅程全映射</a><ul>
+<li><a href="#phase-0day-1-day-0">Phase 0：患者识别与评估（Day -1 至 Day 0）</a></li>
+<li><a href="#phase-1day-01">Phase 1：激活与入家（Day 0–1）</a></li>
+<li><a href="#phase-2day-2-day-n">Phase 2：活跃管理（Day 2 至 Day N）</a></li>
+<li><a href="#phase-3day-n-day-n7">Phase 3：过渡与退出（Day N 至 Day N+7）</a></li>
+<li><a href="#phase-4day-n7-day-30">Phase 4：社区随访（Day N+7 至 Day 30）</a></li>
+</ul>
+</li>
+<li><a href="#113">11.3 多病种旅程变体</a></li>
+<li><a href="#114">11.4 旅程关键触点总结</a></li>
+</ul>
+</li>
+<li><a href="#hk-hah">工作文件十二：风险框架（HK 特定 + HaH 通用）</a><ul>
+<li><a href="#121">12.1 框架来源</a></li>
+<li><a href="#122">12.2 六维风险矩阵</a><ul>
+<li><a href="#a">A. 临床安全风险</a></li>
+<li><a href="#b">B. 运营风险</a></li>
+<li><a href="#c-hk">C. 监管与合规风险（HK 特定）</a></li>
+<li><a href="#d">D. 财务风险</a></li>
+<li><a href="#e-hk">E. 人力风险（HK 特定）</a></li>
+<li><a href="#f">F. 声誉与公共信任风险</a></li>
+</ul>
+</li>
+<li><a href="#123">12.3 风险热力图</a></li>
+<li><a href="#124-top-5-b">12.4 Top 5 风险与计划B</a></li>
+<li><a href="#125">12.5 风险监控仪表盘</a></li>
+<li><a href="#p2">附录：P2 关键参考来源</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hospital-at-home-p2">香港 Hospital-at-Home 战略规划 · P2 核心工作文件</h1>
+<blockquote>
+<p><strong>基于</strong>：DispatchHealth 深度调研 + ASHRM HaH 风险白皮书 + DiMe HaH 患者旅程标准
+<strong>编制人</strong>：Kate | 顶级战略咨询公司调研副总裁 VP
+<strong>日期</strong>：2026年6月28日
+<strong>前置依赖</strong>：P0（五文件）+ P1（四文件）</p>
+</blockquote>
+<hr />
+<h1 id="dispatchhealth">工作文件十：DispatchHealth 失败教训提炼与规避方案</h1>
+<h2 id="101">10.1 教训提炼方法论</h2>
+<p>DispatchHealth 的失误不是孤立的——它们反映了 HaH 行业在高速增长→整合→成熟过程中的<strong>系统性陷阱</strong>。每个教训按以下框架分析：</p>
+<pre><code>教训 → 根因 → 时间窗口 → 早期预警信号 → 香港规避方案
+</code></pre>
+<hr />
+<h2 id="102">10.2 八大失败教训</h2>
+<h3 id="_1">教训一：过度扩张 — &ldquo;先占地再盈利&rdquo;的战略陷阱</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发生了什么</strong></td>
+<td>2013–2023：从丹佛扩张至 50 州 → 2023年从 50 州收缩 → 2025年退出 10 市场</td>
+</tr>
+<tr>
+<td><strong>根因</strong></td>
+<td>以融资驱动的地域扩张（&rdquo;拿下市场&rdquo;），而非以单元经济验证驱动的扩张（&rdquo;深度做好一个市场&rdquo;）</td>
+</tr>
+<tr>
+<td><strong>时间窗口</strong></td>
+<td>2021（估值 $1.7B）→ 2023（收缩）→ 2025（退出）— 仅 2 年从巅峰到被迫收缩</td>
+</tr>
+<tr>
+<td><strong>早期预警信号</strong></td>
+<td>① 2021 YC 批次后急速扩张 ② 每个市场运营模式不统一 ③ 从未公开单市场经济数据</td>
+</tr>
+<tr>
+<td><strong>HK 规避方案</strong></td>
+<td><strong>铁律：Phase 1 在单一联网验证正向单元经济之前，绝不扩展至第二联网</strong>。Phase 1 KPIs 必须含单例毛利和月度盈亏平衡</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3">教训二：合并整合失败 — &ldquo;3个月后裁员&rdquo;的整合灾难</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发生了什么</strong></td>
+<td>2025.06 合并 Medically Home → 2025.09 裁员+退出10市场（仅3个月）</td>
+</tr>
+<tr>
+<td><strong>根因</strong></td>
+<td>① 合并前尽职调查不足（Medically Home 估值崩盘在合并后才发现） ② 没有明确的整合路线图 ③ 两家企业文化/技术栈/客户群差异大</td>
+</tr>
+<tr>
+<td><strong>时间窗口</strong></td>
+<td>合并宣布到裁员仅 6 个月，远低于行业正常的 12-18 个月整合期</td>
+</tr>
+<tr>
+<td><strong>早期预警信号</strong></td>
+<td>① 合并宣布时未披露整合计划 ② MH CEO 在合并完成即离开 ③ 498页泄露文件暴露 MH 依赖战略投资者续命</td>
+</tr>
+<tr>
+<td><strong>HK 规避方案</strong></td>
+<td>① <strong>JV 而非并购</strong>——与 HA 联网建立JV而非收购 ② <strong>12个月整合期</strong>——从 MOU 到运营至少留 12个月 ③ <strong>联合治理委员会</strong>——HA+运营公司各半席</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">教训三：核心能力出售 — &ldquo;卖影像业务换现金&rdquo;的战略性失误</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发生了什么</strong></td>
+<td>2026.01 将移动影像业务（16州运营）出售给 TridentCare</td>
+</tr>
+<tr>
+<td><strong>根因</strong></td>
+<td>合并后现金流紧张，被迫出售资产——但移动影像是 ER 替代和 HaH 的核心差异化能力</td>
+</tr>
+<tr>
+<td><strong>时间窗口</strong></td>
+<td>合并后 7 个月即出售核心资产</td>
+</tr>
+<tr>
+<td><strong>早期预警信号</strong></td>
+<td>合并融资 $160M 不足覆盖整合成本 + 运营亏损</td>
+</tr>
+<tr>
+<td><strong>HK 规避方案</strong></td>
+<td>① <strong>POCT/移动诊断作为核心能力保留</strong>——不可外包 ② <strong>Phase 1 不做资本密集型资产投入</strong>——租赁设备而非购买 ③ <strong>建立充足运营储备金</strong>——Phase 1 至少预留 12 个月运营资金</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="cms-waiver">教训四：政策依赖症 — &ldquo;CMS waiver 短期延期&rdquo;的不确定性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发生了什么</strong></td>
+<td>2022–2025 经历 4 次短期延期（2年→90天→6个月→78天），每次都让行业陷入不确定性</td>
+</tr>
+<tr>
+<td><strong>根因</strong></td>
+<td>商业模式过度依赖单一联邦政策，没有多元化支付通道</td>
+</tr>
+<tr>
+<td><strong>时间窗口</strong></td>
+<td>2022–2025 连续 3 年不确定性，直到 2025.12 才获五年延期</td>
+</tr>
+<tr>
+<td><strong>早期预警信号</strong></td>
+<td>① 支付来源 &gt;80% 依赖 CMS ② 每次 waiver 到期前客户停滞</td>
+</tr>
+<tr>
+<td><strong>HK 规避方案</strong></td>
+<td>① <strong>Day 1 多元化支付</strong>——HA+商业保险+自费三通道（P0已设计） ② <strong>推动永久框架</strong>——参照新加坡 sandbox→制度化路径（P1已设计） ③ <strong>不依赖单一政策杠杆</strong>——即使 HA sandbox 延迟，自费通道可先行启动</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2021-17b-2025">教训五：估值泡沫 — &ldquo;2021 $1.7B → 2025 估值腰斩&rdquo;的资本教训</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发生了什么</strong></td>
+<td>2021 年 Series D 估值 $1.7B，2025 年合并时 MH 估值&rdquo;大幅缩水&rdquo;，合并后估值未公开但推测远低于 $1.7B</td>
+</tr>
+<tr>
+<td><strong>根因</strong></td>
+<td>① 疫情期间 HaH 概念过热，估值脱离基本面 ② 收入增长未匹配估值 ③ MH 严重依赖战略投资者现金续命</td>
+</tr>
+<tr>
+<td><strong>时间窗口</strong></td>
+<td>2021 年估值峰值 → 2025 年现实检验 — 4 年</td>
+</tr>
+<tr>
+<td><strong>早期预警信号</strong></td>
+<td>① 2022 $259M 轮次中混入债务融资（信号：纯股权融资枯竭） ② 从未公布收入数字</td>
+</tr>
+<tr>
+<td><strong>HK 规避方案</strong></td>
+<td>① <strong>不追求估值叙事</strong>——Phase 1 目标不是融资而是证明单元经济 ② <strong>融资与里程碑绑定</strong>——每轮融资对应具体运营里程碑 ③ <strong>保持私营+财务纪律</strong>——不因融资压力过度扩张</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ceoceo">教训六：创始人转型管理失败 — &ldquo;创始CEO退场+外部CEO空降&rdquo;的阵痛</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发生了什么</strong></td>
+<td>Mark Prather（创始CEO/急诊医师）→ Jennifer Webster（原President→CEO）。创始人从&rdquo;CEO&rdquo;变为&rdquo;CSO&rdquo;再淡出。合并后 Medically Home 创始人 Graham Barnes 立即离开</td>
+</tr>
+<tr>
+<td><strong>根因</strong></td>
+<td>从&rdquo;创始人驱动的创业文化&rdquo;到&rdquo;职业经理人驱动的规模化文化&rdquo;的转型管理不当</td>
+</tr>
+<tr>
+<td><strong>时间窗口</strong></td>
+<td>2023 年 Webster 任 President → 2025 年成为 CEO — 过渡期仅 2 年</td>
+</tr>
+<tr>
+<td><strong>HK 规避方案</strong></td>
+<td>① <strong>从 Day 1 设计治理结构</strong>——创始团队+HA 代表+独立董事三方平衡 ② <strong>创始人保留临床领导角色</strong>（Medical Director），运营交给职业经理人 ③ <strong>渐进过渡</strong>——不突然换帅</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="x">教训七：技术整合困境 — &ldquo;两个平台X两种文化&rdquo;的系统性内耗</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发生了什么</strong></td>
+<td>DispatchHealth 自有技术 + Medically Home 技术平台（指挥中心+物流），合并后仍在整合中——进度未公开</td>
+</tr>
+<tr>
+<td><strong>根因</strong></td>
+<td>两个独立技术栈（自研 vs 平台授权）+ 两个开发团队 + 两个客户群</td>
+</tr>
+<tr>
+<td><strong>时间窗口</strong></td>
+<td>合并后 12 个月仍在整合中（截至2026.06）</td>
+</tr>
+<tr>
+<td><strong>HK 规避方案</strong></td>
+<td>① <strong>Phase 1 用最小技术栈（MVP）</strong>——不一开始就建大平台（P1已设计） ② <strong>单一技术路线</strong>——自研核心 + 嫁接 HA Go，不引入第二个平台</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="optumhumana">教训八：支付方利益冲突 — &ldquo;Optum+Humana 双投资&rdquo;的两难</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发生了什么</strong></td>
+<td>主要投资者含 UnitedHealth/Optum 和 Humana——两者互为竞争对手且都是支付方。支付方投资 HaH 运营商引发&rdquo;既是客户又是股东&rdquo;的利益冲突</td>
+</tr>
+<tr>
+<td><strong>根因</strong></td>
+<td>战略投资者与被投公司的定价谈判中存在结构性利益冲突</td>
+</tr>
+<tr>
+<td><strong>HK 规避方案</strong></td>
+<td>① <strong>HA 作为 JV 伙伴而非纯投资者</strong>——避免定价利益冲突 ② <strong>保持支付方多元化</strong>——单通道占比不超过 50%</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="103">10.3 教训优先级矩阵</h2>
+<pre><code>                    高影响
+                      │
+      教训一·过度扩张  │  教训二·整合失败
+      教训四·政策依赖  │  教训三·核心能力出售
+                      │  教训五·估值泡沫
+    ──────────────────┼──────────────────
+      低概率           │           高概率
+                      │
+      教训六·创始人   │  教训七·技术整合
+      教训八·利益冲突  │
+                      │
+                    低影响
+</code></pre>
+<h2 id="104-hk-hah">10.4 合成为&rdquo;HK HaH 十大铁律&rdquo;</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>铁律</th>
+<th style="text-align: center;">来源教训</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td><strong>单市场盈利前不扩展第二市场</strong></td>
+<td style="text-align: center;">教训一</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><strong>JV 优于并购；整合期 ≥12 个月</strong></td>
+<td style="text-align: center;">教训二</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><strong>核心诊断能力不可外包</strong></td>
+<td style="text-align: center;">教训三</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><strong>支付通道 Day 1 多元化（≥3条）</strong></td>
+<td style="text-align: center;">教训四</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td><strong>不追求估值叙事；融资绑定运营里程碑</strong></td>
+<td style="text-align: center;">教训五</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td><strong>创始人保留临床角色；运营交职业经理人</strong></td>
+<td style="text-align: center;">教训六</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td><strong>MVP 技术栈优先；单一技术路线</strong></td>
+<td style="text-align: center;">教训七</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td><strong>支付方不作为控股股东</strong></td>
+<td style="text-align: center;">教训八</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td><strong>12 个月运营储备金始终在账</strong></td>
+<td style="text-align: center;">教训三+五</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td><strong>每季度公开发布安全+经济数据</strong></td>
+<td style="text-align: center;">教训四+五</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h1 id="hk">工作文件十一：患者旅程映射（HK 定制版）</h1>
+<h2 id="111">11.1 方法论</h2>
+<p>基于 <strong>DiMe（Digital Medicine Society）HaH 五阶段患者旅程标准</strong>，结合 <strong>HK HA 系统特征</strong>（HA CMS/HA Go/eHealth/ICAH），定制化映射。</p>
+<pre><code>Phase 0        Phase 1        Phase 2          Phase 3         Phase 4
+识别&amp;评估     激活&amp;入家      活跃管理          过渡&amp;退出        社区随访
+(Day-1 to 0)  (Day 0-1)      (Day 2-N)         (Day N to N+7)  (Day N+7 to 30)
+</code></pre>
+<hr />
+<h2 id="112-hah">11.2 心衰 HaH 患者旅程全映射</h2>
+<h3 id="phase-0day-1-day-0">Phase 0：患者识别与评估（Day -1 至 Day 0）</h3>
+<pre><code>┌────────────────────────────────────────────────────────────┐
+│ 地点：HA 联网医院 ED / 内科病房                              │
+├────────────────────────────────────────────────────────────┤
+│                                                              │
+│  Step 0.1  自动筛选触发                                     │
+│  ├── HA CMS 触发规则：入院诊断 ICD-10 I50.x（心衰）          │
+│  ├── 自动检查准入标准（见 P0 文件五）                        │
+│  └── 如符合 → ED/Hospitalist 收到 HaH 转介提醒              │
+│                                                              │
+│  Step 0.2  临床评估                                          │
+│  ├── HaH Physician（远程）查看 HA CMS 病历                  │
+│  ├── HaH RN 到达 ED/病房 → 面对面评估                        │
+│  ├── 检查排除标准（ACS/严重心律失常/意识改变/独居无照护者）  │
+│  └── 确定 HaH 适用性 → 与患者/家属首次沟通                   │
+│                                                              │
+│  Step 0.3  知情同意                                          │
+│  ├── 解释 HaH 模式（中文/英文）                             │
+│  ├── 签署知情同意书（电子版 → HA CMS 归档）                 │
+│  ├── 提供 HaH 患者手册（含 SOS 流程）                       │
+│  └── 确认照护者身份和联系方式                                │
+│                                                              │
+│  Step 0.4  居家环境评估                                       │
+│  ├── HaH RN + 社工 → 上门评估（或视频评估）                 │
+│  ├── 检查：水电/通讯/空间/卫浴/无障碍/安全隐患               │
+│  ├── SDOH 筛查（独居？经济？照顾者负荷？）                   │
+│  └── 环境评分 → 如不达标，转为传统住院                       │
+│                                                              │
+│  Step 0.5  HaH 指挥中心激活                                  │
+│  ├── 在指挥中心系统中创建患者档案                            │
+│  ├── 分配 Primary RN + Backup RN                             │
+│  ├── 预约首次上门时间（Day 0 当天）                          │
+│  └── 设备准备（BP/SpO₂/体重秤/平板）→ 物流配送              │
+│                                                              │
+│  关键决策点：                                                │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │ 是否满足 ALL 准入标准 + 排除标准未触发？               │   │
+│  │  ├── YES → 进入 Phase 1                               │   │
+│  │  └── NO  → 传统住院路径                               │   │
+│  └──────────────────────────────────────────────────────┘   │
+│                                                              │
+└────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="phase-1day-01">Phase 1：激活与入家（Day 0–1）</h3>
+<pre><code>┌────────────────────────────────────────────────────────────┐
+│ 地点：患者家中 + HA 医院                                     │
+├────────────────────────────────────────────────────────────┤
+│                                                              │
+│  Day 0（入院日）                                             │
+│  ─────────                                                  │
+│  08:00  HA 病房 → 出院手续                                  │
+│  ├── Hospitalist 完成出院摘要 → HA CMS                      │
+│  ├── 药房发放首 3 天药物                                    │
+│  ├── 患者转运（如需要）—— 非紧急医疗运送                   │
+│  └── HaH 协调员确认到达时间                                 │
+│                                                              │
+│  10:00  首次居家临床评估（RN 上门）                          │
+│  ├── 全面身体评估 + 生命体征基线                            │
+│  ├── NT-proBNP + 电解质 + 肾功能 POCT                       │
+│  ├── ECG（12导联，便携式）                                  │
+│  ├── 药物核对（利尿剂/ACEi/BB/MRA/抗凝）                    │
+│  ├── 静脉通路建立（如需要 IV 利尿剂）                       │
+│  └── 照护者培训 #1：体重监测 + 症状日记 + SOS 按钮         │
+│                                                              │
+│  12:00  设备安装与连接                                       │
+│  ├── BP monitor（蓝牙 → 指挥中心）                          │
+│  ├── Pulse Oximeter（连续或间歇）                           │
+│  ├── 智能体重秤（每日自动上传）                             │
+│  ├── 平板电脑（视频查房用）                                 │
+│  └── 设备连接测试 + 照护者操作培训                          │
+│                                                              │
+│  14:00  HaH Physician 远程查房 #1                            │
+│  ├── 视频连接（平板）                                       │
+│  ├── 确认治疗方案                                            │
+│  ├── 药物调整（利尿剂滴定计划）                              │
+│  └── 回答患者/家属问题                                      │
+│                                                              │
+│  20:00  远程夜间查房（RN 视频）                             │
+│                                                              │
+│  Day 1                                                       │
+│  ─────                                                       │
+│  08:00  RN 上门 #2                                           │
+│  ├── 体重变化追踪（目标：-1.0 to -1.5 kg/day）              │
+│  ├── 肺部听诊 + 下肢水肿评估                                │
+│  ├── 出入量监测（I/O Chart）                                │
+│  └── 电解质复查（如需要）                                    │
+│                                                              │
+│  12:00  HaH Physician 远程查房 #2                            │
+│  ├── 评估治疗反应                                            │
+│  ├── 利尿剂剂量调整                                          │
+│  └── 决定是否可以转为每日 1 次上门                           │
+│                                                              │
+│  ⚠️ 关键升级触发（Phase 1 内）：                             │
+│  · SBP &lt;90 或 HR &gt;130 → 立即 RN 上门 + 医生决策             │
+│  · 体重下降 &lt;0.5kg/24h + 症状加重 → 加强利尿方案            │
+│  · 肌酐上升 &gt;26.5 μmol/L → AKI 预警 → 调整方案/考虑转运    │
+│                                                              │
+└────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="phase-2day-2-day-n">Phase 2：活跃管理（Day 2 至 Day N）</h3>
+<pre><code>┌────────────────────────────────────────────────────────────┐
+│ 地点：患者家中（远程+上门混合）                              │
+├────────────────────────────────────────────────────────────┤
+│                                                              │
+│  每日节奏（Day 2–4）                                         │
+│  ────────────────                                            │
+│  08:00  远程晨间查房（RN 视频/电话）                        │
+│  ├── 昨夜情况回顾                                           │
+│  ├── 体重/症状/出入量自报                                   │
+│  └── 决定是否需要上门                                       │
+│                                                              │
+│  09:00–12:00  RN 上门（如需要）                              │
+│  ├── 身体评估（按需）                                       │
+│  ├── 静脉用药/抽血（按需）                                   │
+│  └── 照护者教育 #2：饮食/限钠/活动                          │
+│                                                              │
+│  14:00  HaH Physician 远程查房（每日）                      │
+│  ├── 审查生命体征趋势                                        │
+│  ├── 药物调整                                                │
+│  └── 记录查房笔记 → HA CMS                                  │
+│                                                              │
+│  社工介入（Day 2–3）                                        │
+│  ├── 评估社区资源需求                                       │
+│  ├── 长者服务对接（如适用）                                 │
+│  └── 照顾者负荷评估                                         │
+│                                                              │
+│  药剂师审查（Day 2）                                        │
+│  ├── 全程药物核对                                           │
+│  ├── 出院后药物变化与入院前对比                             │
+│  └── 患者/家属用药教育                                      │
+│                                                              │
+│  指挥中心 24/7 远程监护                                      │
+│  ├── 实时生命体征仪表盘                                     │
+│  ├── AI 预警（异常趋势自动触发）                            │
+│  └── 患者 SOS 按钮随时响应                                  │
+│                                                              │
+│  ⚠️ 升级触发（Phase 2 内）：                                 │
+│  · SpO₂ &lt;92% 持续 &gt;15分钟 → 吸氧 + 升级评估                │
+│  · 体重每日未下降 &gt;48h + 呼吸窘迫加重 → 转运评估            │
+│  · 患者/家属主动求助 → ≤10 分钟响应                         │
+│                                                              │
+└────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="phase-3day-n-day-n7">Phase 3：过渡与退出（Day N 至 Day N+7）</h3>
+<pre><code>┌────────────────────────────────────────────────────────────┐
+│ 地点：患者家中 → 社区                                        │
+├────────────────────────────────────────────────────────────┤
+│                                                              │
+│  Day N-1  出院准备评估                                       │
+│  ────────────                                                │
+│  ├── HaH Physician 评估是否满足出院标准：                   │
+│  │   · 体重稳定或恢复至&quot;干体重&quot;                             │
+│  │   · 静息呼吸困难缓解（NYHA 回复至基线）                  │
+│  │   · 口服利尿剂方案稳定 ≥24h                              │
+│  │   · 生命体征稳定 ≥24h                                    │
+│  └── 条件满足 → 启动 Phase 3                                │
+│                                                              │
+│  Day N  正式出院                                             │
+│  ──────                                                      │
+│  10:00  末次上门                                             │
+│  ├── 出院体检                                                │
+│  ├── 撤除监测设备                                            │
+│  ├── 出院药物总结（Med Rec）                                │
+│  └── 照护者能力终审                                         │
+│                                                              │
+│  12:00  HaH 出院文书                                         │
+│  ├── 出院摘要（→ HA CMS）                                  │
+│  ├── HA 专科门诊预约（7天内）                               │
+│  ├── HA 社区护士（ICAH）转介                                │
+│  └── 患者满意度调查发放                                     │
+│                                                              │
+│  Day N+1 to N+7  桥接期                                      │
+│  ──────────────────                                          │
+│  ├── HA 社区护士接手（ICAH 常规随访）                       │
+│  ├── HaH 团队每日电话随访（Day N+1, N+3, N+7）             │
+│  ├── 药物依从性确认                                         │
+│  └── 如 48h 内再入院 → HaH 团队复盘                         │
+│                                                              │
+│  ⚠️ 过渡期风险点：                                           │
+│  · &quot;照护责任转移&quot;——从 HaH 团队到社区/家属 —— 最大风险窗口 │
+│  · 药物变化导致混乱 —— 需清晰药物总结                       │
+│                                                              │
+└────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="phase-4day-n7-day-30">Phase 4：社区随访（Day N+7 至 Day 30）</h3>
+<pre><code>┌────────────────────────────────────────────────────────────┐
+│ 地点：社区（HA 专科门诊 + eHealth + 远程）                    │
+├────────────────────────────────────────────────────────────┤
+│                                                              │
+│  Day N+7  内科专科门诊                                       │
+│  ├── HA 心脏科/内科复诊                                     │
+│  ├── 复查 NT-proBNP + 肾功能 + 电解质                      │
+│  ├── 长期药物方案确认                                        │
+│  └── HaH 团队收到复诊摘要                                   │
+│                                                              │
+│  Day N+30  随访终点                                          │
+│  ├── 30天再入院率追踪                                       │
+│  ├── 死亡率追踪                                             │
+│  ├── 患者满意度终调                                         │
+│  └── 数据录入 HaH 质量数据库                                │
+│                                                              │
+│  长期（Day 30+）                                             │
+│  ├── HA 慢性病管理计划（CDMP）接管                          │
+│  ├── eHealth 记录全程可追溯                                 │
+│  └── 如再入院 → HaH 数据库标记（用于质量改进）             │
+│                                                              │
+└────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="113">11.3 多病种旅程变体</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>病种</th>
+<th>与心衰旅程的主要差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>COPD</strong></td>
+<td>+ 雾化/吸氧设备 + 呼吸治疗师上门 + ABG 监测 + 激素/抗生素</td>
+</tr>
+<tr>
+<td><strong>CAP</strong></td>
+<td>+ IV 抗生素（每日上门给药）+ 更频繁的体温/SpO₂ 监测 + 胸片复查（Day 3）</td>
+</tr>
+<tr>
+<td><strong>UTI</strong></td>
+<td>+ 尿培养 POCT + IV/口服抗生素切换判断 + 较短 LOS（2-3天）</td>
+</tr>
+<tr>
+<td><strong>DVT</strong></td>
+<td>+ LMWH 注射教学 + 腿部周径测量 + 较短 LOS（1-2天活动期）→ 口服抗凝长期</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="114">11.4 旅程关键触点总结</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th style="text-align: center;">触点数</th>
+<th>最常触点</th>
+<th>最痛点</th>
+<th>满意度杠杆</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phase 0</strong></td>
+<td style="text-align: center;">5</td>
+<td>医生转介沟通</td>
+<td>被&rdquo;推出医院&rdquo;的焦虑感</td>
+<td>清晰解释 HaH = 延伸照护(&ldquo;不是甩包袱&rdquo;)</td>
+</tr>
+<tr>
+<td><strong>Phase 1</strong></td>
+<td style="text-align: center;">6</td>
+<td>RN 首次上门</td>
+<td>设备使用不适应</td>
+<td>照护者陪同培训 + 24/7 热线</td>
+</tr>
+<tr>
+<td><strong>Phase 2</strong></td>
+<td style="text-align: center;">12+</td>
+<td>每日医生远程查房</td>
+<td>等待回应焦虑</td>
+<td>AI预警自动通知&rdquo;一切正常&rdquo;</td>
+</tr>
+<tr>
+<td><strong>Phase 3</strong></td>
+<td style="text-align: center;">5</td>
+<td>出院摘要移交</td>
+<td>&ldquo;照护真空&rdquo;恐惧</td>
+<td>桥接期每日电话 + HA 门诊已约好</td>
+</tr>
+<tr>
+<td><strong>Phase 4</strong></td>
+<td style="text-align: center;">3</td>
+<td>HA 专科复诊</td>
+<td>被遗忘感</td>
+<td>N+30 主动随访 + 满意度回访</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h1 id="hk-hah">工作文件十二：风险框架（HK 特定 + HaH 通用）</h1>
+<h2 id="121">12.1 框架来源</h2>
+<p>基于 <strong>ASHRM（美国医疗风险管理协会）HaH 风险白皮书</strong>（2025）的六维风险分类 + <strong>AIG Lexington HaH 风险报告</strong> + <strong>HK 特定环境风险</strong>。</p>
+<h2 id="122">12.2 六维风险矩阵</h2>
+<h3 id="a">A. 临床安全风险</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>风险</th>
+<th style="text-align: center;">概率</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+<th style="text-align: center;">残余风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1</td>
+<td><strong>延迟识别病情恶化</strong>（居家监测不如院内连续监护）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🔴 致命</td>
+<td>① AI预警系统（生命体征趋势异常自动触发） ② 每日≥1次远程医生查房 ③ 24/7 RN on-call</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>A2</td>
+<td><strong>用药错误</strong>（口服利尿剂剂量不当/抗凝过量）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🔴 严重</td>
+<td>① 药剂师 Day 2 药物核对 ② 电子处方系统+自动剂量检查 ③ 照护者用药教育</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>A3</td>
+<td><strong>跌倒/居家意外</strong>（患者在不熟悉设备的环境中活动）</td>
+<td style="text-align: center;">中高</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① Phase 0 居家安全评估 ② 移除松动地毯/电线 ③ 如高风险 → 排除</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>A4</td>
+<td><strong>院内感染→院外恶化</strong>（出院时已有定植菌）</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① 入院时感染筛查 ② 每日体温/SpO₂ 监测 ③ 如适用 → 持续 IV 抗生素</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>A5</td>
+<td><strong>转运途中恶化</strong>（从家到医院的救护车途中）</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🔴 致命</td>
+<td>① 30分钟车程限制 ② 转运前通知接收 ED ③ 随行 EHR 摘要</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="b">B. 运营风险</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>风险</th>
+<th style="text-align: center;">概率</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+<th style="text-align: center;">残余风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td><strong>人手不足/缺勤</strong>（RN 病假 → 无人上门）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① 每班≥2 RN + on-call 替补 ② 交叉培训（HCA 可执行部分非临床任务）</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>B2</td>
+<td><strong>设备故障/信号中断</strong>（BP/SpO₂设备失效）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① 备用设备在每辆车上 ② 设备每日自检+状态上传 ③ 4G+蓝牙双通道</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>B3</td>
+<td><strong>物流延迟</strong>（交通/天气导致到达延迟）</td>
+<td style="text-align: center;">低（HK密度）</td>
+<td style="text-align: center;">🟢 低</td>
+<td>① HK密度天然优势 ② 实时GPS+交通预警 ③ MTR+步行可替代（HK特色）</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>B4</td>
+<td><strong>调度错误</strong>（错误分配/遗漏访问）</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① 自动化调度+人工审核 ② 患者 App 显示预计到达 ③ 未确认访问自动报警</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="c-hk">C. 监管与合规风险（HK 特定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>风险</th>
+<th style="text-align: center;">概率</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+<th style="text-align: center;">残余风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td><strong>沙盒审批延迟/拒绝</strong></td>
+<td style="text-align: center;">中高</td>
+<td style="text-align: center;">🔴 致命</td>
+<td>① 提前6个月启动 HH B/DH 对话 ② 新加坡MOHT先例作为模板 ③ 准备完整国际证据包</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>C2</td>
+<td><strong>PDPO 数据违规</strong>（患者健康数据泄露）</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🔴 严重</td>
+<td>① 所有数据在港存储（HA托管） ② 端到端加密 ③ 年度 PDPO 审计</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>C3</td>
+<td><strong>执业范围争议</strong>（RN在居家执行医生授权操作）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① 明确授权协议（Standing Orders） ② 医生远程实时监督 ③ DH 沙盒条款覆盖</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>C4</td>
+<td><strong>不良事件强制报告</strong>（未及时报告→牌照吊销）</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🔴 致命</td>
+<td>① 24h 内自动生成事件报告 ② 独立临床安全官审查 ③ DH 报告合规培训</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>C5</td>
+<td><strong>VHIS 覆盖争议</strong>（保险公司拒赔 HaH 费用）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① 定制产品合同明确条款 ② 沙盒期间由 HA 直接支付兜底</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="d">D. 财务风险</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>风险</th>
+<th style="text-align: center;">概率</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+<th style="text-align: center;">残余风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td><strong>单元经济恶化</strong>（实际成本 &gt; 预测）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① 月度 P&amp;L 追踪+预警线 ② 灵活调整人力配置 ③ Phase 1 融资含 20% 缓冲</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>D2</td>
+<td><strong>HA 支付延迟/削减</strong></td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🔴 严重</td>
+<td>① MOU 明确支付条款 ② 多元化支付（保险+自费） ③ 12个月运营储备金</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>D3</td>
+<td><strong>融资断裂</strong>（后续融资不到位）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🔴 致命</td>
+<td>① 融资按里程碑分轮 ② 保持私募+不上市 ③ Phase 1 规模使 burn rate 可控</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="e-hk">E. 人力风险（HK 特定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>风险</th>
+<th style="text-align: center;">概率</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+<th style="text-align: center;">残余风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E1</td>
+<td><strong>RN 招聘困难</strong>（香港护理人力持续短缺）</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: center;">🔴 严重</td>
+<td>① QHC 14,000 RN 网络合作 ② 私家医院借调 ③ HA 兼职/退休返聘</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>E2</td>
+<td><strong>RN 流失</strong>（居家护理孤独感+职业倦怠）</td>
+<td style="text-align: center;">中高</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① 团队制（2 RN+1 HCA）避免单人作业 ② 固定轮换（上门 vs 指挥中心） ③ 高于市场 15-20% 薪酬</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>E3</td>
+<td><strong>医生参与度下降</strong>（视为额外负担）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① 医生每日查房 ≤15 分钟/例 ② CME 学分激励 ③ 研究发表机会</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>E4</td>
+<td><strong>照护者 burnout</strong>（家庭成员负担过重）</td>
+<td style="text-align: center;">中高</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① Phase 0 SDOH 评估照护者能力 ② 社工定期评估负荷 ③ 临时喘息服务对接</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="f">F. 声誉与公共信任风险</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>风险</th>
+<th style="text-align: center;">概率</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+<th style="text-align: center;">残余风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td><strong>首例严重不良事件 → 媒体放大</strong></td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🔴 致命</td>
+<td>① 极端保守的准入标准 ② 24/7 升级协议 ③ 危机沟通预案</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>F2</td>
+<td><strong>&ldquo;富人医疗&rdquo;认知</strong>（HaH被视为私家专利）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① Phase 1 定位为 HA 合作 ② 保持公立价格对标 ③ 患者案例多元化（覆盖公屋长者）</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>F3</td>
+<td><strong>&ldquo;推患者出门&rdquo;负面叙事</strong></td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中等</td>
+<td>① 患者选择权（Opt-in, not forced） ② 98%满意度数据作为反证 ③ 患者自述视频</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="123">12.3 风险热力图</h2>
+<pre><code>严重度
+ 致命  │ C1(审批)  A1(延迟恶化)
+       │ D3(融资)  F1(首例不良)
+       │ C4(报告)
+  ─────┼────────────────────────────
+ 严重  │ D2(支付)   A2(用药错误)
+       │ E1(招聘)   C2(数据泄露)
+  ─────┼────────────────────────────
+ 中等  │ C3(执业)   A3(跌倒)  B1(人手)
+       │ C5(保险)   E2(流失)  E4(照护)
+       │ D1(经济)   F2(富人)  F3(推人)
+       │            B2(设备)
+  ─────┼────────────────────────────
+  低   │ A4(感染)   B3(物流)  A5(转运)
+       │            B4(调度)
+       │
+       └───────────────────────────
+          低           中          高
+                      概率
+</code></pre>
+<h2 id="124-top-5-b">12.4 Top 5 风险与计划B</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">排名</th>
+<th>风险</th>
+<th style="text-align: center;">影响</th>
+<th>计划 B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td><strong>沙盒审批延迟/拒绝</strong></td>
+<td style="text-align: center;">项目终止</td>
+<td>转用私家医院作为 Phase 1 起点（自费模式）+ 持续游说 HA</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td><strong>RN 招聘困难</strong></td>
+<td style="text-align: center;">无法启动</td>
+<td>QHC 合作外包护理 → 后期自建团队；引入海外受训护士（如适用）</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td><strong>首例严重不良事件</strong></td>
+<td style="text-align: center;">声誉毁灭</td>
+<td>① 极端保守准入（Phase 1 只选最稳定患者）② 独立临床安全委员会③ 24h 内透明沟通</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td><strong>单元经济恶化</strong></td>
+<td style="text-align: center;">现金流断裂</td>
+<td>缩减至单病种+提高自费比例+寻求 HA 补充拨款</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td><strong>融资断裂</strong></td>
+<td style="text-align: center;">项目中断</td>
+<td>Phase 1 预算已预留 12 个月运营储备金，在储备耗尽前 6 个月启动下一轮</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="125">12.5 风险监控仪表盘</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">频率</th>
+<th>绿区</th>
+<th>黄区（预警）</th>
+<th>红区（升级）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>严重安全事件</td>
+<td style="text-align: center;">实时</td>
+<td>0</td>
+<td>—</td>
+<td>≥1 → 暂停入组</td>
+</tr>
+<tr>
+<td>升级转运率</td>
+<td style="text-align: center;">每周</td>
+<td>&lt;12%</td>
+<td>12-18%</td>
+<td>&gt;18% → 审查准入标准</td>
+</tr>
+<tr>
+<td>30天再入院率</td>
+<td style="text-align: center;">每月</td>
+<td>&lt;10%</td>
+<td>10-14%</td>
+<td>&gt;14% → 审查临床路径</td>
+</tr>
+<tr>
+<td>患者满意度</td>
+<td style="text-align: center;">每例</td>
+<td>≥90%</td>
+<td>80-89%</td>
+<td>&lt;80% → 根源分析</td>
+</tr>
+<tr>
+<td>RN 空缺率</td>
+<td style="text-align: center;">每月</td>
+<td>&lt;10%</td>
+<td>10-20%</td>
+<td>&gt;20% → 暂停新入组</td>
+</tr>
+<tr>
+<td>单例毛利</td>
+<td style="text-align: center;">每月</td>
+<td>≥30%</td>
+<td>10-29%</td>
+<td>&lt;10% → 财务审查</td>
+</tr>
+<tr>
+<td>设备正常运行率</td>
+<td style="text-align: center;">每周</td>
+<td>&gt;98%</td>
+<td>95-98%</td>
+<td>&lt;95% → 更换/维修</td>
+</tr>
+<tr>
+<td>月现金消耗</td>
+<td style="text-align: center;">每月</td>
+<td>&lt;预算 90%</td>
+<td>90-110%</td>
+<td>&gt;110% → 支出冻结</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="p2">附录：P2 关键参考来源</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>来源</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ASHRM (2025)</td>
+<td>Hospital at Home: Navigating Risk Outside the Traditional Hospital Setting 白皮书</td>
+</tr>
+<tr>
+<td>2</td>
+<td>AIG Lexington (2025)</td>
+<td>Hospital at Home: Risk Management Implications</td>
+</tr>
+<tr>
+<td>3</td>
+<td>DiMe (Digital Medicine Society)</td>
+<td>Advancing a Sustainable HaH Ecosystem: Patient Journey Map</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Mount Sinai HaH Users Group</td>
+<td>患者准入标准+团队配置指南</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HHCN (2025.09)</td>
+<td>DispatchHealth 裁员+市场收缩报道</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Axios (2025.06)</td>
+<td>Medically Home 估值泄露+财务困境</td>
+</tr>
+<tr>
+<td>7</td>
+<td>DispatchHealth 官网新闻室</td>
+<td>合并关闭公告+领导层变动</td>
+</tr>
+<tr>
+<td>8</td>
+<td>JAMA / npj Digital Medicine</td>
+<td>HaH 临床证据综述</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Singapore MOH/MOHT</td>
+<td>MIC@Home Sandbox 框架</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HK PDPO</td>
+<td>《个人资料（私隐）条例》合规要求</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<blockquote>
+<p><strong>P0+P1+P2 共十二份工作文件已完成。</strong>这十二份文件构成了从 DispatchHealth 美国模式 → HK 本地适配 → 可执行战略规划的完整闭环。可直接提交董事会/投资委员会评审。</p>
+</blockquote>
+<p>— Kate · 顶级战略咨询公司调研副总裁 VP · 2026年6月28日</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

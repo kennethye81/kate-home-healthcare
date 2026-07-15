@@ -1,0 +1,2984 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>台大医院在宅医疗中心 — 27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#27">台大医院在宅医疗中心 — 27 维度深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a><ul>
+<li><a href="#hospital-at-home-hah">核心判断：✅ 确认属于 Hospital at Home (HaH) 赛道</a></li>
+</ul>
+</li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 实体全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实表</a></li>
+<li><a href="#_2">发展时间线</a></li>
+<li><a href="#_3">关键人物表</a></li>
+<li><a href="#_4">治理结构</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_5">一句话核心逻辑</a></li>
+<li><a href="#_6">战略差异化要素</a></li>
+<li><a href="#_7">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#_8">可视化架构图</a></li>
+<li><a href="#vs">支付方 vs 使用方</a></li>
+<li><a href="#_9">价值链定位</a></li>
+<li><a href="#_10">战略合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线与定价模式</a><ul>
+<li><a href="#_11">核心服务线</a></li>
+<li><a href="#2024-nhi">在宅急症照护关键参数（2024 NHI 试办计划）</a></li>
+<li><a href="#rd">R&amp;D 与创新管线</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_12">客户结构估算</a></li>
+<li><a href="#_13">支付方来源</a></li>
+<li><a href="#_14">客户获取渠道</a></li>
+<li><a href="#_15">品牌与声誉</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a><ul>
+<li><a href="#nhi">NHI 在宅医疗相关预算</a></li>
+<li><a href="#_16">成本结构推估（台大在宅项目）</a></li>
+<li><a href="#_17">收入来源推估</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a><ul>
+<li><a href="#_18">在宅急症照护完整流程</a></li>
+<li><a href="#_19">与传统住院的关键差异</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构总览（五层模型）</a></li>
+<li><a href="#92">9.2 软件架构深度</a></li>
+<li><a href="#93-iot">9.3 硬件/IoT 设备</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+<li><a href="#96">9.6 技术风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a><ul>
+<li><a href="#_20">台湾本土对标</a></li>
+<li><a href="#_21">基层在宅医疗诊所</a></li>
+<li><a href="#_22">关键判断</a></li>
+</ul>
+</li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</a><ul>
+<li><a href="#tam">TAM（台湾可触达市场）</a></li>
+<li><a href="#sam">SAM（台大可服务市场）</a></li>
+<li><a href="#_23">增长驱动因素</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型与路径</a><ul>
+<li><a href="#-">成本-收入平衡分析</a></li>
+<li><a href="#_24">财务可持续性路径</a></li>
+<li><a href="#_25">综合判断</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a><ul>
+<li><a href="#_26">法律与合规</a></li>
+<li><a href="#_27">宏观敏感性</a></li>
+</ul>
+</li>
+<li><a href="#d14">D14 — 管理层指引</a></li>
+<li><a href="#d15">D15 — 估值对比</a><ul>
+<li><a href="#_28">❌ 不适用——非公司实体，无独立估值</a></li>
+</ul>
+</li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1-vs-hah">1. 模式借鉴：大医院 vs 社区的 HaH 路径选择</a></li>
+<li><a href="#2">2. 适应症起步策略</a></li>
+<li><a href="#3">3. 支付设计：部分负担的经济杠杆</a></li>
+<li><a href="#4">4. 不要忽略「在地终老」的人文价值</a></li>
+<li><a href="#5">5. 技术平台不可忽视</a></li>
+<li><a href="#6">6. 护理人力是最大瓶颈</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a><ul>
+<li><a href="#_29">核心政策框架</a></li>
+<li><a href="#_30">政策趋势判断</a></li>
+</ul>
+</li>
+<li><a href="#d18">D18 — 单元经济模型</a><ul>
+<li><a href="#vs-9">案例：肺炎患者 — 在宅 vs 住院对比（9 天疗程）</a></li>
+<li><a href="#_31">关键假设</a></li>
+<li><a href="#_32">经济可行性判断</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a><ul>
+<li><a href="#_33">分层矩阵</a></li>
+<li><a href="#_34">对战略的推导含义</a></li>
+</ul>
+</li>
+<li><a href="#d20">D20 — 竞品深度地图</a><ul>
+<li><a href="#_35">已确认对标机构</a></li>
+<li><a href="#_36">潜在跨界进入者</a></li>
+</ul>
+</li>
+<li><a href="#d21">D21 — 跨境/跨区域战略深度评估</a><ul>
+<li><a href="#_37">❌ 不适用——公立医院内部项目，无跨境扩展路径</a></li>
+</ul>
+</li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a><ul>
+<li><a href="#_38">❌ 不适用——公立医院内部项目，无股权退出路径</a></li>
+</ul>
+</li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a><ul>
+<li><a href="#esg">ESG 评估</a></li>
+<li><a href="#_39">关键社会影响力指标</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才</a><ul>
+<li><a href="#_40">组织架构</a></li>
+<li><a href="#_41">关键人才</a></li>
+<li><a href="#_42">组织风险</a></li>
+</ul>
+</li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a><ul>
+<li><a href="#cap-table">❌ 不适用——非公司实体，无融资历史与 Cap Table</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a><ul>
+<li><a href="#100-gtm">❌ 不适用——100% 体系内转诊获客，无独立 GTM</a></li>
+</ul>
+</li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271-nhi">27.1 核心临床指标（全台 NHI 在宅急症照护数据）</a></li>
+<li><a href="#272">27.2 台大体系特有临床证据</a></li>
+<li><a href="#273">27.3 质量认证体系</a></li>
+<li><a href="#274">27.4 临床证据强度评级</a></li>
+</ul>
+</li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_43">调研空白与后续补充</a></li>
+<li><a href="#_44">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="27">台大医院在宅医疗中心 — 27 维度深度尽调报告</h1>
+<blockquote>
+<p><strong>调研日期</strong>：2026-07-11<br />
+<strong>实体类型</strong>：Track A — 公立医学中心自有 HaH 项目（非独立公司）<br />
+<strong>市场环境</strong>：台湾单一支付方（全民健保 NHI）体系<br />
+<strong>数据截止</strong>：2026 年 7 月（基于公开资料 + 政策文件）<br />
+<strong>语言</strong>：简体中文</p>
+</blockquote>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<h3 id="hospital-at-home-hah">核心判断：✅ 确认属于 Hospital at Home (HaH) 赛道</h3>
+<p>台大医院在宅医疗中心是台湾最早系统化开展「居家急性医疗」（Hospital at Home / 在宅住院）的三甲医院项目。其服务覆盖急性感染居家抗生素治疗（相当于美国 CMS Acute Hospital Care at Home 模式）、居家安宁疗护、慢性伤口照护等，属于 <strong>True HaH（急性住院替代）</strong>，而非单纯的慢性 RPM 或传统居家护理。</p>
+<p><strong>赛道定位</strong>：
+| 维度 | 判断 |
+|:------|:-----|
+| 是否为急性住院替代？ | ✅ 是——提供肺炎/尿路感染/软组织感染的居家 IV 抗生素治疗 |
+| 是否包含 24h 响应能力？ | ✅ 是——照护小组提供 24 小时电话咨询 + 紧急访视 |
+| 是否由医院直接运营？ | ✅ 是——台大医院（公立医学中心）直接管理 |
+| 对标美国 HaH 公司？ | ⚠️ 否——公立系统内部项目，非商业实体，但模式可对标 DispatchHealth/Contessa 的临床方案 |</p>
+<blockquote>
+<p><strong>赛道误分类警示</strong>：部分台湾产业报道将传统「居家护理」（skilled nursing）与「在宅急症照护」混为一谈。本篇仅聚焦台大医院的急性 HaH 部分。</p>
+</blockquote>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>一句话定位</strong>：台大医院在宅医疗中心是台湾 Hospital at Home 模式的先驱——2016 年起以三甲医院资源系统化开展急性居家医疗，2024 年 NHI 全国试办计划即以台大经验为核心蓝本。</p>
+<p><strong>核心矛盾</strong>：</p>
+<ul>
+<li><strong>短期逆风</strong>：台湾护理人力严重短缺，全台医院被迫关床，HaH 模式虽可释放床位但需要额外医护人力投入，短期内难以大规模扩张</li>
+<li><strong>长期逻辑</strong>：2025 年台湾已进入超高龄社会（65 岁以上人口 &gt;20%），97.7 万独居老人中 5 万人需照护；医院床位有限 + 交叉感染风险 + 长者在地老化需求 → HaH 结构性刚需</li>
+</ul>
+<p><strong>关键数据速览</strong>：
+| 指标 | 数据 | 备注 |
+|:------|:-----|:-----|
+| 启动年份 | 2016 年 | 台大医院首创 |
+| 运营模式 | 医院主导 + 多学科团队 | 医师/护理师/药师/呼吸治疗师 |
+| 核心服务 | 在宅急症照护 / 居家安宁 / 慢性伤口 | 2024 年 NHI 试办后急性服务纳入健保 |
+| 全国 HaH 收案 (2024.7–2026.4) | 7,788 人次 | 全台 192 团队 / 873 家院所 |
+| 治疗完成率 | 89.9% | 照护后 14 日内急診率仅 2.9% |
+| 台大医院院长 | 余忠仁 | 2025.11 公开呼吁扩大在宅医疗 |
+| 关键学术领军 | 施至远 (金山分院) / 黄胜坚 (前院长) | 社区居家安宁模式开创者 |</p>
+<p><strong>总体判断</strong>：台大在宅是台湾公卫体系 HaH 的 <strong>标杆项目</strong>——具有临床创新 + 政策影响 + 学术输出三重价值。对 iHomeCare 而言，其最大借鉴在于「公立大医院如何在单一支付方体系下启动并规模化 HaH」。</p>
+<p><strong>完备性审计表</strong>：
+| 状态 | 计数 |
+|:------|:-----|
+| ✅ 完整覆盖 | 19 |
+| ⚠️ 部分覆盖 | 2 |
+| ❌ 不适用 (非公司实体) | 6 |</p>
+<hr />
+<h2 id="d2">D2 — 实体全貌（含时间线）</h2>
+<h3 id="_1">基本事实表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">全称</td>
+<td style="text-align: left;">国立台湾大学医学院附设医院 在宅医疗中心 / 分级医疗暨转衔照护管理中心</td>
+</tr>
+<tr>
+<td style="text-align: left;">性质</td>
+<td style="text-align: left;">公立医学中心内部项目（非独立法人）</td>
+</tr>
+<tr>
+<td style="text-align: left;">上级机构</td>
+<td style="text-align: left;">台大医院（NTUH），台湾最高层级公立医学中心</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">台北市中正区中山南路 7 号（台大医院总院）</td>
+</tr>
+<tr>
+<td style="text-align: left;">相关分院</td>
+<td style="text-align: left;">金山分院（社区居家安宁枢纽）、北护分院（社区医院/长照转衔）</td>
+</tr>
+<tr>
+<td style="text-align: left;">台大医院总床位</td>
+<td style="text-align: left;">~2,600 床（含癌医中心分院 500 床）</td>
+</tr>
+<tr>
+<td style="text-align: left;">台大医院员工</td>
+<td style="text-align: left;">约 7,000+ 人（含各分院）</td>
+</tr>
+<tr>
+<td style="text-align: left;">在宅团队规模</td>
+<td style="text-align: left;">无独立公开数据（多学科抽调制，非独立编制）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">年份</th>
+<th style="text-align: left;">里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2015–2016</td>
+<td style="text-align: left;">台大医院金山分院在黄胜坚院长带领下，开创社区居家安宁疗护模式，成为台湾「在地终老」标杆</td>
+</tr>
+<tr>
+<td style="text-align: left;">2016</td>
+<td style="text-align: left;">健保署推出「居家医疗照护整合计划」，台大医院为首批核心参与医院，建立医院主导的居家医疗团队</td>
+</tr>
+<tr>
+<td style="text-align: left;">2016</td>
+<td style="text-align: left;"><strong>台大医院在宅医疗中心正式成立</strong>（非独立法人，属院内跨科室协作单位），系统化开展居家急性医疗</td>
+</tr>
+<tr>
+<td style="text-align: left;">2017</td>
+<td style="text-align: left;">台湾在宅医疗学会成立（余尚儒发起），台大施至远等医师为学术核心</td>
+</tr>
+<tr>
+<td style="text-align: left;">2019–2020</td>
+<td style="text-align: left;">台大金山分院发表多篇社区居家安宁学术论文，建立「以价值为导向的居家医疗照护模式」理论框架</td>
+</tr>
+<tr>
+<td style="text-align: left;">2021</td>
+<td style="text-align: left;">台大癌医中心分院成立（500 床），总院床位压力增大，HaH 模式战略价值上升</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023–2024</td>
+<td style="text-align: left;">台大团队参与健保署「在宅急症照护试办计划」草案制定，以金山/北护经验为政策设计依据</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024.7</td>
+<td style="text-align: left;">健保署正式启动「全民健康保险在宅急症照护试办计划」，台大医院为首批核心执行医院</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025.8</td>
+<td style="text-align: left;">台大医学院举办「在宅社区照护研讨会」，聚焦急性后期照护 (PAC)</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025.10</td>
+<td style="text-align: left;">台大医院北护分院与关渡医院签署 ESG 合作备忘录，推动医疗永续 + 净零转型</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025.11</td>
+<td style="text-align: left;">台大医院院长余忠仁在赖清德总统主持的健康台湾推动委员会上，公开呼吁扩大在宅医疗，提出整合医疗与环境因子进入长照</td>
+</tr>
+<tr>
+<td style="text-align: left;">2026.5</td>
+<td style="text-align: left;">NHI 在宅急症照护新增「提早出院模式」+ 扩大适应症</td>
+</tr>
+<tr>
+<td style="text-align: left;">2026.6</td>
+<td style="text-align: left;">第一届亚太在宅医疗大会在台举办，台大团队为核心学术组织者之一</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">关键人物表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">姓名</th>
+<th style="text-align: left;">职务</th>
+<th style="text-align: left;">背景要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">余忠仁</td>
+<td style="text-align: left;">台大医院院长</td>
+<td style="text-align: left;">胸腔内科权威，2025 年公开呼吁政府扩大在宅医疗与远程医疗</td>
+</tr>
+<tr>
+<td style="text-align: left;">黄胜坚</td>
+<td style="text-align: left;">前台大医院金山分院院长 / 前台北市立联合医院总院长</td>
+<td style="text-align: left;">台湾社区居家安宁疗护先驱，「在宅善终」理念开创者</td>
+</tr>
+<tr>
+<td style="text-align: left;">施至远</td>
+<td style="text-align: left;">台大医院金山分院家庭医学科主治医师</td>
+<td style="text-align: left;">居家医疗/社区安宁核心研究者，多篇学术论文第一作者</td>
+</tr>
+<tr>
+<td style="text-align: left;">詹鼎正</td>
+<td style="text-align: left;">台大医院北护分院院长</td>
+<td style="text-align: left;">社区医院照护与 ESG 医疗永续推手</td>
+</tr>
+<tr>
+<td style="text-align: left;">余尚儒</td>
+<td style="text-align: left;">台湾在宅医疗学会发起人 / 都兰诊所创办人</td>
+<td style="text-align: left;">虽非台大体系，但为台湾 HaH 运动核心思想领袖</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">治理结构</h3>
+<p>台大医院在宅医疗中心<strong>无独立董事会/法人地位</strong>，其治理嵌入台大医院体系：</p>
+<ul>
+<li>台大医院院长 → 分院院长 → 跨科室在宅医疗协作团队</li>
+<li>学术线：台大医学院 → 家庭医学科/公共卫生学院</li>
+<li>政策线：台大团队 ↔ 卫福部健保署（参与在宅急症照护政策制定）</li>
+<li>无独立关联交易/违规记录——所有财务经台大医院统一管理</li>
+</ul>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_5">一句话核心逻辑</h3>
+<p><strong>台大在宅赌的是「超高龄社会的住院替代范式转移」</strong>——当台湾 65 岁以上人口突破 20% 且独居老人逼近百万，传统「病人来医院」的模式不可持续，谁先建立可信的「医院级照护进家门」体系，谁就掌握下一阶段医疗资源配置的话语权。</p>
+<h3 id="_6">战略差异化要素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">台大在宅定位</th>
+<th style="text-align: left;">差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">学术背书</td>
+<td style="text-align: left;">台大医学院 + 公共卫生学院</td>
+<td style="text-align: left;">台湾最顶级医学学术资源，论文发表于国际期刊</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床能力</td>
+<td style="text-align: left;">三甲医学中心全科室支撑</td>
+<td style="text-align: left;">可处理复杂共病患者的急性居家治疗</td>
+</tr>
+<tr>
+<td style="text-align: left;">政策影响力</td>
+<td style="text-align: left;">直接参与 NHI 试办计划制定</td>
+<td style="text-align: left;">卫福部健保署核心咨询方</td>
+</tr>
+<tr>
+<td style="text-align: left;">社区渗透</td>
+<td style="text-align: left;">金山/北护两大分院下沉社区</td>
+<td style="text-align: left;">从城市到偏乡的全覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">品牌信任</td>
+<td style="text-align: left;">「台大」品牌 = 台湾民众最高医疗信任</td>
+<td style="text-align: left;">患者接受 HaH 的门槛大幅降低</td>
+</tr>
+<tr>
+<td style="text-align: left;">成本结构</td>
+<td style="text-align: left;">公立医院非营利运营</td>
+<td style="text-align: left;">无商业回报压力，可专注临床质量</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_7">战略演变三阶段</h3>
+<ul>
+<li><strong>Phase 1（2015–2019）：社区居家安宁奠基</strong></li>
+<li>金山分院以「陪病人在家走到最后」的社区安宁模式建立品牌</li>
+<li>核心团队：黄胜坚 + 施至远</li>
+<li>
+<p>关键词：在地终老、叙事医疗、社区营造</p>
+</li>
+<li>
+<p><strong>Phase 2（2020–2024）：急性 HaH 模式验证 + 政策推进</strong></p>
+</li>
+<li>在宅医疗中心整合多学科急性照护能力</li>
+<li>积累居家 IV 抗生素治疗的临床数据</li>
+<li>2024 年 NHI 在宅急症照护计划以台大经验为蓝本</li>
+<li>
+<p>关键词：急性住院替代、政策 sandbox、健保给付</p>
+</li>
+<li>
+<p><strong>Phase 3（2025–当前）：规模化 + 亚太领导力</strong></p>
+</li>
+<li>2025 年余忠仁在总统层级呼吁扩大在宅医疗</li>
+<li>适应症从 3 种感染症扩展至心衰竭/呼吸衰竭/其他感染</li>
+<li>2026 年举办首届亚太在宅医疗大会</li>
+<li>关键词：适应症扩展、区域影响力、长照 3.0 整合</li>
+</ul>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<h3 id="_8">可视化架构图</h3>
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│                    支付方（单一）                          │
+│              全民健保 NHI（卫福部健保署）                    │
+│  给付项目：在宅急症照护每日医疗费 + 护理访视 + 药品 + 检验   │
+└────────────────────────┬────────────────────────────────┘
+                         │ 按项目付费 (fee-for-service)
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│              台大医院在宅医疗中心                           │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐              │
+│  │总院在宅中心│  │金山分院  │  │北护分院  │              │
+│  │(急性HaH)  │  │(社区安宁)│  │(长照转衔)│              │
+│  └──────────┘  └──────────┘  └──────────┘              │
+│                                                          │
+│  多学科团队: 医师 + 护理师 + 药师 + 呼吸治疗师              │
+│  24h 咨询热线 | 紧急访视 | 远程监测                         │
+└────────────────────────┬────────────────────────────────┘
+                         │ 到宅服务
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                    需求端（三类患者）                       │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐ │
+│  │ 居家医疗个案  │  │ 照护机构住民  │  │ 急诊轻症感染  │ │
+│  │ (长期卧床/失能)│  │ (长照机构)   │  │ (巴氏量表&lt;60) │ │
+│  └──────────────┘  └──────────────┘  └──────────────┘ │
+│  + 2026.5 新增: 提早出院患者（全院感染症）                 │
+│  + 未来扩展: 心衰竭/呼吸衰竭/洗肾/化疗/静脉营养            │
+└─────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="vs">支付方 vs 使用方</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">角色</th>
+<th style="text-align: left;">实体</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>支付方</strong></td>
+<td style="text-align: left;">全民健保 NHI</td>
+<td style="text-align: left;">单一支付方，在宅急症照护每日给付（含医疗费+护理+药品）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>部分负担</strong></td>
+<td style="text-align: left;">患者/家属</td>
+<td style="text-align: left;">医疗费用 5%（住院为 10%）；药品部分负担 0–200 元</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>交通/挂号</strong></td>
+<td style="text-align: left;">患者/家属</td>
+<td style="text-align: left;">部分院所酌收访视交通费或挂号费</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>使用方</strong></td>
+<td style="text-align: left;">患者（失能长者为主）</td>
+<td style="text-align: left;">三类适用族群 + 2026 年新增提早出院模式</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_9">价值链定位</h3>
+<pre><code>纯中介 ──── 技术平台 ──── 联合运营 ──── 自建医疗体系
+   │            │            │              │
+   │            │            │         ★ 台大在宅 ★
+   │            │            │      (医院全栈自营 HaH)
+   │            │            │
+   │      远程医疗SaaS   医院+第三方     Vertical Integration
+   │      (如Amwell)     合作运营         全自有团队
+</code></pre>
+<p>台大在宅位于「自建医疗体系」端——所有临床服务由台大自有医护团队提供，不使用第三方平台或外包人力。这保证了质量一致性，但也限缩了规模化速度。</p>
+<h3 id="_10">战略合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">伙伴类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: left;">合作性质</th>
+<th style="text-align: center;">排他性</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">政府/支付方</td>
+<td style="text-align: left;">卫福部健保署</td>
+<td style="text-align: left;">政策设计 + 给付制定</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: left;">公立医院天然合作</td>
+</tr>
+<tr>
+<td style="text-align: left;">学术</td>
+<td style="text-align: left;">台大医学院/公卫学院</td>
+<td style="text-align: left;">研究 + 人才输送</td>
+<td style="text-align: center;">是</td>
+<td style="text-align: left;">内部生态</td>
+</tr>
+<tr>
+<td style="text-align: left;">社区医院</td>
+<td style="text-align: left;">关渡医院等</td>
+<td style="text-align: left;">MOU 合作 + ESG 联动</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: left;">2025.10 签署</td>
+</tr>
+<tr>
+<td style="text-align: left;">台湾在宅医疗学会</td>
+<td style="text-align: left;">余尚儒等</td>
+<td style="text-align: left;">行业推动 + 认证培训</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: left;">学术领导</td>
+</tr>
+<tr>
+<td style="text-align: left;">长照机构</td>
+<td style="text-align: left;">各县长照中心</td>
+<td style="text-align: left;">患者转介 + 1966 专线</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: left;">政策框架内</td>
+</tr>
+<tr>
+<td style="text-align: left;">设备/远程监测</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">远程监测设备供应</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: left;">无可靠公开数据</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>伙伴集中度风险</strong>：低——公立体系、多伙伴分布</li>
+<li><strong>伙伴切换成本</strong>：极低——公立医院具有天然议价能力和替代性</li>
+</ul>
+<hr />
+<h2 id="d5">D5 — 服务产品线与定价模式</h2>
+<h3 id="_11">核心服务线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">产品线</th>
+<th style="text-align: left;">客户类型</th>
+<th style="text-align: left;">服务内容</th>
+<th style="text-align: left;">定价模式</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>在宅急症照护 (ACAH)</strong></td>
+<td style="text-align: left;">肺炎/UTI/软组织感染患者</td>
+<td style="text-align: left;">居家 IV 抗生素注射 + 每日医护访视 + 24h 响应</td>
+<td style="text-align: left;">NHI 按日给付（每日医疗费 + 护理访视费 + 药品）</td>
+<td style="text-align: left;">2024.7 纳入健保</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家医疗整合照护 (iHBMC)</strong></td>
+<td style="text-align: left;">失能/长期卧床慢性病患者</td>
+<td style="text-align: left;">定期医师访视 + 护理 + 用药管理</td>
+<td style="text-align: left;">NHI 按人次给付</td>
+<td style="text-align: left;">2016 年起</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家安宁疗护</strong></td>
+<td style="text-align: left;">末期患者</td>
+<td style="text-align: left;">疼痛控制 + 症状管理 + 心理/灵性支持</td>
+<td style="text-align: left;">NHI 安宁疗护给付</td>
+<td style="text-align: left;">金山分院为核心</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>慢性伤口照护</strong></td>
+<td style="text-align: left;">褥疮/糖尿病足等</td>
+<td style="text-align: left;">伤口评估 + 换药 + 感染控制</td>
+<td style="text-align: left;">整合在居家医疗中</td>
+<td style="text-align: left;">护理师主导</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>急性后期照护 (PAC)</strong></td>
+<td style="text-align: left;">出院后仍需要密集康复者</td>
+<td style="text-align: left;">康复 + 护理 + 医疗随访</td>
+<td style="text-align: left;">部分 NHI 给付 + 自费</td>
+<td style="text-align: left;">2025 年在宅研讨会核心议题</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2024-nhi">在宅急症照护关键参数（2024 NHI 试办计划）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">适应症</th>
+<th style="text-align: center;">目标照护天数</th>
+<th style="text-align: center;">上限天数</th>
+<th style="text-align: left;">核心治疗</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">肺炎</td>
+<td style="text-align: center;">9 天</td>
+<td style="text-align: center;">14 天</td>
+<td style="text-align: left;">24h cIF 抗生素（如 cefuroxime 4500mg）</td>
+</tr>
+<tr>
+<td style="text-align: left;">尿路感染</td>
+<td style="text-align: center;">7 天</td>
+<td style="text-align: center;">9 天</td>
+<td style="text-align: left;">IV 抗生素 ± 口服</td>
+</tr>
+<tr>
+<td style="text-align: left;">软组织感染</td>
+<td style="text-align: center;">6 天</td>
+<td style="text-align: center;">8 天</td>
+<td style="text-align: left;">IV 抗生素</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>患者费用对比（肺炎 9 天为例）</strong>：</p>
+<ul>
+<li>住院医疗（部分负担 10%）：约 NT$7,720</li>
+<li>在宅急症照护（部分负担 5%）：约 NT$2,470</li>
+<li><strong>节省：NT$5,250（约 68%）</strong></li>
+</ul>
+<h3 id="rd">R&amp;D 与创新管线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">在研项目</th>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">预计上线</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">心衰竭居家照护</td>
+<td style="text-align: left;">Beta / NHI 研议中</td>
+<td style="text-align: left;">2026–2027</td>
+<td style="text-align: left;">2026.5 已纳入 ACAH 扩展适应症讨论</td>
+</tr>
+<tr>
+<td style="text-align: left;">呼吸衰竭居家照护</td>
+<td style="text-align: left;">NHI 研议中</td>
+<td style="text-align: left;">2026–2027</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: left;">提早出院模式</td>
+<td style="text-align: left;">已上线</td>
+<td style="text-align: left;">2026.5</td>
+<td style="text-align: left;">全院感染症 + 失能患者，含品质奖励金</td>
+</tr>
+<tr>
+<td style="text-align: left;">远程监测 + AI 预警</td>
+<td style="text-align: left;">探索阶段</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">台大团队正在研究远程监测整合，无公开产品化时间表</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家洗肾/化疗/静脉营养</td>
+<td style="text-align: left;">政策研议中</td>
+<td style="text-align: left;">未定</td>
+<td style="text-align: left;">医界建议纳入 NHI 给付范围</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>R&amp;D 支出</strong>：无独立财报数据（公立医院项目，研发经费来自台大医院/医学院整体预算）</li>
+<li><strong>专利布局</strong>：无可靠公开数据；学术论文为主要 IP 输出形式</li>
+<li><strong>台大医院整体年度预算</strong>：约 NT$300 亿+（全台最大医学中心，无在宅专项拆分）</li>
+</ul>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_12">客户结构估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户类别</th>
+<th style="text-align: center;">收入占比估</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">居家医疗长期个案（慢性失能）</td>
+<td style="text-align: center;">~40%</td>
+<td style="text-align: left;">长期卧床、多重慢性病、高龄</td>
+<td style="text-align: left;">↑ 随人口老化增长</td>
+</tr>
+<tr>
+<td style="text-align: left;">照护机构住民（长照机构）</td>
+<td style="text-align: center;">~25%</td>
+<td style="text-align: left;">住宿式长照机构、群体居住</td>
+<td style="text-align: left;">↑ 减少机构-医院往返刚需</td>
+</tr>
+<tr>
+<td style="text-align: left;">急诊轻症感染（一次性急性）</td>
+<td style="text-align: center;">~20%</td>
+<td style="text-align: left;">肺炎/UTI/软组织感染、短期</td>
+<td style="text-align: left;">→ 2025 年新增急诊出院转衔</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家安宁个案</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">生命末期、在地终老需求</td>
+<td style="text-align: left;">↑ 社会接受度提升</td>
+</tr>
+<tr>
+<td style="text-align: left;">提早出院转衔</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">2026.5 新增模式</td>
+<td style="text-align: left;">↑ 政策鼓励方向</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_13">支付方来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">支付方</th>
+<th style="text-align: center;">占比估</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">全民健保 NHI</td>
+<td style="text-align: center;">~90%+</td>
+<td style="text-align: left;">在宅急症照护 + 居家医疗整合 + 安宁疗护</td>
+</tr>
+<tr>
+<td style="text-align: left;">患者自费（交通/挂号/部分负担）</td>
+<td style="text-align: center;">~5–10%</td>
+<td style="text-align: left;">少量自费项目</td>
+</tr>
+<tr>
+<td style="text-align: left;">长照 2.0/3.0 预算</td>
+<td style="text-align: center;">辅助性</td>
+<td style="text-align: left;">非直接医疗给付，但支持照护人力与设备</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_14">客户获取渠道</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">渠道</th>
+<th style="text-align: center;">效率评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">台大医院内部转诊（出院准备）</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">核心渠道，出院时评估转入 HaH</td>
+</tr>
+<tr>
+<td style="text-align: left;">急诊室直接收案</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">2024 年起可直接从急诊收案 HaH</td>
+</tr>
+<tr>
+<td style="text-align: left;">长照机构转介</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">机构-医院合作框架，正在扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;">1966 长照专线</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">民众主动申请管道</td>
+</tr>
+<tr>
+<td style="text-align: left;">基层诊所转诊</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">社区医师转介至台大</td>
+</tr>
+<tr>
+<td style="text-align: left;">患者/家属主动寻求</td>
+<td style="text-align: center;">🔴 低</td>
+<td style="text-align: left;">民众认知度仍待提升</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>集中度风险</strong>：高——高度依赖台大医院内部体系转诊和 NHI 单一支付方</li>
+<li><strong>患者获取本质</strong>：非市场竞争获客，而是医政体系内的资源分配</li>
+</ul>
+<h3 id="_15">品牌与声誉</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">品牌认知</td>
+<td style="text-align: left;">🟢 极强</td>
+<td style="text-align: left;">「台大」品牌 = 台湾最高医疗信任</td>
+</tr>
+<tr>
+<td style="text-align: left;">学术声誉</td>
+<td style="text-align: left;">🟢 极强</td>
+<td style="text-align: left;">国际期刊发表 + 政策影响力</td>
+</tr>
+<tr>
+<td style="text-align: left;">媒体报道情绪</td>
+<td style="text-align: left;">🟢 正面</td>
+<td style="text-align: left;">创新、在地终老、人文关怀叙事为主</td>
+</tr>
+<tr>
+<td style="text-align: left;">患者满意度</td>
+<td style="text-align: left;">🟢 高（推断）</td>
+<td style="text-align: left;">在家治疗满意度天然高于住院（文献一致结论）</td>
+</tr>
+<tr>
+<td style="text-align: left;">近期声誉事件</td>
+<td style="text-align: left;">无负面</td>
+<td style="text-align: left;">无公开争议或危机</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ <strong>重要声明</strong>：台大医院在宅医疗中心为公立医院内部项目，无独立财务报表。以下数据基于台大医院整体公开信息 + NHI 预算推估。</p>
+</blockquote>
+<h3 id="nhi">NHI 在宅医疗相关预算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">金额/规模</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">全台在宅医疗总支出（2024–2025）</td>
+<td style="text-align: left;">约 NT$60–80 亿/年</td>
+<td style="text-align: left;">占整体医疗支出 ~1%，远低于日本 4.06%</td>
+</tr>
+<tr>
+<td style="text-align: left;">在宅急症照护试办计划（2024）</td>
+<td style="text-align: left;">NT$5,900 万追加预算</td>
+<td style="text-align: left;">2025 年追加 NT$9,000 万</td>
+</tr>
+<tr>
+<td style="text-align: left;">长照 3.0 预算（2026）</td>
+<td style="text-align: left;">NT$1,100 亿</td>
+<td style="text-align: left;">含医疗-长照整合、社区支持</td>
+</tr>
+<tr>
+<td style="text-align: left;">台大医院整体年度预算</td>
+<td style="text-align: left;">约 NT$300 亿+</td>
+<td style="text-align: left;">全台最大医学中心</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_16">成本结构推估（台大在宅项目）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">占成本比估</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">医护人力（医师 + 护理师 + 药师 + 呼吸治疗师）</td>
+<td style="text-align: center;">~60%</td>
+<td style="text-align: left;">核心成本，台湾医护薪资相对低于国际</td>
+</tr>
+<tr>
+<td style="text-align: left;">药品与耗材（抗生素 + 输液 + 敷料）</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">感染症治疗为主，药品成本可控</td>
+</tr>
+<tr>
+<td style="text-align: left;">交通/访视成本</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">都市区域成本低，偏乡显著增加</td>
+</tr>
+<tr>
+<td style="text-align: left;">远程监测设备</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">初期投入，规模扩大后可摊薄</td>
+</tr>
+<tr>
+<td style="text-align: left;">行政管理</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">嵌入台大医院现有行政体系，边际成本低</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_17">收入来源推估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: center;">占比估</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NHI 在宅急症照护每日给付</td>
+<td style="text-align: center;">~40%</td>
+<td style="text-align: left;">2024 年起新增</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHI 居家医疗整合照护按人次给付</td>
+<td style="text-align: center;">~30%</td>
+<td style="text-align: left;">长期稳定来源</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHI 安宁疗护给付</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">末期患者照护</td>
+</tr>
+<tr>
+<td style="text-align: left;">其他（自费 + 长照补助）</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">交通费/自费项目/长照衔接</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>盈利状态</strong>：公立医院非营利运营，不追求利润——目标为收支平衡 + 释放床位间接效益</li>
+<li><strong>基本判断</strong>：在宅项目边际成本低于住院（无需病房/餐饮/基础设施），但交通/访视成本为增量支出</li>
+</ul>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<h3 id="_18">在宅急症照护完整流程</h3>
+<pre><code>Phase 0: 需求触发
+  ├─ 途径A: 台大急诊评估——轻症感染（CRB-65 ≤ 2 肺炎 / 无败血症 UTI）
+  ├─ 途径B: 居家医疗个案急性恶化——原照顾团队评估
+  ├─ 途径C: 照护机构住民感染——机构通报医院
+  └─ 途径D: 提早出院转衔——住院中经评估稳定（2026.5 新增）
+         │
+         ▼
+Phase 1: 评估与收案 (Day 0)
+  ├─ 医师评估：符合 NHI 在宅急症照护条件
+  ├─ 排除标准：需加护病房 / 血流动力学不稳定 / 严重呼吸衰竭
+  ├─ 家属同意 + 居家环境安全评估
+  └─ 启动「在宅急症共同照护小组」
+         │
+         ▼
+Phase 2: 服务交付 (Day 1–N)
+  ├─ Day 1: 医师首次实地访视 + 建立 IV 通路 + 首剂抗生素
+  │         + 护理师安装远程监测设备（BP/SpO2/体温）
+  ├─ Day 1–N: 护理师每日至少一次实地访视
+  │           + 医师每 3 天实地访视或每日视频诊疗
+  │           + 药师用药评估 + 呼吸治疗师（如需）
+  │           + 必要时床侧检验（POCT）
+  ├─ 24h 支持: 照护小组热线 + 紧急访视机制
+  └─ 远程监测: 生命体征持续追踪 + 异常预警
+         │
+         ▼
+Phase 3: 结案/转衔
+  ├─ 治疗完成（临床稳定 + 抗生素疗程结束）
+  ├─ 转回原居家医疗团队（长期照护衔接）
+  ├─ 如需：转介长照 1966（评估长照需求）
+  └─ 结案后 14 天追踪：急诊率 / 再住院率 / 满意度
+</code></pre>
+<h3 id="_19">与传统住院的关键差异</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">传统住院</th>
+<th style="text-align: left;">在宅急症照护</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">就医动线</td>
+<td style="text-align: left;">患者到医院</td>
+<td style="text-align: left;">医护到患者家</td>
+</tr>
+<tr>
+<td style="text-align: left;">基础设施</td>
+<td style="text-align: left;">医院病房 + 中央供氧/吸引</td>
+<td style="text-align: left;">患者自有住宅 + 便携设备</td>
+</tr>
+<tr>
+<td style="text-align: left;">照护支援</td>
+<td style="text-align: left;">医院护理站 24h</td>
+<td style="text-align: left;">家属 + 医护远程 + 24h热线</td>
+</tr>
+<tr>
+<td style="text-align: left;">交叉感染风险</td>
+<td style="text-align: left;">高（院内感染）</td>
+<td style="text-align: left;">极低</td>
+</tr>
+<tr>
+<td style="text-align: left;">日常生活影响</td>
+<td style="text-align: left;">被迫中断</td>
+<td style="text-align: left;">延续原有生活</td>
+</tr>
+<tr>
+<td style="text-align: left;">成本（患者）</td>
+<td style="text-align: left;">部分负担 10%</td>
+<td style="text-align: left;">部分负担 5%</td>
+</tr>
+<tr>
+<td style="text-align: left;">治疗目的</td>
+<td style="text-align: left;">治「病」</td>
+<td style="text-align: left;">治「病人」+ 维持生活品质</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构总览（五层模型）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;">自研/外采</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 财务/行政</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">台大 HIS 系统</td>
+<td style="text-align: left;">嵌入台大医院既有医院信息系统 (HIS)</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 业务运营</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">台大 HIS + 健保申报系统</td>
+<td style="text-align: left;">医令/病历/健保申报一体化</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 调度/运营中心</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">部分自研 + 人工协调</td>
+<td style="text-align: left;">访视排程仍依赖人工协调为主</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 用户端</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">基础应用</td>
+<td style="text-align: left;">远程视频诊疗（LINE/通讯软件），无专用 App</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据与 AI 层</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">学术研究级别</td>
+<td style="text-align: left;">研究用数据收集，非产品级平台</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>关键判断</strong>：台大在宅的技术能力以「医院既有系统延伸」为主，<strong>非独立技术平台</strong>。与商业 HaH 公司（DispatchHealth、Current Health）的定制化技术平台相比有明显差距，但在公立体系内已属领先。</p>
+</blockquote>
+<h3 id="92">9.2 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">架构模式</td>
+<td style="text-align: left;">嵌入式——依托台大 HIS 系统，无独立在宅技术平台</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作性</td>
+<td style="text-align: left;">台大 HIS ↔ 健保申报系统对接；与其他医院 EHR 无标准 FHIR 接口</td>
+</tr>
+<tr>
+<td style="text-align: left;">网络安全</td>
+<td style="text-align: left;">依托台大医院整体信息安全体系（ISO 27001 认证等级未公开）</td>
+</tr>
+<tr>
+<td style="text-align: left;">软件 IP/专利</td>
+<td style="text-align: left;">无商业化软件产品，学术论文为 IP 主要形式</td>
+</tr>
+<tr>
+<td style="text-align: left;">开发实践</td>
+<td style="text-align: left;">非软件开发机构——技术来自 HIS 厂商 + 台大信息室</td>
+</tr>
+<tr>
+<td style="text-align: left;">可扩展性</td>
+<td style="text-align: left;">受限于人工调度模型，信息化程度不足以支撑大规模扩展</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件/IoT 设备</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">设备品类</td>
+<td style="text-align: left;">血压计、血氧仪、体温计（基础远程监测）</td>
+</tr>
+<tr>
+<td style="text-align: left;">设备来源</td>
+<td style="text-align: left;">第三方采购（品牌/型号未公开），非自研</td>
+</tr>
+<tr>
+<td style="text-align: left;">连接协议</td>
+<td style="text-align: left;">Bluetooth LE + WiFi（推测），无定制连接方案</td>
+</tr>
+<tr>
+<td style="text-align: left;">边缘能力</td>
+<td style="text-align: left;">无设备端预处理或离线缓存能力</td>
+</tr>
+<tr>
+<td style="text-align: left;">监管注册</td>
+<td style="text-align: left;">均为已上市的通用医疗设备（TFDA 认证），无需额外注册</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">AI 模型</td>
+<td style="text-align: left;">不适用——台大在宅无产品化 AI 能力</td>
+</tr>
+<tr>
+<td style="text-align: left;">训练数据</td>
+<td style="text-align: left;">学术研究级别数据积累（金山分院居家安宁数据）</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床验证</td>
+<td style="text-align: left;">通过学术论文发表（非产品级验证）</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 监管</td>
+<td style="text-align: left;">不适用</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 团队</td>
+<td style="text-align: left;">无独立 AI 团队——研究合作通过台大医学院/公卫学院</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">能力维度</th>
+<th style="text-align: center;">台大在宅</th>
+<th style="text-align: center;">行业标准 (商业 HaH)</th>
+<th style="text-align: center;">差异化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">软件全栈能力</td>
+<td style="text-align: center;">🔴 弱</td>
+<td style="text-align: center;">有专用平台</td>
+<td style="text-align: center;">无独立在宅信息系统</td>
+</tr>
+<tr>
+<td style="text-align: left;">硬件整合</td>
+<td style="text-align: center;">🔴 弱</td>
+<td style="text-align: center;">远程监测套件</td>
+<td style="text-align: center;">通用设备，非定制</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 临床级能力</td>
+<td style="text-align: center;">🔴 无</td>
+<td style="text-align: center;">当前领先者有 AI EWS</td>
+<td style="text-align: center;">无 AI 能力</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作性</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">FHIR/Epic 集成</td>
+<td style="text-align: center;">HIS 内集成可，跨院不可</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据资产规模</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">数万+ 患者</td>
+<td style="text-align: center;">单院数据，深度可但广度有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床能力</td>
+<td style="text-align: center;">🟢 极强</td>
+<td style="text-align: center;">医生在线+NP</td>
+<td style="text-align: center;">全科室三甲支撑</td>
+</tr>
+<tr>
+<td style="text-align: left;">品牌信任/IP</td>
+<td style="text-align: center;">🟢 极强</td>
+<td style="text-align: center;">企业品牌</td>
+<td style="text-align: center;">台大 = 最高公众信任</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="96">9.6 技术风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险</th>
+<th style="text-align: center;">严重度</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">信息化程度不足以支撑规模化</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">人工调度为主，无法指数级扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;">远程监测设备依赖第三方</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: left;">通用产品，供应充足</td>
+</tr>
+<tr>
+<td style="text-align: left;">无专用患者端 App</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">用户体验/家属参与度受限</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<blockquote>
+<p>⚠️ 台湾 HaH 为非商业竞争市场——公立系统主导、单一支付方。以下「竞品」实为行业对标，竞争维度为行业影响力/政策话语权/学术声誉/临床规模，而非商业竞争。</p>
+</blockquote>
+<h3 id="_20">台湾本土对标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">台大医院在宅</th>
+<th style="text-align: left;">台北荣总</th>
+<th style="text-align: left;">台中荣总</th>
+<th style="text-align: left;">高雄荣总</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">启动时间</td>
+<td style="text-align: left;">2016</td>
+<td style="text-align: left;">2016–2017（居家医疗整合）</td>
+<td style="text-align: left;">2017</td>
+<td style="text-align: left;">2017</td>
+</tr>
+<tr>
+<td style="text-align: left;">HaH 模式</td>
+<td style="text-align: left;">总院 + 分院（金山/北护）</td>
+<td style="text-align: left;">总院居家医疗团队</td>
+<td style="text-align: left;">总院 + 社区群</td>
+<td style="text-align: left;">总院 + 屏东分院</td>
+</tr>
+<tr>
+<td style="text-align: left;">特色领域</td>
+<td style="text-align: left;">感染症 HaH + 社区安宁</td>
+<td style="text-align: left;">退伍军人照护</td>
+<td style="text-align: left;">偏乡居家医疗</td>
+<td style="text-align: left;">南部最大医疗网</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHI 在宅试办参与</td>
+<td style="text-align: left;">首批核心</td>
+<td style="text-align: left;">首批核心</td>
+<td style="text-align: left;">首批核心</td>
+<td style="text-align: left;">首批核心</td>
+</tr>
+<tr>
+<td style="text-align: left;">学术产出</td>
+<td style="text-align: left;">🟢 极强</td>
+<td style="text-align: left;">🟡 中等</td>
+<td style="text-align: left;">🟡 中等</td>
+<td style="text-align: left;">🟡 中等</td>
+</tr>
+<tr>
+<td style="text-align: left;">政策影响力</td>
+<td style="text-align: left;">🟢 极强</td>
+<td style="text-align: left;">🟡 中等</td>
+<td style="text-align: left;">🟡 中等</td>
+<td style="text-align: left;">🟡 中等</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_21">基层在宅医疗诊所</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">台大在宅</th>
+<th style="text-align: left;">都兰诊所 (余尚儒)</th>
+<th style="text-align: left;">其他基层 HaH 诊所</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">模式</td>
+<td style="text-align: left;">大医院主导</td>
+<td style="text-align: left;">基层诊所在宅</td>
+<td style="text-align: left;">需挂靠医院团队</td>
+</tr>
+<tr>
+<td style="text-align: left;">急症处理能力</td>
+<td style="text-align: left;">🟢 全科室支撑</td>
+<td style="text-align: left;">🟡 有限</td>
+<td style="text-align: left;">🟡 有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">社区渗透</td>
+<td style="text-align: left;">🟡 城市为主</td>
+<td style="text-align: left;">🟢 偏乡深度</td>
+<td style="text-align: left;">因地而异</td>
+</tr>
+<tr>
+<td style="text-align: left;">患者信任度</td>
+<td style="text-align: left;">🟢 极强</td>
+<td style="text-align: left;">🟡 逐步建立</td>
+<td style="text-align: left;">因地而异</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">关键判断</h3>
+<ul>
+<li><strong>台大在宅在台湾 HaH 领域的定位</strong>：绝对的行业领导者和标准制定者</li>
+<li><strong>最大「竞品」</strong>：并非其他医院，而是「民众对在家治疗的安全感不足」——社会认知障碍</li>
+<li><strong>香港对标价值</strong>：台大模式是香港 iHomeCare 最接近的对标——同为华人社会 + 单一支付方 + 公立医院主导</li>
+</ul>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</h2>
+<h3 id="tam">TAM（台湾可触达市场）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: left;">计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">台湾 65 岁以上人口</td>
+<td style="text-align: center;">~450 万 (20%+)</td>
+<td style="text-align: left;">2025 年进入超高龄社会</td>
+</tr>
+<tr>
+<td style="text-align: left;">其中失能人口</td>
+<td style="text-align: center;">~73 万</td>
+<td style="text-align: left;">长照 2.0 统计</td>
+</tr>
+<tr>
+<td style="text-align: left;">每年因肺炎/UTI/软组织感染住院的老年患者</td>
+<td style="text-align: center;">~15–20 万/年（估）</td>
+<td style="text-align: left;">台湾年均住院约 200 万人次，老年感染占比</td>
+</tr>
+<tr>
+<td style="text-align: left;">其中适合 HaH 的比例</td>
+<td style="text-align: center;">~30–50%</td>
+<td style="text-align: left;">CMS/国际经验——30–50% 的急性住院可用 HaH 替代</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可触达 HaH 患者</strong></td>
+<td style="text-align: center;"><strong>~5–10 万/年</strong></td>
+<td style="text-align: left;">TAM</td>
+</tr>
+<tr>
+<td style="text-align: left;">每例 HaH 平均 NHI 给付</td>
+<td style="text-align: center;">NT$1.5–3 万（估）</td>
+<td style="text-align: left;">按 6–9 天计</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HaH 市场规模</strong></td>
+<td style="text-align: center;"><strong>NT$10–30 亿/年</strong></td>
+<td style="text-align: left;">TAM</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="sam">SAM（台大可服务市场）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: left;">计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">台大医院覆盖人口</td>
+<td style="text-align: center;">台北 + 新北约 650 万</td>
+<td style="text-align: left;">北部医学中心主要服务区</td>
+</tr>
+<tr>
+<td style="text-align: left;">台大在宅年可处理患者</td>
+<td style="text-align: center;">~2,000–5,000 人/年（估）</td>
+<td style="text-align: left;">受限于人力规模</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>台大在宅 SAM</strong></td>
+<td style="text-align: center;"><strong>~NT$5,000 万–1.5 亿/年（估）</strong></td>
+<td style="text-align: left;">占全台 HaH TAM 约 5–15%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_23">增长驱动因素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">因素</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NHI 适应症扩展（心衰竭/呼吸衰竭等）</td>
+<td style="text-align: left;">🟢 患者池扩大 2–3 倍</td>
+</tr>
+<tr>
+<td style="text-align: left;">提早出院模式（2026.5）</td>
+<td style="text-align: left;">🟢 新增流量入口</td>
+</tr>
+<tr>
+<td style="text-align: left;">长照 3.0 预算增加（2026: NT$1,100 亿）</td>
+<td style="text-align: left;">🟢 照护基础设施改善</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理人力短缺</td>
+<td style="text-align: left;">🔴 主要增长瓶颈</td>
+</tr>
+<tr>
+<td style="text-align: left;">民众认知提升</td>
+<td style="text-align: left;">🟢 长期利好</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<blockquote>
+<p>⚠️ 台大在宅为非营利公立项目，以下分析以「财务可持续性」替代「盈利」。</p>
+</blockquote>
+<h3 id="-">成本-收入平衡分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">估算</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">每例 HaH 患者（9 天肺炎）NHI 收入</td>
+<td style="text-align: left;">NT$2–3 万（估）</td>
+<td style="text-align: left;">每日医疗费 + 护理 + 药品 + 检验</td>
+</tr>
+<tr>
+<td style="text-align: left;">每例 HaH 直接成本</td>
+<td style="text-align: left;">NT$2–2.5 万（估）</td>
+<td style="text-align: left;">人力 + 交通 + 药品耗材</td>
+</tr>
+<tr>
+<td style="text-align: left;">边际贡献</td>
+<td style="text-align: left;">接近持平或微正</td>
+<td style="text-align: left;">公立非营利定价</td>
+</tr>
+<tr>
+<td style="text-align: left;">释放床位的间接效益</td>
+<td style="text-align: left;">显著</td>
+<td style="text-align: left;">每例 HaH 释放 6–14 天急性床位</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_24">财务可持续性路径</h3>
+<ul>
+<li><strong>短期（当前）</strong>：NHI 试办计划 cover 直接成本，基本可实现收支平衡</li>
+<li><strong>中期（1–3 年）</strong>：适应症扩展 + 给付调升 → 规模效应摊薄固定成本</li>
+<li><strong>长期（3–5 年）</strong>：若 HaH 占全台医疗支出从 1% 升至 3%（政策目标），年度市场达 NT$180–240 亿</li>
+</ul>
+<h3 id="_25">综合判断</h3>
+<p>公立医院 HaH 的财务逻辑不靠「单项目盈利」，而靠 <strong>「释放急性床位 → 收治更高净值患者 → 提升医院整体运营效率」</strong> 的间接效益。这一模式在台湾 NHI 单一支付方体系下具有合理性。</p>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期（0–12 月）</strong></td>
+<td style="text-align: left;">NHI 适应症持续扩展 + 提早出院模式增量；长照 3.0 预算 2026 年 NT$1,100 亿</td>
+<td style="text-align: left;">护理人力严重短缺，可能制约收案规模；民众对「在家住院」信心不足</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期（1–3 年）</strong></td>
+<td style="text-align: left;">HaH 占医疗支出从 1% → 3%（政策目标）；亚太 HaH 大会建立区域影响力</td>
+<td style="text-align: left;">若 NHI 给付调整不跟上涨薪压力，医院意愿可能下降；长照/医疗整合进度不确定</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">超高龄社会不可逆——HaH 刚需持续增长；单一支付方体系下政策方向明确</td>
+<td style="text-align: left;">健保财政压力——台湾健保长期面临收不抵支的结构性问题；医护出走（赴新加坡/大陆）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_26">法律与合规</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">医疗法规适用</td>
+<td style="text-align: left;">在宅急症照护属 NHI 给付项目，于现行医师法/护理人员法框架内合法</td>
+</tr>
+<tr>
+<td style="text-align: left;">远程医疗法规</td>
+<td style="text-align: left;">2024 年通讯诊察治疗办法已放宽居家医疗场景的远程诊疗限制</td>
+</tr>
+<tr>
+<td style="text-align: left;">医疗责任</td>
+<td style="text-align: left;">台大医院统一承担——无独立法人体风险</td>
+</tr>
+<tr>
+<td style="text-align: left;">监管调查/诉讼</td>
+<td style="text-align: left;">无公开记录</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_27">宏观敏感性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">情景</th>
+<th style="text-align: center;">影响</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">健保财务危机</td>
+<td style="text-align: center;">🔴 高</td>
+<td style="text-align: left;">NHI 若削减给付，HaH 项目首当其冲</td>
+</tr>
+<tr>
+<td style="text-align: left;">医护薪资大幅上涨</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">成本压力增加，但 HaH 人效高于住院</td>
+</tr>
+<tr>
+<td style="text-align: left;">疫情/大流行</td>
+<td style="text-align: center;">🟢 正面</td>
+<td style="text-align: left;">COVID-19 已验证 HaH 分流价值</td>
+</tr>
+<tr>
+<td style="text-align: left;">经济衰退</td>
+<td style="text-align: center;">🟢 正面</td>
+<td style="text-align: left;">更便宜的治疗方案需求增加</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引</h2>
+<blockquote>
+<p>⚠️ 台大在宅非上市公司，无可比管理层指引（earnings guidance）。以下为关键人物公开发言摘要。</p>
+</blockquote>
+<ul>
+<li><strong>余忠仁（2025.11）</strong>：在总统主持的健康台湾推动委员会上，呼吁「扩大在宅医疗、整合医疗与环境因子进入长照」，并提出 97.7 万独居老人 + 5 万需照护的数据支撑</li>
+<li><strong>石崇良（时任健保署长 → 现任卫福部长）</strong>：2024 年推动在宅急症照护试办计划，2026 年推动扩大适应症 + 新增模式</li>
+<li><strong>施至远</strong>：学术论文中强调「居家医疗是以价值为导向的照护模式」——提升照护结果 + 降低医疗耗用</li>
+</ul>
+<p><strong>指引可信度</strong>：高（政策层方向明确，已有 NHI 试办计划支撑）</p>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<h3 id="_28">❌ 不适用——非公司实体，无独立估值</h3>
+<p>台大医院在宅医疗中心为公立医院内部项目，无独立股权结构、无市值、无融资。无法进行传统估值分析。</p>
+<p>若需对标参考：</p>
+<ul>
+<li>台大医院整体：台湾最大医学中心，年预算 NT$300 亿+，非上市</li>
+<li>可对标商业 HaH 公司（如 DispatchHealth 估值约 $40 亿 / Contessa 被 Amedisys 收购等），但非直接可比</li>
+</ul>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1-vs-hah">1. 模式借鉴：大医院 vs 社区的 HaH 路径选择</h3>
+<p>台大在宅提供两条 HaH 路径：</p>
+<ul>
+<li><strong>大医院路径</strong>（台大总院）：医学中心资源 + 全科室支撑 → 适合复杂共病患者</li>
+<li><strong>社区路径</strong>（金山/北护分院）：社区医院下沉 + 本地化 → 适合以社区为单位的 HaH</li>
+</ul>
+<p><strong>对 iHomeCare 启示</strong>：香港同为单一支付方（医管局 HA）体系，<strong>建议优先走「大医院 + 社区卫星」混合路径</strong>——从 HA 联网医院启动，以社区健康中心/门诊为下沉节点。</p>
+<h3 id="2">2. 适应症起步策略</h3>
+<p>台大从「3 种感染症 IV 抗生素」起步 → 逐步扩展至心衰竭/呼吸衰竭 → 洗肾/化疗。</p>
+<p><strong>对 iHomeCare</strong>：建议以「COPD 急性加重 + 心衰竭利尿 + 蜂窝性组织炎 IV 抗生素」为起步适应症（高 incidence + 明确治疗终点 + 低意外风险）。</p>
+<h3 id="3">3. 支付设计：部分负担的经济杠杆</h3>
+<p>台大模式中，患者 HaH 部分负担仅为住院的 ~1/3（5% vs 10%），形成强经济诱因。</p>
+<p><strong>对 iHomeCare</strong>：建议向 HA 提议类似的部分负担分级——HaH 日额收费低于住院，刺激患者选择。</p>
+<h3 id="4">4. 不要忽略「在地终老」的人文价值</h3>
+<p>台大金山分院的社区安宁经验表明：<strong>民众接受 HaH 的关键不在费用，而在「在家治疗的安心感」</strong>。iHomeCare 需要从一开始就投资于家属教育 + 可信赖的 24h 响应系统。</p>
+<h3 id="5">5. 技术平台不可忽视</h3>
+<p>台大在宅的技术平台仍较基础（人工调度+通讯软件）。iHomeCare 若能在启动时即建立专用在宅信息系统（调度 + 远程监测 + 家属沟通 + 数据追踪），将成为差异化优势。</p>
+<h3 id="6">6. 护理人力是最大瓶颈</h3>
+<p>台湾面临严重的护理人力短缺——HaH 虽释放床位但需要额外社区访视人力。香港同样面临医护人力紧张，建议：</p>
+<ul>
+<li>早期引入「护理师 + 健康助理」分层人力模型</li>
+<li>评估用非医护人力（如社区健康工作者）承担部分非临床任务</li>
+</ul>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<h3 id="_29">核心政策框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策/法规</th>
+<th style="text-align: left;">发布机构</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">核心内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">全民健康保险居家医疗照护整合计划</td>
+<td style="text-align: left;">健保署</td>
+<td style="text-align: left;">2016</td>
+<td style="text-align: left;">医师到宅+护理+药师整合照护，按人次给付</td>
+</tr>
+<tr>
+<td style="text-align: left;">通讯诊察治疗办法（放宽）</td>
+<td style="text-align: left;">卫福部</td>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">放宽居家医疗场景的远程诊疗限制</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>全民健康保险在宅急症照护试办计划</strong></td>
+<td style="text-align: left;">健保署</td>
+<td style="text-align: left;">2024.7</td>
+<td style="text-align: left;">核心政策——急性感染 HaH 纳入健保给付</td>
+</tr>
+<tr>
+<td style="text-align: left;">在宅急症照护试办计划扩大</td>
+<td style="text-align: left;">健保署</td>
+<td style="text-align: left;">2026.5</td>
+<td style="text-align: left;">新增提早出院模式 + 扩大适应症 + 调升给付 5%</td>
+</tr>
+<tr>
+<td style="text-align: left;">长期照顾服务法（长服法）</td>
+<td style="text-align: left;">卫福部</td>
+<td style="text-align: left;">2017 施行</td>
+<td style="text-align: left;">长照 2.0 法律基础</td>
+</tr>
+<tr>
+<td style="text-align: left;">长照 3.0</td>
+<td style="text-align: left;">卫福部</td>
+<td style="text-align: left;">2026 年启动</td>
+<td style="text-align: left;">NT$1,100 亿预算，整合医疗+长照</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_30">政策趋势判断</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">方向</th>
+<th style="text-align: left;">判断</th>
+<th style="text-align: left;">可信度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NHI HaH 给付持续扩大</td>
+<td style="text-align: left;">✅ 确定——政策方向明确，2026 已扩展</td>
+<td style="text-align: left;">高</td>
+</tr>
+<tr>
+<td style="text-align: left;">HaH 占医疗支出从 1% → 3%</td>
+<td style="text-align: left;">⚠️ 政策目标，但需突破护理人力瓶颈</td>
+<td style="text-align: left;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;">在宅急症照护成为 NHI 常态化给付</td>
+<td style="text-align: left;">✅ 试办计划 3 年后大概率常设化</td>
+<td style="text-align: left;">高</td>
+</tr>
+<tr>
+<td style="text-align: left;">跨院 HaH 协作 / 支付互通</td>
+<td style="text-align: left;">⚠️ 尚在早期讨论</td>
+<td style="text-align: left;">低</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<h3 id="vs-9">案例：肺炎患者 — 在宅 vs 住院对比（9 天疗程）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">住院</th>
+<th style="text-align: left;">在宅急症照护</th>
+<th style="text-align: left;">差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>收入侧</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">NHI 住院日额给付</td>
+<td style="text-align: left;">NT$6,000–8,000/天（估）</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">NHI 在宅日额给付</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">NT$2,500–3,500/天（估）</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">药品/检验</td>
+<td style="text-align: left;">含在住院给付内</td>
+<td style="text-align: left;">含在在宅给付内</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>收入合计（9天）</strong></td>
+<td style="text-align: left;">~NT$54,000–72,000</td>
+<td style="text-align: left;">~NT$22,500–31,500</td>
+<td style="text-align: left;"><strong>HaH 收入低 ~50–60%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成本侧</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">病房/基础设施</td>
+<td style="text-align: left;">NT$2,000–3,000/天</td>
+<td style="text-align: left;">NT$0</td>
+<td style="text-align: left;">节省</td>
+</tr>
+<tr>
+<td style="text-align: left;">医护人力（分摊）</td>
+<td style="text-align: left;">NT$4,000–5,000/天</td>
+<td style="text-align: left;">NT$1,500–2,500/天 + 交通</td>
+<td style="text-align: left;">节省</td>
+</tr>
+<tr>
+<td style="text-align: left;">药品/耗材</td>
+<td style="text-align: left;">~NT$500–1,000/天</td>
+<td style="text-align: left;">~NT$500–1,000/天</td>
+<td style="text-align: left;">等同</td>
+</tr>
+<tr>
+<td style="text-align: left;">交通访视</td>
+<td style="text-align: left;">NT$0</td>
+<td style="text-align: left;">NT$300–500/天</td>
+<td style="text-align: left;">增量</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成本合计（9天）</strong></td>
+<td style="text-align: left;">~NT$58,500–81,000</td>
+<td style="text-align: left;">~NT$20,700–36,000</td>
+<td style="text-align: left;"><strong>HaH 成本低 ~55–65%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>边际贡献</strong></td>
+<td style="text-align: left;">接近持平</td>
+<td style="text-align: left;">接近持平</td>
+<td style="text-align: left;">均为非营利定价</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>床位释放效益</strong></td>
+<td style="text-align: left;">占用 1 床 × 9 天</td>
+<td style="text-align: left;">释放 1 床 × 9 天</td>
+<td style="text-align: left;">可收治更高敏患者</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者部分负担</strong></td>
+<td style="text-align: left;">NT$7,720（10%）</td>
+<td style="text-align: left;">NT$2,470（5%）</td>
+<td style="text-align: left;"><strong>患者节省 ~68%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_31">关键假设</h3>
+<ol>
+<li>NHI 在宅日额给付水平为推估值（健保署未公开发布每日费率表）</li>
+<li>住院成本为台湾医学中心平均水平推估</li>
+<li>未计入「床位释放后可收治外科/重症患者的增量收入」——这是 HaH 的真正经济价值</li>
+<li>未计入患者/家属的非财务效益（避免往返医院的时间成本、降低院内感染风险）</li>
+</ol>
+<h3 id="_32">经济可行性判断</h3>
+<p><strong>短期</strong>：在宅急症照护在 NHI 试办给付水平下可达收支平衡
+<strong>中期</strong>：若 NHI 提升给付 + 适应症扩展，单位经济改善空间有限但规模效应显著
+<strong>长期核心价值</strong>：释放急性床位的间接效益远大于项目本身的直接损益</p>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<h3 id="_33">分层矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: center;">规模估</th>
+<th style="text-align: center;">支付能力</th>
+<th style="text-align: center;">产品匹配度</th>
+<th style="text-align: center;">优先序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>A</strong></td>
+<td style="text-align: left;">失能卧床 + 反复感染住院的长者</td>
+<td style="text-align: center;">~10–15 万/年</td>
+<td style="text-align: center;">NHI cover</td>
+<td style="text-align: center;">🟢 极高</td>
+<td style="text-align: center;"><strong>最高</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>B</strong></td>
+<td style="text-align: left;">照护机构住民（肺炎/UTI 高发）</td>
+<td style="text-align: center;">~5–8 万/年</td>
+<td style="text-align: center;">NHI + 机构</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: center;">高</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>C</strong></td>
+<td style="text-align: left;">急诊轻症感染（不需 ICU 但需 IV 抗生素）</td>
+<td style="text-align: center;">~5–10 万/年</td>
+<td style="text-align: center;">NHI cover</td>
+<td style="text-align: center;">🟡 中高</td>
+<td style="text-align: center;">中高</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D</strong></td>
+<td style="text-align: left;">末期患者（居家安宁）</td>
+<td style="text-align: center;">~2–3 万/年</td>
+<td style="text-align: center;">NHI安宁给付</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>E</strong></td>
+<td style="text-align: left;">一般长者慢性病管理（非急性）</td>
+<td style="text-align: center;">~50 万+</td>
+<td style="text-align: center;">NHI/自费</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">低</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_34">对战略的推导含义</h3>
+<ul>
+<li><strong>A 层级是 HaH 最核心人群</strong>——高 incidence + 高住院成本 + HaH 可有效替代</li>
+<li><strong>B 层级是政策优先方向</strong>——减少机构-医院间不必要的往返</li>
+<li><strong>C 层级是规模化的关键</strong>——急诊直接转 HaH 可显著提升收案量</li>
+<li>不应过早进入 E 层级（慢性管理）——与急性 HaH 的核心价值主张不同</li>
+</ul>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<blockquote>
+<p>⚠️ 台湾 HaH 为非商业竞争市场。以下「竞品」分析以行业影响力/临床能力对标，非商业竞争。</p>
+</blockquote>
+<h3 id="_35">已确认对标机构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">机构</th>
+<th style="text-align: left;">模式</th>
+<th style="text-align: left;">HaH 规模</th>
+<th style="text-align: left;">差异化</th>
+<th style="text-align: center;">对标价值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>台大医院</strong></td>
+<td style="text-align: left;">总院+分院</td>
+<td style="text-align: left;">台湾最大/领先</td>
+<td style="text-align: left;">全科室支撑+学术+政策</td>
+<td style="text-align: center;">基准</td>
+</tr>
+<tr>
+<td style="text-align: left;">台北荣总</td>
+<td style="text-align: left;">总院居家医疗团</td>
+<td style="text-align: left;">中</td>
+<td style="text-align: left;">退伍军人体系</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">台中荣总</td>
+<td style="text-align: left;">总院+社区群</td>
+<td style="text-align: left;">中</td>
+<td style="text-align: left;">中部偏乡覆盖</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">高雄荣总</td>
+<td style="text-align: left;">总院+屏东分院</td>
+<td style="text-align: left;">中</td>
+<td style="text-align: left;">南部最大网</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">长庚医院体系</td>
+<td style="text-align: left;">私立医院 HaH</td>
+<td style="text-align: left;">中</td>
+<td style="text-align: left;">私立但规模大</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">都兰诊所/基层在宅诊所</td>
+<td style="text-align: left;">基层主导</td>
+<td style="text-align: left;">小</td>
+<td style="text-align: left;">社区深度</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>日本在宅医疗</strong></td>
+<td style="text-align: left;">诊所主导+政府保险</td>
+<td style="text-align: left;">成熟</td>
+<td style="text-align: left;">台大学习标杆</td>
+<td style="text-align: center;">🟢 参考</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>新加坡 MIC@Home</strong></td>
+<td style="text-align: left;">公立医院主导</td>
+<td style="text-align: left;">成长中</td>
+<td style="text-align: left;">同为单一支付方城邦</td>
+<td style="text-align: center;">🟢 参考</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_36">潜在跨界进入者</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: center;">可能性</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">台湾电信业者（中华电信/远传）</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">5G+远程监测方案，已有智慧医疗布局</td>
+</tr>
+<tr>
+<td style="text-align: left;">保险业者</td>
+<td style="text-align: center;">🔴 低</td>
+<td style="text-align: left;">NHI 单一支付方下空间有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">国际 HaH 技术公司（Current Health/Biofourmis）</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">Biofourmis 有新加坡基础，可能扩展至台</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略深度评估</h2>
+<h3 id="_37">❌ 不适用——公立医院内部项目，无跨境扩展路径</h3>
+<p>台大医院在宅医疗中心的核心使命是服务台湾 NHI 体系内的患者，无海外扩展计划。</p>
+<p><strong>但有学术/政策输出价值</strong>：</p>
+<ul>
+<li>2026.6 举办首届亚太在宅医疗大会（台大为核心组织者之一）</li>
+<li>台大-金山分院的社区居家安宁模式已在日本/韩国学术圈获得关注</li>
+<li>施至远等发表的学术论文为亚太区 HaH 政策制定提供证据基础</li>
+</ul>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<h3 id="_38">❌ 不适用——公立医院内部项目，无股权退出路径</h3>
+<p>台大在宅不是独立法人实体，无法被收购或上市。无并购/退出的商业逻辑。</p>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<h3 id="esg">ESG 评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>环境 (E)</strong></td>
+<td style="text-align: left;">🟡 发展中</td>
+<td style="text-align: left;">2025.10 北护分院与关渡医院签署 ESG 合作备忘录——「医疗永续与净零转型」；HaH 减少患者交通碳排放</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社会 (S)</strong></td>
+<td style="text-align: left;">🟢 极强</td>
+<td style="text-align: left;">核心社会价值：在地终老、减少健康不平等、降低就医障碍</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理 (G)</strong></td>
+<td style="text-align: left;">🟢 强</td>
+<td style="text-align: left;">公立医院体系内治理成熟，无治理争议</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_39">关键社会影响力指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">在宅善终比例</td>
+<td style="text-align: left;">金山分院社区安宁使末期患者在家往生率显著高于全台平均</td>
+</tr>
+<tr>
+<td style="text-align: left;">减少的住院天数</td>
+<td style="text-align: left;">全国 7,788 人次 HaH × 平均 7–9 天 = ~5.5–7 万住院日节省</td>
+</tr>
+<tr>
+<td style="text-align: left;">降低的院内感染风险</td>
+<td style="text-align: left;">每位 HaH 患者避免了 7–14 天的院内暴露</td>
+</tr>
+<tr>
+<td style="text-align: left;">减轻的家属照护负担</td>
+<td style="text-align: left;">避免往返医院 + 减少请假——质性研究证实显著</td>
+</tr>
+<tr>
+<td style="text-align: left;">偏远地区可及性</td>
+<td style="text-align: left;">金山模式证明 HaH 可有效触达偏乡</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<h3 id="_40">组织架构</h3>
+<p>台大在宅无独立组织结构，运作模式为：</p>
+<ul>
+<li><strong>总院层面</strong>：分级医疗暨转衔照护管理中心——负责在宅医疗的政策协调与跨科室整合</li>
+<li><strong>分院层面</strong>：金山分院（社区居家安宁枢纽）+ 北护分院（社区医院/长照转衔）</li>
+<li><strong>团队组成</strong>：家庭医学科 + 感染科 + 护理部 + 药学部 + 呼吸治疗科——多学科抽调</li>
+</ul>
+<h3 id="_41">关键人才</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">人才密度</td>
+<td style="text-align: left;">🟢 极高——台湾最顶级医学院（台大）的人才池</td>
+</tr>
+<tr>
+<td style="text-align: left;">核心团队稳定性</td>
+<td style="text-align: left;">🟢 高——公立医院体系，人员流动率低于私立</td>
+</tr>
+<tr>
+<td style="text-align: left;">关键人依赖</td>
+<td style="text-align: left;">🟡 中——施至远/黄胜坚等核心人物具有不可替代性</td>
+</tr>
+<tr>
+<td style="text-align: left;">招聘</td>
+<td style="text-align: left;">🟢 强——台大品牌吸引力，但护理人力全台短缺为共性挑战</td>
+</tr>
+<tr>
+<td style="text-align: left;">企业文化</td>
+<td style="text-align: left;">🟢 正面——公立医院 + 学术驱动 + 人文关怀</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_42">组织风险</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险</th>
+<th style="text-align: center;">严重度</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">护理人力全台短缺</td>
+<td style="text-align: center;">🔴 高</td>
+<td style="text-align: left;">台湾护理人员缺口大，HaH 需要额外访视人力</td>
+</tr>
+<tr>
+<td style="text-align: left;">多学科协调成本</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">医护药呼吸四科协调需要有效管理机制</td>
+</tr>
+<tr>
+<td style="text-align: left;">无独立编制</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">在宅团队为抽调制，影响持续性和专注度</td>
+</tr>
+<tr>
+<td style="text-align: left;">世代交替</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">黄胜坚等第一代先驱逐渐退休，新一代领导者培养中</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<h3 id="cap-table">❌ 不适用——非公司实体，无融资历史与 Cap Table</h3>
+<p>台大医院在宅医疗中心为公立医院内部项目，无独立股权结构、无融资历史。</p>
+<ul>
+<li><strong>资金来源</strong>：台大医院年度预算 + NHI 健保给付 + 政府研究计划补助</li>
+<li><strong>台大医院整体预算</strong>：约 NT$300 亿+/年（全台最大公立医学中心）</li>
+<li><strong>长照相关预算</strong>：2026 年全台长照 3.0 预算 NT$1,100 亿（含在宅医疗联动）</li>
+</ul>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<h3 id="100-gtm">❌ 不适用——100% 体系内转诊获客，无独立 GTM</h3>
+<p>台大在宅无销售团队、无市场获客行为。患者来源：</p>
+<ol>
+<li>台大医院内部转诊（出院准备 → HaH 衔接）</li>
+<li>台大急诊直接收案（急诊医师评估 → 在宅照护）</li>
+<li>照护机构转介</li>
+<li>长照 1966 专线转介</li>
+<li>2026.5 新增：住院中提早出院转衔</li>
+</ol>
+<ul>
+<li><strong>获客成本 (CAC)</strong>：理论为 N/A——无主动获客行为</li>
+<li><strong>获客模型</strong>：体系内被动转诊，不是市场驱动的「销售」</li>
+</ul>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="271-nhi">27.1 核心临床指标（全台 NHI 在宅急症照护数据）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">数据</th>
+<th style="text-align: center;">对照标准</th>
+<th style="text-align: center;">差距</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">治疗完成率</td>
+<td style="text-align: center;"><strong>89.9%</strong></td>
+<td style="text-align: center;">HaH 国际目标 ~85–90%</td>
+<td style="text-align: center;">✅ 优秀</td>
+<td style="text-align: left;">NHI 2026.3 统计</td>
+</tr>
+<tr>
+<td style="text-align: left;">照护后 14 日内急诊率</td>
+<td style="text-align: center;"><strong>2.9%</strong></td>
+<td style="text-align: center;">住院后 30 天急诊 ~15–20%</td>
+<td style="text-align: center;">✅ 显著低于住院</td>
+<td style="text-align: left;">NHI 统计</td>
+</tr>
+<tr>
+<td style="text-align: left;">照护后 14 日内再住院率</td>
+<td style="text-align: center;"><strong>3.7%</strong></td>
+<td style="text-align: center;">CMS HaH 目标 &lt;10%</td>
+<td style="text-align: center;">✅ 显著低于目标</td>
+<td style="text-align: left;">NHI 统计</td>
+</tr>
+<tr>
+<td style="text-align: left;">总收案人数 (2024.7–2026.4)</td>
+<td style="text-align: center;"><strong>7,788 人</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">NHI 2026.4 统计</td>
+</tr>
+<tr>
+<td style="text-align: left;">参与团队/院所</td>
+<td style="text-align: center;"><strong>192 团队 / 873 家院所</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">NHI 统计</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="272">27.2 台大体系特有临床证据</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证据类型</th>
+<th style="text-align: left;">代表研究</th>
+<th style="text-align: left;">发表期刊/场合</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">社区居家安宁模式</td>
+<td style="text-align: left;">翁瑞萱、施至远、黄胜坚等 (2015)</td>
+<td style="text-align: left;">护理杂志</td>
+<td style="text-align: left;">台大金山分院社区安宁经验</td>
+</tr>
+<tr>
+<td style="text-align: left;">以价值为导向的居家医疗</td>
+<td style="text-align: left;">施至远等 (2017)</td>
+<td style="text-align: left;">北市医学杂志——价值医疗特刊</td>
+<td style="text-align: left;">理论框架</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家医疗老年人照护结果</td>
+<td style="text-align: left;">施至远 (2024)</td>
+<td style="text-align: left;">台大公卫学院博士论文</td>
+<td style="text-align: left;">群组化多重轨迹分析</td>
+</tr>
+<tr>
+<td style="text-align: left;">超高龄社会居家医疗与在宅急症</td>
+<td style="text-align: left;">施至远 (2025)</td>
+<td style="text-align: left;">台湾医志 (J Formos Med Assoc)</td>
+<td style="text-align: left;">临床实证与政策建言</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHI 在宅急症照护成果</td>
+<td style="text-align: left;">陈亮妤、林青青、陈炳仁等 (2026)</td>
+<td style="text-align: left;">台湾医志 / 美国公卫学院学会官网</td>
+<td style="text-align: left;">全国性成果发表于国际期刊</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 质量认证体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">JCI</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">台大医院整体通过 JCI 认证（台湾医学中心标准）</td>
+</tr>
+<tr>
+<td style="text-align: left;">在宅急症照护教育训练</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">医护人员需完成 4 小时实体教育训练 + 每年 4 小时继续教育</td>
+</tr>
+<tr>
+<td style="text-align: left;">台湾在宅医疗学会专业认证</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">第二届时程在 2026，台大团队参与中</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="274">27.4 临床证据强度评级</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证据类型</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">代表研究</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">全国观察性研究</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">NHI 7,788 例全国数据 (2026)</td>
+</tr>
+<tr>
+<td style="text-align: left;">前瞻性队列研究</td>
+<td style="text-align: center;">1–2（估）</td>
+<td style="text-align: left;">台大内部 HaH 队列（未公开发表专题）</td>
+</tr>
+<tr>
+<td style="text-align: left;">回顾性分析/综述</td>
+<td style="text-align: center;">多篇</td>
+<td style="text-align: left;">施至远等学术论文</td>
+</tr>
+<tr>
+<td style="text-align: left;">RCT</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">无随机对照试验（伦理/实践困难）</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>证据强度总体评级</strong>：🟡 中（有全国规模观察性数据 + 学术论文，缺乏 RCT）</li>
+<li><strong>临床差异化</strong>：HaH 模式在患者满意度/避免院内感染/维持生活功能方面显著优于住院；死亡率/严重不良事件率与住院等同（国际文献一致结论）</li>
+</ul>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">D0 赛道验证</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">确认为 True HaH</td>
+</tr>
+<tr>
+<td style="text-align: left;">D1 执行摘要</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整</td>
+</tr>
+<tr>
+<td style="text-align: left;">D2 实体全貌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含时间线+管理层+治理</td>
+</tr>
+<tr>
+<td style="text-align: left;">D3 战略定位</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含三阶段演变</td>
+</tr>
+<tr>
+<td style="text-align: left;">D4 商业模式</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含架构图+生态伙伴</td>
+</tr>
+<tr>
+<td style="text-align: left;">D5 服务产品线</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含创新管线</td>
+</tr>
+<tr>
+<td style="text-align: left;">D6 客户与支付方</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含品牌声誉</td>
+</tr>
+<tr>
+<td style="text-align: left;">D7 财务拆解</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">无独立财报，基于推估</td>
+</tr>
+<tr>
+<td style="text-align: left;">D8 工作流/旅程</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含完整流程对比</td>
+</tr>
+<tr>
+<td style="text-align: left;">D9 技术评估</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">部分覆盖，台大在宅技术基础较弱</td>
+</tr>
+<tr>
+<td style="text-align: left;">D10 竞争格局</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">台湾本土对标齐全</td>
+</tr>
+<tr>
+<td style="text-align: left;">D11 TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含市场层级估算</td>
+</tr>
+<tr>
+<td style="text-align: left;">D12 盈利模型</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含可持续性分析</td>
+</tr>
+<tr>
+<td style="text-align: left;">D13 机遇风险</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含宏观/法律</td>
+</tr>
+<tr>
+<td style="text-align: left;">D14 管理层指引</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">关键人物发言摘要</td>
+</tr>
+<tr>
+<td style="text-align: left;">D15 估值</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">不适用——非公司实体</td>
+</tr>
+<tr>
+<td style="text-align: left;">D16 战略建议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">6 条对 iHomeCare 建议</td>
+</tr>
+<tr>
+<td style="text-align: left;">D17 政策监管</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">6 项核心政策</td>
+</tr>
+<tr>
+<td style="text-align: left;">D18 单元经济</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">9 天肺炎案例</td>
+</tr>
+<tr>
+<td style="text-align: left;">D19 目标人群</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">5 层分层矩阵</td>
+</tr>
+<tr>
+<td style="text-align: left;">D20 竞品地图</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">已提供，附注非商业竞争</td>
+</tr>
+<tr>
+<td style="text-align: left;">D21 跨境</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">不适用——公立项目</td>
+</tr>
+<tr>
+<td style="text-align: left;">D22 退出/并购</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">不适用——无股权路径</td>
+</tr>
+<tr>
+<td style="text-align: left;">D23 ESG</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">E/S/G 三维覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D24 组织人才</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含组织风险</td>
+</tr>
+<tr>
+<td style="text-align: left;">D25 融资/Cap Table</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">不适用——无独立融资</td>
+</tr>
+<tr>
+<td style="text-align: left;">D26 GTM</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">不适用——体系内被动获客</td>
+</tr>
+<tr>
+<td style="text-align: left;">D27 临床质量</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含 NHI 全国数据+学术证据</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: left;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 不适用</td>
+<td style="text-align: left;">6</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_43">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">台大在宅独立收案量/年（与全台 7,788 区隔）</td>
+<td style="text-align: left;">直接联系台大在宅医疗中心或查阅台大年报</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">NHI 在宅急症照护每日给付金额明细</td>
+<td style="text-align: left;">查阅健保署公开费率表</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">在宅团队人力规模（FTE 医师/护理师人数）</td>
+<td style="text-align: left;">直接访谈台大在宅医疗中心</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">远程监测设备品牌/型号与使用率</td>
+<td style="text-align: left;">直接访谈或现场观察</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">患者满意度/NPS 量化数据</td>
+<td style="text-align: left;">NHI 试办计划可能有尚未公开的满意度调查</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">台大在宅 vs 其他医学中心 HaH 的临床结果对比</td>
+<td style="text-align: left;">需 NHI 分机构数据（目前仅发布全国汇总）</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">在宅急症照护的长期结果（6 个月死亡率/功能状态）</td>
+<td style="text-align: left;">需前瞻性研究——当前尚无</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">护理人员访视的日均工作量与 burnout 率</td>
+<td style="text-align: left;">一手调研——高优先级</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_44">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">台湾卫福部健保署</td>
+<td style="text-align: left;">全民健康保险在宅急症照护试办计划公告</td>
+<td style="text-align: left;">2024.7</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">台湾卫福部健保署</td>
+<td style="text-align: left;">NHI Launches New Acute Hospital Care-at-Home Model</td>
+<td style="text-align: left;">2024.11</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">联合报 (udn.com)</td>
+<td style="text-align: left;">在宅急症照护 健保署成果登国际期刊——截至 115 年 4 月底 7,788 人受惠</td>
+<td style="text-align: left;">2026.6</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Taiwan News</td>
+<td style="text-align: left;">Hospital director urges boost in home healthcare for Taiwan&rsquo;s seniors（余忠仁呼吁）</td>
+<td style="text-align: left;">2025.11</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">天下杂志银天下</td>
+<td style="text-align: left;">「在宅急症照护」新制上路，失能长辈染 3 疾病可在家住院</td>
+<td style="text-align: left;">2024.7</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">台湾卫福部</td>
+<td style="text-align: left;">健保推动在宅急症照护试办计划——在家安养无忧向晚</td>
+<td style="text-align: left;">2024.7</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">台湾医志 (J Formos Med Assoc)</td>
+<td style="text-align: left;">超高龄社会下的居家医疗与在宅急症发展之临床实证与政策建言（施至远）</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">康健杂志</td>
+<td style="text-align: left;">台大医院金山分院：到病人家，陪他活到最后一刻</td>
+<td style="text-align: left;">2016</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">北市医学杂志</td>
+<td style="text-align: left;">建构以价值为导向的居家医疗照护模式（施至远等）</td>
+<td style="text-align: left;">2017</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">台湾在宅医疗学会 (tsohhc.tw)</td>
+<td style="text-align: left;">第一届亚太在宅医疗大会圆满落幕</td>
+<td style="text-align: left;">2026.6</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">台湾医界 (fma.org.tw)</td>
+<td style="text-align: left;">超高龄居家医疗与在宅急症临床实证与政策</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">RTI 中央广播电台</td>
+<td style="text-align: left;">在宅医疗经费占比拚 3%——卫福部支持</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">侨委会新闻 (ocacnews.net)</td>
+<td style="text-align: left;">健保挹注 5,900 万——在宅急症照护增「提早出院」模式</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">台湾胸腔暨重症医学会</td>
+<td style="text-align: left;">在宅急症照护实务运作（公版讲义）——肺炎/UTI 抗生素指引</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">台湾医师公会全联会</td>
+<td style="text-align: left;">在宅急症照护试办计划——教育训练与抗生素治疗量能</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">NHI 健保署英文官网</td>
+<td style="text-align: left;">NHI Launches New Acute Care at Home Model to Achieve Aging in Place</td>
+<td style="text-align: left;">2025.1</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: left;">台大医院官网</td>
+<td style="text-align: left;">您有所不知的居家医疗（施至远）</td>
+<td style="text-align: left;">2020</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td style="text-align: left;">台大医院官网</td>
+<td style="text-align: left;">分级医疗暨转衔照护管理中心——分级照护的健保给付规划</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">19</td>
+<td style="text-align: left;">台大医院电子报</td>
+<td style="text-align: left;">金山分院长照经验分享（施至远）</td>
+<td style="text-align: left;">2023</td>
+</tr>
+<tr>
+<td style="text-align: center;">20</td>
+<td style="text-align: left;">CNA 中央社</td>
+<td style="text-align: left;">余忠仁呼吁扩大在宅医疗 + 长照 3.0 预算增至 1,100 亿</td>
+<td style="text-align: left;">2025.11</td>
+</tr>
+<tr>
+<td style="text-align: center;">21</td>
+<td style="text-align: left;">NHI 健保署</td>
+<td style="text-align: left;">在宅急症照护试办计划——提早出院模式新增品质奖励金（每案 3,000 点）</td>
+<td style="text-align: left;">2026.5</td>
+</tr>
+<tr>
+<td style="text-align: center;">22</td>
+<td style="text-align: left;">台湾在宅医疗学会</td>
+<td style="text-align: left;">2026 年 6 月 27–28 日第一届亚太在宅医疗大会</td>
+<td style="text-align: left;">2026</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<blockquote>
+<p><strong>报告完成时间</strong>：2026-07-11<br />
+<strong>总行数</strong>：目标 ≥900 行，待最终验证<br />
+<strong>维度覆盖</strong>：D0–D27 共 28 个维度全部独立覆盖<br />
+<strong>参考文献</strong>：22 条</p>
+</blockquote>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,3232 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>iSavta 27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#isavta-27">iSavta 27 维度深度尽调报告</a><ul>
+<li><a href="#0">前置步骤 0 — 赛道真实性验证</a></li>
+<li><a href="#d0">D0 — 公司概览速览</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实表</a></li>
+<li><a href="#_2">发展时间线</a></li>
+<li><a href="#_3">品牌命名</a></li>
+<li><a href="#_4">管理层</a></li>
+<li><a href="#_5">公司治理</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_6">一句话核心逻辑</a></li>
+<li><a href="#_7">战略差异化要素表</a></li>
+<li><a href="#_8">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#_9">可视化架构图</a></li>
+<li><a href="#vs">支付方 vs 使用方分离</a></li>
+<li><a href="#_10">价值链定位</a></li>
+<li><a href="#_11">战略合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#_12">产品线总览</a></li>
+<li><a href="#_13">定价参照表</a></li>
+<li><a href="#_14">研发与创新管线</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_15">客户结构估算</a></li>
+<li><a href="#_16">支付方来源</a></li>
+<li><a href="#_17">客户获取渠道</a></li>
+<li><a href="#_18">集中度风险</a></li>
+<li><a href="#_19">品牌与声誉</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a><ul>
+<li><a href="#_20">收入估算（自下而上）</a></li>
+<li><a href="#_21">核心财务概览（估算）</a></li>
+<li><a href="#_22">资产负债表</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a><ul>
+<li><a href="#_23">雇主端旅程</a></li>
+<li><a href="#_24">护理员端旅程</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构总览（五层模型）</a></li>
+<li><a href="#92">9.2 软件架构深度</a></li>
+<li><a href="#93-iot">9.3 硬件 / IoT 设备 — ❌ 不适用</a></li>
+<li><a href="#94-ai-ai">9.4 AI 与数据能力 — ❌ 不适用（基本无 AI 能力）</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+<li><a href="#96">9.6 技术风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a><ul>
+<li><a href="#_25">🔴 前置安全步骤</a></li>
+<li><a href="#_26">竞争对比表</a></li>
+<li><a href="#_27">最大威胁深度扫描</a></li>
+<li><a href="#_28">潜在跨界进入者</a></li>
+</ul>
+</li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</a><ul>
+<li><a href="#tamsam">TAM/SAM/当前渗透率估算</a></li>
+<li><a href="#_29">增长驱动因素</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型与路径</a><ul>
+<li><a href="#_30">成本结构拆解表（估算）</a></li>
+<li><a href="#_31">盈利路径分析</a></li>
+<li><a href="#_32">综合判断</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a><ul>
+<li><a href="#_33">法律与诉讼</a></li>
+<li><a href="#_34">宏观敏感性</a></li>
+</ul>
+</li>
+<li><a href="#d14-ceo">D14 — 管理层/CEO 公开指引</a></li>
+<li><a href="#d15">D15 — 估值对比</a><ul>
+<li><a href="#_35">估值逻辑推理</a></li>
+</ul>
+</li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1">1. 对潜在投资者</a></li>
+<li><a href="#2-isavta">2. 对管理层（iSavta 视角）</a></li>
+<li><a href="#3-ihomecare">3. 对竞对/新进入者（含 iHomeCare）</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a><ul>
+<li><a href="#_36">核心政策框架</a></li>
+<li><a href="#_37">监管风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d18">D18 — 单元经济模型</a><ul>
+<li><a href="#level-5-nii">典型案例：住家外籍护理员（Level 5 NII 受益人）</a></li>
+<li><a href="#_38">与替代方案对比</a></li>
+<li><a href="#_39">关键假设清单</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a><ul>
+<li><a href="#_40">分层矩阵</a></li>
+<li><a href="#_41">推导含义</a></li>
+</ul>
+</li>
+<li><a href="#d20">D20 — 竞品深度地图</a><ul>
+<li><a href="#_42">已确认竞品列表</a></li>
+<li><a href="#tagid-chevrot-siud">最大威胁深度扫描：传统 tagid + chevrot siud 体系</a></li>
+<li><a href="#_43">潜在跨界进入者</a></li>
+</ul>
+</li>
+<li><a href="#d21">D21 — 跨境/跨区域战略评估</a><ul>
+<li><a href="#d21_1">D21 — 不适用</a></li>
+</ul>
+</li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a><ul>
+<li><a href="#d22_1">D22 — 不适用（无明确退出路径，仅作理论分析）</a></li>
+</ul>
+</li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a><ul>
+<li><a href="#esg">ESG 披露状态</a></li>
+<li><a href="#_44">社会影响力</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a><ul>
+<li><a href="#251">25.1 融资历史全览</a></li>
+<li><a href="#252-cap-table">25.2 Cap Table 深度分析</a></li>
+<li><a href="#253">25.3 现金状况</a></li>
+<li><a href="#254">25.4 投资者质量评估</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#d27_1">D27 — 不适用</a></li>
+</ul>
+</li>
+<li><a href="#_45">收尾结构</a><ul>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_46">调研空白与后续补充</a></li>
+<li><a href="#_47">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="isavta-27">iSavta 27 维度深度尽调报告</h1>
+<blockquote>
+<p><strong>调研日期</strong>：2026-07-11 | <strong>版本</strong>：v1.0 | <strong>调研对象</strong>：iSavta Ltd.（以色列）
+<strong>赛道标注</strong>：🚨 <strong>非 HaH 公司</strong>——iSavta 是以色列最大的在线护理员撮合平台（caregiver marketplace），属于 AgeTech / 家政护理招聘赛道，对 iHomeCare 的直接竞品相关性 <strong>低</strong>。但其对以色列「外籍护理员经济」的数字化改造模式对理解中东居家护理生态具有重要参考价值。</p>
+</blockquote>
+<hr />
+<h2 id="0">前置步骤 0 — 赛道真实性验证</h2>
+<p><strong>验证方法</strong>：搜索 iSavta 的实际产品/服务。
+<strong>验证结果</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">公司声称定位</td>
+<td style="text-align: left;">以色列最大在线护理员招聘平台——连接家庭与外籍/本地护理员</td>
+</tr>
+<tr>
+<td style="text-align: left;">实际赛道</td>
+<td style="text-align: left;"><strong>在线护理员撮合平台（Caregiver Marketplace）+ 直接雇佣 SaaS 工具</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">是否属于 HaH</td>
+<td style="text-align: left;">❌ <strong>否</strong>。iSavta 不做急性住院替代、不做远程患者监测、不做临床服务。它是护理员-家庭双端撮合平台，属于家政护理招聘赛道。</td>
+</tr>
+<tr>
+<td style="text-align: left;">对 iHomeCare 竞品相关性</td>
+<td style="text-align: left;"><strong>低</strong>——但作为以色列居家护理生态的关键入口，对理解区域市场结构有价值</td>
+</tr>
+<tr>
+<td style="text-align: left;">报告深度建议</td>
+<td style="text-align: left;">标准 27 维度覆盖，但 D9（技术）、D27（临床质量）等维度按科技平台公司标准而非医疗科技公司标准评估</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>来源：iSavta 官网 (isavta.co.il) 明确描述其核心产品为「直接连接雇主与护理员的数字平台，无中介介入」——属于撮合平台而非医疗服务。</p>
+</blockquote>
+<hr />
+<h2 id="d0">D0 — 公司概览速览</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">属性</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">公司全称</td>
+<td style="text-align: left;">iSavta Ltd.（曾用名 Codonco）</td>
+</tr>
+<tr>
+<td style="text-align: left;">注册地</td>
+<td style="text-align: left;">以色列</td>
+</tr>
+<tr>
+<td style="text-align: left;">成立时间</td>
+<td style="text-align: left;">2011 年（免费版），2016 年转为付费平台</td>
+</tr>
+<tr>
+<td style="text-align: left;">创始人/CEO</td>
+<td style="text-align: left;">Ariel Cabiri（阿里尔·卡比里）</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">以色列（具体城市无公开信息）</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工规模</td>
+<td style="text-align: left;">无可靠公开数据源（推测 &lt;20 人小型团队）</td>
+</tr>
+<tr>
+<td style="text-align: left;">融资总额</td>
+<td style="text-align: left;">$500K（Pre-Seed，2019 年 1 月）</td>
+</tr>
+<tr>
+<td style="text-align: left;">投资者</td>
+<td style="text-align: left;">Udi Peless（天使投资人）</td>
+</tr>
+<tr>
+<td style="text-align: left;">平台指标</td>
+<td style="text-align: left;">20,000+ 患者家庭 / 35,400+ 注册护理员 / 600-750 个实时职位</td>
+</tr>
+<tr>
+<td style="text-align: left;">网站</td>
+<td style="text-align: left;">https://www.isavta.co.il</td>
+</tr>
+<tr>
+<td style="text-align: left;">行业标签</td>
+<td style="text-align: left;">AgeTech, Digital Health, Employment, Healthtech, Impact, SaaS</td>
+</tr>
+<tr>
+<td style="text-align: left;">多语言</td>
+<td style="text-align: left;">英语、希伯来语、俄语、罗马尼亚语、乌兹别克语</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>一句话定位</strong>：iSavta 是以色列最大的外籍护理员在线撮合平台——起步于创始人为祖母找护理员的个人经历，通过去中介化将传统护理机构（chevrat siud / tagid）的撮合功能搬到线上，连接 2 万+患者家庭与 3.5 万+注册护理员。</p>
+<p><strong>核心矛盾</strong>：</p>
+<ul>
+<li><strong>短期逆风</strong>：以色列政府对双边协议国（菲律宾/印度/尼泊尔/斯里兰卡）护理员引入通道的强化管控可能收紧供给；传统护理机构（tagidim）的法律强制角色尚未被完全绕过——雇主仍需通过 tagid 注册。</li>
+<li><strong>长期逻辑</strong>：以色列 392,000 名 NII 护理津贴受益人 + 快速老龄化（65 岁以上人口占比预计从 12% 升至 2040 年的 16%）构成刚性需求底座；去中介化降低家庭成本 5,000-25,600 NIS/年，价值主张清晰；多语言平台天然适配以色列多元移民社会。</li>
+</ul>
+<p><strong>关键数据速览</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">平台患者家庭数</td>
+<td style="text-align: left;">20,000+</td>
+<td style="text-align: left;">Social Impact Israel 报道（2020 年前后）</td>
+</tr>
+<tr>
+<td style="text-align: left;">注册护理员数</td>
+<td style="text-align: left;">35,400+</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: left;">实时活跃职位数</td>
+<td style="text-align: left;">600-750</td>
+<td style="text-align: left;">iSavta 社交媒体（2026）</td>
+</tr>
+<tr>
+<td style="text-align: left;">融资总额</td>
+<td style="text-align: left;">$500K</td>
+<td style="text-align: left;">Startup Nation Central</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理员来源国</td>
+<td style="text-align: left;">菲律宾、印度、尼泊尔、斯里兰卡、乌兹别克斯坦</td>
+<td style="text-align: left;">iSavta 平台数据</td>
+</tr>
+<tr>
+<td style="text-align: left;">雇主会员费（自助）</td>
+<td style="text-align: left;">389 NIS 开通 + 69 NIS/月</td>
+<td style="text-align: left;">iSavta 官网</td>
+</tr>
+<tr>
+<td style="text-align: left;">雇主会员费（全服务）</td>
+<td style="text-align: left;">699 NIS 开通 + 119 NIS/月</td>
+<td style="text-align: left;">iSavta 官网</td>
+</tr>
+<tr>
+<td style="text-align: left;">以色列护理津贴受益人</td>
+<td style="text-align: left;">~392,000 人</td>
+<td style="text-align: left;">Semerenko Group（2026）</td>
+</tr>
+<tr>
+<td style="text-align: left;">国家护理支出</td>
+<td style="text-align: left;">~210 亿 NIS/年</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: left;">外籍护理员月均总成本</td>
+<td style="text-align: left;">7,500-9,500 NIS/月</td>
+<td style="text-align: left;">同上</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>总体判断</strong>：iSavta 是一个 <strong>小而专</strong> 的垂直撮合平台——受限于以色列市场的绝对规模（约 6 万外籍护理员），天花板清晰，但凭借先发优势和多语言能力在以色列外籍护理员招聘这一细分赛道建立了品牌认知。估值逻辑更接近生活方式型企业（lifestyle business）而非 VC 级高增长标的。对 iHomeCare 而言，其直接借鉴意义有限，但作为以色列居家护理生态的需求端入口具有参考价值。</p>
+<p><strong>完备性审计</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: left;">22</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 数据缺失</td>
+<td style="text-align: left;">1</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_1">基本事实表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">属性</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">全称</td>
+<td style="text-align: left;">iSavta Ltd.</td>
+</tr>
+<tr>
+<td style="text-align: left;">曾用名</td>
+<td style="text-align: left;">Codonco</td>
+</tr>
+<tr>
+<td style="text-align: left;">公司类型</td>
+<td style="text-align: left;">私人有限公司（未上市）</td>
+</tr>
+<tr>
+<td style="text-align: left;">注册国家</td>
+<td style="text-align: left;">以色列</td>
+</tr>
+<tr>
+<td style="text-align: left;">成立年份</td>
+<td style="text-align: left;">2011 年（免费版）/ 2016 年（付费版）</td>
+</tr>
+<tr>
+<td style="text-align: left;">创始人/CEO</td>
+<td style="text-align: left;">Ariel Cabiri</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部地址</td>
+<td style="text-align: left;">以色列（具体地址无公开信息）</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工规模</td>
+<td style="text-align: left;">无可靠公开数据源，推测 &lt;20 人</td>
+</tr>
+<tr>
+<td style="text-align: left;">行业分类</td>
+<td style="text-align: left;">AgeTech / 护理招聘平台 / 家政撮合</td>
+</tr>
+<tr>
+<td style="text-align: left;">官网</td>
+<td style="text-align: left;">isavta.co.il</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">年份</th>
+<th style="text-align: left;">里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2011 年</td>
+<td style="text-align: left;">Ariel Cabiri 在为祖母（「Savta」即希伯来语「祖母」）Ruth Zucker 寻找护理员的过程中经历「面试 100+ 人」的困境后，创立 iSavta 免费网站</td>
+</tr>
+<tr>
+<td style="text-align: left;">2016 年</td>
+<td style="text-align: left;">转为付费平台，引入雇主端会员制收费模式</td>
+</tr>
+<tr>
+<td style="text-align: left;">2019 年 1 月</td>
+<td style="text-align: left;">完成 $500K Pre-Seed 融资，来自天使投资人 Udi Peless</td>
+</tr>
+<tr>
+<td style="text-align: left;">2020 年前后</td>
+<td style="text-align: left;">平台注册护理员突破 35,400 人，患者家庭突破 20,000 个（据 Social Impact Israel 报道）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024-2026</td>
+<td style="text-align: left;">平台活跃职位稳定在 600-750 个实时在线，覆盖全以色列各区域；推出假日预定、薪资计算器等 SaaS 工具</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">品牌命名</h3>
+<p>「iSavta」=「i」+「Savta」（希伯来语：סבתא，意为「祖母」）——直接呼应创始人个人故事：为祖母找护理员的经验催生了这个平台。品牌 slogan：「Someone is taking care of you」。</p>
+<h3 id="_4">管理层</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">姓名</th>
+<th style="text-align: left;">职务</th>
+<th style="text-align: left;">背景要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Ariel Cabiri</td>
+<td style="text-align: left;">创始人 &amp; CEO</td>
+<td style="text-align: left;">个人经历驱动创业；曾在 Calcalist（以色列经济媒体）发表关于直接雇佣护理员节省成本的文章；LinkedIn 可查</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 除 Ariel Cabiri 外，无其他管理团队成员公开信息。推测为创始人主导的极精简团队。</p>
+</blockquote>
+<h3 id="_5">公司治理</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">董事会</td>
+<td style="text-align: left;">无公开信息——私人小公司，推测为创始人独资或天使投资人参与</td>
+</tr>
+<tr>
+<td style="text-align: left;">治理争议</td>
+<td style="text-align: left;">无公开记录</td>
+</tr>
+<tr>
+<td style="text-align: left;">关联交易</td>
+<td style="text-align: left;">无公开信息</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_6">一句话核心逻辑</h3>
+<p><strong>iSavta 赌的是：以色列外籍护理员市场的信息不对称足够大、足够痛，一个在线撮合平台可以通过去中介化显著降低家庭成本，从而替代传统护理中介机构（tagidim）的撮合功能。</strong></p>
+<h3 id="_7">战略差异化要素表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">iSavta 定位</th>
+<th style="text-align: left;">差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">撮合模式</td>
+<td style="text-align: left;">平台直接连接 vs 传统 tagid 中介</td>
+<td style="text-align: left;">去中介化，家庭自主筛选，无需支付中介费</td>
+</tr>
+<tr>
+<td style="text-align: left;">多语言</td>
+<td style="text-align: left;">英语 / 希伯来语 / 俄语 / 罗马尼亚语 / 乌兹别克语</td>
+<td style="text-align: left;">覆盖外籍护理员母语，降低沟通门槛</td>
+</tr>
+<tr>
+<td style="text-align: left;">直接雇佣工具</td>
+<td style="text-align: left;">薪资计算器、社保表单提交、假日管理</td>
+<td style="text-align: left;">从「撮合」延伸到「雇佣管理」SaaS</td>
+</tr>
+<tr>
+<td style="text-align: left;">内容生态</td>
+<td style="text-align: left;">Blog + Magazine（护理知识、社保指南）</td>
+<td style="text-align: left;">用内容建立信任、SEO 获客</td>
+</tr>
+<tr>
+<td style="text-align: left;">定价</td>
+<td style="text-align: left;">自助 69 NIS/月，全服务 119 NIS/月</td>
+<td style="text-align: left;">极低定价（vs tagid 收取 2,000 NIS 注册费 + 70 NIS/月）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_8">战略演变三阶段</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">时期</th>
+<th style="text-align: left;">战略焦点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Phase 1 — 验证</td>
+<td style="text-align: left;">2011-2015</td>
+<td style="text-align: left;">免费网站，验证「在线撮合护理员」需求是否真实存在</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 2 — 商业化</td>
+<td style="text-align: left;">2016-2019</td>
+<td style="text-align: left;">转为付费平台，建立双边网络；完成 Pre-Seed 融资</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 3 — 深度工具化</td>
+<td style="text-align: left;">2020-至今</td>
+<td style="text-align: left;">从纯撮合向「直接雇佣 SaaS」扩展（薪资计算、社保表单、假日管理）；强化内容生态</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<h3 id="_9">可视化架构图</h3>
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│                     iSavta 平台                          │
+│                                                         │
+│  ┌──────────────────┐         ┌──────────────────┐      │
+│  │   供给端 (Supply)  │         │  需求端 (Demand)   │      │
+│  │                  │         │                  │      │
+│  │ 外籍护理员         │  ◄───►  │ 以色列家庭         │      │
+│  │ · 菲律宾          │  撮合    │ · 失能老人子女      │      │
+│  │ · 印度            │  匹配    │ · NII 津贴受益人    │      │
+│  │ · 尼泊尔          │         │ · 大屠杀幸存者家属   │      │
+│  │ · 斯里兰卡         │         │ · 需临时替换的家庭   │      │
+│  │ · 乌兹别克斯坦     │         │                  │      │
+│  │ · 以色列本地       │         │                  │      │
+│  └──────────────────┘         └──────────────────┘      │
+│            │                          │                │
+│            ▼                          ▼                │
+│  ┌──────────────────────────────────────────────┐      │
+│  │           平台服务层                           │      │
+│  │  · 搜索/筛选（地点/语言/性别/工作类型）          │      │
+│  │  · 个人资料 + 推荐信                          │      │
+│  │  · 私信沟通                                   │      │
+│  │  · 职位发布 + 申请管理                         │      │
+│  │  · 直接雇佣工具（薪资计算/社保/NII 表单）        │      │
+│  └──────────────────────────────────────────────┘      │
+│                         │                              │
+│                         ▼                              │
+│  ┌──────────────────────────────────────────────┐      │
+│  │           变现层                               │      │
+│  │  · 雇主端订阅会员（69-119 NIS/月）              │      │
+│  │  · 开通费（389-699 NIS）                      │      │
+│  │  · 可能：护理员端增值服务（免费基础注册）         │      │
+│  └──────────────────────────────────────────────┘      │
+└─────────────────────────────────────────────────────────┘
+         │                                    │
+         ▼                                    ▼
+┌──────────────┐                    ┌──────────────────┐
+│ Bituach Leumi│                    │  人口与移民管理局  │
+│  (NII 社保)   │                    │ (签证/工作许可)    │
+│  护理津贴发放  │                    │                   │
+└──────────────┘                    └──────────────────┘
+</code></pre>
+<h3 id="vs">支付方 vs 使用方分离</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">角色</th>
+<th style="text-align: left;">支付方</th>
+<th style="text-align: left;">使用方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">平台费</td>
+<td style="text-align: left;">✅（雇主家庭支付会员费）</td>
+<td style="text-align: left;">雇主家庭 + 护理员（免费搜索/创建资料）</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理员工资</td>
+<td style="text-align: left;">✅（雇主家庭直接支付，Bituach Leumi 补贴）</td>
+<td style="text-align: left;">护理员（领取工资）</td>
+</tr>
+<tr>
+<td style="text-align: left;">NII 护理津贴</td>
+<td style="text-align: left;">Bituach Leumi（政府社保）</td>
+<td style="text-align: left;">家庭（现金或实物服务）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_10">价值链定位</h3>
+<pre><code>纯中介 ────────────────●────── 自建医疗体系
+(classified ads)      │      (vertically integrated provider)
+                      │
+                   iSavta
+               (撮合 + 轻 SaaS)
+</code></pre>
+<p>iSavta 处于「纯分类广告」与「自建服务体系」之间的 <strong>撮合+轻 SaaS</strong> 位置——比 Craigslist 式分类广告多了结构化资料、直接雇佣管理和多语言；但远未涉及临床服务、护理质量保证或保险整合等深度价值链环节。</p>
+<h3 id="_11">战略合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">伙伴类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: left;">合作性质</th>
+<th style="text-align: center;">排他性</th>
+<th style="text-align: center;">收入贡献占比</th>
+<th style="text-align: center;">合作年限</th>
+<th style="text-align: center;">关系健康度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NII 社保机构</td>
+<td style="text-align: left;">Bituach Leumi</td>
+<td style="text-align: left;">间接——帮助家庭申请现金津贴</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">间接贡献</td>
+<td style="text-align: center;">长期</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">Claims Conference</td>
+<td style="text-align: left;">Claims Conference (大屠杀幸存者基金)</td>
+<td style="text-align: left;">间接——帮助符合条件的家庭申请额外津贴</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">间接贡献</td>
+<td style="text-align: center;">长期</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">传统护理机构</td>
+<td style="text-align: left;">各 tagidim</td>
+<td style="text-align: left;">竞合——tagid 是法定注册机构，iSavta 不能完全绕过</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">内容/媒体</td>
+<td style="text-align: left;">13 频道 (Reshet 13)、Maariv、Calcalist</td>
+<td style="text-align: left;">媒体曝光、SEO</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">间接</td>
+<td style="text-align: center;">间歇</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ <strong>伙伴集中度风险</strong>：iSavta 的商业模式不依赖任何单一大伙伴——双边市场模式天然分散。但 <strong>监管依赖</strong>（NII 津贴政策）是最大单点风险。</p>
+</blockquote>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<h3 id="_12">产品线总览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">产品线</th>
+<th style="text-align: left;">客户类型</th>
+<th style="text-align: left;">服务内容</th>
+<th style="text-align: left;">定价模式</th>
+<th style="text-align: center;">占收入估</th>
+<th style="text-align: left;">利润率特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>护理员招聘平台</strong></td>
+<td style="text-align: left;">雇主家庭</td>
+<td style="text-align: left;">搜索/筛选护理员资料、发布职位、私信联系</td>
+<td style="text-align: left;">会员订阅</td>
+<td style="text-align: center;">主营业务</td>
+<td style="text-align: left;">高毛利（软件边际成本低）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>直接雇佣服务（自助）</strong></td>
+<td style="text-align: left;">雇主家庭</td>
+<td style="text-align: left;">在线指导工具包：社保表单下载、过渡步骤、权益自检</td>
+<td style="text-align: left;">389 NIS 开通 + 69 NIS/月</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: left;">高毛利</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>直接雇佣服务（全服务）</strong></td>
+<td style="text-align: left;">雇主家庭</td>
+<td style="text-align: left;">团队代提交 NII 表单、代计算月薪和社保、电话/邮件支持</td>
+<td style="text-align: left;">699 NIS 开通 + 119 NIS/月</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: left;">中毛利（含人工）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>护理员端注册</strong></td>
+<td style="text-align: left;">护理员</td>
+<td style="text-align: left;">创建个人资料、搜索职位、接收雇主联系</td>
+<td style="text-align: left;"><strong>免费</strong></td>
+<td style="text-align: center;">0%（供给侧补贴）</td>
+<td style="text-align: left;">N/A</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>内容/媒体</strong></td>
+<td style="text-align: left;">全网</td>
+<td style="text-align: left;">Blog + Magazine：护理知识、社保指南、产品推荐</td>
+<td style="text-align: left;">免费（间接变现）</td>
+<td style="text-align: center;">间接贡献</td>
+<td style="text-align: left;">高毛利</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_13">定价参照表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">定价维度</th>
+<th style="text-align: center;">iSavta</th>
+<th style="text-align: center;">传统 tagid</th>
+<th style="text-align: center;">传统护理公司 (chevrat siud)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">注册/开通费</td>
+<td style="text-align: center;">389-699 NIS</td>
+<td style="text-align: center;">2,000-2,500 NIS</td>
+<td style="text-align: center;">无（从 NII 津贴中扣费）</td>
+</tr>
+<tr>
+<td style="text-align: left;">月度费用</td>
+<td style="text-align: center;">69-119 NIS</td>
+<td style="text-align: center;">70 NIS/月</td>
+<td style="text-align: center;">从津贴中扣取比例</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理员匹配费</td>
+<td style="text-align: center;">0 NIS</td>
+<td style="text-align: center;">含在注册费中</td>
+<td style="text-align: center;">含在服务费中</td>
+</tr>
+<tr>
+<td style="text-align: left;">年化总费用</td>
+<td style="text-align: center;">1,217-2,127 NIS</td>
+<td style="text-align: center;">2,840-3,340 NIS</td>
+<td style="text-align: center;">间接（年化约 3,000-10,000 NIS）</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>节省测算</strong>：家庭通过 iSavta 自助模式 + NII 现金津贴（而非通过护理公司），每年可节省 7,000-25,600 NIS（iSavta 官网数据）。</p>
+</blockquote>
+<h3 id="_14">研发与创新管线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">在研产品/功能</th>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">预计上线</th>
+<th style="text-align: left;">目标市场</th>
+<th style="text-align: center;">潜在收入贡献（估）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">假日预选系统</td>
+<td style="text-align: left;">✅ 已上线</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">全用户</td>
+<td style="text-align: center;">低</td>
+</tr>
+<tr>
+<td style="text-align: left;">薪资计算器（多语言）</td>
+<td style="text-align: left;">✅ 已上线</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">直接雇佣用户</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理员端 App</td>
+<td style="text-align: left;">⚠️ 无公开信息</td>
+<td style="text-align: left;">未知</td>
+<td style="text-align: left;">护理员端</td>
+<td style="text-align: center;">未知</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>R&amp;D 支出：无公开数据。推测以内部开发为主，无大规模研发投入。</p>
+</blockquote>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_15">客户结构估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户类别</th>
+<th style="text-align: center;">收入占比估</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">失能老人家庭（NII 津贴受益人）</td>
+<td style="text-align: center;">~70%</td>
+<td style="text-align: left;">核心用户群，需要全职住家护理员</td>
+<td style="text-align: left;">随老龄化稳增</td>
+</tr>
+<tr>
+<td style="text-align: left;">大屠杀幸存者家庭（Claims Conference 额外津贴）</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">高价值用户，津贴叠加后支付能力更强</td>
+<td style="text-align: left;">随时间递减（人口老龄化）</td>
+</tr>
+<tr>
+<td style="text-align: left;">需临时替换的家庭（护理员休假/节假日）</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">短周期、高频次</td>
+<td style="text-align: left;">季节性波动</td>
+</tr>
+<tr>
+<td style="text-align: left;">独立雇佣家庭（不依赖 NII 津贴）</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">自费雇佣护理员的高收入家庭</td>
+<td style="text-align: left;">稳定</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_16">支付方来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">支付方</th>
+<th style="text-align: left;">支付内容</th>
+<th style="text-align: center;">占比估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">雇主家庭自费</td>
+<td style="text-align: left;">平台会员费 + 护理员薪资中超出津贴部分</td>
+<td style="text-align: center;">~95%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bituach Leumi（NII）</td>
+<td style="text-align: left;">护理津贴（现金或实物）——间接支付给家庭，非 iSavta</td>
+<td style="text-align: center;">0%（间接）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Claims Conference</td>
+<td style="text-align: left;">大屠杀幸存者额外津贴——同上，间接支付</td>
+<td style="text-align: center;">0%（间接）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_17">客户获取渠道</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">渠道</th>
+<th style="text-align: center;">效率评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">SEO/自然搜索</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">核心获客渠道——护理/社保相关长尾关键词搜索量大</td>
+</tr>
+<tr>
+<td style="text-align: left;">内容营销（Blog/Magazine）</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">内容质量高，涵盖社保、护理知识、法律指南</td>
+</tr>
+<tr>
+<td style="text-align: left;">口碑/推荐</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">护理员群体内部口碑传播强</td>
+</tr>
+<tr>
+<td style="text-align: left;">传统媒体曝光（TV/报纸）</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">曾登上 Reshet 13、Maariv、Calcalist</td>
+</tr>
+<tr>
+<td style="text-align: left;">社交媒体（Facebook/Instagram）</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">维护活跃但粉丝规模有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">付费广告</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">无公开证据表明有大规模付费获客</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_18">集中度风险</h3>
+<ul>
+<li>双边平台天然分散——无单一大客户风险</li>
+<li><strong>区域集中风险</strong>：全以色列市场，无地理多元化</li>
+<li><strong>政策集中风险</strong>：强依赖 NII 护理津贴政策持续性</li>
+</ul>
+<h3 id="_19">品牌与声誉</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">公司数据</th>
+<th style="text-align: center;">行业基准</th>
+<th style="text-align: left;">数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>在线评分</strong></td>
+<td style="text-align: center;">Facebook 正面评价为主</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: left;">Facebook 页面</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社交媒体情绪</strong></td>
+<td style="text-align: center;">多数正面（护理员感谢信+雇主推荐）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">官网评价板块</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>品牌搜索量</strong></td>
+<td style="text-align: center;">「iSavta」在以色列护理招聘搜索中有认知度</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">主观推断</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>媒体报道情绪</strong></td>
+<td style="text-align: center;">正面（Social Impact Israel SDG 报道、Calcalist CEO 专栏）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">公开报道</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NPS</strong></td>
+<td style="text-align: center;">无公开数据</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>近期声誉事件：无公开负面事件。平台以「去中介化帮家庭省钱」为核心叙事，在以色列消费者中建立正面口碑。</p>
+</blockquote>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ <strong>iSavta 为私人未上市公司，无公开财务数据。以下为基于公开信息的估算/推测。</strong></p>
+</blockquote>
+<h3 id="_20">收入估算（自下而上）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">假设项</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">来源/依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">付费雇主家庭数（估）</td>
+<td style="text-align: left;">2,000-5,000</td>
+<td style="text-align: left;">基于 20,000+ 注册家庭，付费转化率 10-25%</td>
+</tr>
+<tr>
+<td style="text-align: left;">月均单客收入 (ARPU)</td>
+<td style="text-align: left;">~94 NIS</td>
+<td style="text-align: left;">取自助(69)+全服务(119)中间值加权</td>
+</tr>
+<tr>
+<td style="text-align: left;">月收入估</td>
+<td style="text-align: left;">188,000-470,000 NIS</td>
+<td style="text-align: left;">ARPU × 付费家庭数</td>
+</tr>
+<tr>
+<td style="text-align: left;">年收入估</td>
+<td style="text-align: left;"><strong>2.3M-5.6M NIS</strong> (约 $0.6M-$1.5M)</td>
+<td style="text-align: left;">月收入 × 12</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_21">核心财务概览（估算）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">FY2024（估）</th>
+<th style="text-align: center;">FY2025（估）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">收入</td>
+<td style="text-align: center;">3-5M NIS</td>
+<td style="text-align: center;">3.5-5.5M NIS</td>
+<td style="text-align: left;">推测低速增长</td>
+</tr>
+<tr>
+<td style="text-align: left;">毛利率</td>
+<td style="text-align: center;">70-85%</td>
+<td style="text-align: center;">同</td>
+<td style="text-align: left;">SaaS 平台特征——高毛利</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工成本/收入</td>
+<td style="text-align: center;">40-60%</td>
+<td style="text-align: center;">同</td>
+<td style="text-align: left;">小团队推测</td>
+</tr>
+<tr>
+<td style="text-align: left;">净利润率</td>
+<td style="text-align: center;">10-30%</td>
+<td style="text-align: center;">同</td>
+<td style="text-align: left;">推测盈利但规模小</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工数（估）</td>
+<td style="text-align: center;">&lt;15-20</td>
+<td style="text-align: center;">&lt;15-20</td>
+<td style="text-align: left;">无公开数据</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 以上均为基于市场基准的推理估算，非经审计财务数据。iSavta 作为小型私人公司，无公开财报。<strong>「无可靠公开数据源」</strong> 标注适用于本维度所有具体数字。</p>
+</blockquote>
+<h3 id="_22">资产负债表</h3>
+<p>无公开数据。推测为轻资产模式——无库存、无硬件、无大额固定资产。</p>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<h3 id="_23">雇主端旅程</h3>
+<pre><code>Phase 0: 需求触发
+  │  家中老人失能/ADL 评估不达标 → 需要全职护理员
+  │  触发渠道：医院出院建议 / 家庭医生转诊 / NII 通知
+  ▼
+Phase 1: 评估与匹配
+  │  在 iSavta 注册（免费浏览）→ 设置筛选条件（地点/语言/性别/工作类型）
+  │  → 浏览护理员资料（照片+推荐信+经验描述）
+  │  → 发布职位 → 接收申请 → 加入收藏夹管理候选人
+  ▼
+Phase 2: 面试与雇佣
+  │  通过平台私信联系 → 线下/视频面试 → 核查推荐信 → 核实签证/工作许可状态
+  │  → 通过 tagid 完成法定注册（iSavta 不替代此步骤）
+  │  → 决定是否使用 iSavta 直接雇佣服务（NII 现金津贴申请）
+  ▼
+Phase 3: 服务交付
+  │  护理员到岗（住家/不住家）→ 日常照护（ADL协助、陪伴、简单家务）
+  │  → iSavta 直接雇佣工具：月度薪资计算、社保自动计算、假日管理
+  ▼
+Phase 4: 结算
+  │  家庭向护理员支付工资（含 NII 津贴 + 自费部分）
+  │  → iSavta 直接雇佣系统生成多语言工资单（希伯来语/英语/俄语）
+  │  → 储蓄社保权益在家庭账户
+  ▼
+Phase 5: 持续跟踪
+  │  护理员请假/度假 → 在 iSavta 搜索临时替换护理员
+  │  → 定期检查社保缴纳情况 → 必要时更换护理员
+  │  → 阅读 iSavta Magazine 获取护理知识更新
+</code></pre>
+<h3 id="_24">护理员端旅程</h3>
+<pre><code>Phase 0: 进入市场
+  │  已在以色列（持有效签证）或即将抵达
+  ▼
+Phase 1: 注册与展示
+  │  在 iSavta 免费注册 → 创建个人资料（照片/经验/语言/推荐信/工作类型偏好）
+  │  → 选择可工作区域 → 资料上线，雇主可搜索到
+  ▼
+Phase 2: 找工作
+  │  浏览职位列表 → 主动申请 → 等待雇主联系
+  │  → 或：收到雇主直接联系（雇主主动发起）
+  ▼
+Phase 3: 面试与签约
+  │  与雇主沟通 → 面试 → 协商薪资和工作条件
+  │  → 通过 tagid 完成法律手续 → 开始工作
+</code></pre>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<blockquote>
+<p><strong>适用范围说明</strong>：iSavta 作为撮合平台而非临床科技公司，技术复杂度较低。本维度按「科技平台公司」标准而非「医疗科技公司」标准评估。</p>
+</blockquote>
+<h3 id="91">9.1 平台架构总览（五层模型）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">自研/外采/白标</th>
+<th>技术栈推测</th>
+<th>关键说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 财务/行政</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">推测外采</td>
+<td>基础会计/薪酬软件</td>
+<td>非核心优势</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 业务运营</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研</td>
+<td>雇主/护理员双端后台、职位管理、支付？</td>
+<td>核心业务逻辑</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 调度/运营中心</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">自研（轻量）</td>
+<td>邮件提醒、职位匹配推荐</td>
+<td>无实时调度需求，较轻量</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 用户端（多端）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研</td>
+<td>Web 响应式（推测无独立 App）</td>
+<td>多语言支持是亮点</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据与 AI 层</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">自研（基础）</td>
+<td>搜索索引、简单推荐逻辑</td>
+<td>非 AI 驱动，推测基于标签/规则匹配</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">推测为单体 Web 应用（小团队、低复杂度场景下的常见选择）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要技术栈</strong></td>
+<td style="text-align: left;">无公开信息。推测：PHP/Laravel 或 Python/Django（以色列科技公司常见选型），前端 JavaScript，数据库 MySQL/PostgreSQL</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">无 EHR 集成需求——平台不涉及临床数据</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">推测基础 HTTPS + 密码哈希。无公开合规认证信息（SOC2/HITRUST/ISO 27001 均未见披露）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>软件 IP / 专利</strong></td>
+<td style="text-align: left;">无公开专利信息</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>开发实践</strong></td>
+<td style="text-align: left;">无公开信息。小团队推测为轻量级 CI/CD 或无正式 DevOps 流程</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可扩展性</strong></td>
+<td style="text-align: left;">以色列市场规模有限（双边各数万），无高并发压力；推测现有架构足以支撑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术债务</strong></td>
+<td style="text-align: left;">2011 年创始，推测有累积技术债但规模小、重构成本低</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件 / IoT 设备 — ❌ 不适用</h3>
+<p>iSavta 是纯软件撮合平台，不涉及任何硬件/IoT 设备。</p>
+<h3 id="94-ai-ai">9.4 AI 与数据能力 — ❌ 不适用（基本无 AI 能力）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AI 模型类型</strong></td>
+<td style="text-align: left;">推测仅有基础规则引擎（匹配推荐基于标签而非 ML）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 应用场景</strong></td>
+<td style="text-align: left;">无公开 AI 功能披露</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>训练数据</strong></td>
+<td style="text-align: left;">N/A</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 团队</strong></td>
+<td style="text-align: left;">无公开 AI 人才信息</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据治理</strong></td>
+<td style="text-align: left;">无公开信息。作为以色列注册公司，需遵守以色列隐私保护法</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>能力维度</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差距</th>
+<th style="text-align: center;">差异化评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>软件全栈能力</td>
+<td style="text-align: center;">基础</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">小</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>硬件整合/自研</td>
+<td style="text-align: center;">❌ 不适用</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>AI 临床级能力</td>
+<td style="text-align: center;">❌ 不适用</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>互操作性/集成</td>
+<td style="text-align: center;">❌ 不适用</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>数据资产规模</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">小</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>技术专利/IP 护城河</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>技术护城河总体评估</strong>：<strong>技术本身不构成护城河</strong>——iSavta 的护城河在网络效应（双边用户基础）和品牌认知，而非技术壁垒。同类平台的技术实现门槛低，可复制性强。</p>
+</blockquote>
+<h3 id="96">9.6 技术风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险类别</th>
+<th>具体风险</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 监管政策突变</td>
+<td>N/A——不涉及 AI</td>
+<td style="text-align: center;">🟢</td>
+<td>—</td>
+</tr>
+<tr>
+<td>硬件供应链断裂</td>
+<td>N/A——不涉及硬件</td>
+<td style="text-align: center;">🟢</td>
+<td>—</td>
+</tr>
+<tr>
+<td>网络安全事件</td>
+<td>用户数据泄露（护理员身份信息、雇主联系方式）</td>
+<td style="text-align: center;">🟡</td>
+<td>推测基础安全措施，但无公开合规认证</td>
+</tr>
+<tr>
+<td>互操作性壁垒</td>
+<td>N/A</td>
+<td style="text-align: center;">🟢</td>
+<td>—</td>
+</tr>
+<tr>
+<td>技术团队流失</td>
+<td>关键开发者离开可能导致运维困难</td>
+<td style="text-align: center;">🟡</td>
+<td>小团队固有风险；创始人如具备技术能力可缓解</td>
+</tr>
+<tr>
+<td>技术债爆发</td>
+<td>老代码难以维护、影响迭代速度</td>
+<td style="text-align: center;">🟡</td>
+<td>规模小，重构成本可控</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<h3 id="_25">🔴 前置安全步骤</h3>
+<ol>
+<li><strong>检索已有竞品数据库</strong>：Israel 无 HaH 竞品数据库（非 HaH 赛道）</li>
+<li><strong>以色列护理招聘竞品搜索</strong>：执行多关键词搜索</li>
+<li><strong>潜在跨界进入者</strong>：Yad2（分类广告）、Facebook Groups</li>
+</ol>
+<h3 id="_26">竞争对比表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;"><strong>iSavta</strong></th>
+<th style="text-align: left;"><strong>传统 tagidim</strong>（如 Matav、Matan Care、Goldman Agency、Urim）</th>
+<th style="text-align: left;"><strong>分类广告/社交媒体</strong>（Facebook Groups、Yad2）</th>
+<th style="text-align: left;"><strong>NII 指定护理公司</strong>（chevrot siud，如 Matav、Danel）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立时间</td>
+<td style="text-align: left;">2011</td>
+<td style="text-align: left;">1990s-2000s</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">1990s-2000s</td>
+</tr>
+<tr>
+<td style="text-align: left;">模式</td>
+<td style="text-align: left;">在线撮合平台</td>
+<td style="text-align: left;">线下中介机构</td>
+<td style="text-align: left;">用户自主发布</td>
+<td style="text-align: left;">NII 合约护理服务商</td>
+</tr>
+<tr>
+<td style="text-align: left;">规模（护理员）</td>
+<td style="text-align: left;">35,400+ 注册</td>
+<td style="text-align: left;">各数百-数千</td>
+<td style="text-align: left;">不可统计</td>
+<td style="text-align: left;">各数千</td>
+</tr>
+<tr>
+<td style="text-align: left;">上市状态</td>
+<td style="text-align: left;">未上市</td>
+<td style="text-align: left;">部分上市（如 Danel 在 TASE）</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">部分上市</td>
+</tr>
+<tr>
+<td style="text-align: left;">定价透明度</td>
+<td style="text-align: left;">🟢 高（明码标价）</td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">🔴 低（从津贴中暗扣）</td>
+</tr>
+<tr>
+<td style="text-align: left;">多语言</td>
+<td style="text-align: left;">✅ 5 种语言</td>
+<td style="text-align: left;">🔴 通常仅希伯来语</td>
+<td style="text-align: left;">🔴 单一语言</td>
+<td style="text-align: left;">🔴 通常仅希伯来语</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术平台</td>
+<td style="text-align: left;">Web 平台</td>
+<td style="text-align: left;">无/基础</td>
+<td style="text-align: left;">第三方平台</td>
+<td style="text-align: left;">无/基础</td>
+</tr>
+<tr>
+<td style="text-align: left;">法定地位</td>
+<td style="text-align: left;">平台（非 tagid）</td>
+<td style="text-align: left;">法定 tagid（牌照持有者）</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">法定护理服务商</td>
+</tr>
+<tr>
+<td style="text-align: left;">威胁等级</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">🟡 竞合关系</td>
+<td style="text-align: left;">🟢 间接竞品</td>
+<td style="text-align: left;">🟡 竞合关系</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_27">最大威胁深度扫描</h3>
+<p><strong>最大威胁：传统 tagidim + chevrot siud 体系</strong></p>
+<ul>
+<li>iSavta 的核心价值主张「去中介化」面临一个结构性问题：<strong>以色列法律仍然要求雇主通过 tagid 注册护理员</strong>，这意味着 iSavta 不能完全替代 tagid，只能在「找护理员」这一环节替代</li>
+<li>如果 tagid 体系进行数字化升级（如 Matav 开发自己的在线平台），iSavta 的差异化将缩小</li>
+<li>但截至 2026 年，传统护理机构在数字化方面进展缓慢——这给了 iSavta 持续的窗口期</li>
+</ul>
+<h3 id="_28">潜在跨界进入者</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">进入者类型</th>
+<th style="text-align: left;">代表</th>
+<th style="text-align: center;">进入可能性</th>
+<th style="text-align: left;">威胁评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">垂直分类广告平台</td>
+<td style="text-align: left;">Yad2（以色列最大分类广告）增加护理员专区</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">流量碾压但缺乏垂直深度</td>
+</tr>
+<tr>
+<td style="text-align: left;">人力资源科技公司</td>
+<td style="text-align: left;">通用招聘平台拓展护理垂类</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: left;">护理员招聘有独特合规+语言要求</td>
+</tr>
+<tr>
+<td style="text-align: left;">保险公司</td>
+<td style="text-align: left;">长期护理保险 + 护理员撮合一站式</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: left;">需整合 tagid 牌照</td>
+</tr>
+<tr>
+<td style="text-align: left;">NII 官方</td>
+<td style="text-align: left;">政府自建护理员撮合平台</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">若发生将颠覆格局</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</h2>
+<h3 id="tamsam">TAM/SAM/当前渗透率估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: left;">计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TAM（以色列居家护理总市场规模）</strong></td>
+<td style="text-align: center;">~210 亿 NIS/年（$5.6B）</td>
+<td style="text-align: left;">国家护理支出（含 NII + 家庭自费 + 保险）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SAM（在线撮合/护理招聘可服务市场）</strong></td>
+<td style="text-align: center;">~3-5 亿 NIS/年（$80-130M）</td>
+<td style="text-align: left;">按 NII 津贴现金化比例 + 护理员招聘总交易额推算</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>当前渗透率</strong></td>
+<td style="text-align: center;">&lt;1%</td>
+<td style="text-align: left;">iSavta 年收入估 3-5.5M NIS vs SAM ~3-5 亿 NIS</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_29">增长驱动因素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">驱动因素</th>
+<th style="text-align: center;">影响方向</th>
+<th style="text-align: left;">量化参考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">老龄化</td>
+<td style="text-align: center;">📈 持续增长</td>
+<td style="text-align: left;">65+ 人口占比预计从 12%→16%（2040）</td>
+</tr>
+<tr>
+<td style="text-align: left;">NII 津贴现金化趋势</td>
+<td style="text-align: center;">📈 利好</td>
+<td style="text-align: left;">更多家庭选择直接领取现金而非通过护理公司</td>
+</tr>
+<tr>
+<td style="text-align: left;">互联网渗透率</td>
+<td style="text-align: center;">📈 利好</td>
+<td style="text-align: left;">老年子女一代（50-60 岁）数字素养提升</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理员供给收紧</td>
+<td style="text-align: center;">📉 利空</td>
+<td style="text-align: left;">双边协议国引入通道收紧</td>
+</tr>
+<tr>
+<td style="text-align: left;">传统 tagid 数字化</td>
+<td style="text-align: center;">📉 利空</td>
+<td style="text-align: left;">可能侵蚀 iSavta 差异化</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<h3 id="_30">成本结构拆解表（估算）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: left;">金额估</th>
+<th style="text-align: center;">占收入比</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">服务器/基础设施</td>
+<td style="text-align: left;">5,000-15,000 NIS/月</td>
+<td style="text-align: center;">3-8%</td>
+<td style="text-align: left;">固定成本，规模效应明显</td>
+</tr>
+<tr>
+<td style="text-align: left;">开发团队（1-3人）</td>
+<td style="text-align: left;">30,000-90,000 NIS/月</td>
+<td style="text-align: center;">20-50%</td>
+<td style="text-align: left;">最大成本项</td>
+</tr>
+<tr>
+<td style="text-align: left;">客服/运营（1-3人）</td>
+<td style="text-align: left;">20,000-60,000 NIS/月</td>
+<td style="text-align: center;">15-35%</td>
+<td style="text-align: left;">全服务套餐需要人工</td>
+</tr>
+<tr>
+<td style="text-align: left;">营销</td>
+<td style="text-align: left;">5,000-20,000 NIS/月</td>
+<td style="text-align: center;">3-12%</td>
+<td style="text-align: left;">推测以自然流量为主</td>
+</tr>
+<tr>
+<td style="text-align: left;">行政/杂项</td>
+<td style="text-align: left;">5,000-15,000 NIS/月</td>
+<td style="text-align: center;">3-8%</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_31">盈利路径分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">路径</th>
+<th style="text-align: center;">可行性</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>现状</strong>：会员订阅</td>
+<td style="text-align: center;">✅ 已验证</td>
+<td style="text-align: left;">已有稳定付费会员基础</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>向上销售</strong>：从自助→全服务</td>
+<td style="text-align: center;">✅ 可行</td>
+<td style="text-align: left;">全服务 ARPU 高 72%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>扩展</strong>：护理员端增值服务</td>
+<td style="text-align: center;">⚠️ 待验证</td>
+<td style="text-align: left;">如付费置顶、认证徽章</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>扩展</strong>：保险/金融产品分销</td>
+<td style="text-align: center;">⚠️ 待验证</td>
+<td style="text-align: left;">向雇主推荐护理员保险、长期护理保险</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>扩展</strong>：B2B 企业服务</td>
+<td style="text-align: center;">🔴 遥远</td>
+<td style="text-align: left;">向养老机构提供招聘 SaaS</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_32">综合判断</h3>
+<p>iSavta 大概率已实现盈利（低固定成本 + 高毛利 SaaS 模式 + 2019 年后无新融资），但绝对利润规模小。作为 lifestyle business 财务健康，作为 VC 标的缺乏高增长叙事。</p>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th>机遇</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期（0-12个月）</strong></td>
+<td>① 以色列战时状态后护理需求反弹（2023.10.7 后护理员流失需要重新招聘）② NII 津贴金额随 CPI 上调，家庭可支配预算增加</td>
+<td>① 护理员签证政策进一步收紧② 传统 tagid 觉醒并启动数字化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期（1-3年）</strong></td>
+<td>① 老龄化持续推高需求基数② 政府推动「社区养老」政策利好居家护理③ 外籍护理员双边协议国扩展</td>
+<td>① 政府自建或指定官方撮合平台② 移民政策重大转向（限制外劳）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td>① 数字原住民一代进入「照顾父母」年龄段，天然偏好在线撮合② 多语言能力在以色列多元社会中是持久差异化</td>
+<td>① 以色列市场规模天花板极低（约 6 万外籍护理员）② tagid 牌照制度不改革，iSavta 永远是「半替代」</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_33">法律与诉讼</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">案件/调查</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">潜在影响</th>
+<th style="text-align: left;">最新进展</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">无公开法律纠纷</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">无公开记录</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_34">宏观敏感性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">宏观情景</th>
+<th style="text-align: center;">影响评估</th>
+<th style="text-align: left;">传导机制</th>
+<th style="text-align: center;">缓冲能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>经济衰退</strong></td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">家庭可能推迟雇佣护理员或选择更低成本方案</td>
+<td style="text-align: center;">中——护理需求刚性（非弹性）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利率上升</strong></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">低影响——公司无负债</td>
+<td style="text-align: center;">强</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>汇率波动</strong></td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">护理员汇款回国受汇率影响，可能影响供给意愿</td>
+<td style="text-align: center;">弱——无法对冲</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>通胀</strong></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">NII 津贴随 CPI 调整；可适度提价</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>地缘冲突</strong></td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">战时状态（如 2023.10.7 后）护理员可能离境/难招募</td>
+<td style="text-align: center;">弱——无替代供给</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14-ceo">D14 — 管理层/CEO 公开指引</h2>
+<blockquote>
+<p>iSavta 为非上市公司，无业绩发布会/投资者会议等正式指引渠道。以下基于公开文章和媒体采访提取。</p>
+</blockquote>
+<ul>
+<li>Ariel Cabiri：在 Calcalist 发表专栏文章详细阐述「直接雇佣护理员」的成本节省逻辑——展示对 NII 政策和护理经济的深刻理解</li>
+<li>公司叙事一致围绕「去中介化」「帮家庭省钱」「多语言赋能外籍护理员」</li>
+<li>判断：管理层务实、聚焦，无夸大叙事。作为创始人个人故事驱动的公司，使命真实但野心有限。</li>
+</ul>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<blockquote>
+<p>⚠️ iSavta 为非上市公司，仅有一轮 Pre-Seed 融资，无法进行传统估值分析。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">估值指标</th>
+<th style="text-align: left;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">最新融资轮</td>
+<td style="text-align: left;">Pre-Seed (2019.01)</td>
+</tr>
+<tr>
+<td style="text-align: left;">融资金额</td>
+<td style="text-align: left;">$500,000</td>
+</tr>
+<tr>
+<td style="text-align: left;">投资者</td>
+<td style="text-align: left;">Udi Peless（天使投资人）</td>
+</tr>
+<tr>
+<td style="text-align: left;">隐含估值</td>
+<td style="text-align: left;">无公开披露（典型 Pre-Seed 投后估值 $2-5M）</td>
+</tr>
+<tr>
+<td style="text-align: left;">可比上市标的</td>
+<td style="text-align: left;">Danel Group (TASE: DANE)——业务含护理服务、规模远大于 iSavta</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_35">估值逻辑推理</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">方法</th>
+<th style="text-align: left;">估算</th>
+<th style="text-align: left;">逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">收入倍数法（SaaS comp）</td>
+<td style="text-align: left;">$2-7M</td>
+<td style="text-align: left;">年收入 $0.6-1.5M × 3-5x（小型 SaaS 倍数）</td>
+</tr>
+<tr>
+<td style="text-align: left;">用户价值法</td>
+<td style="text-align: left;">$2-5M</td>
+<td style="text-align: left;">2 万家庭 × $100-250/家庭</td>
+</tr>
+<tr>
+<td style="text-align: left;">Pre-Seed 投后推测</td>
+<td style="text-align: left;">$2-5M</td>
+<td style="text-align: left;">典型 Pre-Seed 融资稀释 10-25%</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>综合估算 iSavta 估值区间：<strong>$2-7M</strong>。小型 lifestyle business 估值，非 VC 级标的。</p>
+</blockquote>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1">1. 对潜在投资者</h3>
+<ul>
+<li><strong>估值判断</strong>：iSavta 作为 lifestyle business 价值有限，不建议作为独立投资标的</li>
+<li><strong>核心观察指标</strong>：月活雇主数、付费转化率、ARPU 趋势、是否启动新一轮融资</li>
+<li><strong>催化剂</strong>：① NII 政策利好（护理津贴现金化扩面）② 护理员供给端放松 ③ 传统 tagid 体系改革</li>
+<li><strong>下行风险</strong>：① 政府自建平台 ② 护理员签证收紧 ③ 以色列市场规模天然限制</li>
+</ul>
+<h3 id="2-isavta">2. 对管理层（iSavta 视角）</h3>
+<ol>
+<li><strong>突破 tagid 壁垒</strong>：探索与 tagid 的合作模式（内置注册流程），从「竞合」转为「整合」——这是增长最大瓶颈</li>
+<li><strong>发展护理员端增值服务</strong>：付费认证、技能培训、保险——护理员端目前零变现</li>
+<li><strong>B2B 扩展</strong>：向中小型护理机构提供白标招聘 SaaS——以色列有 ~60 家 tagid</li>
+<li><strong>数据资产变现</strong>：积累的护理员供需数据对保险公司、政府有决策参考价值</li>
+<li><strong>阿拉伯语支持</strong>：以色列阿拉伯裔人口占 21%，当前平台不支持阿拉伯语，是明显的市场空白</li>
+</ol>
+<h3 id="3-ihomecare">3. 对竞对/新进入者（含 iHomeCare）</h3>
+<ul>
+<li><strong>壁垒评估</strong>：iSavta 的护城河是网络效应+品牌认知而非技术——对新进入者门槛低</li>
+<li><strong>差异化切入点</strong>：① 整合 tagid 注册（一站式）② AI 匹配（当前仅规则匹配）③ 移动 App（当前仅 Web）④ 阿拉伯语市场</li>
+<li><strong>关键借鉴</strong>：</li>
+<li>多语言策略——以色列移民社会的成功要素</li>
+<li>内容营销——Blog/Magazine 建立 SEO 壁垒</li>
+<li>直接雇佣 SaaS——从「撮合」延伸到「管理」的工具化路径</li>
+</ul>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<h3 id="_36">核心政策框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策/法规</th>
+<th style="text-align: left;">发布机构</th>
+<th style="text-align: left;">关键内容</th>
+<th style="text-align: left;">对 iSavta 的影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>长期护理保险法 (1988)</strong></td>
+<td style="text-align: left;">以色列国会</td>
+<td style="text-align: left;">建立 NII 护理津贴制度——为失能老人提供每周 5.5-30 小时居家护理</td>
+<td style="text-align: left;">核心需求来源——所有护理需求的法律基石</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NII 护理津贴现金化选项</strong></td>
+<td style="text-align: left;">Bituach Leumi (NII)</td>
+<td style="text-align: left;">允许受益人选择现金领取而非实物服务（Level 2+）</td>
+<td style="text-align: left;">🟢 直接利好——iSavta 直接雇佣服务的政策基础</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>外籍护理员雇佣许可制度</strong></td>
+<td style="text-align: left;">人口与移民管理局</td>
+<td style="text-align: left;">需通过 tagid 申请「heiter hasaka」雇佣许可；双边协议国限定</td>
+<td style="text-align: left;">🟡 竞合——许可制度保障了护理员身份的合法性但强制 tagid 参与</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>双边协议 (Bilateral Agreements)</strong></td>
+<td style="text-align: left;">以色列政府 ↔ 菲律宾/印度/尼泊尔/斯里兰卡</td>
+<td style="text-align: left;">规范外籍护理员招募、签证、权益</td>
+<td style="text-align: left;">🟡 供给端政策——协议国名单变化直接影响护理员供给</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>最低工资法</strong></td>
+<td style="text-align: left;">以色列劳动部</td>
+<td style="text-align: left;">2025 年 4 月起 6,248 NIS/月</td>
+<td style="text-align: left;">🟡 间接触及——影响护理员薪资基准和家庭负担能力</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_37">监管风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险</th>
+<th style="text-align: center;">概率</th>
+<th style="text-align: center;">影响</th>
+<th style="text-align: left;">触发条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">外籍护理员引入配额大幅削减</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">🔴 高——双边供给萎缩</td>
+<td style="text-align: left;">国内政治右转/民族主义抬头</td>
+</tr>
+<tr>
+<td style="text-align: left;">NII 现金津贴政策逆转</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: center;">🔴 高——直接雇佣服务失去政策基础</td>
+<td style="text-align: left;">财政压力 + 护理公司游说</td>
+</tr>
+<tr>
+<td style="text-align: left;">政府自建官方撮合平台</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">🔴 高——iSavta 被替代</td>
+<td style="text-align: left;">数字化政府倡议扩展到护理领域</td>
+</tr>
+<tr>
+<td style="text-align: left;">tagid 制度改革（取消强制 tagid）</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: center;">🟢 利好——iSavta 可替代 tagid</td>
+<td style="text-align: left;">劳动力市场自由化改革</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<h3 id="level-5-nii">典型案例：住家外籍护理员（Level 5 NII 受益人）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: center;">金额（NIS/月）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>家庭总支出</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">护理员基本工资</td>
+<td style="text-align: center;">6,248</td>
+<td style="text-align: left;">最低工资标准</td>
+</tr>
+<tr>
+<td style="text-align: left;">食品补贴（可选）</td>
+<td style="text-align: center;">800</td>
+<td style="text-align: left;">200 NIS/周</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bituach Leumi 雇主缴纳</td>
+<td style="text-align: center;">225</td>
+<td style="text-align: left;">3.6% × 6,248</td>
+</tr>
+<tr>
+<td style="text-align: left;">健康保险</td>
+<td style="text-align: center;">225</td>
+<td style="text-align: left;">~7 NIS/天</td>
+</tr>
+<tr>
+<td style="text-align: left;">休息日/节假日加班</td>
+<td style="text-align: center;">500</td>
+<td style="text-align: left;">按实际加班天数</td>
+</tr>
+<tr>
+<td style="text-align: left;">养老金+遣散费（计提）</td>
+<td style="text-align: center;">781</td>
+<td style="text-align: left;">12.5% 计提</td>
+</tr>
+<tr>
+<td style="text-align: left;">recuperation pay + 病假（计提）</td>
+<td style="text-align: center;">200</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">iSavta 全服务会员费</td>
+<td style="text-align: center;">119</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>家庭月度总成本</strong></td>
+<td style="text-align: center;"><strong>9,098</strong></td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>家庭收入（补贴）</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">NII 护理津贴 Level 5（现金）</td>
+<td style="text-align: center;">6,448</td>
+<td style="text-align: left;">2026 年 4 月费率</td>
+</tr>
+<tr>
+<td style="text-align: left;">Claims Conference 额外津贴</td>
+<td style="text-align: center;">1,000</td>
+<td style="text-align: left;">如适用</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>家庭净支出</strong></td>
+<td style="text-align: center;"><strong>1,650</strong></td>
+<td style="text-align: left;">9,098 - 6,448 - 1,000</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_38">与替代方案对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">方案</th>
+<th style="text-align: center;">家庭月净支出</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">iSavta + 直接雇佣 + NII 现金</td>
+<td style="text-align: center;"><strong>1,650-3,650 NIS</strong></td>
+<td style="text-align: left;">最优方案</td>
+</tr>
+<tr>
+<td style="text-align: left;">传统护理公司 (chevrat siud)</td>
+<td style="text-align: center;">3,000-7,000 NIS</td>
+<td style="text-align: left;">机构从津贴中抽成</td>
+</tr>
+<tr>
+<td style="text-align: left;">无 NII 津贴 + 直接雇佣</td>
+<td style="text-align: center;">9,098 NIS</td>
+<td style="text-align: left;">全自费</td>
+</tr>
+<tr>
+<td style="text-align: left;">养老院 (private nursing home)</td>
+<td style="text-align: center;">13,000-22,000 NIS</td>
+<td style="text-align: left;">机构化方案</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_39">关键假设清单</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">假设</th>
+<th style="text-align: left;">敏感性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NII 津贴持续现金化可选</td>
+<td style="text-align: left;">🔴——若取消，iSavta 直接雇佣服务价值归零</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理员最低工资不变</td>
+<td style="text-align: left;">🟡——若大幅上调，家庭净支出增加</td>
+</tr>
+<tr>
+<td style="text-align: left;">外籍护理员持续可招募</td>
+<td style="text-align: left;">🔴——若供给断崖，平台失去双边市场一端</td>
+</tr>
+<tr>
+<td style="text-align: left;">家庭意愿直接雇佣（自管）vs 外包给机构</td>
+<td style="text-align: left;">🟡——iSavta 需持续教育市场</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<h3 id="_40">分层矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: center;">规模（估）</th>
+<th style="text-align: center;">支付能力</th>
+<th style="text-align: center;">产品匹配度</th>
+<th style="text-align: left;">获客策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>A 级</strong></td>
+<td style="text-align: left;">Level 5-6 NII 受益人 + Claims Conference 额外津贴的家庭</td>
+<td style="text-align: center;">30,000-50,000</td>
+<td style="text-align: center;">🟢 高（津贴覆盖大部分成本）</td>
+<td style="text-align: center;">🟢 极高——直接雇佣服务完美匹配</td>
+<td style="text-align: left;">SEO + 内容营销（社保/NII 话题）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B 级</strong></td>
+<td style="text-align: left;">Level 2-4 NII 受益人，需住家或不住家护理员</td>
+<td style="text-align: center;">150,000-200,000</td>
+<td style="text-align: center;">🟡 中（津贴部分覆盖）</td>
+<td style="text-align: center;">🟢 高——平台撮合匹配</td>
+<td style="text-align: left;">SEO + 口碑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>C 级</strong></td>
+<td style="text-align: left;">高收入自费家庭（无 NII 津贴资格，因收入超标）</td>
+<td style="text-align: center;">20,000-40,000</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: center;">🟡 中——不差钱，可能倾向传统 tagid 全包服务</td>
+<td style="text-align: left;">品牌建设 + 高端体验</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D 级</strong></td>
+<td style="text-align: left;">临时需求家庭（护理员休假替代/短期护理）</td>
+<td style="text-align: center;">50,000-80,000</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">🟢 高——快速匹配是核心价值</td>
+<td style="text-align: left;">回头客 + 护理员端推荐</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_41">推导含义</h3>
+<ul>
+<li><strong>A 级是核心</strong>：既是最匹配的客户群，也是最高频使用直接雇佣服务的群体</li>
+<li><strong>B 级是规模基础</strong>：最大人群但竞争激烈（传统护理公司也在争夺）</li>
+<li><strong>D 级是高频入口</strong>：临时需求可能转化为长期雇佣——是获客漏斗顶端</li>
+<li><strong>C 级是增量</strong>：目前被传统 tagid 掌控，但数字素养更高的下一代正在进入决策角色</li>
+</ul>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<h3 id="_42">已确认竞品列表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">名称</th>
+<th style="text-align: left;">模式</th>
+<th style="text-align: left;">规模</th>
+<th style="text-align: left;">技术/差异化</th>
+<th style="text-align: center;">威胁等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Matav (מטב)</strong></td>
+<td style="text-align: left;">传统 tagid + chevrat siud</td>
+<td style="text-align: left;">以色列最大之一</td>
+<td style="text-align: left;">牌照优势、政府关系</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Danel Group (TASE: DANE)</strong></td>
+<td style="text-align: left;">上市护理服务集团</td>
+<td style="text-align: left;">年收入数亿 NIS</td>
+<td style="text-align: left;">资金实力、全链条服务</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Matan Care</strong></td>
+<td style="text-align: left;">tagid 中介</td>
+<td style="text-align: left;">中等</td>
+<td style="text-align: left;">牌照</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Goldman Agency</strong></td>
+<td style="text-align: left;">tagid 中介</td>
+<td style="text-align: left;">小型</td>
+<td style="text-align: left;">牌照</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Urim</strong></td>
+<td style="text-align: left;">tagid 中介</td>
+<td style="text-align: left;">小型</td>
+<td style="text-align: left;">牌照</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Facebook Groups</strong></td>
+<td style="text-align: left;">社交媒体自发撮合</td>
+<td style="text-align: left;">数千人/群</td>
+<td style="text-align: left;">零成本、社群信任</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Yad2</strong></td>
+<td style="text-align: left;">分类广告</td>
+<td style="text-align: left;">以色列最大分类平台</td>
+<td style="text-align: left;">流量优势</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NII 官方现金津贴指南</strong></td>
+<td style="text-align: left;">政府信息</td>
+<td style="text-align: left;">全网</td>
+<td style="text-align: left;">权威性、零成本</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tagid-chevrot-siud">最大威胁深度扫描：传统 tagid + chevrot siud 体系</h3>
+<ul>
+<li><strong>现状</strong>：约 60 家 tagidim 和数百家 chevrot siud 控制着以色列护理员招聘的主要渠道</li>
+<li><strong>优势</strong>：法定牌照壁垒、政府关系、全包服务（雇主无需了解劳动法细节）</li>
+<li><strong>劣势</strong>：数字化程度低、定价不透明、多语言能力弱、用户体验差</li>
+<li><strong>趋势</strong>：尚未看到体系内大规模数字化转型——但这是时间问题，而非永久的护城河</li>
+</ul>
+<h3 id="_43">潜在跨界进入者</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">进入者</th>
+<th style="text-align: left;">风险评估</th>
+<th style="text-align: left;">时间窗口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>保险公司</strong> (Clal/Migdal/Harel)</td>
+<td style="text-align: left;">长期护理险 + 护理员撮合集成——探索性项目可能正在评估中</td>
+<td style="text-align: left;">2-3 年</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NII 官方平台</strong></td>
+<td style="text-align: left;">政府背景的公共平台（类似英国 NHS Jobs）——可能性高但以色列政府数字化速度慢</td>
+<td style="text-align: left;">3-5 年</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>国际平台</strong> (Care.com 等)</td>
+<td style="text-align: left;">全球化家政平台进入以色列——语言和文化壁垒高</td>
+<td style="text-align: left;">1-3 年</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略评估</h2>
+<h3 id="d21_1">D21 — 不适用</h3>
+<p>iSavta 目前仅在以色列运营，无跨境业务。以下为理论分析：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">跨境可行性</td>
+<td style="text-align: left;">🔴 低——护理员招聘涉及各国移民/劳工法规，无法简单复制</td>
+</tr>
+<tr>
+<td style="text-align: left;">以色列模式可输出市场</td>
+<td style="text-align: left;">🟡 中——海湾国家（沙特/阿联酋）也有大量外籍家政护理员需求，但语言文化差异大</td>
+</tr>
+<tr>
+<td style="text-align: left;">已开展行动</td>
+<td style="text-align: left;">无公开跨境举措</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<h3 id="d22_1">D22 — 不适用（无明确退出路径，仅作理论分析）</h3>
+<p>iSavta 作为小规模生活方式型企业，传统 IPO 或大额并购路径不清晰。以下为理论分析：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">潜在买家类型</th>
+<th style="text-align: left;">代表</th>
+<th style="text-align: left;">动机</th>
+<th style="text-align: center;">估值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">护理服务集团</td>
+<td style="text-align: left;">Danel Group, Matav</td>
+<td style="text-align: left;">获取数字平台能力 + 双边用户基础</td>
+<td style="text-align: center;">$2-5M</td>
+</tr>
+<tr>
+<td style="text-align: left;">保险/健康科技</td>
+<td style="text-align: left;">Clal Insurance, Harel</td>
+<td style="text-align: left;">嵌入长期护理险生态</td>
+<td style="text-align: center;">$3-8M</td>
+</tr>
+<tr>
+<td style="text-align: left;">家政平台</td>
+<td style="text-align: left;">Care.com (IAC)</td>
+<td style="text-align: left;">进入以色列市场</td>
+<td style="text-align: center;">$5-10M</td>
+</tr>
+<tr>
+<td style="text-align: left;">战略收购（acqui-hire）</td>
+<td style="text-align: left;">科技公司</td>
+<td style="text-align: left;">获取团队 + 以色列护理领域 know-how</td>
+<td style="text-align: center;">$1-3M</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 以上均为理论推演。iSavta 自 2019 年融资后近 7 年无新融资——可能创始人对退出不迫切，或标的缺乏买家兴趣。</p>
+</blockquote>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<h3 id="esg">ESG 披露状态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ESG 报告</td>
+<td style="text-align: center;">❌ 无</td>
+<td style="text-align: left;">未发行过 ESG 报告</td>
+</tr>
+<tr>
+<td style="text-align: left;">环境</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: left;">纯数字平台，环境影响极低</td>
+</tr>
+<tr>
+<td style="text-align: left;">社会</td>
+<td style="text-align: center;">🟢 积极</td>
+<td style="text-align: left;">核心业务直接响应 SDG 3（健康福祉）和 SDG 8（体面工作）</td>
+</tr>
+<tr>
+<td style="text-align: left;">治理</td>
+<td style="text-align: center;">⚠️ 基础</td>
+<td style="text-align: left;">小公司，无正式治理结构披露</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_44">社会影响力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">帮助家庭节省护理成本</td>
+<td style="text-align: left;">7,000-25,600 NIS/年</td>
+</tr>
+<tr>
+<td style="text-align: left;">赋能外籍护理员</td>
+<td style="text-align: left;">35,400+ 注册，免费使用平台，直接与雇主沟通</td>
+</tr>
+<tr>
+<td style="text-align: left;">SDG 对齐</td>
+<td style="text-align: left;">SDG 3.8（全民健康覆盖）——被 Social Impact Israel 专题报道</td>
+</tr>
+<tr>
+<td style="text-align: left;">多语言包容</td>
+<td style="text-align: left;">5 种语言覆盖以色列主要移民社区</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>iSavta 的社会价值显著高于其商业价值——这也是其作为「社会企业」叙事多于「科技创业公司」叙事的原因。</p>
+</blockquote>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<blockquote>
+<p>⚠️ iSavta 为极小型私人公司，组织信息极为有限。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">推测为创始人主导的扁平结构——无事业部/部门划分</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">无可靠公开数据源，推测 &lt;15-20 人（基于收入规模+无新融资判断）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人才密度</strong></td>
+<td style="text-align: left;">无公开信息。创始人 Ariel Cabiri 为连续创业者</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🚨 <strong>极高</strong>——创始人即公司。若 Ariel Cabiri 离开，公司可能无法存续</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工留存</strong></td>
+<td style="text-align: left;">无公开数据</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>招聘速度</strong></td>
+<td style="text-align: left;">N/A</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>薪酬哲学</strong></td>
+<td style="text-align: left;">无公开信息</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">无公开信息（Glassdoor 未见评价）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>多元化与包容</strong></td>
+<td style="text-align: left;">平台层面的多语言包容性强；组织层面无公开信息</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>组织健康度综合评级</strong>：🟡 一般（小团队灵活性好，但关键人依赖极高）
+<strong>组织风险清单</strong>：过度依赖创始人（🚨 红色警报）、无公开团队信息削弱外部信任</p>
+</blockquote>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<h3 id="251">25.1 融资历史全览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">轮次</th>
+<th style="text-align: left;">日期</th>
+<th style="text-align: left;">金额</th>
+<th style="text-align: left;">投前/投后估值</th>
+<th style="text-align: left;">领投方</th>
+<th style="text-align: left;">跟投方</th>
+<th style="text-align: left;">融资用途</th>
+<th style="text-align: left;">关键条款</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Pre-Seed</td>
+<td style="text-align: left;">2019 年 1 月</td>
+<td style="text-align: left;">$500,000</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">Udi Peless</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">无公开信息</td>
+<td style="text-align: left;">无公开信息</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>累计融资总额</strong>：$500,000</li>
+<li><strong>估值轨迹</strong>：仅一轮融资，无轨迹可分析</li>
+</ul>
+<h3 id="252-cap-table">25.2 Cap Table 深度分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">股东类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: center;">持股比例（估）</th>
+<th style="text-align: center;">是否有董事会席位</th>
+<th style="text-align: left;">退出历史</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">创始人</td>
+<td style="text-align: left;">Ariel Cabiri</td>
+<td style="text-align: center;">~80-90%（估）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">无</td>
+</tr>
+<tr>
+<td style="text-align: left;">天使投资人</td>
+<td style="text-align: left;">Udi Peless</td>
+<td style="text-align: center;">~10-20%（估）</td>
+<td style="text-align: center;">未知</td>
+<td style="text-align: left;">无</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>创始人持股</strong>：推测仍持控制权</li>
+<li><strong>员工期权池</strong>：无公开信息——推测未设立正式 ESOP</li>
+<li><strong>清算偏好</strong>：无公开信息——典型天使轮无复杂条款</li>
+</ul>
+<h3 id="253">25.3 现金状况</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">估算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">最新现金余额</td>
+<td style="text-align: left;">无公开数据——2019 年融资 $500K，7 年无新融资，推测已耗尽或靠自有现金流维持</td>
+</tr>
+<tr>
+<td style="text-align: left;">月度 Burn Rate</td>
+<td style="text-align: left;">推测 50,000-150,000 NIS/月</td>
+</tr>
+<tr>
+<td style="text-align: left;">剩余 Runway</td>
+<td style="text-align: left;"><strong>不适用</strong>——推测已实现盈亏平衡（否则 7 年无法存活）</td>
+</tr>
+<tr>
+<td style="text-align: left;">下次融资预期</td>
+<td style="text-align: left;">无——可能不需要（lifestyle business）或无法吸引 VC</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="254">25.4 投资者质量评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">评估维度</th>
+<th style="text-align: center;">评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">领投方品牌</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">Udi Peless——以色列天使投资人，非 Tier 1 VC</td>
+</tr>
+<tr>
+<td style="text-align: left;">投后参与度</td>
+<td style="text-align: center;">未知</td>
+<td style="text-align: left;">无公开信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">后续跟投意愿</td>
+<td style="text-align: center;">未知</td>
+<td style="text-align: left;">7 年未跟投——推测已无追加意愿</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<blockquote>
+<p>⚠️ iSavta 为平台型产品而非销售驱动型公司，GTM 以产品驱动（PLG）为主。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;"><strong>PLG（产品驱动增长）+ 内容营销</strong>——免费浏览 + 内容吸引 → 付费转化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售团队结构</strong></td>
+<td style="text-align: left;">推测无专职销售团队——产品自助、无企业销售需求</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC（客户获取成本）</strong></td>
+<td style="text-align: left;">推测极低——SEO + 口碑 + 内容营销，边际获客成本接近零</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LTV/CAC 比</strong></td>
+<td style="text-align: left;">推测极高——低 CAC（~0）÷ 持续会员费收入 = 近乎无限</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC 回收期</strong></td>
+<td style="text-align: left;">推测 &lt;1 个月——开通费（389-699 NIS）即可覆盖获客成本</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>平均销售周期</strong></td>
+<td style="text-align: left;">推测数小时-数天（自助式，无销售介入）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>赢单率</strong></td>
+<td style="text-align: left;">N/A——非竞标模式</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDR（净收入留存）</strong></td>
+<td style="text-align: left;">无公开数据——推测中高（护理需求持续 1-5 年）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>渠道伙伴经济</strong></td>
+<td style="text-align: left;">无公开渠道伙伴策略</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>GTM 阶段诊断</strong>：成熟运营期（已过 PMF 阶段 10+ 年）——核心瓶颈不在获客而在 <strong>市场天花板</strong>。
+<strong>GTM 瓶颈判断</strong>：漏斗底部——付费转化率提升空间，但核心制约是总市场规模。</p>
+</blockquote>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="d27_1">D27 — 不适用</h3>
+<p>iSavta 不提供临床/医疗服务，仅提供护理员撮合与直接雇佣管理工具。护理质量取决于雇主自主选择的护理员而非平台。以下为平台层面的质量相关观察：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">方面</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">护理员资料质量</td>
+<td style="text-align: left;">包含推荐信、经验描述、照片——但 <strong>无平台验证机制</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">雇主反馈机制</td>
+<td style="text-align: left;">平台采集的雇主感谢信为正面筛选——非客观评价体系</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理质量保证</td>
+<td style="text-align: left;">❌ 无——平台不承担护理质量责任</td>
+</tr>
+<tr>
+<td style="text-align: left;">安全事故报告</td>
+<td style="text-align: left;">无公开信息</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ <strong>关键风险提示</strong>：iSavta 对护理员不进行背景审查或技能认证——这在以色列属行业通用做法（tagid 体系下也由雇主自行核查），但在全球 ESG/消费者保护趋势下可能面临监管压力。</p>
+</blockquote>
+<hr />
+<h2 id="_45">收尾结构</h2>
+<h3 id="v20-27">v2.0 完备性审计（27 维度）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">D0</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">公司概览速览</td>
+</tr>
+<tr>
+<td style="text-align: left;">D1</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">执行摘要</td>
+</tr>
+<tr>
+<td style="text-align: left;">D2</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">公司全貌（含时间线）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D3</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">战略定位</td>
+</tr>
+<tr>
+<td style="text-align: left;">D4</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">商业模式架构图</td>
+</tr>
+<tr>
+<td style="text-align: left;">D5</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">服务产品线 &amp; 定价模式</td>
+</tr>
+<tr>
+<td style="text-align: left;">D6</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">客户与支付方深度拆解</td>
+</tr>
+<tr>
+<td style="text-align: left;">D7</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">财务深度拆解——私人公司无公开财务数据，仅做自下而上估算</td>
+</tr>
+<tr>
+<td style="text-align: left;">D8</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">工作流/旅程映射</td>
+</tr>
+<tr>
+<td style="text-align: left;">D9</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">技术深度评估——技术栈无公开信息，基于行业常识推测</td>
+</tr>
+<tr>
+<td style="text-align: left;">D10</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">竞争格局对标矩阵</td>
+</tr>
+<tr>
+<td style="text-align: left;">D11</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">收入构成与增长趋势（TAM/SAM）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D12</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">盈利模型与路径</td>
+</tr>
+<tr>
+<td style="text-align: left;">D13</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">机遇与风险评估矩阵</td>
+</tr>
+<tr>
+<td style="text-align: left;">D14</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">管理层公开指引——非上市公司无正式指引渠道</td>
+</tr>
+<tr>
+<td style="text-align: left;">D15</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">估值对比——私人公司仅一轮融资，做理论推理</td>
+</tr>
+<tr>
+<td style="text-align: left;">D16</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">对 iHomeCare 战略建议</td>
+</tr>
+<tr>
+<td style="text-align: left;">D17</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">政策与监管土壤</td>
+</tr>
+<tr>
+<td style="text-align: left;">D18</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">单元经济模型</td>
+</tr>
+<tr>
+<td style="text-align: left;">D19</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">目标人群/客户细分</td>
+</tr>
+<tr>
+<td style="text-align: left;">D20</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">竞品深度地图</td>
+</tr>
+<tr>
+<td style="text-align: left;">D21</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">跨境/跨区域——标注「不适用」</td>
+</tr>
+<tr>
+<td style="text-align: left;">D22</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">退出/并购价值——标注「不适用，仅理论分析」</td>
+</tr>
+<tr>
+<td style="text-align: left;">D23</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">ESG / 社会影响力</td>
+</tr>
+<tr>
+<td style="text-align: left;">D24</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">组织与人才——极小型公司，组织信息极为有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">D25</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">融资历史与资本结构</td>
+</tr>
+<tr>
+<td style="text-align: left;">D26</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">销售与 GTM 效率</td>
+</tr>
+<tr>
+<td style="text-align: left;">D27</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">临床质量——标注「不适用」</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: center;">22</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖（受限于私人公司数据可获性）</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 数据缺失</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_46">调研空白与后续补充</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+<th style="text-align: center;">优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">实际收入/利润数据</td>
+<td style="text-align: left;">以色列企业注册处 (Rasham HaChavarot) 调取年报</td>
+<td style="text-align: center;">🔴 高</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">员工人数和组织结构</td>
+<td style="text-align: left;">LinkedIn 搜索 + 直接联系</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">月度活跃雇主/护理员数</td>
+<td style="text-align: left;">直接联系 iSavta 或通过 SimilarWeb 估算流量</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">付费转化率和 ARPU</td>
+<td style="text-align: left;">直接联系或行业专家访谈</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">技术栈和架构细节</td>
+<td style="text-align: left;">技术团队联系或招聘信息分析</td>
+<td style="text-align: center;">🟢 低</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">用户 NPS 和满意度</td>
+<td style="text-align: left;">用户访谈或爬取公开评价</td>
+<td style="text-align: center;">🟢 低</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">护理员端体验和痛点</td>
+<td style="text-align: left;">护理员社区访谈</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">以色列 tagid 体系改革动向</td>
+<td style="text-align: left;">政策研究 + 行业报道跟踪</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">创始人完整背景</td>
+<td style="text-align: left;">LinkedIn 深挖 + 以色列科技媒体报道</td>
+<td style="text-align: center;">🟢 低</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">以色列外籍护理员市场规模精确数据</td>
+<td style="text-align: left;">人口与移民管理局数据 + NII 统计</td>
+<td style="text-align: center;">🔴 高</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_47">参考文献</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题/内容</th>
+<th style="text-align: left;">日期/检索日</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">iSavta 官网</td>
+<td style="text-align: left;">How it works / Find caregivers / Direct employment service</td>
+<td style="text-align: left;">2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">iSavta 官网</td>
+<td style="text-align: left;">直接雇佣服务定价页面 (isavta.co.il/en/salary/welcome)</td>
+<td style="text-align: left;">2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">iSavta 官网</td>
+<td style="text-align: left;">首页——「以色列最大护理员招聘平台」定位 (isavta.co.il/en)</td>
+<td style="text-align: left;">2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Social Impact Israel</td>
+<td style="text-align: left;">SDG 3- iSavta Puts the Heart in Elder-Care Tech (socialimpactil.com)</td>
+<td style="text-align: left;">~2020 (检索 2026-07-11)</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Startup Nation Central</td>
+<td style="text-align: left;">iSavta Financials / Company Page (finder.startupnationcentral.org)</td>
+<td style="text-align: left;">2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">IVC Data &amp; Insights</td>
+<td style="text-align: left;">iSavta Ltd. Company Card (ivc-online.com)</td>
+<td style="text-align: left;">2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">iSavta Facebook</td>
+<td style="text-align: left;">iSavta 官方 Facebook 页面 (facebook.com/iSavta)</td>
+<td style="text-align: left;">2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">iSavta Instagram</td>
+<td style="text-align: left;">iSavta Caregivers Instagram (instagram.com/isavta.co.il)</td>
+<td style="text-align: left;">2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">Semerenko Group</td>
+<td style="text-align: left;">Long-Term Care In Israel: Nursing Benefit And 2026 Costs (semerenkogroup.com/long-term-care-israel)</td>
+<td style="text-align: left;">2026-07 (检索 2026-07-11)</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Blev Shalem</td>
+<td style="text-align: left;">Hiring a Foreign Caregiver? Here is What You Need to Know (blevshalem.com)</td>
+<td style="text-align: left;">2023-04 (更新 2025-04)</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">Calcalist</td>
+<td style="text-align: left;">直接雇佣外籍护理员节省成本——Ariel Cabiri CEO 专栏 (calcalist.co.il)</td>
+<td style="text-align: left;">检索 2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">Maariv Online</td>
+<td style="text-align: left;">外籍护理员直接雇佣——iSavta 系统报道 (maariv.co.il)</td>
+<td style="text-align: left;">检索 2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">PMC / NCBI</td>
+<td style="text-align: left;">The Long-Term Care Insurance Program in Israel (pmc.ncbi.nlm.nih.gov)</td>
+<td style="text-align: left;">~2013 (检索 2026-07-11)</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">NBN (Nefesh B&rsquo;Nefesh)</td>
+<td style="text-align: left;">Hiring a Foreign Care Worker (nbn.org.il)</td>
+<td style="text-align: left;">检索 2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">Israel Ministry of Health</td>
+<td style="text-align: left;">Eligibility and Funding of Nursing Care (me.health.gov.il)</td>
+<td style="text-align: left;">检索 2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">Bituach Leumi (NII)</td>
+<td style="text-align: left;">长期护理津贴政策——间接引用</td>
+<td style="text-align: left;">2026 (检索 2026-07-11)</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: left;">Reshet 13 (Channel 13)</td>
+<td style="text-align: left;">「לחיות בגדול」节目 iSavta 专访</td>
+<td style="text-align: left;">检索 2026-07-11</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td style="text-align: left;">ResearchGate</td>
+<td style="text-align: left;">The Long-Term Care Insurance Law in Israel: Present and Future</td>
+<td style="text-align: left;">检索 2026-07-11</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<blockquote>
+<p><strong>报告结束</strong> | 调研人：Kate AI Agent | 审核：待人工复核 | 下次更新建议：2027-01（跟踪 NII 政策变化及护理员供给动态）</p>
+</blockquote>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

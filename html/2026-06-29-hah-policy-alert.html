@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HaH 全球政策周度预警报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">HaH 全球政策周度预警报告</a><ul>
+<li><a href="#4">🔴 重大政策变动 + 深度分析（4条）</a><ul>
+<li><a href="#1-ahcah-2030">🔴 #1 美国：AHCaH 豁免延期法案正式签署 — 延至2030年</a></li>
+<li><a href="#2-acah-jfma">🔴 #2 台湾：在宅急症照护(ACAH)成果登上国际期刊 JFMA</a></li>
+<li><a href="#3-3">🔴 #3 台湾：台湾在宅医疗学会吁健保/长照资源至少3%投入居家医疗</a></li>
+<li><a href="#4-cihi-2026er">🔴 #4 加拿大：CIHI 2026报告揭示居家护理缺口加剧ER危机</a></li>
+</ul>
+</li>
+<li><a href="#_1">🟡 值得关注</a><ul>
+<li><a href="#5-2026629">#5 日本：厚劳大臣记者会通知（2026年6月29日）</a></li>
+<li><a href="#6-hith">#6 澳洲：HITH老年护理定位陈述持续发酵</a></li>
+</ul>
+</li>
+<li><a href="#_2">🟢 行业动态</a></li>
+<li><a href="#_3">📊 统计</a></li>
+<li><a href="#_4">附件：完整说明</a><ul>
+<li><a href="#rss">本次RSS源状态</a></li>
+<li><a href="#_5">方法论</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">HaH 全球政策周度预警报告</h1>
+<p><strong>日期</strong>: 2026-06-29<br />
+<strong>分析师</strong>: Kate / 调研 VP<br />
+<strong>覆盖</strong>: US(CMS/AHCAH) · UK(NHS) · JP(厚労省) · AU(HITH) · SG(MIC@Home) · TW(在宅急症) · CA(HaH)</p>
+<hr />
+<h2 id="4">🔴 重大政策变动 + 深度分析（4条）</h2>
+<hr />
+<h3 id="1-ahcah-2030">🔴 #1 美国：AHCaH 豁免延期法案正式签署 — 延至2030年</h3>
+<p><strong>事件概述</strong>
+2026年2月3日，总统签署《Hospital Inpatient Services Modernization Act》（H.R. 7148，替代H.R. 4313、S. 2237），将急性医院居家护理（Acute Hospital Care at Home, AHCaH）豁免项目正式延长至2030年9月30日。该法案由参议员 Bill Cassidy, MD (R-LA) 和 Debbie Stabenow (D-MI) 牵头，众议院于2025年12月1日通过。</p>
+<p><strong>原文来源</strong></p>
+<ul>
+<li>GovTrack.us: H.R. 4313 → 以H.R. 7148形式签署</li>
+<li>Congress.gov: S. 2237 (119th Congress)</li>
+<li>AHA Fact Sheet: Extending the Hospital-at-Home Program</li>
+</ul>
+<p><strong>多源交叉验证</strong> ⭐⭐⭐⭐⭐
+| 来源 | 时间 | 结论 |
+|------|------|------|
+| GovTrack | Feb 3, 2026 | &ldquo;Enacted — Signed by the President&rdquo; |
+| AHA | Updated 2026 | 确认为5年延长期限至2030 |
+| ATA Action | Dec 2025 | 院通过后呼吁参院快速推进 |
+| Society of Hospital Medicine | 2025 | 公开支持该法案 |</p>
+<p><strong>具体条款</strong></p>
+<ul>
+<li>AHCaH waiver 延长至2030年9月30日</li>
+<li>要求HHS开展正式评估，对比居家与住院在质量、患者满意度、再入院率等指标</li>
+<li>CMS将基于评估发布正式健康与安全标准</li>
+<li>New applications from hospitals had slowed prior to this extension — 政策确定性恢复后将重新激活医院申请</li>
+</ul>
+<p><strong>对Kate关注市场的影响判断</strong></p>
+<ul>
+<li>🇺🇸 <strong>美国（核心市场）</strong>: 🔴 重大利好。政策确定性恢复至2030年，为医院投资HaH基础设施、扩大项目规模提供了5年窗口。预计参与医院数量将从目前的约300家显著增长。CMS评估体系可能在未来3-5年内转化为正式MBS/PPS编码，建议Kate关注CMS后续的PPS更新与质量指标制定。</li>
+<li>🇯🇵 <strong>日本（参考）</strong>: 🟡 间接参考。美国HaH支付模式的正式化可能影响日本2028年診療報酬改定中在宅医療的计价设计。</li>
+<li>🇩🇪 <strong>德国</strong>: 🟢 未直接覆盖，但美国政策稳定有利于全球HaH设备/远程监测供应商（如Best Buy Health、Biofourmis、Current Health）融资与市场扩张。</li>
+<li>🇨🇳 <strong>中国/香港</strong>: 🟡 中长期参考。中国正在探索居家医疗试点，美国的支付框架具有一定借鉴意义。</li>
+</ul>
+<p><strong>可执行建议</strong></p>
+<ol>
+<li>监控CMS在2026H2-2027发布的正式安全标准草案，评估对医院HaH运营成本的影响</li>
+<li>关注CMS后续的PPS更新（CY2027规则制定）；当前waiver框架下的计价机制可能被纳入正式Medicare Benefit</li>
+<li>建议Kate团队评估美国Top 50 health systems在政策延长期内的HaH扩张计划，筛选投资标的</li>
+</ol>
+<hr />
+<h3 id="2-acah-jfma">🔴 #2 台湾：在宅急症照护(ACAH)成果登上国际期刊 JFMA</h3>
+<p><strong>事件概述</strong>
+卫福部健保署（NHIA）推出&rdquo;在宅急症照护试办计划&rdquo;（Acute Care at Home, ACAH）成果以&rdquo;Taiwan&rsquo;s Acute Care at Home Program: Early National Experience and Evaluation Using a Logic Model&rdquo;为题发表于《Journal of the Formosan Medical Association》（JFMA）。赖清德总统在第一届亚太在宅医疗大会（APHaH 2026，6/27-28）披露最新数据。</p>
+<p><strong>原文来源</strong></p>
+<ul>
+<li>卫福部新闻稿: mohw.gov.tw (Article 86969)</li>
+<li>上報 Upmedia: 健康台湾计划展成果</li>
+<li>ScienceDirect: JFMA论文 (S0929664626003323)</li>
+</ul>
+<p><strong>多源交叉验证</strong> ⭐⭐⭐⭐⭐
+| 来源 | 数据 | 时间 |
+|------|------|------|
+| JFMA论文 | Logic Model评估框架 | 2026年6月 |
+| 卫福部新闻稿 | 2,158人受惠 | 2026年6月 |
+| 赖清德总统演讲 | 7,700+人次，完成率近9成 | 2026-06-27 |</p>
+<p><strong>核心数据</strong></p>
+<ul>
+<li>目标疾病：肺炎、泌尿道感染、软组织感染 → 2026年5月起扩至所有感染症</li>
+<li>截至2026年4月底：累计服务7,700+人次</li>
+<li>治疗完成率：~90%（89.9%）</li>
+<li>14天内急诊率：2.9%；再住院率：3.7%</li>
+<li>新增&rdquo;提早出院模式&rdquo;（2026年5月1日），额外挹注约9,000万新台币预算</li>
+<li>调升医事访视费用、提高床侧检验支付加成</li>
+</ul>
+<p><strong>对Kate关注市场的影响判断</strong></p>
+<ul>
+<li>🇹🇼 <strong>台湾（核心市场）</strong>: 🔴 高度利好。台湾ACAH试办数据优秀（完成率90%，低再住院率），为支付方（NHIA）提供了扩大试办的实证基础。总统级别背书、健保署署长主导、国际期刊发表，说明政策优先级极高。2027年可能的健保给付正式化窗口值得高度关注。</li>
+<li>🇯🇵 <strong>日本</strong>: 🟡 直接参照。台湾ACAH的模式创新（Logic Model评估）对日本2028年診療報酬改定中的在宅医療評価有直接参考价值。</li>
+<li>🇨🇳 <strong>中国</strong>: 🟡 示范效应。中国各地方零星试点在宅医疗，台湾的健保给付设计+实证数据为中国提供pilot框架参考。</li>
+<li>🇺🇸 <strong>美国</strong>: 🟢 学术层面参照。台湾数据可丰富美国HaH的国际证据基础，但支付机制不同，直接借鉴有限。</li>
+</ul>
+<p><strong>可执行建议</strong></p>
+<ol>
+<li>订阅JFMA论文全文，提取Logic Model评估框架纳入Kate团队的HaH评估方法论</li>
+<li>关注NHIA在2026H2对ACAH的正式评估报告，特别是成本效益分析</li>
+<li>第一届APHaH大会（台北，6/27-28）为区域HaH合作标志性事件，建议跟进大会白皮书</li>
+</ol>
+<hr />
+<h3 id="3-3">🔴 #3 台湾：台湾在宅医疗学会吁健保/长照资源至少3%投入居家医疗</h3>
+<p><strong>事件概述</strong>
+2026年6月27日，第一届亚太在宅医疗大会（APHaH 2026）开幕式上，台湾在宅医疗学会理事长陈英诏当面向赖清德总统提出三项愿望：①在宅医疗经费占医疗总支出从当前&lt;1%提升至3%（日本为4.6%）；② 政府支持建立国际在宅医疗联盟；③邀请总统出席第二届大会。赖清德明确回应&rdquo;我有听到了&rdquo;。</p>
+<p><strong>原文来源</strong></p>
+<ul>
+<li>联合新闻网 UDN: 学会盼2030年在宅医疗支出增至3%</li>
+<li>Yahoo奇摩: 争取在宅医疗经费提升至3%</li>
+<li>总统府新闻稿</li>
+</ul>
+<p><strong>多源交叉验证</strong> ⭐⭐⭐⭐⭐
+| 来源 | 要点 | 可信度 |
+|------|------|--------|
+| UDN | 赖总统回应&rdquo;我有听到了&rdquo; | 高 |
+| Yahoo奇摩 | 全文刊载学会三愿望与总统回应 | 高 |
+| 总统府 | 总统出席APHaH 2026开幕式 | 官方确认 |</p>
+<p><strong>影响判断</strong></p>
+<ul>
+<li>当前台湾在宅医疗经费占医疗总支出不到1%，远低于日本的4.6%</li>
+<li>学会目标：2030年提升至3%</li>
+<li>赖清德表态&rdquo;听到了&rdquo;不等于立即承诺，但释放了政策倾斜信号</li>
+<li>若实现，将意味着在宅医疗经费增长3倍以上</li>
+<li>总统亦提及健保署6月25日已通过挹注53亿元优化儿童重症、急重难症给付</li>
+</ul>
+<p><strong>对Kate关注市场的影响判断</strong></p>
+<ul>
+<li>🇹🇼 <strong>台湾</strong>: 🔴 重大政策信号。3%目标若写入下一期（2027-2031）健保/长照预算框架，将大幅拉动台湾HaH市场供给端（设备/远程监测/居家护理人力）。健保署长陈亮妤同时提到&rdquo;复健病房&rdquo;试点，表明台湾正在构建从急性期→后急性期→居家的完整HaH支付链。</li>
+<li>🇯🇵 <strong>日本</strong>: 🟡 相互印证。台湾以日本4.6%为参照，说明日本在宅医疗经费占比已是亚洲领先水平，但仍有提升空间。</li>
+<li>🌏 <strong>亚太区域</strong>: 🟢 台湾首次主办APHaH大会（15国参与），标志着亚太在宅医疗合作网络成型。</li>
+</ul>
+<p><strong>可执行建议</strong></p>
+<ol>
+<li><strong>重点关注</strong>: 台湾2027年度健保总额协商中是否体现在宅医疗增速安排</li>
+<li>若3%目标纳入政策路线图，台湾居家医疗设备/远程监测市场将迎来结构性增长</li>
+</ol>
+<hr />
+<h3 id="4-cihi-2026er">🔴 #4 加拿大：CIHI 2026报告揭示居家护理缺口加剧ER危机</h3>
+<p><strong>事件概述</strong>
+加拿大健康信息研究所（CIHI）于2026年6月25日发布年度报告&rdquo;Emergency department wait times in Canada: Insights from a health system perspective&rdquo;及&rdquo;Wait times in Canada, 2026&rdquo;。报告显示：</p>
+<ul>
+<li>2024-25年度，16.1百万人次ER就诊</li>
+<li>约180,000名收治患者（1/10）在ER等待超过48小时才能入院</li>
+<li>平均收治患者ER等待时间16小时</li>
+<li>5人中1人无家庭医生（1 in 5 Canadians don&rsquo;t have a family doctor）</li>
+<li>数千名患者因缺乏长期护理/居家护理床位，平均滞留医院24天</li>
+</ul>
+<p><strong>原文来源</strong></p>
+<ul>
+<li>CIHI官方: cihi.ca — Emergency and ambulatory care reports (Jun 25, 2026)</li>
+<li>CBC News: Jenna Olsen报道 (Jun 25, 2026)</li>
+<li>Global News: CIHI报告分析</li>
+<li>Refdesk.ca: 详细数据分析</li>
+</ul>
+<p><strong>多源交叉验证</strong> ⭐⭐⭐⭐
+| 来源 | 要点 | 可信度 |
+|------|------|--------|
+| CIHI官方 | &ldquo;Wait times in Canada, 2026&rdquo; 发布说明 | 最高 |
+| CBC News Jenna Olsen | &ldquo;1 in 10 wait 48+ hours&rdquo; 主报道 | 高 |
+| Global News | 引用CIHI总监Cheryl Chui评论 | 高 |
+| Refdesk.ca | 16h平均等待、180K患者超48h | 中（二手分析） |</p>
+<p><strong>影响判断</strong></p>
+<ul>
+<li>CIHI明确指出：ER等待时间延长的主因在ER之外——初级护理可及性下降、居家护理/长期护理床位不足导致&rdquo;ALC（Alternative Level of Care）&rdquo;患者滞留医院</li>
+<li>居家护理缺口直接推高了ER等待时间，形成系统性的&rdquo;ripple effect&rdquo;</li>
+<li>加拿大各省面临财政压力，HaH作为降低ALC滞留的解决方案正在获得更多关注</li>
+<li>但注意：RSS原文[531]为2019年CBC报道转载；本次预警经CIHI 2026报告交叉验证后确认属实</li>
+</ul>
+<p><strong>对Kate关注市场的影响判断</strong></p>
+<ul>
+<li>🇨🇦 <strong>加拿大</strong>: 🔴 危机驱动的政策窗口。ALC患者滞留（24天平均）使HaH成为省级卫生厅降低床位占用率的选项。安大略省、BC省可能加速HaH试点扩展。但加拿大HaH支付端依赖省预算，扩张速度受制于财政约束。</li>
+<li>🇺🇸 <strong>美国（参考）</strong>: 🟡 加拿大案例再次验证了&rdquo;居家护理短缺→ER危机&rdquo;的因果链，可用于美国医保支付改革论证中支持HaH扩张。</li>
+</ul>
+<p><strong>可执行建议</strong></p>
+<ol>
+<li>监控加拿大各省2026-27预算中对HaH/居家护理的专项拨款</li>
+<li>CIHI该报告建议关注&rdquo;access to primary care and home care&rdquo;的系统性改革，对HaH从业者而言是政策倡导窗口</li>
+</ol>
+<hr />
+<h2 id="_1">🟡 值得关注</h2>
+<h3 id="5-2026629">#5 日本：厚劳大臣记者会通知（2026年6月29日）</h3>
+<ul>
+<li>上野厚生労働大臣閣議後記者会見公告（newpage_74160）</li>
+<li>具体内容未公开，但6月期间日本厚劳省多次就2026年診療報酬改定及在宅医療推進政策发表说明</li>
+<li>建议Kate团队关注会見后正式发言记录，评估是否涉及在宅医療相关改革方向</li>
+</ul>
+<h3 id="6-hith">#6 澳洲：HITH老年护理定位陈述持续发酵</h3>
+<ul>
+<li>澳大利亚老年护理协会（Aged &amp; Community Care Providers Association）2025年2月发布HITH定位声明</li>
+<li>NSW Health正在推进精神健康HITH试点</li>
+<li>虽然本次RSS文章【530】主要讨论老年护理政策争议而非HITH政策变动，但HITH作为急性护理替代方案在澳洲州级层面持续推进</li>
+<li>建议关注：Commonwealth MBS review中HITH项目的计价更新</li>
+</ul>
+<hr />
+<h2 id="_2">🟢 行业动态</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>条目</th>
+<th>地区</th>
+<th>简述</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一届亚太在宅医疗大会 APHaH 2026</td>
+<td>台湾/亚太</td>
+<td>6/26-28台北举办，15国参与，定义亚太HaH未来</td>
+<td>TW RSS</td>
+</tr>
+<tr>
+<td>台湾ACAH改版（5月1日）</td>
+<td>台湾</td>
+<td>新增提早出院模式，扩至所有感染症，追加9000万预算</td>
+<td>总统府</td>
+</tr>
+<tr>
+<td>台湾健保署通过挹注53亿元</td>
+<td>台湾</td>
+<td>优化儿童重症、急重难症给付、住院护理师加成</td>
+<td>UDN</td>
+</tr>
+<tr>
+<td>台湾&rdquo;复健病房试办计划&rdquo;</td>
+<td>台湾</td>
+<td>选8-10家医院，7月公布名单</td>
+<td>UDN</td>
+</tr>
+<tr>
+<td>日本在宅医療・介護連携推進手引き</td>
+<td>日本</td>
+<td>厚労省发布新版操作指南（PDF）</td>
+<td>MHLW</td>
+</tr>
+<tr>
+<td>NSW精神健康HITH试点</td>
+<td>澳洲</td>
+<td>Kempsey地区试点</td>
+<td>NSW Health</td>
+</tr>
+<tr>
+<td>美国JAMA观点：HaH 5年延期分析</td>
+<td>美国</td>
+<td>评估wavier延期对美国医疗体系变革的影响</td>
+<td>JAMA</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_3">📊 统计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RSS源总数</td>
+<td>10</td>
+</tr>
+<tr>
+<td>RSS源成功抓取</td>
+<td>8/10（HHCN 403, MedCity 403）</td>
+</tr>
+<tr>
+<td>新文章</td>
+<td>11</td>
+</tr>
+<tr>
+<td>🔴 重大预警</td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td>🔴 美国</td>
+<td>1（AHCaH延期法案签署）</td>
+</tr>
+<tr>
+<td>🔴 台湾</td>
+<td>2（ACAH JFMA发表 + 3%预算呼吁）</td>
+</tr>
+<tr>
+<td>🔴 加拿大</td>
+<td>1（CIHI 2026 ER/居家护理危机报告）</td>
+</tr>
+<tr>
+<td>🟡 值得关注</td>
+<td>2</td>
+</tr>
+<tr>
+<td>深度调研条数</td>
+<td>4</td>
+</tr>
+<tr>
+<td>交叉验证来源</td>
+<td>15+</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_4">附件：完整说明</h2>
+<h3 id="rss">本次RSS源状态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>源名称</th>
+<th>状态</th>
+<th>新文章</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AU HaH News</td>
+<td>✅</td>
+<td>1</td>
+</tr>
+<tr>
+<td>CA HaH News</td>
+<td>✅</td>
+<td>2</td>
+</tr>
+<tr>
+<td>CMS Newsroom</td>
+<td>✅</td>
+<td>0</td>
+</tr>
+<tr>
+<td>HaH News US</td>
+<td>✅</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Home Health Care News</td>
+<td>❌ 403</td>
+<td>-</td>
+</tr>
+<tr>
+<td>MHLW Japan</td>
+<td>✅</td>
+<td>1</td>
+</tr>
+<tr>
+<td>MedCity News</td>
+<td>❌ 403</td>
+<td>-</td>
+</tr>
+<tr>
+<td>NHS England</td>
+<td>✅</td>
+<td>0</td>
+</tr>
+<tr>
+<td>SG HaH News</td>
+<td>✅</td>
+<td>4</td>
+</tr>
+<tr>
+<td>TW HaH News</td>
+<td>✅</td>
+<td>2</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_5">方法论</h3>
+<ul>
+<li>每项🔴预警经≥2独立来源验证后方列入重大政策变动</li>
+<li>影响判断基于Kate关注市场（美日德中港）的直接或间接关联度</li>
+<li>可执行建议侧重6-12个月内的实操窗口</li>
+</ul>
+<hr />
+<p><em>报告由Kate AI调研引擎自动生成 · 2026-06-29 16:30 UTC</em>
+<em>下次扫描: 6h后</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

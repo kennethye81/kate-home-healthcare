@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>广东省21城长期护理保险政策完整清单</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#21">广东省21城长期护理保险政策完整清单</a><ul>
+<li><a href="#2">一、已实施（已运行）— 2个</a></li>
+<li><a href="#2_1">二、即将实施 — 2个</a></li>
+<li><a href="#8">三、征求意见稿阶段 — 8个</a></li>
+<li><a href="#1">四、工作方案已公布 — 1个</a></li>
+<li><a href="#8_1">五、尚未查到独立长护险发文的城市 — 8个</a></li>
+<li><a href="#_1">六、全覆盖总结</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="21">广东省21城长期护理保险政策完整清单</h1>
+<p><strong>数据截止</strong>：2026年6月30日 | <strong>交叉验证</strong>：Tavily + 博查 + 各市医保局官网/政府网站</p>
+<hr />
+<h2 id="2">一、已实施（已运行）— 2个</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">政策名称</th>
+<th style="text-align: left;">实施时间</th>
+<th style="text-align: left;">关键参数</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>广州</strong></td>
+<td style="text-align: left;">✅ <strong>已实施</strong>（全国首批15城）</td>
+<td style="text-align: left;">《广州市长期护理保险试行办法》（穗医保规字〔2020〕10号→2024年修订版）<br><strong>最新</strong>：2026.06.01 新增定点第10批公示</td>
+<td style="text-align: left;"><strong>2017年8月1日</strong>试点实施<br>2024年1月修订版现行有效</td>
+<td style="text-align: left;">费率筹资，收入挂钩；<strong>35岁以下职工个人全免</strong>；单位从医保统筹划扣<strong>不增企业负担</strong>；职工报销~70%</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>梅州</strong></td>
+<td style="text-align: left;">梅州市长期护理保险制度（省医保局指导实施）</td>
+<td style="text-align: left;"><strong>2025年7月1日</strong>（省内第二个）</td>
+<td style="text-align: left;">职工与退休同比例缴费，<strong>无年龄豁免</strong>；严格执行国家规范；<strong>第二批定点机构已公示</strong>(2025.12.31)</td>
+<td style="text-align: left;">梅州市医保局✅</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="2_1">二、即将实施 — 2个</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">政策名称</th>
+<th style="text-align: left;">当前状态</th>
+<th style="text-align: left;">关键参数</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>深圳</strong></td>
+<td style="text-align: left;">《深圳市长期护理保险办法（征求意见稿）》</td>
+<td style="text-align: left;"><strong>征求意见已结束</strong>（2026.04.30-05.30），采纳情况已公布，待正式实施</td>
+<td style="text-align: left;"><strong>费率0.25%</strong>（低于全国0.3%）；居家80元/小时（基金付<strong>80%=64元</strong>）；社区100元/日（80%）；机构月付上限<strong>3,200元</strong>（70%）；医疗附加<strong>1,000元/月</strong></td>
+<td style="text-align: left;">深圳政府在线✅ 深圳特区报✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>清远</strong></td>
+<td style="text-align: left;">《清远市长期护理保险实施办法（征求意见稿）》</td>
+<td style="text-align: left;"><strong>拟2026年7月1日实施</strong></td>
+<td style="text-align: left;">独立险种，职工医保同步参保；保费与职工医保同步征收</td>
+<td style="text-align: left;">清远市医保局✅ 经济日报✅</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="8">三、征求意见稿阶段 — 8个</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">政策名称</th>
+<th style="text-align: left;">征求意见时间</th>
+<th style="text-align: left;">说明</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><strong>珠海</strong></td>
+<td style="text-align: left;">《珠海市长期护理保险制度（征求意见稿）》</td>
+<td style="text-align: left;"><strong>2025年8月</strong></td>
+<td style="text-align: left;">拟提出重度失能人员享受待遇</td>
+<td style="text-align: left;">珠海特区报✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><strong>佛山</strong></td>
+<td style="text-align: left;">《佛山市长期护理保险实施办法（征求公众意见稿）》</td>
+<td style="text-align: left;">2026年</td>
+<td style="text-align: left;">征求公众意见中；佛山本地宝有科普文(2026.03)</td>
+<td style="text-align: left;">佛山市医保局(keceyun)✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><strong>东莞</strong></td>
+<td style="text-align: left;">《东莞市长期护理保险制度实施办法（征求意见稿）》</td>
+<td style="text-align: left;">2026年</td>
+<td style="text-align: left;">全文可在dg.gov.cn查阅</td>
+<td style="text-align: left;">dg.gov.cn✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><strong>惠州</strong></td>
+<td style="text-align: left;">《惠州市长期护理保险试行办法（征求意见稿）》</td>
+<td style="text-align: left;"><strong>二次征求意见结束</strong>（2026.03.09-04.11）→采纳情况已公布(2026.04.17)</td>
+<td style="text-align: left;">同时通过市政府门户网站+惠州医保微信公众号发布</td>
+<td style="text-align: left;">huizhou.gov.cn✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><strong>江门</strong></td>
+<td style="text-align: left;">《江门市长期护理保险试行办法（二次征求意见稿）》</td>
+<td style="text-align: left;"><strong>二次征求意见</strong>（2026.04.29发布）</td>
+<td style="text-align: left;">含起草说明附件PDF</td>
+<td style="text-align: left;">jiangmen.gov.cn✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;"><strong>汕尾</strong></td>
+<td style="text-align: left;">《汕尾市建立长期护理保险制度工作方案(征求意见稿)》</td>
+<td style="text-align: left;">2026年</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">shanwei.gov.cn✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;"><strong>云浮</strong></td>
+<td style="text-align: left;">《云浮市长期护理保险试行办法（征求意见稿）》</td>
+<td style="text-align: left;">2026年</td>
+<td style="text-align: left;">公示中接受书面意见</td>
+<td style="text-align: left;">yunfu.gov.cn✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;"><strong>中山</strong></td>
+<td style="text-align: left;">《中山市长期护理保险实施办法（征求意见稿）》</td>
+<td style="text-align: left;"><strong>一次</strong>2026.04.08-05.07；<strong>二次</strong>2026.05.28-06.05</td>
+<td style="text-align: left;">已进入二次征求意见阶段</td>
+<td style="text-align: left;">hsa.zs.gov.cn✅ 搜狐✅</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="1">四、工作方案已公布 — 1个</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">政策/方案名称</th>
+<th style="text-align: left;">关键时间表</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;"><strong>湛江</strong></td>
+<td style="text-align: left;">《湛江市建立实施长期护理保险制度工作方案》</td>
+<td style="text-align: left;"><strong>2026年底前</strong>→在职职工/退休人员/灵活就业人员；<strong>2027年底前</strong>→未就业城乡居民</td>
+<td style="text-align: left;">湛江日报✅ gdzjdaily.com.cn✅</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="8_1">五、尚未查到独立长护险发文的城市 — 8个</h2>
+<p>以下城市经Tavily + 博查 + 各市政府网站搜索，<strong>暂未查到</strong>以该城市名义发布的独立长护险实施方案/办法/细则/征求意见稿。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">说明</th>
+<th style="text-align: left;">预期（按国家2028全面覆盖要求）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;"><strong>汕头</strong></td>
+<td style="text-align: left;">未查到</td>
+<td style="text-align: left;">2028年前须出台</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;"><strong>韶关</strong></td>
+<td style="text-align: left;">未查到</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;"><strong>河源</strong></td>
+<td style="text-align: left;">仅转载国家政策；未查到本市文件</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: left;"><strong>阳江</strong></td>
+<td style="text-align: left;">未查到</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td style="text-align: left;"><strong>茂名</strong></td>
+<td style="text-align: left;">未查到</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">19</td>
+<td style="text-align: left;"><strong>肇庆</strong></td>
+<td style="text-align: left;">未查到</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">20</td>
+<td style="text-align: left;"><strong>潮州</strong></td>
+<td style="text-align: left;">未查到</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">21</td>
+<td style="text-align: left;"><strong>揭阳</strong></td>
+<td style="text-align: left;">未查到</td>
+<td style="text-align: left;">同上</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>注</strong>：上面8市可能已出台政策但未被网络充分收录，也可能正在起草中。建议通过各市医保局微信公众号或政务热线直接查询。</p>
+</blockquote>
+<hr />
+<h2 id="_1">六、全覆盖总结</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">城市</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">🟢 <strong>已实施</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">广州、梅州</td>
+</tr>
+<tr>
+<td style="text-align: left;">🟢 <strong>即将实施</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">深圳、清远</td>
+</tr>
+<tr>
+<td style="text-align: left;">🟡 <strong>征求意见稿</strong></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">珠海、佛山、东莞、惠州、江门、汕尾、云浮、中山</td>
+</tr>
+<tr>
+<td style="text-align: left;">🟡 <strong>工作方案已公布</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">湛江</td>
+</tr>
+<tr>
+<td style="text-align: left;">🔴 <strong>未查到发文</strong></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">汕头、韶关、河源、阳江、茂名、肇庆、潮州、揭阳</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>合计</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: left;">广东省全部地级市</td>
+</tr>
+</tbody>
+</table></div>
+<p>已覆盖（含方案/征求意见）：<strong>13/21城（62%）</strong>；2028年前须全部覆盖。</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

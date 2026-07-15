@@ -1,0 +1,2158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A4 Mount Sinai Hospital at Home — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#a4-mount-sinai-hospital-at-home-27">A4 Mount Sinai Hospital at Home — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实表</a></li>
+<li><a href="#_2">发展时间线</a></li>
+<li><a href="#_3">公司治理</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_4">一句话核心逻辑</a></li>
+<li><a href="#_5">战略差异化要素</a></li>
+<li><a href="#_6">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#vs">支付方 vs 使用方</a></li>
+<li><a href="#_7">战略合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#_8">研发与创新管线</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_9">患者来源</a></li>
+<li><a href="#hah">患者多样性（全美 HaH 最多样）</a></li>
+<li><a href="#_10">支付方来源</a></li>
+<li><a href="#_11">品牌与声誉</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a></li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a></li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构总览（五层模型）</a></li>
+<li><a href="#92">9.2 软件架构深度</a></li>
+<li><a href="#93-iot">9.3 硬件 / IoT 设备</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+<li><a href="#96">9.6 技术风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a></li>
+<li><a href="#d11-tam">D11 — 收入构成与 TAM</a><ul>
+<li><a href="#tamsam">TAM/SAM/当前渗透率估算</a></li>
+<li><a href="#_12">收入构成</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型</a><ul>
+<li><a href="#_13">成本结构拆解</a></li>
+<li><a href="#_14">盈利路径分析</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估</a><ul>
+<li><a href="#_15">机遇与风险矩阵</a></li>
+<li><a href="#_16">法律与诉讼</a></li>
+<li><a href="#_17">宏观敏感性</a></li>
+</ul>
+</li>
+<li><a href="#d14">D14 — 管理层指引</a><ul>
+<li><a href="#_18">核心指引要点</a></li>
+<li><a href="#_19">管理层指引一致性</a></li>
+</ul>
+</li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 战略建议（对 iHomeCare）</a><ul>
+<li><a href="#mount-sinai-ihomecare-5">Mount Sinai 模式对 iHomeCare 的 5 大直接借鉴</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管</a><ul>
+<li><a href="#_20">联邦层面</a></li>
+<li><a href="#_21">州层面（纽约州）</a></li>
+<li><a href="#_22">政策风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d18">D18 — 单元经济</a><ul>
+<li><a href="#hah_1">每 HaH 案例成本拆解（估）</a></li>
+<li><a href="#jv-vs">JV 经济 vs 纯系统内模型</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a><ul>
+<li><a href="#_23">分层矩阵</a></li>
+<li><a href="#_24">入组标准</a></li>
+</ul>
+</li>
+<li><a href="#d20">D20 — 竞品深度地图</a><ul>
+<li><a href="#_25">已确认&rdquo;竞品&rdquo;列表</a></li>
+<li><a href="#_26">跨界进入者</a></li>
+</ul>
+</li>
+<li><a href="#d21">D21 — 跨境评估</a></li>
+<li><a href="#d22">D22 — 退出/并购</a></li>
+<li><a href="#d23-esg">D23 — ESG</a><ul>
+<li><a href="#esg">ESG 披露状态</a></li>
+<li><a href="#_27">社会影响力亮点</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资与资本结构</a></li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a><ul>
+<li><a href="#gtm">内部&rdquo;GTM&rdquo;（健康公平驱动的采纳）</a></li>
+</ul>
+</li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证体系</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_28">调研空白与后续补充</a></li>
+<li><a href="#_29">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="a4-mount-sinai-hospital-at-home-27">A4 Mount Sinai Hospital at Home — 27 维度深度尽调</h1>
+<p><strong>调研人：Kenneth Ye</strong>
+<strong>调研日期：2026 年 7 月 3 日</strong>
+<strong>分类：卫生系统自有 HaH 项目 / Track A</strong>
+<strong>国家：美国（纽约州纽约市）</strong></p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否真正 HaH？</td>
+<td>✅ <strong>是</strong>——CMS AHCAH Waiver + Rehabilitation at Home + Palliative Care at Home</td>
+</tr>
+<tr>
+<td>实体类型</td>
+<td>🏥 卫生系统内部部门（Brookdale 老年科 × Contessa JV）</td>
+</tr>
+<tr>
+<td>所属系统</td>
+<td>Mount Sinai Health System（7 医院，纽约市）</td>
+</tr>
+<tr>
+<td>对 iHomeCare 相关性</td>
+<td>🟢 <strong>中-高</strong>——Contessa JV 模式 + 最多样化患者群体 + 康复/姑息扩展独具特色</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一句话定位</strong></td>
+<td>🏙️ <strong>纽约市最大的 HaH 项目 + 最多样化患者群体</strong>——Contessa JV 合作、ADC 25–30、30 天再入院率 8.6%（vs 住院 16.1%）</td>
+</tr>
+<tr>
+<td><strong>核心矛盾</strong></td>
+<td>与 Contessa 的 JV 模式提供了独特的风险共担+运营灵活性，但 Contessa 已被 UnitedHealth/Optum 收购——JV 的长期稳定性取决于 UNH 的战略优先级</td>
+</tr>
+<tr>
+<td><strong>启动</strong></td>
+<td>前 COVID 时代（基于 Johns Hopkins 模型）</td>
+</tr>
+<tr>
+<td><strong>ADC</strong></td>
+<td>25–30/天（翻倍自一年前 15–20）</td>
+</tr>
+<tr>
+<td><strong>30 天再入院</strong></td>
+<td><strong>8.6%</strong> vs 住院 16.1%（AHA 案例）</td>
+</tr>
+<tr>
+<td><strong>ED 访问</strong></td>
+<td><strong>5.8%</strong> vs 住院 11.9%</td>
+</tr>
+<tr>
+<td><strong>患者多样性</strong></td>
+<td>28% 白人、20% 黑人、<strong>35% 西裔</strong>、6.5% 亚裔——全美 HaH 中最多样</td>
+</tr>
+<tr>
+<td><strong>Medicaid 占比</strong></td>
+<td><strong>44%</strong>（初级或次级）——高安全网成分</td>
+</tr>
+<tr>
+<td><strong>技术伙伴</strong></td>
+<td><strong>Contessa Health</strong>（JV 模式）</td>
+</tr>
+<tr>
+<td><strong>总体判断</strong></td>
+<td>🟢 HaH 多样性和健康公平的标杆——Mount Sinai 证明了 HaH 在安全网人群中同样有效（甚至更有效）。Contessa JV 模式值得 iHomeCare 深入研究。</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_1">基本事实表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>品牌</td>
+<td>Mount Sinai Hospital at Home</td>
+</tr>
+<tr>
+<td>所属系统</td>
+<td>Mount Sinai Health System（纽约市 7 医院）</td>
+</tr>
+<tr>
+<td>系统规模</td>
+<td>7 医院 + Icahn 医学院 + 8 个急诊点</td>
+</tr>
+<tr>
+<td>旗舰医院</td>
+<td>The Mount Sinai Hospital (1,121 床)</td>
+</tr>
+<tr>
+<td>HaH 启动</td>
+<td>前 COVID（基于 Johns Hopkins Hospital at Home 先驱模型）</td>
+</tr>
+<tr>
+<td>ADC</td>
+<td>25–30/天（2025→2026；从 15–20 翻倍）</td>
+</tr>
+<tr>
+<td>月入组</td>
+<td>目标 50–60 人/月</td>
+</tr>
+<tr>
+<td>运行部门</td>
+<td>Brookdale 老年与姑息医学部（美国最早设立的老年医学部）</td>
+</tr>
+<tr>
+<td>合作模式</td>
+<td><strong>与 Contessa Health 的 JV 合资</strong></td>
+</tr>
+<tr>
+<td>官网</td>
+<td>https://www.mountsinai.org</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2014+</td>
+<td>基于 Johns Hopkins HaH 模型建立 Mobile Acute Care Team (MACT)</td>
+</tr>
+<tr>
+<td>2019</td>
+<td>WHAHC 演讲公布项目结构</td>
+</tr>
+<tr>
+<td>2020</td>
+<td>CMS AHCAH Waiver 后扩展</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>AHA 案例研究发表（8.6% 再入院率）</td>
+</tr>
+<tr>
+<td>2022</td>
+<td>扩展与 Contessa 的合作伙伴关系→推出 Palliative Care at Home + Rehabilitation at Home</td>
+</tr>
+<tr>
+<td>2023</td>
+<td>目标月入组 50–60 人</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>ADC 从 15–20 翻倍至 25–30</td>
+</tr>
+<tr>
+<td>2026</td>
+<td>JAMA Network Open 列为美国增长中 HaH 项目之一</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">公司治理</h3>
+<blockquote>
+<p>⚠️ 不适用——卫生系统内部部门。但需注意：Contessa JV 结构增加了治理复杂性——JV 的决策权、利润分配受制于 UNH/Optum 收购。</p>
+</blockquote>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_4">一句话核心逻辑</h3>
+<p><strong>Mount Sinai 赌的是：HaH 不仅能改善临床结果——它还是解决健康公平问题的工具。通过服务纽约市最多样化的患者群体（35% 西裔、44% Medicaid），Mount Sinai 用 HaH 证明&rdquo;更好的护理&rdquo;不应被种族/收入/语言障碍所限制。</strong></p>
+<h3 id="_5">战略差异化要素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Mount Sinai</th>
+<th>行业对比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>患者多样性</td>
+<td><strong>35% 西裔、20% 黑人、26% 非英语</strong></td>
+<td>全美 HaH 最多样</td>
+</tr>
+<tr>
+<td>Medicaid 占比</td>
+<td><strong>44%</strong></td>
+<td>多数 &lt;20%</td>
+</tr>
+<tr>
+<td>合作模式</td>
+<td><strong>Contessa JV（风险共担）</strong></td>
+<td>Atrium/MGB=技术客户</td>
+</tr>
+<tr>
+<td>扩展范围</td>
+<td><strong>HaH + 康复 + 姑息</strong> 三轨</td>
+<td>多数仅 HaH</td>
+</tr>
+<tr>
+<td>学术基础</td>
+<td>Brookdale 老年部 + JHU 模型传承</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_6">战略演变三阶段</h3>
+<ul>
+<li><strong>Phase 1 (2014–2019)</strong>：MACT（Mobile Acute Care Team）→ 验证 HaH 可行性</li>
+<li><strong>Phase 2 (2020–2023)</strong>：Contessa JV → 规模化 + 扩展到康复 + 姑息</li>
+<li><strong>Phase 3 (2024+)</strong>：翻倍 ADC → 目标 50–60/月入组 + 健康公平标杆</li>
+</ul>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<pre><code>Mount Sinai Health System (7 医院/纽约市)
+  │
+  ├── 实体住院
+  │
+  ├── Brookdale 老年与姑息医学部
+  │     │
+  │     ├── Hospital at Home (ADC 25–30)
+  │     │     └── 与 Contessa Health JV
+  │     │           ├── Contessa: 技术平台 + 运营
+  │     │           └── Mount Sinai: 临床团队 + 患者来源
+  │     │
+  │     ├── Rehabilitation at Home
+  │     │     └── 同样 Contessa JV
+  │     │
+  │     └── Palliative Care at Home
+  │           └── 同样 Contessa JV
+  │
+  └── 患者: 纽约市最多样化人群
+        ├── 35% 西裔
+        ├── 20% 黑人
+        ├── 28% 白人
+        ├── 6.5% 亚裔
+        ├── 26% 非英语首选
+        └── 44% Medicaid
+</code></pre>
+<h3 id="vs">支付方 vs 使用方</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>实体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>支付方</td>
+<td>Medicare (AHCAH Waiver) + <strong>Medicaid（44%—高安全网）</strong> + 商业</td>
+</tr>
+<tr>
+<td>使用方</td>
+<td>纽约市多样化急性患者（平均年龄 68）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_7">战略合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>伙伴类别</th>
+<th>代表方</th>
+<th>合作性质</th>
+<th>收入贡献</th>
+<th>健康度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>技术+运营</td>
+<td><strong>Contessa Health</strong></td>
+<td>JV 风险共担——非 SaaS 客户</td>
+<td>技术与运营费+利润分享</td>
+<td>🟡 Contessa 已被 Optum/UNH 收购→长期稳定性取决于 UNH 战略</td>
+</tr>
+<tr>
+<td>学术</td>
+<td><strong>Johns Hopkins (JHU)</strong></td>
+<td>HaH 模型传承——Mount Sinai 基于 JHU 先驱模型</td>
+<td>非收入</td>
+<td>🟢</td>
+</tr>
+<tr>
+<td>老年医学</td>
+<td><strong>Brookdale 老年医学部</strong></td>
+<td>临床基础——美国最早的老年医学部门</td>
+<td>非收入</td>
+<td>🟢</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>客户类型</th>
+<th>服务内容</th>
+<th>定价模式</th>
+<th>占量</th>
+<th>利润率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HaH（急性）</strong></td>
+<td>成人急性患者</td>
+<td>RPM + 上门 RN + 虚拟 MD + IV/O2/实验室</td>
+<td>AHCAH + Medicaid + 商业</td>
+<td>~60%</td>
+<td>JV 分润——不公开</td>
+</tr>
+<tr>
+<td><strong>Rehabilitation at Home</strong></td>
+<td>出院后康复</td>
+<td>居家康复治疗（PT/OT/SLP）</td>
+<td>同上</td>
+<td>~20%</td>
+<td>JV 分润</td>
+</tr>
+<tr>
+<td><strong>Palliative Care at Home</strong></td>
+<td>严重疾病/终末期</td>
+<td>居家姑息护理 + 症状管理</td>
+<td>同上</td>
+<td>~20%</td>
+<td>JV 分润</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_8">研发与创新管线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>在研项目</th>
+<th>阶段</th>
+<th>预计上线</th>
+<th>目标市场</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>月入组扩至 50–60 人</td>
+<td>推进中</td>
+<td>2026+</td>
+<td>Mount Sinai 系统内</td>
+</tr>
+<tr>
+<td>三轨扩展更多病种/服务</td>
+<td>「不可得」</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>多语言患者支持优化</td>
+<td>「不可得」</td>
+<td>—</td>
+<td>26% 非英语患者</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_9">患者来源</h3>
+<ul>
+<li>100% Mount Sinai 系统内（ED + 住院转诊）</li>
+<li>平均年龄 68</li>
+</ul>
+<h3 id="hah">患者多样性（全美 HaH 最多样）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>族裔</th>
+<th>Mount Sinai 占比</th>
+<th>行业典型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>白人</td>
+<td>28%</td>
+<td>多数 &gt;60%</td>
+</tr>
+<tr>
+<td>黑人/非裔</td>
+<td>20%</td>
+<td>多数 &lt;15%</td>
+</tr>
+<tr>
+<td><strong>西裔/拉丁裔</strong></td>
+<td><strong>35%</strong></td>
+<td>多数 &lt;10%</td>
+</tr>
+<tr>
+<td>亚裔</td>
+<td>6.5%</td>
+<td>—</td>
+</tr>
+<tr>
+<td>非英语首选</td>
+<td><strong>26%</strong></td>
+<td>多数 &lt;5%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_10">支付方来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>支付方</th>
+<th>占比</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Medicaid</strong></td>
+<td><strong>44%</strong>（初级或次级）</td>
+<td><strong>全美 HaH 最高</strong>——安全网定位</td>
+</tr>
+<tr>
+<td>Medicare FFS (AHCAH Waiver)</td>
+<td>~40%</td>
+<td>CMS AHCAH 费率</td>
+</tr>
+<tr>
+<td>商业保险</td>
+<td>~16%</td>
+<td>低——纽约市安全网患者群体</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_11">品牌与声誉</h3>
+<ul>
+<li>Top 20 美国医院（U.S. News）</li>
+<li>Top 5 老年医学（Brookdale 老年与姑息医学部——美国最早）</li>
+<li>AHA 2021 案例研究——8.6% 再入院率标杆</li>
+<li>JAMA Network Open 2025 引用</li>
+</ul>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ Mount Sinai 为非营利卫生系统，且 HaH 通过 Contessa JV 运营——财务双层不透明。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JV 利润分享</td>
+<td>「不公开」——Mount Sinai 与 Contessa/UNH 的分润结构未公开</td>
+<td>未公开</td>
+</tr>
+<tr>
+<td>Medicaid 支付率</td>
+<td>低于 Medicare——44% Medicaid 占比影响单位收入</td>
+<td>【行业常识】</td>
+</tr>
+<tr>
+<td>成本 vs 传统住院</td>
+<td>推测节省显著——8.6% 再入院率 vs 16.1% 住院→间接节省巨大</td>
+<td>AHA 2021</td>
+</tr>
+<tr>
+<td>ADC 增长</td>
+<td>翻倍（15–20 → 25–30）</td>
+<td>Becker&rsquo;s 2025/2026</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<pre><code>Phase 0: 识别
+  ED/住院 → Brookdale 老年部评估 HaH 适宜性
+  ▼
+Phase 1: 激活 (Day 0–1)
+  Contessa 平台设备部署 + 患者教育
+  首次上门 RN 护理
+  ▼
+Phase 2: 日常管理 (Day 2–N)
+  · 虚拟 MD 查房（Mount Sinai 医师）
+  · 上门 RN（Mount Sinai + Contessa 混合团队）
+  · Contessa RPM 持续监测
+  · IV/O2/实验室/影像
+  ▼
+Phase 3: 出院/过渡
+  临床稳定 → HaH 出院
+  → 康复路径（Rehabilitation at Home）或
+  → 姑息路径（Palliative Care at Home）或
+  → 初级保健
+</code></pre>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构总览（五层模型）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: right;">层级</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;">自研/外采</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">5. 财务/行政</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">外采</td>
+<td>集成 Mount Sinai 系统财务 + Contessa JV 结算</td>
+</tr>
+<tr>
+<td style="text-align: right;">4. 业务运营</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">JV 共享</td>
+<td>Contessa Health 平台</td>
+</tr>
+<tr>
+<td style="text-align: right;">3. 调度/运营中心</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">JV 共享</td>
+<td>Contessa 运营支持 + Mount Sinai 临床指挥</td>
+</tr>
+<tr>
+<td style="text-align: right;">2. 用户端</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">外采</td>
+<td>Contessa 患者端 + Clinician Dashboard</td>
+</tr>
+<tr>
+<td style="text-align: right;">1. 数据与 AI 层</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">JV 共享</td>
+<td>Contessa RPM + Mount Sinai Epic EHR</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">Contessa Health 平台——推测 SaaS/微服务</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要技术栈</strong></td>
+<td style="text-align: left;">「不可得」——通过 Contessa 提供</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">Mount Sinai Epic EHR ↔ Contessa 平台 + FHIR 集成</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">HIPAA 合规；JV 双方共同管理</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>软件 IP / 专利</strong></td>
+<td style="text-align: left;">Contessa 平台——Mount Sinai 非自研</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>开发实践</strong></td>
+<td style="text-align: left;">「不可得」——依赖 Contessa</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可扩展性</strong></td>
+<td style="text-align: left;">已验证支撑 ADC 翻倍（15–20 → 25–30）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术债务</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件 / IoT 设备</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>设备品类</strong></td>
+<td style="text-align: left;">推测 Contessa 标准 RPM 套件（血压/血氧/体温/平板）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>设备来源</strong></td>
+<td style="text-align: left;">Contessa 供应链——第三方采购</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>连接协议</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>边缘能力</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>供应链</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>硬件可靠性</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>监管注册</strong></td>
+<td style="text-align: left;">推测标准 FDA 合规</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>硬件成本结构</strong></td>
+<td style="text-align: left;">「不可得」——内嵌于 JV 运营成本</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AI 模型类型</strong></td>
+<td style="text-align: left;">「不可得」——Contessa 平台可能有预测分析</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 应用场景</strong></td>
+<td style="text-align: left;">推测：再入院风险预测、恶化预警</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>训练数据</strong></td>
+<td style="text-align: left;">Mount Sinai + Contessa 共享数据——但 44% Medicaid 人群的特殊性可能有独特价值</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>算法性能</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>临床验证</strong></td>
+<td style="text-align: left;">「不可得」——无 HaH 特定 AI 发表</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 监管</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 团队</strong></td>
+<td style="text-align: left;">「不可得」——推测 Contessa 数据科学团队</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据治理</strong></td>
+<td style="text-align: left;">HIPAA 合规；JV 双方共同管理——数据所有权条款未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可解释性</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 成本</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>能力维度</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差距</th>
+<th style="text-align: center;">差异化评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>软件全栈能力</td>
+<td style="text-align: center;">JV 共享（Contessa）</td>
+<td style="text-align: center;">多数外采</td>
+<td style="text-align: center;">有控制权（JV）</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>硬件整合/自研</td>
+<td style="text-align: center;">第三方采购</td>
+<td style="text-align: center;">同</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>AI 临床级能力</td>
+<td style="text-align: center;">「不可得」</td>
+<td style="text-align: center;">MGB 有自研</td>
+<td style="text-align: center;">落后</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td>互操作性/集成</td>
+<td style="text-align: center;">✅ Epic + Contessa</td>
+<td style="text-align: center;">标准</td>
+<td style="text-align: center;">达标</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>数据资产规模</td>
+<td style="text-align: center;">纽约市最多样化人群数据——独特价值</td>
+<td style="text-align: center;">无可比</td>
+<td style="text-align: center;"><strong>独特</strong></td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>技术专利/IP 护城河</td>
+<td style="text-align: center;">依赖 Contessa——但 JV 有话语权</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>技术护城河总体评估</strong>：🟡 Mount Sinai 的技术优势在于 <strong>JV 模式的控制权 + 独特患者数据资产</strong>（全美最多样化 HaH 人群）。但技术平台本身依赖 Contessa——而 Contessa 已被 UNH 收购。</li>
+<li><strong>技术竞争对标</strong>：vs Atrium（纯 Medically Home 客户）→ Mount Sinai JV 模式控制力更强；vs Mayo（投资 Medically Home）→ 控制力相当但 Contessa/UNH 增加了不确定性。</li>
+</ul>
+<h3 id="96">9.6 技术风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险类别</th>
+<th>具体风险</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>供应商集中风险</td>
+<td>Contessa 被 UNH/Optum 收购→技术路线图可能偏离 Mount Sinai 需求</td>
+<td style="text-align: center;">🔴</td>
+<td>JV 合同条款（未知）提供一定保护</td>
+</tr>
+<tr>
+<td>JV 治理风险</td>
+<td>UNH/Optum 的战略优先级 vs Mount Sinai 需求→可能冲突</td>
+<td style="text-align: center;">🔴</td>
+<td>持续的 JV 治理沟通</td>
+</tr>
+<tr>
+<td>网络安全事件</td>
+<td>纽约市 RPM 数据流 + JV 双方面攻击面</td>
+<td style="text-align: center;">🟡</td>
+<td>双方共同安全管理</td>
+</tr>
+<tr>
+<td>互操作性壁垒</td>
+<td>Contessa ↔ Mount Sinai Epic ↔ UNH/Optum 系统→三重集成复杂度</td>
+<td style="text-align: center;">🟡</td>
+<td>持续 FHIR 集成</td>
+</tr>
+<tr>
+<td>技术团队流失</td>
+<td>Contessa 被收购后团队可能变动</td>
+<td style="text-align: center;">🟡</td>
+<td>JV 中 Mount Sinai 的临床团队相对独立</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<blockquote>
+<p>卫生系统 HaH 项目间&rdquo;竞争&rdquo;间接——争行业影响力/政策话语权/人才。Mount Sinai 的独特定位：健康公平标杆。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Mount Sinai</th>
+<th>Atrium</th>
+<th>MGB</th>
+<th>Mayo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADC</td>
+<td>25–30</td>
+<td><strong>80–100</strong></td>
+<td>25–33</td>
+<td>「未公开」</td>
+</tr>
+<tr>
+<td>合作模式</td>
+<td><strong>Contessa JV</strong></td>
+<td>Medically Home (客户)</td>
+<td>Current Health (客户)</td>
+<td>Medically Home (投资+共创)</td>
+</tr>
+<tr>
+<td>多样性</td>
+<td><strong>全美最多样</strong></td>
+<td>中</td>
+<td>中</td>
+<td>低</td>
+</tr>
+<tr>
+<td>Medicaid 占比</td>
+<td><strong>44%</strong></td>
+<td>&lt;20%</td>
+<td>&lt;20%</td>
+<td>~10%</td>
+</tr>
+<tr>
+<td>扩展范围</td>
+<td><strong>HaH+康复+姑息</strong></td>
+<td>HaH(成人+儿科)</td>
+<td>HaH+Continuing</td>
+<td>HaH</td>
+</tr>
+<tr>
+<td>30 天再入院率</td>
+<td><strong>8.6%</strong></td>
+<td>「未公开」</td>
+<td>「更低」</td>
+<td>「未公开」</td>
+</tr>
+<tr>
+<td>学术基础</td>
+<td>Brookdale 老年部 + JHU</td>
+<td>—</td>
+<td>David Levine + RCT</td>
+<td>Mayo Platform</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-tam">D11 — 收入构成与 TAM</h2>
+<h3 id="tamsam">TAM/SAM/当前渗透率估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th>计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>美国 HaH TAM</strong></td>
+<td style="text-align: center;">2,650,000 入院/年</td>
+<td>35M 入院 × 7.5% HaH 适宜比例</td>
+</tr>
+<tr>
+<td><strong>纽约市 TAM</strong></td>
+<td style="text-align: center;">~80,000–120,000 入院/年（估）</td>
+<td>800 万人口城市 + Mount Sinai 旗舰 1,121 床</td>
+</tr>
+<tr>
+<td><strong>Mount Sinai SAM</strong></td>
+<td style="text-align: center;">~30,000–40,000 入院/年</td>
+<td>7 医院系统内科入院量</td>
+</tr>
+<tr>
+<td><strong>当前渗透率</strong></td>
+<td style="text-align: center;">~1,200–1,800 案例/年（估）</td>
+<td>ADC 25–30 × 365 / 5–6 天人均</td>
+</tr>
+<tr>
+<td><strong>渗透率 vs SAM</strong></td>
+<td style="text-align: center;">~3–5%</td>
+<td>目标月入组 50–60→ ADC 目标 ~35–40</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_12">收入构成</h3>
+<blockquote>
+<p>⚠️ JV 结构使收入分析复杂——Mount Sinai 与 Contessa/UNH 分享收入。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>支付方</th>
+<th>收入占比估</th>
+<th>每案例收入特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Medicaid</td>
+<td><strong>44%</strong></td>
+<td>支付率低于 Medicare——单位收入较同业低</td>
+</tr>
+<tr>
+<td>Medicare FFS (AHCAH Waiver)</td>
+<td>~40%</td>
+<td>CMS AHCAH 费率</td>
+</tr>
+<tr>
+<td>商业保险</td>
+<td>~16%</td>
+<td>协商费率——占比较低</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型</h2>
+<h3 id="_13">成本结构拆解</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>成本项</th>
+<th>占运营成本估</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人力成本（Mount Sinai + Contessa 混合团队）</td>
+<td>~55–65%</td>
+<td>JV 分担人力成本</td>
+</tr>
+<tr>
+<td>技术平台（Contessa——JV 成本）</td>
+<td>~15–20%</td>
+<td>JV 内部分摊</td>
+</tr>
+<tr>
+<td>设备/物流</td>
+<td>~10–15%</td>
+<td>—</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>~5–10%</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_14">盈利路径分析</h3>
+<ul>
+<li><strong>当前状态</strong>：⚠️ 「不可得」——JV 财务不公开</li>
+<li><strong>JV 模式的经济逻辑</strong>：风险共担——Contessa 承担技术平台+运营风险，Mount Sinai 提供患者流+临床团队——利润按约定比例分享</li>
+<li><strong>Medicaid 压力</strong>：44% Medicaid 占比意味着单位收入可能低于同业——但 NYC Medicaid 费率可能高于全国平均</li>
+<li><strong>间接利润</strong>：8.6% 再入院率（vs 16.1% 住院）→大幅减少再入院罚款 + 释放床位</li>
+<li><strong>Contessa/UNH 收购后的不确定性</strong>：UNH/Optum 可能重新谈判 JV 条款或调整分润结构</li>
+<li><strong>综合判断</strong>：🟡 推测接近盈亏平衡或小幅盈利——单位收入压力（Medicaid）被 JV 风险共担+良好临床结果部分抵消</li>
+</ul>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估</h2>
+<h3 id="_15">机遇与风险矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>机遇</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>短期（0–12 月）</strong></td>
+<td>① ADC 翻倍势头持续→月入组 50–60 目标接近 ② CMS 延至 2030 稳定 Medicare 支付 ③ 健康公平叙事吸引政策/媒体关注</td>
+<td>① Contessa/UNH JV 稳定性——UNH 可能调整战略优先级 ② Medicaid 支付率压力——44% 占比使 Mount Sinai 特别敏感</td>
+</tr>
+<tr>
+<td><strong>中长期（1–3 年）</strong></td>
+<td>① 三轨模型（HaH+康复+姑息）→覆盖完整患者旅程→更高患者 LTV ② 最多样化患者数据→独特的临床证据资产 ③ 健康公平标杆→吸引研究和政策资金</td>
+<td>① UNH/Optum 可能将 Contessa JV 从 Mount Sinai 抽走或改变条款 ② 26% 非英语患者→运营复杂度和错误率风险 ③ 人才竞争——NYC 医疗人力市场竞争激烈</td>
+</tr>
+<tr>
+<td><strong>结构性</strong></td>
+<td>① Mount Sinai 证明了 HaH 在安全网人群中可行——对全球健康公平叙事至关重要 ② Brookdale 老年部的学术传统→建立 HaH 的老年医学证据基础</td>
+<td>① 若 Medicaid 支付政策收紧→44% 收入基础受损 ② Contessa/UNH 作为全国性平台可能优先其他市场</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_16">法律与诉讼</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">案件/调查</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">潜在影响</th>
+<th style="text-align: left;">最新进展</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">无公开法律/监管风险</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_17">宏观敏感性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">宏观情景</th>
+<th style="text-align: center;">影响评估</th>
+<th style="text-align: left;">传导机制</th>
+<th style="text-align: left;">缓冲能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>经济衰退</strong></td>
+<td style="text-align: center;">🟡 混合</td>
+<td style="text-align: left;">HaH 需求增加（省钱），但 Medicaid 预算可能收紧</td>
+<td style="text-align: left;">中——44% Medicaid 占比是双刃剑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利率上升</strong></td>
+<td style="text-align: center;">🟢 低影响</td>
+<td style="text-align: left;">非营利融资成本上升但 HaH 不依赖外部资本</td>
+<td style="text-align: left;">强</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>通胀</strong></td>
+<td style="text-align: center;">🟡 中等</td>
+<td style="text-align: left;">人力成本上升；Medicaid 支付率可能滞后于通胀</td>
+<td style="text-align: left;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>疫情/大流行</strong></td>
+<td style="text-align: center;">🟢 正面</td>
+<td style="text-align: left;">HaH 减少院内感染——COVID 已证明</td>
+<td style="text-align: left;">强</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引</h2>
+<h3 id="_18">核心指引要点</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>指引内容</th>
+<th>可信度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Becker&rsquo;s 2025/2026</td>
+<td>ADC 翻倍（15–20 → 25–30）+ 目标月入组 50–60</td>
+<td>🟢 高（可验证数据）</td>
+</tr>
+<tr>
+<td>AHA 2021 案例</td>
+<td>8.6% 再入院率 vs 16.1% 住院——&ldquo;HaH 比住院更好&rdquo;</td>
+<td>🟢 高（公开案例）</td>
+</tr>
+<tr>
+<td>Contessa 2022 公告</td>
+<td>扩展合作→康复+姑息路径</td>
+<td>🟢 高</td>
+</tr>
+<tr>
+<td>Brookdale 老年与姑息医学部</td>
+<td>美国最早老年医学部的学术传承——HaH 是老年医学的自然延伸</td>
+<td>🟢 高</td>
+</tr>
+<tr>
+<td>JAMA Network Open 2025</td>
+<td>列为美国增长中 HaH 项目</td>
+<td>🟢 高</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_19">管理层指引一致性</h3>
+<ul>
+<li><strong>跨来源一致性</strong>：✅ 高——运营数据（ADC 翻倍）、临床数据（再入院率）、战略方向（三轨扩展）三者自洽</li>
+<li><strong>核心不确定性</strong>：⚠️ Contessa/UNH JV 的长期稳定性——管理层未公开表态此问题</li>
+</ul>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<blockquote>
+<p>❌ <strong>不适用——卫生系统内部项目非独立公司实体。</strong> Mount Sinai Hospital at Home 是 Mount Sinai Health System 内部部门（通过 Contessa JV 运营），无独立估值、无股权结构。Mount Sinai 本身为非营利系统。JV 的财务价值取决于与 Contessa/UNH 的分润协议——不公开。</p>
+</blockquote>
+<hr />
+<h2 id="d16-ihomecare">D16 — 战略建议（对 iHomeCare）</h2>
+<h3 id="mount-sinai-ihomecare-5">Mount Sinai 模式对 iHomeCare 的 5 大直接借鉴</h3>
+<ol>
+<li><strong>JV 风险共担模式</strong>：与香港 HA 或保险公司建立合资企业——风险共担、技术+运营联合——是最值得研究的公私合作路径。Contessa JV 证明了这种模式可以在技术平台方和卫生系统之间运作</li>
+<li><strong>健康公平差异化</strong>：Mount Sinai 证明 HaH 在安全网人群中同样有效（8.6% 再入院率）——iHomeCare 可将此作为向香港政府争取支持的核心论点：&rdquo;HaH 不是富人专属——它让弱势群体获得更好的护理&rdquo;</li>
+<li><strong>三轨扩展</strong>：HaH + 康复 + 姑息——覆盖患者旅程的完整后端。iHomeCare 可考虑类似的多轨策略，提升患者 LTV 和系统价值</li>
+<li><strong>语言多样性处理</strong>：26% 非英语患者→iHomeCare 需考虑多语言界面/翻译支持。香港的多语言环境（粤语/英语/普通话）与此类似</li>
+<li><strong>学术老年医学基础</strong>：Mount Sinai 的 Brookdale 部门提供了临床合法性和人才 pipeline。iHomeCare 可与港大/中大老年医学部建立类似合作</li>
+</ol>
+<hr />
+<h2 id="d17">D17 — 政策与监管</h2>
+<h3 id="_20">联邦层面</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>政策</th>
+<th>状态</th>
+<th>对 Mount Sinai 影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CMS AHCAH Waiver</strong></td>
+<td>✅ 延至 2030</td>
+<td>~40% 收入基础（Medicare）</td>
+</tr>
+<tr>
+<td><strong>Medicaid</strong></td>
+<td>44% 支付方占比——联邦+州联合资助</td>
+<td>政策变化敏感度极高</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_21">州层面（纽约州）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>政策</th>
+<th>状态</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NY Medicaid HaH 覆盖</strong></td>
+<td>✅ 覆盖——44% 占比是证明</td>
+<td>运营数据</td>
+</tr>
+<tr>
+<td><strong>NY 州远程医疗法规</strong></td>
+<td>✅ 成熟——纽约远程医疗环境全美前列</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>NYC 健康公平政策</strong></td>
+<td>✅ 有利——纽约市健康公平议程</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">政策风险评估</h3>
+<ul>
+<li><strong>短期</strong>：CMS 延至 2030 + NY 州政策友好→低风险</li>
+<li><strong>中长期</strong>：⚠️ <strong>Mount Sinai 比同业更敏感于 Medicaid 政策变化</strong>——44% 占比是独特风险。若 Medicaid 支付收紧→影响远超 Atrium/MGB</li>
+</ul>
+<hr />
+<h2 id="d18">D18 — 单元经济</h2>
+<h3 id="hah_1">每 HaH 案例成本拆解（估）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>成本项</th>
+<th>金额估 (USD)</th>
+<th>占比</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人力（Mount Sinai + Contessa 混合）</td>
+<td>$1,800–2,800</td>
+<td>55–65%</td>
+<td>JV 分担→可能降低 Mount Sinai 侧人力成本</td>
+</tr>
+<tr>
+<td>技术平台（Contessa——JV 成本）</td>
+<td>$250–500</td>
+<td>10–15%</td>
+<td>JV 内部分摊</td>
+</tr>
+<tr>
+<td>设备/物流</td>
+<td>$200–400</td>
+<td>8–12%</td>
+<td>—</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>$200–400</td>
+<td>8–15%</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>每案例总成本</strong></td>
+<td><strong>$2,450–4,100</strong></td>
+<td>100%</td>
+<td><strong>估算范围</strong></td>
+</tr>
+<tr>
+<td>vs 传统住院</td>
+<td>显著节省——8.6% 再入院率间接节省巨大</td>
+<td>—</td>
+<td>AHA 2021</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="jv-vs">JV 经济 vs 纯系统内模型</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Mount Sinai (Contessa JV)</th>
+<th>Atrium (纯系统内)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>技术成本</td>
+<td>JV 分担——但需分润</td>
+<td>全额支出——但利润 100% 保留</td>
+</tr>
+<tr>
+<td>运营灵活性</td>
+<td>Contessa 专业运营支持</td>
+<td>完全自主</td>
+</tr>
+<tr>
+<td>扩展速度</td>
+<td>JV 可能加速</td>
+<td>受内部资源限制</td>
+</tr>
+<tr>
+<td>长期风险</td>
+<td>UNH 收购 Contessa→不确定性</td>
+<td>Medically Home 供应商风险但无分润</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<h3 id="_23">分层矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">级别</th>
+<th>定义</th>
+<th>规模估</th>
+<th>支付能力</th>
+<th>产品匹配度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>A 级</strong></td>
+<td>商业保险成人急性患者</td>
+<td>~16%</td>
+<td>高——商业协商费率</td>
+<td>✅ 小量但高利润</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>B 级</strong></td>
+<td>Medicare FFS 老年患者</td>
+<td>~40%</td>
+<td>中——CMS AHCAH 费率</td>
+<td>✅ 核心</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>C 级</strong></td>
+<td><strong>Medicaid 患者</strong></td>
+<td><strong>44%</strong></td>
+<td><strong>低——支付率低于 Medicare</strong></td>
+<td>✅ 核心——健康公平定位</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D 级</strong></td>
+<td>非英语/移民患者</td>
+<td>26%</td>
+<td>混合</td>
+<td>✅ 核心——多语言支持需求</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_24">入组标准</h3>
+<ul>
+<li>成人急性内科疾病</li>
+<li>平均年龄 68</li>
+<li>临床稳定、非 ICU</li>
+<li>安全居家环境——NYC 住房条件可能限制部分患者</li>
+<li>26% 非英语患者需要语言支持</li>
+</ul>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<blockquote>
+<p>卫生系统 HaH 项目间非直接商业竞争。Mount Sinai 的独特竞争维度：健康公平 + JV 模式。</p>
+</blockquote>
+<h3 id="_25">已确认&rdquo;竞品&rdquo;列表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>模式</th>
+<th>规模</th>
+<th>技术/差异化</th>
+<th>威胁等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Atrium Health HaH</strong></td>
+<td>系统内</td>
+<td>ADC 80–100</td>
+<td>规模领先+儿科</td>
+<td>🟢 不同维度</td>
+</tr>
+<tr>
+<td><strong>MGB Home Hospital</strong></td>
+<td>系统内</td>
+<td>ADC 25–33</td>
+<td>RCT+自研 AI</td>
+<td>🟢 不同维度</td>
+</tr>
+<tr>
+<td><strong>Mayo Clinic HaH</strong></td>
+<td>系统内</td>
+<td>ADC 未公开</td>
+<td>#1 品牌</td>
+<td>🟢 不同维度</td>
+</tr>
+<tr>
+<td><strong>NYU Langone HaH</strong></td>
+<td>系统内？</td>
+<td>「不可得」</td>
+<td>同为 NYC→直接地理竞争</td>
+<td>🟡 本地竞争</td>
+</tr>
+<tr>
+<td><strong>Northwell Health HaH</strong></td>
+<td>系统内？</td>
+<td>「不可得」</td>
+<td>同为 NYC→直接地理竞争</td>
+<td>🟡 本地竞争</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_26">跨界进入者</h3>
+<ul>
+<li><strong>UNH/Optum（通过 Contessa）</strong>：最大的结构性风险——若 UNH 将 Contessa 平台用于其他 NYC 系统→Mount Sinai 的 JV 优势被削弱</li>
+<li><strong>Cityblock Health</strong>：社区健康平台——NYC 安全网人群重叠</li>
+</ul>
+<hr />
+<h2 id="d21">D21 — 跨境评估</h2>
+<blockquote>
+<p>❌ <strong>不适用——Mount Sinai Hospital at Home 是纽约市本地的卫生系统内部项目。</strong> 无跨境扩张计划、无国际业务。但 Mount Sinai 的健康公平模式（35% 西裔、44% Medicaid、26% 非英语）对全球城市健康公平具有示范价值。</p>
+</blockquote>
+<hr />
+<h2 id="d22">D22 — 退出/并购</h2>
+<blockquote>
+<p>❌ <strong>不适用——卫生系统内部项目非独立公司实体。</strong> Mount Sinai Hospital at Home 无法被&rdquo;收购&rdquo;或&rdquo;退出&rdquo;。但 Contessa JV 的结构意味着：若 JV 协议到期或终止，Mount Sinai 可能需要寻找替代技术伙伴或自建能力。UNH/Optum 已收购 Contessa——JV 的未来取决于 UNH 的战略意愿。</p>
+</blockquote>
+<hr />
+<h2 id="d23-esg">D23 — ESG</h2>
+<h3 id="esg">ESG 披露状态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>环境 (E)</strong></td>
+<td>✅ HaH 减少碳排放 vs 住院；NYC 高密度环境下减少交通排放</td>
+</tr>
+<tr>
+<td><strong>社会 (S)</strong></td>
+<td>✅ <strong>健康公平标杆</strong>——35% 西裔、20% 黑人、44% Medicaid、26% 非英语→证明 HaH 在安全网人群中有效；改善 NYC 弱势社区医疗可及性；8.6% 再入院率→减少健康不平等</td>
+</tr>
+<tr>
+<td><strong>治理 (G)</strong></td>
+<td>⚠️ 非营利系统治理；JV 结构增加了治理复杂度</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_27">社会影响力亮点</h3>
+<ul>
+<li>全美 HaH 最多样化患者群体→直接证明 HaH 不是&rdquo;富人专属&rdquo;</li>
+<li>44% Medicaid 占比→安全网模式验证</li>
+<li>三轨模型（急性+康复+姑息）→全人护理理念</li>
+<li>Brookdale 老年医学部→建立老年 HaH 的学术基础</li>
+</ul>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">Brookdale 老年与姑息医学部主导 + Contessa JV 运营——双线汇报结构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">「不可得」——基于 ADC 25–30 推算：~20–30 RN/APP + ~5–8 MD + Contessa 运营团队 ~5–10</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人才密度</strong></td>
+<td style="text-align: left;">🟢 <strong>高</strong>——Brookdale 是美国最早的老年医学部→临床人才深厚；JV 获得 Contessa 运营专才</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🟡 Brookdale 部门领导层——若部门重组可能影响 HaH 优先级</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工留存</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>招聘速度</strong></td>
+<td style="text-align: left;">「不可得」——但 ADC 翻倍表明招聘能力良好</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>薪酬哲学</strong></td>
+<td style="text-align: left;">「不可得」——非营利系统 + JV 混合薪酬</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">🟢 健康公平使命驱动 + 老年医学学术传统</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>多元化与包容</strong></td>
+<td style="text-align: left;">✅ 患者多样性间接反映团队多样性可能较高——但未公开员工数据</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>组织健康度综合评级</strong>：🟢 强——学术基础深厚、使命驱动明确</li>
+<li><strong>组织风险清单</strong>：① JV 双线汇报的协调复杂度 ② Contessa/UNH 变动可能影响运营团队 ③ NYC 医疗人力竞争激烈</li>
+</ul>
+<hr />
+<h2 id="d25">D25 — 融资与资本结构</h2>
+<blockquote>
+<p>❌ <strong>不适用——卫生系统内部项目非独立公司实体。</strong> Mount Sinai Hospital at Home 无独立融资轮次、无 Cap Table。项目资金来自 Mount Sinai 系统运营预算 + Contessa JV 出资。特殊之处：JV 结构涉及双方的初始出资和持续运营投入——条款不公开。UNH/Optum 收购 Contessa 后，JV 的资本结构发生变化——原 Contessa 在 JV 中的权益现归 UNH 所有。</p>
+</blockquote>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<blockquote>
+<p>❌ <strong>不适用——HaH 项目无对外&rdquo;销售&rdquo;行为。</strong> 患者获取 100% 来自系统内 ED/住院转诊（Mount Sinai 7 家医院 + 8 急诊点）。不存在对外市场营销、直销团队或获客成本（CAC）。</p>
+</blockquote>
+<h3 id="gtm">内部&rdquo;GTM&rdquo;（健康公平驱动的采纳）</h3>
+<ul>
+<li>Mount Sinai 不需要&rdquo;销售&rdquo;HaH——其 8.6% 再入院率数据本身就是最好的内部说服工具</li>
+<li>44% Medicaid 占比说明临床团队在积极将 HaH 推荐给安全网患者——而非仅选择&rdquo;低风险&rdquo;商业保险患者</li>
+<li>多语言支持（26% 非英语）表明团队在克服语言障碍上投入了 GTM 努力</li>
+</ul>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="271">27.1 核心临床指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">公司数据</th>
+<th style="text-align: center;">对照标准</th>
+<th style="text-align: center;">差距</th>
+<th style="text-align: left;">数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>30 天再入院率</strong></td>
+<td style="text-align: center;"><strong>8.6%</strong></td>
+<td style="text-align: center;">住院 16.1%</td>
+<td style="text-align: center;">✅ <strong>几乎减半</strong></td>
+<td style="text-align: left;">AHA 2021 案例</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ED 访问率</strong></td>
+<td style="text-align: center;"><strong>5.8%</strong></td>
+<td style="text-align: center;">住院 11.9%</td>
+<td style="text-align: center;">✅ <strong>几乎减半</strong></td>
+<td style="text-align: left;">AHA 2021 案例</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>不良事件率</strong></td>
+<td style="text-align: center;">「未公开」</td>
+<td style="text-align: center;">院内基线</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者满意度</strong></td>
+<td style="text-align: center;">「未公开」</td>
+<td style="text-align: center;">HCAHPS 基准</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NPS</strong></td>
+<td style="text-align: center;">「未公开」</td>
+<td style="text-align: center;">行业中位数 ~40</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>死亡率</strong></td>
+<td style="text-align: center;">「未公开」</td>
+<td style="text-align: center;">风险调整后与院内等同？</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADC 增长</strong></td>
+<td style="text-align: center;"><strong>翻倍（15–20 → 25–30）</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅ 增速领先</td>
+<td style="text-align: left;">Becker&rsquo;s 2025/2026</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="272">27.2 质量认证体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CMS AHCAH Waiver</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">联邦 HaH 支付认证</td>
+</tr>
+<tr>
+<td style="text-align: left;">NY 州许可</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">州级运营许可</td>
+</tr>
+<tr>
+<td style="text-align: left;">JCI</td>
+<td style="text-align: center;">❌ 不适用</td>
+<td style="text-align: left;">医院级认证</td>
+</tr>
+<tr>
+<td style="text-align: left;">NCQA</td>
+<td style="text-align: center;">❌ 不适用</td>
+<td style="text-align: left;">健康计划认证</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证据类型</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">代表性研究</th>
+<th style="text-align: left;">发表期刊</th>
+<th style="text-align: center;">影响力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">RCT</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">前瞻性队列研究</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">回顾性分析</td>
+<td style="text-align: center;">1+</td>
+<td style="text-align: left;">Demographic Analysis of HaH Patient Population</td>
+<td style="text-align: left;">SHM Abstracts 2024/2025</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td style="text-align: left;">病例系列/病例报告</td>
+<td style="text-align: center;">2+</td>
+<td style="text-align: left;">AHA 2021 案例 + Mount Sinai Reports</td>
+<td style="text-align: left;">AHA / Mount Sinai</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td style="text-align: left;">同行评审（总数）</td>
+<td style="text-align: center;">2+</td>
+<td style="text-align: left;">AHA 案例 + SHM 摘要 + JAMA Network Open 2025 引用</td>
+<td style="text-align: left;">AHA/SHM/JAMA</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>证据强度总体评级</strong>：🟡 <strong>中</strong>——有高质量的运营数据（8.6% 再入院率）和案例研究，但缺乏 RCT/前瞻性研究。Mount Sinai 的临床差异化不在于证据深度，而在于<strong>证据在多样化人群中的适用性</strong>——这是其最独特的价值。</li>
+<li><strong>临床差异化</strong>：</li>
+<li>8.6% 再入院率 vs 16.1% 住院——<strong>几乎减半</strong>——是所有 HaH 项目中最公开透明的再入院率数据之一</li>
+<li>5.8% ED 访问 vs 11.9% 住院——也几乎减半</li>
+<li>这些结果在<strong>全美最多样化患者群体</strong>中实现——证明 HaH 不是&rdquo;选择偏差&rdquo;的产物</li>
+</ul>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>计数</th>
+<th>维度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ 完整覆盖</td>
+<td>13</td>
+<td>D0, D1, D2, D3, D4, D5, D6, D8, D10, D13, D16, D17, D27</td>
+</tr>
+<tr>
+<td>⚠️ 部分覆盖（数据不公开或推测）</td>
+<td>9</td>
+<td>D7（JV 财务不公开）、D9（技术细节不公开）、D11（TAM 估）、D12（JV 盈利不公开）、D14（管理层指引仅定性）、D18（单元经济估）、D19（人群分层估）、D20（非直接竞品）、D24（组织内部信息有限）</td>
+</tr>
+<tr>
+<td>❌ 不适用（卫生系统项目）</td>
+<td>5</td>
+<td>D15（估值）、D21（跨境）、D22（退出——但 JV 退出风险需关注）、D25（融资/Cap Table）、D26（GTM）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_28">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>Contessa/UNH JV 的具体条款</strong>——分润比例、期限、终止条件</td>
+<td style="text-align: left;">一手访谈或行业情报</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">每 episode 成本/利润 + JV 分润结构</td>
+<td style="text-align: left;">一手访谈</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Contessa 被 UNH 收购后 JV 的调整动态</td>
+<td style="text-align: left;">行业跟踪</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">患者满意度和 NPS</td>
+<td style="text-align: left;">Mount Sinai 内部数据或学术发表</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">三轨各自的运营数据和患者量</td>
+<td style="text-align: left;">Mount Sinai 公开报告</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">26% 非英语患者的具体语言支持方案</td>
+<td style="text-align: left;">Mount Sinai 或 Contessa 公开资料</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_29">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>来源</th>
+<th>标题</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Becker&rsquo;s Hospital Review</td>
+<td>How Mount Sinai Doubled Its HaH Program</td>
+<td>2025/2026</td>
+</tr>
+<tr>
+<td>2</td>
+<td>AHA</td>
+<td>Members in Action: Mount Sinai HaH Case Study</td>
+<td>2021.1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Contessa Health</td>
+<td>Mount Sinai Expands Partnership (Palliative)</td>
+<td>2022</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HaH Users Group</td>
+<td>Mount Sinai Program Profile</td>
+<td>2026</td>
+</tr>
+<tr>
+<td>5</td>
+<td>SHM Abstracts</td>
+<td>Demographic Analysis of HaH Patient Population</td>
+<td>2024/2025</td>
+</tr>
+<tr>
+<td>6</td>
+<td>JAMA Network Open</td>
+<td>Scaling Hospital at Home Beyond Original Studies</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>7</td>
+<td>John A Hartford Foundation</td>
+<td>Mount Sinai HaH Model Improves Outcomes</td>
+<td>2022</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Mount Sinai Reports</td>
+<td>Pioneering At-Home Care Model Continues to Advance</td>
+<td>2023</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Mount Sinai Reports</td>
+<td>Unique Model of In-Home Care Ready to Take Flight</td>
+<td>2022</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HaH Users Group</td>
+<td>Sinai HaH Implementation Manual</td>
+<td>2020</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

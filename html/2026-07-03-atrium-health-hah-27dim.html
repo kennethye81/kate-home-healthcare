@@ -1,0 +1,2196 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A1 Atrium Health Hospital at Home — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#a1-atrium-health-hospital-at-home-27">A1 Atrium Health Hospital at Home — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实表</a></li>
+<li><a href="#_2">发展时间线</a></li>
+<li><a href="#_3">公司治理</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_4">一句话核心逻辑</a></li>
+<li><a href="#_5">战略差异化要素</a></li>
+<li><a href="#_6">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#vs">支付方 vs 使用方</a></li>
+<li><a href="#_7">价值链定位</a></li>
+<li><a href="#_8">战略合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#_9">研发与创新管线</a></li>
+<li><a href="#ama">入组标准（AMA 案例研究公开）</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_10">患者来源</a></li>
+<li><a href="#_11">支付方来源</a></li>
+<li><a href="#_12">品牌与声誉</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a></li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a></li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构总览（五层模型）</a></li>
+<li><a href="#92">9.2 软件架构深度</a></li>
+<li><a href="#93-iot">9.3 硬件 / IoT 设备</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+<li><a href="#96">9.6 技术风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a></li>
+<li><a href="#d11-tam">D11 — 收入构成与 TAM</a><ul>
+<li><a href="#tamsam">TAM/SAM/当前渗透率估算</a></li>
+<li><a href="#_13">收入构成</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型</a><ul>
+<li><a href="#_14">成本结构拆解</a></li>
+<li><a href="#_15">盈利路径分析</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估</a><ul>
+<li><a href="#_16">机遇与风险矩阵</a></li>
+<li><a href="#_17">法律与诉讼</a></li>
+<li><a href="#_18">宏观敏感性</a></li>
+</ul>
+</li>
+<li><a href="#d14">D14 — 管理层指引</a><ul>
+<li><a href="#_19">核心指引要点</a></li>
+<li><a href="#_20">管理层指引一致性</a></li>
+</ul>
+</li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 战略建议（对 iHomeCare）</a><ul>
+<li><a href="#atrium-ihomecare-5">Atrium 模式对 iHomeCare 的 5 大直接借鉴</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管</a><ul>
+<li><a href="#_21">联邦层面</a></li>
+<li><a href="#_22">州层面（北卡罗来纳州）</a></li>
+<li><a href="#_23">政策风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d18">D18 — 单元经济</a><ul>
+<li><a href="#hah">每 HaH 案例成本拆解（估）</a></li>
+<li><a href="#_24">关键假设清单</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a><ul>
+<li><a href="#_25">分层矩阵</a></li>
+<li><a href="#_26">入组排除标准</a></li>
+</ul>
+</li>
+<li><a href="#d20">D20 — 竞品深度地图</a><ul>
+<li><a href="#_27">已确认&rdquo;竞品&rdquo;列表</a></li>
+<li><a href="#_28">跨界进入者分析</a></li>
+</ul>
+</li>
+<li><a href="#d21">D21 — 跨境评估</a></li>
+<li><a href="#d22">D22 — 退出/并购</a></li>
+<li><a href="#d23-esg">D23 — ESG</a><ul>
+<li><a href="#esg">ESG 披露状态</a></li>
+<li><a href="#_29">社会影响力亮点</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资与资本结构</a></li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a><ul>
+<li><a href="#gtm">内部&rdquo;GTM&rdquo;（临床文化变革）</a></li>
+</ul>
+</li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证体系</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_30">调研空白与后续补充</a></li>
+<li><a href="#_31">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="a1-atrium-health-hospital-at-home-27">A1 Atrium Health Hospital at Home — 27 维度深度尽调</h1>
+<p><strong>调研人：Kenneth Ye</strong>
+<strong>调研日期：2026 年 7 月 3 日</strong>
+<strong>分类：卫生系统自有 HaH 项目 / Track A</strong>
+<strong>国家：美国（北卡罗来纳州夏洛特）</strong></p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否真正 HaH？</td>
+<td>✅ <strong>是</strong>——CMS AHCAH Waiver 下运行的急性住院替代项目</td>
+</tr>
+<tr>
+<td>实体类型</td>
+<td>🏥 卫生系统内部部门（非独立公司）</td>
+</tr>
+<tr>
+<td>所属系统</td>
+<td>Atrium Health → Advocate Health（美国第三大非营利卫生系统）</td>
+</tr>
+<tr>
+<td>对 iHomeCare 相关性</td>
+<td>🔴 <strong>极高</strong>——全球最大 HaH 项目的运营模式可直接借鉴</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一句话定位</strong></td>
+<td>🌍 <strong>全球最大急性 HaH 项目</strong>——日均患者 80–100 人，相当于一所小型社区医院的住院量，已累计服务 10,000+ 患者</td>
+</tr>
+<tr>
+<td><strong>核心矛盾</strong></td>
+<td>系统医院在 110–115% 占用率下运营，「无法建足够多床位」→ HaH 作为虚拟容量扩展，已实现正向贡献利润</td>
+</tr>
+<tr>
+<td><strong>启动时间</strong></td>
+<td>2020 年（CMS AHCAH Waiver 初期）</td>
+</tr>
+<tr>
+<td><strong>ADC</strong></td>
+<td>80–100/天（预算 100 床）</td>
+</tr>
+<tr>
+<td><strong>累计患者</strong></td>
+<td>10,574 人（2022.1–2024.4）→ 2026 估 15,000+</td>
+</tr>
+<tr>
+<td><strong>儿科 HaH</strong></td>
+<td>2025.4 全国首个——唯一同时覆盖成人和儿童的系统</td>
+</tr>
+<tr>
+<td><strong>技术伙伴</strong></td>
+<td>历史上 Medically Home（2021 年共同创立 Advanced Care at Home Coalition）</td>
+</tr>
+<tr>
+<td><strong>总体判断</strong></td>
+<td>🟢 HaH 运营的&rdquo;教科书级&rdquo;案例——规模、临床、财务、创新四维度均领先。对 iHomeCare 的借鉴价值在所有 Track A 项目中排名第一。</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_1">基本事实表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实体名称</td>
+<td>Atrium Health Hospital at Home</td>
+</tr>
+<tr>
+<td>所属系统</td>
+<td>Atrium Health（Charlotte, NC）</td>
+</tr>
+<tr>
+<td>系统母公司</td>
+<td>Advocate Health（美国第三大非营利卫生系统，由 Atrium + Advocate Aurora 合并）</td>
+</tr>
+<tr>
+<td>系统规模</td>
+<td>40+ 医院、1500+ 护理地点</td>
+</tr>
+<tr>
+<td>HaH 启动</td>
+<td>2020 年</td>
+</tr>
+<tr>
+<td>项目类型</td>
+<td>系统内部部门（非独立法人）</td>
+</tr>
+<tr>
+<td>运营地点</td>
+<td>北卡罗来纳州 Charlotte 地区（Greater Charlotte Region）</td>
+</tr>
+<tr>
+<td>ADC</td>
+<td>80–100/天</td>
+</tr>
+<tr>
+<td>覆盖医院</td>
+<td>14 家医院（CMC/Cabarrus/Pineville/Mercy/Cleveland/Union/University/Lincoln/Stanly/Kings Mtn/Union West/Cornelius 等）</td>
+</tr>
+<tr>
+<td>官网</td>
+<td>https://atriumhealth.org</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2020</td>
+<td>CMS AHCAH Waiver 下启动成人 HaH</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>与 Mayo Clinic、Medically Home 共同创立 <strong>Advanced Care at Home Coalition</strong></td>
+</tr>
+<tr>
+<td>2022.1</td>
+<td>月均患者量 154 人</td>
+</tr>
+<tr>
+<td>2022–2024</td>
+<td>持续增长：月均 154 → 379（2024.4）</td>
+</tr>
+<tr>
+<td>2024.4</td>
+<td>累计患者突破 <strong>10,574 人</strong></td>
+</tr>
+<tr>
+<td>2025.4</td>
+<td>启动全国<strong>首个儿科 HaH</strong>（Atrium Health Levine Children&rsquo;s Hospital at Home）</td>
+</tr>
+<tr>
+<td>2026</td>
+<td>HaH 预算 ADC 100 床，系统床位占用率 110–115%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">公司治理</h3>
+<blockquote>
+<p>⚠️ 不适用——HaH 是卫生系统内部部门，无独立董事会/股权结构。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>卫生系统 CEO</td>
+<td>「不可得」</td>
+</tr>
+<tr>
+<td>HaH 医学主任</td>
+<td>「不可得」（曾有 Dr. Janelle White → 2024 年任 NC Medicaid Medical Director）</td>
+</tr>
+<tr>
+<td>决策层</td>
+<td>C-suite + 临床领导 + 财务领导——&ldquo;ALL IN 心态&rdquo;</td>
+</tr>
+<tr>
+<td>关联交易</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>违规记录</td>
+<td>无公开记录</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_4">一句话核心逻辑</h3>
+<p><strong>Atrium 赌的是：在床位紧缺（110–115% 占用）的结构性瓶颈下，HaH 是比建楼更快、更便宜、且质量等同的扩容方案。</strong></p>
+<h3 id="_5">战略差异化要素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Atrium HaH</th>
+<th>行业对比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>规模</td>
+<td><strong>全球最大（80–100 ADC）</strong></td>
+<td>MGB 25–33；全国平均 &lt;10</td>
+</tr>
+<tr>
+<td>儿科</td>
+<td><strong>全国唯一</strong></td>
+<td>无</td>
+</tr>
+<tr>
+<td>支付</td>
+<td>Payer-agnostic + 正向贡献利润</td>
+<td>多数项目仅 Medicare FFS</td>
+</tr>
+<tr>
+<td>人力模型</td>
+<td>社区急救员（Paramedic）+ RN 混合</td>
+<td>多数纯 RN</td>
+</tr>
+<tr>
+<td>系统支持</td>
+<td>C-suite &ldquo;ALL IN&rdquo;</td>
+<td>多数仍为试点心态</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_6">战略演变三阶段</h3>
+<ul>
+<li><strong>Phase 1 (2020–2021)</strong>：COVID 紧急启动→验证临床可行性</li>
+<li><strong>Phase 2 (2022–2024)</strong>：规模化——从 154/月→379/月→正向利润</li>
+<li><strong>Phase 3 (2025+)</strong>：创新——儿科 HaH + 政策联盟 + 系统内 HaH 从&rdquo;项目&rdquo;升级为&rdquo;预算内永久床位&rdquo;</li>
+</ul>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<pre><code>┌──────────────────────────────────────┐
+│       Atrium Health 卫生系统           │
+│  40+ 医院 / 110–115% 床位占用率        │
+│                                      │
+│  ┌────────────────────────────────┐  │
+│  │   Hospital at Home (虚拟床位)    │  │
+│  │   ADC 80–100/预算 100 床        │  │
+│  │                                │  │
+│  │  ┌──────────────────────────┐  │  │
+│  │  │ 技术层                    │  │  │
+│  │  │ · RPM + 双向音视频         │  │  │
+│  │  │ · Medically Home 平台     │  │  │
+│  │  │ · 24/7 指挥中心           │  │  │
+│  │  └──────────┬───────────────┘  │  │
+│  │             │                  │  │
+│  │  ┌──────────┴───────────────┐  │  │
+│  │  │ 人力层                    │  │  │
+│  │  │ · 社区急救员 (上门)       │  │  │
+│  │  │ · RN (上门+虚拟)          │  │  │
+│  │  │ · MD (每日虚拟查房)        │  │  │
+│  │  └──────────────────────────┘  │  │
+│  └────────────────┬───────────────┘  │
+│                   │                   │
+│  ┌────────────────┴───────────────┐  │
+│  │ 服务: IV/O2/呼吸治疗/EKG/实验室  │  │
+│  │ 患者: 成人 (2020+) + 儿科 (2025+) │  │
+│  └────────────────────────────────┘  │
+└──────────────────────────────────────┘
+</code></pre>
+<h3 id="vs">支付方 vs 使用方</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>实体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>支付方</strong></td>
+<td>Medicare FFS (CMS AHCAH Waiver)、Medicaid (NC DHHS)、商业保险 → <strong>Payer-agnostic</strong></td>
+</tr>
+<tr>
+<td><strong>使用方</strong></td>
+<td>成人+儿童患者（需符合入组标准）</td>
+</tr>
+<tr>
+<td><strong>系统内动机</strong></td>
+<td>释放实体床位用于高价手术/ICU → 正向贡献利润</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_7">价值链定位</h3>
+<pre><code>纯技术外包 ──── Atrium HaH ──── 全自建
+                  ↑
+         技术平台(Medically Home)+
+         自有人力(社区急救员/RN/MD)+
+         自有指挥中心
+</code></pre>
+<h3 id="_8">战略合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>伙伴类别</th>
+<th>代表方</th>
+<th>合作性质</th>
+<th>收入贡献</th>
+<th>健康度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>技术平台</td>
+<td>Medically Home（历史）</td>
+<td>联合开发</td>
+<td>技术费支出</td>
+<td>🟡 注意：DispatchHealth 合并后关系不确定</td>
+</tr>
+<tr>
+<td>政策联盟</td>
+<td>ACH Coalition（Mayo/Kaiser 等）</td>
+<td>联合游说</td>
+<td>非收入</td>
+<td>🟢</td>
+</tr>
+<tr>
+<td>支付方</td>
+<td>NC DHHS (Medicaid)</td>
+<td>覆盖</td>
+<td>部分收入</td>
+<td>🟢</td>
+</tr>
+<tr>
+<td>设备/物流</td>
+<td>「不可得」</td>
+<td>推测本地合作</td>
+<td>—</td>
+<td>「不可得」</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>客户类型</th>
+<th>服务内容</th>
+<th>定价模式</th>
+<th>占 HaH 量估</th>
+<th>利润率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>成人 HaH</strong></td>
+<td>成人急性患者</td>
+<td>RPM + 24/7 RN 虚拟 + 每日 2 次上门 + MD 虚拟查房 + IV/O2/EKG/实验室</td>
+<td>CMS AHCAH Waiver (FFS) + 商业保险 + Medicaid</td>
+<td>~90%</td>
+<td>✅ 正向贡献利润</td>
+</tr>
+<tr>
+<td><strong>儿科 HaH</strong></td>
+<td>儿童急性患者 (2025.4+)</td>
+<td>多学科团队 + 儿童专用路径</td>
+<td>同上</td>
+<td>&lt;10%（新启动）</td>
+<td>「不可得」</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_9">研发与创新管线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>在研项目</th>
+<th>阶段</th>
+<th>预计上线</th>
+<th>目标市场</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>儿科 HaH 扩展到更多病种</td>
+<td>早期（刚启动）</td>
+<td>2026+</td>
+<td>儿童</td>
+</tr>
+<tr>
+<td>HaH 从&rdquo;项目&rdquo;升级为永久&rdquo;虚拟床位预算&rdquo;</td>
+<td>推进中</td>
+<td>2026+</td>
+<td>系统内部</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ama">入组标准（AMA 案例研究公开）</h3>
+<ul>
+<li>≤4L O2、呼吸 &lt;24、SBP &gt;90、SpO2 &gt;92</li>
+<li>72h 内不需高级诊疗/手术</li>
+<li>患者能配合或有家庭支持</li>
+<li>安全居家环境 + 可用电话</li>
+</ul>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_10">患者来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>占比估</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ED 直接入组</td>
+<td>~40%</td>
+<td>避免住院</td>
+</tr>
+<tr>
+<td>住院转 HaH</td>
+<td>~60%</td>
+<td>缩短住院日</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_11">支付方来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>支付方</th>
+<th>占比估</th>
+<th>趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Medicare FFS (AHCAH Waiver)</td>
+<td>~50–60%</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>商业保险</td>
+<td>~20–30%</td>
+<td>增长</td>
+</tr>
+<tr>
+<td>Medicaid (NC DHHS)</td>
+<td>~10–20%</td>
+<td>增长（NC 政策友好）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_12">品牌与声誉</h3>
+<ul>
+<li>Atrium Health = 美国 Top 医疗机构</li>
+<li>JAMA Network Open 引用 HaH ADC 80–100</li>
+<li>AMA 案例研究</li>
+<li>全国首个儿科 HaH 获广泛媒体报道</li>
+</ul>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ Atrium 为非营利卫生系统，HaH 财务嵌入系统整体 P&amp;L，不独立公开。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>贡献利润</strong></td>
+<td>✅ <strong>正向</strong></td>
+<td>HFMA NC 2024 报告</td>
+</tr>
+<tr>
+<td>系统床位占用率</td>
+<td>110–115%</td>
+<td>HFMA 报告</td>
+</tr>
+<tr>
+<td>HaH 等效价值</td>
+<td>100 床 ≈ 新建一栋楼的容量</td>
+<td>系统领导者公开表态</td>
+</tr>
+<tr>
+<td>建设成本节省</td>
+<td>「不可得」——但建 100 床新楼需数亿 vs HaH 仅需技术+人力</td>
+<td>【推算】</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<pre><code>Phase 0: 识别
+  ED/住院 → 临床团队评估 HaH 适宜性
+  (标准：≤4L O2, 稳定, 无 72h 内高级诊疗需求)
+  ▼
+Phase 1: 激活 (Day 0–1)
+  设备部署 (RPM + 平板) + 患者教育
+  首次社区急救员/RN 上门
+  ▼
+Phase 2: 日常管理 (Day 2–N)
+  · 24/7 RN 虚拟监测 + 指挥中心
+  · 每日 2 次社区急救员/RN 上门
+  · 每日 MD 虚拟查房
+  · IV/O2/呼吸治疗/EKG/实验室
+  ▼
+Phase 3: 出院
+  临床稳定 → HaH 出院
+  设备回收 → 转初级保健
+</code></pre>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构总览（五层模型）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: right;">层级</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;">自研/外采</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">5. 财务/行政</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">外采</td>
+<td>集成 Atrium 系统财务（ERP）</td>
+</tr>
+<tr>
+<td style="text-align: right;">4. 业务运营</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">外采</td>
+<td>Medically Home 平台核心业务系统</td>
+</tr>
+<tr>
+<td style="text-align: right;">3. 调度/运营中心</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">外采+自建</td>
+<td>校园内 24/7 指挥中心</td>
+</tr>
+<tr>
+<td style="text-align: right;">2. 用户端</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">外采</td>
+<td>患者平板 + Clinician Dashboard</td>
+</tr>
+<tr>
+<td style="text-align: right;">1. 数据与 AI 层</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">外采</td>
+<td>RPM 数据采集 + EHR 集成</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">Medically Home 平台——推测微服务/模块化架构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要技术栈</strong></td>
+<td style="text-align: left;">「不可得」——通过 Medically Home 提供</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">EHR 集成（Epic 推测）+ RPM 设备数据接入</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">系统级 HIPAA 合规；Medically Home 平台安全</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>软件 IP / 专利</strong></td>
+<td style="text-align: left;">不适用——非自研软件</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>开发实践</strong></td>
+<td style="text-align: left;">「不可得」——依赖 Medically Home 平台</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可扩展性</strong></td>
+<td style="text-align: left;">已验证支撑 ADC 80–100 并发</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术债务</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件 / IoT 设备</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>设备品类</strong></td>
+<td style="text-align: left;">血压计、血氧仪、体温计、平板（音视频）——标准 RPM 套件</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>设备来源</strong></td>
+<td style="text-align: left;">第三方采购——推测通过 Medically Home 供应链</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>连接协议</strong></td>
+<td style="text-align: left;">推测 WiFi + Bluetooth LE</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>边缘能力</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>供应链</strong></td>
+<td style="text-align: left;">「不可得」——依赖 Medically Home/第三方</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>硬件可靠性</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>监管注册</strong></td>
+<td style="text-align: left;">RPM 设备需 FDA 510(k)——推测标准合规</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>硬件成本结构</strong></td>
+<td style="text-align: left;">「不可得」——内嵌于技术平台费用</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AI 模型类型</strong></td>
+<td style="text-align: left;">「不可得」——Medically Home 平台可能包含预测分析</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 应用场景</strong></td>
+<td style="text-align: left;">推测：早期预警评分（EWS）、恶化检测</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>训练数据</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>算法性能</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>临床验证</strong></td>
+<td style="text-align: left;">「不可得」——无公开 HaH AI 研究</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 监管</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 团队</strong></td>
+<td style="text-align: left;">「不可得」——非自研 AI</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据治理</strong></td>
+<td style="text-align: left;">HIPAA 合规——系统级管理</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可解释性</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 成本</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>能力维度</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差距</th>
+<th style="text-align: center;">差异化评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>软件全栈能力</td>
+<td style="text-align: center;">外采（Medically Home）</td>
+<td style="text-align: center;">多数外采</td>
+<td style="text-align: center;">无差距</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>硬件整合/自研</td>
+<td style="text-align: center;">第三方采购</td>
+<td style="text-align: center;">同</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>AI 临床级能力</td>
+<td style="text-align: center;">「不可得」</td>
+<td style="text-align: center;">MGB 有自研</td>
+<td style="text-align: center;">落后</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td>互操作性/集成</td>
+<td style="text-align: center;">✅ Epic EHR + RPM</td>
+<td style="text-align: center;">标准</td>
+<td style="text-align: center;">达标</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>数据资产规模</td>
+<td style="text-align: center;">10,000+ 患者数据</td>
+<td style="text-align: center;">仅次于 Atrium 自身</td>
+<td style="text-align: center;">领先</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>技术专利/IP 护城河</td>
+<td style="text-align: center;">无（依赖 Medically Home）</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">弱</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>技术护城河总体评估</strong>：Atrium 的技术优势在于<strong>规模数据</strong>而非自研技术——依赖 Medically Home 平台。</li>
+<li><strong>技术竞争对标</strong>：vs MGB（自研 AI + Current Health 平台）→ Atrium 技术自主性较弱。</li>
+</ul>
+<h3 id="96">9.6 技术风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险类别</th>
+<th>具体风险</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>供应商集中风险</td>
+<td>Medically Home 被 DispatchHealth 收购→平台路线图不确定性</td>
+<td style="text-align: center;">🔴</td>
+<td>评估替代平台或自研过渡</td>
+</tr>
+<tr>
+<td>网络安全事件</td>
+<td>100 床规模的 RPM 数据流→攻击面大</td>
+<td style="text-align: center;">🟡</td>
+<td>系统级安全团队</td>
+</tr>
+<tr>
+<td>互操作性壁垒</td>
+<td>Medically Home 平台与 Atrium Epic 集成深度</td>
+<td style="text-align: center;">🟡</td>
+<td>持续 FHIR 集成</td>
+</tr>
+<tr>
+<td>技术团队流失</td>
+<td>依赖 Medically Home 团队→非自主</td>
+<td style="text-align: center;">🟡</td>
+<td>培养内部技术能力</td>
+</tr>
+<tr>
+<td>技术债爆发</td>
+<td>快速扩展→临时解决方案积累</td>
+<td style="text-align: center;">🟡</td>
+<td>系统级 IT 治理</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<blockquote>
+<p>卫生系统 HaH 项目之间的&rdquo;竞争&rdquo;是间接的——不争患者，争行业影响力/政策话语权/人才。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Atrium</th>
+<th>MGB</th>
+<th>Mayo</th>
+<th>Mount Sinai</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADC</td>
+<td><strong>80–100</strong></td>
+<td>25–33</td>
+<td>「未公开」</td>
+<td>25–30</td>
+</tr>
+<tr>
+<td>启动</td>
+<td>2020</td>
+<td><strong>2016</strong></td>
+<td>2020</td>
+<td>前 COVID</td>
+</tr>
+<tr>
+<td>儿科</td>
+<td>✅ <strong>唯一</strong></td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>证据强度</td>
+<td>运营数据+案例</td>
+<td><strong>RCT+顶刊</strong></td>
+<td>观察性</td>
+<td>AHA 案例</td>
+</tr>
+<tr>
+<td>技术合作</td>
+<td>Medically Home（客户）</td>
+<td>Current Health（客户）</td>
+<td>Medically Home（投资+共创）</td>
+<td>Contessa JV</td>
+</tr>
+<tr>
+<td>支付方覆盖</td>
+<td>Payer-agnostic</td>
+<td>自有 MA 计划</td>
+<td>Medicare+商业</td>
+<td>44% Medicaid</td>
+</tr>
+<tr>
+<td>联盟</td>
+<td>ACH Coalition</td>
+<td>学术网络</td>
+<td>ACH Coalition</td>
+<td>—</td>
+</tr>
+<tr>
+<td>患者多样性</td>
+<td>中等</td>
+<td>中等</td>
+<td>低</td>
+<td><strong>全美最多样</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-tam">D11 — 收入构成与 TAM</h2>
+<h3 id="tamsam">TAM/SAM/当前渗透率估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th>计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>美国 HaH TAM</strong></td>
+<td style="text-align: center;">2,650,000 入院/年（可 HaH 替代）</td>
+<td>美国每年 ~35M 入院 × ~7.5% HaH 适宜比例</td>
+</tr>
+<tr>
+<td><strong>Atrium 系统 SAM</strong></td>
+<td style="text-align: center;">~50,000–70,000 入院/年</td>
+<td>40+ 医院系统内科入院量</td>
+</tr>
+<tr>
+<td><strong>当前渗透率</strong></td>
+<td style="text-align: center;">~3,650–4,500 案例/年（估）</td>
+<td>ADC 80–100 × 365 天 × 人均 5–7 天 → 5,200–7,300 案例/年——但 ADC 含儿科+部分短期案例</td>
+</tr>
+<tr>
+<td><strong>渗透率 vs SAM</strong></td>
+<td style="text-align: center;">~5–10%</td>
+<td>仍有显著增长空间（目标 100 床预算）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_13">收入构成</h3>
+<blockquote>
+<p>⚠️ 非营利系统，HaH 收入嵌入系统整体财务报表。以下为结构估算。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>支付方</th>
+<th>收入占比估</th>
+<th>每案例收入（估）</th>
+<th>趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Medicare FFS (AHCAH Waiver)</td>
+<td>~50–55%</td>
+<td>CMS AHCAH 费率</td>
+<td>稳定——依赖 CMS 延至 2030</td>
+</tr>
+<tr>
+<td>商业保险</td>
+<td>~25–30%</td>
+<td>协商费率</td>
+<td>增长</td>
+</tr>
+<tr>
+<td>Medicaid (NC DHHS)</td>
+<td>~15–20%</td>
+<td>NC Medicaid 费率</td>
+<td>增长——NC 政策友好</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型</h2>
+<h3 id="_14">成本结构拆解</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>成本项</th>
+<th>占运营成本估</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人力成本（社区急救员/RN/MD）</td>
+<td>~50–60%</td>
+<td>最大成本项——社区急救员模型降低成本</td>
+</tr>
+<tr>
+<td>技术平台费用（Medically Home）</td>
+<td>~15–20%</td>
+<td>SaaS/平台费</td>
+</tr>
+<tr>
+<td>RPM 设备 + 物流</td>
+<td>~10–15%</td>
+<td>设备采购+配送+回收</td>
+</tr>
+<tr>
+<td>指挥中心运营</td>
+<td>~5–10%</td>
+<td>24/7 人员+设施</td>
+</tr>
+<tr>
+<td>其他（药物/实验室/间接）</td>
+<td>~5–10%</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_15">盈利路径分析</h3>
+<ul>
+<li><strong>当前状态</strong>：✅ <strong>正向贡献利润</strong>（HFMA NC 2024 公开确认）</li>
+<li><strong>利润驱动因素</strong>：
+  1. 社区急救员模型压低人力成本（vs 纯 RN 模型）
+  2. 高 ADC（80–100）摊薄固定成本（指挥中心/平台）
+  3. 释放实体床位用于高利润手术/ICU——间接利润巨大</li>
+<li><strong>综合判断</strong>：🟢 Atrium HaH 是全球极少数已验证盈利的 HaH 项目之一——规模效应是关键</li>
+</ul>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估</h2>
+<h3 id="_16">机遇与风险矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>机遇</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>短期（0–12 月）</strong></td>
+<td>① 儿科 HaH 扩展带来新患者流 ② CMS 延至 2030 消除政策不确定性 ③ 系统 110%+ 占用率持续推动 HaH 需求</td>
+<td>① Medically Home/DispatchHealth 合并后平台连续性风险 ② 儿科 HaH 临床风险——新领域经验不足</td>
+</tr>
+<tr>
+<td><strong>中长期（1–3 年）</strong></td>
+<td>① HaH 从&rdquo;项目&rdquo;升级为&rdquo;预算内永久床位&rdquo;→ 制度化 ② 扩展到更多 Advocate Health 系统（全国第三大系统） ③ 社区急救员模型全国推广</td>
+<td>① 领导层换届可能导致&rdquo;ALL IN&rdquo;心态减弱 ② 人才短缺——社区急救员/RN 全国性供给瓶颈 ③ 支付方覆盖可能收紧若 CMS 政策变化</td>
+</tr>
+<tr>
+<td><strong>结构性</strong></td>
+<td>① HaH 行业从&rdquo;试点&rdquo;→&rdquo;标准护理&rdquo;的结构性迁移 ② 人口老龄化驱动长期需求增长</td>
+<td>① 商业保险/Medicaid 支付率的长期不确定性 ② 监管可能引入更严格的 HaH 质量标准</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_17">法律与诉讼</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">案件/调查</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">潜在影响</th>
+<th style="text-align: left;">最新进展</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">无公开法律/监管风险</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_18">宏观敏感性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">宏观情景</th>
+<th style="text-align: center;">影响评估</th>
+<th style="text-align: left;">传导机制</th>
+<th style="text-align: left;">缓冲能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>经济衰退</strong></td>
+<td style="text-align: center;">🟢 正面</td>
+<td style="text-align: left;">系统床位压力增大→HaH 需求更旺盛</td>
+<td style="text-align: left;">强——HaH 是&rdquo;省钱&rdquo;方案</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利率上升</strong></td>
+<td style="text-align: center;">🟢 低影响</td>
+<td style="text-align: left;">非营利系统融资成本上升但 HaH 不依赖外部资本</td>
+<td style="text-align: left;">强</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>通胀</strong></td>
+<td style="text-align: center;">🟡 中等</td>
+<td style="text-align: left;">人力成本上升压缩利润</td>
+<td style="text-align: left;">中——可转嫁部分给支付方</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>疫情/大流行</strong></td>
+<td style="text-align: center;">🟢 正面</td>
+<td style="text-align: left;">HaH 减少院内感染风险</td>
+<td style="text-align: left;">强——COVID 已证明价值</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引</h2>
+<h3 id="_19">核心指引要点</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>指引内容</th>
+<th>可信度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HFMA NC 2024</td>
+<td>&ldquo;正向贡献利润&rdquo;——HaH 不是成本中心</td>
+<td>🟢 高（公开报告）</td>
+</tr>
+<tr>
+<td>C-suite 公开表态</td>
+<td>&ldquo;ALL IN 心态&rdquo;——不是试点，是战略核心</td>
+<td>🟢 高（一致叙事）</td>
+</tr>
+<tr>
+<td>系统领导者</td>
+<td>&ldquo;我们没办法建足够多的床位&rdquo;→ HaH 是唯一扩容路径</td>
+<td>🟢 高（与 110%+ 占用率数据一致）</td>
+</tr>
+<tr>
+<td>预算文件</td>
+<td>HaH 预算 100 床——等同新建一栋楼</td>
+<td>🟢 高（预算分配是最真实的信号）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_20">管理层指引一致性</h3>
+<ul>
+<li><strong>跨来源一致性</strong>：✅ 高——C-suite 表态（ALL IN）、财务数据（正向利润）、预算（100 床）、运营数据（ADC 80-100）四者自洽</li>
+<li><strong>核心假设验证</strong>：床位占用率 110-115% 是公开可验证的→ HaH 扩容逻辑坚实</li>
+</ul>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<blockquote>
+<p>❌ <strong>不适用——卫生系统内部项目非独立公司实体。</strong> Atrium Health Hospital at Home 是 Atrium Health（现 Advocate Health）系统内部部门，无独立估值、无股权结构、无上市/融资可能。Atrium Health 本身为非营利系统，无市值概念。</p>
+</blockquote>
+<hr />
+<h2 id="d16-ihomecare">D16 — 战略建议（对 iHomeCare）</h2>
+<h3 id="atrium-ihomecare-5">Atrium 模式对 iHomeCare 的 5 大直接借鉴</h3>
+<ol>
+<li><strong>&ldquo;虚拟床位&rdquo;叙事</strong>：向香港医院管理局讲——&ldquo;你可以用 HaH 等于免费增加 100 张床位而不建楼&rdquo;——这是比&rdquo;临床质量&rdquo;更有力的政策说服工具</li>
+<li><strong>社区急救员模型</strong>：用较低成本人力（Paramedic）替代 100% RN——香港可考虑用注册护士+健康助理的混合模式降低单位成本</li>
+<li><strong>Payer-agnostic + 正向利润</strong>：作为 HaH 可行性证明——不是&rdquo;成本中心&rdquo;而是&rdquo;利润贡献者&rdquo;——向支付方/政府展示 HaH 的商业可持续性</li>
+<li><strong>儿科扩展路径</strong>：Atrium 先用成人 HaH 验证模型→2 年后扩展到儿科——iHomeCare 可学习此渐进路径，降低同时启动多产品线的风险</li>
+<li><strong>C-suite ALL IN</strong>：HaH 成功的前提条件是系统最高领导层的全情投入——&ldquo;试点心态&rdquo;必死。对 iHomeCare：若与香港 HA 合作，需要争取最高层级的支持承诺</li>
+</ol>
+<hr />
+<h2 id="d17">D17 — 政策与监管</h2>
+<h3 id="_21">联邦层面</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>政策</th>
+<th>状态</th>
+<th>对 Atrium 影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CMS AHCAH Waiver</strong></td>
+<td>✅ 延至 2030 年</td>
+<td>核心支付基础——50–60% 收入来源稳定</td>
+</tr>
+<tr>
+<td><strong>ACH Coalition 游说</strong></td>
+<td>Atrium 联合创立——持续推动 CMS 永久化</td>
+<td>政策影响力高</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">州层面（北卡罗来纳州）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>政策</th>
+<th>状态</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NC DHSR 床位牌照豁免</strong></td>
+<td>✅ 已豁免——不占用实体床位牌照</td>
+<td>HFMA 2024</td>
+</tr>
+<tr>
+<td><strong>NC Medicaid HaH 覆盖</strong></td>
+<td>✅ NC DHHS 覆盖</td>
+<td>HFMA 2024</td>
+</tr>
+<tr>
+<td><strong>NC Board of Pharmacy 支持</strong></td>
+<td>✅ 居家用药配送合规</td>
+<td>HFMA 2024</td>
+</tr>
+<tr>
+<td><strong>MIH（Mobile Integrated Health）规则</strong></td>
+<td>✅ 社区急救员可执行临床任务</td>
+<td>HFMA 2024</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_23">政策风险评估</h3>
+<ul>
+<li><strong>短期</strong>：CMS 延至 2030 消除最大政策不确定性</li>
+<li><strong>中长期</strong>：若 CMS 未在 2030 前永久化→ HaH 项目将面临支付悬崖</li>
+<li><strong>州层面</strong>：NC 政策环境全美最友好之一——Atrium 受益于本地政策优势</li>
+</ul>
+<hr />
+<h2 id="d18">D18 — 单元经济</h2>
+<h3 id="hah">每 HaH 案例成本拆解（估）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>成本项</th>
+<th>金额估 (USD)</th>
+<th>占比</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人力（RN/急救员/MD）</td>
+<td>$1,500–2,500</td>
+<td>50–60%</td>
+<td>社区急救员模型 5–7 天案例</td>
+</tr>
+<tr>
+<td>技术平台费</td>
+<td>$300–500</td>
+<td>10–15%</td>
+<td>Medically Home SaaS</td>
+</tr>
+<tr>
+<td>RPM 设备/物流</td>
+<td>$200–400</td>
+<td>8–12%</td>
+<td>设备部署+回收</td>
+</tr>
+<tr>
+<td>指挥中心</td>
+<td>$150–300</td>
+<td>5–10%</td>
+<td>24/7 分摊</td>
+</tr>
+<tr>
+<td>药物/实验室/其他</td>
+<td>$200–500</td>
+<td>8–15%</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>每案例总成本</strong></td>
+<td><strong>$2,350–4,200</strong></td>
+<td>100%</td>
+<td><strong>估算范围</strong></td>
+</tr>
+<tr>
+<td>vs 传统住院 (5–7 天)</td>
+<td>$10,000–15,000</td>
+<td>—</td>
+<td>节省 60–75%</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 上述数字为行业基准推算，Atrium 具体数字不公开。HFMA 确认「正向贡献利润」间接验证上述逻辑。</p>
+</blockquote>
+<h3 id="_24">关键假设清单</h3>
+<ol>
+<li>案例平均住院 5–7 天</li>
+<li>社区急救员成本 ≈ RN 的 50–60%</li>
+<li>Medically Home 平台费为 SaaS 模式</li>
+<li>指挥中心固定成本被 ADC 80–100 摊薄</li>
+</ol>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<h3 id="_25">分层矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">级别</th>
+<th>定义</th>
+<th>规模估</th>
+<th>支付能力</th>
+<th>产品匹配度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>A 级</strong></td>
+<td>商业保险成人急性患者</td>
+<td>20–30%</td>
+<td>高——商业协商费率</td>
+<td>✅ 核心——高利润段</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>B 级</strong></td>
+<td>Medicare FFS 老年急性患者</td>
+<td>50–60%</td>
+<td>中——CMS AHCAH 费率</td>
+<td>✅ 核心——最大量段</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>C 级</strong></td>
+<td>Medicaid 成人急性患者</td>
+<td>10–20%</td>
+<td>低——NC Medicaid 费率</td>
+<td>✅ 覆盖——政策要求</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D 级</strong></td>
+<td>儿科急性患者</td>
+<td>&lt;10%（新启动）</td>
+<td>混合</td>
+<td>✅ 创新——全国首创</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_26">入组排除标准</h3>
+<ul>
+<li>
+<blockquote>
+<p>4L O2 需求</p>
+</blockquote>
+</li>
+<li>72h 内需手术/高级影像</li>
+<li>生命体征不稳定</li>
+<li>无家庭支持/不安全居家环境</li>
+</ul>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<blockquote>
+<p>卫生系统 HaH 项目间非直接商业竞争——竞争维度为行业影响力、政策话语权、人才获取、技术供应商关系。</p>
+</blockquote>
+<h3 id="_27">已确认&rdquo;竞品&rdquo;列表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>模式</th>
+<th>规模</th>
+<th>技术/差异化</th>
+<th>威胁等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MGB Home Hospital</strong></td>
+<td>系统内 HaH</td>
+<td>ADC 25–33</td>
+<td>RCT 证据+自研 AI+自有 MA 计划</td>
+<td>🟡 学术/政策竞争</td>
+</tr>
+<tr>
+<td><strong>Mayo Clinic Advanced Care at Home</strong></td>
+<td>系统内 HaH</td>
+<td>ADC 未公开</td>
+<td>#1 品牌+Medically Home 投资</td>
+<td>🟡 品牌/政策竞争</td>
+</tr>
+<tr>
+<td><strong>Mount Sinai Hospital at Home</strong></td>
+<td>系统内+Contessa JV</td>
+<td>ADC 25–30</td>
+<td>最多样患者+三轨扩展</td>
+<td>🟢 模式竞争</td>
+</tr>
+<tr>
+<td><strong>Kaiser Permanente HaH</strong></td>
+<td>系统内 HaH</td>
+<td>未公开</td>
+<td>闭环支付+提供系统</td>
+<td>🟡 支付模式竞争</td>
+</tr>
+<tr>
+<td><strong>Cleveland Clinic Hospital Care At Home</strong></td>
+<td>系统内 HaH</td>
+<td>ADC 24</td>
+<td>#2 品牌</td>
+<td>🟢 跟随者</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_28">跨界进入者分析</h3>
+<ul>
+<li><strong>DispatchHealth（收购 Medically Home）</strong>：若从技术供应商转型为 HaH 运营商→可能直接竞争系统内项目</li>
+<li><strong>Optum/UnitedHealth</strong>：通过 Contessa 收购已进入 HaH 运营→可能独立运营 HaH 而非仅 JV</li>
+</ul>
+<hr />
+<h2 id="d21">D21 — 跨境评估</h2>
+<blockquote>
+<p>❌ <strong>不适用——Atrium Health Hospital at Home 是北卡罗来纳州本地的卫生系统内部项目。</strong> 无跨境扩张计划、无国际业务、无海外技术部署。Atrium 的 HaH 运营范围为 Greater Charlotte Region，服务本地社区。</p>
+</blockquote>
+<hr />
+<h2 id="d22">D22 — 退出/并购</h2>
+<blockquote>
+<p>❌ <strong>不适用——卫生系统内部项目非独立公司实体。</strong> Atrium Health Hospital at Home 无法被&rdquo;收购&rdquo;或&rdquo;退出&rdquo;——它是 Atrium Health（现 Advocate Health）系统的一部分。Atrium/Advocate 本身为非营利系统，无 IPO/并购路径。</p>
+</blockquote>
+<hr />
+<h2 id="d23-esg">D23 — ESG</h2>
+<h3 id="esg">ESG 披露状态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>环境 (E)</strong></td>
+<td>✅ HaH 减少患者/家属交通碳排放；居家护理 vs 住院设施的碳足迹显著更低（文献估 50–70% 减少）</td>
+</tr>
+<tr>
+<td><strong>社会 (S)</strong></td>
+<td>✅ 改善农村医疗可及性；释放床位使更多患者可获住院护理；儿科 HaH 减少儿童住院创伤</td>
+</tr>
+<tr>
+<td><strong>治理 (G)</strong></td>
+<td>⚠️ 非营利系统治理——无独立 ESG 报告义务；治理透明度低于上市公司</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_29">社会影响力亮点</h3>
+<ul>
+<li>释放 100 床等效容量→每年额外 ~3,650–7,300 名患者可获住院护理</li>
+<li>首个儿科 HaH→减少儿童住院的心理创伤和家庭负担</li>
+<li>社区急救员模型→创造新的医疗人力职业路径</li>
+</ul>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">系统内部门——汇报线到虚拟健康 SVP / CMO。职能制结构——指挥中心+外勤团队+临床领导</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">「不可得」——基于 ADC 80–100 推算：~50–80 RN/急救员 + ~10–15 MD/NP/PA + 指挥中心 + 行政</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人才密度</strong></td>
+<td style="text-align: left;">社区急救员（Paramedic）模型降低了对高成本 RN 的依赖——人才策略创新</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🟡 前医学主任 Dr. Janelle White 离职→NC Medicaid（2024）→ 领导层过渡风险；C-suite &ldquo;ALL IN&rdquo; 文化依赖现任高管</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工留存</strong></td>
+<td style="text-align: left;">「不可得」——但 HFMA 报告特别提及 HaH 团队的 &ldquo;Esprit de Corps&rdquo;（团队精神）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>招聘速度</strong></td>
+<td style="text-align: left;">「不可得」——ADC 从 154→379/月表明招聘能力足以支撑快速扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>薪酬哲学</strong></td>
+<td style="text-align: left;">「不可得」——非营利系统薪酬结构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">🟢 &ldquo;Esprit de Corps&rdquo;——HaH 团队的高度使命感和凝聚力被 HFMA 报告特别提及</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>多元化与包容</strong></td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>组织健康度综合评级</strong>：🟢 强——团队凝聚力高，C-suite 支持强</li>
+<li><strong>组织风险清单</strong>：①关键领导层过渡（White 离职）②快速扩展可能导致文化稀释 ③社区急救员/RN 招聘竞争加剧</li>
+</ul>
+<hr />
+<h2 id="d25">D25 — 融资与资本结构</h2>
+<blockquote>
+<p>❌ <strong>不适用——卫生系统内部项目非独立公司实体。</strong> Atrium Health Hospital at Home 无独立融资轮次、无 Cap Table、无外部投资者。项目资金来自 Atrium Health 系统运营预算（政府拨款+医疗服务收入+慈善捐赠）。Atrium Health 本身为非营利 501(c)(3) 组织，通过免税债券融资。</p>
+</blockquote>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<blockquote>
+<p>❌ <strong>不适用——HaH 项目无对外&rdquo;销售&rdquo;行为。</strong> 患者获取 100% 来自系统内 ED/住院转诊。不存在对外市场营销、直销团队、渠道伙伴或获客成本（CAC）。</p>
+</blockquote>
+<h3 id="gtm">内部&rdquo;GTM&rdquo;（临床文化变革）</h3>
+<p>虽然不适用传统 GTM 分析，但 Atrium 面临的内部挑战是：</p>
+<ul>
+<li><strong>临床文化变革</strong>：让 ED 和住院医生愿意转诊到 HaH——需要教育+数据+领导力推动</li>
+<li><strong>转诊漏斗</strong>：ED 识别 → HaH 评估 → 患者同意 → 入组——转化率数据不公开</li>
+<li><strong>患者拒绝率</strong>：部分患者/家属偏好住院（&rdquo;在医院更安全&rdquo;心理）——需持续教育</li>
+</ul>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="271">27.1 核心临床指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">公司数据</th>
+<th style="text-align: center;">对照标准</th>
+<th style="text-align: center;">差距</th>
+<th style="text-align: left;">数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>30 天再入院率</strong></td>
+<td style="text-align: center;">「未公开具体数字——仅知&rdquo;减少&rdquo;」</td>
+<td style="text-align: center;">行业均值 ~15%</td>
+<td style="text-align: center;">待验证</td>
+<td style="text-align: left;">HFMA 2024</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>不良事件率</strong></td>
+<td style="text-align: center;">「未公开」</td>
+<td style="text-align: center;">院内基线</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者满意度</strong></td>
+<td style="text-align: center;">「未公开」</td>
+<td style="text-align: center;">HCAHPS 基准</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NPS</strong></td>
+<td style="text-align: center;">「未公开」</td>
+<td style="text-align: center;">行业中位数 ~40</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>死亡率</strong></td>
+<td style="text-align: center;">「未公开」</td>
+<td style="text-align: center;">风险调整后与院内等同？</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>月均患者量增长</strong></td>
+<td style="text-align: center;">154→379（2022.1→2024.4）</td>
+<td style="text-align: center;">行业领先</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">HFMA 2024</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>累计患者量</strong></td>
+<td style="text-align: center;">10,574（2024.4）</td>
+<td style="text-align: center;">全球最大</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">HFMA 2024</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="272">27.2 质量认证体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CMS AHCAH Waiver</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">联邦 HaH 支付认证</td>
+</tr>
+<tr>
+<td style="text-align: left;">NC DHSR 床位牌照豁免</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">州级运营许可</td>
+</tr>
+<tr>
+<td style="text-align: left;">NC Board of Pharmacy 支持</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">居家用药配送</td>
+</tr>
+<tr>
+<td style="text-align: left;">NC MIH 规则</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">社区急救员临床任务授权</td>
+</tr>
+<tr>
+<td style="text-align: left;">JCI</td>
+<td style="text-align: center;">❌ 不适用</td>
+<td style="text-align: left;">医院级认证——HaH 不单独认证</td>
+</tr>
+<tr>
+<td style="text-align: left;">NCQA</td>
+<td style="text-align: center;">❌ 不适用</td>
+<td style="text-align: left;">健康计划认证</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证据类型</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">代表性研究</th>
+<th style="text-align: left;">发表期刊</th>
+<th style="text-align: center;">影响力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">RCT</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">前瞻性队列研究</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">回顾性分析</td>
+<td style="text-align: center;">1+</td>
+<td style="text-align: left;">Census Growth of a Novel HaH Program</td>
+<td style="text-align: left;">PMC 2025</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;">病例系列/病例报告</td>
+<td style="text-align: center;">2+</td>
+<td style="text-align: left;">AMA Future of Health 案例、HFMA NC 案例</td>
+<td style="text-align: left;">AMA/HFMA</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;">同行评审（总数）</td>
+<td style="text-align: center;">2+</td>
+<td style="text-align: left;">PMC 2025 + JAMA Network Open 2025（引用）</td>
+<td style="text-align: left;">PMC/JAMA</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;">媒体报道</td>
+<td style="text-align: center;">多</td>
+<td style="text-align: left;">全国首个儿科 HaH</td>
+<td style="text-align: left;">HHCN 等</td>
+<td style="text-align: center;">高曝光</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>证据强度总体评级</strong>：🟡 <strong>中</strong>——有运营数据（与规模匹配）和案例研究，但缺乏 RCT/前瞻性研究。Atrium 选择&rdquo;用规模证明&rdquo;而非&rdquo;用学术证明&rdquo;（vs MGB 路线）</li>
+<li><strong>临床差异化</strong>：全球最大 HaH 规模本身就是临床可行性的最强信号——10,000+ 患者的真实世界运营数据</li>
+</ul>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>计数</th>
+<th>维度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ 完整覆盖</td>
+<td>13</td>
+<td>D0, D1, D2, D3, D4, D5, D6, D8, D9, D10, D13, D16, D17</td>
+</tr>
+<tr>
+<td>⚠️ 部分覆盖（数据不公开）</td>
+<td>9</td>
+<td>D7（财务不公开）、D11（TAM 估）、D12（盈利仅定性）、D14（管理层指引仅定性）、D18（单元经济估）、D19（人群分层估）、D20（非直接竞品）、D24（组织内部信息有限）、D27（部分临床指标不公开）</td>
+</tr>
+<tr>
+<td>❌ 不适用（卫生系统项目）</td>
+<td>5</td>
+<td>D15（估值）、D21（跨境）、D22（退出）、D25（融资/Cap Table）、D26（GTM）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_30">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">ADC 当前准确值 (2026)</td>
+<td style="text-align: left;">行业会议或 Atrium 公开报告</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">每 episode 成本/利润</td>
+<td style="text-align: left;">一手访谈（前 HaH 财务人员）</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Medically Home 平台当前使用状态（DispatchHealth 合并后）</td>
+<td style="text-align: left;">行业跟踪</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">儿科 HaH 早期临床数据</td>
+<td style="text-align: left;">学术文献追踪</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">HaH 团队规模和组成</td>
+<td style="text-align: left;">招聘信息追踪</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">具体临床指标（再入院率/NPS/不良事件率）</td>
+<td style="text-align: left;">Atrium 内部数据或学术发表</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_31">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>来源</th>
+<th>标题</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>JAMA Network Open</td>
+<td>Scaling Hospital at Home Beyond Original Studies</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HFMA</td>
+<td>Atrium Health Hospital at Home (North Carolina)</td>
+<td>2024.9</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Atrium Health</td>
+<td>First Pediatric Hospital at Home</td>
+<td>2025.4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>AMA</td>
+<td>Future of Health Case Study: Atrium Health</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>5</td>
+<td>AHA Market Scan</td>
+<td>Atrium Health Extends Reach with Virtual Care</td>
+<td>2024.2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>PMC</td>
+<td>Census Growth of a Novel HaH Program</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HHCN</td>
+<td>Atrium Launches Nation&rsquo;s First Pediatric HaH</td>
+<td>2025.3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>The Hospitalist</td>
+<td>Expanding Pediatric Hospital Capacity</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Atrium Health</td>
+<td>Transforming Health Care Through Virtual Care (Whitepaper)</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>10</td>
+<td>AtriumHealth.org</td>
+<td>About Us</td>
+<td>2026</td>
+</tr>
+<tr>
+<td>11</td>
+<td>ACH Coalition</td>
+<td>Homepage</td>
+<td>2026</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Mayo Clinic News</td>
+<td>Mayo Launches Advanced Care at Home</td>
+<td>2020</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1642 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calvary Health Care — 27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#calvary-health-care-27">Calvary Health Care — 27 维度深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实</a></li>
+<li><a href="#_2">发展时间线</a></li>
+<li><a href="#_3">公司治理</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_4">一句话核心逻辑</a></li>
+<li><a href="#_5">战略差异化要素</a></li>
+<li><a href="#_6">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#vs">支付方 vs 使用方</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#fy2024">业务板块 (FY2024)</a></li>
+<li><a href="#_7">定价模式</a></li>
+<li><a href="#rd">R&amp;D 与创新</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_8">客户结构</a></li>
+<li><a href="#_9">支付方来源</a></li>
+<li><a href="#_10">品牌与声誉</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a><ul>
+<li><a href="#_11">核心财务概览</a></li>
+<li><a href="#fy2024_1">资本投资 (FY2024)</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a><ul>
+<li><a href="#my-home-hospital">My Home Hospital 患者旅程</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构</a></li>
+<li><a href="#92">9.2 技术差异化</a></li>
+<li><a href="#93">9.3 硬件 — ❌ 不适用</a></li>
+<li><a href="#94-ai-ai">9.4 AI — ❌ 不适用（无公开 AI 能力）</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a></li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</a></li>
+<li><a href="#d12">D12 — 盈利模型与路径</a></li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a><ul>
+<li><a href="#_12">宏观敏感性</a></li>
+</ul>
+</li>
+<li><a href="#d14-ceo">D14 — 管理层/CEO 战略指引</a></li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16">D16 — 战略建议（分角色）</a><ul>
+<li><a href="#_13">对潜在投资者</a></li>
+<li><a href="#ihomecare">对 iHomeCare</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a></li>
+<li><a href="#d18">D18 — 单元经济模型</a></li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略深度评估</a></li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a></li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a></li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a></li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_14">调研空白与后续补充</a></li>
+<li><a href="#_15">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="calvary-health-care-27">Calvary Health Care — 27 维度深度尽调报告</h1>
+<blockquote>
+<p><strong>报告日期</strong>: 2026-07-11 | <strong>数据截止</strong>: FY2024 | <strong>版本</strong>: v2.0
+<strong>赛道</strong>: 综合医疗健康（医院 + 机构养老 + 居家护理 + 虚拟医院） | <strong>实体类型</strong>: 天主教非营利组织</p>
+</blockquote>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<p>Calvary Health Care (Little Company of Mary Health Care) 是一家天主教非营利综合医疗健康组织，运营<strong>医院、机构养老、居家护理、退休村和 virtual hospital</strong>。在居家护理赛道，Calvary 有 16 个居家护理服务中心和 18,598 名客户——属于澳大利亚居家护理赛道的重要参与者。同时其 My Home Hospital（与 Amplar Health 合资）是澳大利亚领先的虚拟医院/居家医院服务。✅ <strong>确认属于综合医疗健康赛道，居家护理+虚拟医院均高度相关。</strong></p>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p>Calvary Health Care 是澳大利亚最大的天主教非营利医疗健康组织之一，1885 年由 Little Company of Mary 修女会创立。FY2024 总收入 $2.11B（IBISWorld 2025 估计 $2.18B），运营 17 家医院、61 家养老院、16 个居家护理中心、17 个退休村和 1 个虚拟医院，员工及志愿者超 18,000 人。</p>
+<p><strong>核心矛盾</strong>：Calvary 拥有从急性医院到居家护理的<strong>完整连续护理链条</strong>——这是独特优势。但作为非营利组织，资本投入能力有限，且在公立/私立混合运营模式下需要平衡使命与财务可持续性。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">关键指标</th>
+<th style="text-align: center;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">FY2024 总收入</td>
+<td style="text-align: center;">$2.11B</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工+志愿者</td>
+<td style="text-align: center;">18,000+</td>
+</tr>
+<tr>
+<td style="text-align: left;">医院数</td>
+<td style="text-align: center;">17（含 3 公立 + 10 私立 + 虚拟医院）</td>
+</tr>
+<tr>
+<td style="text-align: left;">养老院</td>
+<td style="text-align: center;">61 家 / 4,841 居民</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家护理客户</td>
+<td style="text-align: center;">18,598 人</td>
+</tr>
+<tr>
+<td style="text-align: left;">医院 NPS</td>
+<td style="text-align: center;">88.32%</td>
+</tr>
+<tr>
+<td style="text-align: left;">虚拟医院 NPS</td>
+<td style="text-align: center;">88%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>总体判断</strong>：Calvary 的&rdquo;医院→虚拟医院→居家护理→机构养老&rdquo;完整连续体是澳大利亚最全面的护理链条之一。My Home Hospital 虚拟医院合资项目是居家医院赛道的标杆案例。</p>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_1">基本事实</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">属性</th>
+<th style="text-align: left;">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>法定名称</strong></td>
+<td style="text-align: left;">Little Company of Mary Health Care Limited</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>运营品牌</strong></td>
+<td style="text-align: left;">Calvary Health Care</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>法律地位</strong></td>
+<td style="text-align: left;">天主教非营利慈善组织</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成立</strong></td>
+<td style="text-align: left;">1885 年（141 年历史）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总部</strong></td>
+<td style="text-align: left;">Level 15, 345 George Street, Sydney NSW 2000</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>National CEO</strong></td>
+<td style="text-align: left;">Martin Bowles AO PSM</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>董事会主席</strong></td>
+<td style="text-align: left;">Jim Birch AM</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>监事会主席</strong></td>
+<td style="text-align: left;">Hon Michael Lee</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工</strong></td>
+<td style="text-align: left;">18,000+ (含志愿者)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>官网</strong></td>
+<td style="text-align: left;">calvarycare.org.au</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">年份</th>
+<th style="text-align: left;">里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1877</td>
+<td style="text-align: left;">Mary Potter 在英国 Nottingham 创立 Little Company of Mary 修女会</td>
+</tr>
+<tr>
+<td style="text-align: left;">1885</td>
+<td style="text-align: left;">6 位修女抵达悉尼，次日即开始居家护理服务</td>
+</tr>
+<tr>
+<td style="text-align: left;">1889</td>
+<td style="text-align: left;">开设 Lewisham 儿童医院</td>
+</tr>
+<tr>
+<td style="text-align: left;">1900</td>
+<td style="text-align: left;">Calvary North Adelaide Hospital 成立</td>
+</tr>
+<tr>
+<td style="text-align: left;">1926</td>
+<td style="text-align: left;">Calvary Wagga Wagga 成立</td>
+</tr>
+<tr>
+<td style="text-align: left;">1941</td>
+<td style="text-align: left;">Calvary Bethlehem (墨尔本) 成立</td>
+</tr>
+<tr>
+<td style="text-align: left;">1997</td>
+<td style="text-align: left;">成立 Little Company of Mary Health Care Limited 法人实体</td>
+</tr>
+<tr>
+<td style="text-align: left;">2011</td>
+<td style="text-align: left;">教规管理权移交 Calvary Ministries（获圣座认可）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2020s</td>
+<td style="text-align: left;">推出 PEARS 养老护理模式 + Calvary Care System 数字平台</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-24</td>
+<td style="text-align: left;">与 Amplar Health 合资推出 My Home Hospital 虚拟医院</td>
+</tr>
+<tr>
+<td style="text-align: left;">FY2024</td>
+<td style="text-align: left;">总收入 $2.11B；NPS 88.32% (医院)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">公司治理</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>双重治理</strong></td>
+<td style="text-align: left;">Calvary Ministries (监事会) 行使 stewardship；LCMHC Board 负责运营</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>董事会</strong></td>
+<td style="text-align: left;">Jim Birch AM 为主席的独立董事会</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关联交易</strong></td>
+<td style="text-align: left;">天主教系统内资源共享</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理争议</strong></td>
+<td style="text-align: left;">无重大监管处罚</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>透明度</strong></td>
+<td style="text-align: left;">ACNC 注册慈善组织，年度报告公开</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_4">一句话核心逻辑</h3>
+<p>Calvary 赌的是：<strong>&ldquo;从医院到居家&rdquo;的完整连续护理体系</strong>——通过急性医院建立入口，用虚拟医院和居家护理延伸到院外，形成闭环患者关系——这在 Support at Home 改革和&rdquo;医疗去中心化&rdquo;大趋势下具有结构性优势。</p>
+<h3 id="_5">战略差异化要素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">定位</th>
+<th style="text-align: left;">差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">使命</td>
+<td style="text-align: left;">天主教&rdquo;为他人而存在&rdquo;</td>
+<td style="text-align: left;">信任 + 使命感</td>
+</tr>
+<tr>
+<td style="text-align: left;">服务链</td>
+<td style="text-align: left;">急性→亚急性→虚拟→居家→机构</td>
+<td style="text-align: left;">全链条覆盖独一无二</td>
+</tr>
+<tr>
+<td style="text-align: left;">虚拟医院</td>
+<td style="text-align: left;">My Home Hospital (Amplar JV)</td>
+<td style="text-align: left;">居家医院标杆</td>
+</tr>
+<tr>
+<td style="text-align: left;">PEARS 模式</td>
+<td style="text-align: left;">以人为本的养老护理</td>
+<td style="text-align: left;">居民共同设计护理</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_6">战略演变三阶段</h3>
+<ul>
+<li><strong>Phase 1 (1885-1997)</strong>: 修女会直接运营——医院 + 养老院</li>
+<li><strong>Phase 2 (1997-2020)</strong>: 法人化 + 全国扩张——系统化管理</li>
+<li><strong>Phase 3 (2020-)</strong>: 数字化转型 —— Calvary Care System 平台 + PEARS 模式 + My Home Hospital 虚拟医院</li>
+</ul>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<pre><code>┌──────────────────────────────────────────────────┐
+│              Calvary Care System                   │
+│         &quot;Great, Connected Care&quot;                    │
+├──────────┬──────────┬──────────┬─────────────────┤
+│ Hospitals│Virtual   │Home Care │ Residential     │
+│ 17 家    │Hospital  │16 中心   │ Aged Care 61 家  │
+│          │(Amplar JV)│         │                 │
+├──────────┴──────────┴──────────┴─────────────────┤
+│                                                    │
+│ 急性入口 → 虚拟医院 → 居家护理 → 机构养老→ 退休村  │
+│   (入口)    (延伸)     (社区)     (长期)    (独立)  │
+│                                                    │
+│ 支付方: 联邦/州政府 (公立医院) + 私人保险 +          │
+│         Support at Home/HCP + NDIS + 自付          │
+└──────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="vs">支付方 vs 使用方</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>公立医院</strong></td>
+<td style="text-align: left;">州政府拨款</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>私立医院/养老/居家</strong></td>
+<td style="text-align: left;">联邦政府 + 私人保险 + 自付 + DVA</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>虚拟医院</strong></td>
+<td style="text-align: left;">州政府 + 联邦政府（合资模式）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<h3 id="fy2024">业务板块 (FY2024)</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">业务线</th>
+<th style="text-align: left;">规模</th>
+<th style="text-align: left;">关键指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>医院</strong> (17 家)</td>
+<td style="text-align: left;">最大收入板块</td>
+<td style="text-align: left;">219,758 入院 / 143,077 手术 / ALOS 9.22 天</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>机构养老</strong> (61 家)</td>
+<td style="text-align: left;">第二大板块</td>
+<td style="text-align: left;">4,841 居民 / 5,698,554 护理小时</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家护理</strong> (16 中心)</td>
+<td style="text-align: left;">增长板块</td>
+<td style="text-align: left;">18,598 客户 / 908,971 护理小时</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>退休村</strong> (17)</td>
+<td style="text-align: left;">稳定板块</td>
+<td style="text-align: left;">495 居民 / 514 单元</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>虚拟医院</strong> (1)</td>
+<td style="text-align: left;">新兴板块</td>
+<td style="text-align: left;">My Home Hospital (Amplar JV)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>精神健康</strong></td>
+<td style="text-align: left;">Hyson Green 14 床扩建</td>
+<td style="text-align: left;">$10.8M 投资</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>肿瘤</strong></td>
+<td style="text-align: left;">Connery Centre</td>
+<td style="text-align: left;">$4.75M 投资</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_7">定价模式</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">服务</th>
+<th style="text-align: left;">支付方</th>
+<th style="text-align: left;">定价模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">公立医院</td>
+<td style="text-align: left;">州政府</td>
+<td style="text-align: left;">活动量拨款 (ABF)</td>
+</tr>
+<tr>
+<td style="text-align: left;">私立医院</td>
+<td style="text-align: left;">私人保险/自付</td>
+<td style="text-align: left;">DRG + 自付缺口</td>
+</tr>
+<tr>
+<td style="text-align: left;">机构养老</td>
+<td style="text-align: left;">联邦政府 + 居民贡献</td>
+<td style="text-align: left;">政府补贴 + 资产测试后付费</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家护理</td>
+<td style="text-align: left;">联邦 HCP/Support at Home</td>
+<td style="text-align: left;">按人拨款</td>
+</tr>
+<tr>
+<td style="text-align: left;">虚拟医院</td>
+<td style="text-align: left;">州政府</td>
+<td style="text-align: left;">按 episode 付费</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="rd">R&amp;D 与创新</h3>
+<ul>
+<li><strong>PEARS 养老护理模式</strong>：以人为本原则框架，2024 年推出</li>
+<li><strong>Calvary Care System 数字平台</strong>：开发中，旨在实现无缝连接护理</li>
+<li><strong>I-CHARP 痴呆康复项目</strong>：与悉尼大学合作</li>
+<li><strong>vNOTE 微创手术</strong>：Calvary St Vincent&rsquo;s (Launceston) 率先开展</li>
+</ul>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_8">客户结构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户群</th>
+<th style="text-align: center;">规模</th>
+<th style="text-align: left;">特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">住院患者</td>
+<td style="text-align: center;">219,758 入院/年</td>
+<td style="text-align: left;">急性 + 择期手术</td>
+</tr>
+<tr>
+<td style="text-align: left;">急诊患者</td>
+<td style="text-align: center;">27,402 次/年</td>
+<td style="text-align: left;">公立医院</td>
+</tr>
+<tr>
+<td style="text-align: left;">机构养老居民</td>
+<td style="text-align: center;">4,841 人</td>
+<td style="text-align: left;">平均年龄 86 岁</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家护理客户</td>
+<td style="text-align: center;">18,598 人</td>
+<td style="text-align: left;">覆盖 ACT/NSW/VIC/SA/TAS/QLD</td>
+</tr>
+<tr>
+<td style="text-align: left;">退休村居民</td>
+<td style="text-align: center;">495 人</td>
+<td style="text-align: left;">独立生活</td>
+</tr>
+<tr>
+<td style="text-align: left;">虚拟医院患者</td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: left;">My Home Hospital</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_9">支付方来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">支付方</th>
+<th style="text-align: center;">估计占比</th>
+<th style="text-align: center;">稳定性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">州政府 (公立医院)</td>
+<td style="text-align: center;">40-50%</td>
+<td style="text-align: center;">🟢 高</td>
+</tr>
+<tr>
+<td style="text-align: left;">联邦政府 (养老+居家)</td>
+<td style="text-align: center;">25-30%</td>
+<td style="text-align: center;">🟢 高</td>
+</tr>
+<tr>
+<td style="text-align: left;">私人健康保险</td>
+<td style="text-align: center;">15-20%</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td style="text-align: left;">个人自付/共付</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_10">品牌与声誉</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+<th style="text-align: left;">评价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>医院 NPS</strong></td>
+<td style="text-align: left;">88.32% (目标 60%)</td>
+<td style="text-align: left;">🟢 优秀</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>虚拟医院 NPS</strong></td>
+<td style="text-align: left;">88%</td>
+<td style="text-align: left;">🟢 优秀</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>机构养老满意度</strong></td>
+<td style="text-align: left;">8.7/10 (目标 7)</td>
+<td style="text-align: left;">🟢 优秀</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家护理尊重度</strong></td>
+<td style="text-align: left;">98.86% 客户感受被尊重</td>
+<td style="text-align: left;">🟢 优秀</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>跌倒率 (医院)</strong></td>
+<td style="text-align: left;">1.86/10,000 次 (行业基准 3.5)</td>
+<td style="text-align: left;">🟢 行业领先</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>雇主品牌</strong></td>
+<td style="text-align: left;">Randstad 2025 最具吸引力雇主</td>
+<td style="text-align: left;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ 非营利组织，公开财务数据有限。以下来自 Annual Review 2024 和 IBISWorld。</p>
+</blockquote>
+<h3 id="_11">核心财务概览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: right;">FY2024</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>总收入</strong></td>
+<td style="text-align: right;">$2,114M ($2.11B)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总支出</strong></td>
+<td style="text-align: right;">$2,258M ($2.26B)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>净运营赤字</strong></td>
+<td style="text-align: right;">~-$144M</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>净资产</strong></td>
+<td style="text-align: right;">$146.8M</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IBISWorld 2025 收入估计</strong></td>
+<td style="text-align: right;">$2,185M ($2.18B)</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ FY2024 运营亏损 $144M——主要受养老护理工资裁决涨薪和合规投入影响。非营利组织不追求利润，但财务可持续性需关注。</p>
+</blockquote>
+<h3 id="fy2024_1">资本投资 (FY2024)</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">金额</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Hyson Green 精神健康扩建</td>
+<td style="text-align: left;">$10.8M</td>
+</tr>
+<tr>
+<td style="text-align: left;">Connery 肿瘤中心</td>
+<td style="text-align: left;">$4.75M</td>
+</tr>
+<tr>
+<td style="text-align: left;">George Vowell 痴呆护理扩建</td>
+<td style="text-align: left;">$1.0M</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<h3 id="my-home-hospital">My Home Hospital 患者旅程</h3>
+<p><strong>Phase 0</strong>: 急诊/GP 转诊 → 评估是否符合居家医院条件
+<strong>Phase 1</strong>: My Home Hospital 团队评估 → 确定护理方案 (静脉抗生素/术后护理/姑息治疗等)
+<strong>Phase 2</strong>: 护士+医生上门 + 远程监测 (虚拟查房)
+<strong>Phase 3</strong>: 每日临床评估 + 患者反馈 (NPS 88%)
+<strong>Phase 4</strong>: 康复后出院 → 如需长期护理 → Calvary Home Care 接手
+<strong>Phase 5</strong>: PEARS 模式下的持续健康管理</p>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">用户端</td>
+<td style="text-align: center;">⚠️ 开发中</td>
+<td style="text-align: left;">Calvary Care System 数字平台</td>
+</tr>
+<tr>
+<td style="text-align: center;">运营系统</td>
+<td style="text-align: center;">⚠️ 建设中</td>
+<td style="text-align: left;">跨服务线统一平台</td>
+</tr>
+<tr>
+<td style="text-align: center;">虚拟护理</td>
+<td style="text-align: center;">✅ 就绪</td>
+<td style="text-align: left;">My Home Hospital 远程监测</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 技术差异化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">能力维度</th>
+<th style="text-align: center;">评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">软件全栈</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">数字平台开发中</td>
+</tr>
+<tr>
+<td style="text-align: left;">虚拟护理</td>
+<td style="text-align: center;">🟢 强</td>
+<td style="text-align: left;">My Home Hospital 标杆</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床数据</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">跌倒率等行业基准追踪</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 应用</td>
+<td style="text-align: center;">🔴 弱</td>
+<td style="text-align: left;">无公开 AI 能力</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作性</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">跨服务线整合进行中</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93">9.3 硬件 — ❌ 不适用</h3>
+<h3 id="94-ai-ai">9.4 AI — ❌ 不适用（无公开 AI 能力）</h3>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Calvary</th>
+<th style="text-align: left;">St Vincent&rsquo;s Health</th>
+<th style="text-align: left;">Ramsay Health</th>
+<th style="text-align: left;">Australian Unity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>类型</strong></td>
+<td style="text-align: left;">天主教非营利</td>
+<td style="text-align: left;">天主教非营利</td>
+<td style="text-align: left;">营利上市 (ASX: RHC)</td>
+<td style="text-align: left;">互助制</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>医院</strong></td>
+<td style="text-align: left;">17 家</td>
+<td style="text-align: left;">6 公立 + 10 私立</td>
+<td style="text-align: left;">70+ 家</td>
+<td style="text-align: left;">无</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>养老</strong></td>
+<td style="text-align: left;">61 家</td>
+<td style="text-align: left;">有</td>
+<td style="text-align: left;">有</td>
+<td style="text-align: left;">12 家</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家护理</strong></td>
+<td style="text-align: left;">16 中心/18,598 客户</td>
+<td style="text-align: left;">有</td>
+<td style="text-align: left;">有限</td>
+<td style="text-align: left;">#1 (22,000+)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>虚拟医院</strong></td>
+<td style="text-align: left;">✅ My Home Hospital</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">有限</td>
+<td style="text-align: left;">转型中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>收入</strong></td>
+<td style="text-align: left;">$2.11B</td>
+<td style="text-align: left;">~$2B</td>
+<td style="text-align: left;">$15B+</td>
+<td style="text-align: left;">$2.95B</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: center;">Calvary 渗透率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TAM (澳大利亚医疗总支出)</strong></td>
+<td style="text-align: center;">~$200B</td>
+<td style="text-align: center;">~1%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SAM (私立医院+养老+居家市场)</strong></td>
+<td style="text-align: center;">~$50B</td>
+<td style="text-align: center;">~4%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>虚拟医院/居家医院</strong></td>
+<td style="text-align: center;">新兴市场</td>
+<td style="text-align: center;">先驱</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<p>Calvary 作为非营利组织，目标非利润最大化，而是<strong>使命驱动的财务可持续性</strong>。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">占比</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">临床人员工资</td>
+<td style="text-align: center;">~55-60%</td>
+<td style="text-align: left;">劳动力密集型</td>
+</tr>
+<tr>
+<td style="text-align: left;">药品/耗材</td>
+<td style="text-align: center;">~10-12%</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">物业运营</td>
+<td style="text-align: center;">~8-10%</td>
+<td style="text-align: left;">61 家养老院</td>
+</tr>
+<tr>
+<td style="text-align: left;">行政管理</td>
+<td style="text-align: center;">~8-10%</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">数字平台开发</td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: left;">投资期</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>可持续性挑战</strong>：FY2024 运营亏损 $144M → 需关注拨款增长是否追上成本增长。</p>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期</strong></td>
+<td style="text-align: left;">My Home Hospital 扩展</td>
+<td style="text-align: left;">运营亏损持续</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期</strong></td>
+<td style="text-align: left;">Support at Home + 虚拟医院趋势</td>
+<td style="text-align: left;">劳动力短缺+工资上涨</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">完整连续护理链——医院→虚拟→居家</td>
+<td style="text-align: left;">公立/私立混合运营的财务平衡压力</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_12">宏观敏感性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">情景</th>
+<th style="text-align: center;">影响</th>
+<th style="text-align: center;">缓冲</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">经济衰退</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: center;">政府拨款反周期</td>
+</tr>
+<tr>
+<td style="text-align: left;">劳动力通胀</td>
+<td style="text-align: center;">🔴 高</td>
+<td style="text-align: center;">工资裁决强制涨薪</td>
+</tr>
+<tr>
+<td style="text-align: left;">疫情</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">虚拟医院需求增加</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14-ceo">D14 — 管理层/CEO 战略指引</h2>
+<p>CEO Martin Bowles AO PSM 核心判断（Annual Review 2024）：</p>
+<blockquote>
+<p>&ldquo;我们继续建设 Calvary Care System——一个独特的数字平台，为人们提供无缝且富有同情心的医疗体验，确保他们能获得适当的护理，在他们想要或需要的地方。&rdquo;</p>
+</blockquote>
+<p><strong>3 大战略支柱</strong>：</p>
+<ol>
+<li>Great, Connected Care——跨服务线无缝连接</li>
+<li>PEARS 养老护理模式——居民共同设计</li>
+<li>Calvary Care System 数字平台——技术赋能</li>
+</ol>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<p>❌ <strong>不适用</strong>——Calvary 为非营利慈善组织，无估值概念。可比参考：Ramsay Health Care (ASX: RHC) 作为营利上市同业，P/E ~25-30x。</p>
+<hr />
+<h2 id="d16">D16 — 战略建议（分角色）</h2>
+<h3 id="_13">对潜在投资者</h3>
+<ul>
+<li>非营利，不可投资——但 My Home Hospital JV 模式可能成为未来商业化路径</li>
+</ul>
+<h3 id="ihomecare">对 iHomeCare</h3>
+<ul>
+<li><strong>壁垒评估</strong>：Calvary 的急性医院入口 + 虚拟医院 + 居家护理的完整链条是极强护城河</li>
+<li><strong>关键借鉴</strong>：
+  1. My Home Hospital 的医院→居家过渡模式——急症出院患者是居家护理最高价值入口
+  2. PEARS 模式——让居民参与共同设计护理方案
+  3. 完整连续护理链——从急性到居家的闭环关系管理</li>
+<li><strong>潜在合作</strong>：Calvary 已与 Amplar Health 合资虚拟医院，对技术合作伙伴持开放态度</li>
+</ul>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Support at Home (2025.07)</strong></td>
+<td style="text-align: left;">居家护理拨款统一化 → 客户自主选择 → 16 个中心需提升竞争力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>New Aged Care Act (2025.11)</strong></td>
+<td style="text-align: left;">更严格合规要求 → 运营成本上升</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Aged Care Work Value Case</strong></td>
+<td style="text-align: left;">强制涨薪 → 拨款相应增加</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ACQSC 监管</strong></td>
+<td style="text-align: left;">五星评级 + 强制护理分钟数</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>州政府公立医院拨款</strong></td>
+<td style="text-align: left;">活动量拨款模式 (ABF)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<blockquote>
+<p>My Home Hospital——典型居家医院 episode 估算</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: center;">金额 (AUD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">日均成本 (居家医院)</td>
+<td style="text-align: center;">~$300-500/天</td>
+</tr>
+<tr>
+<td style="text-align: left;">vs 传统住院</td>
+<td style="text-align: center;">~$1,500-2,000/天</td>
+</tr>
+<tr>
+<td style="text-align: left;">节省</td>
+<td style="text-align: center;">60-70%</td>
+</tr>
+<tr>
+<td style="text-align: left;">NPS</td>
+<td style="text-align: center;">88%</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: left;">画像</th>
+<th style="text-align: center;">Calvary 触达</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">A (急性)</td>
+<td style="text-align: left;">住院患者 → 出院后居家护理</td>
+<td style="text-align: center;">🟢 医院入口直接转诊</td>
+</tr>
+<tr>
+<td style="text-align: center;">B (养老)</td>
+<td style="text-align: left;">4,841 机构养老居民</td>
+<td style="text-align: center;">🟢 61 家养老院</td>
+</tr>
+<tr>
+<td style="text-align: center;">C (居家)</td>
+<td style="text-align: left;">18,598 居家护理客户</td>
+<td style="text-align: center;">🟢 16 个中心</td>
+</tr>
+<tr>
+<td style="text-align: center;">D (独立)</td>
+<td style="text-align: left;">495 退休村居民</td>
+<td style="text-align: center;">🟢 17 个退休村</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: left;">重叠领域</th>
+<th style="text-align: center;">威胁等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>St Vincent&rsquo;s Health Australia</strong></td>
+<td style="text-align: left;">天主教医院+养老</td>
+<td style="text-align: center;">🟡 中——同类竞争</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ramsay Health Care</strong></td>
+<td style="text-align: left;">私立医院</td>
+<td style="text-align: center;">🔴 高——营利性效率优势</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Australian Unity</strong></td>
+<td style="text-align: left;">居家护理</td>
+<td style="text-align: center;">🟡 中——不同赛道侧重</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Amplar Health</strong></td>
+<td style="text-align: left;">虚拟医院（JV 伙伴）</td>
+<td style="text-align: center;">🟢 合作</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略深度评估</h2>
+<p>❌ <strong>不适用</strong>——Calvary 100% 澳大利亚境内运营。Little Company of Mary 修女会本身是国际组织，但 Calvary Health Care Australia 无跨境业务。</p>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<p>❌ <strong>不适用</strong>——天主教非营利组织，无退出/并购概念。慈善资产受 ACNC 保护，不可出售获利。</p>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>ESG 披露</strong></td>
+<td style="text-align: left;">2024 年度审查含可持续发展目标——承诺 2030 年碳足迹减少 43%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>现代奴隶制</strong></td>
+<td style="text-align: left;">正式声明立场——根除现代奴隶制</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社区影响</strong></td>
+<td style="text-align: left;">慈善捐款、志愿者项目、替他人过渡住房</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理</strong></td>
+<td style="text-align: left;">双重治理 (Calvary Ministries + LCMHC Board)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>雇主品牌</strong></td>
+<td style="text-align: left;">Randstad 2025 最具吸引力雇主</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>ESG 评级</strong>：🟢 <strong>强</strong>——天主教使命天然对齐 ESG 最高标准。</p>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">按服务线：医院 / 机构养老 / 居家护理 / 退休村 / 虚拟医院</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">18,000+ (含志愿者)；医院 8,144 人、养老院 7,568 人、居家护理 1,293 人</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人才培养</strong></td>
+<td style="text-align: left;">2024 年：66 名护士毕业生、103 名养老护理培训生、15 名居家护理培训生、115 名国际招聘</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">CEO Martin Bowles—政府关系背景（前 Department of Health 秘书长）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">&ldquo;Spirit of Calvary&rdquo;——使命驱动</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>离职率</strong></td>
+<td style="text-align: left;">未公开</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>组织健康度</strong>：🟡 <strong>一般</strong>——18,000 人大组织的管理复杂度；劳动力短缺全行业挑战。</p>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<p>❌ <strong>不适用</strong>——Calvary 为非营利慈善组织，无股权融资。资金来源：政府拨款 + 慈善捐赠 + 运营收入。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">资金来源</th>
+<th style="text-align: left;">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">政府拨款</td>
+<td style="text-align: left;">主要来源（公立医院+养老+居家）</td>
+</tr>
+<tr>
+<td style="text-align: left;">慈善捐赠</td>
+<td style="text-align: left;">遗产捐赠 + 企业捐赠 (如 Tomago Aluminium $14,000)</td>
+</tr>
+<tr>
+<td style="text-align: left;">运营收入</td>
+<td style="text-align: left;">私立医院+私人保险+自付</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">医院入口自然导流 + 政府渠道 (My Aged Care) + 天主教社区网络</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC</strong></td>
+<td style="text-align: left;">极低——医院出院患者直接转诊至居家护理/虚拟医院</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>竞争优势</strong></td>
+<td style="text-align: left;">141 年品牌 + 天主教信任 + 全链条闭环</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>GTM 阶段</strong>：成熟期——获客不是瓶颈，供给端（劳动力）是主要约束。</p>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Calvary</th>
+<th style="text-align: center;">行业基准</th>
+<th style="text-align: center;">评价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>医院 NPS</strong></td>
+<td style="text-align: center;">88.32%</td>
+<td style="text-align: center;">目标 60%</td>
+<td style="text-align: center;">🟢 远超目标</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>虚拟医院 NPS</strong></td>
+<td style="text-align: center;">88%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>机构养老满意度</strong></td>
+<td style="text-align: center;">8.7/10</td>
+<td style="text-align: center;">目标 7</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家护理尊重度</strong></td>
+<td style="text-align: center;">98.86%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>医院跌倒率</strong></td>
+<td style="text-align: center;">1.86/10,000 次</td>
+<td style="text-align: center;">3.5</td>
+<td style="text-align: center;">🟢 远低于行业</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>机构养老跌倒率</strong></td>
+<td style="text-align: center;">29.95%</td>
+<td style="text-align: center;">31.6%</td>
+<td style="text-align: center;">🟢 低于行业</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>质量认证</strong>: Aged Care Quality Standards ✅ | National Safety and Quality Health Service Standards ✅</p>
+<p><strong>临床证据强度</strong>：🟡 <strong>中</strong>——内部质量数据优秀但未发表同行评审研究。</p>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: center;">23</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: center;">1 (D7——非营利财务数据有限)</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 不适用</td>
+<td style="text-align: center;">4 (D15 估值 / D21 跨境 / D22 退出 / D25 融资)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_14">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">各业务线具体收入拆解</td>
+<td style="text-align: left;">非营利披露有限</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">My Home Hospital 患者规模</td>
+<td style="text-align: left;">合资项目不单独披露</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">员工离职率</td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">数字平台上线时间表</td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">PEARS 模式推广进度</td>
+<td style="text-align: left;">仅试点信息</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_15">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Calvary Health Care</td>
+<td style="text-align: left;">Being Calvary — Annual Review 2024</td>
+<td style="text-align: left;">2024.10</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Wikipedia</td>
+<td style="text-align: left;">Little Company of Mary Health Care (Australia)</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">IBISWorld</td>
+<td style="text-align: left;">Little Company of Mary Health Care Limited company profile</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">LinkedIn</td>
+<td style="text-align: left;">Calvary Health Care company page</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">ACNC</td>
+<td style="text-align: left;">LCMHC charity registration</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Calvary website</td>
+<td style="text-align: left;">Hospital / Aged Care / Home Care listings</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Randstad</td>
+<td style="text-align: left;">Calvary named most attractive employer</td>
+<td style="text-align: left;">2025.05</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">Australian Ageing Agenda</td>
+<td style="text-align: left;">Randstad award coverage</td>
+<td style="text-align: left;">2025.05</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">Calvary Care</td>
+<td style="text-align: left;">PEARS model of care</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Department of Health</td>
+<td style="text-align: left;">Support at Home reform</td>
+<td style="text-align: left;">2024-25</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">Australian Government</td>
+<td style="text-align: left;">Aged Care Bill 2024</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">Fair Work Commission</td>
+<td style="text-align: left;">Aged Care Work Value Case</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">My Aged Care</td>
+<td style="text-align: left;">Calvary provider listings</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">Calvary website</td>
+<td style="text-align: left;">My Home Hospital virtual care</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">Little Company of Mary</td>
+<td style="text-align: left;">LCM Australia heritage page</td>
+<td style="text-align: left;">2025</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

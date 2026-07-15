@@ -1,0 +1,1656 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YDCare（易得康香港）27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#ydcare27">YDCare（易得康香港）27 维度深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实</a></li>
+<li><a href="#_2">发展时间线</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_3">核心逻辑</a></li>
+<li><a href="#_4">战略差异化</a></li>
+<li><a href="#_5">战略阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#_6">战略合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a></li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a></li>
+<li><a href="#d7">D7 — 财务深度拆解</a></li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a><ul>
+<li><a href="#ydcare">肿瘤居家康复路径（YDCare × 希愈医疗中心）</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构</a></li>
+<li><a href="#92">9.2 软件架构</a></li>
+<li><a href="#93-iot">9.3 硬件/IoT — ❌ 不适用</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a></li>
+<li><a href="#d11-tamsam">D11 — TAM/SAM 估算</a></li>
+<li><a href="#d12">D12 — 盈利模型与路径</a></li>
+<li><a href="#d13">D13 — 机遇与风险评估</a></li>
+<li><a href="#d14">D14 — 管理层</a></li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 的战略建议</a></li>
+<li><a href="#d17">D17 — 政策与监管土壤</a></li>
+<li><a href="#d18">D18 — 单元经济模型</a><ul>
+<li><a href="#vs-ccsv">高端十大专科客户（vs CCSV 客户）</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群</a></li>
+<li><a href="#d20-ydcare">D20 — 竞品深度地图（突出 YDCare 视角）</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略评估</a></li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a></li>
+<li><a href="#d23-esg">D23 — ESG</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a><ul>
+<li><a href="#gr">融资/Gr交易</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a></li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_7">调研空白与后续补充</a></li>
+<li><a href="#_8">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="ydcare27">YDCare（易得康香港）27 维度深度尽调报告</h1>
+<h2 id="d0">D0 — 赛道验证</h2>
+<p>YDCare 易得康是<strong>新风天域集团（New Frontier Group）旗下高端居家医疗护理平台</strong>。中国大陆运营主体「易得康医疗」覆盖 40+城市、3,500 万+人次服务经验，香港运营主体 2024 年设立，聚焦护士经理制（Nurse Case Manager）下的医院级居家医疗护理，覆盖肿瘤、中风、认知障碍等十大专科。</p>
+<p><strong>赛道定位</strong>：🟢 <strong>高端居家医疗护理（Home Clinical Care）</strong>——比传统社区安老更接近急性 HaH。由注册护士主导、多学科团队（护士/治疗师/营养师/保健员），引入美国先进照护理念。对 iHomeCare 竞品相关性<strong>高</strong>——同在「高质量居家医疗」赛道，但 YDCare 偏线下护理团队驱动，iHomeCare 偏技术/IoT/AI 驱动。</p>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一句话定位</strong></td>
+<td>新风天域旗下「护士经理制」高端居家医疗护理平台，香港+中国大陆双线运营，十大专科覆盖</td>
+</tr>
+<tr>
+<td><strong>核心数据</strong></td>
+<td>母集团 12,000+员工/92城市/11家JCI医院；中国大陆 40+城市/300+站点/3,500万+人次；2所护理学校/7,000+培训人才；客户满意度 97%+</td>
+</tr>
+<tr>
+<td><strong>香港成立</strong></td>
+<td>2024年（香港运营主体），依托新风天域香港总部</td>
+</tr>
+<tr>
+<td><strong>对 iHomeCare 相关性</strong></td>
+<td>🟢🟢 高——同在高端居家医疗赛道；YDCare 代表「人力+临床」路径、iHomeCare 代表「技术+AI」路径</td>
+</tr>
+<tr>
+<td><strong>总体判断</strong></td>
+<td>香港居家医疗市场最新最强的资本驱动型进入者。集团化资源（医院网络+护理学校+资金）赋予其快速规模化的潜力。但香港业务 2024 年才起步，品牌认知度和本地网络仍在建设期</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_1">基本事实</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公司全称</td>
+<td>易得康（YDCare），隶属于上海纽锋养老服务有限公司 / 新风天域集团</td>
+</tr>
+<tr>
+<td>香港运营主体</td>
+<td>YDCare Hong Kong，2024年设立</td>
+</tr>
+<tr>
+<td>母公司</td>
+<td><strong>新风天域集团（New Frontier Group）</strong></td>
+</tr>
+<tr>
+<td>母集团创始人</td>
+<td><strong>梁锦松</strong>（香港前财政司司长）+ <strong>吴启楠</strong>（黑石集团前高管）</td>
+</tr>
+<tr>
+<td>母集团成立</td>
+<td>2016年</td>
+</tr>
+<tr>
+<td>母集团员工</td>
+<td>12,000+</td>
+</tr>
+<tr>
+<td>母集团规模</td>
+<td>92城市/11家JCI医院/300+站点</td>
+</tr>
+<tr>
+<td>上市状态</td>
+<td>否——私募集团。曾收购和睦家医疗（~$1.4B），后出售</td>
+</tr>
+<tr>
+<td>CCSV</td>
+<td>香港社署认可服务单位</td>
+</tr>
+<tr>
+<td>香港官网</td>
+<td>⚠️ 中国大陆官网 ydcare.cn；香港专门网站未独立</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2016</td>
+<td>新风天域集团在香港创立（梁锦松+吴启楠）</td>
+</tr>
+<tr>
+<td>2016</td>
+<td>易得康品牌在中国大陆创立——引入美国照护理念</td>
+</tr>
+<tr>
+<td>2016-2019</td>
+<td>中国大陆扩张——建立 2 所护理学校、300+站点</td>
+</tr>
+<tr>
+<td>2019-2021</td>
+<td>新风天域收购和睦家医疗（中国高端私立医院）→ 成为中国最大私立医疗集团之一</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>新风天域全资收购易得康</td>
+</tr>
+<tr>
+<td>2022-2023</td>
+<td>中国大陆深耕长护险市场（56城市）</td>
+</tr>
+<tr>
+<td>2024</td>
+<td><strong>YDCare 香港运营主体设立</strong>——推出十大专科居家医疗护理</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>与希愈医疗中心合作推出「肿瘤居家康复」联合解决方案</td>
+</tr>
+<tr>
+<td>至今</td>
+<td>香港市场拓展中，CCSV认可服务单位</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_3">核心逻辑</h3>
+<p><strong>「新风天域医疗生态的居家延伸——用护士经理制（Nurse Case Manager）替代住院的部分功能，用医院级标准做居家医疗」</strong></p>
+<p>YDCare 的定位比传统安老服务商（EDEN/Bamboos）更高端、比保险公司护理（QualityCare）更临床化。核心差异化在于：</p>
+<ol>
+<li><strong>护士经理制</strong>：每个客户由注册护士担任 Case Manager——制定方案、协调多学科团队、持续评估</li>
+<li><strong>十大专科</strong>：肿瘤/中风/认知障碍/骨科/心血管等——非「个人照顾」而是「专科居家医疗」</li>
+<li><strong>集团协同</strong>：新风天域旗下医院（原和睦家体系）提供临床背书和转诊</li>
+</ol>
+<h3 id="_4">战略差异化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>临床深度</td>
+<td>🟢 十大专科+多学科团队—香港居家护理中最临床化的</td>
+</tr>
+<tr>
+<td>人才体系</td>
+<td>🟢 2所护理学校+7,000+培训人才—自有人才供应链</td>
+</tr>
+<tr>
+<td>集团协同</td>
+<td>🟢 11家JCI医院+92城市网络—远超任何香港本地竞品</td>
+</tr>
+<tr>
+<td>技术支持</td>
+<td>🟡 有技术平台但未见公开RPM/AI能力</td>
+</tr>
+<tr>
+<td>品牌认知</td>
+<td>🟡 中国大陆强（易得康品牌）但香港品牌新（2024启动）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_5">战略阶段</h3>
+<ul>
+<li><strong>Phase 1 (2016-2020)</strong>：中国大陆模式验证——建立护理学校+站点网络</li>
+<li><strong>Phase 2 (2021-2023)</strong>：集团整合——全资收购+并购和睦家</li>
+<li><strong>Phase 3 (2024-至今)</strong>：<strong>香港市场+高端化</strong>——用大陆积累的经验和集团资源切回香港市场</li>
+</ul>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<pre><code>供给端                        平台                         需求端
+────────────────────────────────────────────────────────────
+新风天域集团                   YDCare 香港                   CCSV合资格长者
+├─ 11家JCI医院                 ├─ 护士Case Manager           (政府资助)
+├─ 2所护理学校                 ├─ 多学科团队                  ↓
+├─ 12,000+员工                 │  ├─ 注册护士(RN)            自费高净值长者
+├─ 资金实力(曾收购和睦家$1.4B)  │  ├─ 物理治疗师               (十大专科)
+└─ 品牌背书                    │  ├─ 营养师                   ↓
+                               │  ├─ 保健员                  B2B合作伙伴
+护理人员供应链                  │  └─ 社工                    ├─ 希愈医疗中心
+├─ 7,000+培训人才               │                             ├─ 保险公司
+├─ 320+院校合作                 ├─ 十大专科服务              └─ 安老院舍
+└─ 大湾区跨境人才               └─ 技术平台
+                                  (健康监测/家属端)            跨境粤港澳
+                                                              (未来)
+</code></pre>
+<h3 id="_6">战略合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">伙伴类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: left;">合作性质</th>
+<th style="text-align: center;">排他性</th>
+<th style="text-align: center;">关系健康度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">医院系统</td>
+<td style="text-align: left;">希愈医疗中心</td>
+<td style="text-align: left;">联合临床方案（肿瘤居家康复）</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">医院系统</td>
+<td style="text-align: left;">原和睦家网络（11家JCI）</td>
+<td style="text-align: left;">患者转诊+临床背书</td>
+<td style="text-align: center;">集团内</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">教育/人才</td>
+<td style="text-align: left;">2所护理学校+320+院校</td>
+<td style="text-align: left;">护理人才输送</td>
+<td style="text-align: center;">集团内+外部</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">保险/支付方</td>
+<td style="text-align: left;">⚠️ 未见公开合作</td>
+<td style="text-align: left;">未来可期</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">CCSV 政府</td>
+<td style="text-align: left;">社署</td>
+<td style="text-align: left;">认可服务单位</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>客户类型</th>
+<th>服务内容</th>
+<th style="text-align: center;">定价模式</th>
+<th style="text-align: center;">收入占比估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>十大专科居家护理</strong></td>
+<td>出院后患者/慢性病</td>
+<td>肿瘤/中风/认知障碍/骨科/心血管/呼吸/术后/糖尿病/肾病/神经退行</td>
+<td style="text-align: center;">按次/按月定制</td>
+<td style="text-align: center;">~40%</td>
+</tr>
+<tr>
+<td>长期照护/安老护理</td>
+<td>CCSV长者+自费长者</td>
+<td>个人照顾+基本护理+康复</td>
+<td style="text-align: center;">CCSV社区券+自费</td>
+<td style="text-align: center;">~30%</td>
+</tr>
+<tr>
+<td>医院/机构B2B</td>
+<td>香港私立医院/院舍</td>
+<td>出院后过渡护理+护理人员供给</td>
+<td style="text-align: center;">B2B合约</td>
+<td style="text-align: center;">~20%</td>
+</tr>
+<tr>
+<td>护理培训/认证</td>
+<td>护理从业者</td>
+<td>护理技能培训/再教育</td>
+<td style="text-align: center;">按课程收费</td>
+<td style="text-align: center;">~10%</td>
+</tr>
+</tbody>
+</table></div>
+<p>⚠️ YDCare 香港 2024年启动，以上占比为基于集团大陆经验+香港市场定位的逻辑推演。</p>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>客户类别</th>
+<th style="text-align: center;">收入占比估</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自费高净值长者/家属</td>
+<td style="text-align: center;">~35%</td>
+<td>高端定价空间，品牌敏感</td>
+</tr>
+<tr>
+<td>CCSV 政府渠道</td>
+<td style="text-align: center;">~25%</td>
+<td>量稳但利薄</td>
+</tr>
+<tr>
+<td>B2B 医院/院舍</td>
+<td style="text-align: center;">~25%</td>
+<td>合约制，稳定</td>
+</tr>
+<tr>
+<td>保险渠道（待建立）</td>
+<td style="text-align: center;">~15%</td>
+<td>关键增长引擎——尚未发力</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<p>⚠️ <strong>YDCare 香港为非上市集团子公司，财务数据不独立公开。以下是基于集团信息的推算：</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">推算范围</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新风天域集团年收入</td>
+<td style="text-align: center;">估 <strong>$5-15亿美元</strong></td>
+<td>11家JCI医院+300+站点+和睦家收购规模</td>
+</tr>
+<tr>
+<td>YDCare 大陆年收入</td>
+<td style="text-align: center;">估 <strong>$1-3亿美元</strong></td>
+<td>40+城市/3,500万+人次</td>
+</tr>
+<tr>
+<td>YDCare 香港年收入</td>
+<td style="text-align: center;">估 <strong>$500-2,000万港元</strong></td>
+<td>2024启动，起步阶段</td>
+</tr>
+<tr>
+<td>利润率</td>
+<td style="text-align: center;">大陆估 5-15% / 香港起步期估 负数（投入期）</td>
+<td>护理人力密集</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<h3 id="ydcare">肿瘤居家康复路径（YDCare × 希愈医疗中心）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phase 0</strong></td>
+<td>希愈医疗中心肿瘤科医生推荐患者接受居家康复</td>
+</tr>
+<tr>
+<td><strong>Phase 1</strong></td>
+<td>YDCare 护士 Case Manager 上门评估——制定个性化康复方案</td>
+</tr>
+<tr>
+<td><strong>Phase 2</strong></td>
+<td>多学科团队介入——物理治疗师设计康复计划、营养师制定膳食方案、社工心理支持</td>
+</tr>
+<tr>
+<td><strong>Phase 3</strong></td>
+<td>护理人员按方案定期上门；Case Manager 持续评估调整</td>
+</tr>
+<tr>
+<td><strong>Phase 4</strong></td>
+<td>定期向肿瘤科医生反馈进展——医院-居家闭环</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 财务/行政</td>
+<td style="text-align: center;">✅</td>
+<td>集团财务系统</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 业务运营</td>
+<td style="text-align: center;">⚠️</td>
+<td>护理管理平台——⚠️ 无可靠公开数据源说明详细功能</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 调度/运营中心</td>
+<td style="text-align: center;">⚠️</td>
+<td>有调度体系（300+站点）但系统化程度不明</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 用户端</td>
+<td style="text-align: center;">⚠️</td>
+<td>中国大陆有用户界面——香港端未见独立 App</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据与 AI</td>
+<td style="text-align: center;">⚠️</td>
+<td>3,500万+人次数据——但 AI 能力未见公开</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构</h3>
+<p>⚠️ <strong>无可靠公开数据源</strong>。YDCare 在技术信息披露方面非常有限，公开资料主要侧重临床服务描述。推测其技术平台以运营管理系统（护理排班/CRM/结算）为主，尚未形成独立 SaaS 或 AI 产品。</p>
+<h3 id="93-iot">9.3 硬件/IoT — ❌ 不适用</h3>
+<p>无自有硬件产品。不涉 RPM 设备制造。</p>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 应用</td>
+<td>⚠️ 未见公开的 AI 驱动临床决策或预测模型</td>
+</tr>
+<tr>
+<td>数据资产</td>
+<td>🟢 3,500万+人次服务数据——潜在金矿但未见公开的数据产品化</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>能力维度</th>
+<th style="text-align: center;">YDCare 状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>临床深度</td>
+<td style="text-align: center;">🟢 十大专科</td>
+<td style="text-align: center;">🟡 一般护理</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>技术平台</td>
+<td style="text-align: center;">⚠️ 弱公开</td>
+<td style="text-align: center;">⚠️ 参差不齐</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>AI 能力</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">⚠️ 早期</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td>数据资产</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>人才体系</td>
+<td style="text-align: center;">🟢 自建学校</td>
+<td style="text-align: center;">🔴 多数无</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>技术护城河总体评估</strong>：🟡 <strong>临床+人才护城河强，技术护城河弱</strong>。YDCare 的核心壁垒不在技术而在「护理学校→人才供应链→标准化多学科临床服务」的体系。这恰恰是纯技术驱动的 iHomeCare 可以作为互补而非直接竞争的点。</p>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>YDCare</th>
+<th>Evercare</th>
+<th>QualityCare(Bupa)</th>
+<th>百本医护(2293.HK)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成立(HK)</td>
+<td>2024</td>
+<td>~2016</td>
+<td>1868(护理1975)</td>
+<td>1998</td>
+</tr>
+<tr>
+<td>临床深度</td>
+<td>🟢 十大专科</td>
+<td>🟡 一般护理</td>
+<td>🟡 一般护理</td>
+<td>⚠️ 人力中介</td>
+</tr>
+<tr>
+<td>集团背书</td>
+<td>新风天域(和睦家)</td>
+<td>自筹</td>
+<td>Bupa £140亿</td>
+<td>上市HK</td>
+</tr>
+<tr>
+<td>人才供应链</td>
+<td>🟢 2所护理学校</td>
+<td>⚠️ 招募</td>
+<td>⚠️ 招募</td>
+<td>🟢 3.2万登记</td>
+</tr>
+<tr>
+<td>技术平台</td>
+<td>⚠️ 积累中</td>
+<td>🟢 App匹配</td>
+<td>🟡 QHMS App</td>
+<td>⚠️ 基础</td>
+</tr>
+<tr>
+<td>香港品牌力</td>
+<td>🔴 新（2024）</td>
+<td>🟡</td>
+<td>🟢 150年</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td>CCSV认可</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>⚠️</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-tamsam">D11 — TAM/SAM 估算</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: center;">YDCare HK 渗透率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TAM</strong></td>
+<td style="text-align: center;">~$50-80亿港元/年（HK全居家护理）</td>
+<td style="text-align: center;">~0.1%</td>
+</tr>
+<tr>
+<td><strong>SAM（高端居家医疗）</strong></td>
+<td style="text-align: center;">~$10-20亿港元/年</td>
+<td style="text-align: center;">~0.5-2%</td>
+</tr>
+</tbody>
+</table></div>
+<p>起步期渗透率极低——但这是故意为之：YDCare 选择「高端专科→向下延伸」的路径，对标的是市场顶端而非全面铺开。</p>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<p><strong>当前阶段</strong>：投入期——香港 2024年刚起步，学员培训/站点建设/品牌推广的高投入阶段，大概率尚未盈利。</p>
+<p><strong>盈利拐点逻辑</strong>：</p>
+<ol>
+<li><strong>大陆验证的模型</strong>：40+城市/3,500万+人次——大陆业务是盈利的</li>
+<li><strong>香港复制成本低于从零开始</strong>：护理学校/培训体系/服务标准/SOP 均可复用</li>
+<li><strong>高端定价</strong>：十大专科定位高端自费——客单价比 CCSV 路径高 2-3x</li>
+</ol>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>机遇</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>短期（0-12月）</strong></td>
+<td>CCSV 扩张窗口；希愈医疗肿瘤合作可快速积累案例</td>
+<td>品牌认知低——「易得康」在香港知名度几乎为零；大陆品牌不等于香港品牌</td>
+</tr>
+<tr>
+<td><strong>中长期（1-3年）</strong></td>
+<td>大湾区跨境——新风天域香港总部+中国大陆网络天然跨域优势；保险合作建立后可快速上量</td>
+<td>香港市场规模有限——高端护理天花板低；新风天域可能调整战略优先级（香港 vs 大陆）</td>
+</tr>
+<tr>
+<td><strong>结构性</strong></td>
+<td>老龄化+院舍成本上升→居家医疗需求爆发；护理学校保障人才供应链</td>
+<td>非香港原生品牌的文化适应性挑战；资本驱动 vs 有机生长的可持续性</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>姓名</th>
+<th>职务</th>
+<th>背景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>梁锦松</strong></td>
+<td>新风天域集团联合创始人/董事长</td>
+<td>香港前财政司司长（2001-2003）、黑石集团大中华区前主席</td>
+</tr>
+<tr>
+<td><strong>吴启楠</strong></td>
+<td>新风天域集团联合创始人/CEO</td>
+<td>黑石集团前高管、和睦家收购操盘者</td>
+</tr>
+<tr>
+<td>YDCare 香港运营负责人</td>
+<td>⚠️ 无可靠公开数据源</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>管理层质量</strong>：🟢 极高——顶级政商背景+医疗投资经验。梁锦松的香港政商人脉为 YDCare 提供独特的政策/商业通道。</p>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<p>❌ <strong>不适用</strong>——YDCare 为非上市集团子公司。参考数据：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>参考指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新风天域收购和睦家</td>
+<td>~$14亿美元 (2019)</td>
+</tr>
+<tr>
+<td>新风天域出售和睦家</td>
+<td>~$16亿美元+ (2023/24)</td>
+</tr>
+<tr>
+<td>新风天域集团推定估值</td>
+<td>估 <strong>$20-40亿美元</strong>（基于和睦家交易+医疗网络）</td>
+</tr>
+<tr>
+<td>YDCare 单独估值</td>
+<td>⚠️ 不单独估值</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 的战略建议</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>赛道差异</strong></td>
+<td>YDCare 是「人力+临床」的高端护理，iHomeCare 是「技术+AI」的急性 HaH。两者<strong>定位不同但存在互补空间</strong>：iHomeCare 的 RPM/AI 能力可作为 YDCare 的技术层</td>
+</tr>
+<tr>
+<td><strong>潜在合作</strong></td>
+<td>YDCare 的护理团队 + iHomeCare 的 RPM/AI 监测 = 完整的「技术+临床」HaH 方案。可寻求成为 YDCare 的技术供应商或联合竞标 CCSV/HA 项目</td>
+</tr>
+<tr>
+<td><strong>竞争威胁</strong></td>
+<td>🟡 中等——若 YDCare 未来自建或收购技术能力（RPM/AI），将直接竞争。但 YDCare 目前的技术侧重运营管理而非临床 AI——窗口期 1-2年</td>
+</tr>
+<tr>
+<td><strong>借鉴价值</strong></td>
+<td>YDCare 的「护士 Case Manager 制 + 多学科团队 + 护理学校人才供应链」是 iHomeCare 临床体系建设的最佳对标模板</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<p>与 EDEN/QualityCare 公共部分同。以下为 YDCare 特有影响：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>政策</th>
+<th>影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>大湾区跨境医疗——广东院舍计划 26家</td>
+<td>🔼🔼 YDCare 有新风天域大湾区网络可协同——是香港竞品中最具跨境潜力的</td>
+</tr>
+<tr>
+<td>2025施政报告：医疗器械立法</td>
+<td>🔼 若 YDCare 未来引入 RPM 设备将受益</td>
+</tr>
+<tr>
+<td>输入护理员计划（15,000配额）</td>
+<td>🟡 自有护理学校可对冲外劳政策波动</td>
+</tr>
+<tr>
+<td>医健通+ 五年计划</td>
+<td>🔼 数据互通提升服务连续性</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<h3 id="vs-ccsv">高端十大专科客户（vs CCSV 客户）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align: center;">十大专科路径</th>
+<th style="text-align: center;">CCSV 路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>月均服务收入</td>
+<td style="text-align: center;">$15,000-30,000（高端自费）</td>
+<td style="text-align: center;">$4,526-10,824（券值）</td>
+</tr>
+<tr>
+<td>团队配置</td>
+<td style="text-align: center;">RN Case Manager + PT + 营养师 + 保健员</td>
+<td style="text-align: center;">1名保健员/护理员为主</td>
+</tr>
+<tr>
+<td>月均毛利率</td>
+<td style="text-align: center;">估 25-40%</td>
+<td style="text-align: center;">估 10-20%</td>
+</tr>
+<tr>
+<td>客户LTV</td>
+<td style="text-align: center;">3-6个月（康复导向）</td>
+<td style="text-align: center;">12-36个月（长期照护）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>核心发现</strong>：高端路径客单高但 LTV 短（康复结束即终止），CCSV 路径客单低但 LTV 长。最优策略是<strong>两者交叉销售</strong>：高端客户康复后转 CCSV 长期照护。</p>
+<hr />
+<h2 id="d19">D19 — 目标人群</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">级别</th>
+<th>人群</th>
+<th style="text-align: center;">支付能力</th>
+<th style="text-align: center;">YDCare 匹配度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>A</strong></td>
+<td>高端自费术后康复（肿瘤/中风/骨科）</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: center;">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>B</strong></td>
+<td>CCSV 合资格长者</td>
+<td style="text-align: center;">低-中</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>C</strong></td>
+<td>B2B 私立医院出院后</td>
+<td style="text-align: center;">中-高</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D</strong></td>
+<td>大湾区跨境医护需求</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20-ydcare">D20 — 竞品深度地图（突出 YDCare 视角）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>竞品</th>
+<th style="text-align: center;">威胁等级</th>
+<th>YDCare 相对优势</th>
+<th>YDCare 相对劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Evercare</td>
+<td style="text-align: center;">🟡</td>
+<td>临床专科深度+集团资源</td>
+<td>香港品牌认知</td>
+</tr>
+<tr>
+<td>QualityCare</td>
+<td style="text-align: center;">🟡</td>
+<td>临床化（专科 vs 一般护理）</td>
+<td>Bupa保险直付+150年品牌</td>
+</tr>
+<tr>
+<td>百本医护</td>
+<td style="text-align: center;">🟢</td>
+<td>全面碾压</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略评估</h2>
+<p>🟢 <strong>YDCare 是香港居家护理企业中跨境潜力最强的</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>跨境维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>已有网络</td>
+<td>中国大陆 40+城市/300+站点</td>
+</tr>
+<tr>
+<td>集团背景</td>
+<td>新风天域香港总部——天然的双向通道</td>
+</tr>
+<tr>
+<td>大湾区机会</td>
+<td>广东院舍计划 26家+穗港医疗合作——YDCare 可同时服务「留港」和「北上」长者</td>
+</tr>
+<tr>
+<td>护城河</td>
+<td>其他香港竞品（Evercare/Bamboos/QualityCare）无中国大陆同等深度的运营网络</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<p>❌ <strong>不适用</strong>——非上市集团子公司。唯一相关场景：新风天域未来可能将 YDCare 独立上市（香港/美国）或出售。参考可比：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>交易</th>
+<th>估值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bupa 收购 QHMS (2013)</td>
+<td>$355M</td>
+</tr>
+<tr>
+<td>新风天域收购易得康 (2021)</td>
+<td>⚠️ 未公开</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d23-esg">D23 — ESG</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环境</td>
+<td>⚪ 集团层面可能有披露</td>
+</tr>
+<tr>
+<td>社会</td>
+<td>🟢 居家医疗减少住院→降低碳排放+提升患者生活质量；护理学校提供就业</td>
+</tr>
+<tr>
+<td>治理</td>
+<td>🟢 梁锦松/吴启楠顶级治理团队</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>组织架构</td>
+<td>集团公司制——新风天域集团 &gt; 新风医疗 &gt; YDCare(易得康)</td>
+</tr>
+<tr>
+<td>员工规模</td>
+<td>母集团 12,000+；中国大陆 YDCare 估 2,000-5,000；香港 YDCare 估 &lt;100（起步期）</td>
+</tr>
+<tr>
+<td><strong>人才供应链</strong></td>
+<td>🟢🟢 <strong>独有优势</strong>——2所护理学校 + 320+院校合作 + 7,000+培训人才——是全港竞品中唯一拥有自建培训体系的</td>
+</tr>
+<tr>
+<td>关键人依赖</td>
+<td>🟡 梁锦松/吴启楠是集团的灵魂人物，但 YDCare 运营层应已有中层管理梯队</td>
+</tr>
+<tr>
+<td>企业文化</td>
+<td>「患者为中心」+「医路向善」——中国大陆 97%+ 满意度反映较强服务文化</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>组织健康度</strong>：🟢 强——制度化人才供应链+集团资源支持。</p>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<h3 id="gr">融资/Gr交易</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>日期</th>
+<th>金额</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新风天域收购易得康</td>
+<td>2021</td>
+<td>⚠️ 未公开</td>
+<td>全资收购</td>
+</tr>
+<tr>
+<td>新风天域收购和睦家</td>
+<td>2019</td>
+<td>~$1.4B</td>
+<td>中国最大私立医院收购案之一</td>
+</tr>
+<tr>
+<td>新风天域出售和睦家</td>
+<td>2023/24</td>
+<td>~$1.6B+</td>
+<td>战略调整</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Cap Table</strong>：YDCare = 新风天域 100% → YDCare 香港运营主体 = 集团全资。</p>
+<p><strong>投资者质量</strong>：🟢 顶级——梁锦松/吴启楠/黑石网络。</p>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GTM 模式</td>
+<td><strong>五层驱动</strong>：①希愈医疗/集团医院B2B转诊 ②CCSV政府渠道 ③品牌声誉(97%满意度口碑) ④护理学校→人才渠道也是获客渠道 ⑤大陆→香港客户迁移</td>
+</tr>
+<tr>
+<td>CAC</td>
+<td>中低——B2B转诊+CCSV获客成本低；自费高端需要品牌投入</td>
+</tr>
+<tr>
+<td>GTM 瓶颈</td>
+<td>🔴 <strong>香港品牌为零</strong>——「易得康」在港知名度远不及 Evercare/Bamboos/QualityCare</td>
+</tr>
+<tr>
+<td>GTM 阶段</td>
+<td><strong>市场进入期</strong>（Product-Market Fit 验证中）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>临床证据</td>
+<td>🟡 中国大陆 3,500万+人次服务数据——但未见同行评审期刊发表的临床结局研究</td>
+</tr>
+<tr>
+<td>客户满意度</td>
+<td>🟢 <strong>97%+</strong>（大陆数据）——极高水平</td>
+</tr>
+<tr>
+<td>质量认证</td>
+<td>依托新风天域集团旗下 11家 JCI 认证医院的质控标准</td>
+</tr>
+<tr>
+<td>证据强度</td>
+<td>🟡 中——运营数据充足但学术产出不足</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>提升建议</strong>：YDCare 应投资发表同行评审研究（如「护士经理制居家护理 vs 传统护理的临床结局比较」），将运营优势转化为学术证据——这在香港医疗系统（重视循证）中至关重要。</p>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ 完整覆盖</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr>
+<td>⚠️ 部分覆盖</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr>
+<td>❌ 不适用</td>
+<td style="text-align: center;">4</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D0 赛道验证</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D1 执行摘要</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D2 公司全貌</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D3 战略定位</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D4 商业模式</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D5 产品线</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D6 客户/支付方</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D7 财务</td>
+<td style="text-align: center;">⚠️（推算——非上市集团子公司）</td>
+</tr>
+<tr>
+<td>D8 工作流</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D9 技术</td>
+<td style="text-align: center;">⚠️（运营系统存在但公开信息不足）</td>
+</tr>
+<tr>
+<td>D10 竞争对标</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D11 TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D12 盈利模型</td>
+<td style="text-align: center;">⚠️（推算——起步期）</td>
+</tr>
+<tr>
+<td>D13 机遇与风险</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D14 管理层</td>
+<td style="text-align: center;">⚠️（集团层面已知，运营层面不可得）</td>
+</tr>
+<tr>
+<td>D15 估值</td>
+<td style="text-align: center;">❌ 不适用——集团子公司</td>
+</tr>
+<tr>
+<td>D16 战略建议</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D17 政策/监管</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D18 单元经济</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D19 客户细分</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D20 竞品地图</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D21 跨境</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D22 退出/并购</td>
+<td style="text-align: center;">❌ 不适用</td>
+</tr>
+<tr>
+<td>D23 ESG</td>
+<td style="text-align: center;">⚠️（部分——集团层面）</td>
+</tr>
+<tr>
+<td>D24 组织人才</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D25 融资/Cap Table</td>
+<td style="text-align: center;">⚠️（收购事件已知，Cap Table推定）</td>
+</tr>
+<tr>
+<td>D26 GTM</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D27 临床质量</td>
+<td style="text-align: center;">⚠️（大陆数据+满意度已知，学术证据不足）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_7">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>缺口</th>
+<th>补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>YDCare 香港运营负责人</td>
+<td>一手调研或集团年报</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>香港业务独立收入/服务量</td>
+<td>一手调研</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>技术平台详细架构</td>
+<td>YDCare/新风天域技术团队访谈</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>同行评审临床结局研究</td>
+<td>PubMed 持续追踪</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>保险合作进展（如有）</td>
+<td>行业新闻/一手调研</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_8">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>来源</th>
+<th>内容</th>
+<th style="text-align: center;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>hah_competitors.json v1.2.0</td>
+<td>YDCare 基本数据</td>
+<td style="text-align: center;">2026.06</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>新风天域官网 new-frontier.com</td>
+<td>集团概况/12,000+员工/11家JCI</td>
+<td style="text-align: center;">2026.07</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>ydcare.cn</td>
+<td>中国大陆运营：40+城市/300+站点</td>
+<td style="text-align: center;">2026.07</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>腾讯新闻</td>
+<td>新风天域全资收购易得康</td>
+<td style="text-align: center;">2021.11</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>搜狐/南开大学</td>
+<td>新风天域校园招聘/集团介绍</td>
+<td style="text-align: center;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>前程无忧</td>
+<td>新风天域「患者为中心」定位</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td>SWD CCSV 页面</td>
+<td>YDCare CCSV认可服务单位</td>
+<td style="text-align: center;">2026.07</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td>2026-27财政预算案 §236</td>
+<td>CCSV 16,000张</td>
+<td style="text-align: center;">2026.02</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td>希愈医疗中心</td>
+<td>「肿瘤居家康复」联合方案</td>
+<td style="text-align: center;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td>百本医护 FY2025年报</td>
+<td>同业对标</td>
+<td style="text-align: center;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td>Evercare 数据</td>
+<td>竞品对比</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td>QHMS/Bupa 公开资料</td>
+<td>QualityCare 竞品</td>
+<td style="text-align: center;">2026.07</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td>立法会十一题</td>
+<td>输入护理员配额 8,300已批</td>
+<td style="text-align: center;">2025.07.09</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td>政府统计处</td>
+<td>65+ 人口 23.9%</td>
+<td style="text-align: center;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td>EDEN HOME 调研报告</td>
+<td>同日完成的本报告姊妹篇</td>
+<td style="text-align: center;">2026.07.10</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><strong>报告编写日期</strong>：2026-07-10
+<strong>编写人</strong>：Kenneth Ye（Kate 调研体系）</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

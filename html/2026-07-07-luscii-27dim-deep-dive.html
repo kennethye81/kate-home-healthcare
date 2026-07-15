@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Luscii — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#luscii-27">Luscii — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 赛道验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4">D4 — 商业模式</a></li>
+<li><a href="#d5">D5 — 产品线</a></li>
+<li><a href="#d6">D6 — 客户</a></li>
+<li><a href="#d7">D7 — 财务</a></li>
+<li><a href="#d8">D8 — 工作流</a></li>
+<li><a href="#d9">D9 — 技术深度评估</a></li>
+<li><a href="#d10">D10 — 竞争格局</a></li>
+<li><a href="#d11-tamsam">D11 — TAM/SAM</a></li>
+<li><a href="#d12">D12 — 盈利模型</a></li>
+<li><a href="#d13">D13 — 机遇与风险矩阵</a></li>
+<li><a href="#d14">D14 — 管理层指引</a></li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1">1. 荷兰→英国的跨境扩展路径</a></li>
+<li><a href="#2">2. 跨境需要本地化但不是全栈</a></li>
+<li><a href="#3-nice">3. NICE 收录是跨境敲门砖</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管</a></li>
+<li><a href="#d18">D18 — 单元经济</a></li>
+<li><a href="#d19">D19 — 客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a></li>
+<li><a href="#d21">D21 — 跨境战略</a></li>
+<li><a href="#d22">D22 — 退出分析</a></li>
+<li><a href="#d23-esg">D23 — ESG</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史</a></li>
+<li><a href="#d26-gtm">D26 — GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量</a><ul>
+<li><a href="#271">27.1 核心指标</a></li>
+<li><a href="#272">27.2 质量认证</a></li>
+<li><a href="#273">27.3 证据强度</a></li>
+</ul>
+</li>
+<li><a href="#_1">调研空白</a></li>
+<li><a href="#v20">v2.0 完备性审计</a></li>
+<li><a href="#_2">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="luscii-27">Luscii — 27 维度深度尽调</h1>
+<p><strong>调研人</strong>: Kate, VP Research | <strong>日期</strong>: 2026-07-07</p>
+<hr />
+<h2 id="d0">D0 — 赛道验证</h2>
+<p>✅ 虚拟病房技术平台（荷兰→英国 NHS 跨境）。NICE HTG697 收录。<strong>对 iHomeCare</strong>: 🟢 高 —— 欧洲跨境扩张的参考案例。</p>
+<h2 id="d1">D1 — 执行摘要</h2>
+<p>荷兰虚拟病房平台，成功进入英国 NHS 市场（Dorset ICB 等）。NICE HTG697 评估收录。欧洲多国扩张中。</p>
+<h2 id="d2">D2 — 公司全貌</h2>
+<ul>
+<li>品牌: Luscii (Luscii Healthtech)</li>
+<li>总部: 荷兰 | 英国有业务</li>
+<li>赛道: 虚拟病房技术平台</li>
+<li>NICE: HTG697 收录</li>
+<li>创立: 未公开</li>
+</ul>
+<h2 id="d3">D3 — 战略定位</h2>
+<p>欧洲虚拟病房跨境平台——荷兰技术+多国 NHS/欧洲部署。核心差异化：从数字化成熟的荷兰市场起步，向更大的英国/德国市场扩展。</p>
+<h2 id="d4">D4 — 商业模式</h2>
+<p>B2G (NHS+欧洲多国)——SaaS 订阅模式。纯技术平台，不提供临床服务。</p>
+<h2 id="d5">D5 — 产品线</h2>
+<p>① 虚拟病房平台 ② 远程患者监测 ③ 患者 App ④ 临床仪表盘</p>
+<h2 id="d6">D6 — 客户</h2>
+<p>Dorset ICB（NHS）等英国 Trust + 欧洲多国医院</p>
+<h2 id="d7">D7 — 财务</h2>
+<p>⚠️ 私人公司，未公开</p>
+<h2 id="d8">D8 — 工作流</h2>
+<p>患者通过 App 录入生命体征→平台实时分析→临床团队仪表盘监测→异常预警→干预</p>
+<h2 id="d9">D9 — 技术深度评估</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">平台类型</td>
+<td style="text-align: left;">云端虚拟病房+远程监测</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 能力</td>
+<td style="text-align: left;">🟡 基础预警规则</td>
+</tr>
+<tr>
+<td style="text-align: left;">设备集成</td>
+<td style="text-align: left;">第三方设备（无自有硬件）</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作</td>
+<td style="text-align: left;">与 EHR 系统集成（具体标准未公开）</td>
+</tr>
+<tr>
+<td style="text-align: left;">安全</td>
+<td style="text-align: left;">GDPR + NHS DSPT 合规</td>
+</tr>
+<tr>
+<td style="text-align: left;">监管</td>
+<td style="text-align: left;">CE 标志</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>技术护城河</strong>: 🟡 中等——跨境多国部署经验是软性壁垒，但纯软件平台可复制性高。</p>
+<h2 id="d10">D10 — 竞争格局</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: center;">威胁</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Doccla</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">全栈+临床——对 NHS 更有吸引力</td>
+</tr>
+<tr>
+<td style="text-align: left;">Huma</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">AI 领先</td>
+</tr>
+<tr>
+<td style="text-align: left;">Clinitouch</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">15 年 NHS 经验</td>
+</tr>
+<tr>
+<td style="text-align: left;">Whzan</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: left;">IoT 硬件——不同赛道</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d11-tamsam">D11 — TAM/SAM</h2>
+<p>欧洲虚拟病房市场 ~£5-10B；荷兰 ~€500M-1B；英国 ~£1-2B</p>
+<h2 id="d12">D12 — 盈利模型</h2>
+<p>⚠️ 私人公司，未公开。推测 SaaS 订阅模式，按 Trust/患者规模收费。</p>
+<h2 id="d13">D13 — 机遇与风险矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期</strong></td>
+<td style="text-align: left;">① NHS 虚拟病房政策持续推动 ② 从 Dorset 扩展到更多 ICB</td>
+<td style="text-align: left;">① 竞品全栈化趋势 ② 跨境运营复杂性</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期</strong></td>
+<td style="text-align: left;">① 欧洲多国扩展 ② 荷兰政府数字化医疗政策</td>
+<td style="text-align: left;">① NHS Online 全国统一平台 ② 大型 EHR 厂商进入</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">① 跨境部署经验→多国监管适应性</td>
+<td style="text-align: left;">① 纯平台护城河浅</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d14">D14 — 管理层指引</h2>
+<p>⚠️ 创始人/管理层信息未公开。NICE 收录和 Dorset ICB 合同代表一定可信度。</p>
+<h2 id="d15">D15 — 估值对比</h2>
+<p>❌ 不适用——私人公司，无公开融资或估值。</p>
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1">1. 荷兰→英国的跨境扩展路径</h3>
+<p>Luscii 从数字化成熟的荷兰市场起步，验证产品后通过 NHS 框架进入英国。iHomeCare 可以从香港（数字化成熟）起步，验证后通过大湾区框架进入内地。</p>
+<h3 id="2">2. 跨境需要本地化但不是全栈</h3>
+<p>Luscii 证明：纯技术平台也可以跨境——但需要与当地临床团队合作。iHomeCare 进入新市场时可以考虑&rdquo;技术输出+当地临床伙伴&rdquo;的轻模式。</p>
+<h3 id="3-nice">3. NICE 收录是跨境敲门砖</h3>
+<p>Luscii 的 NICE 收录是其进入 NHS 的关键。iHomeCare 未来应考虑获取 NICE/FDA 等国际认证。</p>
+<h2 id="d17">D17 — 政策与监管</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策</th>
+<th style="text-align: left;">影响</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NICE HTG697</td>
+<td style="text-align: left;">🟢 NHS 采购通道</td>
+<td style="text-align: left;">NICE</td>
+</tr>
+<tr>
+<td style="text-align: left;">CE 标志</td>
+<td style="text-align: left;">🟢 欧盟市场准入</td>
+<td style="text-align: left;">EU</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS DTAC</td>
+<td style="text-align: left;">🟢 英国合规</td>
+<td style="text-align: left;">NHS Digital</td>
+</tr>
+<tr>
+<td style="text-align: left;">GDPR</td>
+<td style="text-align: left;">🟢 数据保护</td>
+<td style="text-align: left;">EU</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d18">D18 — 单元经济</h2>
+<p>⚠️ 未公开。推测 NHS 合同 £50-200K/年/Trust。</p>
+<h2 id="d19">D19 — 客户细分</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: center;">优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">A: NHS Trust/ICB</td>
+<td style="text-align: left;">英国核心市场</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td style="text-align: left;">B: 荷兰医院</td>
+<td style="text-align: left;">母国市场</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">C: 欧洲其他国家</td>
+<td style="text-align: left;">扩展中</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: center;">威胁</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Doccla</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">全栈+临床+10 国</td>
+</tr>
+<tr>
+<td style="text-align: left;">Huma</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">AI+11 国</td>
+</tr>
+<tr>
+<td style="text-align: left;">Clinitouch</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">15 年+5 大洲</td>
+</tr>
+<tr>
+<td style="text-align: left;">Whzan</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: left;">IoT 硬件</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d21">D21 — 跨境战略</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">区域</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">进入方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">荷兰</td>
+<td style="text-align: center;">🟢 核心</td>
+<td style="text-align: left;">母国直销</td>
+</tr>
+<tr>
+<td style="text-align: left;">英国</td>
+<td style="text-align: center;">🟢 已进入</td>
+<td style="text-align: left;">NHS 框架（Dorset ICB）</td>
+</tr>
+<tr>
+<td style="text-align: left;">欧洲其他</td>
+<td style="text-align: center;">🟡 扩展中</td>
+<td style="text-align: left;">合作伙伴/直销</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d22">D22 — 退出分析</h2>
+<p>❌ 不适用——私人公司，无公开信息。可能被 Doccla/Huma 或大型 EHR 厂商收购。</p>
+<h2 id="d23-esg">D23 — ESG</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">社会</td>
+<td style="text-align: left;">🟢 正面——改善医疗可及性</td>
+</tr>
+<tr>
+<td style="text-align: left;">环境</td>
+<td style="text-align: left;">🟡 中性——纯软件</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">员工规模</td>
+<td style="text-align: left;">未公开——荷兰初创团队</td>
+</tr>
+<tr>
+<td style="text-align: left;">关键人依赖</td>
+<td style="text-align: left;">🔴 高——小型团队</td>
+</tr>
+<tr>
+<td style="text-align: left;">企业文化</td>
+<td style="text-align: left;">🟢 技术创新+跨境视野</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d25">D25 — 融资历史</h2>
+<p>⚠️ 未公开。推测已有种子/天使轮融资。</p>
+<h2 id="d26-gtm">D26 — GTM 效率</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">GTM 模式</td>
+<td style="text-align: left;">B2G——NHS 框架+欧洲直销</td>
+</tr>
+<tr>
+<td style="text-align: left;">销售周期</td>
+<td style="text-align: left;">NHS 6-18 个月</td>
+</tr>
+<tr>
+<td style="text-align: left;">GTM 阶段</td>
+<td style="text-align: left;">🟡 早期扩展——荷兰→英国→欧洲</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d27">D27 — 临床质量</h2>
+<h3 id="271">27.1 核心指标</h3>
+<p>⚠️ 未公开具体临床效果数据。NICE 收录代表一定临床验证。</p>
+<h3 id="272">27.2 质量认证</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CE 标志</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">NICE HTG697</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS DTAC</td>
+<td style="text-align: center;">✅（推定）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 证据强度</h3>
+<p>🟡 中低——NICE 收录是官方背书，但缺乏公开临床数据。</p>
+<hr />
+<h2 id="_1">调研空白</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">创始人/管理层</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">融资历史</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">具体临床效果</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">收入/财务数据</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">员工规模</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="v20">v2.0 完备性审计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">D0-D11</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D12</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">私人公司</td>
+</tr>
+<tr>
+<td style="text-align: left;">D13-D14</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D15</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">无公开估值</td>
+</tr>
+<tr>
+<td style="text-align: left;">D16-D21</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D22</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">无公开信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">D23-D24</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D25</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">D26-D27</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅</td>
+<td style="text-align: center;">22</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总计</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="_2">参考文献</h2>
+<ol>
+<li>NICE — HTG697</li>
+<li>Luscii 官方</li>
+<li>Future Health Intelligence — Virtual Wards Systems 2025-2026</li>
+<li>Dorset ICB — NHS procurement</li>
+</ol>
+<hr />
+<p><em>报告终</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

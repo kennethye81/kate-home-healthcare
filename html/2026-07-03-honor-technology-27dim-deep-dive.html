@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Honor Technology — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#honor-technology-27">Honor Technology — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌</a></li>
+<li><a href="#d3">D3 — 战略</a></li>
+<li><a href="#d4">D4 — 商业模式</a></li>
+<li><a href="#d5">D5 — 产品线</a></li>
+<li><a href="#d6">D6 — 客户</a></li>
+<li><a href="#d7">D7 — 财务</a></li>
+<li><a href="#d8">D8 — 工作流</a></li>
+<li><a href="#d9">D9 — 技术</a></li>
+<li><a href="#d10">D10 — 竞争</a></li>
+<li><a href="#d11-tam">D11 — TAM</a></li>
+<li><a href="#d12">D12 — 盈利</a></li>
+<li><a href="#d13">D13 — 风险</a></li>
+<li><a href="#d14">D14 — 管理层</a></li>
+<li><a href="#d15">D15 — 估值</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare</a></li>
+<li><a href="#d17">D17 — 政策</a></li>
+<li><a href="#d18">D18 — 单元经济</a></li>
+<li><a href="#d19">D19 — 目标人群</a></li>
+<li><a href="#d20">D20 — 竞品</a></li>
+<li><a href="#d21">D21 — 跨境</a></li>
+<li><a href="#d22">D22 — 退出</a></li>
+<li><a href="#d23-esg">D23 — ESG</a></li>
+<li><a href="#d24">D24 — 组织</a></li>
+<li><a href="#d25">D25 — 融资</a></li>
+<li><a href="#d26-gtm">D26 — GTM</a></li>
+<li><a href="#d27">D27 — 临床</a></li>
+<li><a href="#v20">v2.0 完备性审计</a></li>
+<li><a href="#_1">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="honor-technology-27">Honor Technology — 27 维度深度尽调</h1>
+<p><strong>调研人：Kenneth Ye / 调研日期：2026.7.3 / 分类：补充 居家照护技术平台 / 国家：美国</strong></p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否 HaH？</td>
+<td>🚨 <strong>否</strong>——居家照护技术平台+运营商（非医疗）</td>
+</tr>
+<tr>
+<td>实体类型</td>
+<td>🏢 私有公司</td>
+</tr>
+<tr>
+<td>对 iHomeCare 相关性</td>
+<td>🟡 低-中——&ldquo;技术×线下网络&rdquo;模式可参考</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>定位</strong>：硅谷技术平台收购全球最大居家照护特许经营——&ldquo;科技吃掉传统&rdquo;经典案例。$625M+ 融资/$1.25B 估值/合并 $2.1B 收入。Seth Sternberg CEO。</p>
+<p><strong>判断</strong>：🟡 &ldquo;技术×线下网络&rdquo;的乘法效应值得研究。</p>
+<h2 id="d2">D2 — 公司全貌</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创立</td>
+<td>2014 / 旧金山</td>
+</tr>
+<tr>
+<td>CEO</td>
+<td>Seth Sternberg (前 Meebo→Google)</td>
+</tr>
+<tr>
+<td>收购</td>
+<td>2021.8 Home Instead</td>
+</tr>
+<tr>
+<td>融资</td>
+<td>$625M+ ($325M 股权+$300M 债务)</td>
+</tr>
+<tr>
+<td>估值</td>
+<td>$1.25B (2021)</td>
+</tr>
+<tr>
+<td>子公司</td>
+<td>Home Instead (1,200+ 网点)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d3">D3 — 战略</h2>
+<p>技术平台×线下网络乘法效应。AI 驱动转型 (2025+)。</p>
+<h2 id="d4">D4 — 商业模式</h2>
+<p>Honor 技术平台→Home Instead 加盟网络→老年消费者。B2C+B2B。</p>
+<h2 id="d5">D5 — 产品线</h2>
+<p>护理匹配引擎/Caregiver App/调度/家庭门户/AI 预测——纯非医疗。</p>
+<h2 id="d6">D6 — 客户</h2>
+<p>B2C 老年+ B2B 其他照护机构。Home Instead 品牌。</p>
+<h2 id="d7">D7 — 财务</h2>
+<p>合并 $2.1B 收入/$300M 债务。私有——盈利不公开。</p>
+<h2 id="d8">D8 — 工作流</h2>
+<p>家庭需求→Honor 匹配→调度→上门→评价</p>
+<h2 id="d9">D9 — 技术</h2>
+<p>云 SaaS/匹配算法/AI 预测。无医疗设备。</p>
+<h2 id="d10">D10 — 竞争</h2>
+<p>Visiting Angels/Right at Home/Comfort Keepers/AlayaCare (互补)</p>
+<h2 id="d11-tam">D11 — TAM</h2>
+<p>全球居家照护 $500B (非医疗 ~$100B)</p>
+<h2 id="d12">D12 — 盈利</h2>
+<p>$300M 债务利息负担。整合 synergies 关键。</p>
+<h2 id="d13">D13 — 风险</h2>
+<p>🚨 $300M 债务+加盟商技术接受度+AI hype</p>
+<h2 id="d14">D14 — 管理层</h2>
+<p>Seth Sternberg 连续创业者/硅谷网络强。</p>
+<h2 id="d15">D15 — 估值</h2>
+<p>$1.25B (2021)/当前可能持平或略低。</p>
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare</h2>
+<p>&ldquo;技术×网络&rdquo;收购整合模式。使命驱动品牌叙事。</p>
+<h2 id="d17">D17 — 政策</h2>
+<p>FTC 特许经营监管。非医疗——无 CMS/医疗监管。</p>
+<h2 id="d18">D18 — 单元经济</h2>
+<p>加盟商利润率 ~21.5%/版税 5%。</p>
+<h2 id="d19">D19 — 目标人群</h2>
+<p>65+ 老年消费者 B2C。</p>
+<h2 id="d20">D20 — 竞品</h2>
+<blockquote>
+<p>见 D10。</p>
+</blockquote>
+<h2 id="d21">D21 — 跨境</h2>
+<p>✅ Home Instead 全球 6+ 国家。</p>
+<h2 id="d22">D22 — 退出</h2>
+<p>IPO 可能——$300M 债务使退出复杂。</p>
+<h2 id="d23-esg">D23 — ESG</h2>
+<p>老年照护社会价值。债务杠杆偏高。</p>
+<h2 id="d24">D24 — 组织</h2>
+<p>旧金山工程团队+ Home Instead 全球网络。Seth Sternberg 关键人。</p>
+<h2 id="d25">D25 — 融资</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>轮次</th>
+<th>金额</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Series B</td>
+<td>$42M</td>
+</tr>
+<tr>
+<td>Series E</td>
+<td>$70M</td>
+</tr>
+<tr>
+<td>Debt</td>
+<td>$300M</td>
+</tr>
+<tr>
+<td>累计</td>
+<td>$625M+</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d26-gtm">D26 — GTM</h2>
+<p>B2C 数字营销+加盟商本地获客+B2B 平台销售。</p>
+<h2 id="d27">D27 — 临床</h2>
+<blockquote>
+<p>❌ 不适用——非医疗公司。</p>
+</blockquote>
+<h2 id="v20">v2.0 完备性审计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>20</td>
+</tr>
+<tr>
+<td>⚠️</td>
+<td>4</td>
+</tr>
+<tr>
+<td>❌ 不适用</td>
+<td>6</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="_1">参考文献</h2>
+<p>Tracxn/Honor Care/HHCN/LeadingAge/CEO.com</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

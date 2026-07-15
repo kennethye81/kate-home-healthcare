@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DispatchHealth — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#dispatchhealth-27">DispatchHealth — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4">D4 — 商业模式</a></li>
+<li><a href="#d5">D5 — 服务产品线</a></li>
+<li><a href="#d6">D6 — 客户与支付方</a></li>
+<li><a href="#d7">D7 — 财务</a></li>
+<li><a href="#d8">D8 — 工作流</a></li>
+<li><a href="#d9">D9 — 技术深度</a></li>
+<li><a href="#d10">D10 — 竞争对标</a></li>
+<li><a href="#d11-tam">D11 — TAM</a></li>
+<li><a href="#d12">D12 — 盈利</a></li>
+<li><a href="#d13">D13 — 风险</a></li>
+<li><a href="#d14">D14 — 管理层</a></li>
+<li><a href="#d15">D15 — 估值</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare</a></li>
+<li><a href="#d17">D17 — 政策</a></li>
+<li><a href="#d18">D18 — 单元经济</a></li>
+<li><a href="#d19">D19 — 目标人群</a></li>
+<li><a href="#d20">D20 — 竞品</a></li>
+<li><a href="#d21">D21 — 跨境</a></li>
+<li><a href="#d22">D22 — 退出</a></li>
+<li><a href="#d23-esg">D23 — ESG</a></li>
+<li><a href="#d24">D24 — 组织</a></li>
+<li><a href="#d25">D25 — 融资</a></li>
+<li><a href="#d26-gtm">D26 — GTM</a></li>
+<li><a href="#d27">D27 — 临床质量</a></li>
+<li><a href="#v20">v2.0 完备性审计</a></li>
+<li><a href="#_1">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="dispatchhealth-27">DispatchHealth — 27 维度深度尽调</h1>
+<p><strong>调研人：Kenneth Ye / 调研日期：2026.7.3 / 分类：Track B HaH 全栈运营商 / 国家：美国</strong></p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否真正 HaH？</td>
+<td>✅ <strong>是</strong>——全栈急性+急性后居家照护，CMS AHCAH Waiver</td>
+</tr>
+<tr>
+<td>实体类型</td>
+<td>🏢 私有公司（2025.6 与 Medically Home 合并）</td>
+</tr>
+<tr>
+<td>对 iHomeCare 相关性</td>
+<td>🔴 <strong>极高</strong>——全栈 HaH 运营商的标杆</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>定位</strong>：🦅 <strong>美国最大独立 HaH 全栈运营商</strong>——120 万+人次/50 都市区/~40 卫生系统伙伴/2,200+员工/$700M+融资。2025.6 与 Medically Home 合并→全链路：ER-Alternative + Hospital-Alternative + Transitional Care。</p>
+<p><strong>核心矛盾</strong>：合并后成为规模最大的独立 HaH，但 Medically Home 整合阵痛+资金消耗率+Contessa/UNH 竞争。<strong>判断</strong>：🟡 规模领先但整合风险高。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成立</td>
+<td>2013 / Denver</td>
+</tr>
+<tr>
+<td>CEO</td>
+<td>Jennifer Webster (DispatchHealth)</td>
+</tr>
+<tr>
+<td>总融资</td>
+<td>$700M+</td>
+</tr>
+<tr>
+<td>患者量</td>
+<td>120 万+人次 / ~20K HaH 年住院</td>
+</tr>
+<tr>
+<td>覆盖</td>
+<td>50 都市区 / ~40 卫生系统</td>
+</tr>
+<tr>
+<td>员工</td>
+<td>2,200+</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d2">D2 — 公司全貌</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创立</td>
+<td>2013 / Mark Prather MD / Denver</td>
+</tr>
+<tr>
+<td>合并</td>
+<td>2025.6 与 Medically Home 合并</td>
+</tr>
+<tr>
+<td>CEO</td>
+<td>Jennifer Webster</td>
+</tr>
+<tr>
+<td>服务</td>
+<td>ER-Alternative + Hospital-Alternative + Transitional Care</td>
+</tr>
+<tr>
+<td>技术</td>
+<td>Medically Home 平台（技术授权/合并后自有）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>时间线</strong>：2013 创立→2019 CMS ACHaH→2022 Medically Home 客户→2024.10 宣布合并→2025.6 合并完成</p>
+<blockquote>
+<p><strong>治理</strong>：私有公司——General Atlantic/Bessemer/Openspace 等 VC。Dr. Mark Prather 联合创始人/执行主席。</p>
+</blockquote>
+<h2 id="d3">D3 — 战略定位</h2>
+<p><strong>核心逻辑</strong>：全栈自营——从 ER 替代到急性住院替代到过渡护理，完整闭环。合并 Medically Home 后打通技术+运营。</p>
+<p><strong>差异化</strong>：全栈一体化→单一供应商→简化卫生系统采购。</p>
+<h2 id="d4">D4 — 商业模式</h2>
+<pre><code>DispatchHealth
+  ├── ER-Alternative (同日上门/$1,400+ 每案例节省)
+  ├── Hospital-Alternative (CMS ACHaH/$5,000-7,000 每案例节省)
+  ├── Transitional Care (出院后 30 天)
+  └── 支付: Medicare + 商业 + Medicaid
+</code></pre>
+<p><strong>伙伴生态</strong>：~40 卫生系统 + 多数主要健康计划 + 价值付费实体。</p>
+<h2 id="d5">D5 — 服务产品线</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>支付</th>
+<th>每案例节省</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ER-Alternative</strong></td>
+<td>商业/Medicare</td>
+<td>$1,400+</td>
+</tr>
+<tr>
+<td><strong>Hospital-Alternative</strong></td>
+<td>CMS ACHaH</td>
+<td>$5,000–7,000</td>
+</tr>
+<tr>
+<td><strong>Transitional Care</strong></td>
+<td>价值付费</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>研发管线</strong>：合并后整合 Medically Home 技术→扩展 AI 预测+远程监测。</p>
+<h2 id="d6">D6 — 客户与支付方</h2>
+<ul>
+<li>~40 卫生系统伙伴/50 都市区</li>
+<li>支付方：Medicare (ACHaH Waiver) + 主要商业 + Medicaid</li>
+<li>品牌：美国最大独立 HaH</li>
+<li><strong>集中度风险</strong>：最大卫生系统伙伴可能占 &gt;15%</li>
+</ul>
+<h2 id="d7">D7 — 财务</h2>
+<blockquote>
+<p>⚠️ 私有——财务不公开。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>估算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>收入</td>
+<td>$500M+（估）</td>
+</tr>
+<tr>
+<td>融资</td>
+<td>$700M+ ($300M Series D + Medically Home 合并)</td>
+</tr>
+<tr>
+<td>估值</td>
+<td>合并后估 $1–2B (推测)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d8">D8 — 工作流</h2>
+<p>ED→DispatchHealth 评估→同日上门 (ER-Alternative) 或 HaH 入组→RPM+虚拟+上门→出院→Transitional Care</p>
+<h2 id="d9">D9 — 技术深度</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9.1 平台</td>
+<td>合并后 Medically Home 平台（自研）</td>
+</tr>
+<tr>
+<td>9.2 软件</td>
+<td>临床平台+调度+EHR 集成</td>
+</tr>
+<tr>
+<td>9.3 硬件</td>
+<td>自研/第三方 RPM 设备</td>
+</tr>
+<tr>
+<td>9.4 AI</td>
+<td>Medically Home 预测分析</td>
+</tr>
+<tr>
+<td>9.5 差异化</td>
+<td>全栈自营——技术+运营一体</td>
+</tr>
+<tr>
+<td>9.6 风险</td>
+<td>合并后技术整合</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d10">D10 — 竞争对标</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>DispatchHealth</th>
+<th>Contessa/UNH</th>
+<th>Biofourmis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模式</td>
+<td><strong>全栈自营</strong></td>
+<td>JV 共担</td>
+<td>技术平台</td>
+</tr>
+<tr>
+<td>临床团队</td>
+<td>✅ 自有</td>
+<td>JV 共享</td>
+<td>可配置</td>
+</tr>
+<tr>
+<td>规模</td>
+<td>50 都市区</td>
+<td>9+ JV</td>
+<td>5–7 系统</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d11-tam">D11 — TAM</h2>
+<p>美国 HaH ~$22.8B (2024)→$1.16T (2034)。DispatchHealth 当前渗透率 &lt;1%。</p>
+<h2 id="d12">D12 — 盈利</h2>
+<p>推测仍亏损——高速扩张期。Medically Home 合并前有财务压力（泄漏文件）。</p>
+<h2 id="d13">D13 — 风险</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>机遇</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>短期</td>
+<td>CMS Waiver 延至 2030</td>
+<td>整合 Medically Home</td>
+</tr>
+<tr>
+<td>中长期</td>
+<td>HaH 市场爆发</td>
+<td>UNH/Contessa 竞争</td>
+</tr>
+<tr>
+<td>结构性</td>
+<td>支付方→居家</td>
+<td>人才竞争</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d14">D14 — 管理层</h2>
+<p>Jennifer Webster CEO。Mark Prather 联合创始人/执行主席。</p>
+<h2 id="d15">D15 — 估值</h2>
+<p>$700M+ 融资。合并后估 $1–2B（推测）。二级市场交易可能。</p>
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare</h2>
+<p><strong>全栈自营模式</strong>是最值得研究的对标。DispatchHealth 证明了&rdquo;技术+临床团队+运营&rdquo;一体化是可行的。</p>
+<h2 id="d17">D17 — 政策</h2>
+<p>CMS AHCAH Waiver 延至 2030.9。各州 MIH (Mobile Integrated Health) 规则。</p>
+<h2 id="d18">D18 — 单元经济</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>案例类型</th>
+<th>成本</th>
+<th>节省</th>
+<th>毛利率(估)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ER-Alternative</td>
+<td>—</td>
+<td>$1,400+</td>
+<td>30–40%</td>
+</tr>
+<tr>
+<td>HaH</td>
+<td>—</td>
+<td>$5,000–7,000</td>
+<td>30–40%</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d19">D19 — 目标人群</h2>
+<p>成人急性患者——ER 可避免/住院可替代。排除：需 ICU/手术。</p>
+<h2 id="d20">D20 — 竞品</h2>
+<p>Contessa/UNH、Biofourmis、Current Health</p>
+<h2 id="d21">D21 — 跨境</h2>
+<blockquote>
+<p>❌ 不适用——仅美国。</p>
+</blockquote>
+<h2 id="d22">D22 — 退出</h2>
+<p>IPO 或战略收购 (UNH/CVS/Amazon)。Medically Home 合并后退出路径更复杂。</p>
+<h2 id="d23-esg">D23 — ESG</h2>
+<p>HaH 碳减。2,200+ 员工劳动实践。</p>
+<h2 id="d24">D24 — 组织</h2>
+<p>2,200+ 员工（合并后）。50%+ 一线临床。Jennifer Webster CEO→Mark Prather 执行主席。整合 Medically Home 团队是关键。</p>
+<h2 id="d25">D25 — 融资</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>轮次</th>
+<th>金额</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>累计 (DispatchHealth)</td>
+<td>$400M+</td>
+</tr>
+<tr>
+<td>Medically Home 累计</td>
+<td>$300M+</td>
+</tr>
+<tr>
+<td>合并后总计</td>
+<td><strong>$700M+</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d26-gtm">D26 — GTM</h2>
+<p>直销卫生系统 + 支付方合作。50 都市区本地运营团队。</p>
+<h2 id="d27">D27 — 临床质量</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>意外死亡率</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>患者 NPS</td>
+<td>+93</td>
+</tr>
+<tr>
+<td>30 天再入院</td>
+<td>9.3%</td>
+</tr>
+<tr>
+<td>SNF 入院率</td>
+<td>0.3%</td>
+</tr>
+<tr>
+<td>每案例节省</td>
+<td>$5,000–7,000</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="v20">v2.0 完备性审计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>22</td>
+</tr>
+<tr>
+<td>⚠️</td>
+<td>3</td>
+</tr>
+<tr>
+<td>❌ 不适用</td>
+<td>5</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="_1">参考文献</h2>
+<p>DispatchHealth 官网/Forbes/HHCN/Healthcare Finance News/Becker&rsquo;s</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

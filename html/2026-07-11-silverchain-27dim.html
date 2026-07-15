@@ -1,0 +1,3316 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SilverChain Group — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#silverchain-group-27">SilverChain Group — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 前置验证：赛道真实性</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实</a></li>
+<li><a href="#_2">发展时间线</a></li>
+<li><a href="#_3">管理层</a></li>
+<li><a href="#_4">股权结构概览</a></li>
+<li><a href="#_5">公司治理</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_6">一句话核心逻辑</a></li>
+<li><a href="#_7">战略差异化要素</a></li>
+<li><a href="#_8">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#_9">可视化架构</a></li>
+<li><a href="#vs">支付方 vs 使用方分离</a></li>
+<li><a href="#_10">价值链定位</a></li>
+<li><a href="#_11">战略合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#rd">R&amp;D 与创新管线</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_12">客户结构估算</a></li>
+<li><a href="#_13">客户获取渠道</a></li>
+<li><a href="#_14">集中度风险</a></li>
+<li><a href="#_15">品牌与声誉</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a><ul>
+<li><a href="#_16">核心财务概览</a></li>
+<li><a href="#_17">收入结构拆解</a></li>
+<li><a href="#_18">关键财务比率（估值算）</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a><ul>
+<li><a href="#phase-0">Phase 0: 需求触发</a></li>
+<li><a href="#phase-1">Phase 1: 评估与匹配</a></li>
+<li><a href="#phase-2">Phase 2: 服务交付</a></li>
+<li><a href="#phase-3">Phase 3: 监测与调整</a></li>
+<li><a href="#phase-4">Phase 4: 结算</a></li>
+<li><a href="#phase-5">Phase 5: 持续跟踪</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构总览</a></li>
+<li><a href="#92">9.2 软件架构深度</a></li>
+<li><a href="#93-iot">9.3 硬件/IoT 设备</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+<li><a href="#96">9.6 技术风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a><ul>
+<li><a href="#_19">对标表</a></li>
+<li><a href="#_20">差异化定位图</a></li>
+<li><a href="#_21">竞争核心发现</a></li>
+</ul>
+</li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势 (TAM/SAM)</a><ul>
+<li><a href="#tamsam">TAM/SAM/渗透率估算</a></li>
+<li><a href="#_22">增长趋势</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型与路径</a><ul>
+<li><a href="#_23">成本结构拆解</a></li>
+<li><a href="#_24">盈利路径分析</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a><ul>
+<li><a href="#_25">法律与诉讼</a></li>
+<li><a href="#_26">宏观敏感性</a></li>
+</ul>
+</li>
+<li><a href="#d14-ceo">D14 — 管理层/CEO 公开指引</a><ul>
+<li><a href="#dale-fisher-am">Dale Fisher AM 在职期间核心主张</a></li>
+<li><a href="#_27">指引可信度评估</a></li>
+</ul>
+</li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1">1. 对潜在投资者</a></li>
+<li><a href="#2-ihomecare">2. 对 iHomeCare 管理层</a></li>
+<li><a href="#3">3. 对竞对/新进入者</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a><ul>
+<li><a href="#_28">核心政策环境</a></li>
+<li><a href="#_29">政策趋势判断</a></li>
+<li><a href="#_30">监管土壤评分</a></li>
+</ul>
+</li>
+<li><a href="#d18">D18 — 单元经济模型</a><ul>
+<li><a href="#hcp-level-4">典型案例：HCP Level 4 客户（高级居家护理）</a></li>
+<li><a href="#_31">关键假设</a></li>
+<li><a href="#vs_1">vs 机构养老</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a><ul>
+<li><a href="#_32">分层矩阵</a></li>
+<li><a href="#_33">战略含义</a></li>
+</ul>
+</li>
+<li><a href="#d20">D20 — 竞品深度地图</a><ul>
+<li><a href="#_34">已确认竞品</a></li>
+<li><a href="#bolton-clarke">最大威胁深度扫描：Bolton Clarke</a></li>
+<li><a href="#_35">潜在跨界进入者</a></li>
+</ul>
+</li>
+<li><a href="#d21">D21 — 跨境/跨区域战略评估</a><ul>
+<li><a href="#_36">跨州扩展状态</a></li>
+<li><a href="#_37">跨境相关性评估</a></li>
+</ul>
+</li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a><ul>
+<li><a href="#_38">近期可比交易（行业参考）</a></li>
+<li><a href="#_39">理论估值（若可出售）</a></li>
+</ul>
+</li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a><ul>
+<li><a href="#esg">ESG 披露状态</a></li>
+<li><a href="#esg_1">关键 ESG 指标</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a><ul>
+<li><a href="#251">25.1 &ldquo;融资&rdquo;历史</a></li>
+<li><a href="#252-cap-table-nfp">25.2 无 Cap Table — NFP</a></li>
+<li><a href="#253">25.3 现金状况（推断）</a></li>
+<li><a href="#254">25.4 &ldquo;投资者&rdquo;质量（拨款方）</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证体系</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#_40">调研空白与后续补充</a></li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_41">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <hr />
+<p>title: SilverChain Group 27 维度深度尽调报告
+date: 2026-07-11
+entity_type: 非营利组织 (NFP)
+country: 澳大利亚
+industry: 居家健康与养老护理
+status: 完成
+version: 2.0
+search_engines: tavily+brave+bocha+firecrawl</p>
+<hr />
+<h1 id="silverchain-group-27">SilverChain Group — 27 维度深度尽调</h1>
+<blockquote>
+<p><strong>赛道真实定位</strong>：✅ 正确归属 — SilverChain 是澳大利亚最大的复杂社区护理 NFP 服务商，覆盖从基础居家养老到复杂临床护理（含 HITH/急性居家替代）的全谱系。与 iHomeCare 赛道高度相关。</p>
+</blockquote>
+<hr />
+<h2 id="d0">D0 — 前置验证：赛道真实性</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">检查项</th>
+<th style="text-align: left;">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">主营业务</td>
+<td style="text-align: left;">居家健康护理 + 养老护理 + HITH 急性居家替代</td>
+</tr>
+<tr>
+<td style="text-align: left;">是否含 HITH/急性居家</td>
+<td style="text-align: left;">✅ 是 — 与公立医院合作承接出院后急性护理、复杂伤口护理、姑息治疗</td>
+</tr>
+<tr>
+<td style="text-align: left;">赛道归类</td>
+<td style="text-align: left;">复合型：传统 Home Care + 复杂临床护理 + HITH</td>
+</tr>
+<tr>
+<td style="text-align: left;">对 iHomeCare 相关性</td>
+<td style="text-align: left;">🔴 高 — 是澳大利亚 HaH/HITH 生态的核心参与者</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>结论</strong>：SilverChain 不属于赛道误分类。它在 KPMG 2026 养老行业分析中排名 #5，是澳大利亚居家护理标杆机构。</p>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>一句话定位</strong>：SilverChain Group 是澳大利亚最大、历史最悠久的复杂社区护理非营利组织（1894 年成立，130 年历史），经 2024 年收购 KinCare 后跃居全国第三大居家养老护理服务商，以&rdquo;复杂临床护理+全护理谱系&rdquo;为差异化壁垒。</p>
+<p><strong>核心矛盾</strong>：</p>
+<ul>
+<li><strong>短期</strong>：KinCare 整合（1,300 员工 + 11,500+ 客户）带来执行风险；Support at Home 改革延迟至 2025 年 11 月造成政策不确定性</li>
+<li><strong>长期</strong>：澳大利亚人口老龄化（&rdquo;银发海啸&rdquo;） + 政策方向明确向&rdquo;居家优先&rdquo;倾斜 → 具备复杂临床能力的居家护理商结构性受益</li>
+</ul>
+<p><strong>关键数据速览</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立时间</td>
+<td style="text-align: left;">1894 年（130 年历史）</td>
+<td style="text-align: left;">官网 / 年报</td>
+</tr>
+<tr>
+<td style="text-align: left;">法律地位</td>
+<td style="text-align: left;">非营利组织 (NFP)，ACNC 注册</td>
+<td style="text-align: left;">ACNC</td>
+</tr>
+<tr>
+<td style="text-align: left;">FY2025 总收入</td>
+<td style="text-align: left;">~AUD $625.3M</td>
+<td style="text-align: left;">IBISWorld 2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工总数</td>
+<td style="text-align: left;">~5,900（含 KinCare）</td>
+<td style="text-align: left;">IBISWorld 2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">年服务客户</td>
+<td style="text-align: left;">&gt;84,000 人</td>
+<td style="text-align: left;">Growjo / 年报推断</td>
+</tr>
+<tr>
+<td style="text-align: left;">KinCare 收购</td>
+<td style="text-align: left;">2024.7.1，1,300 员工，11,500+ 客户</td>
+<td style="text-align: left;">年报 / Community Care Review</td>
+</tr>
+<tr>
+<td style="text-align: left;">CEO</td>
+<td style="text-align: left;">Dale Fisher AM（2018 年至今）</td>
+<td style="text-align: left;">LinkedIn / 官网</td>
+</tr>
+<tr>
+<td style="text-align: left;">董事会主席</td>
+<td style="text-align: left;">Haydn Chrystal（2024-25 年接任 Anne Skipper AM）</td>
+<td style="text-align: left;">年报</td>
+</tr>
+<tr>
+<td style="text-align: left;">排名</td>
+<td style="text-align: left;">全国第三大 HCP 服务商（收购后）</td>
+<td style="text-align: left;">年报</td>
+</tr>
+<tr>
+<td style="text-align: left;">地理覆盖</td>
+<td style="text-align: left;">WA + SA + VIC + NSW + QLD + TAS（全国性）</td>
+<td style="text-align: left;">官网</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>总体判断</strong>：SilverChain 是澳大利亚居家护理领域不可替代的标杆机构。其 130 年品牌、双重认证（医疗+养老）、复杂临床护理能力构成深厚护城河。面临的主要挑战是 NFP 资本约束下的规模化效率与 for-profit 对手的技术竞争。对 iHomeCare 而言，SilverChain 是澳大利亚市场最有价值的对标机构之一。</p>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_1">基本事实</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">属性</th>
+<th style="text-align: left;">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>全称</strong></td>
+<td style="text-align: left;">SilverChain Group Limited</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>法律地位</strong></td>
+<td style="text-align: left;">非营利公益慈善组织 (NFP)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>注册</strong></td>
+<td style="text-align: left;">ACNC（澳大利亚慈善与非营利委员会）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成立年份</strong></td>
+<td style="text-align: left;">1894 年（Silver Chain Nursing Association，珀斯）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总部</strong></td>
+<td style="text-align: left;">珀斯 (Perth)，西澳大利亚州</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CEO</strong></td>
+<td style="text-align: left;">Dale Fisher AM（2018 年 10 月至今）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>董事会主席</strong></td>
+<td style="text-align: left;">Haydn Chrystal（2024-25 接任）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">~5,900（FY2025，含 KinCare）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>FY2025 收入</strong></td>
+<td style="text-align: left;">~AUD $625.3M（IBISWorld 估算）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>旗下品牌</strong></td>
+<td style="text-align: left;">Silverchain（原核心）、RDNS SA（南澳）、KinCare（全国/2024 收购）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>官网</strong></td>
+<td style="text-align: left;">https://www.silverchain.org.au/</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">年份</th>
+<th style="text-align: left;">事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1894</td>
+<td style="text-align: left;">Silver Chain Nursing Association 在珀斯成立，由 district nursing 起步</td>
+</tr>
+<tr>
+<td style="text-align: left;">1894</td>
+<td style="text-align: left;">Royal District Nursing Service (RDNS SA) 在南澳阿德莱德成立</td>
+</tr>
+<tr>
+<td style="text-align: left;">~1900s–2000s</td>
+<td style="text-align: left;">逐步扩展至西澳全州，建立偏远地区护理网络</td>
+</tr>
+<tr>
+<td style="text-align: left;">2011</td>
+<td style="text-align: left;">RDNS SA 并入 SilverChain Group，形成 WA+SA 双州布局</td>
+</tr>
+<tr>
+<td style="text-align: left;">2018</td>
+<td style="text-align: left;">更名为 SilverChain Group；Dale Fisher 出任 CEO</td>
+</tr>
+<tr>
+<td style="text-align: left;">~2019–2023</td>
+<td style="text-align: left;">扩展至 VIC 市场；推进数字化建设</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024.7.1</td>
+<td style="text-align: left;">收购 KinCare（1,300 员工、11,500+ HCP/CHSP 客户），进入 NSW 市场</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024-25</td>
+<td style="text-align: left;">庆祝 130 周年；Anne Skipper AM 卸任董事会主席，Haydn Chrystal 接任</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025.7.1</td>
+<td style="text-align: left;">KinCare 品牌正式更名整合为 Silverchain</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025.11</td>
+<td style="text-align: left;">Support at Home 改革预计实施（原定 2025.7.1，延迟至 11.1）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">管理层</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">姓名</th>
+<th style="text-align: left;">职务</th>
+<th style="text-align: left;">背景要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Dale Fisher AM</td>
+<td style="text-align: left;">CEO</td>
+<td style="text-align: left;">护理背景，Monash 大学，2018 年 10 月至今，获 AM 勋章</td>
+</tr>
+<tr>
+<td style="text-align: left;">Haydn Chrystal</td>
+<td style="text-align: left;">董事会主席</td>
+<td style="text-align: left;">2024-25 年接任 Anne Skipper AM（任职 13 年）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fiona Ellett</td>
+<td style="text-align: left;">General Manager（高管团队成员）</td>
+<td style="text-align: left;">RocketReach 数据</td>
+</tr>
+<tr>
+<td style="text-align: left;">Shannon Thompson</td>
+<td style="text-align: left;">Transformation Officer</td>
+<td style="text-align: left;">Growjo 数据</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ <strong>数据真空</strong>：完整高管团队名单未在公开渠道完整披露。NFP 信息披露标准低于上市公司。</p>
+</blockquote>
+<h3 id="_4">股权结构概览</h3>
+<ul>
+<li><strong>非营利组织 — 无股东、无股权结构</strong></li>
+<li>治理结构：独立董事会（NFP 治理模式）</li>
+<li>受 ACNC 监管，须提交年度信息声明 (AIS) 和财务报告</li>
+<li>无外部投资者、无风投、无控股股东</li>
+</ul>
+<h3 id="_5">公司治理</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">治理要素</th>
+<th style="text-align: left;">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>董事会组成</strong></td>
+<td style="text-align: left;">多元化行业背景（社区护理、医疗、数字化、法律、财务）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主席任期</strong></td>
+<td style="text-align: left;">Anne Skipper AM 任职 13 年（至 2024），Haydn Chrystal 接任（2024-25）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关联交易</strong></td>
+<td style="text-align: left;">无公开披露（NFP 性质，关联交易风险低）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理争议</strong></td>
+<td style="text-align: left;">无公开违规记录、无证监会/交易所问询</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>年报披露</strong></td>
+<td style="text-align: left;">通过官网 + ACNC 公开年报，Modern Slavery Statement 已发布第六版</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_6">一句话核心逻辑</h3>
+<p><strong>SilverChain 在赌</strong>：澳大利亚人口老龄化 + 政府政策&rdquo;居家优先&rdquo;转向 + 公立医院压力外溢 → 具备复杂临床能力的居家护理机构将成为健康系统的关键基础设施，而 130 年品牌 + NFP 信任 + 全国覆盖是结构性壁垒。</p>
+<h3 id="_7">战略差异化要素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">SilverChain 定位</th>
+<th style="text-align: left;">差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">护理谱系</td>
+<td style="text-align: left;">从基础养老到复杂临床全覆盖</td>
+<td style="text-align: left;">多数竞品仅做养老护理或仅做临床</td>
+</tr>
+<tr>
+<td style="text-align: left;">认证资质</td>
+<td style="text-align: left;">全国唯少数获得医疗+养老双重认证</td>
+<td style="text-align: left;">可承接 HITH/急性居家护理</td>
+</tr>
+<tr>
+<td style="text-align: left;">品牌资产</td>
+<td style="text-align: left;">130 年历史，RDNS 是 nursing 先驱</td>
+<td style="text-align: left;">消费者信任度远超 for-profit 新进入者</td>
+</tr>
+<tr>
+<td style="text-align: left;">地理覆盖</td>
+<td style="text-align: left;">全国性（WA+SA 深厚 + NSW/VIC/QLD）</td>
+<td style="text-align: left;">西澳/南澳偏远地区服务壁垒极高</td>
+</tr>
+<tr>
+<td style="text-align: left;">法律地位</td>
+<td style="text-align: left;">NFP 慈善组织</td>
+<td style="text-align: left;">政府拨款优先 + 公众信任 + 捐赠渠道</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术战略</td>
+<td style="text-align: left;">收购 KinCare 带来的数字化资产</td>
+<td style="text-align: left;">smart glasses、EMBED 临床试验</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_8">战略演变三阶段</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">时期</th>
+<th style="text-align: left;">核心战略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Phase 1: 创立扎根</strong></td>
+<td style="text-align: left;">1894–2010</td>
+<td style="text-align: left;">西澳 district nursing → 全州护理网络，建立品牌和社区信任</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Phase 2: 平台化扩张</strong></td>
+<td style="text-align: left;">2011–2023</td>
+<td style="text-align: left;">RDNS SA 合并 → 品牌统一 → 进入 VIC → 数字化起步</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Phase 3: 全国整合</strong></td>
+<td style="text-align: left;">2024–现在</td>
+<td style="text-align: left;">KinCare 收购 → 全国平台 → Support at Home 改革卡位 → 临床+养老双重能力变现</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<h3 id="_9">可视化架构</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                      支付方层（谁付钱）                            │
+│  联邦政府 (~70%)    州政府 (~15%)    NDIS (~5%)   个人自付 (~5%)    │
+│  Support at Home    HITH/社区合同    残障支持      自费+捐赠(~5%)   │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │ 拨款/合同/个人支付
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                   SilverChain Group（平台层）                      │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐   │
+│  │  Silverchain │  │   RDNS SA    │  │   KinCare (2024)     │   │
+│  │  (WA 核心)   │  │  (SA 品牌)   │  │  (NSW/VIC/QLD)       │   │
+│  └──────────────┘  └──────────────┘  └──────────────────────┘   │
+│                                                                   │
+│  核心能力：临床治理 · 护理协调 · EHR · 远程监测 · 调度中心          │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │ 服务交付
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    服务供给层（谁提供服务）                          │
+│  RN 注册护士  │  EN 登记护士  │  PCW 护理员  │  辅助医疗(physio/OT) │
+│  复杂临床护理  │  基础护理     │  个人护理     │  康复/功能评估       │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    需求端（谁使用服务）                             │
+│  老年居家养老者  │  出院后患者    │  慢病患者    │  临终患者  │  NDIS  │
+│  (最大客户群)   │  HITH/急性护理 │  复杂护理    │  姑息治疗  │  残障  │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="vs">支付方 vs 使用方分离</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">角色</th>
+<th style="text-align: left;">实体</th>
+<th style="text-align: center;">占比</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>支付方</strong></td>
+<td style="text-align: left;">联邦政府 (Support at Home)</td>
+<td style="text-align: center;">~70%</td>
+<td style="text-align: left;">拨款制，受政策改革影响</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">州政府 (HITH/社区合同)</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">合同制，相对稳定</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">NDIS</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">法定拨款</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">个人自付 + 慈善捐赠</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">弹性补充</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>使用方</strong></td>
+<td style="text-align: left;">老年居家养老者</td>
+<td style="text-align: center;">~60%</td>
+<td style="text-align: left;">不直接支付/部分共付</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">出院后急性患者</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">政府全额/医院转诊</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">慢病/复杂护理患者</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">混合支付</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">NDIS 参与者</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">NDIS 拨款</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">临终患者</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">混合支付</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">偏远地区居民</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">政府补贴</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_10">价值链定位</h3>
+<p>从「纯中介平台」到「自建医疗体系」的光谱上，SilverChain 定位在 <strong>偏右 70%</strong> 位置：</p>
+<pre><code>纯中介 ←—————————————————————— SilverChain —————————→ 自建医疗体系
+(仅匹配供需)      (有临床能力 + 自雇护士)        (自建医院+全闭环)
+</code></pre>
+<ul>
+<li>自雇 ~5,900 名员工（含大量注册护士），非纯平台模式</li>
+<li>自身具备复杂临床护理能力，非简单&rdquo;派单&rdquo;</li>
+<li>但不拥有医院床位，与医院是合作转诊关系</li>
+</ul>
+<h3 id="_11">战略合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">伙伴类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: left;">合作性质</th>
+<th style="text-align: center;">排他性</th>
+<th style="text-align: center;">收入贡献</th>
+<th style="text-align: center;">关系健康度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">联邦政府</td>
+<td style="text-align: left;">Department of Health</td>
+<td style="text-align: left;">主要拨款方</td>
+<td style="text-align: center;">非排他</td>
+<td style="text-align: center;">~70%</td>
+<td style="text-align: center;">🟢 稳定</td>
+</tr>
+<tr>
+<td style="text-align: left;">州政府</td>
+<td style="text-align: left;">WA Health / SA Health</td>
+<td style="text-align: left;">HITH/社区护理合同</td>
+<td style="text-align: center;">非排他</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: center;">🟢 稳定</td>
+</tr>
+<tr>
+<td style="text-align: left;">公立医院</td>
+<td style="text-align: left;">各州公立医院系统</td>
+<td style="text-align: left;">转诊网络</td>
+<td style="text-align: center;">非排他</td>
+<td style="text-align: center;">间接</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">全科医生 (GP)</td>
+<td style="text-align: left;">社区 GP 网络</td>
+<td style="text-align: left;">转诊/联合护理</td>
+<td style="text-align: center;">非排他</td>
+<td style="text-align: center;">间接</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">学术/研究</td>
+<td style="text-align: left;">大学/研究机构</td>
+<td style="text-align: left;">EMBED 试验/smart glasses</td>
+<td style="text-align: center;">非排他</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">养老社区</td>
+<td style="text-align: left;">Ingenia Communities</td>
+<td style="text-align: left;">联合服务</td>
+<td style="text-align: center;">非排他</td>
+<td style="text-align: center;">新兴</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术平台</td>
+<td style="text-align: left;">KinCare 原数字化资产</td>
+<td style="text-align: left;">内部整合</td>
+<td style="text-align: center;">内部</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: center;">🟡 整合中</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>伙伴集中度风险</strong>：🚨 联邦政府占收入 ~70%，政策改革风险极高</li>
+<li><strong>伙伴切换成本</strong>：对政府拨款的依赖是结构性风险，但 NFP 身份降低&rdquo;被替换&rdquo;风险</li>
+</ul>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">产品线</th>
+<th style="text-align: left;">客户类型</th>
+<th style="text-align: left;">服务内容</th>
+<th style="text-align: left;">定价模式</th>
+<th style="text-align: center;">占收入（估）</th>
+<th style="text-align: left;">利润率特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>居家养老护理 (HCP/CHSP)</strong></td>
+<td style="text-align: left;">老年人</td>
+<td style="text-align: left;">个人护理、家政、膳食、交通、社交</td>
+<td style="text-align: left;">政府拨款包干制</td>
+<td style="text-align: center;">~45%</td>
+<td style="text-align: left;">中等，人力密集</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家临床护理</strong></td>
+<td style="text-align: left;">慢病/术后患者</td>
+<td style="text-align: left;">伤口护理、导管/造口管理、药物管理</td>
+<td style="text-align: left;">政府合同 + MBS</td>
+<td style="text-align: center;">~20%</td>
+<td style="text-align: left;">较高，需 RN 资质</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HITH/急性居家替代</strong></td>
+<td style="text-align: left;">出院后患者</td>
+<td style="text-align: left;">急性期护理、IV 抗生素、术后监测</td>
+<td style="text-align: left;">州政府合同</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">高，临床壁垒</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>姑息治疗</strong></td>
+<td style="text-align: left;">临终患者</td>
+<td style="text-align: left;">社区姑息护理、疼痛管理</td>
+<td style="text-align: left;">政府拨款 + 捐赠</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">中等</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家康复</strong></td>
+<td style="text-align: left;">术后/伤后</td>
+<td style="text-align: left;">physio/OT、跌倒预防</td>
+<td style="text-align: left;">MBS + 政府合同</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">中等</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDIS 残障支持</strong></td>
+<td style="text-align: left;">残障人士</td>
+<td style="text-align: left;">个人支持、社区参与</td>
+<td style="text-align: left;">NDIS 拨款</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">中等</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>远程/虚拟护理</strong></td>
+<td style="text-align: left;">偏远地区/慢性病</td>
+<td style="text-align: left;">远程监测、视频问诊</td>
+<td style="text-align: left;">项目拨款/试点</td>
+<td style="text-align: center;">~3%</td>
+<td style="text-align: left;">初期投入阶段</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>复杂慢病管理</strong></td>
+<td style="text-align: left;">心衰/COPD/糖尿病</td>
+<td style="text-align: left;">多学科团队管理</td>
+<td style="text-align: left;">政府合同/MBS</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">较高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>失智症支持</strong></td>
+<td style="text-align: left;">认知障碍患者</td>
+<td style="text-align: left;">专业护理+家属支持</td>
+<td style="text-align: left;">混合</td>
+<td style="text-align: center;">~2%</td>
+<td style="text-align: left;">新兴增长</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="rd">R&amp;D 与创新管线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">在研项目</th>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">目标</th>
+<th style="text-align: left;">潜在影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">EMBED 临床试验</td>
+<td style="text-align: left;">进行中</td>
+<td style="text-align: left;">居家老年人抑郁症管理（WA+SA）</td>
+<td style="text-align: left;">世界首创，可能输出为临床指南</td>
+</tr>
+<tr>
+<td style="text-align: left;">Smart Glasses</td>
+<td style="text-align: left;">试点</td>
+<td style="text-align: left;">远程专家实时指导一线护士</td>
+<td style="text-align: left;">提升偏远地区复杂护理质量</td>
+</tr>
+<tr>
+<td style="text-align: left;">KinCare 数字化整合</td>
+<td style="text-align: left;">进行中</td>
+<td style="text-align: left;">统一 EHR/CRM/调度系统</td>
+<td style="text-align: left;">运营效率提升关键</td>
+</tr>
+<tr>
+<td style="text-align: left;">Support at Home 转型准备</td>
+<td style="text-align: left;">规划</td>
+<td style="text-align: left;">适应新拨款模式</td>
+<td style="text-align: left;">生存级战略</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>R&amp;D 支出</strong>：未单独公开（NFP 年报未拆分）</li>
+<li><strong>专利/IP</strong>：Smart glasses 应用场景可能有 IP 积累；EMBED 产出学术价值</li>
+<li><strong>创新文化</strong>：NFP 属性偏保守，但 130 周年策略明确强调&rdquo;future care&rdquo;方向</li>
+</ul>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_12">客户结构估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户类别</th>
+<th style="text-align: center;">收入占比（估）</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">老年居家养老者（HCP/CHSP）</td>
+<td style="text-align: center;">~45%</td>
+<td style="text-align: left;">规模最大，依赖政府拨款</td>
+<td style="text-align: left;">↗ 随老龄化增长</td>
+</tr>
+<tr>
+<td style="text-align: left;">出院后急性患者（HITH）</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">临床壁垒高，医院转诊</td>
+<td style="text-align: left;">↗ 公立医院压力外溢</td>
+</tr>
+<tr>
+<td style="text-align: left;">慢病/复杂护理患者</td>
+<td style="text-align: center;">~20%</td>
+<td style="text-align: left;">RN 主导，高附加值</td>
+<td style="text-align: left;">↗ 慢病负担加重</td>
+</tr>
+<tr>
+<td style="text-align: left;">临终患者</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">社会影响力大</td>
+<td style="text-align: left;">→ 稳定</td>
+</tr>
+<tr>
+<td style="text-align: left;">NDIS 参与者</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">政策驱动</td>
+<td style="text-align: left;">→ 稳定</td>
+</tr>
+<tr>
+<td style="text-align: left;">偏远地区居民</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">服务成本高，政策补贴</td>
+<td style="text-align: left;">→ 稳定</td>
+</tr>
+<tr>
+<td style="text-align: left;">其他</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">含 KinCare 未细分客户</td>
+<td style="text-align: left;">↗ 整合后增长</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_13">客户获取渠道</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">渠道</th>
+<th style="text-align: center;">效率</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">政府 My Aged Care 系统转介</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">主要 HCP/CHSP 入口</td>
+</tr>
+<tr>
+<td style="text-align: left;">公立医院出院转诊</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">HITH 核心获客路径</td>
+</tr>
+<tr>
+<td style="text-align: left;">GP/专科医生转介</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">临床护理推荐</td>
+</tr>
+<tr>
+<td style="text-align: left;">社区口碑/品牌认知</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">130 年品牌沉淀</td>
+</tr>
+<tr>
+<td style="text-align: left;">直接咨询/官网</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">数字化获客较弱</td>
+</tr>
+<tr>
+<td style="text-align: left;">KinCare 原客户转化</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">整合过渡期</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_14">集中度风险</h3>
+<ul>
+<li><strong>客户分散度高</strong>：服务 &gt;84,000 人/年，无单一客户集中风险</li>
+<li><strong>但支付方集中度极高</strong>：联邦政府占收入 ~70% ← 🚨 最大风险源</li>
+</ul>
+<h3 id="_15">品牌与声誉</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">评估</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>品牌知名度 (WA/SA)</strong></td>
+<td style="text-align: center;">🟢 极高</td>
+<td style="text-align: left;">RDNS/Silverchain 是家喻户晓品牌</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>品牌知名度 (NSW/VIC)</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">KinCare 有一定认知，整合中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>行业声誉</strong></td>
+<td style="text-align: center;">🟢 正面</td>
+<td style="text-align: left;">KPMG #5 排名，行业标杆</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>消费者信任</strong></td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">NFP 身份 + 130 年历史</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>负面事件</strong></td>
+<td style="text-align: center;">🟢 无重大公开丑闻</td>
+<td style="text-align: left;">ACNC 合规记录良好</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社交媒体情绪</strong></td>
+<td style="text-align: center;">未系统监测</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ <strong>数据真空声明</strong>：SilverChain 为 NFP，不发布上市公司级别财报。以下数据来源：IBISWorld 2025 估算 + ACNC 公开信息 + 年报摘要 + 同规模 NFP 推理。</p>
+</blockquote>
+<h3 id="_16">核心财务概览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">FY2023（估）</th>
+<th style="text-align: center;">FY2024（估）</th>
+<th style="text-align: center;">FY2025（估）</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">总收入</td>
+<td style="text-align: center;">~AUD $450M</td>
+<td style="text-align: center;">~AUD $500M</td>
+<td style="text-align: center;">~AUD $625M</td>
+<td style="text-align: left;">IBISWorld / 推断</td>
+</tr>
+<tr>
+<td style="text-align: left;">政府拨款</td>
+<td style="text-align: center;">~AUD $140M</td>
+<td style="text-align: center;">~AUD $173M</td>
+<td style="text-align: center;">~AUD $220M+</td>
+<td style="text-align: left;">KPMG/Aged Care Online</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工成本</td>
+<td style="text-align: center;">~AUD $350M</td>
+<td style="text-align: center;">~AUD $390M</td>
+<td style="text-align: center;">~AUD $500M</td>
+<td style="text-align: left;">推算（人力密集型）</td>
+</tr>
+<tr>
+<td style="text-align: left;">盈余/(赤字)</td>
+<td style="text-align: center;">接近平衡</td>
+<td style="text-align: center;">接近平衡</td>
+<td style="text-align: center;">整合投入期</td>
+<td style="text-align: left;">NFP 属性推断</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工人数</td>
+<td style="text-align: center;">~3,500</td>
+<td style="text-align: center;">~4,500</td>
+<td style="text-align: center;">~5,900</td>
+<td style="text-align: left;">IBISWorld</td>
+</tr>
+<tr>
+<td style="text-align: left;">年服务人次</td>
+<td style="text-align: center;">~65,000</td>
+<td style="text-align: center;">~75,000</td>
+<td style="text-align: center;">&gt;84,000</td>
+<td style="text-align: left;">Growjo/推断</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_17">收入结构拆解</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: center;">占比（估）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">联邦 Support at Home（原 HCP+CHSP）</td>
+<td style="text-align: center;">~45%</td>
+<td style="text-align: left;">改革前为 HCP/CHSP 分列</td>
+</tr>
+<tr>
+<td style="text-align: left;">联邦其他拨款（含 NDIS）</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">NDIS + 专项拨款</td>
+</tr>
+<tr>
+<td style="text-align: left;">州政府 HITH/社区合同</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">各州政府合同</td>
+</tr>
+<tr>
+<td style="text-align: left;">个人自付/保险</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">慈善捐赠/其他</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">Foundation 渠道</td>
+</tr>
+<tr>
+<td style="text-align: left;">KinCare 贡献（FY2025 新增）</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">收购贡献</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_18">关键财务比率（估值算）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">比率</th>
+<th style="text-align: center;">估算</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">员工成本/收入</td>
+<td style="text-align: center;">~80%</td>
+<td style="text-align: left;">人力密集行业典型水平</td>
+</tr>
+<tr>
+<td style="text-align: left;">行政成本/收入</td>
+<td style="text-align: center;">~5-8%</td>
+<td style="text-align: left;">NFP 偏精简</td>
+</tr>
+<tr>
+<td style="text-align: left;">盈余率</td>
+<td style="text-align: center;">~0-3%</td>
+<td style="text-align: left;">NFP 目标收支平衡</td>
+</tr>
+<tr>
+<td style="text-align: left;">人均收入</td>
+<td style="text-align: center;">~AUD $106,000</td>
+<td style="text-align: left;">$625M / 5,900 员工</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<h3 id="phase-0">Phase 0: 需求触发</h3>
+<ul>
+<li>老年人/家属 → My Aged Care 系统注册 → 评估 (ACAT/RAS)</li>
+<li>出院患者 → 医院 discharge planner → 转诊 SilverChain HITH</li>
+<li>GP/专科医生 → 直接推荐临床护理</li>
+</ul>
+<h3 id="phase-1">Phase 1: 评估与匹配</h3>
+<ul>
+<li>SilverChain 护理经理联系客户 → 居家综合评估</li>
+<li>确定护理等级 (HCP 1-4 或临床分级)</li>
+<li>制定个性化护理计划 (Care Plan)</li>
+<li>匹配护理团队 (RN/EN/PCW/辅助医疗)</li>
+</ul>
+<h3 id="phase-2">Phase 2: 服务交付</h3>
+<ul>
+<li>护士/护理员按计划上门</li>
+<li>临床护理：伤口换药、导管管理、药物给予、IV 抗生素（HITH）</li>
+<li>养老护理：个人护理、家务、膳食、陪伴</li>
+<li>远程监测：生命体征远程传输 → 临床团队审查</li>
+<li>Smart glasses：远程专家指导复杂操作（偏远地区试点）</li>
+</ul>
+<h3 id="phase-3">Phase 3: 监测与调整</h3>
+<ul>
+<li>EHR 实时记录每次服务</li>
+<li>护理经理定期审查 (Care Plan Review)</li>
+<li>异常事件升级 → 临床治理团队介入</li>
+<li>与 GP/医院双向沟通</li>
+</ul>
+<h3 id="phase-4">Phase 4: 结算</h3>
+<ul>
+<li>政府拨款账单（按 HCP 等级/服务量）</li>
+<li>州政府合同结算（HITH 按案例）</li>
+<li>NDIS 计划结算</li>
+<li>个人自付部分结算</li>
+</ul>
+<h3 id="phase-5">Phase 5: 持续跟踪</h3>
+<ul>
+<li>长期客户定期复查（每 12 月）</li>
+<li>出院后 30 天随访（HITH 质量指标）</li>
+<li>满意度调查</li>
+<li>数据反馈至质量改进体系</li>
+</ul>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构总览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">自研/外采/白标</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 财务/行政</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">未公开</td>
+<td>ERP/财务/HR 系统，KinCare 整合待统一</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 业务运营</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">混合</td>
+<td>临床管理系统 + 客户管理 (CRM)，双系统并存</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 调度/运营中心</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研+外采</td>
+<td>全国 Contact Centre，年处理大量呼叫</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 用户端</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">有限</td>
+<td>护士移动端 + 管理后台；消费者 App 缺失</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据与 AI 层</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">建设中</td>
+<td>KinCare 数字化资产 + Smart glasses 数据</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">推测为模块化传统架构；KinCare 整合前两套系统并存</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要技术栈</strong></td>
+<td style="text-align: left;">官网使用 JavaScript；具体 EHR 系统未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">与 My Aged Care 系统对接；医院转诊接口未公开；与 GP 系统的互操作性有待评估</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">Modern Slavery Statement 提及供应链安全；具体认证未公开（NFP 通常不如商业公司完善）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>软件 IP</strong></td>
+<td style="text-align: left;">Smart glasses 应用场景有定制开发；非软件型公司</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>开发实践</strong></td>
+<td style="text-align: left;">未公开；NFP 通常外包/合作开发</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可扩展性</strong></td>
+<td style="text-align: left;">经 KinCare 整合考验中——1,300 员工+11,500 客户系统迁移</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术债务</strong></td>
+<td style="text-align: left;">🚨 KinCare 与 SilverChain 双系统整合是重大技术工程</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件/IoT 设备</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>设备品类</strong></td>
+<td style="text-align: left;">Smart glasses（远程会诊）、远程监测设备（生命体征）、移动护理终端</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>设备来源</strong></td>
+<td style="text-align: left;">推测为第三方采购+定制集成</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>连接协议</strong></td>
+<td style="text-align: left;">Smart glasses 需网络连接；远程监测推测使用 4G/WiFi</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>边缘能力</strong></td>
+<td style="text-align: left;">偏远地区可能涉及离线缓存/断网续传</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>监管注册</strong></td>
+<td style="text-align: left;">Smart glasses 非医疗器械，不涉及 TGA 注册</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AI 模型类型</strong></td>
+<td style="text-align: left;">未公开 AI 能力；EMBED 临床试验可能涉及算法筛选</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 应用场景</strong></td>
+<td style="text-align: left;">有限——SilverChain 尚未以 AI 为卖点</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据治理</strong></td>
+<td style="text-align: left;">NFP 隐私政策；澳洲 Privacy Act 合规</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 评级</strong></td>
+<td style="text-align: left;">🟡 早期阶段 — 技术投入偏传统，非核心差异化维度</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">能力维度</th>
+<th style="text-align: center;">SilverChain</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差距</th>
+<th style="text-align: center;">差异化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">软件全栈能力</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">→</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">硬件整合</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">→</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 临床级能力</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">↓</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作性</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">→</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据资产规模</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">↑</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">专利/IP 护城河</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">→</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>技术护城河总体评估</strong>：SilverChain 的技术优势不体现在自研软件/AI，而在于 <strong>130 年积累的临床数据资产 + 偏远地区服务覆盖</strong>（后者是物流/人力壁垒，非纯技术壁垒）。KinCare 的数字化能力整合是关键变量。</li>
+</ul>
+<h3 id="96">9.6 技术风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险类别</th>
+<th style="text-align: left;">具体风险</th>
+<th style="text-align: center;">严重度</th>
+<th style="text-align: left;">缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">KinCare 系统整合失败</td>
+<td style="text-align: left;">双系统并行影响运营效率</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">分阶段迁移，2025.7 品牌统一先行</td>
+</tr>
+<tr>
+<td style="text-align: left;">数字化滞后</td>
+<td style="text-align: left;">for-profit 对手技术领先（如 Bolton Clarke）</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">KinCare 数字化资产补短板</td>
+</tr>
+<tr>
+<td style="text-align: left;">网络安全</td>
+<td style="text-align: left;">医疗数据泄露</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">需确认认证合规</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作性壁垒</td>
+<td style="text-align: left;">My Health Record/医院系统对接</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">政府标准推进</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<h3 id="_19">对标表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;"><strong>SilverChain</strong></th>
+<th style="text-align: left;"><strong>Bolton Clarke</strong></th>
+<th style="text-align: left;"><strong>HammondCare</strong></th>
+<th style="text-align: left;"><strong>BaptistCare</strong></th>
+<th style="text-align: left;"><strong>Regis Healthcare</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立</td>
+<td style="text-align: left;">1894</td>
+<td style="text-align: left;">2015（合并）</td>
+<td style="text-align: left;">1932</td>
+<td style="text-align: left;">1944</td>
+<td style="text-align: left;">1992</td>
+</tr>
+<tr>
+<td style="text-align: left;">法律地位</td>
+<td style="text-align: left;">NFP</td>
+<td style="text-align: left;">NFP</td>
+<td style="text-align: left;">NFP 基督教</td>
+<td style="text-align: left;">NFP 基督教</td>
+<td style="text-align: left;">ASX 上市 (REG)</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工规模</td>
+<td style="text-align: left;">~5,900</td>
+<td style="text-align: left;">~12,000+</td>
+<td style="text-align: left;">~5,000+</td>
+<td style="text-align: left;">~5,000+</td>
+<td style="text-align: left;">~8,000+</td>
+</tr>
+<tr>
+<td style="text-align: left;">收入规模</td>
+<td style="text-align: left;">~AUD $625M</td>
+<td style="text-align: left;">&gt;AUD $1B</td>
+<td style="text-align: left;">~AUD $500M+</td>
+<td style="text-align: left;">~AUD $500M+</td>
+<td style="text-align: left;">~AUD $700M+</td>
+</tr>
+<tr>
+<td style="text-align: left;">服务谱系</td>
+<td style="text-align: left;">养老+临床+HITH</td>
+<td style="text-align: left;">养老+临床+退休村</td>
+<td style="text-align: left;">养老+失智症+临终</td>
+<td style="text-align: left;">养老+残障+社区</td>
+<td style="text-align: left;">养老+退休村</td>
+</tr>
+<tr>
+<td style="text-align: left;">地理覆盖</td>
+<td style="text-align: left;">全国</td>
+<td style="text-align: left;">全国</td>
+<td style="text-align: left;">NSW+ACT+VIC</td>
+<td style="text-align: left;">NSW+ACT+WA</td>
+<td style="text-align: left;">全国</td>
+</tr>
+<tr>
+<td style="text-align: left;">双重认证</td>
+<td style="text-align: left;">✅ 医疗+养老</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">⚠️ 偏养老</td>
+<td style="text-align: left;">⚠️ 偏养老</td>
+<td style="text-align: left;">✅ 养老</td>
+</tr>
+<tr>
+<td style="text-align: left;">复杂临床能力</td>
+<td style="text-align: left;">★★★★★</td>
+<td style="text-align: left;">★★★★</td>
+<td style="text-align: left;">★★★</td>
+<td style="text-align: left;">★★★</td>
+<td style="text-align: left;">★★</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术平台</td>
+<td style="text-align: left;">⚠️ 整合中</td>
+<td style="text-align: left;">★★★★</td>
+<td style="text-align: left;">★★★</td>
+<td style="text-align: left;">★★★</td>
+<td style="text-align: left;">★★★</td>
+</tr>
+<tr>
+<td style="text-align: left;">上市状态</td>
+<td style="text-align: left;">NFP</td>
+<td style="text-align: left;">NFP</td>
+<td style="text-align: left;">NFP</td>
+<td style="text-align: left;">NFP</td>
+<td style="text-align: left;">ASX</td>
+</tr>
+<tr>
+<td style="text-align: left;">品牌历史</td>
+<td style="text-align: left;">130 年</td>
+<td style="text-align: left;">~10 年（合并后）</td>
+<td style="text-align: left;">90+ 年</td>
+<td style="text-align: left;">80+ 年</td>
+<td style="text-align: left;">30 年</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_20">差异化定位图</h3>
+<pre><code>                    高临床能力
+                        │
+                   SilverChain ★
+                        │
+        HammondCare ●   │   ● Bolton Clarke
+                        │
+低 ─────────────────────┼───────────────────── 高
+机构养老                │                      居家养老
+                        │
+                  Regis ●
+                        │
+                    低临床能力
+</code></pre>
+<h3 id="_21">竞争核心发现</h3>
+<ul>
+<li>SilverChain 的不可替代优势：<strong>复杂临床护理 + 偏远地区覆盖 + NFP 信任</strong></li>
+<li>最大竞对：<strong>Bolton Clarke</strong>（规模更大，技术更强，但过去合并整合时间更短）</li>
+<li>差异化威胁：<strong>for-profit 技术平台</strong>（如 Amplar Health 等远程医疗公司可能侵蚀轻症市场）</li>
+</ul>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势 (TAM/SAM)</h2>
+<h3 id="tamsam">TAM/SAM/渗透率估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: left;">计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TAM：澳大利亚居家养老+护理总支出</strong></td>
+<td style="text-align: center;">~AUD $30B+</td>
+<td style="text-align: left;">联邦 Support at Home 预算 ~$9B + 州政府社区护理 + 个人自付 + NDIS 护理</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SAM：NFP 大型服务商可触达</strong></td>
+<td style="text-align: center;">~AUD $12-15B</td>
+<td style="text-align: left;">排除退休村、小型机构、纯个人护理市场</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SilverChain 当前规模</strong></td>
+<td style="text-align: center;">~AUD $625M</td>
+<td style="text-align: left;">FY2025 收入</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SAM 渗透率</strong></td>
+<td style="text-align: center;">~4-5%</td>
+<td style="text-align: left;">第三大服务商，碎片化市场中集中度仍低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>增长驱动力</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">人口老龄化（65+ 占比从 17% → 22% by 2035）+ 政策&rdquo;居家优先&rdquo;</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">增长趋势</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">年</th>
+<th style="text-align: center;">收入（估）</th>
+<th style="text-align: center;">增长率</th>
+<th style="text-align: left;">驱动因素</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">FY2023</td>
+<td style="text-align: center;">~AUD $450M</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">有机增长</td>
+</tr>
+<tr>
+<td style="text-align: left;">FY2024</td>
+<td style="text-align: center;">~AUD $500M</td>
+<td style="text-align: center;">+11%</td>
+<td style="text-align: left;">有机增长 + VIC 扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;">FY2025</td>
+<td style="text-align: center;">~AUD $625M</td>
+<td style="text-align: center;">+25%</td>
+<td style="text-align: left;">KinCare 收购贡献</td>
+</tr>
+<tr>
+<td style="text-align: left;">FY2026（预期）</td>
+<td style="text-align: center;">~AUD $680-700M</td>
+<td style="text-align: center;">+8-12%</td>
+<td style="text-align: left;">整合+改革红利</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<h3 id="_23">成本结构拆解</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">占比（估）</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">直接护理人力成本</td>
+<td style="text-align: center;">~65%</td>
+<td style="text-align: left;">RN/EN/PCW 工资+on-cost，最大成本项</td>
+</tr>
+<tr>
+<td style="text-align: left;">管理与行政</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">护理经理、调度、后台</td>
+</tr>
+<tr>
+<td style="text-align: left;">差旅/交通</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">上门服务特性，偏远地区成本更高</td>
+</tr>
+<tr>
+<td style="text-align: left;">培训/质量/合规</td>
+<td style="text-align: center;">~3%</td>
+<td style="text-align: left;">双重认证维护成本</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术/数字化</td>
+<td style="text-align: center;">~3%</td>
+<td style="text-align: left;">KinCare 整合+系统维护</td>
+</tr>
+<tr>
+<td style="text-align: left;">物业/基础设施</td>
+<td style="text-align: center;">~2%</td>
+<td style="text-align: left;">多地办公室/仓库</td>
+</tr>
+<tr>
+<td style="text-align: left;">其他</td>
+<td style="text-align: center;">~12%</td>
+<td style="text-align: left;">含捐赠支出、折旧等</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>合计</strong></td>
+<td style="text-align: center;">~100%</td>
+<td style="text-align: left;">NFP 目标收支平衡</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_24">盈利路径分析</h3>
+<ul>
+<li><strong>NFP 不追求利润最大化</strong>，但需要健康盈余以再投资</li>
+<li>隐含盈余率 ~0-3%，低于商业养老护理公司（Regis 等 ~5-10% 运营利润率）</li>
+<li><strong>规模效应路径</strong>：KinCare 整合后可摊薄固定成本（全国 Contact Centre/调度/后台）</li>
+<li><strong>结构调整路径</strong>：提高高毛利临床护理占比（vs 低毛利个人护理）</li>
+<li><strong>技术降本路径</strong>：数字化调度减少差旅/空闲时间</li>
+</ul>
+<p><strong>综合判断</strong>：SilverChain 的&rdquo;盈利&rdquo;是可持续运营能力，非投资回报。NFP 属性是其战略选择，不是弱点。</p>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期（0-12 月）</strong></td>
+<td style="text-align: left;">✅ Support at Home 改革卡位 — 大品牌受益于标准化；✅ KinCare 品牌统一完成（2025.7）— 整合里程碑</td>
+<td style="text-align: left;">⚠️ 改革过渡期资金流不确定性；⚠️ KinCare 客户流失风险；⚠️ 双系统并行运维成本</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期（1-3 年）</strong></td>
+<td style="text-align: left;">✅ 全国平台效应释放 — 跨州转诊/统一采购；✅ 临床+养老&rdquo;全谱系&rdquo;差异化；✅ 偏远地区服务壁垒加厚</td>
+<td style="text-align: left;">🚨 劳动力短缺（全行业性）；⚠️ for-profit 对手技术和效率竞争；⚠️ 政府拨款增速可能低于成本增速</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">✅ 老龄化不可逆趋势；✅ 居家优先已成两党共识；✅ HITH 是公立医院减压器</td>
+<td style="text-align: left;">🔴 依赖政府拨款的结构性脆弱性；⚠️ 自管模式 (self-management) 威胁传统服务商模式</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_25">法律与诉讼</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">案件/调查</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">潜在影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">无重大公开诉讼</td>
+<td style="text-align: left;">✅ 清洁</td>
+<td style="text-align: left;">N/A</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>2026 年 6 月：Aged Care Act 实施延迟至 2025.11，SilverChain 公开欢迎此决定</li>
+<li>无 Royal Commission 负面发现（与某些 for-profit 机构不同）</li>
+</ul>
+<h3 id="_26">宏观敏感性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">宏观情景</th>
+<th style="text-align: center;">影响</th>
+<th style="text-align: left;">传导机制</th>
+<th style="text-align: center;">缓冲能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>经济衰退</strong></td>
+<td style="text-align: center;">🟢 低敏</td>
+<td style="text-align: left;">政府拨款不受商业周期影响</td>
+<td style="text-align: center;">强</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利率上升</strong></td>
+<td style="text-align: center;">🟢 低敏</td>
+<td style="text-align: left;">NFP 无权益融资压力；无大额浮动利率债务</td>
+<td style="text-align: center;">强</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>汇率波动</strong></td>
+<td style="text-align: center;">🟢 低敏</td>
+<td style="text-align: left;">纯国内业务</td>
+<td style="text-align: center;">强</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>通胀</strong></td>
+<td style="text-align: center;">🟡 中敏</td>
+<td style="text-align: left;">人力成本上升（护士工资）；政府拨款可能滞后</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>疫情</strong></td>
+<td style="text-align: center;">🟢 正向</td>
+<td style="text-align: left;">COVID 期间 HITH 需求大增，居家护理价值凸显</td>
+<td style="text-align: center;">强</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14-ceo">D14 — 管理层/CEO 公开指引</h2>
+<h3 id="dale-fisher-am">Dale Fisher AM 在职期间核心主张</h3>
+<ol>
+<li><strong>&ldquo;居家护理是医院压力的减压阀&rdquo;</strong>：反复在年报和公开场合强调 home care 对缓解公立医院压力的战略价值</li>
+<li><strong>&ldquo;澳大利亚居家护理落后于国际&rdquo;</strong>：2024-25 年报明确写道&rdquo;Australia is behind other nations in home care&rdquo;——这是向政府施压的公开话术</li>
+<li><strong>支持 Support at Home 改革</strong>：欢迎但强调&rdquo;reform process is not finished&rdquo;</li>
+<li><strong>KinCare 收购逻辑</strong>：全国覆盖 + 数字化能力补强</li>
+</ol>
+<h3 id="_27">指引可信度评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>一致性</strong></td>
+<td style="text-align: left;">🟢 高 — 6 年 CEO 任期主张一贯</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>兑现记录</strong></td>
+<td style="text-align: left;">🟢 完成 KinCare 收购；品牌统一如期进行</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NFP CEO 约束</strong></td>
+<td style="text-align: left;">NFP CEO 无股权激励，激励结构偏向使命驱动</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<blockquote>
+<p>⚠️ <strong>NFP 不适用传统估值</strong>。SilverChain 无上市股票、无股权融资、无市值。以下为<strong>可比机构规模对标</strong>，非估值分析。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">SilverChain (NFP)</th>
+<th style="text-align: center;">Bolton Clarke (NFP)</th>
+<th style="text-align: center;">Regis Healthcare (ASX:REG)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">收入</td>
+<td style="text-align: center;">~AUD $625M</td>
+<td style="text-align: center;">&gt;AUD $1B</td>
+<td style="text-align: center;">~AUD $700M</td>
+</tr>
+<tr>
+<td style="text-align: left;">EV/Revenue</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: center;">~1.5x</td>
+</tr>
+<tr>
+<td style="text-align: left;">市盈率</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: center;">~15x</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工数</td>
+<td style="text-align: center;">~5,900</td>
+<td style="text-align: center;">~12,000+</td>
+<td style="text-align: center;">~8,000+</td>
+</tr>
+<tr>
+<td style="text-align: left;">市值</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: center;">~AUD $1B</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>如果 SilverChain 是 for-profit 上市公司</strong>（思维实验）：按 Regis 估值倍数，隐含企业价值 ~AUD $900M–1.2B。但 NFP 身份意味着此数字仅是理论参考。</p>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1">1. 对潜在投资者</h3>
+<ul>
+<li><strong>无可投资性</strong>：NFP 无股权，无法直接投资</li>
+<li><strong>但可关注</strong>：政府是否推动 NFP 转为&rdquo;社会企业&rdquo;或引入社会影响力债券</li>
+</ul>
+<h3 id="2-ihomecare">2. 对 iHomeCare 管理层</h3>
+<ul>
+<li><strong>核心对标维度</strong>：</li>
+<li><strong>临床能力建设</strong>：SilverChain 证明&rdquo;能做复杂临床&rdquo;是居家护理最强护城河——此点 iHomeCare 可直接借鉴</li>
+<li><strong>偏远地区策略</strong>：SilverChain 的 WA 偏远地区服务是典型&rdquo;先亏损→建壁垒→不可替代&rdquo;策略</li>
+<li><strong>NFP 信任资产</strong>：在老龄化市场，NFP/社会企业身份本身就是竞争壁垒</li>
+<li><strong>差异化切入点</strong>：</li>
+<li>SilverChain 的技术是短板 → iHomeCare 可用 AI/技术领先切入</li>
+<li>SilverChain 的 NSW/VIC 覆盖较浅 → 可优先在东部沿海竞争</li>
+<li><strong>关键借鉴</strong>：双重认证（医疗+养老）是 HITH/急性居家护理的准入门槛——iHomeCare 进入澳大利亚市场须重视此点</li>
+</ul>
+<h3 id="3">3. 对竞对/新进入者</h3>
+<ul>
+<li><strong>壁垒高度</strong>：130 年品牌 + 偏远地区网络 + 政府关系 → 🔴 极高</li>
+<li><strong>薄弱环节</strong>：技术数字化 → 可攻击点</li>
+<li><strong>KinCare 整合窗口</strong>：2025-2026 年是 SilverChain 最脆弱期（整合投入 + 改革过渡），是竞争对手的切入窗口</li>
+</ul>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<h3 id="_28">核心政策环境</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策/法规</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">对 SilverChain 影响</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Support at Home 改革</strong></td>
+<td style="text-align: left;">2025.11 实施（延迟）</td>
+<td style="text-align: left;">🔴 核心 — 重新定义 HCP/CHSP 拨款逻辑</td>
+<td style="text-align: left;">联邦卫生部</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>新 Aged Care Act</strong></td>
+<td style="text-align: left;">2025.11 实施（延迟）</td>
+<td style="text-align: left;">🔴 重大 — 强化质量标准 + 新拨款框架</td>
+<td style="text-align: left;">联邦立法</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Aged Care Quality Standards</strong></td>
+<td style="text-align: left;">已实施 + 加强版将至</td>
+<td style="text-align: left;">⚠️ 合规成本上升</td>
+<td style="text-align: left;">养老护理质量与安全委员会</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDIS</strong></td>
+<td style="text-align: left;">持续改革中</td>
+<td style="text-align: left;">⚠️ 残障支持拨款稳定性</td>
+<td style="text-align: left;">NDIA</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ACNC 治理标准</strong></td>
+<td style="text-align: left;">现行</td>
+<td style="text-align: left;">⚠️ NFP 年报/治理合规</td>
+<td style="text-align: left;">ACNC</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>National Health Reform</strong></td>
+<td style="text-align: left;">讨论中</td>
+<td style="text-align: left;">🟢 利好 — 推动 HITH/居家替代</td>
+<td style="text-align: left;">联邦+州</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_29">政策趋势判断</h3>
+<ul>
+<li><strong>方向确定</strong>：澳大利亚两党共识——&ldquo;居家优先&rdquo;是老龄化社会唯一可行路径</li>
+<li><strong>节奏不确定</strong>：改革反复延迟（原定 2024.7 → 2025.7 → 2025.11）反映执行复杂度</li>
+<li><strong>SilverChain 的立场</strong>：NFP 身份 + 临床能力 = 政策话语权，有能力影响规则制定</li>
+</ul>
+<h3 id="_30">监管土壤评分</h3>
+<p>🟢 <strong>整体有利</strong> — 政策方向明确利好居家护理，但改革过渡期有不确定性。NFP 身份提供额外政策缓冲。</p>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<h3 id="hcp-level-4">典型案例：HCP Level 4 客户（高级居家护理）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">年度金额 (AUD)</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">政府拨款 (HCP L4)</td>
+<td style="text-align: center;">~$52,000</td>
+<td style="text-align: left;">2025 标准</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SilverChain 收入</strong></td>
+<td style="text-align: center;">~$47,000</td>
+<td style="text-align: left;">扣减行政费 (~10%)</td>
+</tr>
+<tr>
+<td style="text-align: left;">直接护理人力</td>
+<td style="text-align: center;">~$35,000</td>
+<td style="text-align: left;">RN/PCW 上门服务</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理管理/协调</td>
+<td style="text-align: center;">~$5,000</td>
+<td style="text-align: left;">Care Manager 时间分摊</td>
+</tr>
+<tr>
+<td style="text-align: left;">差旅</td>
+<td style="text-align: center;">~$2,000</td>
+<td style="text-align: left;">上门往返</td>
+</tr>
+<tr>
+<td style="text-align: left;">后台分摊</td>
+<td style="text-align: center;">~$4,700</td>
+<td style="text-align: left;">行政/IT/物业</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>盈余</strong></td>
+<td style="text-align: center;">~$300</td>
+<td style="text-align: left;">~0.6% 微利</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_31">关键假设</h3>
+<ul>
+<li>人力成本占比 ~75%（行业典型）</li>
+<li>差旅成本在偏远地区显著升高（可加 30-50%）</li>
+<li>NFP 不追求高盈余，定价贴近成本</li>
+</ul>
+<h3 id="vs_1">vs 机构养老</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">对比</th>
+<th style="text-align: center;">居家护理 (HCP L4)</th>
+<th style="text-align: center;">机构养老 (RAD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">政府支出/年</td>
+<td style="text-align: center;">~$52,000</td>
+<td style="text-align: center;">~$70,000+</td>
+</tr>
+<tr>
+<td style="text-align: left;">消费者共付</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">高 (RAD 押金 ~$400K+)</td>
+</tr>
+<tr>
+<td style="text-align: left;">消费者偏好</td>
+<td style="text-align: center;">80%+ 更愿居家</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">政府偏好</td>
+<td style="text-align: center;">成本更低</td>
+<td style="text-align: center;">资本密集</td>
+</tr>
+</tbody>
+</table></div>
+<p>居家护理的单元经济对政府和消费者均是更优选择——这是 Support at Home 改革的核心逻辑。</p>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<h3 id="_32">分层矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: left;">人群特征</th>
+<th style="text-align: center;">市场规模</th>
+<th style="text-align: center;">支付能力</th>
+<th style="text-align: center;">产品匹配度</th>
+<th style="text-align: center;">战略优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>A 级</strong></td>
+<td style="text-align: left;">高临床复杂性老年人（伤口/导管/IV/临终）</td>
+<td style="text-align: center;">小</td>
+<td style="text-align: center;">高（政府全包）</td>
+<td style="text-align: center;">★★★★★</td>
+<td style="text-align: center;">🔴 核心</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B 级</strong></td>
+<td style="text-align: left;">HCP 3-4 级居家养老者（需临床+个人护理）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">中高（政府拨款）</td>
+<td style="text-align: center;">★★★★</td>
+<td style="text-align: center;">🔴 核心</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>C 级</strong></td>
+<td style="text-align: left;">HCP 1-2 级/CHSP 低需求老年人</td>
+<td style="text-align: center;">大</td>
+<td style="text-align: center;">中（政府拨款）</td>
+<td style="text-align: center;">★★★</td>
+<td style="text-align: center;">🟡 增长</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D 级</strong></td>
+<td style="text-align: left;">NDIS 残障参与者</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">中（NDIS 拨款）</td>
+<td style="text-align: center;">★★★</td>
+<td style="text-align: center;">🟡 补充</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E 级</strong></td>
+<td style="text-align: left;">偏远地区居民（所有类别）</td>
+<td style="text-align: center;">小</td>
+<td style="text-align: center;">低（服务成本高）</td>
+<td style="text-align: center;">★★★★</td>
+<td style="text-align: center;">🟢 壁垒资产</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_33">战略含义</h3>
+<ul>
+<li>SilverChain 的高价值客户是 <strong>A+B 级</strong>（复杂临床 + 高级居家养老）——这是其差异化所在</li>
+<li>C 级市场竞争激烈（低门槛，大量小型提供商可替代）</li>
+<li><strong>偏远地区 (E 级)</strong> 是亏损性战略资产：短期成本高，但构成不可替代的竞争壁垒 + 政府关系筹码</li>
+</ul>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<h3 id="_34">已确认竞品</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">名称</th>
+<th style="text-align: left;">模式</th>
+<th style="text-align: left;">规模</th>
+<th style="text-align: left;">技术/差异化</th>
+<th style="text-align: center;">威胁等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Bolton Clarke</strong></td>
+<td style="text-align: left;">NFP 全国护理+退休村</td>
+<td style="text-align: left;">&gt;AUD $1B，12,000+ 员工</td>
+<td style="text-align: left;">技术投入领先，规模最大</td>
+<td style="text-align: center;">🟡 最大竞对</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HammondCare</strong></td>
+<td style="text-align: left;">NFP 基督教，失智症专长</td>
+<td style="text-align: left;">~AUD $500M，5,000+</td>
+<td style="text-align: left;">失智症护理标杆</td>
+<td style="text-align: center;">🟢 间接</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BaptistCare</strong></td>
+<td style="text-align: left;">NFP 基督教</td>
+<td style="text-align: left;">~AUD $500M，5,000+</td>
+<td style="text-align: left;">NSW/ACT 强覆盖</td>
+<td style="text-align: center;">🟢 间接</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Regis Healthcare</strong></td>
+<td style="text-align: left;">ASX 上市 for-profit</td>
+<td style="text-align: left;">~AUD $700M，8,000+</td>
+<td style="text-align: left;">资本充裕，并购活跃</td>
+<td style="text-align: center;">🟡 模式差异</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Amplar Health</strong></td>
+<td style="text-align: left;">Medibank 旗下 for-profit</td>
+<td style="text-align: left;">数据未公开</td>
+<td style="text-align: left;">HITH/虚拟护理技术强</td>
+<td style="text-align: center;">🟡 直接 HITH 竞对</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Anglicare</strong></td>
+<td style="text-align: left;">NFP 基督教</td>
+<td style="text-align: left;">~AUD $300M</td>
+<td style="text-align: left;">社区网络深</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Uniting NSW.ACT</strong></td>
+<td style="text-align: left;">NFP</td>
+<td style="text-align: left;">~AUD $500M+</td>
+<td style="text-align: left;">NSW 社区服务网</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>小型 HCP 提供商</strong></td>
+<td style="text-align: left;">碎片化</td>
+<td style="text-align: left;">每家 &lt;$50M</td>
+<td style="text-align: left;">本地化灵活</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="bolton-clarke">最大威胁深度扫描：Bolton Clarke</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Bolton Clarke</th>
+<th style="text-align: left;">SilverChain</th>
+<th style="text-align: left;">优势方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">规模</td>
+<td style="text-align: left;">&gt;AUD $1B</td>
+<td style="text-align: left;">~$625M</td>
+<td style="text-align: left;">BC</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床能力</td>
+<td style="text-align: left;">★★★★</td>
+<td style="text-align: left;">★★★★★</td>
+<td style="text-align: left;">SC</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术</td>
+<td style="text-align: left;">★★★★</td>
+<td style="text-align: left;">⚠️ 整合中</td>
+<td style="text-align: left;">BC</td>
+</tr>
+<tr>
+<td style="text-align: left;">品牌历史</td>
+<td style="text-align: left;">~10 年（合并后）</td>
+<td style="text-align: left;">130 年</td>
+<td style="text-align: left;">SC</td>
+</tr>
+<tr>
+<td style="text-align: left;">退休村整合</td>
+<td style="text-align: left;">✅ 有</td>
+<td style="text-align: left;">❌ 无</td>
+<td style="text-align: left;">BC</td>
+</tr>
+<tr>
+<td style="text-align: left;">治理稳定性</td>
+<td style="text-align: left;">2015 合并后整合中</td>
+<td style="text-align: left;">2011+2024 收购整合中</td>
+<td style="text-align: left;">→ 持平</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_35">潜在跨界进入者</h3>
+<ul>
+<li><strong>保险公司</strong>（如 Medibank/Amplar 模式）：有资本和技术，但缺护理交付网络</li>
+<li><strong>医院系统</strong>：直接开展 HITH 可能绕开 SilverChain</li>
+<li><strong>科技平台</strong>（远程医疗、AI 分诊）：可能抢占轻症市场</li>
+</ul>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略评估</h2>
+<blockquote>
+<p>❌ <strong>不适用</strong> — SilverChain 纯澳大利亚国内运营，无跨境扩张迹象。澳大利亚 NFP 的 ACNC 注册限制其海外业务比例。以下为跨州扩展评估。</p>
+</blockquote>
+<h3 id="_36">跨州扩展状态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">州/领地</th>
+<th style="text-align: center;">覆盖深度</th>
+<th style="text-align: left;">进入方式</th>
+<th style="text-align: center;">扩展潜力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">WA</td>
+<td style="text-align: center;">★★★★★</td>
+<td style="text-align: left;">原产地</td>
+<td style="text-align: center;">饱和，维护壁垒</td>
+</tr>
+<tr>
+<td style="text-align: left;">SA</td>
+<td style="text-align: center;">★★★★</td>
+<td style="text-align: left;">RDNS SA 合并</td>
+<td style="text-align: center;">深耕，地域有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">VIC</td>
+<td style="text-align: center;">★★★</td>
+<td style="text-align: left;">有机+KinCare</td>
+<td style="text-align: center;">🟢 最大增长潜力</td>
+</tr>
+<tr>
+<td style="text-align: left;">NSW</td>
+<td style="text-align: center;">★★★</td>
+<td style="text-align: left;">KinCare 收购</td>
+<td style="text-align: center;">🟢 最大市场</td>
+</tr>
+<tr>
+<td style="text-align: left;">QLD</td>
+<td style="text-align: center;">★★★</td>
+<td style="text-align: left;">KinCare</td>
+<td style="text-align: center;">🟡 老龄化重镇</td>
+</tr>
+<tr>
+<td style="text-align: left;">TAS</td>
+<td style="text-align: center;">★★</td>
+<td style="text-align: left;">有限进入</td>
+<td style="text-align: center;">🟡 分散市场</td>
+</tr>
+<tr>
+<td style="text-align: left;">NT</td>
+<td style="text-align: center;">★</td>
+<td style="text-align: left;">极小覆盖</td>
+<td style="text-align: center;">🟡 偏远能力可复制</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_37">跨境相关性评估</h3>
+<ul>
+<li><strong>新西兰</strong>：文化/法律相近，但 SilverChain 无扩张迹象</li>
+<li><strong>英国</strong>：NHS community nursing 模式类似，SilverChain 曾引用英国经验作为 advocacy 论据</li>
+<li><strong>亚太</strong>：新加坡/香港的老龄化结构与澳洲相似，但 NFP 属性限制海外扩张</li>
+</ul>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<blockquote>
+<p>❌ <strong>不适用</strong> — NFP 无股权退出路径。SilverChain 是收购方（而非被收购标的），其并购价值仅存在于理论&rdquo;资产剥离&rdquo;场景。</p>
+</blockquote>
+<h3 id="_38">近期可比交易（行业参考）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">交易</th>
+<th style="text-align: left;">日期</th>
+<th style="text-align: left;">金额</th>
+<th style="text-align: left;">倍数参考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">SilverChain 收购 KinCare</td>
+<td style="text-align: left;">2024.7</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Regis 收购小型 HCP</td>
+<td style="text-align: left;">频繁</td>
+<td style="text-align: left;">小额</td>
+<td style="text-align: left;">~1-1.5x 收入</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hesperia/Regis 交易</td>
+<td style="text-align: left;">2024.7</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_39">理论估值（若可出售）</h3>
+<ul>
+<li>按 ~AUD $625M 收入，for-profit 居家护理企业 EV/Revenue ~1-2x → 理论企业价值 AUD $600M–1.25B</li>
+<li>但 NFP 法定限制使此分析仅为学术参考</li>
+</ul>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<h3 id="esg">ESG 披露状态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">评估</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Environmental</strong></td>
+<td style="text-align: center;">🟡 有限</td>
+<td style="text-align: left;">居家护理模式本身低碳（vs 机构护理）；无专门碳披露</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Social</strong></td>
+<td style="text-align: center;">🟢 强</td>
+<td style="text-align: left;">核心使命：偏远地区可及性、临终关怀、残障支持</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Governance</strong></td>
+<td style="text-align: center;">🟢 强</td>
+<td style="text-align: left;">ACNC 注册 NFP 治理标准；独立董事会；Modern Slavery Statement 第六版</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="esg_1">关键 ESG 指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>服务可及性</strong></td>
+<td style="text-align: left;">🟢 西澳/南澳偏远地区——减少健康不平等</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>临终关怀</strong></td>
+<td style="text-align: left;">🟢 社区姑息治疗领导者</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>原住民健康</strong></td>
+<td style="text-align: left;">⚠️ 未明确宣传，但偏远地区覆盖包括原住民社区</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工福利</strong></td>
+<td style="text-align: left;">⚠️ NFP 薪资可能低于 for-profit；全行业劳动力短缺</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>慈善效率</strong></td>
+<td style="text-align: left;">未独立评级（非筹款型 NFP，拨款为主收入）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>社会影响力总体评级</strong>：🟢 高 — 核心业务天然产生社会价值。130 年服务的&rdquo;社会许可证&rdquo;是隐性资产。</p>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">推测为地理+业务线矩阵制（WA/SA/VIC/NSW 区域 + 临床/养老/NDIS 业务线）；KinCare 整合后可能调整</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">~5,900（FY2025），FY2024 ~4,500 → 增长 +31%（含 KinCare）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>按部门拆解</strong></td>
+<td style="text-align: left;">未公开精确拆解；护理人员占绝大多数（估计 &gt;75%）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人才密度</strong></td>
+<td style="text-align: left;">注册护士 (RN) 是核心资产；Dale Fisher 本人护理背景 + 获 AM 勋章；管理层多元背景</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🚨 CEO Dale Fisher 任职 6 年，是品牌代言人 + 政府关系核心；董事会主席刚换届（2024-25），过渡风险可控</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工留存</strong></td>
+<td style="text-align: left;">未公开——全行业护理人员流失率 ~20-30%，推测面临同样挑战</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>招聘速度</strong></td>
+<td style="text-align: left;">全行业护理人员短缺 → 招聘为核心运营瓶颈</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>薪酬哲学</strong></td>
+<td style="text-align: left;">NFP 通常低于 for-profit；但提供使命驱动型工作环境</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">130 年历史沉淀；&rdquo;care, connection, innovation&rdquo; 年度主题；年报强调&rdquo;people&rdquo;战略支柱</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>多元化</strong></td>
+<td style="text-align: left;">ACNC NFP 合规要求；未具体公开 DEI 数据</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>组织健康度</strong>：🟡 一般 — 整合期文化融合 + 全行业劳力的挑战，但品牌和管理层稳定性提供缓冲。</p>
+<p><strong>组织风险清单</strong>：</p>
+<ul>
+<li>护理劳动力短缺（全行业，严重度 🔴）</li>
+<li>KinCare 整合期文化冲突 + 人才流失（🟡）</li>
+<li>CEO 继任计划不透明（🟡）</li>
+</ul>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<blockquote>
+<p>⚠️ <strong>适用性调整</strong>：SilverChain 为 NFP，无传统股权融资。以下调整为&rdquo;资金来源与财务可持续性分析&rdquo;。</p>
+</blockquote>
+<h3 id="251">25.1 &ldquo;融资&rdquo;历史</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">日期</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">政府拨款（持续性）</td>
+<td style="text-align: left;">全年</td>
+<td style="text-align: left;">联邦+州政府，约占收入 85%</td>
+</tr>
+<tr>
+<td style="text-align: left;">慈善捐赠</td>
+<td style="text-align: left;">全年</td>
+<td style="text-align: left;">SilverChain Foundation 渠道</td>
+</tr>
+<tr>
+<td style="text-align: left;">KinCare 收购融资</td>
+<td style="text-align: left;">2024.7</td>
+<td style="text-align: left;">资金来源未公开——推测为 NFP 储备金 + 银行借款/社会债券</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="252-cap-table-nfp">25.2 无 Cap Table — NFP</h3>
+<ul>
+<li><strong>无股东、无股权、无期权池</strong></li>
+<li>治理依赖独立董事会</li>
+<li>员工激励：薪资 + 可能的 NFP 福利（薪资牺牲安排）</li>
+</ul>
+<h3 id="253">25.3 现金状况（推断）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">估计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">年度现金流</td>
+<td style="text-align: left;">~AUD $625M 收入 → 运营现金流接近平衡</td>
+</tr>
+<tr>
+<td style="text-align: left;">KinCare 收购现金消耗</td>
+<td style="text-align: left;">未公开，一次性大额支出</td>
+</tr>
+<tr>
+<td style="text-align: left;">财务缓冲</td>
+<td style="text-align: left;">NFP 通常保留 3-6 月运营储备金</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可持续性</strong></td>
+<td style="text-align: left;">✅ NFP 模式可持续 — 政府拨款是稳定收入源，但增长依赖拨款增速 + 捐赠</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="254">25.4 &ldquo;投资者&rdquo;质量（拨款方）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">评估维度</th>
+<th style="text-align: center;">评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">拨款方稳定性</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">联邦政府是长期稳定拨款方</td>
+</tr>
+<tr>
+<td style="text-align: left;">政策风险</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">Support at Home 改革可能改变拨款分配</td>
+</tr>
+<tr>
+<td style="text-align: left;">多元化</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">联邦政府集中度 ~70%</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<blockquote>
+<p>⚠️ <strong>适用性调整</strong>：SilverChain 非传统销售驱动型公司。客户获取以政府转介 + 品牌认知为主。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">政府转介制（My Aged Care）+ 医院转诊 + 品牌认知 + 社区口碑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售团队</strong></td>
+<td style="text-align: left;">无传统销售团队——护理经理承担客户 onboarding 角色</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC</strong></td>
+<td style="text-align: left;">不适用传统 CAC 计算——获客成本主要是 My Aged Care 系统对接 + 品牌维护</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LTV</strong></td>
+<td style="text-align: left;">养老客户平均服务 2-5 年（HCP）；HITH 客户短期（数周-数月）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>获客效率</strong></td>
+<td style="text-align: left;">🟢 高 — 政府系统自动分配 referral，无获客广告费用</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDR</strong></td>
+<td style="text-align: left;">不适用 SaaS 概念——客户留存取决于政府评估的持续批准</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>渠道伙伴</strong></td>
+<td style="text-align: left;">医院 discharge planner、GP 是最重要&rdquo;渠道&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>地推</strong></td>
+<td style="text-align: left;">偏远地区服务团队即&rdquo;地推&rdquo;——服务本身建立本地认知</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>GTM 阶段诊断</strong>：<strong>成熟运营期</strong> — 不需证明 PMF，不需规模化获客，核心是&rdquo;服务容量匹配需求增长&rdquo;。</p>
+<p><strong>GTM 瓶颈</strong>：不是需求不足，是 <strong>供给瓶颈</strong>——护士招聘 + 偏远地区物流。这是全行业瓶颈。</p>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="271">27.1 核心临床指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">估计/状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>30 天再入院率</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: left;">HITH 项目目标 &lt;10%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>不良事件率</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: left;">双重认证要求内部监测</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者满意度</strong></td>
+<td style="text-align: center;">未公开量化数据</td>
+<td style="text-align: left;">年报强调&rdquo;high quality care&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>临床治理</strong></td>
+<td style="text-align: center;">✅ 双重认证</td>
+<td style="text-align: left;">医疗 (health care) + 养老 (aged care) 双标准</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>临床审计</strong></td>
+<td style="text-align: center;">内部体系运行中</td>
+<td style="text-align: left;">NFP 治理要求</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="272">27.2 质量认证体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Aged Care Quality Standards</td>
+<td style="text-align: center;">✅ 认证</td>
+<td style="text-align: left;">养老护理质量与安全委员会</td>
+</tr>
+<tr>
+<td style="text-align: left;">National Safety and Quality Health Service (NSQHS) Standards</td>
+<td style="text-align: center;">✅ 认证</td>
+<td style="text-align: left;">全国唯少数获得医疗+养老双重认证</td>
+</tr>
+<tr>
+<td style="text-align: left;">AHPRA 护理注册</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">所有注册护士 (RN) 须 AHPRA 注册</td>
+</tr>
+<tr>
+<td style="text-align: left;">NDIS 注册服务商</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">NDIS Quality and Safeguards Commission</td>
+</tr>
+<tr>
+<td style="text-align: left;">ACNC 慈善注册</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">治理标准合规</td>
+</tr>
+<tr>
+<td style="text-align: left;">ISO 认证</td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证据类型</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">EMBED 临床试验</td>
+<td style="text-align: left;">🟢 进行中</td>
+<td style="text-align: left;">世界首创——居家老年人抑郁症管理，WA+SA 开展</td>
+</tr>
+<tr>
+<td style="text-align: left;">Smart Glasses 研究</td>
+<td style="text-align: left;">🟡 试点</td>
+<td style="text-align: left;">远程专家指导，技术验证阶段</td>
+</tr>
+<tr>
+<td style="text-align: left;">同行评审论文</td>
+<td style="text-align: left;">未系统统计</td>
+<td style="text-align: left;">通过大学合作产出</td>
+</tr>
+<tr>
+<td style="text-align: left;">白皮书/政策建言</td>
+<td style="text-align: left;">🟢 活跃</td>
+<td style="text-align: left;">年报 + advocacy 中引用国际证据</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>证据强度总体评级</strong>：🟡 中 — EMBED 是重要临床研究，但 SilverChain 整体以服务交付见长，非学术研究型机构。</p>
+<p><strong>临床差异化</strong>：</p>
+<ul>
+<li>vs 标准住院：居家护理降低院内感染风险 + 提升患者舒适度</li>
+<li>vs 传统居家护理：SilverChain 有 RN 主导的复杂临床能力（伤口/导管/IV）</li>
+<li>vs for-profit 对手：NFP 的临床决策以患者需求为中心（非利润驱动）</li>
+</ul>
+<hr />
+<h2 id="_40">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>FY2025 详细财务数据</strong>（收入拆解、资产负债、现金流）</td>
+<td style="text-align: left;">获取 ACNC 年报或 SilverChain 官网完整年报 PDF</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>完整高管团队名单及背景</strong></td>
+<td style="text-align: left;">官网 Leadership 页面或 LinkedIn 爬取</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>KinCare 收购金额及融资方式</strong></td>
+<td style="text-align: left;">年报财务附注或 ACNC 文件</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>具体 EHR/技术系统名称和架构</strong></td>
+<td style="text-align: left;">技术负责人访谈或行业会议材料</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><strong>患者满意度/临床质量量化数据</strong>（NPS、再入院率、不良事件率）</td>
+<td style="text-align: left;">年报附件或直接询问</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><strong>员工流失率和招聘数据</strong></td>
+<td style="text-align: left;">年报人力资源章节或行业对标</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><strong>各州收入拆分</strong>（WA vs SA vs NSW vs VIC）</td>
+<td style="text-align: left;">年报分部报告</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><strong>Support at Home 改革影响的情景分析</strong></td>
+<td style="text-align: left;">政策分析报告或管理层指引</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><strong>原住民社区健康服务数据</strong></td>
+<td style="text-align: left;">年报社会责任章节或专项报告</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;"><strong>董事会委员会详细组成</strong></td>
+<td style="text-align: left;">年报治理章节</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">D0 赛道验证</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">赛道归类正确，与 iHomeCare 高相关</td>
+</tr>
+<tr>
+<td style="text-align: left;">D1 执行摘要</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备</td>
+</tr>
+<tr>
+<td style="text-align: left;">D2 公司全貌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（时间线+管理层+治理）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D3 战略定位</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（核心逻辑+差异化+三阶段）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D4 商业模式</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（架构图+支付方+伙伴生态）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D5 服务产品线</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（9 条产品线+定价+R&amp;D 管线）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D6 客户与支付方</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（客户结构+渠道+品牌声誉）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D7 财务深度</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">NFP 数据有限，基于 IBISWorld 估算</td>
+</tr>
+<tr>
+<td style="text-align: left;">D8 工作流映射</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（Phase 0-5）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D9 技术评估</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（九子维度全部覆盖）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D10 竞争格局</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（8 家竞品+对标矩阵）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D11 TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备</td>
+</tr>
+<tr>
+<td style="text-align: left;">D12 盈利模型</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（NFP 调整）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D13 机遇与风险</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（含法律+宏观敏感性）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D14 管理层指引</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备</td>
+</tr>
+<tr>
+<td style="text-align: left;">D15 估值</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">NFP 不适用，提供可比规模对标</td>
+</tr>
+<tr>
+<td style="text-align: left;">D16 战略建议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（投资者+iHomeCare+竞对三视角）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D17 政策监管</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备</td>
+</tr>
+<tr>
+<td style="text-align: left;">D18 单元经济</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（HCP L4 案例）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D19 客户细分</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（A-E 五层矩阵）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D20 竞品地图</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备（8 家+跨界威胁）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D21 跨境</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">标注不适用，提供跨州分析</td>
+</tr>
+<tr>
+<td style="text-align: left;">D22 退出/并购</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">NFP 不适用，提供理论参考</td>
+</tr>
+<tr>
+<td style="text-align: left;">D23 ESG</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备</td>
+</tr>
+<tr>
+<td style="text-align: left;">D24 组织与人才</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完备</td>
+</tr>
+<tr>
+<td style="text-align: left;">D25 融资/Cap Table</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">NFP 调整，改为资金来源分析</td>
+</tr>
+<tr>
+<td style="text-align: left;">D26 GTM</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">政府转介制调整，非传统销售</td>
+</tr>
+<tr>
+<td style="text-align: left;">D27 临床质量</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">认证信息完备，量化临床指标缺失</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: right;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖（NFP 调整/数据有限）</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 数据缺失</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_41">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">SilverChain 官网</td>
+<td style="text-align: left;">Silverchain Annual Report 2024-2025</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">SilverChain 官网</td>
+<td style="text-align: left;">Agility 2024-2025 — KinCare Acquisition</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Community Care Review</td>
+<td style="text-align: left;">Silverchain buys KinCare</td>
+<td style="text-align: left;">2024-07-03</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">IBISWorld</td>
+<td style="text-align: left;">Silver Chain Group Limited — Company Profile</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">PitchBook</td>
+<td style="text-align: left;">Silver Chain 2026 Company Profile</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Owler</td>
+<td style="text-align: left;">Silver Chain&rsquo;s Competitors, Revenue, Employees</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Growjo</td>
+<td style="text-align: left;">Silver Chain Group Revenue and Competitors</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">RocketReach</td>
+<td style="text-align: left;">Silverchain Group Management Team</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">ACNC</td>
+<td style="text-align: left;">Silver Chain Group Limited — Charity Register</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Modern Slavery Register</td>
+<td style="text-align: left;">Silverchain Group Modern Slavery Statement 2024-25</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">LinkedIn</td>
+<td style="text-align: left;">Dale Fisher AM — CEO Profile</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">Australian Government</td>
+<td style="text-align: left;">Support at Home Reform</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">KPMG</td>
+<td style="text-align: left;">Aged Care Industry Analysis 2026</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">Aged Care Online</td>
+<td style="text-align: left;">Government Funding Data — SilverChain</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">Ansell Strategic</td>
+<td style="text-align: left;">Deal Tracker H2 FY25 — Aged Care M&amp;A</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">SilverChain 官网</td>
+<td style="text-align: left;">Silverchain Group Leadership</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: left;">SilverChain 官网</td>
+<td style="text-align: left;">Delayed Implementation of Aged Care Act Welcomed</td>
+<td style="text-align: left;">2025-06</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td style="text-align: left;">Community Care Review</td>
+<td style="text-align: left;">Workforce readiness essential to sector&rsquo;s future</td>
+<td style="text-align: left;">2026-07-08</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<blockquote>
+<p><strong>免责声明</strong>：SilverChain Group 为非营利组织，不发布上市公司级别的财务报告。本报告基于公开可得信息编制，部分维度数据为基于 IBISWorld/行业对标/年报摘要的合理推断。财务数据请以 ACNC 年度信息声明和 SilverChain 官方年报为准。报告日期：2026-07-11。</p>
+<p>📎 相关报告：[[Bolton Clarke]] [[HammondCare]] [[Regis Healthcare]] [[Amplar Health]]</p>
+</blockquote>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

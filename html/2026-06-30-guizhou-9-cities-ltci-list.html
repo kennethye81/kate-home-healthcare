@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>贵州省9市州长护险政策全量清单</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#9">贵州省9市州长护险政策全量清单</a><ul>
+<li><a href="#_1">省级概况</a><ul>
+<li><a href="#_2">时间表</a></li>
+</ul>
+</li>
+<li><a href="#3">一、已实施（3个）</a><ul>
+<li><a href="#2020">🔵 黔西南州 — 国家第二批试点（2020年起）</a></li>
+<li><a href="#2026">🔵 遵义市 — 2026年启动</a></li>
+<li><a href="#2026_1">🔵 铜仁市 — 2026年启动</a></li>
+</ul>
+</li>
+<li><a href="#_3">二、按省方案推进中的城市</a></li>
+<li><a href="#_4">三、全覆盖总结</a></li>
+<li><a href="#ihomecare">四、对iHomeCare的战略意义</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="9">贵州省9市州长护险政策全量清单</h1>
+<p><strong>数据截止</strong>：2026年6月30日 | <strong>来源</strong>：NHSA官网 + 贵州日报 + 铜仁市医保局</p>
+<hr />
+<h2 id="_1">省级概况</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>省级方案</strong></td>
+<td style="text-align: left;">🟢 <strong>已发</strong> —《贵州省关于加快建立长期护理保险制度的实施意见》</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>发布时间</strong></td>
+<td style="text-align: left;"><strong>2026年6月24日</strong>（NHSA发布）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>全省费率</strong></td>
+<td style="text-align: left;"><strong>0.3%</strong>（统一）；居民当年减半，5年过渡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>职工支付</strong></td>
+<td style="text-align: left;"><strong>70%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居民支付</strong></td>
+<td style="text-align: left;"><strong>50%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>年度上限</strong></td>
+<td style="text-align: left;">不超过统筹地区上年度城乡居民人均可支配收入的50%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>统筹层次</strong></td>
+<td style="text-align: left;">市(州)级统筹，条件成熟一家启动一家</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">时间表</h3>
+<pre><code>2020 ─ 黔西南州国家试点先行
+
+2026 ─ 遵义市、铜仁市启动实施
+
+2026-2028 ─ 其余地区条件成熟一家启动一家
+
+2028年12月底 ─ 全省基本建立长期护理保险制度
+</code></pre>
+<hr />
+<h2 id="3">一、已实施（3个）</h2>
+<h3 id="2020">🔵 黔西南州 — 国家第二批试点（2020年起）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>试点启动</strong></td>
+<td style="text-align: left;"><strong>2020年</strong>（国家第二批扩围）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>覆盖范围</strong></td>
+<td style="text-align: left;">全州参保职工起步</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>政策文件</strong></td>
+<td style="text-align: left;">《黔西南州长期护理保险制度试点实施方案》</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>当前状态</strong></td>
+<td style="text-align: left;">省方案框架下深化推进中</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2026">🔵 遵义市 — 2026年启动</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>启动时间</strong></td>
+<td style="text-align: left;"><strong>2026年</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>政策状态</strong></td>
+<td style="text-align: left;">已正式启动实施</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>覆盖范围</strong></td>
+<td style="text-align: left;">职工起步</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2026_1">🔵 铜仁市 — 2026年启动</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>启动时间</strong></td>
+<td style="text-align: left;"><strong>2026年</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>政策文件</strong></td>
+<td style="text-align: left;">《铜仁市长期护理保险失能等级评估管理实施细则（试行）》(2026.05.29)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>覆盖范围</strong></td>
+<td style="text-align: left;">职工起步</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_3">二、按省方案推进中的城市</h2>
+<p>省方案要求&rdquo;条件成熟一家、启动一家&rdquo;，以下城市正在推进：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">预计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>贵阳</strong></td>
+<td style="text-align: left;">⏳ 推进筹备中</td>
+<td style="text-align: left;">省会，预计2026-2027启动</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><strong>六盘水</strong></td>
+<td style="text-align: left;">⏳ 推进筹备中</td>
+<td style="text-align: left;">2028前</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><strong>安顺</strong></td>
+<td style="text-align: left;">⏳ 推进筹备中</td>
+<td style="text-align: left;">2028前</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><strong>毕节</strong></td>
+<td style="text-align: left;">⏳ 推进筹备中</td>
+<td style="text-align: left;">2028前</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><strong>黔东南州</strong></td>
+<td style="text-align: left;">⏳ 推进筹备中</td>
+<td style="text-align: left;">2028前</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><strong>黔南州</strong></td>
+<td style="text-align: left;">⏳ 推进筹备中</td>
+<td style="text-align: left;">2028前</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_4">三、全覆盖总结</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">城市</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ <strong>已实施</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">黔西南州(2020试点)、遵义(2026)、铜仁(2026)</td>
+</tr>
+<tr>
+<td style="text-align: left;">⏳ <strong>推进中</strong></td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">贵阳、六盘水、安顺、毕节、黔东南州、黔南州</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>合计</strong></td>
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: left;">全省</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="ihomecare">四、对iHomeCare的战略意义</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">城市</th>
+<th style="text-align: center;">优先级</th>
+<th style="text-align: left;">理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>黔西南州</strong></td>
+<td style="text-align: center;">🟡 中期</td>
+<td style="text-align: left;">5年试点运行，有成熟经验</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>遵义</strong></td>
+<td style="text-align: center;">🟡 中期</td>
+<td style="text-align: left;">2026刚启动，定点招募窗口期</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>铜仁</strong></td>
+<td style="text-align: center;">🟡 中期</td>
+<td style="text-align: left;">2026刚启动，实施细则已出</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>贵阳</strong></td>
+<td style="text-align: center;">🔵 关注</td>
+<td style="text-align: left;">省会后发，预计2027-2028启动</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

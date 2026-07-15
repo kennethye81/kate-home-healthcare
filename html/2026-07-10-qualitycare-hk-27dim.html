@@ -1,0 +1,1682 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QualityCare（卓健护理介绍所）27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#qualitycare27">QualityCare（卓健护理介绍所）27 维度深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实</a></li>
+<li><a href="#_2">发展时间线</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_3">核心逻辑</a></li>
+<li><a href="#_4">战略差异化</a></li>
+<li><a href="#_5">战略阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#_6">战略合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a></li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a></li>
+<li><a href="#d7">D7 — 财务深度拆解</a></li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a><ul>
+<li><a href="#bupa">Bupa 投保人→居家的典型路径</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构</a></li>
+<li><a href="#92">9.2 软件架构</a></li>
+<li><a href="#93-iot">9.3 硬件/IoT — ❌ 不适用</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力 — ⚠️ 部分</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a></li>
+<li><a href="#d11-tamsam">D11 — TAM/SAM 估算</a></li>
+<li><a href="#d12">D12 — 盈利模型</a></li>
+<li><a href="#d13">D13 — 机遇与风险评估</a></li>
+<li><a href="#d14">D14 — 管理层</a></li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 的战略建议</a></li>
+<li><a href="#d17-eden-qualitycare">D17 — 政策与监管土壤（与 EDEN 公共部分同，以下突出 QualityCare 特有影响）</a></li>
+<li><a href="#d18">D18 — 单元经济模型</a><ul>
+<li><a href="#bupa-vs-ccsv">Bupa 投保人居家护理单元（vs CCSV 单元）</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群</a></li>
+<li><a href="#d20-qualitycare">D20 — 竞品深度地图（突出 QualityCare 视角）</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略评估</a></li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a></li>
+<li><a href="#d23-esg">D23 — ESG</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a></li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a></li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_7">调研空白与后续补充</a></li>
+<li><a href="#_8">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="qualitycare27">QualityCare（卓健护理介绍所）27 维度深度尽调报告</h1>
+<h2 id="d0">D0 — 赛道验证</h2>
+<p>QualityCare 是<strong>QHMS（卓健医疗）旗下的护理人员转介及居家护理服务品牌</strong>，隶属于 Bupa（保柏）集团。业务涵盖护理人员转介（医院、安老院舍、个人客户）及 2024 年 9 月新推出的「卓健居家护理」品牌服务。</p>
+<p><strong>赛道定位</strong>：🟡 <strong>传统医疗网络+护理转介 → 居家护理延伸</strong>。核心是 Bupa 保险生态内的「保险+医疗+护理」闭环整合，非独立的 HaH 急性医疗平台。对 iHomeCare 的竞品相关性<strong>中</strong>——居家护理服务有直接重叠，但其竞争优势来自 Bupa 保险整合（而非技术/临床创新），代表的是「支付方驱动」模式。</p>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一句话定位</strong></td>
+<td>Bupa 旗下香港最大私营医疗网络（1,650+服务点）的护理转介及新兴居家护理服务，核心壁垒是「保险+医疗+护理」付费闭环</td>
+</tr>
+<tr>
+<td><strong>核心数据</strong></td>
+<td>母公司 Bupa 全球营收 £140亿+；香港 1,650+服务点；护理介绍所 1975年成立（50年历史）；2024.9 推出「卓健居家护理」</td>
+</tr>
+<tr>
+<td><strong>成立/收购</strong></td>
+<td>1868年创立（Dr. Anderson &amp; Partners）→ 2013.10 Bupa $355M 收购</td>
+</tr>
+<tr>
+<td><strong>对 iHomeCare 相关性</strong></td>
+<td>🟡 中——居家护理服务直接重叠；Bupa 保险整合模式是 iHomeCare 支付策略的核心参照</td>
+</tr>
+<tr>
+<td><strong>总体判断</strong></td>
+<td>香港最老牌的医疗护理机构之一（150+年历史），在规模、品牌、保险整合方面具备结构性优势。但居家护理是 2024 年新业务线，尚处早期。其「支付方（Bupa）→ 医疗网络（QHMS）→ 居家护理（QualityCare）」的三层闭环是独特壁垒，非独立竞品可复制</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_1">基本事实</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公司全称</td>
+<td>卓健护理介绍所（Quality Healthcare Nursing Agency），隶属于卓健医疗（Quality HealthCare Medical Services / QHMS）</td>
+</tr>
+<tr>
+<td>成立年份</td>
+<td>1868年（Dr. Anderson &amp; Partners 起源）；1975年成立护理介绍所；2024年9月推出「卓健居家护理」</td>
+</tr>
+<tr>
+<td>总部</td>
+<td>香港</td>
+</tr>
+<tr>
+<td>母公司</td>
+<td><strong>Bupa（保柏）</strong>——全球最大医疗保险公司之一</td>
+</tr>
+<tr>
+<td>CEO/总经理</td>
+<td>朱怡菁（总经理）</td>
+</tr>
+<tr>
+<td>员工规模</td>
+<td>1,001-5,000人（QHMS总计）</td>
+</tr>
+<tr>
+<td>上市状态</td>
+<td>非独立上市——Bupa 旗下全资子公司</td>
+</tr>
+<tr>
+<td>收购信息</td>
+<td>2013年10月 Bupa 以 <strong>$3.55亿美元</strong> 收购 QHMS</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1868</td>
+<td>Dr. Anderson &amp; Partners 在香港创立（香港最早西医诊所之一）</td>
+</tr>
+<tr>
+<td>1870s-1974</td>
+<td>逐步发展为香港领先的私营医疗集团</td>
+</tr>
+<tr>
+<td>1975</td>
+<td>成立<strong>卓健护理介绍所</strong>（Quality Healthcare Nursing Agency）——提供护理人员转介</td>
+</tr>
+<tr>
+<td>1990s-2012</td>
+<td>扩展至全港多科室医疗网络，建立 1,000+ 服务点</td>
+</tr>
+<tr>
+<td>2013.10</td>
+<td>Bupa 以 <strong>$355M 美元</strong> 收购 QHMS</td>
+</tr>
+<tr>
+<td>2013-2023</td>
+<td>Bupa 整合期——将 QHMS 纳入全球保险+医疗生态</td>
+</tr>
+<tr>
+<td>2024.09</td>
+<td>正式推出<strong>「卓健居家护理」</strong>品牌，进军居家护理市场</td>
+</tr>
+<tr>
+<td>2025-至今</td>
+<td>CCSV 认可服务单位，持续扩展居家护理服务</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_3">核心逻辑</h3>
+<p><strong>「Bupa 保险支付方驱动的医疗生态闭环——让投保人从门诊→住院→居家康复都在 Bupa 体系内完成」</strong></p>
+<p>QualityCare 居家护理不是独立的创业项目，而是 Bupa 集团「保险赔付→自有医疗网络→居家护理」价值链的<strong>最后一环延伸</strong>。其战略逻辑是：居家护理降低保险理赔成本（居家康复比住院便宜）→ Bupa 保险产品可设计更优惠的包含居家护理的套餐 → 吸引更多投保人 → 规模化后进一步降低成本。</p>
+<h3 id="_4">战略差异化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>支付整合</td>
+<td>🟢 <strong>独特优势</strong>——Bupa 保险可直接理赔居家护理（香港唯一实现「保险+护理」直付的机构）</td>
+</tr>
+<tr>
+<td>品牌信任</td>
+<td>🟢 150+年历史 + Bupa 全球品牌</td>
+</tr>
+<tr>
+<td>服务网络</td>
+<td>🟢 1,650+服务点，全港覆盖</td>
+</tr>
+<tr>
+<td>技术平台</td>
+<td>🟡 QHMS App（视像诊症+电子健康纪录），但非专为居家护理设计</td>
+</tr>
+<tr>
+<td>CCSV 渠道</td>
+<td>✅ 认可服务单位，双轨支付</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_5">战略阶段</h3>
+<ul>
+<li><strong>Phase 1 (1868-2013)</strong>：从西医诊所发展为香港领先私营医疗网络</li>
+<li><strong>Phase 2 (2013-2024)</strong>：Bupa 整合期——将医疗服务网络与 Bupa 保险产品对接</li>
+<li><strong>Phase 3 (2024-至今)</strong>：推出「卓健居家护理」——将保险+医疗闭环延伸至居家，布局老龄化市场</li>
+</ul>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<pre><code>供给端                        平台                         需求端
+────────────────────────────────────────────────────────────
+Bupa 保险体系                  QHMS (卓健医疗)              Bupa 投保人
+├─ 全球 £140亿+ 营收          ├─ 1,650+ 服务点             (保险直付)
+├─ 香港市场领先                ├─ 西医/中医/牙科/体检       ↓
+└─ 保险产品设计                ├─ QHMS App                  CCSV合资格长者
+                               │                            (政府资助)
+护理人员库                     │                            ↓
+├─ 自雇注册护士/登记护士       ├─ QualityCare              自费长者/家属
+├─ 护理员/保健员               │  ├─ 护理介绍所(1975)       ↓
+└─ CCSV 标准培训               │  └─ 卓健居家护理(2024)    企业客户
+                               │                            (团体保险/员工福利)
+                               └─ CCSV认可服务单位           ↓
+                                                           医院/安老院舍
+                                                           (护理人员B2B转介)
+</code></pre>
+<h3 id="_6">战略合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">伙伴类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: left;">合作性质</th>
+<th style="text-align: center;">排他性</th>
+<th style="text-align: center;">收入贡献</th>
+<th style="text-align: center;">关系健康度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">保险/支付方</td>
+<td style="text-align: left;">Bupa（母公司）</td>
+<td style="text-align: left;">保险直付+产品设计</td>
+<td style="text-align: center;">✅ 排他</td>
+<td style="text-align: center;">核心</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">医院系统</td>
+<td style="text-align: left;">全港私立医院 + 医管局推展</td>
+<td style="text-align: left;">病人转诊</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">重要</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">安老院舍</td>
+<td style="text-align: left;">全港 ~500+ 私营院舍</td>
+<td style="text-align: left;">护理人员供给 + 院舍券认可</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">CCSV 政府</td>
+<td style="text-align: left;">社署</td>
+<td style="text-align: left;">社区券认可服务单位</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">增长中</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>客户类型</th>
+<th>服务内容</th>
+<th style="text-align: center;">定价模式</th>
+<th style="text-align: center;">收入占比估</th>
+<th style="text-align: center;">利润率特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>护理人员转介（医院/院舍）</td>
+<td>医疗机构</td>
+<td>注册护士/登记护士/护理员派遣</td>
+<td style="text-align: center;">按小时/天计费</td>
+<td style="text-align: center;">~40%</td>
+<td style="text-align: center;">中介费~15-25%</td>
+</tr>
+<tr>
+<td>护理人员转介（个人）</td>
+<td>自费客户</td>
+<td>上门护理/陪诊/24小时看护</td>
+<td style="text-align: center;">按小时/天</td>
+<td style="text-align: center;">~25%</td>
+<td style="text-align: center;">中介费~15-25%</td>
+</tr>
+<tr>
+<td><strong>卓健居家护理（2024.09新）</strong></td>
+<td>CCSV长者 + Bupa投保人</td>
+<td>综合居家护理方案</td>
+<td style="text-align: center;">CCSV社区券 + Bupa保险直付</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: center;">发展中</td>
+</tr>
+<tr>
+<td>西医/中医/牙科/体检</td>
+<td>全港居民</td>
+<td>门诊/专科/体检服务</td>
+<td style="text-align: center;">自费 + 保险理赔</td>
+<td style="text-align: center;">Bupa整体(HK)</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>注：QHMS 整体收入远超 QualityCare 护理业务，后者为集团业务的一小部分。以上占比为 QualityCare 护理业务内部的逻辑推演。</p>
+</blockquote>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>客户类别</th>
+<th style="text-align: center;">收入占比估</th>
+<th>特点</th>
+<th>趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B2B 医院/院舍</td>
+<td style="text-align: center;">~40%</td>
+<td>长期合约、稳定量大</td>
+<td>→</td>
+</tr>
+<tr>
+<td>B2C 自费个人客户</td>
+<td style="text-align: center;">~25%</td>
+<td>价格敏感度较高</td>
+<td>↑（老龄化驱动）</td>
+</tr>
+<tr>
+<td>CCSV政府渠道</td>
+<td style="text-align: center;">~10%</td>
+<td>新兴渠道、政策红利</td>
+<td>↑↑</td>
+</tr>
+<tr>
+<td>Bupa 保险投保人</td>
+<td style="text-align: center;">~20%</td>
+<td><strong>核心差异化</strong>——保险直付</td>
+<td>↑</td>
+</tr>
+<tr>
+<td>企业团体客户</td>
+<td style="text-align: center;">~5%</td>
+<td>员工福利外包</td>
+<td>→</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>支付方来源占比</strong>：
+| 支付方 | 占比估 | 特征 |
+|--------|:&mdash;:|------|
+| <strong>Bupa 保险直付</strong> | ~25% | 闭环内，利润率高 |
+| <strong>其他保险/自费</strong> | ~55% | 标准市场定价 |
+| <strong>CCSV 社区券</strong> | ~10% | 政府定价，利润率较低 |
+| <strong>企业 B2B</strong> | ~10% | 合约定价 |</p>
+<p><strong>集中度风险</strong>：🟡 中等——Bupa 既是母公司也是主要支付方之一（~25%），但非全部依赖。CCSV 占比低（10%），受政策波动影响小。</p>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<p>⚠️ <strong>QHMS 为 Bupa 全资子公司，不单独公开披露财务数据。以下为基于 Bupa 集团公开信息 + 同业对标的推算：</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">推算范围</th>
+<th>推算依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bupa 全球营收</td>
+<td style="text-align: center;"><strong>£140亿+</strong>（~HK$1,400亿）</td>
+<td>Bupa 年报</td>
+</tr>
+<tr>
+<td>QHMS 年收入（HK）</td>
+<td style="text-align: center;">估 <strong>HK$15-30亿</strong></td>
+<td>1,650+服务点 × 单点年均收入估</td>
+</tr>
+<tr>
+<td>QualityCare 护理业务收入</td>
+<td style="text-align: center;">估 <strong>HK$1-3亿</strong></td>
+<td>护理业务为 QHMS 小部分</td>
+</tr>
+<tr>
+<td>QHMS 整体利润率</td>
+<td style="text-align: center;">估 8-15%</td>
+<td>私营医疗集团典型水平</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<h3 id="bupa">Bupa 投保人→居家的典型路径</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phase 0: 触发</strong></td>
+<td>Bupa 投保人出院/门诊后被推荐居家护理；或自主通过 QHMS App 查询</td>
+</tr>
+<tr>
+<td><strong>Phase 1: 评估</strong></td>
+<td>QualityCare 护理经理上门评估 + 与主诊医生协调</td>
+</tr>
+<tr>
+<td><strong>Phase 2: 方案制定</strong></td>
+<td>制定护理方案 → Bupa 保险预授权</td>
+</tr>
+<tr>
+<td><strong>Phase 3: 匹配</strong></td>
+<td>从护理人员库匹配合适资质的护士/护理员</td>
+</tr>
+<tr>
+<td><strong>Phase 4: 服务交付</strong></td>
+<td>护理人员按计划上门；App 记录+追踪</td>
+</tr>
+<tr>
+<td><strong>Phase 5: 结算</strong></td>
+<td>Bupa 直付（投保人自付部分按保险计划）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 财务/行政</td>
+<td style="text-align: center;">✅</td>
+<td>Bupa 全球 ERP 系统</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 业务运营</td>
+<td style="text-align: center;">✅</td>
+<td>QHMS App（电子挂号/预约/视像诊症/健康纪录）</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 调度/运营中心</td>
+<td style="text-align: center;">⚠️</td>
+<td>护理转介调度——⚠️ 无可靠公开数据源说明数字化程度</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 用户端（多端）</td>
+<td style="text-align: center;">✅</td>
+<td>QHMS App（患者端），自主硏发</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据与 AI</td>
+<td style="text-align: center;">⚠️</td>
+<td>Bupa 全球数据资产，但居家护理 AI 应用未见公开</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>架构模式</td>
+<td>⚠️ 无可靠公开数据源</td>
+</tr>
+<tr>
+<td>主要技术栈</td>
+<td>QHMS App——自主硏发；推测 Bupa 全球技术基础设施</td>
+</tr>
+<tr>
+<td>互操作性</td>
+<td>与 Bupa 保险系统深度集成（理赔/预授权）；医健通(eHR+)对接中</td>
+</tr>
+<tr>
+<td>网络安全</td>
+<td>Bupa 全球安全标准——推测 ISO 27001 或等同</td>
+</tr>
+<tr>
+<td>开发实践</td>
+<td>⚠️ 无可靠公开数据源</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件/IoT — ❌ 不适用</h3>
+<p>无自有硬件。不涉设备制造或 RPM 远程监测设备。</p>
+<h3 id="94-ai">9.4 AI 与数据能力 — ⚠️ 部分</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 应用场景</td>
+<td>⚠️ 未见公开的 AI 驱动居家护理应用。Bupa 集团层面有数据分析和理赔 AI</td>
+</tr>
+<tr>
+<td>数据资产</td>
+<td>🟢 Bupa 3,200万被保险人的全球数据——但 QualityCare 居家护理为本地新业务，数据积累有限</td>
+</tr>
+<tr>
+<td>AI 团队</td>
+<td>⚠️ 无可靠公开数据源</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>能力维度</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差距</th>
+<th style="text-align: center;">评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>软件全栈能力</td>
+<td style="text-align: center;">✅ App存在</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">持平</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>保险系统整合</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">❌ 多数竞品无</td>
+<td style="text-align: center;">领先</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>AI 临床能力</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">⚠️ 早期</td>
+<td style="text-align: center;">落后</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td>数据资产规模</td>
+<td style="text-align: center;">🟢（母公司）</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">领先</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>技术护城河</strong>：🟡 中等——「保险系统整合」是真正的护城河（竞品无法复制 Bupa 直付），但居家护理专属技术（RPM/AI/调度）未见领先。</p>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>QualityCare (Bupa)</th>
+<th>Evercare</th>
+<th>百本医护(2293.HK)</th>
+<th>YDCare(新风天域)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成立</td>
+<td>1868（护理1975）</td>
+<td>~2016</td>
+<td>1998</td>
+<td>2024(HK运营)</td>
+</tr>
+<tr>
+<td>护理网络</td>
+<td>1,650+服务点</td>
+<td>3万+护理员</td>
+<td>3.2万登记医护</td>
+<td>300+站点</td>
+</tr>
+<tr>
+<td>保险整合</td>
+<td>✅ Bupa直付</td>
+<td>❌</td>
+<td>❌</td>
+<td>⚠️ 集团层面可能</td>
+</tr>
+<tr>
+<td>技术平台</td>
+<td>QHMS App</td>
+<td>护理匹配App</td>
+<td>⚠️ 基础</td>
+<td>⚠️ 发展中</td>
+</tr>
+<tr>
+<td>CCSV认可</td>
+<td>✅</td>
+<td>✅</td>
+<td>⚠️ 不直接</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>品牌信任度</td>
+<td>🟢 最高（150年）</td>
+<td>🟡</td>
+<td>🟡</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td>资本背景</td>
+<td>Bupa £140亿</td>
+<td>自筹/PE</td>
+<td>上市</td>
+<td>新风天域</td>
+</tr>
+<tr>
+<td>居家护理推出</td>
+<td>2024.09（新）</td>
+<td>创立即做</td>
+<td>N/A</td>
+<td>2024</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>核心竞争优势</strong>：品牌+保险整合+服务网络规模——<strong>三者合一构成难以复制的壁垒</strong>。</p>
+<hr />
+<h2 id="d11-tamsam">D11 — TAM/SAM 估算</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th>计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TAM（香港私营医疗服务）</strong></td>
+<td style="text-align: center;">~$500-800亿港元/年</td>
+<td>全港私营医疗总支出</td>
+</tr>
+<tr>
+<td><strong>SAM（香港居家护理市场）</strong></td>
+<td style="text-align: center;">~$50-80亿港元/年</td>
+<td>CCSV $12亿 + 自费护理 ~$30-60亿</td>
+</tr>
+<tr>
+<td><strong>QualityCare 护理渗透率</strong></td>
+<td style="text-align: center;">估 ~2-5%</td>
+<td>$1-3亿收入 / $50-80亿 SAM</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>成本项</th>
+<th style="text-align: center;">占护理收入估</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>护理人员成本</td>
+<td style="text-align: center;">~60-70%</td>
+<td>RN/EN/护理员薪酬+保险</td>
+</tr>
+<tr>
+<td>QHMS 平台分摊</td>
+<td style="text-align: center;">~10-15%</td>
+<td>品牌/IT/行政基础设施</td>
+</tr>
+<tr>
+<td>获客成本</td>
+<td style="text-align: center;">极低</td>
+<td>Bupa 投保人自然转化 + CCSV 渠道</td>
+</tr>
+<tr>
+<td>利润</td>
+<td style="text-align: center;">估 10-20%</td>
+<td>得益于保险直付的定价优势</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>盈利路径</strong>：🔵 <strong>低获客成本 + 保险溢价定价</strong> = 优于纯自费竞品。Bupa 投保人自然转化（无需独立获客投入）是核心盈利优势。</p>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>机遇</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>短期（0-12月）</strong></td>
+<td>CCSV 16,000 张增量；Bupa 香港投保人基数持续增长</td>
+<td>居家护理是 2024新业务——品牌认知和市场教育需时</td>
+</tr>
+<tr>
+<td><strong>中长期（1-3年）</strong></td>
+<td>香港老龄化+院舍成本上升→居家需求爆发；Bupa 可将「保险+居家护理」模式复制到亚太其他市场</td>
+<td>Bupa 全球战略变动可能影响 QHMS 资源分配；传统医疗机构文化 vs 居家护理灵活性</td>
+</tr>
+<tr>
+<td><strong>结构性</strong></td>
+<td>「支付方驱动」模式的根本优势——竞品难以短期复制</td>
+<td>医疗网络思维可能限制居家护理的创新速度；政府可能推动 HA 建立自有居家护理网络</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>姓名</th>
+<th>职务</th>
+<th>背景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>朱怡菁</td>
+<td>总经理（QHMS）</td>
+<td>⚠️ 具体履历无可靠公开数据源</td>
+</tr>
+</tbody>
+</table></div>
+<p>⚠️ <strong>信息限制</strong>：Bupa 集团年报通常不披露子公司级别管理层详细背景。QualityCare 护理业务的具体负责人未见公开资料。</p>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<p>❌ <strong>不适用</strong>——QualityCare 为 Bupa 全资子公司，不独立上市。参考数据：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>参考指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bupa 2013年收购 QHMS 价格</td>
+<td><strong>$3.55亿美元</strong></td>
+</tr>
+<tr>
+<td>2025年 QHMS 推定估值</td>
+<td>估 <strong>$8-15亿美元</strong>（基于医疗网络扩张+收入增长）</td>
+</tr>
+<tr>
+<td>QualityCare 护理业务单独估值</td>
+<td>⚠️ 不单独估值，为 QHMS 的小部分</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 的战略建议</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>支付模式学习</strong></td>
+<td>QualityCare 的「Bupa 保险直付 + CCSV 社区券」双轨支付是 iHomeCare 最应借鉴的模式——<strong>先对接保险公司（如 AIA/Bupa/Prudential）建立「赔付→服务」闭环，再对接 CCSV 作为增量</strong></td>
+</tr>
+<tr>
+<td><strong>差异化切入点</strong></td>
+<td>iHomeCare 的核心优势是 <strong>急性 HaH（RPM/IoT/AI）</strong>——这是 QualityCare 目前不做且短期内不会做的。与 QualityCare 的竞争不应在传统护理层面，而应在「智能技术驱动的急性居家替代」</td>
+</tr>
+<tr>
+<td><strong>合作可能性</strong></td>
+<td>若 iHomeCare 的 AI/RPM 技术成熟，可寻求与 QHMS/Bupa 合作——成为其「急性期居家护理技术+临床方案」供应商（B2B 模式而非 B2C 竞争）</td>
+</tr>
+<tr>
+<td><strong>竞争威胁</strong></td>
+<td>🟡 中等——若 Bupa 未来将 RPM/AI 接入 QualityCare（收购或自建），将直接威胁 iHomeCare 定位</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d17-eden-qualitycare">D17 — 政策与监管土壤（与 EDEN 公共部分同，以下突出 QualityCare 特有影响）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>政策</th>
+<th>影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CCSV恒常化+扩量</td>
+<td>🔼 QualityCare 2024.09 时间点精准卡位——政策扩量窗口期进入</td>
+</tr>
+<tr>
+<td>2025施政报告：2026年医疗器械立法</td>
+<td>🔼 Bupa 集团如涉数字医疗设备，将受益于监管明确化</td>
+</tr>
+<tr>
+<td>AMD 条例（2025.07生效）</td>
+<td>🔼 居家安宁疗护需求增加——QualityCare 可拓展</td>
+</tr>
+<tr>
+<td>医健通+ 五年计划</td>
+<td>🔼 QHMS 已接入，数据互通提升服务连续性</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<h3 id="bupa-vs-ccsv">Bupa 投保人居家护理单元（vs CCSV 单元）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align: center;">Bupa 直付路径</th>
+<th style="text-align: center;">CCSV 路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>月均服务收入</td>
+<td style="text-align: center;">$8,000-15,000（保险定价）</td>
+<td style="text-align: center;">$4,526-10,824（社区券面值）</td>
+</tr>
+<tr>
+<td>客户自付</td>
+<td style="text-align: center;">按保险计划（0-20%）</td>
+<td style="text-align: center;">5-40%（共付级别）</td>
+</tr>
+<tr>
+<td>服务商收入</td>
+<td style="text-align: center;">全额定價</td>
+<td style="text-align: center;">政府支付余额</td>
+</tr>
+<tr>
+<td>利润率</td>
+<td style="text-align: center;">较高（保险溢价）</td>
+<td style="text-align: center;">中低（政府定价）</td>
+</tr>
+<tr>
+<td>获客成本</td>
+<td style="text-align: center;">几乎为零（Bupa 自然转化）</td>
+<td style="text-align: center;">几乎为零（社署分配）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>核心发现</strong>：Bupa 路径的单位利润率显著优于 CCSV 路径——<strong>「Bupa 投保人是更好的客户」</strong>。QualityCare 的竞争优势恰恰在于能用 Bupa 路径补贴 CCSV 路径。</p>
+<hr />
+<h2 id="d19">D19 — 目标人群</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">级别</th>
+<th>人群</th>
+<th style="text-align: center;">规模</th>
+<th style="text-align: center;">支付能力</th>
+<th style="text-align: center;">QualityCare 匹配度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>A</strong></td>
+<td>Bupa 香港投保人（中产+）</td>
+<td style="text-align: center;">大</td>
+<td style="text-align: center;">高（保险覆盖）</td>
+<td style="text-align: center;">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>B</strong></td>
+<td>CCSV 合资格长者</td>
+<td style="text-align: center;">大</td>
+<td style="text-align: center;">低-中</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>C</strong></td>
+<td>自费高净值长者</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D</strong></td>
+<td>企业 B2B（员工福利）</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">中-高</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20-qualitycare">D20 — 竞品深度地图（突出 QualityCare 视角）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>竞品</th>
+<th style="text-align: center;">威胁等级</th>
+<th>QualityCare 相对优势</th>
+<th>QualityCare 相对劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Evercare</td>
+<td style="text-align: center;">🔴</td>
+<td>品牌+保险整合+网络规模</td>
+<td>居家护理 2024 才推出，非原生</td>
+</tr>
+<tr>
+<td>百本医护</td>
+<td style="text-align: center;">🟡</td>
+<td>Bupa 保险闭环（百本无）</td>
+<td>百本有上市融资灵活性</td>
+</tr>
+<tr>
+<td>YDCare</td>
+<td style="text-align: center;">🟡</td>
+<td>150年品牌信任</td>
+<td>YDCare 有医院集团背书（和睦家）</td>
+</tr>
+<tr>
+<td>EDEN HOME</td>
+<td style="text-align: center;">🟢</td>
+<td>全面碾压</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略评估</h2>
+<p>⚠️ <strong>部分适用</strong>。Bupa 全球网络覆盖 190 国家，理论上可将「HK QHMS + QualityCare 居家护理」模式复制到其他亚太市场。但<strong>目前 QualityCare 居家护理为香港本地业务</strong>，未见跨境开展。</p>
+<p><strong>大湾区机会</strong>：Bupa 在中国内地有保险业务（Bupa China）和医疗中心（保柏卓健广州），具备「粤港澳大湾区保险+医疗+居家」闭环的基础设施。但跨境数据/支付/监管障碍显著。</p>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<p>❌ <strong>不适用</strong>——Bupa 全资子公司，无独立退出路径。唯一相关场景是 Bupa 未来可能出售 QHMS（2013年 $355M 收购，2025年推定估值 $8-15亿）。</p>
+<p><strong>可比交易</strong>：
+| 交易 | 估值 | 倍数参考 |
+|------|------|:&mdash;:|
+| Bupa 收购 QHMS (2013) | $355M | — |
+| 新风天域收购和睦家 | ~$1.4B | — |</p>
+<hr />
+<h2 id="d23-esg">D23 — ESG</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环境（E）</td>
+<td>🟡 Bupa 集团有全球 ESG 报告；QHMS 层面不单独披露</td>
+</tr>
+<tr>
+<td>社会（S）</td>
+<td>🟢 居家护理促进「居家安老」→减少院舍依赖；CCSV 认可→服务基层</td>
+</tr>
+<tr>
+<td>治理（G）</td>
+<td>🟢 Bupa 全球治理标准；ISO 9001:2015 认证</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>组织架构</td>
+<td>QHMS 职能制——总经理下分西医/中医/牙科/体检/护理等事业部。QualityCare 为护理事业部的一部分</td>
+</tr>
+<tr>
+<td>员工规模</td>
+<td>QHMS 总计 1,001-5,000人；QualityCare 护理团队估 50-200人</td>
+</tr>
+<tr>
+<td>人才密度</td>
+<td>注册护士/登记护士为主要护理人力；⚠️ 居家护理专项人才密度待提升（2024新业务）</td>
+</tr>
+<tr>
+<td>关键人依赖</td>
+<td>🟡 总经理+护理事业部负责人</td>
+</tr>
+<tr>
+<td>企业文化</td>
+<td>Bupa 全球文化——「帮助人们活得更长寿、更健康、更快乐」</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>组织健康度</strong>：🟢 强——Bupa 全球体系支撑，制度化程度高。</p>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<p>❌ <strong>不适用</strong>——Bupa 全资子公司，无独立融资。唯一相关事件：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>日期</th>
+<th>金额</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bupa 收购 QHMS</td>
+<td>2013.10</td>
+<td><strong>$3.55亿美元</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Cap Table</strong>：Bupa 100% 持有。</p>
+<p><strong>投资者质量</strong>：🟢 Bupa 为全球顶级医疗保健集团（非财务投资者），长期战略持有。</p>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GTM 模式</td>
+<td><strong>三层驱动</strong>：①Bupa 保险自然转化（核心）②CCSV 政府渠道（增量）③QHMS 医疗网络交叉销售</td>
+</tr>
+<tr>
+<td>CAC</td>
+<td>极低——Bupa 投保人零边际成本获客；CCSV 无获客成本</td>
+</tr>
+<tr>
+<td>LTV/CAC</td>
+<td>极高——低 CAC + 长期客户关系（长者护理是持续性需求）</td>
+</tr>
+<tr>
+<td>NDR（收入留存）</td>
+<td>高——护理服务具有天然黏性</td>
+</tr>
+<tr>
+<td>GTM 瓶颈</td>
+<td>品牌认知——市场未必知道「QualityCare/QHMS 做居家护理」</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>质量认证</td>
+<td>🟢 ISO 9001:2015；HOKLAS 实验室认证</td>
+</tr>
+<tr>
+<td>临床证据</td>
+<td>⚠️ 居家护理为新业务（2024.09），尚无独立的临床结局数据</td>
+</tr>
+<tr>
+<td>质量监控</td>
+<td>QHMS 医疗机构级别的质控体系可延伸至护理业务</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>证据强度</strong>：🟡 中——传统医疗质量体系成熟，但居家护理临床证据尚未建立。</p>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ 完整覆盖</td>
+<td style="text-align: center;">17</td>
+</tr>
+<tr>
+<td>⚠️ 部分覆盖</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td>❌ 不适用</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D0 赛道验证</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D1 执行摘要</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D2 公司全貌</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D3 战略定位</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D4 商业模式</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D5 产品线</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D6 客户/支付方</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D7 财务</td>
+<td style="text-align: center;">⚠️（推算——QHMS不独立公开财务）</td>
+</tr>
+<tr>
+<td>D8 工作流</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D9 技术</td>
+<td style="text-align: center;">⚠️（部分——App存在但居家护理功能有限）</td>
+</tr>
+<tr>
+<td>D10 竞争对标</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D11 TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D12 盈利模型</td>
+<td style="text-align: center;">⚠️（推算）</td>
+</tr>
+<tr>
+<td>D13 机遇与风险</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D14 管理层</td>
+<td style="text-align: center;">⚠️（仅总经理，护理负责人不可得）</td>
+</tr>
+<tr>
+<td>D15 估值</td>
+<td style="text-align: center;">❌ 不适用——Bupa全资子公司</td>
+</tr>
+<tr>
+<td>D16 战略建议</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D17 政策/监管</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D18 单元经济</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D19 客户细分</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D20 竞品地图</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D21 跨境</td>
+<td style="text-align: center;">⚠️（Bupa全球网络但居家护理本地化）</td>
+</tr>
+<tr>
+<td>D22 退出/并购</td>
+<td style="text-align: center;">❌ 不适用</td>
+</tr>
+<tr>
+<td>D23 ESG</td>
+<td style="text-align: center;">⚠️（部分——集团层面）</td>
+</tr>
+<tr>
+<td>D24 组织人才</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D25 融资/Cap Table</td>
+<td style="text-align: center;">❌ 不适用——全资子公司</td>
+</tr>
+<tr>
+<td>D26 GTM</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>D27 临床质量</td>
+<td style="text-align: center;">⚠️（居家护理新业务无独立证据）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_7">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>缺口</th>
+<th>补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>QHMS/QualityCare 护理业务独立收入/利润</td>
+<td>Bupa 年报或有分部披露</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>护理事业部具体负责人及团队规模</td>
+<td>一手调研</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>卓健居家护理 2024.09 推出后的服务量/客户数</td>
+<td>Bupa/QHMS 新闻发布</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>QHMS App 的居家护理功能详细技术架构</td>
+<td>下载 App 体验 or 开发者文档</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>居家护理临床结局数据</td>
+<td>需业务成熟后（2-3年）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_8">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>来源</th>
+<th>内容</th>
+<th style="text-align: center;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>hah_competitors.json v1.2.0</td>
+<td>QualityCare 基本数据</td>
+<td style="text-align: center;">2026.06</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Bupa 全球年报</td>
+<td>全球营收 £140亿+</td>
+<td style="text-align: center;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>QHMS 官网 qhms.com</td>
+<td>服务网络/App/ISO认证</td>
+<td style="text-align: center;">2026.07</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>Bupa 新闻</td>
+<td>$355M 收购 QHMS（2013.10）</td>
+<td style="text-align: center;">2013</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>SWD CCSV 页面</td>
+<td>认可服务单位资质</td>
+<td style="text-align: center;">2026.07</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>2026-27财政预算案 §236</td>
+<td>CCSV 16,000张/年$12亿</td>
+<td style="text-align: center;">2026.02</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td>LinkedIn QHMS</td>
+<td>员工规模 1,001-5,000人</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td>百本医护 FY2025年报</td>
+<td>同业对标</td>
+<td style="text-align: center;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td>Evercare 官网</td>
+<td>竞品对比</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td>新风天域官网</td>
+<td>YDCare 母公司竞品数据</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td>2025施政报告</td>
+<td>医疗器械立法/基层医疗改革</td>
+<td style="text-align: center;">2025.10</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td>香港公司注册处</td>
+<td>QHMS 注册信息</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td>MDJ IJERPH</td>
+<td>香港院舍安宁疗护研究</td>
+<td style="text-align: center;">2022</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td>立法会六题答复</td>
+<td>遥距医疗 34万+ 个案</td>
+<td style="text-align: center;">2025.09</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td>政府统计处</td>
+<td>65+ 人口 23.9%</td>
+<td style="text-align: center;">2024</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><strong>报告编写日期</strong>：2026-07-10
+<strong>编写人</strong>：Kenneth Ye（Kate 调研体系）</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

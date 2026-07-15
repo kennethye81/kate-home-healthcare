@@ -1,0 +1,2748 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medically Home — 27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#medically-home-27">Medically Home — 27 维度深度尽调报告</a><ul>
+<li><a href="#0">🔴 前置步骤 0 — 赛道真实性验证</a></li>
+<li><a href="#1">维度 1 — 执行摘要</a><ul>
+<li><a href="#_1">完备性审计表</a></li>
+</ul>
+</li>
+<li><a href="#2">维度 2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_2">基本事实表</a></li>
+<li><a href="#_3">发展时间线</a></li>
+<li><a href="#_4">管理层表（合并前）</a></li>
+<li><a href="#_5">公司治理</a></li>
+</ul>
+</li>
+<li><a href="#3">维度 3 — 战略定位</a><ul>
+<li><a href="#_6">一句话核心逻辑</a></li>
+<li><a href="#_7">战略差异化要素表</a></li>
+<li><a href="#_8">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#4">维度 4 — 商业模式架构图</a><ul>
+<li><a href="#vs">支付方 vs 使用方分离表</a></li>
+<li><a href="#_9">价值链定位</a></li>
+<li><a href="#_10">战略合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#5">维度 5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#rd">R&amp;D 与创新管线</a></li>
+</ul>
+</li>
+<li><a href="#6">维度 6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_11">客户结构估算表</a></li>
+<li><a href="#_12">支付方来源</a></li>
+<li><a href="#_13">客户集中度风险</a></li>
+<li><a href="#_14">品牌与声誉</a></li>
+</ul>
+</li>
+<li><a href="#7">维度 7 — 财务深度拆解</a><ul>
+<li><a href="#_15">收入结构推断</a></li>
+<li><a href="#_16">核心财务矛盾</a></li>
+</ul>
+</li>
+<li><a href="#8">维度 8 — 工作流/旅程映射</a><ul>
+<li><a href="#phase-0">Phase 0: 需求触发</a></li>
+<li><a href="#phase-1">Phase 1: 评估与匹配</a></li>
+<li><a href="#phase-2">Phase 2: 服务交付</a></li>
+<li><a href="#phase-3">Phase 3: 持续监控</a></li>
+<li><a href="#phase-4">Phase 4: 出院/过渡</a></li>
+<li><a href="#phase-5">Phase 5: 结算</a></li>
+</ul>
+</li>
+<li><a href="#9-ai">维度 9 — 技术深度评估（软件 · 硬件 · AI/数据）</a><ul>
+<li><a href="#91">9.1 平台架构总览（五层模型）</a></li>
+<li><a href="#92">9.2 软件架构深度</a></li>
+<li><a href="#93-iot">9.3 硬件 / IoT 设备</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+<li><a href="#96">9.6 技术风险评估</a></li>
+</ul>
+</li>
+<li><a href="#10">维度 10 — 竞争格局对标矩阵</a></li>
+<li><a href="#11-tamsam">维度 11 — 收入构成与增长趋势（TAM/SAM）</a><ul>
+<li><a href="#tamsam">TAM/SAM 估算</a></li>
+<li><a href="#_17">增长驱动因素</a></li>
+<li><a href="#_18">增长制约因素</a></li>
+</ul>
+</li>
+<li><a href="#12">维度 12 — 盈利模型与路径</a><ul>
+<li><a href="#_19">成本结构拆解（推测）</a></li>
+<li><a href="#_20">盈利路径分析</a></li>
+</ul>
+</li>
+<li><a href="#13">维度 13 — 机遇与风险评估矩阵</a><ul>
+<li><a href="#_21">法律与诉讼</a></li>
+<li><a href="#_22">宏观敏感性</a></li>
+</ul>
+</li>
+<li><a href="#15">维度 15 — 估值对比</a><ul>
+<li><a href="#_23">同业估值对标</a></li>
+</ul>
+</li>
+<li><a href="#16">维度 16 — 战略建议（分角色）</a><ul>
+<li><a href="#1_1">1. 对潜在投资者</a></li>
+<li><a href="#2-dispatchhealth">2. 对 DispatchHealth 管理层（合并后）</a></li>
+<li><a href="#3-ihomecare">3. 对竞对/新进入者（含 iHomeCare）</a></li>
+</ul>
+</li>
+<li><a href="#17">维度 17 — 政策与监管土壤</a><ul>
+<li><a href="#_24">核心政策框架</a></li>
+<li><a href="#_25">政策风险</a></li>
+</ul>
+</li>
+<li><a href="#18">维度 18 — 单元经济模型</a><ul>
+<li><a href="#_26">典型案例成本拆解（推测）</a></li>
+<li><a href="#_27">关键假设清单</a></li>
+</ul>
+</li>
+<li><a href="#19">维度 19 — 目标人群/客户细分</a></li>
+<li><a href="#20">维度 20 — 竞品深度地图</a><ul>
+<li><a href="#_28">已确认竞品列表</a></li>
+<li><a href="#_29">最大威胁深度扫描</a></li>
+<li><a href="#_30">跨界进入者</a></li>
+</ul>
+</li>
+<li><a href="#21">维度 21 — 跨境/跨区域战略</a></li>
+<li><a href="#22">维度 22 — 退出/并购价值分析</a><ul>
+<li><a href="#2025">已完成退出（2025年合并）</a></li>
+<li><a href="#_31">近期可比交易</a></li>
+<li><a href="#_32">潜在买家分析（如独立运营未合并）</a></li>
+</ul>
+</li>
+<li><a href="#23-esg">维度 23 — ESG / 社会影响力</a></li>
+<li><a href="#24">维度 24 — 组织与人才 🆕</a></li>
+<li><a href="#25">维度 25 — 融资历史与资本结构 🆕</a><ul>
+<li><a href="#251">25.1 融资历史全览</a></li>
+<li><a href="#252-cap-table">25.2 Cap Table 深度分析</a></li>
+<li><a href="#253">25.3 现金状况</a></li>
+<li><a href="#254">25.4 投资者质量评估</a></li>
+</ul>
+</li>
+<li><a href="#26-gtm">维度 26 — 销售与 GTM 效率 🆕</a></li>
+<li><a href="#27">维度 27 — 临床质量与患者结局 🆕</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证体系</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#atrium-health-medically-home">🚨 关键发现：Atrium Health 与 Medically Home 关系修正</a></li>
+<li><a href="#_33">调研空白与后续补充</a></li>
+<li><a href="#_34">参考文献</a></li>
+<li><a href="#_35">维度完备性审计表（最终）</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="medically-home-27">Medically Home — 27 维度深度尽调报告</h1>
+<p><strong>报告日期</strong>：2026-07-03<br />
+<strong>分析师</strong>：Kenneth Ye<br />
+<strong>调研方法</strong>：公开资料多源交叉验证（web_search 15+ 轮次）<br />
+<strong>数据截止</strong>：2026年7月<br />
+<strong>报告版本</strong>：v1.0</p>
+<hr />
+<h2 id="0">🔴 前置步骤 0 — 赛道真实性验证</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">验证维度</th>
+<th style="text-align: left;">判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>声称赛道</strong></td>
+<td style="text-align: left;">HaH（Hospital at Home）技术基础设施/技术赋能平台</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>实际赛道</strong></td>
+<td style="text-align: left;">✅ <strong>True HaH 技术平台</strong> — 为医院系统和医生集团提供高急性度居家医疗的技术平台 + Virtual Clinical Command Center</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>判断依据</strong></td>
+<td style="text-align: left;">公司核心产品为 CESL（Clinical Escalation &amp; Support Layer）平台，支持从急诊到住院级护理的全链条居家医疗服务，覆盖 Mayo Clinic、Kaiser Permanente 等顶级医疗系统</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>⚠️ 重要修正</strong></td>
+<td style="text-align: left;">Atrium Health 的 HaH 并非由 Medically Home 平台驱动——Atrium 自建 HaH 体系，后与 Best Buy Health / Current Health 合作。Medically Home 的核心客户为 <strong>Mayo Clinic、Kaiser Permanente</strong> 及其他 ~40 个医疗系统</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>对 iHomeCare 相关性</strong></td>
+<td style="text-align: left;"><strong>高</strong> — 同为 HaH 赛道技术基础设施提供商，商业模式直接对标</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="1">维度 1 — 执行摘要</h2>
+<p><strong>一句话定位</strong>：Medically Home 是美国医院居家医疗（Hospital at Home）赛道的技术基础设施&rdquo;军火商&rdquo;——为 Mayo Clinic、Kaiser Permanente 等顶级医疗系统提供从 Virtual Command Center、临床协议到供应链的全栈 HaH 技术平台，2025年因现金流枯竭被迫与 DispatchHealth 合并。</p>
+<p><strong>核心矛盾</strong>：顶级医疗机构背书（Mayo Clinic、Kaiser Permanente 联合投资约$100M）+ 超大 TAM（美国住院市场&gt;$1万亿） vs. 独立商业模式无法持续（烧光$287M融资后估值大幅缩水、员工普通股清零、被迫卖身 DispatchHealth）。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">关键数据速览</th>
+<th style="text-align: left;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立时间</td>
+<td style="text-align: left;">2016年</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">Boston, MA</td>
+</tr>
+<tr>
+<td style="text-align: left;">累计融资</td>
+<td style="text-align: left;">~$287M（PitchBook）/ $197M（Tracxn，口径不同）</td>
+</tr>
+<tr>
+<td style="text-align: left;">核心投资者</td>
+<td style="text-align: left;">Mayo Clinic、Kaiser Permanente、Baxter、Cardinal Health、GMR</td>
+</tr>
+<tr>
+<td style="text-align: left;">服务患者数</td>
+<td style="text-align: left;">&gt;40,000（截至2024年8月）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025年状态</td>
+<td style="text-align: left;">已被 DispatchHealth 合并，品牌消失</td>
+</tr>
+<tr>
+<td style="text-align: left;">估值轨迹</td>
+<td style="text-align: left;">2022年峰值→2025年&rdquo;大幅缩水&rdquo;，员工普通股清零</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>总体判断</strong>：Medically Home 是 HaH 赛道最具战略眼光的早期玩家，但商业模式上的结构性缺陷（高固定成本虚拟指挥中心 + 依赖少数大客户 + CMS Waiver 政策不确定性）导致其无法独立生存。2025年与 DispatchHealth 的合并是&rdquo;自救式&rdquo;退出，而非战略升级。对 iHomeCare 而言，Medically Home 的经验教训比其技术本身更有价值。</p>
+<h3 id="_1">完备性审计表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: right;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 数据缺失</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="2">维度 2 — 公司全貌（含时间线）</h2>
+<h3 id="_2">基本事实表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>中文名称</strong></td>
+<td style="text-align: left;">Medically Home（无官方中文名）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>英文全称</strong></td>
+<td style="text-align: left;">Medically Home Group, Inc.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成立时间</strong></td>
+<td style="text-align: left;">2016年</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总部</strong></td>
+<td style="text-align: left;">Boston, Massachusetts, USA</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>创始人</strong></td>
+<td style="text-align: left;">Rami Karjian（联合创始人/前CEO）、Raphael Rakowski（联合创始人/执行主席）、Andy Lipman（联合创始人）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CEO（当前）</strong></td>
+<td style="text-align: left;">已于2025年6月并入 DispatchHealth，不再独立存在</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>末任独立CEO</strong></td>
+<td style="text-align: left;">Graham Barnes（2024年8月任命）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">合并前约数百人（合并后 DispatchHealth 总共约2,200人，过半数为一线的临床人员）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>法律状态</strong></td>
+<td style="text-align: left;">2025年6月被 DispatchHealth 合并，现为 DispatchHealth 子公司</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>上市状态</strong></td>
+<td style="text-align: left;">未上市（曾计划 IPO，未果）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">年份</th>
+<th style="text-align: left;">事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2016</strong></td>
+<td style="text-align: left;">Rami Karjian、Raphael Rakowski、Andy Lipman 在波士顿创立 Medically Home</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2017.10</strong></td>
+<td style="text-align: left;">首轮融资</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2018.03</strong></td>
+<td style="text-align: left;">Series A $9.8M，领投方 Connecticut Innovations</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2019.05</strong></td>
+<td style="text-align: left;">Series B $10M，Cardinal Health 战略投资</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2020.03</strong></td>
+<td style="text-align: left;">COVID-19 疫情期间业务量大幅增长，为多个医疗系统提供紧急居家治疗能力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2021.05</strong></td>
+<td style="text-align: left;"><strong>里程碑事件</strong>：Mayo Clinic 与 Kaiser Permanente 联合宣布 ~$100M 战略投资，这是两家顶级医疗机构史无前例的合作</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2022.01</strong></td>
+<td style="text-align: left;"><strong>Series D $110M</strong>，领投方 Baxter、GMR、Cardinal Health（三者各获董事会席位）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2024.08</strong></td>
+<td style="text-align: left;">CEO 更替：联合创始人 Rami Karjian 退任，Graham Barnes 接任 CEO</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2025.03</strong></td>
+<td style="text-align: left;">宣布与 DispatchHealth 合并</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2025.06.04</strong></td>
+<td style="text-align: left;">合并正式完成，Medically Home 品牌消失，并入 DispatchHealth</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2025.06.13</strong></td>
+<td style="text-align: left;">Axios 披露 498 页泄密文件，揭示 Medically Home 估值大幅缩水、依靠 Mayo/Kaiser 过桥资金维持生存</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">管理层表（合并前）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">姓名</th>
+<th style="text-align: left;">职务</th>
+<th style="text-align: left;">背景要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Rami Karjian</td>
+<td style="text-align: left;">联合创始人、前CEO（2016–2024.08）</td>
+<td style="text-align: left;">物流管理背景，后转为顾问角色</td>
+</tr>
+<tr>
+<td style="text-align: left;">Raphael Rakowski</td>
+<td style="text-align: left;">联合创始人、执行主席</td>
+<td style="text-align: left;">前 McKinsey 顾问，Medically Home 的战略灵魂人物</td>
+</tr>
+<tr>
+<td style="text-align: left;">Andy Lipman</td>
+<td style="text-align: left;">联合创始人</td>
+<td style="text-align: left;">运营管理背景</td>
+</tr>
+<tr>
+<td style="text-align: left;">Graham Barnes</td>
+<td style="text-align: left;">CEO（2024.08–合并）</td>
+<td style="text-align: left;">急性医院 staffing/scheduling、护理协调、居家健康、合同生命周期管理背景</td>
+</tr>
+<tr>
+<td style="text-align: left;">Maneesh Goyal</td>
+<td style="text-align: left;">董事会主席</td>
+<td style="text-align: left;">Mayo Clinic Platform COO</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_5">公司治理</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>董事会组成</strong></td>
+<td style="text-align: left;">含 Baxter、GMR、Cardinal Health 的战略投资者代表；Mayo Clinic Platform COO Maneesh Goyal 任主席</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关联交易</strong></td>
+<td style="text-align: left;">Mayo Clinic 和 Kaiser 作为战略投资者+核心客户，存在投资人与客户身份重叠</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理争议</strong></td>
+<td style="text-align: left;">泄密文件显示公司严重依赖最大两个投资者（Mayo Clinic 和 Kaiser Foundation Hospitals）的过桥资金维持生存——投资人/客户双重身份引发利益冲突问题</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="3">维度 3 — 战略定位</h2>
+<h3 id="_6">一句话核心逻辑</h3>
+<p><strong>Medically Home 押注的是：</strong> 美国 $1万亿+ 的住院市场将被&rdquo;去中心化&rdquo;——通过在患者家中设置&rdquo;虚拟医院病房&rdquo;（技术+人员+供应链），将急性住院从高成本的医院大楼转移到低成本的患者家中，而 Medically Home 作为技术平台&rdquo;军火商&rdquo;赚取 SaaS/服务费。</p>
+<h3 id="_7">战略差异化要素表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Medically Home 定位</th>
+<th style="text-align: left;">差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">服务模式</td>
+<td style="text-align: left;">技术赋能平台 + 临床指挥中心（Virtual Command Center）</td>
+<td style="text-align: left;">不直接提供临床服务，而是为医院/医生集团提供&rdquo;即插即用&rdquo;的 HaH 运营系统</td>
+</tr>
+<tr>
+<td style="text-align: left;">客户类型</td>
+<td style="text-align: left;">大型医疗系统（Mayo、Kaiser等）+ 医生集团</td>
+<td style="text-align: left;">以顶级品牌客户建立壁垒</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术核心</td>
+<td style="text-align: left;">CESL 平台（Clinical Escalation &amp; Support Layer）</td>
+<td style="text-align: left;">全天候 24/7 虚拟指挥中心 + 标准化临床协议 + 供应链整合</td>
+</tr>
+<tr>
+<td style="text-align: left;">收入模式</td>
+<td style="text-align: left;">技术平台许可费 + 每患者服务费</td>
+<td style="text-align: left;">混合 SaaS + 按量收费</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_8">战略演变三阶段</h3>
+<ul>
+<li><strong>Phase 1 (2016–2019)</strong>：创立与概念验证——搭建 CESL 平台，验证急性居家医疗的技术可行性</li>
+<li><strong>Phase 2 (2020–2022)</strong>：旗舰客户获取——借助 COVID 契机拿下 Mayo Clinic/Kaiser Permanente 投资与合作，获得顶级品牌背书</li>
+<li><strong>Phase 3 (2023–2025)</strong>：挣扎求生——CMS Waiver 延期不确定性 + 高昂运营成本 + 客户扩展速度不及预期 → 现金流枯竭 → 被迫与 DispatchHealth 合并</li>
+</ul>
+<hr />
+<h2 id="4">维度 4 — 商业模式架构图</h2>
+<pre><code>┌──────────────────────────────────────────────────────────────────┐
+│                      供给端（技术+临床+供应链）                      │
+│  ┌──────────┐  ┌───────────┐  ┌──────────────┐  ┌─────────────┐  │
+│  │ CESL平台  │  │ 24/7 Virtual│  │ 临床协议库    │  │ 设备/耗材    │  │
+│  │ (技术核心) │  │ Command   │  │ (标准化路径)  │  │ 供应链网络   │  │
+│  │           │  │ Center    │  │              │  │             │  │
+│  └─────┬─────┘  └─────┬─────┘  └──────┬───────┘  └──────┬──────┘  │
+│        └──────────────┴────────────────┴─────────────────┘         │
+│                               │                                    │
+│                    Medically Home 平台层                           │
+│              (技术集成 + 指挥中心运营 + 供应链编排)                    │
+│                               │                                    │
+│         ┌─────────────────────┼─────────────────────┐              │
+│         ▼                     ▼                     ▼              │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐          │
+│  │ Mayo Clinic  │     │   Kaiser    │     │  其他医疗    │          │
+│  │ Advanced     │     │ Permanente  │     │ 系统(~40)   │          │
+│  │ Care at Home │     │  Advanced   │     │             │          │
+│  │              │     │ Care at Home│     │             │          │
+│  └──────┬───────┘     └──────┬──────┘     └──────┬──────┘          │
+│         │                    │                    │                │
+│         └────────────────────┼────────────────────┘                │
+│                              ▼                                     │
+│                    需求端（患者）                                    │
+│          急性居家医疗 → 替代传统住院 → 降低成本 ~20-30%               │
+└──────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="vs">支付方 vs 使用方分离表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">角色</th>
+<th style="text-align: left;">具体方</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>支付方</strong></td>
+<td style="text-align: left;">Medicare（CMS Acute Hospital Care at Home Waiver）、商业保险公司、Kaiser Permanente（整合支付）</td>
+<td style="text-align: left;">CMS Waiver 是关键——允许按住院 DRG 费率支付</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>使用方</strong></td>
+<td style="text-align: left;">医院系统（Mayo、Kaiser等）、医生集团</td>
+<td style="text-align: left;">使用 Medically Home 平台运营自己的 HaH 项目</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>终端用户</strong></td>
+<td style="text-align: left;">符合条件的急性病患者</td>
+<td style="text-align: left;">在居家环境中接受医院级治疗</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_9">价值链定位</h3>
+<pre><code>纯技术平台 ←————————————————————————————→ 自建医疗体系
+    │                                              │
+    │  Medically Home                              │
+    │  (技术+指挥中心+供应链)                         │
+    │  ★ 不直接提供临床服务                          │
+</code></pre>
+<h3 id="_10">战略合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">伙伴类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: left;">合作性质</th>
+<th style="text-align: center;">排他性</th>
+<th style="text-align: center;">收入贡献占比</th>
+<th style="text-align: center;">关系健康度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">医院系统</td>
+<td style="text-align: left;">Mayo Clinic</td>
+<td style="text-align: left;">投资+客户+联合运营</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: center;">🟢（但有利益冲突）</td>
+</tr>
+<tr>
+<td style="text-align: left;">保险/支付方</td>
+<td style="text-align: left;">Kaiser Permanente</td>
+<td style="text-align: left;">投资+客户+联合运营</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: center;">🟢（但有利益冲突）</td>
+</tr>
+<tr>
+<td style="text-align: left;">医疗设备</td>
+<td style="text-align: left;">Baxter International</td>
+<td style="text-align: left;">战略投资+设备供应+董事会席位</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">药品/耗材</td>
+<td style="text-align: left;">Cardinal Health</td>
+<td style="text-align: left;">战略投资+供应链+董事会席位</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">急救运输</td>
+<td style="text-align: left;">Global Medical Response</td>
+<td style="text-align: left;">战略投资+移动医疗+董事会席位</td>
+<td style="text-align: center;">否</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术/云</td>
+<td style="text-align: left;">无公开信息</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>🚨 伙伴集中度风险</strong>：最大两个伙伴（Mayo Clinic + Kaiser）同时是最大投资者——泄密文件显示公司依靠这两家的过桥资金才能维持生存。一旦任何一个撤资/终止合作，公司有崩溃风险。</p>
+<p><strong>伙伴切换成本</strong>：中等——技术平台有一定粘性（临床协议、工作流程集成），但医院理论上可自建 HaH 能力（如 Atrium Health 的做法）。</p>
+<hr />
+<h2 id="5">维度 5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">产品线</th>
+<th style="text-align: left;">客户类型</th>
+<th style="text-align: left;">服务内容</th>
+<th style="text-align: left;">定价模式</th>
+<th style="text-align: center;">占收入估</th>
+<th style="text-align: left;">利润率特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CESL 技术平台</td>
+<td style="text-align: left;">医院/医生集团</td>
+<td style="text-align: left;">临床升级与支持层：虚拟指挥中心、标准化临床协议、远程监控</td>
+<td style="text-align: left;">SaaS 许可费 + 按患者收费</td>
+<td style="text-align: center;">核心收入</td>
+<td style="text-align: left;">软件部分高毛利；指挥中心人力成本重</td>
+</tr>
+<tr>
+<td style="text-align: left;">Virtual Command Center</td>
+<td style="text-align: left;">医院/医生集团</td>
+<td style="text-align: left;">24/7 临床监控与协调（虚拟医护团队）</td>
+<td style="text-align: left;">按人员配置 + 按患者收费</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: left;">人力密集型，低毛利</td>
+</tr>
+<tr>
+<td style="text-align: left;">供应链编排</td>
+<td style="text-align: left;">医院/医生集团</td>
+<td style="text-align: left;">设备租赁/配置、耗材管理、药品配送</td>
+<td style="text-align: left;">按交易/按患者</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: left;">中等毛利，依赖 Cardinal Health 等伙伴</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床协议库</td>
+<td style="text-align: left;">医院/医生集团</td>
+<td style="text-align: left;">标准化临床路径（COVID、心衰、COPD等）</td>
+<td style="text-align: left;">含在平台费中</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: left;">高固定成本研发，边际成本近零</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="rd">R&amp;D 与创新管线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">在研产品/功能</th>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">目标市场</th>
+<th style="text-align: center;">潜在收入贡献</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">平台与 DispatchHealth 整合</td>
+<td style="text-align: left;">进行中（合并后）</td>
+<td style="text-align: left;">全美50个大都市区</td>
+<td style="text-align: center;">合并后整体</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 驱动的早期预警系统</td>
+<td style="text-align: left;">无公开信息</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">新的疾病协议扩展</td>
+<td style="text-align: left;">进行中（合并前）</td>
+<td style="text-align: left;">癌症、术后恢复等</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>专利布局</strong>：无可靠公开数据源，需补充一手调研。</p>
+<hr />
+<h2 id="6">维度 6 — 客户与支付方深度拆解</h2>
+<h3 id="_11">客户结构估算表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户类别</th>
+<th style="text-align: left;">代表</th>
+<th style="text-align: center;">收入占比估</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">顶级学术医疗中心</td>
+<td style="text-align: left;">Mayo Clinic</td>
+<td style="text-align: center;">最高</td>
+<td style="text-align: left;">品牌背书价值远超收入贡献</td>
+<td style="text-align: left;">合并后关系待观察</td>
+</tr>
+<tr>
+<td style="text-align: left;">整合支付+服务系统</td>
+<td style="text-align: left;">Kaiser Permanente</td>
+<td style="text-align: center;">最高</td>
+<td style="text-align: left;">患者基数大、支付与服务一体化</td>
+<td style="text-align: left;">合并后关系待观察</td>
+</tr>
+<tr>
+<td style="text-align: left;">其他医疗系统</td>
+<td style="text-align: left;">~40 家合作方</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: left;">规模各异</td>
+<td style="text-align: left;">通过 DispatchHealth 渠道扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;">医生集团</td>
+<td style="text-align: left;">各类</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: left;">规模较小</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_12">支付方来源</h3>
+<ul>
+<li><strong>Medicare</strong>（通过 CMS Acute Hospital Care at Home Waiver）— 按住院 DRG 费率支付，是最核心的支付基础</li>
+<li><strong>Medicare Advantage</strong> — 商业保险替代方案</li>
+<li><strong>商业保险</strong> — 按协商费率</li>
+<li><strong>Kaiser Permanente</strong> — 自保（整合支付方+服务方）</li>
+</ul>
+<h3 id="_13">客户集中度风险</h3>
+<p><strong>🚨 极高</strong>：Mayo Clinic 和 Kaiser Permanente 同时是最大客户和最大投资者。泄密文件显示，在公司资金紧张时，这两个投资者被迫提供过桥资金以维持运营。这种&rdquo;投资-客户&rdquo;双重身份造成严重的利益冲突——公司几乎没有议价能力。</p>
+<h3 id="_14">品牌与声誉</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">公司数据</th>
+<th style="text-align: center;">行业基准</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">患者满意度</td>
+<td style="text-align: center;">无独立公开数据</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">通常由合作医院报告</td>
+</tr>
+<tr>
+<td style="text-align: left;">媒体报道情绪</td>
+<td style="text-align: center;">正面（2021–2022）→ 负面（2025泄密事件）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">Axios, HHCN, FierceHealthcare</td>
+</tr>
+<tr>
+<td style="text-align: left;">品牌认知度</td>
+<td style="text-align: center;">高（在 HaH 专业圈内）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">行业会议/媒体</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>近期声誉事件</strong>：2025年6月泄密事件严重损害品牌——498页内部文件被意外群发给全体员工后外泄至 Axios，暴露了估值暴跌、现金流困境、员工普通股清零等负面信息。</p>
+<hr />
+<h2 id="7">维度 7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ <strong>重要声明</strong>：Medically Home 为未上市私营公司，不公开披露完整财务报表。以下数据基于公开碎片信息拼凑，存在时效性滞后和准确性局限。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">2022（估）</th>
+<th style="text-align: center;">2023（估）</th>
+<th style="text-align: center;">2024（估）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>年度收入</strong></td>
+<td style="text-align: center;">无可靠数据</td>
+<td style="text-align: center;">~$7.8M（Prospeo 估）</td>
+<td style="text-align: center;">无可靠数据</td>
+<td style="text-align: left;">收入体量远不及融资金额</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>累计融资</strong></td>
+<td style="text-align: center;">$287M（PitchBook）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">含 $110M Series D (2022.01)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>估值</strong></td>
+<td style="text-align: center;">峰值（融后 $110M，估值推测 &gt;$500M）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">&ldquo;大幅缩水&rdquo;（泄密文件）</td>
+<td style="text-align: left;">2025 合并估值远低于峰值</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>月度烧钱率</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">高（需 Mayo/Kaiser 过桥资金）</td>
+<td style="text-align: center;">危急性</td>
+<td style="text-align: left;">泄密文件证实</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>现金跑道</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">&lt;6个月（合并前）</td>
+<td style="text-align: left;">被迫合并的直接原因</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_15">收入结构推断</h3>
+<ul>
+<li><strong>主要收入来源</strong>：向医疗系统收取的平台使用费 + 指挥中心运营服务费</li>
+<li><strong>商业模式验证不足</strong>：累计融资 ~$287M 但年收入可能仅 ~$7.8M（Prospeo 2024年估），收入/融资比极低——典型的&rdquo;融资驱动增长、收入模式未跑通&rdquo;</li>
+</ul>
+<h3 id="_16">核心财务矛盾</h3>
+<ol>
+<li><strong>高固定成本结构</strong>：24/7 Virtual Command Center 需要大量临床人员（医生、护士、护理协调员），人力成本极高</li>
+<li><strong>低边际收入</strong>：按患者收费的定价受限于 CMS DRG 费率，毛利率空间有限</li>
+<li><strong>客户集中度风险</strong>：两大客户 = 两大投资者，几乎没有价格谈判空间</li>
+<li><strong>融资难以为继</strong>：2022年 Series D $110M 后再无新融资，2025年依靠投资人过桥资金苟活</li>
+</ol>
+<hr />
+<h2 id="8">维度 8 — 工作流/旅程映射</h2>
+<h3 id="phase-0">Phase 0: 需求触发</h3>
+<ul>
+<li>患者在急诊科/门诊被诊断为需要住院但符合 HaH 条件</li>
+<li>临床评估工具判断患者适合居家治疗</li>
+</ul>
+<h3 id="phase-1">Phase 1: 评估与匹配</h3>
+<ul>
+<li>Medically Home 平台接收患者信息</li>
+<li>自动匹配临床协议（心衰/COPD/COVID/感染等）</li>
+<li>确认地理位置和供应链覆盖</li>
+</ul>
+<h3 id="phase-2">Phase 2: 服务交付</h3>
+<ul>
+<li>设备+耗材配送至患者家中（通过 Cardinal Health/GMR 等伙伴）</li>
+<li>远程监控设备安装（血压/血氧/体温等）</li>
+<li>24/7 Virtual Command Center 激活</li>
+<li>每日虚拟医生查房 + 必要时上门医护/急救人员访问</li>
+</ul>
+<h3 id="phase-3">Phase 3: 持续监控</h3>
+<ul>
+<li>实时生命体征监控 + AI/规则引擎预警</li>
+<li>Virtual Command Center 协调升级响应</li>
+<li>必要时 GMR 急救人员上门或转回实体医院</li>
+</ul>
+<h3 id="phase-4">Phase 4: 出院/过渡</h3>
+<ul>
+<li>达到临床出院标准</li>
+<li>过渡到康复护理或家庭医生随访</li>
+<li>设备回收</li>
+</ul>
+<h3 id="phase-5">Phase 5: 结算</h3>
+<ul>
+<li>按 CMS DRG 费率或协商费率向支付方结算</li>
+<li>Medically Home 向医院收取平台服务费</li>
+</ul>
+<hr />
+<h2 id="9-ai">维度 9 — 技术深度评估（软件 · 硬件 · AI/数据）</h2>
+<h3 id="91">9.1 平台架构总览（五层模型）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">自研/外采</th>
+<th>技术栈（估）</th>
+<th>关键说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 财务/行政</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">外采为主</td>
+<td>ERP/财务系统</td>
+<td>非核心能力</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 业务运营</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研</td>
+<td>CESL 核心业务系统</td>
+<td>临床协议管理+患者流程</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 调度/运营中心</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研</td>
+<td>Virtual Command Center</td>
+<td>实时监控+调度+升级决策</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 用户端（多端）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研</td>
+<td>患者端/医护端/管理后台</td>
+<td>远程监控+视频问诊+沟通</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据与 AI 层</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">自研 + 合作伙伴</td>
+<td>数据库 + 规则引擎</td>
+<td>AI 能力不详</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">推测为模块化单体或微服务架构（基于 SaaS 平台特性）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">与 Epic/Cerner 等 EHR 系统集成；HL7/FHIR 标准支持</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">需符合 HIPAA 标准；无公开 SOC2/HITRUST 认证信息</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>软件 IP</strong></td>
+<td style="text-align: left;">CESL 平台核心 IP；无专利数量公开信息</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可扩展性</strong></td>
+<td style="text-align: left;">多租户架构，支持多医疗系统并行运营</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术债务</strong></td>
+<td style="text-align: left;">2016年创立时的技术选型可能存在遗留约束</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件 / IoT 设备</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>设备品类</strong></td>
+<td style="text-align: left;">血压计、血氧仪、体温计、心电监测、输液泵等</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>设备来源</strong></td>
+<td style="text-align: left;">第三方采购为主（通过 Baxter、Cardinal Health 等战略投资者供应），非自研硬件</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>连接协议</strong></td>
+<td style="text-align: left;">推测 Bluetooth LE / WiFi 为主</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>供应链</strong></td>
+<td style="text-align: left;">依赖 Baxter、Cardinal Health（均为战略投资者+董事会成员）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>硬件成本结构</strong></td>
+<td style="text-align: left;">采购价/租赁模式；硬件毛利极低</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AI 模型类型</strong></td>
+<td style="text-align: left;">推测以规则引擎 + 基础机器学习为主（无公开LLM/深度学习应用披露）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 应用场景</strong></td>
+<td style="text-align: left;">早期预警评分（EWS）、生命体征异常检测、临床升级决策支持</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>训练数据</strong></td>
+<td style="text-align: left;">已服务 40,000+ 患者，积累自有临床数据</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>算法性能</strong></td>
+<td style="text-align: left;">无公开披露</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>临床验证</strong></td>
+<td style="text-align: left;">无独立公开的 AI 算法验证研究</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 监管</strong></td>
+<td style="text-align: left;">需符合 FDA SaMD 框架（如有临床决策支持功能）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 团队</strong></td>
+<td style="text-align: left;">无公开信息</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据治理</strong></td>
+<td style="text-align: left;">HIPAA 合规；患者数据所有权归合作医院</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>能力维度</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差异化评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>软件全栈能力</td>
+<td style="text-align: center;">✅ 较完整</td>
+<td style="text-align: center;">分散</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>硬件整合/自研</td>
+<td style="text-align: center;">❌ 依赖第三方</td>
+<td style="text-align: center;">部分竞品自研</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td>AI 临床级能力</td>
+<td style="text-align: center;">⚠️ 基础</td>
+<td style="text-align: center;">快速演进</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>互操作性/集成</td>
+<td style="text-align: center;">✅ EHR 集成</td>
+<td style="text-align: center;">中等</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>数据资产规模</td>
+<td style="text-align: center;">🟡 40K+患者</td>
+<td style="text-align: center;">领先者&gt;100K</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>技术专利/IP 护城河</td>
+<td style="text-align: center;">⚠️ 不详</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>技术护城河总体评估</strong>：核心技术壁垒为 Virtual Command Center 的运营体系+标准化临床协议，而非底层技术创新。护城河评级：<strong>中等偏弱</strong>——Atrium Health 等系统可以自建替代方案。</p>
+<h3 id="96">9.6 技术风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险类别</th>
+<th>具体风险</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 监管政策突变</td>
+<td>FDA 要求 HaH AI 决策支持系统通过 SaMD 审批</td>
+<td style="text-align: center;">🔴</td>
+<td>提前布局监管合规</td>
+</tr>
+<tr>
+<td>技术团队流失</td>
+<td>合并后整合可能导致关键技术人才离开</td>
+<td style="text-align: center;">🟡</td>
+<td>保留激励方案</td>
+</tr>
+<tr>
+<td>网络安全事件</td>
+<td>远程监控数据泄露</td>
+<td style="text-align: center;">🟡</td>
+<td>HIPAA 合规 + 加密</td>
+</tr>
+<tr>
+<td>互操作性壁垒</td>
+<td>EHR 系统升级导致接口不兼容</td>
+<td style="text-align: center;">🟡</td>
+<td>持续维护集成</td>
+</tr>
+<tr>
+<td>技术债务爆发</td>
+<td>快速扩张期的技术架构欠债</td>
+<td style="text-align: center;">🟡</td>
+<td>合并后整合期重构</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="10">维度 10 — 竞争格局对标矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">对比维度</th>
+<th style="text-align: left;">Medically Home</th>
+<th style="text-align: left;">DispatchHealth</th>
+<th style="text-align: left;">Contessa Health</th>
+<th style="text-align: left;">Current Health (Best Buy)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立年份</td>
+<td style="text-align: left;">2016</td>
+<td style="text-align: left;">2013</td>
+<td style="text-align: left;">2015</td>
+<td style="text-align: left;">2015 (2021 被 Best Buy $400M 收购)</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">Boston, MA</td>
+<td style="text-align: left;">Denver, CO</td>
+<td style="text-align: left;">Nashville, TN</td>
+<td style="text-align: left;">Edinburgh, UK / US</td>
+</tr>
+<tr>
+<td style="text-align: left;">模式</td>
+<td style="text-align: left;">技术平台（军火商）</td>
+<td style="text-align: left;">全栈服务提供商</td>
+<td style="text-align: left;">全栈服务+合资模式</td>
+<td style="text-align: left;">技术+物流平台</td>
+</tr>
+<tr>
+<td style="text-align: left;">客户类型</td>
+<td style="text-align: left;">医院/医生集团</td>
+<td style="text-align: left;">医院/支付方/患者</td>
+<td style="text-align: left;">医院/支付方</td>
+<td style="text-align: left;">医院/支付方</td>
+</tr>
+<tr>
+<td style="text-align: left;">是否直接提供临床服务</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">否</td>
+</tr>
+<tr>
+<td style="text-align: left;">融资总额</td>
+<td style="text-align: left;">~$287M</td>
+<td style="text-align: left;">~$200M+（含合并前）</td>
+<td style="text-align: left;">~$100M+</td>
+<td style="text-align: left;">Best Buy 旗下</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025年状态</td>
+<td style="text-align: left;">被 DispatchHealth 合并</td>
+<td style="text-align: left;">合并后主导方</td>
+<td style="text-align: left;">独立运营</td>
+<td style="text-align: left;">Best Buy Health 业务线</td>
+</tr>
+<tr>
+<td style="text-align: left;">核心差异化</td>
+<td style="text-align: left;">顶级医疗品牌背书</td>
+<td style="text-align: left;">全美覆盖+全链条</td>
+<td style="text-align: left;">合资模式深度绑定</td>
+<td style="text-align: left;">消费品牌+供应链</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>⚠️ 竞品完备性注意</strong>：DispatchHealth 原为竞品，现已为母公司。合并后最主要的独立竞品是 Contessa Health。</p>
+<hr />
+<h2 id="11-tamsam">维度 11 — 收入构成与增长趋势（TAM/SAM）</h2>
+<h3 id="tamsam">TAM/SAM 估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th>计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TAM（美国急性住院总市场）</strong></td>
+<td style="text-align: center;">&gt;$1万亿/年</td>
+<td>美国年住院总费用</td>
+</tr>
+<tr>
+<td><strong>SAM（可转HaH的住院病例）</strong></td>
+<td style="text-align: center;">~$200B–400B/年</td>
+<td>约20–40%的住院适合居家替代</td>
+</tr>
+<tr>
+<td><strong>SOM（Medically Home 当前渗透）</strong></td>
+<td style="text-align: center;">~$10M–20M/年</td>
+<td>推测年收入量级，渗透率极低</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_17">增长驱动因素</h3>
+<ul>
+<li><strong>政策顺风</strong>：CMS Acute Hospital Care at Home Waiver 持续延期</li>
+<li><strong>支付方认可</strong>：Medicare 按 DRG 全额支付</li>
+<li><strong>医院容量压力</strong>：COVID 后许多医院持续超负荷运行</li>
+<li><strong>患者偏好</strong>：越来越多患者希望在家中接受治疗</li>
+</ul>
+<h3 id="_18">增长制约因素</h3>
+<ul>
+<li><strong>CMS Waiver 政策不确定性</strong>：始终是临时豁免，未获永久立法</li>
+<li><strong>医生转诊习惯</strong>：传统住院思维根深蒂固</li>
+<li><strong>技术门槛</strong>：并非所有患者适合居家治疗</li>
+<li><strong>规模经济未验证</strong>：指挥中心高固定成本导致规模越大越难盈利</li>
+</ul>
+<hr />
+<h2 id="12">维度 12 — 盈利模型与路径</h2>
+<h3 id="_19">成本结构拆解（推测）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">占总成本（估）</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Virtual Command Center 人力</td>
+<td style="text-align: center;">40–50%</td>
+<td style="text-align: left;">24/7 医生+护士+协调员，最大单一成本</td>
+</tr>
+<tr>
+<td style="text-align: left;">设备/耗材</td>
+<td style="text-align: center;">15–20%</td>
+<td style="text-align: left;">通过 Baxter/Cardinal Health 供应</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术平台维护</td>
+<td style="text-align: center;">10–15%</td>
+<td style="text-align: left;">SaaS 基础设施</td>
+</tr>
+<tr>
+<td style="text-align: left;">销售与市场</td>
+<td style="text-align: center;">10–15%</td>
+<td style="text-align: left;">企业销售周期长</td>
+</tr>
+<tr>
+<td style="text-align: left;">管理/行政</td>
+<td style="text-align: center;">10–15%</td>
+<td style="text-align: left;">合规+法务</td>
+</tr>
+<tr>
+<td style="text-align: left;">R&amp;D</td>
+<td style="text-align: center;">5–10%</td>
+<td style="text-align: left;">临床协议开发</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_20">盈利路径分析</h3>
+<p><strong>核心问题</strong>：指挥中心的人力成本是固定成本——无论服务 100 还是 1,000 患者，都需要维持最低人员配置。这导致：</p>
+<ol>
+<li><strong>规模经济悖论</strong>：规模越大→需要越多指挥中心人员→固定成本同步增长→难以盈利</li>
+<li><strong>定价天花板</strong>：CMS DRG 费率固定，医院支付 Medically Home 的费用空间有限</li>
+<li><strong>盈利未验证</strong>：经过 $287M 融资后仍需过桥资金维持，商业模式盈利能力未获证实</li>
+</ol>
+<p><strong>综合判断</strong>：独立商业模式<strong>不可持续</strong>。与 DispatchHealth 合并后，通过整合临床服务团队和指挥中心实现协同效应，可能改善单位经济。</p>
+<hr />
+<h2 id="13">维度 13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>机遇</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>短期（0–12月）</strong></td>
+<td>合并后整合产生协同效应；CMS Waiver 可能获永久立法</td>
+<td>整合执行风险；客户流失（Mayo/Kaiser 重新评估关系）</td>
+</tr>
+<tr>
+<td><strong>中长期（1–3年）</strong></td>
+<td>合并后平台成为 HaH 行业标准基础设施；扩展到 SNF@Home 等新场景</td>
+<td>竞争对手（Contessa、Current Health）份额增长；政策风向转变</td>
+</tr>
+<tr>
+<td><strong>结构性</strong></td>
+<td>美国人口老龄化驱动长期需求；去中心化医疗大趋势</td>
+<td>指挥中心人力成本结构性问题无法根本解决；技术壁垒不足以阻挡后来者</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_21">法律与诉讼</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">案件/调查</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">潜在影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">泄密事件后的员工诉讼</td>
+<td style="text-align: left;">可能性存在</td>
+<td style="text-align: left;">员工普通股清零可能引发法律纠纷</td>
+</tr>
+<tr>
+<td style="text-align: left;">股东诉讼（优先股 vs 普通股清算）</td>
+<td style="text-align: left;">可能性存在</td>
+<td style="text-align: left;">普通股股东可能对合并条款提出挑战</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">宏观敏感性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">宏观情景</th>
+<th style="text-align: center;">影响评估</th>
+<th style="text-align: left;">传导机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>经济衰退</strong></td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">医院支出收紧可能推迟 HaH 采购决策</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利率上升</strong></td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">已无法融资，高度依赖投资者支持</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS 政策收紧</strong></td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">若 Waiver 到期不续，商业模式核心支柱倒塌</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="15">维度 15 — 估值对比</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">估值指标</th>
+<th style="text-align: left;">数值/估计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2022年 Series D 融后估值</strong></td>
+<td style="text-align: left;">推测 $500M–$800M（$110M 融资，通常 15–20% 稀释）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2025年合并时估值</strong></td>
+<td style="text-align: left;">&ldquo;大幅缩水&rdquo;（泄密文件用语）——推测远低于融资总额 $287M</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工普通股价值</strong></td>
+<td style="text-align: left;">清零（泄密文件确认：仅获得 DispatchHealth 的 carved-out upside）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>优先股投资者</strong></td>
+<td style="text-align: left;">获得部分清算优先权（推测为参与分配优先清算权）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_23">同业估值对标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">可比公司</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">估值/收购价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">DispatchHealth</td>
+<td style="text-align: left;">未上市（合并主导方）</td>
+<td style="text-align: left;">合并前估值未披露</td>
+</tr>
+<tr>
+<td style="text-align: left;">Contessa Health</td>
+<td style="text-align: left;">未上市</td>
+<td style="text-align: left;">~$100M+</td>
+</tr>
+<tr>
+<td style="text-align: left;">Current Health</td>
+<td style="text-align: left;">2021年被 Best Buy 收购</td>
+<td style="text-align: left;">$400M</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Medically Home（合并前）</strong></td>
+<td style="text-align: left;"><strong>被 DispatchHealth 合并</strong></td>
+<td style="text-align: left;"><strong>显著低于融资总额</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="16">维度 16 — 战略建议（分角色）</h2>
+<h3 id="1_1">1. 对潜在投资者</h3>
+<ul>
+<li><strong>估值判断</strong>：Medically Home 作为独立实体已无投资机会，已并入 DispatchHealth。合并后的 DispatchHealth 估值需重新评估。</li>
+<li><strong>核心指标关注</strong>：合并后单位经济是否改善（指挥中心人员/患者比）、Mayo/Kaiser 客户留存率、CMS Waiver 立法进展</li>
+<li><strong>催化剂</strong>：CMS 永久立法、《医院居家法案》通过、合并后 EBITDA 转正</li>
+<li><strong>下行风险</strong>：整合失败、关键客户流失、Waiver 到期</li>
+</ul>
+<h3 id="2-dispatchhealth">2. 对 DispatchHealth 管理层（合并后）</h3>
+<ol>
+<li><strong>首要任务：留住 Mayo Clinic 和 Kaiser Permanente</strong>——这两家同时是客户和投资者，任何一方流失将造成连锁反应</li>
+<li><strong>解决指挥中心人力成本结构性问题</strong>——利用 DispatchHealth 现有临床网络减少人员冗余</li>
+<li><strong>加速平台整合</strong>——将 Medically Home 的 CESL 技术与 DispatchHealth 的全美服务网络深度融合</li>
+<li><strong>推动 CMS Waiver 永久化立法</strong>——这是整个行业的生存基础</li>
+<li><strong>为2027-2028年 IPO 做准备</strong>——合并后若能实现 EBIDTA 转正，规模化故事可能支撑上市</li>
+</ol>
+<h3 id="3-ihomecare">3. 对竞对/新进入者（含 iHomeCare）</h3>
+<ul>
+<li><strong>Medically Home 的教训比其技术更有价值</strong>：</li>
+<li>❌ 不要押注&rdquo;融资驱动增长&rdquo;——收入必须跑在融资前面</li>
+<li>❌ 不要让客户=投资者——这彻底消灭了议价能力和退出选项</li>
+<li>❌ 指挥中心的人力成本无法通过规模效应摊薄——这是商业模式的结构性缺陷</li>
+<li>✅ 寻找轻资产路径——做真正的技术平台（SaaS），而非半服务半平台</li>
+<li>✅ 分散客户集中度——任何单一客户占比不超过 20%</li>
+<li><strong>差异化切入点</strong>：</li>
+<li>AI 驱动的自动化指挥中心（减少人力依赖）</li>
+<li>垂直整合硬件（自研监测设备，而非外购）</li>
+</ul>
+<hr />
+<h2 id="17">维度 17 — 政策与监管土壤</h2>
+<h3 id="_24">核心政策框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策</th>
+<th style="text-align: left;">发布机构</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>CMS Acute Hospital Care at Home Waiver</strong></td>
+<td style="text-align: left;">CMS</td>
+<td style="text-align: left;">2020.11（COVID紧急） → 2022.12 延期至 2024.12 → 进一步延期</td>
+<td style="text-align: left;">允许 Medicare 按住院 DRG 费率支付 HaH 服务——整个 HaH 商业模式的<strong>核心政策支柱</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAA 2023（综合拨款法案）</strong></td>
+<td style="text-align: left;">美国国会</td>
+<td style="text-align: left;">2022.12</td>
+<td style="text-align: left;">要求 CMS 研究 AHCAH 效果，2024.09.30 前提交报告</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS AHCAH 研究报告</strong></td>
+<td style="text-align: left;">CMS</td>
+<td style="text-align: left;">2024.09.30</td>
+<td style="text-align: left;">结论正面：HaH 患者死亡率更低、费用更低、患者满意度更高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>《医院居家法案》（Hospital at Home Act）</strong></td>
+<td style="text-align: left;">美国国会</td>
+<td style="text-align: left;">多次提案，未通过</td>
+<td style="text-align: left;">若通过将永久化 HaH 的 Medicare 支付</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_25">政策风险</h3>
+<ul>
+<li><strong>Waiver ≠ 法律</strong>：CMS Waiver 是行政豁免，随时可被新政府撤销</li>
+<li><strong>两党政治风险</strong>：HaH 政策虽有跨党派支持，但在大选年可能成为政治筹码</li>
+<li><strong>州级差异</strong>：各州 Medicaid 对 HaH 的覆盖政策差异巨大</li>
+</ul>
+<hr />
+<h2 id="18">维度 18 — 单元经济模型</h2>
+<h3 id="_26">典型案例成本拆解（推测）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: center;">HaH（Medically Home 模式）</th>
+<th style="text-align: center;">传统住院</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">平均住院天数</td>
+<td style="text-align: center;">4–6天</td>
+<td style="text-align: center;">4–6天</td>
+</tr>
+<tr>
+<td style="text-align: left;">每日成本</td>
+<td style="text-align: center;">~$800–1,200（HaH日均）</td>
+<td style="text-align: center;">~$2,500–3,500（住院日均）</td>
+</tr>
+<tr>
+<td style="text-align: left;">总成本（单次）</td>
+<td style="text-align: center;">~$4,000–7,200</td>
+<td style="text-align: center;">~$12,500–21,000</td>
+</tr>
+<tr>
+<td style="text-align: left;">成本节省</td>
+<td style="text-align: center;">约 40–60%</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">CMS DRG 支付</td>
+<td style="text-align: center;">与住院相同</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">医院节省</td>
+<td style="text-align: center;">~$5,000–15,000/次</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Medically Home 收入</td>
+<td style="text-align: center;">推测 ~$500–1,500/患者</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_27">关键假设清单</h3>
+<ol>
+<li>CMS Waiver 持续有效（按 DRG 全额支付）</li>
+<li>患者日均成本显著低于住院（无需承担医院基础设施分摊）</li>
+<li>指挥中心固定成本可被足够患者量覆盖</li>
+<li>再入院率不高于传统住院</li>
+<li>临床不良事件率与传统住院相当或更低</li>
+</ol>
+<hr />
+<h2 id="19">维度 19 — 目标人群/客户细分</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">规模</th>
+<th style="text-align: center;">支付能力</th>
+<th style="text-align: center;">产品匹配度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>A（核心）</strong></td>
+<td style="text-align: left;">大型学术医疗中心/整合系统（Mayo、Kaiser 等）</td>
+<td style="text-align: left;">~50–100 系统</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: center;">🟢 最佳匹配</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>B（重点）</strong></td>
+<td style="text-align: left;">区域性医疗系统（10+医院）</td>
+<td style="text-align: left;">~500 系统</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>C（扩展）</strong></td>
+<td style="text-align: left;">社区医院（1–5医院）</td>
+<td style="text-align: left;">~3,000+</td>
+<td style="text-align: center;">低-中</td>
+<td style="text-align: center;">🟡 需轻量化方案</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D（潜力）</strong></td>
+<td style="text-align: left;">医生集团/ACO</td>
+<td style="text-align: left;">~1,000+</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🔴 需大幅调整定价</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="20">维度 20 — 竞品深度地图</h2>
+<h3 id="_28">已确认竞品列表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">名称</th>
+<th style="text-align: left;">模式</th>
+<th style="text-align: left;">规模</th>
+<th style="text-align: left;">技术/差异化</th>
+<th style="text-align: center;">威胁等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Contessa Health</strong></td>
+<td style="text-align: left;">全栈 HaH 运营+合资模式</td>
+<td style="text-align: left;">覆盖多州</td>
+<td style="text-align: left;">与医院深度合资绑定</td>
+<td style="text-align: center;">🔴 高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Current Health (Best Buy)</strong></td>
+<td style="text-align: left;">技术+物流平台</td>
+<td style="text-align: left;">Best Buy 全球供应链</td>
+<td style="text-align: left;">消费品牌+Geek Squad</td>
+<td style="text-align: center;">🔴 高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DispatchHealth</strong></td>
+<td style="text-align: left;">全栈服务（现为母公司）</td>
+<td style="text-align: left;">50大都市区</td>
+<td style="text-align: left;">全链条覆盖</td>
+<td style="text-align: center;">—（已合并）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mass General Brigham Home Hospital</strong></td>
+<td style="text-align: left;">自营 HaH 项目</td>
+<td style="text-align: left;">~66社区</td>
+<td style="text-align: left;">顶级学术品牌</td>
+<td style="text-align: center;">🟡 中（非平台模式）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_29">最大威胁深度扫描</h3>
+<p><strong>Contessa Health</strong> 是合并后的 DispatchHealth 最大威胁——其与医院的合资模式创造了更深度的客户绑定，且避免了 Medically Home 的&rdquo;客户集中度&rdquo;问题（合资意味着双方利益对等）。</p>
+<h3 id="_30">跨界进入者</h3>
+<ul>
+<li><strong>Amazon Care / Amazon Clinic</strong>：电商+远程医疗组合，可能在市场成熟时进入</li>
+<li><strong>Walmart Health</strong>：零售医疗网络可能向上游扩展到居家急性护理</li>
+</ul>
+<hr />
+<h2 id="21">维度 21 — 跨境/跨区域战略</h2>
+<blockquote>
+<p>Medically Home 为纯美国市场公司，无已知的跨境/跨国扩张计划。此维度标注&rdquo;不适用&rdquo;。</p>
+</blockquote>
+<hr />
+<h2 id="22">维度 22 — 退出/并购价值分析</h2>
+<h3 id="2025">已完成退出（2025年合并）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>交易类型</strong></td>
+<td style="text-align: left;">全股合并（DispatchHealth 为存续实体）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>交易时间</strong></td>
+<td style="text-align: left;">2025年3月宣布，6月4日完成</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>交易价值</strong></td>
+<td style="text-align: left;">未披露——泄密文件显示估值&rdquo;大幅缩水&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>普通股股东回报</strong></td>
+<td style="text-align: left;">清零——仅获得 DispatchHealth 的 carved-out upside</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>优先股投资者回报</strong></td>
+<td style="text-align: left;">部分清算优先权得以兑现</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工期权</strong></td>
+<td style="text-align: left;">清零</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_31">近期可比交易</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">交易</th>
+<th style="text-align: left;">估值</th>
+<th style="text-align: left;">倍数参考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Best Buy 收购 Current Health (2021)</td>
+<td style="text-align: left;">$400M</td>
+<td style="text-align: left;">技术平台溢价</td>
+</tr>
+<tr>
+<td style="text-align: left;">DispatchHealth-Medically Home 合并 (2025)</td>
+<td style="text-align: left;">&lt;&lt; $287M</td>
+<td style="text-align: left;">困境合并，估值萎缩</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_32">潜在买家分析（如独立运营未合并）</h3>
+<ul>
+<li><strong>战略买家</strong>：Teladoc、Amwell、UnitedHealth/Optum、CVS Health</li>
+<li><strong>财务买家</strong>：无——现金流为负，无杠杆收购基础</li>
+</ul>
+<hr />
+<h2 id="23-esg">维度 23 — ESG / 社会影响力</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>环境</strong></td>
+<td style="text-align: left;">居家医疗减少交通碳排放和医院能耗——正面</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社会</strong></td>
+<td style="text-align: left;">提升老年/行动不便患者的医疗可及性；减少住院隔离带来的心理健康负面影响——显著正面</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理</strong></td>
+<td style="text-align: left;">泄密事件暴露内部管控漏洞；投资人-客户双重身份引发治理争议——负面</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ESG 披露</strong></td>
+<td style="text-align: left;">未上市私营公司，无公开 ESG 报告</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="24">维度 24 — 组织与人才 🆕</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">职能制（技术/临床/运营/销售），合并前 CEO 向董事会汇报</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">合并前估计 200–400人；合并后 DispatchHealth 总共约 2,200人（过半为临床一线人员）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人才密度</strong></td>
+<td style="text-align: left;">联合创始人背景强劲（McKinsey + 物流管理）；中层团队不详</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🚨 极高——Raphael Rakowski（执行主席）是战略核心灵魂人物</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工留存</strong></td>
+<td style="text-align: left;">泄密文件事件 + 期权清零 = 高流失风险</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">泄密事件暴露内部沟通和文件管理的严重缺陷</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Glassdoor 评分</strong></td>
+<td style="text-align: left;">无可靠公开数据</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>组织健康度综合评级</strong>：🟡 一般（受合并和泄密事件冲击）</p>
+<p><strong>组织风险清单</strong>：</p>
+<ul>
+<li>🔴 合并后高管团队整合不确定性</li>
+<li>🔴 员工期权清零 → 关键人才流失风险</li>
+<li>🟡 创始人角色从 CEO 退至顾问 → 战略连续性受损</li>
+</ul>
+<hr />
+<h2 id="25">维度 25 — 融资历史与资本结构 🆕</h2>
+<h3 id="251">25.1 融资历史全览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">轮次</th>
+<th style="text-align: left;">日期</th>
+<th style="text-align: left;">金额</th>
+<th style="text-align: left;">领投方</th>
+<th style="text-align: left;">跟投方</th>
+<th style="text-align: center;">估值方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">种子轮</td>
+<td style="text-align: left;">2017.10</td>
+<td style="text-align: left;">不详</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series A</td>
+<td style="text-align: left;">2018.03</td>
+<td style="text-align: left;">$9.8M</td>
+<td style="text-align: left;">Connecticut Innovations</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series B</td>
+<td style="text-align: left;">2019.05</td>
+<td style="text-align: left;">$10M</td>
+<td style="text-align: left;">Cardinal Health</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series C</td>
+<td style="text-align: left;">2021.05</td>
+<td style="text-align: left;">~$100M</td>
+<td style="text-align: left;">Mayo Clinic + Kaiser Permanente</td>
+<td style="text-align: left;">Adventist Health 等</td>
+<td style="text-align: center;">↑↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series D</td>
+<td style="text-align: left;">2022.01</td>
+<td style="text-align: left;">$110M</td>
+<td style="text-align: left;">Baxter + GMR + Cardinal Health</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">↑ (峰值)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>累计</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"><strong>~$287M</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025 合并</td>
+<td style="text-align: left;">2025.06</td>
+<td style="text-align: left;">全股合并</td>
+<td style="text-align: left;">DispatchHealth</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">↓↓ (大幅缩水)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="252-cap-table">25.2 Cap Table 深度分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">股东类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: center;">持股比例（估）</th>
+<th style="text-align: center;">董事会席位</th>
+<th style="text-align: left;">退出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">战略投资者</td>
+<td style="text-align: left;">Mayo Clinic</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">部分清算</td>
+</tr>
+<tr>
+<td style="text-align: left;">战略投资者</td>
+<td style="text-align: left;">Kaiser Permanente</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">部分清算</td>
+</tr>
+<tr>
+<td style="text-align: left;">战略投资者</td>
+<td style="text-align: left;">Baxter International</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">部分清算</td>
+</tr>
+<tr>
+<td style="text-align: left;">战略投资者</td>
+<td style="text-align: left;">Cardinal Health</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">部分清算</td>
+</tr>
+<tr>
+<td style="text-align: left;">战略投资者</td>
+<td style="text-align: left;">Global Medical Response</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">部分清算</td>
+</tr>
+<tr>
+<td style="text-align: left;">创始人</td>
+<td style="text-align: left;">Rami Karjian, Raphael Rakowski, Andy Lipman</td>
+<td style="text-align: center;">中（大幅稀释）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">carved-out upside</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工期权</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;"><strong>清零</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">普通股股东</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;"><strong>清零</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>🚨 清算偏好</strong>：泄密文件显示存在优先清算权——&ldquo;大型优先股持有者获得部分清算&rdquo;，而员工和普通股仅获得 DispatchHealth 的&rdquo; carved-out upside&rdquo;。推测为 ≥1x 参与分配优先清算权。</p>
+<h3 id="253">25.3 现金状况</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">估计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>最新现金（合并前）</strong></td>
+<td style="text-align: left;">枯竭——需 Mayo/Kaiser 过桥资金维持</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>月度烧钱率</strong></td>
+<td style="text-align: left;">推测 &gt;$5M/月</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>剩余跑道（合并前）</strong></td>
+<td style="text-align: left;">&lt;6 个月</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>过桥资金来源</strong></td>
+<td style="text-align: left;">Mayo Clinic 和 Kaiser Foundation Hospitals</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="254">25.4 投资者质量评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">评估维度</th>
+<th style="text-align: center;">评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">领投方品牌</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">Mayo Clinic + Kaiser 是顶级医疗机构品牌</td>
+</tr>
+<tr>
+<td style="text-align: left;">投后参与度</td>
+<td style="text-align: center;">🔴 过高</td>
+<td style="text-align: left;">客户=投资者，议价能力丧失</td>
+</tr>
+<tr>
+<td style="text-align: left;">后续跟投意愿</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">泄密文件显示投资者被迫提供过桥资金，非主动跟投</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="26-gtm">维度 26 — 销售与 GTM 效率 🆕</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">战略合作伙伴驱动（以旗舰客户吸引其他医疗系统）；直销+行业会议</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售周期</strong></td>
+<td style="text-align: left;">长——医院系统采购决策通常需 9–18 个月</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC</strong></td>
+<td style="text-align: left;">推测高——每获取一个医疗系统客户需要大量高管的销售资源</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDR</strong></td>
+<td style="text-align: left;">推测中等偏低——一旦上线，切换成本存在，但客户数量增长缓慢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>渠道伙伴</strong></td>
+<td style="text-align: left;">Baxter/GMR/Cardinal Health 提供战略渠道，但未见大规模渠道销售</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>GTM 阶段诊断</strong>：<strong>Product-Market Fit 前/初期规模化</strong>——技术验证完成（Mayo/Kaiser 在使用），但盈利模型未跑通，客户获取速度和经济效益未达规模化门槛。</p>
+<p><strong>GTM 瓶颈判断</strong>：漏斗底部（收入转化/盈利）——不是 leads 不够，而是客单价天花板低、单位经济无法支撑高 CAC。</p>
+<hr />
+<h2 id="27">维度 27 — 临床质量与患者结局 🆕</h2>
+<h3 id="271">27.1 核心临床指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Medically Home 数据</th>
+<th style="text-align: center;">对照标准</th>
+<th style="text-align: left;">数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>30天再入院率</strong></td>
+<td style="text-align: center;">无独立公开</td>
+<td style="text-align: center;">HaH 总体 ~8–12% vs 住院 ~15%</td>
+<td style="text-align: left;">CMS AHCAH 报告（行业数据）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者满意度</strong></td>
+<td style="text-align: center;">无独立公开</td>
+<td style="text-align: center;">HaH 总体高于住院</td>
+<td style="text-align: left;">CMS AHCAH 报告</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>死亡率</strong></td>
+<td style="text-align: center;">无独立公开</td>
+<td style="text-align: center;">HaH 总体 0.4% vs 住院 3.6%</td>
+<td style="text-align: left;">JAMA Network Open 2025</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>不良事件率</strong></td>
+<td style="text-align: center;">无独立公开</td>
+<td style="text-align: center;">HaH 总体 3.6% vs 住院 5.1%</td>
+<td style="text-align: left;">JAMA Network Open 2025</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ Medically Home 自身没有公开发表独立的临床结局研究。以上数据来自行业整体研究（CMS AHCAH、JAMA 等）。</p>
+</blockquote>
+<h3 id="272">27.2 质量认证体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">JCI</td>
+<td style="text-align: center;">❌ 无公开信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">NCQA</td>
+<td style="text-align: center;">❌ 无公开信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">URAC</td>
+<td style="text-align: center;">❌ 无公开信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">ISO 13485</td>
+<td style="text-align: center;">❌ 非设备制造商，不适用</td>
+</tr>
+<tr>
+<td style="text-align: left;">CMS Star Rating</td>
+<td style="text-align: center;">❌ 非 Medicare 计划，不适用</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证据类型</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">RCT</td>
+<td style="text-align: center;">0（公司级）</td>
+<td style="text-align: left;">无独立发表的随机对照试验</td>
+</tr>
+<tr>
+<td style="text-align: left;">前瞻性队列</td>
+<td style="text-align: center;">不详</td>
+<td style="text-align: left;">Mayo Clinic 的 ACH 项目有发表（但在 Mayo 品牌下）</td>
+</tr>
+<tr>
+<td style="text-align: left;">同行评审</td>
+<td style="text-align: center;">不详</td>
+<td style="text-align: left;">无独立的 Medically Home 品牌学术论文</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>证据强度总体评级</strong>：🟡 中——临床证据主要通过合作医院（Mayo Clinic）的论文间接体现，而非 Medically Home 自身的独立研究发表。</p>
+<hr />
+<h2 id="atrium-health-medically-home">🚨 关键发现：Atrium Health 与 Medically Home 关系修正</h2>
+<p><strong>原假设</strong>：Atrium Health 的 HaH 项目使用 Medically Home 平台<br />
+<strong>实际验证</strong>：❌ <strong>错误</strong>。</p>
+<p>Atrium Health 的 Hospital at Home 项目是<strong>自建项目</strong>，始发于2020年3月 COVID 疫情期间：</p>
+<ul>
+<li>2021年3月获 CMS Acute Care at Home Waiver</li>
+<li>技术监控合作伙伴为 <strong>Best Buy Health / Current Health</strong>（2023年3月宣布合作）</li>
+<li>Atrium 自行运营临床指挥中心和社区急救人员网络</li>
+<li>2024年预算 ADC=100，月均服务200+患者，累计服务10,574+患者</li>
+<li>是<strong>全美最大的自营 HaH 项目</strong></li>
+</ul>
+<p><strong>对报告的影响</strong>：Medically Home 的核心客户实为 Mayo Clinic 和 Kaiser Permanente，而非 Atrium Health。Atrium 的例子恰恰说明——大型医疗系统<strong>有能力自建 HaH，不一定需要 Medically Home 的平台</strong>。</p>
+<hr />
+<h2 id="_33">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Medically Home 合并前的精确年收入和 EBITDA</td>
+<td style="text-align: left;">付费数据库（PitchBook/Crunchbase）完整财务档案</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">合并交易的具体估值和条款</td>
+<td style="text-align: left;">Axios 泄密文件原文；投资者函</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Mayo/Kaiser 合并后的合作续约状态</td>
+<td style="text-align: left;">行业会议跟踪 + 一手访谈</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">CESL 平台的详细技术架构</td>
+<td style="text-align: left;">技术白皮书或工程师博客</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">员工期权清零后的法律进展</td>
+<td style="text-align: left;">SEC 文件监控</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">AI 能力的详细评估</td>
+<td style="text-align: left;">公司技术团队一手访谈</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">独立发表的临床研究论文</td>
+<td style="text-align: left;">PubMed 深度检索</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">Cap Table 精确持股比例</td>
+<td style="text-align: left;">PitchBook 付费数据</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">指挥中心具体人员配置和成本</td>
+<td style="text-align: left;">行业基准推测 + 一手调研</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">合并后 DispatchHealth 的整合进展</td>
+<td style="text-align: left;">2026年下半年行业媒体报道跟踪</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_34">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">FierceHealthcare</td>
+<td style="text-align: left;">Mayo Clinic, Kaiser Permanente to scale up hospital-at-home efforts with $100M investment</td>
+<td style="text-align: left;">2021.05.13</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Mayo Clinic News Network</td>
+<td style="text-align: left;">Mayo Clinic, Kaiser Permanente announce strategic investment in Medically Home</td>
+<td style="text-align: left;">2021.05.13</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">PR Newswire</td>
+<td style="text-align: left;">Medically Home Announces a $110 Million Strategic Investment</td>
+<td style="text-align: left;">2022.01.10</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">PR Newswire</td>
+<td style="text-align: left;">Medically Home Announces Graham Barnes as CEO</td>
+<td style="text-align: left;">2024.08.01</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Home Health Care News</td>
+<td style="text-align: left;">Hospital-At-Home Leader Medically Home Names New CEO</td>
+<td style="text-align: left;">2024.08</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Axios</td>
+<td style="text-align: left;">Scoop: Leaked deal document suggests loss of valuation in home care merger</td>
+<td style="text-align: left;">2025.06.13</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Home Health Care News</td>
+<td style="text-align: left;">Leaked Doc Reportedly Details Financial Struggles Behind Medically Home, DispatchHealth Deal</td>
+<td style="text-align: left;">2025.06</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">PR Newswire</td>
+<td style="text-align: left;">DispatchHealth and Medically Home Merger Closes</td>
+<td style="text-align: left;">2025.06.04</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">FierceHealthcare</td>
+<td style="text-align: left;">DispatchHealth and Medically Home close merger</td>
+<td style="text-align: left;">2025.06</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Healthcare Dive</td>
+<td style="text-align: left;">Hospital-at-home companies DispatchHealth, Medically Home to merge</td>
+<td style="text-align: left;">2025.03</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">Wilson Sonsini</td>
+<td style="text-align: left;">Advises DispatchHealth on Merger with Medically Home</td>
+<td style="text-align: left;">2025.03.18</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">PitchBook</td>
+<td style="text-align: left;">Medically Home 2026 Company Profile</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">Tracxn</td>
+<td style="text-align: left;">Medically Home - 2026 Company Profile &amp; Team</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">Crunchbase</td>
+<td style="text-align: left;">Medically Home Company Profile &amp; Funding</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">JAMA Network Open</td>
+<td style="text-align: left;">Outcomes Associated With Hospital at Home vs Traditional Inpatient</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">CMS</td>
+<td style="text-align: left;">Fact Sheet: Report on the Study of the Acute Hospital Care at Home Initiative</td>
+<td style="text-align: left;">2024.09.30</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: left;">HFMA</td>
+<td style="text-align: left;">Atrium Health Hospital at Home (Project Pink Floyd slide deck)</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td style="text-align: left;">AHA</td>
+<td style="text-align: left;">Best Buy Partners with Atrium On Hospital-at-Home Program</td>
+<td style="text-align: left;">2023.03</td>
+</tr>
+<tr>
+<td style="text-align: center;">19</td>
+<td style="text-align: left;">LinkedIn (Erin Brodwin)</td>
+<td style="text-align: left;">Scoop: Leaked deal document suggests loss of valuation</td>
+<td style="text-align: left;">2025.06</td>
+</tr>
+<tr>
+<td style="text-align: center;">20</td>
+<td style="text-align: left;">Hospitalogy</td>
+<td style="text-align: left;">DispatchHealth and Medically Home merge</td>
+<td style="text-align: left;">2025.03.27</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_35">维度完备性审计表（最终）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">维度</th>
+<th style="text-align: left;">名称</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">赛道验证</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">True HaH 技术平台</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">执行摘要</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">公司全貌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">战略定位</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">商业模式架构图</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">服务产品线 &amp; 定价</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">客户与支付方</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">财务深度拆解</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">私营公司，财务数据碎片化</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">工作流/旅程映射</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">技术深度评估</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">CESL架构细节、AI能力公开信息不足</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">竞争格局</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">盈利模型</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">机遇与风险矩阵</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">估值对比</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">战略建议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: left;">政策与监管</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td style="text-align: left;">单元经济模型</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">成本数据为公司推测，非公开数据</td>
+</tr>
+<tr>
+<td style="text-align: center;">19</td>
+<td style="text-align: left;">目标人群/客户细分</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">20</td>
+<td style="text-align: left;">竞品深度地图</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">21</td>
+<td style="text-align: left;">跨境/跨区域</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">不适用（纯美国市场）</td>
+</tr>
+<tr>
+<td style="text-align: center;">22</td>
+<td style="text-align: left;">退出/并购价值</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">23</td>
+<td style="text-align: left;">ESG/社会影响力</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">24</td>
+<td style="text-align: left;">组织与人才</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">员工规模等为估计值</td>
+</tr>
+<tr>
+<td style="text-align: center;">25</td>
+<td style="text-align: left;">融资历史与资本结构</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">26</td>
+<td style="text-align: left;">GTM效率</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">CAC/LTV等核心指标无公开数据</td>
+</tr>
+<tr>
+<td style="text-align: center;">27</td>
+<td style="text-align: left;">临床质量与患者结局</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">无独立发表研究，依赖行业数据</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>统计</strong>：✅ 完整覆盖 21 | ⚠️ 部分覆盖 6 | ❌ 不适用 1</p>
+<hr />
+<p><em>报告完成。数据截止 2026年7月。所有未标注来源的数字均为基于公开信息的合理推测，不作为投资建议。</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

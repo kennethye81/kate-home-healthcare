@@ -1,0 +1,2164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doccla — 27 维度公司深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#doccla-27">Doccla — 27 维度公司深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4">D4 — 商业模式架构图</a></li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a></li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a></li>
+<li><a href="#d7">D7 — 财务深度拆解</a></li>
+<li><a href="#d8">D8 — 工作流 / 旅程映射</a></li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构总览</a></li>
+<li><a href="#92">9.2 软件架构</a></li>
+<li><a href="#93-iot">9.3 硬件/IoT 设备</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a></li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</a></li>
+<li><a href="#d12">D12 — 盈利模型与路径</a></li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a></li>
+<li><a href="#d14">D14 — 管理层指引与可信度</a></li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1">1. 临床团队是虚拟病房的&rdquo;入场券&rdquo;</a></li>
+<li><a href="#2">2. &ldquo;预配设备盒&rdquo;模式</a></li>
+<li><a href="#3-3-1-roi">3. &ldquo;£3 换 £1&rdquo;的 ROI 叙事</a></li>
+<li><a href="#4">4. 药企是第二增长曲线</a></li>
+<li><a href="#5">5. 收购是欧洲扩展的加速器</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a></li>
+<li><a href="#d18">D18 — 单元经济模型</a></li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略深度评估</a></li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a></li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a><ul>
+<li><a href="#251">25.1 融资历史全览</a></li>
+<li><a href="#252-cap-table202310-companies-house">25.2 Cap Table（2023.10 Companies House）</a></li>
+<li><a href="#253">25.3 投资者质量评估</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证体系</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#_1">调研空白与后续补充</a></li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_2">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="doccla-27">Doccla — 27 维度公司深度尽调报告</h1>
+<p><strong>调研人</strong>: Kate, VP Research
+<strong>报告日期</strong>: 2026-07-07
+<strong>报告状态</strong>: 终稿</p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<p><strong>验证结论</strong>: ✅ Doccla 属于 <strong>全栈虚拟病房 / Hospital-at-Home 服务商</strong>赛道。</p>
+<p>Doccla 与 Cera 同样拥有自有临床团队（CQC 注册的护士、GP、顾问医生），但聚焦于<strong>急性/亚急性虚拟病房</strong>场景——替代住院或加速出院——而非长期慢性居家护理。技术与临床服务一体化（非纯技术平台），是英国 NHS 虚拟病房市场占有率第一的服务商。</p>
+<ul>
+<li><strong>对 iHomeCare 的相关性</strong>: 🟢🟢🟢 <strong>最高</strong> —— Doccla 是 iHomeCare 在全球最接近的直接对标公司：急性 HaH + 自有临床团队 + 技术平台 + 政府合同</li>
+</ul>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>一句话定位</strong>: Doccla 是欧洲领先的全栈虚拟病房/Hospital-at-Home 服务商，为 NHS 及欧洲 10 国提供技术+设备+临床团队一体化的远程监测和虚拟病房服务。CQC 注册自有临床团队（护士/GP/顾问），£35M Series B（2024），4M+ 患者日监测，NHS ROI 300%。</p>
+<p><strong>核心矛盾</strong>: Doccla 正从英国 NHS 市场领导者向欧洲平台型企业跨越——法国新远程监测编码和 DACH 市场是两大增长引擎。但 NHS 全国统一平台计划（NHS Online）和科技大厂进入构成长期竞争风险。</p>
+<p><strong>关键数据速览</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立</td>
+<td style="text-align: left;">2019 年</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">伦敦，英国（瑞典创始人）</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">创始人</td>
+<td style="text-align: left;">Martin Ratz（主席）、Dag Larsson（CEO）</td>
+<td style="text-align: left;">Sifted / 官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工</td>
+<td style="text-align: left;">180 人（~40 临床人员）</td>
+<td style="text-align: left;">Sifted (2024)</td>
+</tr>
+<tr>
+<td style="text-align: left;">总融资</td>
+<td style="text-align: left;">£52M+（~$65M）</td>
+<td style="text-align: left;">Sifted</td>
+</tr>
+<tr>
+<td style="text-align: left;">最新轮</td>
+<td style="text-align: left;">£35M Series B（2024.9, Lakestar 领投）</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">患者规模</td>
+<td style="text-align: left;">4M+ 患者日</td>
+<td style="text-align: left;">1,000 新患者/月</td>
+</tr>
+<tr>
+<td style="text-align: left;">覆盖</td>
+<td style="text-align: left;">10 欧洲国家 + 新加坡</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS 覆盖</td>
+<td style="text-align: left;">~1/3 至近半数 NHS 区域</td>
+<td style="text-align: left;">Sifted</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床效果</td>
+<td style="text-align: left;">A&amp;E 减少 63%、ROI 300%</td>
+<td style="text-align: left;">NHS 资助研究</td>
+</tr>
+<tr>
+<td style="text-align: left;">客户留存</td>
+<td style="text-align: left;"><strong>100%</strong></td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cap Table（2023.10）</td>
+<td style="text-align: left;">Ratz 35% / General Catalyst 26% / Larsson 15% / Speedinvest 11% / Giant 9%</td>
+<td style="text-align: left;">Companies House</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>总体判断</strong>: Doccla 是 iHomeCare 在全球能找到的<strong>最接近的商业模式对标</strong>——急性 HaH、自有临床团队、政府合同、技术平台四位一体。其 NHS 扩张路径和临床 ROI 叙事可直接参考。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: center;">23</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 不适用</td>
+<td style="text-align: center;">2</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<p><strong>基本事实表</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">全称</td>
+<td style="text-align: left;">Doccla（Doccla UK Limited）</td>
+</tr>
+<tr>
+<td style="text-align: left;">成立年份</td>
+<td style="text-align: left;">2019</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">伦敦，英国</td>
+</tr>
+<tr>
+<td style="text-align: left;">创始人</td>
+<td style="text-align: left;">Martin Ratz（主席/创始人）、Dag Larsson（CEO/联合创始人）——均为瑞典人</td>
+</tr>
+<tr>
+<td style="text-align: left;">创始故事</td>
+<td style="text-align: left;">Martin 年轻时心脏病发作，出院后无任何随访——亲身体验了医疗断连，决定创办 Doccla</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工规模</td>
+<td style="text-align: left;">180 人（2024），其中 ~40 临床人员</td>
+</tr>
+<tr>
+<td style="text-align: left;">上市状态</td>
+<td style="text-align: left;">私募，未上市</td>
+</tr>
+<tr>
+<td style="text-align: left;">CQC 注册</td>
+<td style="text-align: left;">✅ 自有临床团队（护士、GP、顾问医生）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>发展时间线</strong>:</p>
+<p>| 年份 | 关键事件 |
+|:&mdash;|:&mdash;|:&mdash;|
+| 2019 | Martin Ratz &amp; Dag Larsson 在瑞典创立 Doccla |
+| 2020 | 在英国启动首个 NHS 虚拟病房试点（与 NHS Hertfordshire）；COVID 大流行加速需求 |
+| 2021 | £3.3M Seed（Giant Ventures、Speedinvest）；3 家 NHS 医院客户 |
+| 2022 | £15M Series A（General Catalyst 领投）；快速增长至 1/3 NHS 区域 |
+| 2023.8 | 收购欧洲远程监测平台 OTH——进入 9 个欧洲国家 + 新加坡 |
+| 2023 | 收入同比增长近 4 倍；客户留存率 100% |
+| 2024.6 | 与爱尔兰 HSE 签署首个合同 |
+| 2024.9 | <strong>£35M Series B</strong>——Lakestar 领投，Elaia、General Catalyst、Bertelsmann、Speedinvest 跟投 |
+| 2024 | 4M+ 患者日监测；每月新增 1,000 患者 |
+| 2025+ | 法国/DACH 市场扩展；生命科学（药企）业务线启动 |</p>
+<p><strong>管理层</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">姓名</th>
+<th style="text-align: left;">职务</th>
+<th style="text-align: left;">背景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Martin Ratz</td>
+<td style="text-align: left;">创始人 &amp; 主席</td>
+<td style="text-align: left;">瑞典人，心脏病幸存者，欧洲医疗创新背景</td>
+</tr>
+<tr>
+<td style="text-align: left;">Dag Larsson</td>
+<td style="text-align: left;">联合创始人 &amp; CEO</td>
+<td style="text-align: left;">资深技术领导者</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>股权结构</strong>（2023.10 Companies House）:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">股东</th>
+<th style="text-align: center;">持股</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Martin Ratz（创始人）</td>
+<td style="text-align: center;"><strong>35%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">General Catalyst</td>
+<td style="text-align: center;"><strong>26%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Dag Larsson（CEO）</td>
+<td style="text-align: center;"><strong>15%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Speedinvest</td>
+<td style="text-align: center;"><strong>11%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Giant Ventures</td>
+<td style="text-align: center;"><strong>9%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<p><strong>一句话核心逻辑</strong>: Doccla 赌的是&rdquo;医院不需要四面墙&rdquo;——通过自有 CQC 临床团队 + 技术平台 + 设备物流的全栈整合，将急性/亚急性住院护理搬到患者家中。与纯技术平台（Huma/Whzan）不同，Doccla 拥有自己的医生和护士，能承担临床责任——这也是 NHS 敢于将患者委托给 Doccla 的关键。</p>
+<p><strong>战略差异化要素</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Doccla 定位</th>
+<th style="text-align: left;">差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">临床模式</td>
+<td style="text-align: left;"><strong>自有 CQC 注册临床团队</strong></td>
+<td style="text-align: left;">纯技术平台竞品无此能力</td>
+</tr>
+<tr>
+<td style="text-align: left;">全栈整合</td>
+<td style="text-align: left;">技术+设备+物流+临床团队一体化</td>
+<td style="text-align: left;">一站式服务降低 NHS 采购复杂度</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS 叙事</td>
+<td style="text-align: left;">&ldquo;£3 换 £1，ROI 300%&rdquo;</td>
+<td style="text-align: left;">量化价值主张高度有效</td>
+</tr>
+<tr>
+<td style="text-align: left;">欧洲扩展</td>
+<td style="text-align: left;">通过收购 OTH 进入 9 国</td>
+<td style="text-align: left;">技术收购 + 自有临床服务叠加</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>战略演变三阶段</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">时期</th>
+<th style="text-align: left;">战略重点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Phase 1: 软件</td>
+<td style="text-align: left;">2019-2020</td>
+<td style="text-align: left;">纯软件方案——但很快发现不够</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 2: 全栈整合</td>
+<td style="text-align: left;">2020-2023</td>
+<td style="text-align: left;">+设备+物流+自有临床团队→完整的&rdquo;虚拟医院&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 3: 欧洲平台</td>
+<td style="text-align: left;">2023+</td>
+<td style="text-align: left;">收购 OTH 技术平台→10 国覆盖→叠加临床服务</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<pre><code>┌──────────────────────────────────────────────────────┐
+│              物理层（Doccla 自有）                     │
+│  ┌────────┐  ┌──────────┐  ┌──────────────────────┐ │
+│  │ 设备盒  │  │ 预配手机  │  │ 可穿戴医疗设备       │ │
+│  │(定制)   │  │          │  │(BP/HR/SpO2/temp/resp)│ │
+│  └────┬───┘  └────┬─────┘  └──────────┬───────────┘ │
+└───────┼──────────┼──────────────────┼───────────────┘
+        │          │                  │
+        ▼          ▼                  ▼
+┌──────────────────────────────────────────────────────┐
+│              技术层（OTH 平台 + 自研）                  │
+│  ┌──────────┐  ┌───────────┐  ┌──────────────────┐  │
+│  │ 远程监测  │  │ 实时分析   │  │ 数据科学(AI)     │  │
+│  │ 24/7      │  │ 预警系统   │  │ (建设中)         │  │
+│  └────┬─────┘  └─────┬─────┘  └────────┬─────────┘  │
+└───────┼──────────────┼────────────────┼─────────────┘
+        │              │                │
+        ▼              ▼                ▼
+┌──────────────────────────────────────────────────────┐
+│              临床层（CQC 注册，自有）                   │
+│  ┌──────────┐  ┌───────────┐  ┌──────────────────┐  │
+│  │ 护士团队  │  │ GP 团队   │  │ 顾问医生         │  │
+│  │ (一线监测) │  │ (临床决策) │  │ (复杂病例)       │  │
+│  └──────────┘  └───────────┘  └──────────────────┘  │
+└──────────────────────────────────────────────────────┘
+                         │
+                         ▼
+              ┌──────────────────┐
+              │ NHS / European    │
+              │ Health Systems   │
+              └──────────────────┘
+</code></pre>
+<p><strong>价值链定位</strong>: Doccla 是<strong>全栈虚拟病房运营商</strong>——拥有从设备采购到临床决策的完整价值链。类比：Doccla : 急性居家医疗 = 航空公司 : 交通——拥有飞机（设备）、飞行员（临床团队）和票务系统（技术平台）。</p>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">产品线</th>
+<th style="text-align: left;">客户类型</th>
+<th style="text-align: left;">服务内容</th>
+<th style="text-align: left;">定价模式</th>
+<th style="text-align: center;">占收入（估）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Virtual Ward（虚拟病房）</td>
+<td style="text-align: left;">NHS/欧洲医院</td>
+<td style="text-align: left;">出院后监测+住院替代——设备盒+远程监测+临床团队</td>
+<td style="text-align: left;">按患者/按合同（G-Cloud 框架）</td>
+<td style="text-align: center;">~70-80%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Remote Monitoring（远程监测）</td>
+<td style="text-align: left;">NHS/欧洲医院</td>
+<td style="text-align: left;">慢性病长期监测</td>
+<td style="text-align: left;">按患者/月</td>
+<td style="text-align: center;">~10-15%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Proactive Care（预防性护理）</td>
+<td style="text-align: left;">NHS</td>
+<td style="text-align: left;">高风险患者预防性管理（500+ 患者项目）</td>
+<td style="text-align: left;">按项目</td>
+<td style="text-align: center;">~5-10%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Life Sciences（药企）</td>
+<td style="text-align: left;">药企</td>
+<td style="text-align: left;">临床试验数据采集+真实世界证据</td>
+<td style="text-align: left;">项目制</td>
+<td style="text-align: center;">新兴</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>定价参照</strong>: NHS 框架合同——Doccla 宣称每 £1 投入为 NHS 节省 £3（ROI 300%）。政府数字市场（G-Cloud 14）列名，标准化 NHS 采购。</p>
+<p><strong>研发与创新管线</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">在研产品/功能</th>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">目标市场</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">数据科学/AI 预测</td>
+<td style="text-align: left;">早期建设中</td>
+<td style="text-align: left;">主动预防+药企数据分析</td>
+</tr>
+<tr>
+<td style="text-align: left;">法国新远程监测编码</td>
+<td style="text-align: left;">进入中</td>
+<td style="text-align: left;">法国市场</td>
+</tr>
+<tr>
+<td style="text-align: left;">DACH 扩展</td>
+<td style="text-align: left;">早期</td>
+<td style="text-align: left;">德国/奥地利/瑞士</td>
+</tr>
+<tr>
+<td style="text-align: left;">生命科学业务</td>
+<td style="text-align: left;">启动中</td>
+<td style="text-align: left;">全球药企</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<p><strong>客户结构</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户类别</th>
+<th style="text-align: center;">收入占比（估）</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NHS Trust/ICB</td>
+<td style="text-align: center;">70-80%</td>
+<td style="text-align: left;">框架合同，100% 留存</td>
+<td style="text-align: left;">↑ 扩展到近半数 NHS 区域</td>
+</tr>
+<tr>
+<td style="text-align: left;">德国医院</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: left;">2023.12 首个合同</td>
+<td style="text-align: left;">↑ 重点增长</td>
+</tr>
+<tr>
+<td style="text-align: left;">爱尔兰 HSE</td>
+<td style="text-align: center;">5%</td>
+<td style="text-align: left;">2024.6 首个合同</td>
+<td style="text-align: left;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">其他欧洲国家</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: left;">通过 OTH 渠道</td>
+<td style="text-align: left;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">药企</td>
+<td style="text-align: center;">新兴</td>
+<td style="text-align: left;">临床数据+真实世界证据</td>
+<td style="text-align: left;">↑↑</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>客户获取渠道</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">渠道</th>
+<th style="text-align: center;">效率</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NHS 框架投标（G-Cloud 14）</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">标准化采购通道</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床效果数据驱动</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">&ldquo;ROI 300%&rdquo;叙事极有效</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS 内部推荐</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: left;">100% 留存→同行推荐</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>集中度风险</strong>: NHS 作为最大单一支付方——但 NHS 本身高度分散（42 ICS），Doccla 已覆盖近半数。</p>
+<p><strong>品牌与声誉</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">评估</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">客户留存率</td>
+<td style="text-align: center;">🟢🟢 <strong>100%</strong></td>
+<td style="text-align: left;">NHS 客户无一流失</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS ROI</td>
+<td style="text-align: center;">🟢🟢 <strong>300%</strong></td>
+<td style="text-align: left;">NHS 资助研究验证</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床效果</td>
+<td style="text-align: center;">🟢🟢 A&amp;E -63%</td>
+<td style="text-align: left;">独立研究</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ Doccla 为英国私募公司，无公开上市财报。以下数据基于 Sifted、官方公告等。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">2021</th>
+<th style="text-align: center;">2022</th>
+<th style="text-align: center;">2023</th>
+<th style="text-align: center;">2024</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">收入</td>
+<td style="text-align: center;">~£2M（估）</td>
+<td style="text-align: center;">~£5M（估）</td>
+<td style="text-align: center;"><strong>~£20M（估—近 4x 增长）</strong></td>
+<td style="text-align: center;">~£30-40M（估）</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工</td>
+<td style="text-align: center;">~30</td>
+<td style="text-align: center;">~80</td>
+<td style="text-align: center;">~120</td>
+<td style="text-align: center;"><strong>180</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">融资累计</td>
+<td style="text-align: center;">£3.3M Seed</td>
+<td style="text-align: center;">£15M Series A</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>£35M Series B</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">患者日</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>4M+</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">月新增患者</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>1,000</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>收入增长</strong>: 2023 年收入增长近 4x（Sifted 报道）。</p>
+<p><strong>利润状态</strong>: 未公开。推测仍处于投资扩张期，尚未实现 EBITDA 盈利——£35M Series B 主要用于欧洲扩展和团队建设。</p>
+<hr />
+<h2 id="d8">D8 — 工作流 / 旅程映射</h2>
+<p><strong>Doccla 虚拟病房患者旅程</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Phase</th>
+<th style="text-align: left;">动作</th>
+<th style="text-align: left;">Doccla 角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Phase 0: 入院/出院决策</td>
+<td style="text-align: left;">医院决定患者适合虚拟病房</td>
+<td style="text-align: left;">Doccla 接收转诊</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 1: 设备交付</td>
+<td style="text-align: left;">Doccla 物流团队将定制设备盒（手机+可穿戴）送达患者家中</td>
+<td style="text-align: left;">自有最后一公里物流</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 2: 入组</td>
+<td style="text-align: left;">患者学习使用设备——预配手机，即开即用</td>
+<td style="text-align: left;">简化的患者体验（预配是差异化）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 3: 日常监测</td>
+<td style="text-align: left;">设备自动采集生命体征（BP/HR/SpO2/temp/resp）→ 上传云端</td>
+<td style="text-align: left;">24/7 远程监测平台</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 4: 临床审查</td>
+<td style="text-align: left;">Doccla 自有护士/GP 查看数据→异常预警→临床判断</td>
+<td style="text-align: left;">自有 CQC 临床团队</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 5: 干预</td>
+<td style="text-align: left;">根据需要调整用药/安排上门/召回医院</td>
+<td style="text-align: left;">全流程闭环</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 6: 康复/过渡</td>
+<td style="text-align: left;">患者稳定后过渡回 GP 管理</td>
+<td style="text-align: left;">数据移交</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构总览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 数据科学/AI</td>
+<td style="text-align: left;">🟡 建设中</td>
+<td style="text-align: left;">数据科学团队从几人→扩展中</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 临床工作台</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">护士/GP/顾问仪表盘+预警系统</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 监测平台 (OTH)</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">2023 年收购——10 国已部署</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 患者端</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">预配智能手机 + 可穿戴设备</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据层</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">4M+ 患者日的结构化临床数据</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">OTH 平台（收购）+ 自研临床层</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">EMIS Health 正式合作伙伴——集成 NHS 主流 EHR</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">NHS DSPT 合规 + UK GDPR</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>G-Cloud 14</strong></td>
+<td style="text-align: left;">政府数字市场列名</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件/IoT 设备</h3>
+<p><strong>✅ 适用。</strong> Doccla 提供完整的硬件套件：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">设备</th>
+<th style="text-align: left;">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">预配智能手机</td>
+<td style="text-align: left;">无需患者自备设备</td>
+</tr>
+<tr>
+<td style="text-align: left;">血压计</td>
+<td style="text-align: left;">BP 监测</td>
+</tr>
+<tr>
+<td style="text-align: left;">脉搏血氧仪</td>
+<td style="text-align: left;">SpO2 + HR</td>
+</tr>
+<tr>
+<td style="text-align: left;">体温计</td>
+<td style="text-align: left;">体温</td>
+</tr>
+<tr>
+<td style="text-align: left;">呼吸率监测</td>
+<td style="text-align: left;">Resp Rate</td>
+</tr>
+<tr>
+<td style="text-align: left;">定制设备盒</td>
+<td style="text-align: left;">统一包装+物流</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>设备策略</strong>: 设备无关（device-agnostic）——可使用多种品牌，但通过预配和统一包装确保患者体验一致性。</p>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>当前 AI 状态</strong></td>
+<td style="text-align: left;">🟡 <strong>早期</strong>——数据科学团队仅几人（2024）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 方向</strong></td>
+<td style="text-align: left;">患者对话分析、主动预防性护理预测</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据资产</strong></td>
+<td style="text-align: left;">4M+ 患者日——结构化+非结构化（护士对话）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>药企数据价值</strong></td>
+<td style="text-align: left;">92-97% 患者依从率数据→高价值真实世界证据</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">能力维度</th>
+<th style="text-align: center;">Doccla 状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差异化评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">全栈整合（设备+平台+临床）</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: center;">🟡 多数分离</td>
+<td style="text-align: center;">🟢🟢 核心壁垒</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI/数据科学</td>
+<td style="text-align: center;">🟡 早期</td>
+<td style="text-align: center;">🟡 行业早期</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作性</td>
+<td style="text-align: center;">🟢 EMIS 集成</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">欧洲多国覆盖</td>
+<td style="text-align: center;">🟢🟢 10 国</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟢🟢 领先</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>技术护城河总体评估</strong>: 🟢 <strong>强</strong>——全栈整合（技术+设备+自有临床团队）构成核心壁垒。但 AI/数据科学仍是薄弱环节。</p>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;"><strong>Doccla</strong></th>
+<th style="text-align: left;"><strong>Huma</strong></th>
+<th style="text-align: left;"><strong>Cera</strong></th>
+<th style="text-align: left;"><strong>Whzan</strong></th>
+<th style="text-align: left;"><strong>Current Health</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">临床团队</td>
+<td style="text-align: left;">✅ <strong>自有 CQC</strong></td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">✅ 10K+ 护工</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">设备</td>
+<td style="text-align: left;">✅ 全套</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌（使用标准设备）</td>
+<td style="text-align: left;">✅ Blue Box</td>
+<td style="text-align: left;">✅ 可穿戴</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS 覆盖</td>
+<td style="text-align: left;">🟢 ~50% ICB</td>
+<td style="text-align: left;">🟡</td>
+<td style="text-align: left;">🟢🟢 2/3 ICS</td>
+<td style="text-align: left;">🟢 广泛</td>
+<td style="text-align: left;">🔴 已退出</td>
+</tr>
+<tr>
+<td style="text-align: left;">欧洲覆盖</td>
+<td style="text-align: left;">🟢🟢 10 国</td>
+<td style="text-align: left;">🟡 11 国</td>
+<td style="text-align: left;">🟡 德国</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI</td>
+<td style="text-align: left;">🟡 早期</td>
+<td style="text-align: left;">🟢🟢 GenAI</td>
+<td style="text-align: left;">🟢🟢 自研预测</td>
+<td style="text-align: left;">🟡</td>
+<td style="text-align: left;">🟢 FDA</td>
+</tr>
+<tr>
+<td style="text-align: left;">估值/融资</td>
+<td style="text-align: left;">£52M+</td>
+<td style="text-align: left;">$300M+ ($1B)</td>
+<td style="text-align: left;">~$571M</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">$400M→$30-100M</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Doccla 的独特定位</strong>: 唯一同时拥有 (1) 自有 CQC 临床团队 (2) 自有设备物流 (3) 10 国欧洲覆盖 (4) 100% NHS 客户留存的虚拟病房服务商。</p>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</h2>
+<p><strong>TAM/SAM/渗透率估算</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: left;">计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TAM（欧洲虚拟病房市场）</strong></td>
+<td style="text-align: center;">~£5-10B/年</td>
+<td style="text-align: left;">NHS £1-2B + 法国远程监测编码 + DACH + 其他</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SAM（Doccla 当前 10 国）</strong></td>
+<td style="text-align: center;">~£2-3B/年</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>当前收入</strong></td>
+<td style="text-align: center;">~£20-40M</td>
+<td style="text-align: left;">SAM 渗透率 ~1-2%</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<p><strong>盈利路径判断</strong>: Doccla 仍处于投资扩张期，但 NHS 核心业务已证明单位经济为正值（&rdquo;每 £1 投入，NHS 节省 £3&rdquo;意味着 Doccla 收费 &lt; 节省额的 1/3）。法国新远程监测编码（类似美国 RPM CPT 编码）将显著改善欧洲业务的单位经济。</p>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期</strong></td>
+<td style="text-align: left;">① 法国新编码释放巨大市场 ② 德国医院合同扩展 ③ 药企业务线启动</td>
+<td style="text-align: left;">① £35M Series B 后的执行压力 ② 180 人团队管理 10 国的复杂性</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期</strong></td>
+<td style="text-align: left;">① 欧洲虚拟病房市场领导者 ② 数据科学→AI 预测→药企数据收入 ③ 从 1K→100K 月新增患者</td>
+<td style="text-align: left;">① NHS Online 全国统一平台可能挤出 ② 科技大厂进入 ③ 竞品（Huma/Biofourmis）追赶</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">① 欧洲医院床位持续缩减→虚拟病房需求刚性</td>
+<td style="text-align: left;">① 单一支付方（NHS）政策风险</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引与可信度</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">声明</th>
+<th style="text-align: left;">验证</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">&ldquo;目标月新增 100K 患者&rdquo;</td>
+<td style="text-align: left;">⏳ 当前 1K/月→需 100x 增长，极具挑战</td>
+</tr>
+<tr>
+<td style="text-align: left;">&ldquo;收入 2023 年增长近 4x&rdquo;</td>
+<td style="text-align: left;">✅ Sifted 独立报道</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>可信度评估</strong>: 🟢 <strong>高</strong>。</p>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">估值指标</th>
+<th style="text-align: left;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">总融资</td>
+<td style="text-align: left;">£52M+ (~$65M)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series B 后估值</td>
+<td style="text-align: left;">估 £150-250M</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1">1. 临床团队是虚拟病房的&rdquo;入场券&rdquo;</h3>
+<p>Doccla 证明——没有自有临床团队，NHS 不会将患者委托给你。<strong>iHomeCare 在香港必须以自有护士/医生团队为核心</strong>。</p>
+<h3 id="2">2. &ldquo;预配设备盒&rdquo;模式</h3>
+<p>Doccla 的预配智能手机+设备盒大幅降低了老年患者的技术门槛。<strong>iHomeCare 应该复制&rdquo;即开即用&rdquo;的患者体验设计</strong>。</p>
+<h3 id="3-3-1-roi">3. &ldquo;£3 换 £1&rdquo;的 ROI 叙事</h3>
+<p>Doccla 的核心销售武器是 NHS 资助的独立研究证明 ROI 300%。<strong>iHomeCare 需要尽快启动与香港医管局的试点并量化 ROI</strong>。</p>
+<h3 id="4">4. 药企是第二增长曲线</h3>
+<p>Doccla 的 92-97% 患者依从率数据对药企极具价值。<strong>iHomeCare 可以将&rdquo;真实世界数据&rdquo;作为第二收入来源</strong>。</p>
+<h3 id="5">5. 收购是欧洲扩展的加速器</h3>
+<p>Doccla 通过收购 OTH 一夜进入 9 国。<strong>iHomeCare 未来进入大湾区可以考虑收购本地小型护理机构或技术公司</strong>。</p>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策</th>
+<th style="text-align: left;">影响</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NHS 虚拟病房 10 年计划</td>
+<td style="text-align: left;">🟢🟢 核心政策驱动</td>
+<td style="text-align: left;">NHS England</td>
+</tr>
+<tr>
+<td style="text-align: left;">法国远程监测编码（2024+）</td>
+<td style="text-align: left;">🟢🟢 Doccla 重点扩展市场</td>
+<td style="text-align: left;">French HAS</td>
+</tr>
+<tr>
+<td style="text-align: left;">G-Cloud 14</td>
+<td style="text-align: left;">🟢 NHS 标准化采购</td>
+<td style="text-align: left;">UK Gov</td>
+</tr>
+<tr>
+<td style="text-align: left;">CQC 注册</td>
+<td style="text-align: left;">🟢 临床团队合规基础</td>
+<td style="text-align: left;">CQC</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<blockquote>
+<p>⚠️ Doccla 未公开单元经济。以下基于行业基准和 NHS 合同推算。</p>
+</blockquote>
+<p><strong>标准虚拟病房患者单元经济（NHS 合同）</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">收入/成本项</th>
+<th style="text-align: center;">金额（£/患者/月）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NHS 合同费用</td>
+<td style="text-align: center;">£500-1,500</td>
+<td style="text-align: left;">按患者/月或按 episode</td>
+</tr>
+<tr>
+<td style="text-align: left;">设备成本（摊销）</td>
+<td style="text-align: center;">£50-100</td>
+<td style="text-align: left;">预配手机+可穿戴设备</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床团队成本（人均）</td>
+<td style="text-align: center;">£200-400</td>
+<td style="text-align: left;">~40 临床人员 / 患者数</td>
+</tr>
+<tr>
+<td style="text-align: left;">物流/运营</td>
+<td style="text-align: center;">£30-50</td>
+<td style="text-align: left;">设备配送+回收</td>
+</tr>
+<tr>
+<td style="text-align: left;">平台/IT</td>
+<td style="text-align: center;">£20-40</td>
+<td style="text-align: left;">OTH 平台维护+开发</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>单位贡献毛利</strong></td>
+<td style="text-align: center;"><strong>£200-900</strong></td>
+<td style="text-align: left;">毛利率 40-60%（估）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Doccla 宣称的 NHS ROI</strong>: 每 £1 投入 → NHS 节省 £3（300% ROI）</p>
+<ul>
+<li>NHS 住院日均成本 ~£400-500</li>
+<li>若 Doccla 替代 7-14 天住院 = 节省 £2,800-7,000/患者</li>
+<li>Doccla 收费若在 £900-2,300/患者 → 确实可实现 300% ROI</li>
+</ul>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">典型疾病</th>
+<th style="text-align: center;">战略优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">A: 急性出院后</td>
+<td style="text-align: left;">手术后/感染后短期监测（1-4 周）</td>
+<td style="text-align: left;">COPD 急性加重、心衰、肺炎、术后</td>
+<td style="text-align: center;">🔴 核心——NHS 最大需求</td>
+</tr>
+<tr>
+<td style="text-align: left;">B: 慢性病长期管理</td>
+<td style="text-align: left;">高危慢性患者预防性监测</td>
+<td style="text-align: left;">心衰、COPD、糖尿病</td>
+<td style="text-align: center;">🟢 增长——500+ 患者预防项目已验证</td>
+</tr>
+<tr>
+<td style="text-align: left;">C: 儿科虚拟病房</td>
+<td style="text-align: left;">儿童急性/慢性居家监测</td>
+<td style="text-align: left;">哮喘、感染</td>
+<td style="text-align: center;">🟡 新兴</td>
+</tr>
+<tr>
+<td style="text-align: left;">D: 药企临床试验患者</td>
+<td style="text-align: left;">临床研究受试者</td>
+<td style="text-align: left;">任何治疗领域</td>
+<td style="text-align: center;">🟢🟢 第二曲线</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<p><strong>UK/欧洲虚拟病房竞争全景</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: center;">临床团队</th>
+<th style="text-align: center;">设备</th>
+<th style="text-align: center;">AI</th>
+<th style="text-align: center;">威胁等级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Huma</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">纯平台，无临床责任</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Whzan</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">IoT 专精，无临床</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Clinitouch</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: left;">无自有临床团队</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cera</strong></td>
+<td style="text-align: center;">✅ 10K+</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: center;">🟡 低</td>
+<td style="text-align: left;">慢性护理非急性——互补非竞争</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Current Health</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: left;">已退出 NHS</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NHS Trust 自建</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">可能自建但 Doccla 模式已证明外包更经济</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略深度评估</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">区域</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">进入方式</th>
+<th style="text-align: left;">机会</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">英国 (NHS)</td>
+<td style="text-align: center;">🟢 核心</td>
+<td style="text-align: left;">直销+G-Cloud</td>
+<td style="text-align: left;">~50% ICB 覆盖</td>
+<td style="text-align: left;">NHS 全国平台风险</td>
+</tr>
+<tr>
+<td style="text-align: left;">法国</td>
+<td style="text-align: center;">🟢 重点扩展</td>
+<td style="text-align: left;">新远程监测编码</td>
+<td style="text-align: left;">类似美国 CPT 编码革命</td>
+<td style="text-align: left;">语言/文化</td>
+</tr>
+<tr>
+<td style="text-align: left;">德国</td>
+<td style="text-align: center;">🟡 早期</td>
+<td style="text-align: left;">2023.12 首个合同</td>
+<td style="text-align: left;">DACH 市场 £11B+</td>
+<td style="text-align: left;">碎片化</td>
+</tr>
+<tr>
+<td style="text-align: left;">爱尔兰</td>
+<td style="text-align: center;">🟢 已进入</td>
+<td style="text-align: left;">HSE 合同</td>
+<td style="text-align: left;">英语市场</td>
+<td style="text-align: left;">市场小</td>
+</tr>
+<tr>
+<td style="text-align: left;">北欧</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">OTH 收购</td>
+<td style="text-align: left;">创始人母国+数字化成熟</td>
+<td style="text-align: left;">人口少</td>
+</tr>
+<tr>
+<td style="text-align: left;">新加坡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">OTH 收购</td>
+<td style="text-align: left;">亚洲桥头堡</td>
+<td style="text-align: left;">市场小</td>
+</tr>
+<tr>
+<td style="text-align: left;">美国</td>
+<td style="text-align: center;">🔴 未进入</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">竞争极度激烈</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<p><strong>退出路径评估</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">路径</th>
+<th style="text-align: center;">可能性</th>
+<th style="text-align: left;">估值范围</th>
+<th style="text-align: left;">潜在收购方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>战略收购（医疗集团）</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">£200-500M</td>
+<td style="text-align: left;">UnitedHealth/Optum、Bupa、AXA</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>战略收购（科技大厂）</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">£300-600M</td>
+<td style="text-align: left;">Amazon Care、Google Health</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IPO（伦敦）</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">£300-500M</td>
+<td style="text-align: left;">2027+</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>继续私募</strong></td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">当前路径</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>环境</strong></td>
+<td style="text-align: left;">🟢 正面——虚拟病房替代住院减少医疗碳排放（医院能耗+交通）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社会</strong></td>
+<td style="text-align: left;">🟢🟢 极正面——改善医疗可及性；减少住院压力；创始人心脏病幸存故事的使命感</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理</strong></td>
+<td style="text-align: left;">🟢——创始人主导的稳定 Cap Table（Ratz 35%）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">功能制——临床团队（~40 人）+ 技术/产品 + 商务/运营 + 物流</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">180 人（2024），快速增长（2021 ~30→2024 180）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人才密度</strong></td>
+<td style="text-align: left;">🟢 高——临床团队 CQC 注册；技术团队有欧洲多国经验</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🟡 中等——创始人 Martin Ratz（35% 持股）是战略灵魂，CEO Dag Larsson 负责执行</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工留存</strong></td>
+<td style="text-align: left;">未公开——但快速增长暗示文化健康</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">🟢 使命驱动——&ldquo;Patient First&rdquo;为核心价值观</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>组织健康度综合评级</strong>: 🟢 <strong>强</strong>——180 人团队运营 10 国业务，组织效率高。</p>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<h3 id="251">25.1 融资历史全览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">轮次</th>
+<th style="text-align: left;">日期</th>
+<th style="text-align: left;">金额</th>
+<th style="text-align: left;">估值</th>
+<th style="text-align: left;">领投方</th>
+<th style="text-align: left;">跟投方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Seed</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: left;">£3.3M</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Giant Ventures</td>
+<td style="text-align: left;">Speedinvest</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series A</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">£15M</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">General Catalyst</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series B</td>
+<td style="text-align: left;">2024.9</td>
+<td style="text-align: left;"><strong>£35M</strong></td>
+<td style="text-align: left;">估 £150-250M</td>
+<td style="text-align: left;"><strong>Lakestar</strong></td>
+<td style="text-align: left;">Elaia, GC, Bertelsmann, Speedinvest</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>累计</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>£52M+</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="252-cap-table202310-companies-house">25.2 Cap Table（2023.10 Companies House）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">股东</th>
+<th style="text-align: center;">持股</th>
+<th style="text-align: left;">类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Martin Ratz（创始人/主席）</td>
+<td style="text-align: center;"><strong>35%</strong></td>
+<td style="text-align: left;">创始人</td>
+</tr>
+<tr>
+<td style="text-align: left;">General Catalyst</td>
+<td style="text-align: center;"><strong>26%</strong></td>
+<td style="text-align: left;">VC</td>
+</tr>
+<tr>
+<td style="text-align: left;">Dag Larsson（CEO/联合创始人）</td>
+<td style="text-align: center;"><strong>15%</strong></td>
+<td style="text-align: left;">创始人</td>
+</tr>
+<tr>
+<td style="text-align: left;">Speedinvest</td>
+<td style="text-align: center;"><strong>11%</strong></td>
+<td style="text-align: left;">VC</td>
+</tr>
+<tr>
+<td style="text-align: left;">Giant Ventures</td>
+<td style="text-align: center;"><strong>9%</strong></td>
+<td style="text-align: left;">VC</td>
+</tr>
+<tr>
+<td style="text-align: left;">其他/期权池</td>
+<td style="text-align: center;"><strong>4%</strong></td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>创始人控制力</strong>: 🟢 <strong>强</strong>——Ratz + Larsson 合计 50%，保持创始人控制。</p>
+<h3 id="253">25.3 投资者质量评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Lakestar</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: left;">欧洲顶级 VC（Spotify/Klarna 早期投资者）</td>
+</tr>
+<tr>
+<td style="text-align: left;">General Catalyst</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: left;">美国顶级 VC（Stripe/Airbnb）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Elaia</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">法国顶级 VC——助力法国扩展</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">B2G 政府投标（核心）+ NHS 内部推荐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售周期</strong></td>
+<td style="text-align: left;">NHS 框架——3-9 个月（G-Cloud 缩短了周期）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>赢单率</strong></td>
+<td style="text-align: left;">高——100% 客户留存 + &ldquo;每 3 周上线一个新客户&rdquo;（2023）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC</strong></td>
+<td style="text-align: left;">政府投标成本——估 £20-50K/Trust 合同</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LTV/CAC</strong></td>
+<td style="text-align: left;">极高——NHS 合同 3-5 年 + 100% 留存 → LTV &gt;£500K-1M</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GTM 阶段</strong></td>
+<td style="text-align: left;">🟢 <strong>规模化扩展</strong>——从 &ldquo;赢得第一个客户&rdquo; 到 &ldquo;近半数 NHS 区域&rdquo;</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="271">27.1 核心临床指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Doccla 数据</th>
+<th style="text-align: left;">对照标准</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>A&amp;E 就诊减少</strong></td>
+<td style="text-align: center;"><strong>-63%</strong></td>
+<td style="text-align: left;">基线</td>
+<td style="text-align: left;">NHS 资助研究</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>急诊入院减少</strong></td>
+<td style="text-align: center;"><strong>-63%</strong></td>
+<td style="text-align: left;">基线</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者依从率</strong></td>
+<td style="text-align: center;"><strong>95%+</strong></td>
+<td style="text-align: left;">远程监测行业一般 70-80%</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>药企试验依从率</strong></td>
+<td style="text-align: center;"><strong>92-97%</strong></td>
+<td style="text-align: left;">临床试验一般 60-80%</td>
+<td style="text-align: left;">Sifted/CEO 访谈</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NHS ROI</strong></td>
+<td style="text-align: center;"><strong>300%</strong>（每 £1 节省 £3）</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">NHS 资助研究</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>客户留存率</strong></td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">官方</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="272">27.2 质量认证体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CQC 注册</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">自有临床团队</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS DTAC</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">数字技术标准</td>
+</tr>
+<tr>
+<td style="text-align: left;">G-Cloud 14</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">政府数字市场</td>
+</tr>
+<tr>
+<td style="text-align: left;">DTAC</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">NHS 数字技术评估</td>
+</tr>
+<tr>
+<td style="text-align: left;">ISO 13485</td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">ISO 27001</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">信息安全（与 NHS 合作必备）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<p><strong>证据强度总体评级</strong>: 🟢 <strong>强</strong>——Doccla 拥有 NHS 资助的独立研究验证（A&amp;E -63%、ROI 300%），这在虚拟病房赛道是最高级别的临床证据之一。虽然未发表同行评审 RCT，但 NHS 资助的研究本身具有高可信度。</p>
+<hr />
+<h2 id="_1">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">精确收入/利润数据</td>
+<td style="text-align: left;">Companies House 年报</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">法国/DACH 市场具体收入</td>
+<td style="text-align: left;">一手调研</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Series B 后 Cap Table 更新</td>
+<td style="text-align: left;">Companies House</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">数据科学/AI 产品上线时间</td>
+<td style="text-align: left;">等待官方披露</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">D0 — 赛道验证</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">全栈虚拟病房</td>
+</tr>
+<tr>
+<td style="text-align: left;">D1 — 执行摘要</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D2 — 公司全貌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D3 — 战略定位</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D4 — 商业模式</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D5 — 产品线</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D6 — 客户与支付方</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D7 — 财务拆解</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">私募公司</td>
+</tr>
+<tr>
+<td style="text-align: left;">D8 — 工作流</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D9 — 技术深度</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D10 — 竞争格局</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D11 — TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D12 — 盈利模型</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">投资扩张期</td>
+</tr>
+<tr>
+<td style="text-align: left;">D13 — 机遇与风险</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D14 — 管理层指引</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D15 — 估值对比</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">D16 — 战略建议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D17 — 政策与监管</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D18 — 单元经济</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D19 — 客户细分</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D20 — 竞品地图</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D21 — 跨境战略</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D22 — 退出分析</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D23 — ESG</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D24 — 组织与人才</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D25 — 融资/Cap Table</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D26 — GTM 效率</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D27 — 临床质量</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅</td>
+<td style="text-align: center;">24</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总计</strong></td>
+<td style="text-align: center;"><strong>27</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_2">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Sifted</td>
+<td style="text-align: left;">Hospitals at home: Doccla hopes virtual wards can solve healthcare woes</td>
+<td style="text-align: left;">2023.8.18</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Sifted</td>
+<td style="text-align: left;">Doccla raises a £35m Series B</td>
+<td style="text-align: left;">2024.9.3</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Doccla 官方</td>
+<td style="text-align: left;">We&rsquo;ve Raised £35 Million in Series B Funding</td>
+<td style="text-align: left;">2024.9.19</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Doccla 官方</td>
+<td style="text-align: left;">About Doccla</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Digital Health</td>
+<td style="text-align: left;">Virtual ward company Doccla secures £35m</td>
+<td style="text-align: left;">2024.9</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">HTN</td>
+<td style="text-align: left;">South East London ICB £3.5M virtual wards contracts</td>
+<td style="text-align: left;">2025.7.30</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">UKTN</td>
+<td style="text-align: left;">Virtual ward startup Doccla raises £35m</td>
+<td style="text-align: left;">2024.9</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Maddyness</td>
+<td style="text-align: left;">Meet Doccla, the virtual ward keeping patients out of hospital</td>
+<td style="text-align: left;">2022.12</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">NHS England</td>
+<td style="text-align: left;">Virtual wards operational framework</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">NICE</td>
+<td style="text-align: left;">HTG697 Virtual ward platform technologies</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">EMIS Health</td>
+<td style="text-align: left;">Doccla Virtual Care Services partner page</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">Companies House</td>
+<td style="text-align: left;">Doccla UK Limited — Cap Table (Oct 2023)</td>
+<td style="text-align: left;">2023.10</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><em>报告终</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HaH 全球政策周度预警报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">HaH 全球政策周度预警报告</a><ul>
+<li><a href="#3">🔴 重大政策变动 + 深度分析（3条）</a><ul>
+<li><a href="#1-cms-medicare-6">🔴 #1 美国：CMS 全国暂停居家护理和临终关怀 Medicare 新准入 — 6个月冻结令</a></li>
+<li><a href="#2-fda-readi-home-home-as-a-health-care-hub">🔴 #2 美国：FDA 启动 READI-Home 创新挑战 — &ldquo;Home as a Health Care Hub&rdquo; 战略落地</a></li>
+<li><a href="#3-medicare-inpatient-only-ipo-cy-2026-opps">🔴 #3 美国：Medicare Inpatient-Only (IPO) 清单终结 — CY 2026 OPPS 最终规则实施</a></li>
+</ul>
+</li>
+<li><a href="#_1">🟡 值得关注</a><ul>
+<li><a href="#cms-ahcah-2026317">🟡 美国：CMS 发布 AHCaH 第二波公开数据（2026年3月17日）</a></li>
+<li><a href="#20261">🟡 新加坡：全国医疗数据共享法（2026年1月）</a></li>
+<li><a href="#_2">🟡 台湾：在宅医疗医师深度报道</a></li>
+</ul>
+</li>
+<li><a href="#_3">🟢 行业动态</a></li>
+<li><a href="#_4">📊 统计</a></li>
+<li><a href="#rss">附件：RSS源状态</a></li>
+<li><a href="#_5">方法论</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">HaH 全球政策周度预警报告</h1>
+<p><strong>日期</strong>: 2026-06-30<br />
+<strong>分析师</strong>: Kate / 调研 VP<br />
+<strong>覆盖</strong>: US(CMS/AHCAH) · UK(NHS) · JP(厚労省) · AU(HITH) · SG(MIC@Home) · TW(在宅急症) · CA(HaH)</p>
+<hr />
+<h2 id="3">🔴 重大政策变动 + 深度分析（3条）</h2>
+<hr />
+<h3 id="1-cms-medicare-6">🔴 #1 美国：CMS 全国暂停居家护理和临终关怀 Medicare 新准入 — 6个月冻结令</h3>
+<p><strong>事件概述</strong>
+2026年5月13日，CMS 联合副总统 JD Vance 的反欺诈特别工作组，宣布全国范围内暂停新 Medicare 居家健康机构（Home Health Agencies, HHA）和临终关怀机构（Hospice）的准入登记，为期6个月。联邦公报于5月15日正式公布（FR Doc. 2026-09717 / 2026-09718）。CMS 署长 Mehmet Oz 声明称居家健康和临终关怀领域存在&rdquo;系统性、深层次欺诈&rdquo;，该冻结旨在&rdquo;在欺诈发生前阻止它&rdquo;。</p>
+<p><strong>原文来源</strong></p>
+<ul>
+<li>CMS 新闻稿: https://www.cms.gov/newsroom/press-releases/cms-announces-aggressive-nationwide-crackdown-fraud-six-month-hospice-home-health-agency-enrollment</li>
+<li>联邦公报: https://www.federalregister.gov/public-inspection/2026-09717/medicare-medicaid-and-childrens-health-insurance-programs-announcement-of-nationwide-temporary</li>
+<li>CMS QSO-26-11-HHA &amp; Hospice 备忘录: https://www.cms.gov/files/document/qso-26-11-hha-hospice-original-release-2026-05-20.pdf</li>
+</ul>
+<p><strong>多源交叉验证</strong> ⭐⭐⭐⭐⭐</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>日期</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMS 官方</td>
+<td>May 13, 2026</td>
+<td>6个月全国暂停，立即生效</td>
+</tr>
+<tr>
+<td>STAT News</td>
+<td>May 13, 2026</td>
+<td>确认冻结令，Trump政府反欺诈行动</td>
+</tr>
+<tr>
+<td>Mintz Law</td>
+<td>May 18, 2026</td>
+<td>法律分析：基于ACA第424.570(a)条授权</td>
+</tr>
+<tr>
+<td>WilmerHale</td>
+<td>May 21, 2026</td>
+<td>确认冻结范围：新增准入+控制权变更</td>
+</tr>
+<tr>
+<td>ACHC</td>
+<td>May 2026</td>
+<td>现提供FAQ和运营支持</td>
+</tr>
+<tr>
+<td>Epstein Becker Green</td>
+<td>May 2026</td>
+<td>Medicaid/CHIP层由各州自行决定</td>
+</tr>
+<tr>
+<td>Frier Levitt</td>
+<td>May 2026</td>
+<td>已提交申请将被拒绝的&rdquo;重大升级&rdquo;</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对 Kate 关注市场的实质影响</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场</th>
+<th>影响级别</th>
+<th>判断依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🇺🇸 美国</td>
+<td>🔴 <strong>高</strong></td>
+<td>直接影响居家健康/临终关怀供应链；已存在提供者不受影响，但新入局者被挡在门外6个月；AHCAH豁免（至2030）与新HHA准入冻结<strong>不直接冲突</strong>——AHCAH是医院导向的住院替代模式，HHA准入是传统居家健康服务。但信号意义显著：CMS对&rdquo;居家场景&rdquo;监管正在收紧</td>
+</tr>
+<tr>
+<td>🇯🇵 日本</td>
+<td>🟡 中</td>
+<td>影响有限，但需关注日本是否跟进加强在宅医疗监管</td>
+</tr>
+<tr>
+<td>🇩🇪 德国</td>
+<td>🟢 低</td>
+<td>无直接传导</td>
+</tr>
+<tr>
+<td>🇨🇳 中国</td>
+<td>🟢 低</td>
+<td>间接参考意义</td>
+</tr>
+<tr>
+<td>🇭🇰 香港</td>
+<td>🟢 低</td>
+<td>间接参考意义</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>可执行建议</strong></p>
+<ol>
+<li>✅ <strong>关注6个月后（2026年11月）是否续冻</strong> — 若续冻意味着CMS将居家健康视为长期高欺诈风险领域，影响HaH生态的服务供应链</li>
+<li>✅ <strong>区分AHCAH豁免 vs HHA准入</strong> — 两者是不同的监管框架。HaH项目多基于AHCAH豁免（延伸至2030），不受本次冻结直接影响</li>
+<li>✅ <strong>跟踪CMS数据分析和&rdquo;加速清除&rdquo;操作</strong> — CMS计划部署高级数据分析工具识别欺诈，现有提供者应关注合规风险</li>
+<li>✅ <strong>评估对HaH技术供应商的影响</strong> — 新HHA进入受阻可能减缓居家健康技术创新向Medicare渗透的速度</li>
+</ol>
+<hr />
+<h3 id="2-fda-readi-home-home-as-a-health-care-hub">🔴 #2 美国：FDA 启动 READI-Home 创新挑战 — &ldquo;Home as a Health Care Hub&rdquo; 战略落地</h3>
+<p><strong>事件概述</strong>
+2026年4月7日，FDA 器械与放射卫生中心（CDRH）正式启动 READI-Home（Reducing Readmissions through Device Innovation for the Home）创新挑战，作为其&rdquo;Home as a Health Care Hub&rdquo;（家庭成为医疗保健中心）倡议的一部分。该挑战旨在加速开发用于居家环境的医疗设备，降低医院再入院率。重点关注患者和照护者自行使用的技术（而非医疗专业人员操作设备）。2026年6月24日举办了行业说明网络研讨会。</p>
+<p><strong>原文来源</strong></p>
+<ul>
+<li>FDA 官方页面: https://www.fda.gov/medical-devices/home-health-care-hub/fda-readi-home-innovation-challenge-reducing-readmissions-through-device-innovation-home</li>
+<li>FDA 网络研讨会通知: https://www.fda.gov/medical-devices/medical-devices-news-and-events/webinar-reducing-readmissions-through-device-innovation-home-readi-home-innovation-challenge</li>
+<li>FDA Law Blog 深度分析: https://www.thefdalawblog.com/2026/04/fda-launches-readi-home-innovation-challenge-opportunities-and-tensions-for-home-use-device-developers.html</li>
+<li>Venable LLP 分析: https://www.venable.com/insights/publications/2026/04/the-fda-readi-home-challenge-a-new-initiative</li>
+</ul>
+<p><strong>多源交叉验证</strong> ⭐⭐⭐⭐⭐</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>日期</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FDA.gov (官方)</td>
+<td>Apr 7, 2026</td>
+<td>READI-Home挑战正式启动</td>
+</tr>
+<tr>
+<td>FDA Law Blog</td>
+<td>Apr 2026</td>
+<td>深度分析：居家诊断/标本采集设备监管存在&rdquo;持续张力&rdquo;</td>
+</tr>
+<tr>
+<td>Venable LLP</td>
+<td>Apr 2026</td>
+<td>定性为&rdquo;FDA聚焦催化下一代居家医疗设备&rdquo;</td>
+</tr>
+<tr>
+<td>商傳媒 (台湾)</td>
+<td>Apr 8, 2026</td>
+<td>中文媒体报道，台湾源交叉引用</td>
+</tr>
+<tr>
+<td>GCC/MS Teams</td>
+<td>Jun 24, 2026</td>
+<td>网络研讨会已举办</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对 Kate 关注市场的实质影响</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场</th>
+<th>影响级别</th>
+<th>判断依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🇺🇸 美国</td>
+<td>🔴 <strong>高</strong></td>
+<td>直接利好HaH技术生态：远程监测、居家诊断、居家治疗设备赛道获得FDA政策信号</td>
+</tr>
+<tr>
+<td>🇯🇵 日本</td>
+<td>🟡 中</td>
+<td>日本在宅医疗设备审批可借鉴FDA路径</td>
+</tr>
+<tr>
+<td>🇩🇪 德国</td>
+<td>🟡 中</td>
+<td>EU MDR框架下可参考FDA的居家设备审评框架</td>
+</tr>
+<tr>
+<td>🇨🇳 中国</td>
+<td>🟡 中</td>
+<td>中国药监局（NMPA）可能跟进类似居家医疗器械审评指南</td>
+</tr>
+<tr>
+<td>🇭🇰 香港</td>
+<td>🟡 中</td>
+<td>香港作为国际器械准入窗口，可衔接FDA路径</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>可执行建议</strong></p>
+<ol>
+<li>✅ <strong>立即调研READI-Home申请窗口和交互阶段流程</strong> — FDA承诺对入选项目进行早期监管互动，这是加速审批的实质利好</li>
+<li>✅ <strong>关注&rdquo;Home as a Health Care Hub&rdquo;后续框架文件</strong> — 该倡议将产出更多居家设备监管指南</li>
+<li>✅ 对Kate的HaH投资标的（尤其是远程监测/居家诊断类企业）进行<strong>READI-Home适配度评估</strong></li>
+<li>✅ 建议组合内企业关注2026年下半年的FDA居家设备政策白皮书</li>
+</ol>
+<hr />
+<h3 id="3-medicare-inpatient-only-ipo-cy-2026-opps">🔴 #3 美国：Medicare Inpatient-Only (IPO) 清单终结 — CY 2026 OPPS 最终规则实施</h3>
+<p><strong>事件概述</strong>
+2025年11月21日，CMS 发布《CY 2026 OPPS 最终规则》，正式启动废除 Medicare 住院-only 程序清单（IPO List）。2026年1月1日起，285项肌骨外科手术从IPO清单移除，可在医院门诊部（HOPD）中执行，其中271项也允许在门诊手术中心（ASC）执行。CMS明确计划在2028年1月1日前完全废除IPO清单。同时，门诊药品管理支付向场所中立（site-neutral）费率过渡。</p>
+<p><strong>原文来源</strong></p>
+<ul>
+<li>CMS CY 2026 OPPS Final Rule: https://www.cms.gov/newsroom/fact-sheets/cy-2026-hospital-outpatient-prospective-payment-system-opps-final-rule-cms-1835-fc</li>
+<li>Modern Healthcare: https://www.modernhealthcare.com/politics-regulation/mh-cms-medicare-inpatient-only-list-end</li>
+<li>McDermott+ 分析: https://www.mcdermottplus.com/blog/regs-eggs/the-wait-is-over-the-cy-2026-opps-final-rule-is-finally-here</li>
+<li>Trilliant Health 收入影响研究: https://www.trillianthealth.com/market-research/studies/revenue-impacts-elimination-medicare-inpatient-only-list</li>
+</ul>
+<p><strong>多源交叉验证</strong> ⭐⭐⭐⭐⭐</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>日期</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMS 最终规则</td>
+<td>Nov 21, 2025</td>
+<td>确认285项移出IPO + 2028完全废除</td>
+</tr>
+<tr>
+<td>Trilliant Health</td>
+<td>2026</td>
+<td>量化：$93亿住院收入潜在向门诊迁移</td>
+</tr>
+<tr>
+<td>McDermott+</td>
+<td>Nov 2025</td>
+<td>场所中立支付扩大是核心变化</td>
+</tr>
+<tr>
+<td>AHA</td>
+<td>Nov 2025</td>
+<td>表示&rdquo;失望&rdquo;，认为这是对医院的削减</td>
+</tr>
+<tr>
+<td>America&rsquo;s Essential Hospitals</td>
+<td>Nov 2025</td>
+<td>确认340B补偿方案维持</td>
+</tr>
+<tr>
+<td>Modern Healthcare</td>
+<td>Nov 25, 2025</td>
+<td>新闻分析</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对 Kate 关注市场的实质影响</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场</th>
+<th>影响级别</th>
+<th>判断依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🇺🇸 美国</td>
+<td>🔴 <strong>高</strong></td>
+<td>IPO清单废除 + 场所中立支付 = 手术场景从住院向门诊/ASC持续迁移。这为HaH创造了<strong>结构性推力</strong>：更多以前需要住院的手术现在理论上可在家中/门诊完成</td>
+</tr>
+<tr>
+<td>🇯🇵 日本</td>
+<td>🟡 中</td>
+<td>日本2026年诊疗报酬改定也在推动门诊手术/短期住院模式</td>
+</tr>
+<tr>
+<td>🇩🇪 德国</td>
+<td>🟢 低</td>
+<td>德国DRG体系不同，但门诊化趋势一致</td>
+</tr>
+<tr>
+<td>🇨🇳 中国</td>
+<td>🟢 低</td>
+<td>DRG/DIP改革推动住院日缩短，与美国方向一致但路径不同</td>
+</tr>
+<tr>
+<td>🇭🇰 香港</td>
+<td>🟡 中</td>
+<td>HA近年推动日间手术和社区护理，可借鉴美国经验</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>可执行建议</strong></p>
+<ol>
+<li>✅ <strong>将IPO清单废除视为HaH的结构性利好</strong> — 随着更多程序从住院移至门诊/居家场景，对HaH产能的需求将持续上升</li>
+<li>✅ <strong>评估对现有HaH医院合作伙伴的收入影响</strong> — 如果医院因门诊化损失住院收入，可能更积极拥抱HaH作为收入替代</li>
+<li>✅ <strong>跟踪2027年IPO进一步移除清单</strong> — 2027年OPPS规则将公布下一批移除程序</li>
+<li>✅ 关注场所中立支付（site-neutral payment）对医院财务模型的长期影响，判断HaH的付款方吸引力是否相对提升</li>
+</ol>
+<hr />
+<h2 id="_1">🟡 值得关注</h2>
+<h3 id="cms-ahcah-2026317">🟡 美国：CMS 发布 AHCaH 第二波公开数据（2026年3月17日）</h3>
+<ul>
+<li>CMS通过ResDAC发布2023年4月至2025年9月的AHCAH数据（含近5年完整数据）</li>
+<li>涵盖死亡率、再入院率、出院后支出、患者满意度等指标</li>
+<li>这是评估HaH质量/成本证据的关键数据源</li>
+<li>可作为Kate调研工作的一手数据输入</li>
+</ul>
+<h3 id="20261">🟡 新加坡：全国医疗数据共享法（2026年1月）</h3>
+<ul>
+<li>所有医疗机构须共享患者健康数据</li>
+<li>虽非HaH专属政策，但为虚拟病房（Virtual Ward）和院后随访的数据互通奠定基础</li>
+<li>对MIC@Home等新加坡HaH项目有间接赋能作用</li>
+</ul>
+<h3 id="_2">🟡 台湾：在宅医疗医师深度报道</h3>
+<ul>
+<li>良医健康网专访在宅医疗医师陈英诏</li>
+<li>反映台湾在宅医疗临床实践正在标准化和扩大</li>
+</ul>
+<hr />
+<h2 id="_3">🟢 行业动态</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>时间</th>
+<th>事件</th>
+<th>区域</th>
+<th>简述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jun 2026</td>
+<td>FDA READI-Home 行业说明会</td>
+<td>美国</td>
+<td>Webinar完成，进入申请窗口期</td>
+</tr>
+<tr>
+<td>May 2026</td>
+<td>CMS 居家健康准入冻结</td>
+<td>美国</td>
+<td>6个月全国Moratorium</td>
+</tr>
+<tr>
+<td>Apr 2026</td>
+<td>FDA READI-Home 挑战启动</td>
+<td>美国</td>
+<td>Home as a Health Care Hub</td>
+</tr>
+<tr>
+<td>Mar 2026</td>
+<td>CMS AHCAH 数据第二波发布</td>
+<td>美国</td>
+<td>5年数据公开</td>
+</tr>
+<tr>
+<td>Feb 3, 2026</td>
+<td>AHCaH 豁免延期法案签署</td>
+<td>美国</td>
+<td>延期至2030年9月30日（已在上期报告）</td>
+</tr>
+<tr>
+<td>Jan 1, 2026</td>
+<td>IPO清单第一波移除生效</td>
+<td>美国</td>
+<td>285项手术转门诊</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_4">📊 统计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RSS源总数</td>
+<td>10</td>
+</tr>
+<tr>
+<td>RSS源成功抓取</td>
+<td>8/10（HHCN 403, MedCity 403）</td>
+</tr>
+<tr>
+<td>新文章</td>
+<td>11</td>
+</tr>
+<tr>
+<td>🔴 重大预警</td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td>🔴 美国</td>
+<td>3（CMS准入冻结 / FDA READI-Home / IPO清单终结）</td>
+</tr>
+<tr>
+<td>🔴 其他市场</td>
+<td>0</td>
+</tr>
+<tr>
+<td>🟡 值得关注</td>
+<td>3</td>
+</tr>
+<tr>
+<td>深度调研条数</td>
+<td>3</td>
+</tr>
+<tr>
+<td>交叉验证来源</td>
+<td>18+</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="rss">附件：RSS源状态</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>源名称</th>
+<th>状态</th>
+<th>新文章</th>
+<th>新文章主题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AU HaH News</td>
+<td>✅</td>
+<td>0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CA HaH News</td>
+<td>✅</td>
+<td>1</td>
+<td>医院伤害衡量（2018旧文）</td>
+</tr>
+<tr>
+<td>CMS Newsroom</td>
+<td>✅</td>
+<td>0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>HaH News US</td>
+<td>✅</td>
+<td>4</td>
+<td>CMS准入冻结 / MA涨幅 / 价格透明度 / IPO终结</td>
+</tr>
+<tr>
+<td>Home Health Care News</td>
+<td>❌ 403</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>MHLW Japan</td>
+<td>✅</td>
+<td>0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>MedCity News</td>
+<td>❌ 403</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>NHS England</td>
+<td>✅</td>
+<td>0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>SG HaH News</td>
+<td>✅</td>
+<td>3</td>
+<td>数据共享法 / 探视恢复(2022) / 居家住院(2022)</td>
+</tr>
+<tr>
+<td>TW HaH News</td>
+<td>✅</td>
+<td>3</td>
+<td>在宅医师访谈 / FDA READI-Home / 九州在宅(2014)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="_5">方法论</h2>
+<ul>
+<li>每项🔴预警经≥3独立来源验证后方列入重大政策变动</li>
+<li>影响判断基于Kate关注市场（美日德中港）的直接或间接关联度</li>
+<li>可执行建议侧重6-12个月内的实操窗口</li>
+<li>旧文（&gt;6个月）标记年份供参考判断时效性</li>
+</ul>
+<hr />
+<p><em>报告由Kate AI调研引擎自动生成 · 2026-06-30 01:00 UTC</em>
+<em>本次扫描: 8/10源成功 · 11篇新文章 · 🔴3条预警 · 深度调研3条</em>
+<em>下次扫描: 6h后</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1429 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speedoc Group 估值报告 — CEO 决策简报</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#speedoc-group-ceo">Speedoc Group 估值报告 — CEO 决策简报</a><ul>
+<li><a href="#1">1. 一句话核心结论</a></li>
+<li><a href="#2-ceo">2. 估值全景（CEO 一眼看完）</a><ul>
+<li><a href="#_1">敏感性速查：什么情况下估值会变？</a></li>
+</ul>
+</li>
+<li><a href="#3">3. 公司&rdquo;体检报告&rdquo; — 核心指标一览</a><ul>
+<li><a href="#31">3.1 财务关键数字</a></li>
+<li><a href="#32-ebitda">3.2 月度 EBITDA 拐点（全年逐月）</a></li>
+<li><a href="#33">3.3 ⚠️ 资产负债表红旗</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 估值方法论 — 为什么是这个数字？</a><ul>
+<li><a href="#41-fy2027e">4.1 为什么用 FY2027E 收入做锚？</a></li>
+<li><a href="#42-18x25x">4.2 为什么选用 1.8x–2.5x 倍数？</a></li>
+<li><a href="#43-ntm-12">4.3 为什么不用 NTM（未来 12 个月）倍数？</a></li>
+<li><a href="#44-dcf">4.4 DCF 交叉验证</a></li>
+</ul>
+</li>
+<li><a href="#5-vs">5. 管理层预期 vs 报告估值 — 差距分析</a><ul>
+<li><a href="#51">5.1 差距有多大？</a></li>
+<li><a href="#52-rosmead">5.2 Rosmead 认为管理层预期&rdquo;方向正确但时机过早&rdquo;的原因（原文引用）</a></li>
+<li><a href="#53">5.3 报告建议的弥合路径</a></li>
+</ul>
+</li>
+<li><a href="#6-ceo">6. 业务模型核心竞争优势（CEO 视角）</a><ul>
+<li><a href="#61">6.1 五层平台架构</a></li>
+<li><a href="#62">6.2 最关键的经济引擎：指挥中心运营杠杆</a></li>
+<li><a href="#63">6.3 四大收入通道结构</a></li>
+<li><a href="#64-b2c">6.4 B2C 单元经济学（提示：不是利润引擎）</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 五年增长轨迹（管理层预测）</a></li>
+<li><a href="#8">8. 市场跑道的&rdquo;天花板高度&rdquo;</a><ul>
+<li><a href="#_2">结构性压舱石（不可逆）</a></li>
+</ul>
+</li>
+<li><a href="#9-ceo">9. 风险全景（CEO 必须知道）</a><ul>
+<li><a href="#ma">M&amp;A 场景特别警示：整合质量决定一切</a></li>
+</ul>
+</li>
+<li><a href="#10">10. 退出路径（投资人视角的亮点）</a></li>
+<li><a href="#11-38-6">11. 完整可比公司清单（38 家，6 个板块）</a></li>
+<li><a href="#12-ceo">12. CEO 决策清单</a><ul>
+<li><a href="#_3">✅ 融资策略</a></li>
+<li><a href="#_4">🔴 必须在融资前解决</a></li>
+<li><a href="#_5">🟡 需要在融资中展示</a></li>
+<li><a href="#_6">🟢 可作为估值提升的筹码</a></li>
+</ul>
+</li>
+<li><a href="#13">13. 关键原文引用（供尽职调查验证）</a></li>
+<li><a href="#_7">附录：数据来源与免责声明</a><ul>
+<li><a href="#rosmead">报告核心数据来源（Rosmead 标注）</a></li>
+<li><a href="#_8">免责声明</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="speedoc-group-ceo">Speedoc Group 估值报告 — CEO 决策简报</h1>
+<blockquote>
+<p><strong>报告依据</strong>：Rosmead Partners 战略估值报告（2026 年 3 月 / 4 月 6 日定稿，35 页）
+<strong>报告性质</strong>：为董事会和投资者讨论准备的战略估值
+<strong>简报目的</strong>：提炼 CEO 决策所需的关键信息，无遗漏，无推测
+<strong>简报人</strong>：Kenneth Ye
+<strong>日期</strong>：2026 年 7 月 14 日</p>
+</blockquote>
+<hr />
+<h2 id="1">1. 一句话核心结论</h2>
+<p><strong>Rosmead Partners 给出的估值范围为 US$30–65M（有机 US$30–40M / 含并购 US$50–65M），概率加权估值 ~US$45.5M。管理层融资材料 US$120–150M 的预期与此报告之间存在 3–4 倍差距。报告认为管理层预期&rdquo;方向正确但时机过早&rdquo;，建议通过里程碑挂钩的分轮次融资结构弥合分歧。</strong></p>
+<hr />
+<h2 id="2-ceo">2. 估值全景（CEO 一眼看完）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>场景</th>
+<th style="text-align: center;">估值范围 (US$)</th>
+<th>锚定收入 (FY2027E)</th>
+<th style="text-align: center;">倍数</th>
+<th>关键条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>场景 1 — 纯有机增长</strong></td>
+<td style="text-align: center;"><strong>$30M–$40M</strong></td>
+<td>$17.4M</td>
+<td style="text-align: center;">1.8x–2.2x EV/Sales</td>
+<td>EBITDA 持续改善 + Avixo SaaS 起量</td>
+</tr>
+<tr>
+<td><strong>场景 2 — 含并购</strong></td>
+<td style="text-align: center;"><strong>$50M–$65M</strong></td>
+<td>$26.2M</td>
+<td style="text-align: center;">2.0x–2.5x EV/Sales</td>
+<td>成功整合 5 笔并购 + 利润率改善</td>
+</tr>
+<tr>
+<td><strong>概率加权</strong></td>
+<td style="text-align: center;"><strong>~$45.5M</strong></td>
+<td>—</td>
+<td style="text-align: center;">—</td>
+<td>跨场景加权</td>
+</tr>
+<tr>
+<td><strong>管理层预期</strong></td>
+<td style="text-align: center;">$120M–$150M</td>
+<td>—</td>
+<td style="text-align: center;">—</td>
+<td>融资 Pitch Deck 中的预估值</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_1">敏感性速查：什么情况下估值会变？</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>FY2027E 有机收入</th>
+<th style="text-align: center;">1.0x (熊市)</th>
+<th style="text-align: center;">1.8x (保守)</th>
+<th style="text-align: center;">2.0x (基准)</th>
+<th style="text-align: center;">2.2x (乐观)</th>
+<th style="text-align: center;">2.8x (牛市)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$12M（-31% 不达预期）</td>
+<td style="text-align: center;">$12M</td>
+<td style="text-align: center;">$22M</td>
+<td style="text-align: center;"><strong>$24M</strong></td>
+<td style="text-align: center;">$26M</td>
+<td style="text-align: center;">$34M</td>
+</tr>
+<tr>
+<td><strong>$17.4M（基准）</strong></td>
+<td style="text-align: center;">$17M</td>
+<td style="text-align: center;">$31M</td>
+<td style="text-align: center;"><strong>$35M</strong></td>
+<td style="text-align: center;"><strong>$38M</strong></td>
+<td style="text-align: center;">$49M</td>
+</tr>
+<tr>
+<td>$23.5M（+35% 超预期）</td>
+<td style="text-align: center;">$24M</td>
+<td style="text-align: center;">$42M</td>
+<td style="text-align: center;"><strong>$47M</strong></td>
+<td style="text-align: center;"><strong>$52M</strong></td>
+<td style="text-align: center;">$66M</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>💡 <strong>下行风险</strong>：若 FY2027E 收入比预测低 31%，基准估值可能降至 <strong>$24M</strong>。
+💡 <strong>上行空间</strong>：若收入超预期 35% 且倍数扩张至 2.2x，有机场景可达 <strong>$52M</strong>。</p>
+</blockquote>
+<hr />
+<h2 id="3">3. 公司&rdquo;体检报告&rdquo; — 核心指标一览</h2>
+<h3 id="31">3.1 财务关键数字</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">FY2025 实际</th>
+<th>信号解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>集团收入</strong></td>
+<td style="text-align: center;">SGD 7.54M（~US$5.6M）</td>
+<td>同比 +18.8%</td>
+</tr>
+<tr>
+<td><strong>贡献利润</strong></td>
+<td style="text-align: center;">SGD 6.58M</td>
+<td><strong>贡献利润率 87.3%</strong>（平台经济特征）</td>
+</tr>
+<tr>
+<td><strong>Clean EBITDA</strong></td>
+<td style="text-align: center;">–SGD 0.13M</td>
+<td>⚠️ 接近盈亏平衡，H2 已出现拐点</td>
+</tr>
+<tr>
+<td><strong>毛利率</strong></td>
+<td style="text-align: center;">80.1%</td>
+<td>稳定在 80%+</td>
+</tr>
+<tr>
+<td><strong>H2 正向 EBITDA 月数</strong></td>
+<td style="text-align: center;"><strong>5/6 个月</strong></td>
+<td>✅ 关键拐点——营收在增长，固定成本在摊薄</td>
+</tr>
+<tr>
+<td><strong>收入年内增速</strong></td>
+<td style="text-align: center;">1 月 SGD 568K → 10 月 SGD 750K</td>
+<td><strong>+32% 年内有机增长</strong></td>
+</tr>
+<tr>
+<td><strong>机构收入占比</strong></td>
+<td style="text-align: center;">~70%</td>
+<td>主要来自 NUHS + SGH 等公立医院集群</td>
+</tr>
+<tr>
+<td><strong>医院合作伙伴</strong></td>
+<td style="text-align: center;">20 家</td>
+<td>含新加坡两大公立集群</td>
+</tr>
+<tr>
+<td><strong>虚拟床位</strong></td>
+<td style="text-align: center;">80+</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="32-ebitda">3.2 月度 EBITDA 拐点（全年逐月）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>月份</th>
+<th>收入 (SGD)</th>
+<th>Clean EBITDA (SGD)</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 月</td>
+<td>567,999</td>
+<td>–63,132</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>2 月</td>
+<td>580,594</td>
+<td>–68,574</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>3 月</td>
+<td>621,329</td>
+<td>–95,632</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>4 月</td>
+<td>631,945</td>
+<td>–58,829</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>5 月</td>
+<td>559,891</td>
+<td>–62,685</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>6 月</td>
+<td>577,299</td>
+<td>–18,633</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>7 月</strong></td>
+<td>646,674</td>
+<td><strong>+24,892</strong></td>
+<td>✅ 首次转正</td>
+</tr>
+<tr>
+<td>8 月</td>
+<td>575,133</td>
+<td>–26,032</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>9 月</strong></td>
+<td>610,787</td>
+<td><strong>+48,541</strong></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>10 月</strong></td>
+<td>750,205</td>
+<td><strong>+95,727</strong></td>
+<td>✅ <strong>全年最高</strong></td>
+</tr>
+<tr>
+<td><strong>11 月</strong></td>
+<td>734,955</td>
+<td><strong>+78,882</strong></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>12 月</strong></td>
+<td>685,892</td>
+<td><strong>+20,129</strong></td>
+<td>✅</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>🔑 <strong>CEO 重点关注</strong>：H1 平均月亏损 SGD 68K，H2 平均月盈利 SGD 40K。10 月是转折点——收入 SGD 750K + EBITDA SGD 96K 均为全年峰值。拐点不是一次性的——9、10、11、12 月连续四个月正向 EBITDA 维持了动量。</p>
+</blockquote>
+<h3 id="33">3.3 ⚠️ 资产负债表红旗</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align: center;">FY2025 金额</th>
+<th>CEO 需知</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>净权益</strong></td>
+<td style="text-align: center;"><strong>–SGD 27.1M</strong></td>
+<td>🔴 严重负资产</td>
+</tr>
+<tr>
+<td>股东贷款</td>
+<td style="text-align: center;">SGD 18.4M</td>
+<td>含利息，实质为股权出资但法律形式为债务</td>
+</tr>
+<tr>
+<td>赎回条款</td>
+<td style="text-align: center;"><strong>2025 年起五年</strong></td>
+<td>🔴 2025–2030 年存在刚性偿付义务</td>
+</tr>
+<tr>
+<td>总资产</td>
+<td style="text-align: center;">SGD 3.88M</td>
+<td>—</td>
+</tr>
+<tr>
+<td>现金</td>
+<td style="text-align: center;">SGD 1.24M</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ <strong>CEO 行动项</strong>：新融资进入前必须重组股东贷款结构。报告指出&rdquo;若负债实质为股东出资，新资本进入可重组&rdquo;——但这需要法律确认。</p>
+</blockquote>
+<hr />
+<h2 id="4">4. 估值方法论 — 为什么是这个数字？</h2>
+<h3 id="41-fy2027e">4.1 为什么用 FY2027E 收入做锚？</h3>
+<p>报告给出了三个明确理由（原文引用）：</p>
+<ol>
+<li><strong>最早实现&rdquo;可持续正向 EBITDA&rdquo;的年份</strong>——消除当前近盈亏平衡对估值倍数的扭曲</li>
+<li><strong>足够近（2 年窗口）</strong>——管理假设可针对可观察的业务驱动因素做压力测试，而非依赖遥远的推测</li>
+<li><strong>有机 vs M&amp;A 路径首次出现有意义的分化</strong>——允许估值框架清晰分离两条投资主线</li>
+</ol>
+<h3 id="42-18x25x">4.2 为什么选用 1.8x–2.5x 倍数？</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>可比板块</th>
+<th style="text-align: center;">中位数 EV/Sales</th>
+<th>Speedoc 对标逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>远程医疗</td>
+<td style="text-align: center;"><strong>1.01x</strong></td>
+<td>📍 <strong>下限参照</strong> — Speedoc 高于此（机构收入深度、合同锁定、物理交付）</td>
+</tr>
+<tr>
+<td>居家医疗</td>
+<td style="text-align: center;"><strong>1.47x</strong></td>
+<td>📍 <strong>结构相关性最高</strong> — Speedoc 高于此（Avixo SaaS + 指挥中心能力）</td>
+</tr>
+<tr>
+<td>数字健康平台</td>
+<td style="text-align: center;"><strong>2.11x</strong></td>
+<td>📍 <strong>上限参照</strong> — Speedoc 仅部分接近（Avixo 外部授权尚处于早期）</td>
+</tr>
+<tr>
+<td>医疗 IT</td>
+<td style="text-align: center;">3.09x</td>
+<td>❌ 暂不适用（当 Avixo SaaS 规模化后为长期目标）</td>
+</tr>
+<tr>
+<td>亚洲医疗</td>
+<td style="text-align: center;">3.45x</td>
+<td>❌ 暂不适用（方向性参考）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="43-ntm-12">4.3 为什么不用 NTM（未来 12 个月）倍数？</h3>
+<p>报告原文：「采用 NTM 倍数需要同时预测分子和分母，复合了预测误差。」采用 <strong>可比公司 LTM 倍数 × FY2027E 管理层预测收入</strong>——这是医疗科技上市前融资的标准做法。</p>
+<h3 id="44-dcf">4.4 DCF 交叉验证</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th style="text-align: center;">值</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WACC</td>
+<td style="text-align: center;"><strong>12%</strong></td>
+<td>高于大型医疗股（7-9%）以反映执行风险+集中度+资产负债表脆弱性；低于极早期创业（15-20%）因已有机构收入+命名合作伙伴+接近盈亏平衡</td>
+</tr>
+<tr>
+<td>终端增长率</td>
+<td style="text-align: center;"><strong>3%</strong></td>
+<td>东南亚长期名义 GDP 增长预期，保守于分布式医疗的结构性顺风</td>
+</tr>
+<tr>
+<td>结论</td>
+<td style="text-align: center;">支持 EV/Sales 区间</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="5-vs">5. 管理层预期 vs 报告估值 — 差距分析</h2>
+<h3 id="51">5.1 差距有多大？</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th style="text-align: center;">Rosmead 报告</th>
+<th style="text-align: center;">管理层预期</th>
+<th style="text-align: center;">差距倍数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>有机场景</td>
+<td style="text-align: center;">$30–40M</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>M&amp;A 场景</td>
+<td style="text-align: center;">$50–65M</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>融资预期</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>$120–150M</strong></td>
+<td style="text-align: center;"><strong>3–4x</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52-rosmead">5.2 Rosmead 认为管理层预期&rdquo;方向正确但时机过早&rdquo;的原因（原文引用）</h3>
+<blockquote>
+<p>&ldquo;在 SGD 7.54M 收入、20 家医院合作伙伴、全年近零 EBITDA 的阶段，Speedoc 尚未展示出支撑医疗基础设施溢价倍数所需的<strong>收入规模、盈利可见性或地理广度</strong>。US$120M 与 US$30–65M 之间的差距，代表了 Speedoc 尚未赚到的<strong>执行溢价</strong>。&rdquo;</p>
+</blockquote>
+<h3 id="53">5.3 报告建议的弥合路径</h3>
+<blockquote>
+<p>&ldquo;里程碑挂钩的交易结构（按 FY2026 EBITDA 交付、Avixo 授权加速和 M&amp;A 整合质量分轮次/分阶段）是在分析上正确弥合差距的机制，无需任何一方对单一前瞻假设下注。&rdquo;</p>
+</blockquote>
+<hr />
+<h2 id="6-ceo">6. 业务模型核心竞争优势（CEO 视角）</h2>
+<h3 id="61">6.1 五层平台架构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>功能</th>
+<th style="text-align: center;">护城河深度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>指挥中心</strong></td>
+<td>24/7 临床监控、AI 分诊、虚拟床位管理</td>
+<td style="text-align: center;">🟢 极高</td>
+</tr>
+<tr>
+<td><strong>临床交付</strong></td>
+<td>医生/护士/专职医疗人员上门</td>
+<td style="text-align: center;">🟡 中高</td>
+</tr>
+<tr>
+<td><strong>诊断监测</strong></td>
+<td>医疗级远程监测→实时数据回传</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td><strong>药房物流</strong></td>
+<td>药品供应链+设备配送</td>
+<td style="text-align: center;">🟡 中低</td>
+</tr>
+<tr>
+<td><strong>软件 (Avixo)</strong></td>
+<td>EMR + 临床工作流 CMS</td>
+<td style="text-align: center;">🟢 极高</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="62">6.2 最关键的经济引擎：指挥中心运营杠杆</h3>
+<ul>
+<li>固定运营成本：<strong>~SGD 646K/月</strong>（不管管理多少虚拟床位都要花的钱）</li>
+<li>月度贡献利润：<strong>~SGD 549K/月</strong></li>
+<li>盈亏平衡缺口：<strong>~SGD 97K/月</strong>（仅需 +15% 收入增量即可填补）</li>
+</ul>
+<blockquote>
+<p>💡 <strong>这意味着什么</strong>：虚拟床位翻倍 ≠ 指挥中心成本翻倍。每新增一个机构合同带来的收入增量，几乎全部转化为利润。这就是 H2 FY2025 为什么能扭亏，也是为什么 FY2027E 预测 EBITDA 利润率能到 40%+。</p>
+</blockquote>
+<h3 id="63">6.3 四大收入通道结构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>通道</th>
+<th style="text-align: center;">收入占比</th>
+<th style="text-align: center;">毛利率</th>
+<th style="text-align: center;">切换成本</th>
+<th>战略意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>医院/卫生系统</td>
+<td style="text-align: center;">~70%</td>
+<td style="text-align: center;">高</td>
+<td style="text-align: center;">极高</td>
+<td>🏛️ <strong>锚定通道</strong> — 多年合同，运营嵌入</td>
+</tr>
+<tr>
+<td>政府/支付方</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">中</td>
+<td>公共卫生招标</td>
+</tr>
+<tr>
+<td>企业/保险</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: center;">中高</td>
+<td style="text-align: center;">高</td>
+<td>共享节余模式</td>
+</tr>
+<tr>
+<td><strong>Avixo SaaS</strong></td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: center;"><strong>极高 (&gt;60%)</strong></td>
+<td style="text-align: center;">极高</td>
+<td>🚀 <strong>最高期权价值</strong> — 但当前占比最小</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="64-b2c">6.4 B2C 单元经济学（提示：不是利润引擎）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>服务</th>
+<th style="text-align: center;">收入/次 (US$)</th>
+<th style="text-align: center;">毛利率</th>
+<th>角色定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上门医生</td>
+<td style="text-align: center;">$324.50</td>
+<td style="text-align: center;">23%</td>
+<td>品牌覆盖面</td>
+</tr>
+<tr>
+<td>上门护理</td>
+<td style="text-align: center;">$146.00</td>
+<td style="text-align: center;">24%</td>
+<td>服务网络密度</td>
+</tr>
+<tr>
+<td>视频问诊</td>
+<td style="text-align: center;">$57.75</td>
+<td style="text-align: center;"><strong>31%</strong></td>
+<td>零物理成本，最高效</td>
+</tr>
+<tr>
+<td>救护车转运</td>
+<td style="text-align: center;">$175.00</td>
+<td style="text-align: center;">23%</td>
+<td>辅助服务</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ B2C 单次毛利率仅 23–31%，远低于集团 87% 的贡献利润率——证明 <strong>机构合同才是真正的利润引擎</strong>。</p>
+</blockquote>
+<hr />
+<h2 id="7">7. 五年增长轨迹（管理层预测）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th style="text-align: center;">有机收入 (SGDm)</th>
+<th style="text-align: center;">M&amp;A 收入 (SGDm)</th>
+<th style="text-align: center;">M&amp;A EBITDA (SGDm)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FY2025A</td>
+<td style="text-align: center;">7.64</td>
+<td style="text-align: center;">7.64</td>
+<td style="text-align: center;">(1.17)</td>
+</tr>
+<tr>
+<td>FY2026E</td>
+<td style="text-align: center;">12.25</td>
+<td style="text-align: center;">14.70</td>
+<td style="text-align: center;">(0.80)</td>
+</tr>
+<tr>
+<td><strong>FY2027E</strong> ↑ 锚定年</td>
+<td style="text-align: center;"><strong>23.54</strong></td>
+<td style="text-align: center;"><strong>35.35</strong></td>
+<td style="text-align: center;"><strong>5.56</strong></td>
+</tr>
+<tr>
+<td>FY2028E</td>
+<td style="text-align: center;">36.40</td>
+<td style="text-align: center;">65.95</td>
+<td style="text-align: center;">13.37</td>
+</tr>
+<tr>
+<td>FY2029E</td>
+<td style="text-align: center;">54.36</td>
+<td style="text-align: center;">101.90</td>
+<td style="text-align: center;">21.57</td>
+</tr>
+<tr>
+<td>FY2030E</td>
+<td style="text-align: center;">78.79</td>
+<td style="text-align: center;">139.78</td>
+<td style="text-align: center;">32.80</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>💡 到 FY2030E，M&amp;A 场景下收入可达 US$103M（SGD 140M）、EBITDA SGD 33M。如果这个预测哪怕实现一半，当前 $50–65M 的估值将显得非常保守。</p>
+</blockquote>
+<hr />
+<h2 id="8">8. 市场跑道的&rdquo;天花板高度&rdquo;</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场</th>
+<th style="text-align: center;">分布式医疗 SAM</th>
+<th style="text-align: center;">Speedoc FY25 渗透率</th>
+<th>增长驱动</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新加坡</td>
+<td style="text-align: center;">US$370–550M</td>
+<td style="text-align: center;"><strong>&lt;1.5%</strong></td>
+<td>老龄化（2030 年 1/4 居民 ≥65 岁）；MOH 社区医疗采购</td>
+</tr>
+<tr>
+<td>马来西亚</td>
+<td style="text-align: center;">US$200–350M</td>
+<td style="text-align: center;"><strong>&lt;1%</strong></td>
+<td>公立系统容量不足；私立保险覆盖扩张</td>
+</tr>
+<tr>
+<td>印度尼西亚</td>
+<td style="text-align: center;">US$500–800M</td>
+<td style="text-align: center;"><strong>&lt;0.1%</strong></td>
+<td>JKN 覆盖扩大；城镇化</td>
+</tr>
+<tr>
+<td><strong>核心合计</strong></td>
+<td style="text-align: center;"><strong>US$1.4–2.2B</strong></td>
+<td style="text-align: center;"><strong>&lt;0.5%</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">结构性压舱石（不可逆）</h3>
+<ul>
+<li>新加坡医院床位密度：<strong>2.4 床/千人</strong>（OECD 均值 4.3，日本 13.0）</li>
+<li>新建床位成本：<strong>S$1.5–2.5M/床</strong>，5–7 年交付</li>
+<li>居家治疗 vs 住院成本节省：<strong>50–70%/人次</strong></li>
+<li>政策顺风：Healthier SG + MOH 降级护理采购框架</li>
+</ul>
+<hr />
+<h2 id="9-ceo">9. 风险全景（CEO 必须知道）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险</th>
+<th style="text-align: center;">严重度</th>
+<th>具体表现</th>
+<th>缓解因素</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>执行复杂度</strong></td>
+<td style="text-align: center;">🔴 高</td>
+<td>同时扩临床治理+物流+软件+多国 M&amp;A</td>
+<td>H2 FY2025 执行纪律正面</td>
+</tr>
+<tr>
+<td><strong>客户集中度</strong></td>
+<td style="text-align: center;">🔴 高</td>
+<td>NUHS/SGH 占收入集中，丢失一家即重大冲击</td>
+<td>机构嵌入创造切换成本；每新增合作伙伴即分散</td>
+</tr>
+<tr>
+<td><strong>监管风险</strong></td>
+<td style="text-align: center;">🟡 中高</td>
+<td>多司法辖区合规（新加坡+马来西亚+印尼）</td>
+<td>新加坡为成熟市场；有序逐国扩张</td>
+</tr>
+<tr>
+<td><strong>资本结构</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td>负资产 SGD 27.1M</td>
+<td>股东贷款实质为股权，新资本可重组</td>
+</tr>
+<tr>
+<td><strong>M&amp;A 整合</strong></td>
+<td style="text-align: center;">🔴 高（M&amp;A）</td>
+<td>被收购方利润率从低个位数提升至 10–15% 是关键假设</td>
+<td>Earn-out + 混合对价降低前期风险</td>
+</tr>
+<tr>
+<td><strong>估值差距</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td>管理层 $120–150M vs 报告 $30–65M</td>
+<td>里程碑挂钩结构可弥合</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ma">M&amp;A 场景特别警示：整合质量决定一切</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>整合结果</th>
+<th style="text-align: center;">并购 EBITDA 率</th>
+<th style="text-align: center;">隐含 EV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整合失败</td>
+<td style="text-align: center;">0–2%</td>
+<td style="text-align: center;"><strong>$33–43M</strong>（溢价消失，跌回有机水平）</td>
+</tr>
+<tr>
+<td>部分整合</td>
+<td style="text-align: center;">5–8%</td>
+<td style="text-align: center;">$43–52M</td>
+</tr>
+<tr>
+<td>基准：成功</td>
+<td style="text-align: center;">10–15%</td>
+<td style="text-align: center;"><strong>$52–70M</strong></td>
+</tr>
+<tr>
+<td>强劲：超预期</td>
+<td style="text-align: center;">15–20%</td>
+<td style="text-align: center;">$70–90M</td>
+</tr>
+<tr>
+<td>卓越：SaaS 主导</td>
+<td style="text-align: center;">20–25%</td>
+<td style="text-align: center;">$84–112M</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="10">10. 退出路径（投资人视角的亮点）</h2>
+<p>报告认定的退出通道是 Speedoc 的&rdquo;真正优势&rdquo;：</p>
+<ol>
+<li><strong>医院集团/综合医疗系统</strong> — 最自然的收购方：Speedoc 提供预建、经机构测试的运营系统</li>
+<li><strong>保险公司/管理式医疗</strong> — 若证明精算可衡量的成本节约，从供应商升级为战略资产</li>
+<li><strong>大型健康科技公司</strong> — 缺乏物理交付层的平台</li>
+<li><strong>私募股权</strong> — EBITDA 可见且可预测后成为目标</li>
+</ol>
+<hr />
+<h2 id="11-38-6">11. 完整可比公司清单（38 家，6 个板块）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>板块</th>
+<th>公司</th>
+<th>代码</th>
+<th style="text-align: center;">EV/Sales (LTM)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>远程医疗</strong></td>
+<td>Teladoc Health</td>
+<td>TDOC</td>
+<td style="text-align: center;">0.60x</td>
+</tr>
+<tr>
+<td></td>
+<td>American Well</td>
+<td>AMWL</td>
+<td style="text-align: center;">NM</td>
+</tr>
+<tr>
+<td></td>
+<td>Hims &amp; Hers</td>
+<td>HIMS</td>
+<td style="text-align: center;">3.37x</td>
+</tr>
+<tr>
+<td></td>
+<td>LifeMD</td>
+<td>LFMD</td>
+<td style="text-align: center;">1.42x</td>
+</tr>
+<tr>
+<td></td>
+<td>DocGo</td>
+<td>DCGO</td>
+<td style="text-align: center;">0.14x</td>
+</tr>
+<tr>
+<td></td>
+<td>WELL Health</td>
+<td>WELL CN</td>
+<td style="text-align: center;">2.14x</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>中位数</strong></td>
+<td></td>
+<td style="text-align: center;"><strong>1.01x</strong></td>
+</tr>
+<tr>
+<td><strong>数字健康平台</strong></td>
+<td>JD Health International</td>
+<td>6618 HK</td>
+<td style="text-align: center;">1.32x</td>
+</tr>
+<tr>
+<td></td>
+<td>Ping An Healthcare</td>
+<td>1833 HK</td>
+<td style="text-align: center;">2.07x</td>
+</tr>
+<tr>
+<td></td>
+<td>Alibaba Health</td>
+<td>241 HK</td>
+<td style="text-align: center;">3.09x</td>
+</tr>
+<tr>
+<td></td>
+<td>GoodRx Holdings</td>
+<td>GDRX</td>
+<td style="text-align: center;">1.51x</td>
+</tr>
+<tr>
+<td></td>
+<td>Doximity</td>
+<td>DOCS</td>
+<td style="text-align: center;">13.09x</td>
+</tr>
+<tr>
+<td></td>
+<td>Phreesia</td>
+<td>PHR</td>
+<td style="text-align: center;">3.02x</td>
+</tr>
+<tr>
+<td></td>
+<td>HealthStream</td>
+<td>HSTM</td>
+<td style="text-align: center;">2.11x</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>中位数</strong></td>
+<td></td>
+<td style="text-align: center;"><strong>2.11x</strong></td>
+</tr>
+<tr>
+<td><strong>居家医疗</strong></td>
+<td>Option Care Health</td>
+<td>OPCH</td>
+<td style="text-align: center;">1.07x</td>
+</tr>
+<tr>
+<td></td>
+<td>Aveanna Healthcare</td>
+<td>AVAH</td>
+<td style="text-align: center;">1.50x</td>
+</tr>
+<tr>
+<td></td>
+<td>Amedisys</td>
+<td>AMED</td>
+<td style="text-align: center;">1.44x</td>
+</tr>
+<tr>
+<td></td>
+<td>Addus HomeCare</td>
+<td>ADUS</td>
+<td style="text-align: center;">1.47x</td>
+</tr>
+<tr>
+<td></td>
+<td>Enhabit Home Health</td>
+<td>EHAB</td>
+<td style="text-align: center;">0.84x</td>
+</tr>
+<tr>
+<td></td>
+<td>Chemed</td>
+<td>CHE</td>
+<td style="text-align: center;">2.36x</td>
+</tr>
+<tr>
+<td></td>
+<td>LHC Group</td>
+<td>LHCG</td>
+<td style="text-align: center;">2.58x</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>中位数</strong></td>
+<td></td>
+<td style="text-align: center;"><strong>1.47x</strong></td>
+</tr>
+<tr>
+<td><strong>医疗 IT</strong></td>
+<td>Veeva Systems</td>
+<td>VEEV</td>
+<td style="text-align: center;">8.47x</td>
+</tr>
+<tr>
+<td></td>
+<td>Health Catalyst</td>
+<td>HCAT</td>
+<td style="text-align: center;">0.92x</td>
+</tr>
+<tr>
+<td></td>
+<td>Certara</td>
+<td>CERT</td>
+<td style="text-align: center;">3.62x</td>
+</tr>
+<tr>
+<td></td>
+<td>CareCloud</td>
+<td>CCLD</td>
+<td style="text-align: center;">1.28x</td>
+</tr>
+<tr>
+<td></td>
+<td>Schrodinger</td>
+<td>SDGR</td>
+<td style="text-align: center;">4.03x</td>
+</tr>
+<tr>
+<td></td>
+<td>NextGen Healthcare</td>
+<td>NXGN</td>
+<td style="text-align: center;">2.55x</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>中位数</strong></td>
+<td></td>
+<td style="text-align: center;"><strong>3.09x</strong></td>
+</tr>
+<tr>
+<td><strong>综合医疗</strong></td>
+<td>CVS Health</td>
+<td>CVS</td>
+<td style="text-align: center;">0.42x</td>
+</tr>
+<tr>
+<td></td>
+<td>Walgreens</td>
+<td>WBA</td>
+<td style="text-align: center;">0.26x</td>
+</tr>
+<tr>
+<td></td>
+<td>UnitedHealth</td>
+<td>UNH</td>
+<td style="text-align: center;">0.81x</td>
+</tr>
+<tr>
+<td></td>
+<td>Cigna</td>
+<td>CI</td>
+<td style="text-align: center;">0.35x</td>
+</tr>
+<tr>
+<td></td>
+<td>McKesson</td>
+<td>MCK</td>
+<td style="text-align: center;">0.30x</td>
+</tr>
+<tr>
+<td></td>
+<td>Cardinal Health</td>
+<td>CAH</td>
+<td style="text-align: center;">0.25x</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>中位数</strong></td>
+<td></td>
+<td style="text-align: center;"><strong>0.35x</strong></td>
+</tr>
+<tr>
+<td><strong>亚洲医疗</strong></td>
+<td>Raffles Medical</td>
+<td>RFMD SP</td>
+<td style="text-align: center;">2.19x</td>
+</tr>
+<tr>
+<td></td>
+<td>IHH Healthcare</td>
+<td>IHH MK</td>
+<td style="text-align: center;">3.89x</td>
+</tr>
+<tr>
+<td></td>
+<td>Bangkok Dusit Medical</td>
+<td>BDMS TB</td>
+<td style="text-align: center;">3.01x</td>
+</tr>
+<tr>
+<td></td>
+<td>Bumrungrad Hospital</td>
+<td>BH TB</td>
+<td style="text-align: center;">4.90x</td>
+</tr>
+<tr>
+<td></td>
+<td>Apollo Hospitals</td>
+<td>APHS IN</td>
+<td style="text-align: center;">NM</td>
+</tr>
+<tr>
+<td></td>
+<td>Fortis Healthcare</td>
+<td>FORH IN</td>
+<td style="text-align: center;">7.03x</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>中位数</strong></td>
+<td></td>
+<td style="text-align: center;"><strong>3.45x</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>📊 数据来源：Speedoc 机构可比公司工作簿（Bloomberg 链接驱动）。所有数字均为 US$M。</p>
+</blockquote>
+<hr />
+<h2 id="12-ceo">12. CEO 决策清单</h2>
+<h3 id="_3">✅ 融资策略</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>议题</th>
+<th>Rosmead 立场</th>
+<th>CEO 需判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首轮估值锚定</td>
+<td>$30–65M（保守底线）</td>
+<td>是否接受以此为谈判起点？</td>
+</tr>
+<tr>
+<td>估值差距处理</td>
+<td>里程碑挂钩结构（分轮次/ratchet/Earn-out）</td>
+<td>是否愿意设计此类结构？</td>
+</tr>
+<tr>
+<td>Avixo 单独估值</td>
+<td>未单独估值（当前仅 ~5% 收入）</td>
+<td>是否推动 Avixo SaaS 获得独立倍数？</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">🔴 必须在融资前解决</h3>
+<ul>
+<li>[ ] <strong>股东贷款 SGD 18.4M 重组</strong> — 赎回条款（2025 年起五年）意味着 2030 年前存在刚性偿付义务</li>
+<li>[ ] <strong>负资产 SGD 27.1M 清理</strong> — 新投资者将高度关注</li>
+</ul>
+<h3 id="_5">🟡 需要在融资中展示</h3>
+<ul>
+<li>[ ] H2 FY2025 月度 EBITDA 拐点数据（5/6 月正向）——最强有力的证据</li>
+<li>[ ] 证明 FY2027E 收入 SGD 23.5M 可实现性的具体里程碑</li>
+<li>[ ] Avixo SaaS 外部授权的客户 Pipeline</li>
+</ul>
+<h3 id="_6">🟢 可作为估值提升的筹码</h3>
+<ul>
+<li>[ ] 推动 Avixo 被独立评估（医疗 IT 可比 3.09x vs 当前隐含 0x）</li>
+<li>[ ] 展示 FY2026 持续 EBITDA 改善趋势（如已实现）</li>
+<li>[ ] 证明客户集中度在降低（新签合作伙伴）</li>
+<li>[ ] 展示 AI 层（H-Grid/Searce）的经济效益量化数据</li>
+</ul>
+<hr />
+<h2 id="13">13. 关键原文引用（供尽职调查验证）</h2>
+<p>以下引用直接取自报告原文，可作为与投资人沟通的权威论述：</p>
+<p><strong>关于业务定义</strong>（第 2 页）：</p>
+<blockquote>
+<p>&ldquo;Speedoc Group is an attempt to build operational healthcare infrastructure for treatment outside the hospital. It is a hospital-without-walls platform.&rdquo;</p>
+</blockquote>
+<p><strong>关于估值差距</strong>（第 16 页）：</p>
+<blockquote>
+<p>&ldquo;The company&rsquo;s own fundraising materials frame a pre-money valuation of US$120m to US$150m&hellip; The directional logic is sound. The timing is premature.&rdquo;</p>
+</blockquote>
+<p><strong>关于弥合机制</strong>（第 17 页）：</p>
+<blockquote>
+<p>&ldquo;Milestone-linked deal structures (tranches tied to FY2026 EBITDA delivery, Avixo licensing acceleration and M&amp;A integration quality) are the analytically correct mechanism for bridging this gap.&rdquo;</p>
+</blockquote>
+<p><strong>关于报告性质</strong>（第 28 页）：</p>
+<blockquote>
+<p>&ldquo;This report is prepared by Rosmead Partners from management-provided materials and publicly available data. It is not a fairness opinion, independent audit, or public-market research note.&rdquo;</p>
+</blockquote>
+<hr />
+<h2 id="_7">附录：数据来源与免责声明</h2>
+<h3 id="rosmead">报告核心数据来源（Rosmead 标注）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>数据</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FY2025 财务</td>
+<td>Speedoc FY2025 机构月度 EBITDA 桥表</td>
+</tr>
+<tr>
+<td>FY2026–2030E 预测</td>
+<td>管理层五年模型（2026 年 2 月版）</td>
+</tr>
+<tr>
+<td>B2C 单元经济</td>
+<td>Speedoc B2C 单元经济工作簿</td>
+</tr>
+<tr>
+<td>可比公司</td>
+<td>38 家公司 Bloomberg 链接工作簿</td>
+</tr>
+<tr>
+<td>市场规模</td>
+<td>管理层工作簿 + 世界银行/WHO 医疗支出数据</td>
+</tr>
+<tr>
+<td>估值方法论</td>
+<td>EV/Sales（主）+ DCF 交叉验证（12% WACC / 3% 终端增长）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_8">免责声明</h3>
+<blockquote>
+<p>本简报基于 Rosmead Partners 2026 年 3 月的战略估值报告编制，仅提取报告中已有的事实和数据，未添加任何额外推测或外部数据。所有财务预测均为管理层估计，未经独立审计。本简报不构成投资建议或估值意见。</p>
+</blockquote>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

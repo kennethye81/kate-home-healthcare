@@ -1,0 +1,1633 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>瑞典/北欧 居家医疗体系深度分析</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#_1">瑞典/北欧 居家医疗体系深度分析</a><ul>
+<li><a href="#d0-hahsjukhusansluten-hemsjukvard">D0 赛道验证：HaH（Sjukhusansluten hemsjukvård）定义与范畴</a><ul>
+<li><a href="#01">0.1 核心术语</a></li>
+<li><a href="#02">0.2 定义边界</a></li>
+<li><a href="#03">0.3 赛道成熟度评估</a></li>
+</ul>
+</li>
+<li><a href="#d1-region-kommun">D1 制度框架：Region + Kommun 的职责分工</a><ul>
+<li><a href="#11">1.1 三级治理架构</a></li>
+<li><a href="#12-region-kommun">1.2 Region 与 Kommun 的居家医疗分工边界</a></li>
+<li><a href="#13">1.3 协作机制与协调挑战</a></li>
+<li><a href="#14">1.4 北欧对比视角</a></li>
+</ul>
+</li>
+<li><a href="#d2">D2 支付体系：税收为主 + 自付封顶</a><ul>
+<li><a href="#21-20222024">2.1 资金来源结构（2022–2024年）</a></li>
+<li><a href="#22-patientavgift">2.2 患者费用（Patientavgift）与年度封顶机制</a></li>
+<li><a href="#23">2.3 居家医疗相关费用的支付特点</a></li>
+<li><a href="#24">2.4 居家医疗的经济模型</a></li>
+</ul>
+</li>
+<li><a href="#d3-asih-hah">D3 服务类型：ASIH / 安宁疗护 / 急性期HaH</a><ul>
+<li><a href="#31-asihavancerad-sjukvard-i-hemmet">3.1 ASIH（Avancerad sjukvård i hemmet）——高级居家医疗</a></li>
+<li><a href="#32-palliativ-vard-i-hemmet">3.2 居家安宁疗护（Palliativ vård i hemmet）</a></li>
+<li><a href="#33-hahhospital-at-home">3.3 急性期HaH（Hospital-at-Home）——新兴模式</a></li>
+<li><a href="#34">3.4 其他居家医疗模式</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 覆盖人群与资格标准</a><ul>
+<li><a href="#41-asihhah">4.1 ASIH/HaH 纳入标准</a></li>
+<li><a href="#42">4.2 受益人群规模</a></li>
+<li><a href="#43">4.3 人口结构驱动因素</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 市场规模</a><ul>
+<li><a href="#51">5.1 瑞典医疗卫生总支出</a></li>
+<li><a href="#52">5.2 居家医疗相关支出估算</a></li>
+<li><a href="#53">5.3 居家医疗的预期增长动力</a></li>
+</ul>
+</li>
+<li><a href="#d6-region-vs">D6 主要参与者：Region自营 vs 私营提供者</a><ul>
+<li><a href="#61">6.1 提供者结构概览</a></li>
+<li><a href="#62">6.2 重要参与者概况</a></li>
+<li><a href="#63">6.3 市场结构特征</a></li>
+<li><a href="#64">6.4 北欧市场对比</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 劳动力</a><ul>
+<li><a href="#71">7.1 从业人员构成</a></li>
+<li><a href="#72">7.2 居家医疗人力挑战</a></li>
+<li><a href="#73">7.3 居家医生的角色</a></li>
+<li><a href="#74">7.4 薪资与工作条件</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 质量监管</a><ul>
+<li><a href="#81">8.1 监管体系架构</a></li>
+<li><a href="#82-ivo">8.2 IVO 的监督职能</a></li>
+<li><a href="#83-nationella-kvalitetsregister">8.3 国家质量登记（Nationella kvalitetsregister）</a></li>
+<li><a href="#84">8.4 质量管理的重要举措</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 创新趋势</a><ul>
+<li><a href="#91">9.1 数字居家监测与虚拟病房</a></li>
+<li><a href="#92-ehealth">9.2 瑞典eHealth战略</a></li>
+<li><a href="#93">9.3 福祉技术与智能居家</a></li>
+<li><a href="#94">9.4 其他值得关注的创新</a></li>
+</ul>
+</li>
+<li><a href="#d10-ihomecare">D10 对香港 iHomeCare 的借鉴意义</a><ul>
+<li><a href="#101">10.1 制度模式对比</a></li>
+<li><a href="#102">10.2 可操作借鉴点</a></li>
+<li><a href="#103">10.3 关键差异与限制因素</a></li>
+<li><a href="#104">10.4 政策建议要点（供参考）</a></li>
+</ul>
+</li>
+<li><a href="#_2">附录</a><ul>
+<li><a href="#a">附录A：主要缩写对照表</a></li>
+<li><a href="#b">附录B：主要数据来源</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="_1">瑞典/北欧 居家医疗体系深度分析</h1>
+<blockquote>
+<p>报告日期：2026-07-04
+分析范畴：瑞典（主）+ 北欧三国（挪威、丹麦、芬兰）对比参考
+数据截止：2024–2025年可获取的最新数据</p>
+</blockquote>
+<hr />
+<h2 id="d0-hahsjukhusansluten-hemsjukvard">D0 赛道验证：HaH（Sjukhusansluten hemsjukvård）定义与范畴</h2>
+<h3 id="01">0.1 核心术语</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>瑞典语术语</th>
+<th>英文对应</th>
+<th>中文释义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sjukhusansluten hemsjukvård</strong></td>
+<td>Hospital-connected home care / Hospital-at-Home (HaH)</td>
+<td>医院连接的居家医疗——由医院派出团队，在患者家中提供急性期或亚急性期住院级别的医疗照护</td>
+</tr>
+<tr>
+<td><strong>Avancerad sjukvård i hemmet（ASIH）</strong></td>
+<td>Advanced home health care</td>
+<td>高级居家医疗——主要为安宁疗护和复杂慢性病管理设计的多学科团队模式</td>
+</tr>
+<tr>
+<td><strong>Hemsjukvård</strong></td>
+<td>Home health care / Home nursing</td>
+<td>居家医疗护理——由市镇（Kommun）负责的基本居家护理服务</td>
+</tr>
+<tr>
+<td><strong>Hemtjänst</strong></td>
+<td>Home help / Home care services</td>
+<td>居家照料服务——个人护理、家务协助等社会服务</td>
+</tr>
+<tr>
+<td><strong>Digital vårdavdelning / Virtual vårdavdelning</strong></td>
+<td>Virtual ward</td>
+<td>虚拟病房——通过远程监测技术实现的居家急性期医疗</td>
+</tr>
+<tr>
+<td><strong>Välfärdsteknik</strong></td>
+<td>Welfare technology</td>
+<td>福祉技术——用于支持居家养老与护理的数字化和辅助技术</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="02">0.2 定义边界</h3>
+<p>瑞典居家医疗体系中存在明确的&rdquo;医疗层级&rdquo;划分，并非所有&rdquo;在家中的医疗服务&rdquo;都等同于国际意义上的HaH：</p>
+<ol>
+<li><strong>基本居家护理（Hemsjukvård）</strong>：由市镇（Kommun）提供，以护理（nursing care）为主，包括伤口护理、药物管理、生命体征监测等。<strong>不属于</strong> HaH 范畴。</li>
+<li><strong>高级居家医疗（ASIH）</strong>：由Region（地区卫生当局）或其签约的专科团队提供，配备医生+专科护士+物理治疗师+社工等多学科团队，24/7 可及。<strong>接近</strong> HaH 的亚急性期/安宁疗护模式。</li>
+<li><strong>医院连接的居家医疗（Sjukhusansluten hemsjukvård / Hospital-at-Home）</strong>：近年新兴的模式，由医院直接管理，将住院级别治疗（静脉抗生素、氧疗、化疗、远程监测）送到患者家中。<strong>最严格意义上的 HaH</strong>。</li>
+<li><strong>虚拟病房（Virtual Ward）</strong>：Karolinska大学医院2024年首创的数字+实体混合模式，针对急性病患者，24/7 高 acuity 虚拟住院病房。</li>
+</ol>
+<h3 id="03">0.3 赛道成熟度评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>瑞典状态</th>
+<th>与国际对比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>政策支持</td>
+<td>★★★★★ 国家eHealth战略明确支持居家数字化医疗</td>
+<td>领先于欧盟平均</td>
+</tr>
+<tr>
+<td>支付覆盖</td>
+<td>★★★★☆ 税收支付为主，患者自付有年度封顶</td>
+<td>优于美国Medicare HaH模式</td>
+</tr>
+<tr>
+<td>基础设施</td>
+<td>★★★★☆ 高度数字化，1177.se全国健康门户</td>
+<td>北欧领先</td>
+</tr>
+<tr>
+<td>服务成熟度</td>
+<td>★★★☆☆ ASIH成熟（20+年历史），但急性期HaH仍在扩张期</td>
+<td>落后于英国NHS@home、美国急性期HaH</td>
+</tr>
+<tr>
+<td>劳动力供给</td>
+<td>★★☆☆☆ 专科护士/GP短缺是主要瓶颈</td>
+<td>与多数OECD国家一致</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>结论</strong>：瑞典居家医疗赛道处于<strong>高速发展期</strong>。ASIH（高级居家医疗）已是成熟的亚专科，而急性期HaH（医院级别居家住院）仍处于以Karolinska@home为代表的试点扩张阶段。</p>
+</blockquote>
+<hr />
+<h2 id="d1-region-kommun">D1 制度框架：Region + Kommun 的职责分工</h2>
+<h3 id="11">1.1 三级治理架构</h3>
+<p>瑞典医疗制度是典型的<strong>分散式（decentralised）</strong>模式，由国家（Stat）、21个地区（Regioner）和290个市镇（Kommuner）三级组成。</p>
+<pre><code>┌─────────────────────────────────────────────────────┐
+│  国家层面（Stat）                                    │
+│  社会事务部 + Socialstyrelsen + IVO + TLV + SBU     │
+│  立法、监督、国家指导、拨款（约16%地区收入、21%市镇收入） │
+├─────────────────────────────────────────────────────┤
+│  21个地区（Regioner）                                 │
+│  组织、资助、提供：医院（急症+专科）+ 初级保健中心      │
+│  高级居家医疗（ASIH + HaH）→ Region负责               │
+│  收入来源：地区所得税（~70%）+ 国家拨款（~16%）+ 患者费  │
+├─────────────────────────────────────────────────────┤
+│  290个市镇（Kommuner）                                │
+│  居家护理（hemsjukvård）+ 住宅护理（särskilt boende）  │
+│  日常护理、康复、辅助器具、社会服务                    │
+│  收入来源：市镇所得税（~65%）+ 国家拨款（~21%）+ 服务费  │
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="12-region-kommun">1.2 Region 与 Kommun 的居家医疗分工边界</h3>
+<p>这是瑞典居家医疗体系最关键的制度特征：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Region 负责</th>
+<th>Kommun 负责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>医疗范畴</strong></td>
+<td>医师诊断、处方、专科治疗、住院级照护</td>
+<td>护理（nursing）、康复、个人照顾</td>
+</tr>
+<tr>
+<td><strong>人员配置</strong></td>
+<td>专科医生、ASIH多学科团队</td>
+<td>注册护士（sjuksköterska）、助理护士（undersköterska）</td>
+</tr>
+<tr>
+<td><strong>地点</strong></td>
+<td>医院、专科诊所、患者家中（通过ASIH/HaH团队）</td>
+<td>普通住宅、特别住宅（särskilt boende）</td>
+</tr>
+<tr>
+<td><strong>典型服务</strong></td>
+<td>静脉抗生素、化疗、安宁专科、氧疗、远程监测</td>
+<td>伤口护理、药物管理、洗澡穿衣、餐食服务</td>
+</tr>
+<tr>
+<td><strong>资金</strong></td>
+<td>地区税收（70%）+ 国家拨款</td>
+<td>市镇税收（65%）+ 国家拨款 + 服务费</td>
+</tr>
+<tr>
+<td><strong>法律依据</strong></td>
+<td>Hälso- och sjukvårdslagen (HSL, SFS 2017:30)</td>
+<td>Socialtjänstlagen (SoL) + HSL 部分条款</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="13">1.3 协作机制与协调挑战</h3>
+<ul>
+<li><strong>Trippelheli</strong>（三重责任）困境：患者可能在同一个居家场景中同时受Region（医疗）和Kommun（护理社会服务）管辖，存在明显的<strong>碎片化</strong>问题。</li>
+<li><strong>协调出院法</strong>（Lagen om samverkan vid utskrivning från sluten hälso- och sjukvård, SFS 2017:612）：规定医院出院后3天内，若市镇未准备好接收患者，则市镇需向Region支付&rdquo;滞留费&rdquo;。这一机制显著缩短了住院时间，推动了居家康复。</li>
+<li><strong>LSS法案</strong>（Lag om stöd och service till vissa funktionshindrade）：针对特定功能障碍者的支持服务，涉及居家生活的辅助支持。</li>
+<li><strong>SIP</strong>（Samordnad individuell plan）：协调性个体计划——当患者需要跨Region/Kommun服务时必须制定，但实际执行率偏低。</li>
+</ul>
+<h3 id="14">1.4 北欧对比视角</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>瑞典</th>
+<th>挪威</th>
+<th>丹麦</th>
+<th>芬兰</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地区/市镇数量</td>
+<td>21 Region / 290 Kommun</td>
+<td>11 Fylker / 356 Kommuner</td>
+<td>5 Regioner / 98 Kommuner</td>
+<td>22 Välfärdsområden（福祉区）</td>
+</tr>
+<tr>
+<td>居家医疗责任</td>
+<td>Region（医疗）Kommun（护理）分割</td>
+<td>市镇承担更多整合职责</td>
+<td>地区负责医院，市镇负责居家护理和预防</td>
+<td>2023年改革后福祉区统一负责</td>
+</tr>
+<tr>
+<td>协调机制</td>
+<td>SIP + 协调出院法</td>
+<td>强制协作协议</td>
+<td>地区-市镇健康协议</td>
+<td>新福祉区制度试图消除分割</td>
+</tr>
+<tr>
+<td>碎片化程度</td>
+<td>较高——Region/Kommun边界清晰但协作不足</td>
+<td>中等</td>
+<td>较低——丹麦GP是强gatekeeper</td>
+<td>2023年改革中，成效待观察</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>关键洞察</strong>：瑞典Region/Kommun的分工在国际上常被引为&rdquo;组织碎片化&rdquo;的经典案例。近年通过协调出院法（2018年实施）和数字信息共享推动整合，但跨机构协作仍是核心挑战。</p>
+</blockquote>
+<hr />
+<h2 id="d2">D2 支付体系：税收为主 + 自付封顶</h2>
+<h3 id="21-20222024">2.1 资金来源结构（2022–2024年）</h3>
+<p>根据 Socialstyrelsen 和 WHO/OECD 数据：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>资金来源</th>
+<th>占比</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公共来源合计</td>
+<td><strong>86%</strong></td>
+<td>OECD国家中最高之一</td>
+</tr>
+<tr>
+<td>——地区所得税</td>
+<td>~39%</td>
+<td>各地区税率不同（约10.5–12%不等）</td>
+</tr>
+<tr>
+<td>——市镇所得税</td>
+<td>~17%</td>
+<td>市镇税率约19–21%</td>
+</tr>
+<tr>
+<td>——国家拨款</td>
+<td>~25%</td>
+<td>一般性拨款+定向拨款</td>
+</tr>
+<tr>
+<td>——其他公共</td>
+<td>~5%</td>
+<td>社保等</td>
+</tr>
+<tr>
+<td>私人来源合计</td>
+<td><strong>14%</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>——自付（OOP）</td>
+<td>~13%</td>
+<td>占私人来源的93%</td>
+</tr>
+<tr>
+<td>——自愿健康保险（VHI）</td>
+<td><strong>&lt;1%</strong></td>
+<td>主要用于获得更快专科预约</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td><strong>100%</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="22-patientavgift">2.2 患者费用（Patientavgift）与年度封顶机制</h3>
+<p>瑞典采用 <strong>Högkostnadsskydd</strong>（高费用保护/自付封顶）机制，2025年数据：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>费用类别</th>
+<th>单次费用范围</th>
+<th>年度封顶</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初级保健门诊（läkarbesök）</td>
+<td>150–300 SEK（≈14–28 EUR）</td>
+<td>约 <strong>1,450 SEK</strong>（≈130 EUR）/12个月</td>
+</tr>
+<tr>
+<td>专科门诊</td>
+<td>200–400 SEK（≈18–36 EUR）</td>
+<td>计入同上封顶</td>
+</tr>
+<tr>
+<td>住院费用</td>
+<td>最高 100 SEK/天（≈9 EUR）</td>
+<td>不额外封顶——住院本身已极低</td>
+</tr>
+<tr>
+<td>处方药</td>
+<td>阶梯递减</td>
+<td>超过 <strong>2,900 SEK</strong>（≈259 EUR）/12个月后免费</td>
+</tr>
+<tr>
+<td>牙科（≥24岁）</td>
+<td>全额至3,000 SEK</td>
+<td>超出3,000 SEK部分补贴50%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>豁免群体</strong>：</p>
+<ul>
+<li>儿童（各Region年龄界限不同，通常&lt;18或&lt;20岁）</li>
+<li>孕产妇保健</li>
+<li>≥85岁老年人（部分Region）</li>
+<li>部分慢性病患者（如胰岛素免费）</li>
+</ul>
+<h3 id="23">2.3 居家医疗相关费用的支付特点</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>服务类型</th>
+<th>患者支付</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kommun 居家护理（hemsjukvård）</td>
+<td>基于收入的服务费</td>
+<td>最高约2,280 SEK/月（2024年）</td>
+</tr>
+<tr>
+<td>Region ASIH/高级居家医疗</td>
+<td>普通门诊患者费（如有）</td>
+<td>通常含于年度封顶内，部分Region免除</td>
+</tr>
+<tr>
+<td>居家康复/辅助器具</td>
+<td>部分补贴后自付</td>
+<td>视具体器具和Region政策</td>
+</tr>
+<tr>
+<td>医疗交通（sjukresor）</td>
+<td>每次约100 SEK</td>
+<td>年度封顶约2,000 SEK</td>
+</tr>
+<tr>
+<td>数字问诊（1177.se）</td>
+<td>免费或在部分Region收少量费用</td>
+<td>COVID后很多Region免除了数字问诊费</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="24">2.4 居家医疗的经济模型</h3>
+<p>瑞典的税收支付模式与保险模式（如美国Medicare、瑞士、德国）的关键差异：</p>
+<ul>
+<li><strong>瑞典模式优势</strong>：全民覆盖、无免赔额、自付封顶低、保障连续性好</li>
+<li><strong>瑞典模式挑战</strong>：税收压力大（最高边际税率约57%）、等待时间问题、缺乏竞争刺激效率</li>
+</ul>
+<blockquote>
+<p>居家医疗在瑞典的支付逻辑是：<strong>只要医疗必要性成立，由Region提供HaH/ASIH，患者仅支付封顶内的门诊费；若需要长期护理层面的居家照护，则Kommun根据收入收取服务费。</strong> 二者之间无保险公司的&rdquo;医疗必要性审核&rdquo;环节。</p>
+</blockquote>
+<hr />
+<h2 id="d3-asih-hah">D3 服务类型：ASIH / 安宁疗护 / 急性期HaH</h2>
+<h3 id="31-asihavancerad-sjukvard-i-hemmet">3.1 ASIH（Avancerad sjukvård i hemmet）——高级居家医疗</h3>
+<p>ASIH 是瑞典最成熟的&rdquo;居家代替住院&rdquo;模式，始于1980年代，目前已在所有21个Region运行。</p>
+<p><strong>团队构成（典型ASIH团队）</strong>：</p>
+<ul>
+<li>安宁专科医生（palliativmedicinsk läkare）</li>
+<li>专科护士（specialistsjuksköterska，通常有姑息护理专科培训）</li>
+<li>物理治疗师（sjukgymnast/fysioterapeut）</li>
+<li>职业治疗师（arbetsterapeut）</li>
+<li>社工（kurator）</li>
+<li>心理/宗教支持（必要时）</li>
+</ul>
+<p><strong>覆盖范围</strong>：</p>
+<ul>
+<li><strong>专科安宁疗护</strong>（specialiserad palliativ vård）：ASIH最初起源，针对生命末期患者</li>
+<li><strong>复杂慢性病管理</strong>：慢阻肺急性加重、心衰管理、复杂伤口护理</li>
+<li><strong>肿瘤晚期支持</strong>：化疗、症状管理、营养支持</li>
+<li><strong>神经退行性疾病</strong>：ALS、多发性硬化等晚期</li>
+</ul>
+<p><strong>服务特征</strong>：</p>
+<ul>
+<li>7天/24小时可及（部分团队12小时/天，夜间由电话值班覆盖）</li>
+<li>医生定期家访（通常1–2次/周，必要时加频）</li>
+<li>护士随时上门</li>
+<li>与医院保持紧密联系，必要时直接转回住院</li>
+</ul>
+<h3 id="32-palliativ-vard-i-hemmet">3.2 居家安宁疗护（Palliativ vård i hemmet）</h3>
+<p>瑞典的安宁疗护体系在国际上有高度声誉，瑞典安宁疗护登记系统（Svenska Palliativregistret，2005年启动）是全球最完善的国家级安宁疗护质量登记之一。</p>
+<p><strong>关键数据</strong>（来自瑞典安宁疗护登记系统及Socialstyrelsen）：</p>
+<ul>
+<li>约<strong>50%</strong>的安宁疗护患者在居家环境中度过生命最后阶段（含普通居家和ASIH）</li>
+<li>约<strong>40%</strong>的患者在医院去世——这是瑞典希望改善的指标</li>
+<li>ASIH覆盖约<strong>15–20%</strong>的安宁疗护患者（专科安宁疗护）</li>
+<li>其余居家安宁患者接受的是普通安宁疗护（allmän palliativ vård），由Kommun护理人员+初级保健医生提供</li>
+</ul>
+<p><strong>质量指标</strong>（瑞典安宁疗护登记2023年报告）：</p>
+<ul>
+<li>疼痛评估覆盖率：约<strong>90%</strong>（居家环境）</li>
+<li>吗啡使用比例：约<strong>65%</strong>（居家环境）</li>
+<li>临终对话（&rdquo;brytpunktsamtal&rdquo;）记录：约<strong>55%</strong>——仍有提升空间</li>
+<li>家属支持覆盖率：约<strong>35%</strong>——被认为不足</li>
+</ul>
+<h3 id="33-hahhospital-at-home">3.3 急性期HaH（Hospital-at-Home）——新兴模式</h3>
+<p>以Karolinska大学医院的<strong>Karolinska@home</strong>为代表，这是瑞典首个<strong>数字+实体混合模式</strong>（digi-physical）的急性期HaH项目。</p>
+<p><strong>关键特征</strong>：</p>
+<ul>
+<li><strong>目标患者</strong>：急性内科疾病（肺炎、心衰、慢阻肺急性加重、尿路感染等），经急诊分诊后确定适合居家</li>
+<li><strong>服务模式</strong>：</li>
+<li>每日1–2次护士上门访视</li>
+<li>远程监测：生命体征（血压、心率、血氧、体温）通过患者佩戴的设备实时传输至医院中心站</li>
+<li>24/7医护团队在虚拟病房中心随时响应</li>
+<li><strong>纳入标准</strong>：临床稳定、居家环境适宜、本人同意</li>
+<li><strong>排除标准</strong>：需要持续监测（如心肌梗死）、需要频繁静脉输液、认知功能障碍无家属支持</li>
+</ul>
+<p><strong>初期成果</strong>（Kastengren et al., 2024, Journal of Telemedicine and Telecare）：</p>
+<ul>
+<li>可行性证实：首批患者纳入后证明安全可行</li>
+<li>患者满意度：<strong>极高</strong>（评分4.8/5）</li>
+<li>不良事件：与非匹配住院对照组无显著差异</li>
+<li>平均住院时间：<strong>缩短约30–40%</strong></li>
+<li>30天再入院率：与对照组相似（约12–15%）</li>
+</ul>
+<h3 id="34">3.4 其他居家医疗模式</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模式</th>
+<th>描述</th>
+<th>规模</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>静脉抗生素居家治疗</strong>（OPAT / Hemantibiotika）</td>
+<td>通过PICC或外周静脉导管进行居家抗菌治疗</td>
+<td>各Region均有，规模不一</td>
+</tr>
+<tr>
+<td><strong>居家氧疗</strong>（Syrebehandling i hemmet）</td>
+<td>慢阻肺/肺纤维化患者长期氧疗</td>
+<td>全国约3,000–4,000例</td>
+</tr>
+<tr>
+<td><strong>居家呼吸机</strong>（Hemventilator）</td>
+<td>神经肌肉疾病/慢阻肺的夜间/持续通气支持</td>
+<td>全国约2,000例</td>
+</tr>
+<tr>
+<td><strong>儿科居家医疗</strong>（Barnsjukvård i hemmet）</td>
+<td>新生儿随访、儿童慢性病居家管理</td>
+<td>各大学医院均有专门团队</td>
+</tr>
+<tr>
+<td><strong>居家康复</strong>（Hemrehabilitering）</td>
+<td>术后或脑卒中后的物理/职业治疗入户</td>
+<td>Kommun+Region协作提供</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d4">D4 覆盖人群与资格标准</h2>
+<h3 id="41-asihhah">4.1 ASIH/HaH 纳入标准</h3>
+<p>瑞典没有统一的全国性资格标准——各Region根据本地情况自行制定，但一般遵循以下框架：</p>
+<p><strong>ASIH（高级居家医疗）标准</strong>：</p>
+<ol>
+<li><strong>医疗需求</strong>：需要专科级医疗干预但无需持续住院监测</li>
+<li><strong>疾病阶段</strong>：通常为晚期/进展性疾病（肿瘤、心衰、慢阻肺、神经退行性疾病）</li>
+<li><strong>预期寿命</strong>：通常&lt;12个月（安宁疗护导向），或病情复杂但稳定</li>
+<li><strong>居家条件</strong>：有可行的居家环境，有或无家属支持</li>
+<li><strong>患者意愿</strong>：患者明确选择居家而非住院</li>
+</ol>
+<p><strong>急性期HaH标准</strong>（以Karolinska@home为例）：</p>
+<ol>
+<li>明确诊断的急性内科疾病（无需要ICU监护的急症）</li>
+<li>临床稳定（National Early Warning Score [NEWS] 评分&lt;5）</li>
+<li>年龄≥18岁</li>
+<li>社区距离医院&lt;30分钟车程</li>
+<li>有智能手机或平板用于远程沟通</li>
+<li>理解并能配合监测方案</li>
+</ol>
+<h3 id="42">4.2 受益人群规模</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>人群类别</th>
+<th>估计规模（2023–2024年）</th>
+<th>趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接受Kommun居家护理（hemsjukvård）的≥65岁老年人</td>
+<td>约 <strong>240,000人</strong></td>
+<td>稳定增长</td>
+</tr>
+<tr>
+<td>接受ASIH专科高级居家医疗</td>
+<td>约 <strong>20,000–25,000人</strong></td>
+<td>逐年增长</td>
+</tr>
+<tr>
+<td>接受普通安宁疗护（居家）</td>
+<td>约 <strong>30,000–35,000人</strong>（生命最后一年）</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>急性期HaH（试点/早期阶段）</td>
+<td>约 <strong>500–1,500人</strong>（2024–2025年）</td>
+<td>快速增长</td>
+</tr>
+<tr>
+<td>居家氧疗</td>
+<td>约 <strong>3,500人</strong></td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>居家呼吸机</td>
+<td>约 <strong>2,000人</strong></td>
+<td>缓慢增长</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="43">4.3 人口结构驱动因素</h3>
+<ul>
+<li><strong>65岁以上人口比例</strong>：2021年20.5%，预计2030年约23%，2050年约25%</li>
+<li><strong>多病共患（multimorbidity）</strong>：≥65岁人群约65%有两种或以上慢性病</li>
+<li><strong>独居老年人</strong>：≥75岁中约50%独居——这对居家医疗的可行性构成挑战</li>
+<li><strong>城镇化差异</strong>：斯德哥尔摩等大城市区域的居家医疗服务密度远高于北部内陆地区</li>
+</ul>
+<hr />
+<h2 id="d5">D5 市场规模</h2>
+<h3 id="51">5.1 瑞典医疗卫生总支出</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+<th>年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>医疗卫生GDP占比</td>
+<td><strong>11.2%</strong>（约7,190亿 SEK）</td>
+<td>2024（SCB数据）</td>
+</tr>
+<tr>
+<td>人均医疗卫生支出（PPP）</td>
+<td>约 <strong>7,017 USD</strong></td>
+<td>2022（WHO/OECD）</td>
+</tr>
+<tr>
+<td>公共支出占比</td>
+<td>86%</td>
+<td>2022</td>
+</tr>
+<tr>
+<td>长期照护支出占GDP</td>
+<td>约 <strong>3.4%</strong></td>
+<td>2021（OECD）</td>
+</tr>
+<tr>
+<td>自付比例</td>
+<td>~13%</td>
+<td>2022</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52">5.2 居家医疗相关支出估算</h3>
+<p>由于瑞典的预算分类中，居家医疗（HaH/ASIH）通常包含在&rdquo;专科医疗&rdquo;或&rdquo;初级保健&rdquo;的广义预算中，没有独立的全国性细分数据。以下为基于公开数据的分项估算：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>支出类别</th>
+<th>年支出估算（十亿 SEK）</th>
+<th>占医疗总支出比例（估）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>所有医疗卫生总支出</td>
+<td>~719</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>长期照护（含居家护理+住宅护理）</td>
+<td>~200（估）</td>
+<td>~28%</td>
+</tr>
+<tr>
+<td>——Kommun居家护理（hemsjukvård）</td>
+<td>~60–80（估）</td>
+<td>~8–11%</td>
+</tr>
+<tr>
+<td>——ASIH/高级居家医疗</td>
+<td>~4–6（估）</td>
+<td>~0.6–0.8%</td>
+</tr>
+<tr>
+<td>——急性期HaH（早期阶段）</td>
+<td>~0.1–0.3（估）</td>
+<td>~0.01–0.04%</td>
+</tr>
+<tr>
+<td>——居家氧疗+呼吸机</td>
+<td>~1–2</td>
+<td>~0.1–0.3%</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>注意</strong>：ASIH/HaH 目前占瑞典医疗卫生总支出的比例低于1%，但随着老龄化、支付改革和技术进步，该比例预计在2030年前快速上升。欧盟平均的长期照护支出占GDP约1.7%，瑞典的3.4%反映了其长期照护体系的广度。</p>
+</blockquote>
+<h3 id="53">5.3 居家医疗的预期增长动力</h3>
+<ol>
+<li><strong>人口老龄化</strong>：≥80岁人口预计从2025年的约58万增至2035年的约80万</li>
+<li><strong>医院床位减少</strong>：瑞典每10万人口仅约190张床位（欧盟最低之一），倒逼更多服务居家化</li>
+<li><strong>数字基础设施成熟</strong>：1177.se 近1500万次/年访问量，全国电子健康记录覆盖</li>
+<li><strong>政治意愿</strong>：SKR（瑞典市县联合会）将&rdquo;居家医疗&rdquo;列为优先战略方向</li>
+<li><strong>成本压力</strong>：住院日成本约10,000–15,000 SEK，居家医疗约3,000–5,000 SEK/天</li>
+</ol>
+<hr />
+<h2 id="d6-region-vs">D6 主要参与者：Region自营 vs 私营提供者</h2>
+<h3 id="61">6.1 提供者结构概览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>占比（估）</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Region自营</td>
+<td>~70–75%</td>
+<td>通过医院ASIH团队、居家护理组织直接提供服务</td>
+</tr>
+<tr>
+<td>私营（签约/受委托）</td>
+<td>~20–25%</td>
+<td>通过Lagen om valfrihetssystem（LOV，自由选择制度）或传统采购签约</td>
+</tr>
+<tr>
+<td>私营（无签约，纯自费）</td>
+<td>&lt;5%</td>
+<td>主要是补充性私人医疗服务</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="62">6.2 重要参与者概况</h3>
+<p><strong>公共部门（Region自营）</strong>：</p>
+<ul>
+<li><strong>Karolinska大学医院</strong>（Region Stockholm）：Karolinska@home 项目的运营主体</li>
+<li><strong>Sahlgrenska大学医院</strong>（Västra Götaland）：拥有规模较大的ASIH和居家医疗项目</li>
+<li><strong>Skåne大学医院</strong>（Region Skåne）：南部最大的居家医疗服务提供者</li>
+<li><strong>Norrlands大学医院</strong>（Region Västerbotten）：北部偏远地区的创新居家医疗方案</li>
+</ul>
+<p><strong>主要私营提供者</strong>：</p>
+<ul>
+<li><strong>Capio</strong>（Ramsay Santé旗下）：在多个Region运营居家医护和ASIH服务</li>
+<li><strong>Aleris</strong>：运营居家医疗及安宁疗护服务</li>
+<li><strong>Attendo</strong>：北欧最大的养老和居家护理集团之一，主要在Kommun层面</li>
+<li><strong>Cura</strong>：专注于安宁疗护和高级居家医疗的私营提供者</li>
+<li><strong>Humana</strong>：个人援助和居家护理服务</li>
+<li><strong>Vardaga</strong>：居家护理和特别住宅服务</li>
+</ul>
+<h3 id="63">6.3 市场结构特征</h3>
+<ul>
+<li><strong>初级保健</strong>：私营比例约35–40%（大城市如斯德哥尔摩可达60%），但居家医疗（尤其是ASIH/HaH）中的私营比例较低</li>
+<li><strong>选择自由制度（LOV）</strong>：2010年引入初级保健，允许患者自由选择或更换初级医疗中心——部分Region已将其扩展到居家医疗</li>
+<li><strong>集中采购</strong>：急性期HaH由于需要与医院信息系统深度整合，目前仍以Region自营为主</li>
+<li><strong>利润压力</strong>：瑞典的公共资助体系对私营提供者的利润率控制较严</li>
+</ul>
+<h3 id="64">6.4 北欧市场对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>瑞典</th>
+<th>挪威</th>
+<th>丹麦</th>
+<th>芬兰</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>私营居家医疗占比</td>
+<td>中（20–25%）</td>
+<td>低（&lt;15%）</td>
+<td>低-中（15–25%）</td>
+<td>中（25–30%）</td>
+</tr>
+<tr>
+<td>外资进入门槛</td>
+<td>较低——北欧区域市场较开放</td>
+<td>中——有地域限制</td>
+<td>较低</td>
+<td>较低</td>
+</tr>
+<tr>
+<td>典型商业模式</td>
+<td>长期采购合同（3–5年）</td>
+<td>年度拨款</td>
+<td>服务采购</td>
+<td>服务券/采购混合</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 劳动力</h2>
+<h3 id="71">7.1 从业人员构成</h3>
+<p>居家医疗涉及的多类专业人员供给情况：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>职业类别</th>
+<th>密度（每10万人口）</th>
+<th>供给评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>执业医师</td>
+<td>~430</td>
+<td>总量充足但专科分布不均</td>
+</tr>
+<tr>
+<td>全科医生（GP）</td>
+<td>~55–65</td>
+<td><strong>严重短缺</strong>——尤其农村地区</td>
+</tr>
+<tr>
+<td>执业护士</td>
+<td>~1,085（2019年）</td>
+<td><strong>2015年以来持续下降</strong></td>
+</tr>
+<tr>
+<td>专科护士</td>
+<td>~200–250</td>
+<td><strong>严重短缺</strong>——为最紧缺类别</td>
+</tr>
+<tr>
+<td>助理护士（undersköterska）</td>
+<td>~1,500</td>
+<td>供给紧张</td>
+</tr>
+<tr>
+<td>物理治疗师</td>
+<td>~250</td>
+<td>相对充足</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72">7.2 居家医疗人力挑战</h3>
+<ol>
+<li>
+<p><strong>专科护士短缺</strong>
+   - 瑞典统计局（SCB）预测：2035年将有<strong>严重短缺</strong>，尤其居家护理领域
+   - 原因：老龄化退休潮（约30%的护士将在10年内退休）+ 新毕业护士数量不足
+   - 居家护理中，<strong>district nurse（distriktssköterska）</strong> 是最关键的紧缺角色</p>
+</li>
+<li>
+<p><strong>全科医生（GP）短缺</strong>
+   - 瑞典GP占所有医师的比例（约16%）远低于OECD平均（约25–30%）
+   - 乡村地区尤其严重——北部Västerbotten等地GP空缺率达20–30%
+   - GP对居家医疗至关重要（开具居家医疗处方、进行家访）</p>
+</li>
+<li>
+<p><strong>工作条件</strong>
+   - 护士离职意愿高：一项2024年调查显示约<strong>35%</strong>的初级保健护士有高离职意向
+   - 居家护理护士普遍反映<strong>行政负担重、文书工作多</strong>
+   - 数字化系统碎片化——护士需要登录多个不互联的系统</p>
+</li>
+<li>
+<p><strong>国际招聘</strong>
+   - 2020年约32%的新医师执照授予了海外培训医生
+   - 国际护士（IEN）数量在增长，但语言和认证流程具有门槛</p>
+</li>
+</ol>
+<h3 id="73">7.3 居家医生的角色</h3>
+<p>瑞典没有独立的&rdquo;居家医生&rdquo;（home-based physician）专科。居家医疗中的医生来自：</p>
+<ul>
+<li><strong>ASIH专科医生</strong>：通常是姑息医学或内科专科医师</li>
+<li><strong>初级保健中心医生</strong>：负责所辖列表中的居家患者，进行家访</li>
+<li><strong>医院派出医生</strong>：在HaH模式中由医院专科医生远程或实地参与</li>
+<li><strong>居家养老院签约医生</strong>（läkare i särskilt boende）：部分Region为住宅护理机构安排固定医生</li>
+</ul>
+<h3 id="74">7.4 薪资与工作条件</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>职位</th>
+<th>月薪范围（SEK）</th>
+<th>约合（EUR）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASIH专科医生</td>
+<td>80,000–120,000</td>
+<td>7,000–10,500</td>
+</tr>
+<tr>
+<td>GP（初级保健）</td>
+<td>70,000–100,000</td>
+<td>6,100–8,700</td>
+</tr>
+<tr>
+<td>专科护士（居家）</td>
+<td>35,000–48,000</td>
+<td>3,000–4,200</td>
+</tr>
+<tr>
+<td>注册护士（居家）</td>
+<td>30,000–40,000</td>
+<td>2,600–3,500</td>
+</tr>
+<tr>
+<td>助理护士</td>
+<td>25,000–32,000</td>
+<td>2,200–2,800</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>居家医疗领域护士的薪资相对医院较低，是造成从医院到社区&rdquo;倒流&rdquo;困难的原因之一。</p>
+</blockquote>
+<hr />
+<h2 id="d8">D8 质量监管</h2>
+<h3 id="81">8.1 监管体系架构</h3>
+<pre><code>社会事务部 (Ministry of Health and Social Affairs)
+│
+├── Socialstyrelsen（国家卫生与福利委员会）
+│   职责：规范制定、指南、国家登记、&quot;公开比较&quot;质量发布
+│
+├── IVO（卫生与社会照护监察局 / Inspektionen för vård och omsorg）
+│   职责：许可、监督、投诉处理、强制报告审查
+│
+├── E-hälsomyndigheten（电子健康局）
+│   职责：国家eHealth协调、高费用数据库
+│
+├── TLV（牙科与药品福利局）
+│   职责：药品和医疗用品的定价、报销
+│
+└── SBU（卫生技术评估局）
+     职责：系统评价、评估居家医疗服务的证据基础
+</code></pre>
+<h3 id="82-ivo">8.2 IVO 的监督职能</h3>
+<p>IVO 是瑞典独立的医疗与社会服务质量监督机构：</p>
+<p><strong>监督范围</strong>：</p>
+<ul>
+<li>所有医疗提供者（含公立和私营）必须向IVO注册</li>
+<li>覆盖医院、初级保健中心、居家医疗团队、住宅护理机构</li>
+<li>2023年全国检查：检查27家医院，覆盖所有21个Region</li>
+</ul>
+<p><strong>强制报告制度</strong>：</p>
+<ul>
+<li><strong>Lex Maria</strong>：医疗提供者须向IVO报告严重不良事件或几乎发生的风险事件</li>
+<li><strong>Lex Sarah</strong>：社会服务提供者须报告严重不当对待</li>
+</ul>
+<p><strong>居家医疗相关重点</strong>（IVO 2023–2024年报告）：</p>
+<ul>
+<li>居家医疗中的药物管理安全（尤其是多重用药和沟通断裂）</li>
+<li>居家安宁疗护的疼痛管理质量</li>
+<li>数字监测中的数据保护和知情同意</li>
+<li>Region/Kommun 协作断裂导致的患者安全风险</li>
+</ul>
+<h3 id="83-nationella-kvalitetsregister">8.3 国家质量登记（Nationella kvalitetsregister）</h3>
+<p>瑞典拥有全球最完备的国家质量登记系统之一，居家医疗领域最重要的有：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>登记系统</th>
+<th>启动年份</th>
+<th>覆盖范围</th>
+<th>居家医疗相关指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Svenska Palliativregistret</strong>（瑞典安宁疗护登记）</td>
+<td>2005</td>
+<td>全国所有安宁疗护单位</td>
+<td>疼痛管理、临终对话、家属支持、已故患者最后一周照护质量</td>
+</tr>
+<tr>
+<td><strong>Senior Alert</strong></td>
+<td>2008</td>
+<td>预防性老年护理</td>
+<td>跌倒风险、营养不良、褥疮、口腔健康</td>
+</tr>
+<tr>
+<td><strong>Svenska Demensregistret（SveDem）</strong></td>
+<td>2007</td>
+<td>全国痴呆诊疗</td>
+<td>诊断质量、药物使用、照护连续性</td>
+</tr>
+<tr>
+<td><strong>Riksstroke</strong></td>
+<td>1994</td>
+<td>全国卒中</td>
+<td>居家康复率、二级预防</td>
+</tr>
+<tr>
+<td><strong>Swedevox</strong></td>
+<td>1996</td>
+<td>全国居家氧疗和呼吸支持</td>
+<td>氧疗处方合理性、依从性、地区差异</td>
+</tr>
+<tr>
+<td><strong>Nationella Diabetesregistret</strong></td>
+<td>1996</td>
+<td>全国糖尿病</td>
+<td>血糖控制、并发症、居家自我管理支持</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="84">8.4 质量管理的重要举措</h3>
+<ul>
+<li><strong>Öppna Jämförelser（公开比较）</strong>：Socialstyrelsen 每年发布各地区/各领域的质量指标比较，促进公开透明</li>
+<li><strong>God Vård（优质照护）</strong>：Socialstyrelsen 制定的国家质量框架——六个维度（知识基础、安全、患者参与、及时性、协调、效率）</li>
+<li><strong>SKR 知识驱动管理体系</strong>：通过国家协作项目推动循证实践的标准化</li>
+</ul>
+<hr />
+<h2 id="d9">D9 创新趋势</h2>
+<h3 id="91">9.1 数字居家监测与虚拟病房</h3>
+<p><strong>Karolinska@home——瑞典最具标志性的HaH创新</strong>：</p>
+<ul>
+<li>瑞典首个&rdquo;数字+实体&rdquo;（digi-physical）混合高 acuity HaH模式</li>
+<li>入选患者通过一个集成了生命体征远程监测（RPM）的可穿戴设备+移动应用+中心监控站连接</li>
+<li>由Karolinska大学医院和皇家理工学院（KTH）合作开发</li>
+<li>2024年发表于 Journal of Telemedicine and Telecare 的结果：</li>
+<li>可行性和安全性得到验证</li>
+<li>患者满意度极高（4.8/5）</li>
+<li>与传统住院相比，医疗效果无显著差异</li>
+</ul>
+<p><strong>Region Stockholm 的虚拟病房</strong>：</p>
+<ul>
+<li>整合了远程监测、视频问诊、医生远程查房</li>
+<li>集中于心衰（heart failure）、慢阻肺（COPD）、高血压等慢性病急性发作后管理</li>
+<li>计划2030年前将虚拟病房能力扩大至可覆盖每日约100–150例</li>
+</ul>
+<h3 id="92-ehealth">9.2 瑞典eHealth战略</h3>
+<p><strong>Vision e-hälsa 2025</strong>——由政府和SKR共同制定的国家eHealth战略：</p>
+<ul>
+<li>愿景：&rdquo;瑞典将成为世界上最好的利用数字化的国家&rdquo;</li>
+<li>核心目标：到2025年，让数字化赋能健康，赋能患者</li>
+<li>居家医疗关键词：远程监测、自我管理、数据共享、福祉技术</li>
+</ul>
+<p><strong>1177.se 国家健康门户</strong>：</p>
+<ul>
+<li>瑞典最广泛使用的健康平台（年访问量近1,500万次）</li>
+<li>功能：在线预约、处方续方、健康信息、电子病历查看、视频问诊</li>
+<li>2025年已经实现所有居民可通过 BankID 登录访问个人电子健康记录</li>
+</ul>
+<p><strong>全国电子健康记录（EHR）互操作性</strong>：</p>
+<ul>
+<li>尽管区域自治较强，瑞典在EHR互操作性方面走在欧盟前列</li>
+<li>Nationell Patientöversikt（NPÖ，国家患者概览）允许跨Region的医疗卫生人员查看患者信息</li>
+<li>但 Kommun/Region 间的数据共享仍是瓶颈</li>
+</ul>
+<h3 id="93">9.3 福祉技术与智能居家</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>技术</th>
+<th>应用场景</th>
+<th>渗透率（估）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>社交警报/应急呼叫系统（trygghetslarm）</td>
+<td>跌倒检测、日常求助</td>
+<td>高（约60–70%居家护理接受者）</td>
+</tr>
+<tr>
+<td>远程药物分配器（påminnelsedispenser）</td>
+<td>多重用药患者</td>
+<td>中</td>
+</tr>
+<tr>
+<td>智能传感器（运动、开门、床传感器）</td>
+<td>活动监测、认知障碍</td>
+<td>中度增长</td>
+</tr>
+<tr>
+<td>视频访视系统</td>
+<td>居家远程护理、GP视频问诊</td>
+<td>高增长（COVID后加速）</td>
+</tr>
+<tr>
+<td>跌倒预防可穿戴设备</td>
+<td>高风险老年人</td>
+<td>早期阶段</td>
+</tr>
+<tr>
+<td>居家透析远程监测</td>
+<td>腹膜透析患者</td>
+<td>特定人群</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94">9.4 其他值得关注的创新</h3>
+<p><strong>Region Västerbotten 的远程居家护理（北瑞典）</strong>：</p>
+<ul>
+<li>地理距离远（从最北到大学医院约800公里）</li>
+<li>开发了针对偏远地区的远程居家医疗方案</li>
+<li>包括护士上门+远程专科医生视频会诊的混合模式</li>
+</ul>
+<p><strong>Stockholm Sjukhem 的早期整合安宁疗护（EPIC-HOME）</strong>：</p>
+<ul>
+<li>2019年启动的随机对照试验</li>
+<li>针对老年不治癌症患者的早期整合安宁疗护居家模式</li>
+<li>结果：住院率降低约30%，生活质量提高，医疗成本降低</li>
+</ul>
+<p><strong>Lund大学的人工智能居家风险预测</strong>：</p>
+<ul>
+<li>利用电子健康记录数据+可穿戴设备数据预测患者居家恶化风险</li>
+<li>试点阶段，尚未大规模推广</li>
+</ul>
+<p><strong>北欧合作——Nordic Council of Ministers 的远程医疗项目</strong>：</p>
+<ul>
+<li>跨北欧边界的远程居家医疗协作</li>
+<li>针对罕见病、远程会诊标准制定</li>
+</ul>
+<hr />
+<h2 id="d10-ihomecare">D10 对香港 iHomeCare 的借鉴意义</h2>
+<h3 id="101">10.1 制度模式对比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>瑞典</th>
+<th>香港（现有）</th>
+<th>对iHomeCare的启示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>资金来源</strong></td>
+<td>税收（86%公共）</td>
+<td>税收+公私混合（政府资助+自费+保险）</td>
+<td>香港难以仿效纯税收模式，但可参考瑞典的公共主导+低自付封顶原则</td>
+</tr>
+<tr>
+<td><strong>支付机制</strong></td>
+<td>极低患者自付+年度封顶</td>
+<td>门诊/住院有政府补贴但无统一封顶</td>
+<td>建立居家医疗<strong>自付封顶</strong>制度可降低使用障碍</td>
+</tr>
+<tr>
+<td><strong>区域规划</strong></td>
+<td>21 Region负责全域</td>
+<td>医管局+社署分权</td>
+<td>参考瑞典Region-市镇分工模式，但需简化协作环节</td>
+</tr>
+<tr>
+<td><strong>提供者结构</strong></td>
+<td>公共主导+私营竞争</td>
+<td>公营主导（医管局/社署）+私营</td>
+<td>初期宜以公营（医管局）推动，逐步引入竞争机制</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="102">10.2 可操作借鉴点</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>借鉴领域</th>
+<th>瑞典经验</th>
+<th>香港适配建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ASIH团队模型</strong></td>
+<td>多学科居家医疗团队（医生+专科护士+治疗师）</td>
+<td>iHomeCare可设立核心团队，由老年科/内科医生+社区护士+物理治疗师组成</td>
+</tr>
+<tr>
+<td><strong>三方协作</strong></td>
+<td>地区-市镇-SIP协调计划</td>
+<td>探索医管局-社署-非政府组织的法定协作机制</td>
+</tr>
+<tr>
+<td><strong>服务质量登记</strong></td>
+<td>瑞典安宁疗护登记+Senior Alert+Swedevox</td>
+<td>建立iHomeCare质量指标登记（再入院率、症状控制、满意度）</td>
+</tr>
+<tr>
+<td><strong>患者自付封顶</strong></td>
+<td>年度封顶1,450 SEK门诊+2,900 SEK药品</td>
+<td>建议iHomeCare设置月度/年度家用医疗费用上限</td>
+</tr>
+<tr>
+<td><strong>数字健康基础设施</strong></td>
+<td>1177.se + BankID + 全国EHR互操作</td>
+<td>iHomeCare需先解决HA Go系统与公私机构EHR的互操作性问题</td>
+</tr>
+<tr>
+<td><strong>协调出院法</strong></td>
+<td>出院后3天不接则Kommun付滞留费</td>
+<td>可参考设立出院后24–72小时的社区接收时间窗口及问责机制</td>
+</tr>
+<tr>
+<td><strong>急性期HaH</strong></td>
+<td>Karolinska@home：数字+实体混合</td>
+<td>针对肺炎、心衰、COPD急性加重患者，先行在1–2医院试点</td>
+</tr>
+<tr>
+<td><strong>劳动力策略</strong></td>
+<td>专科护士培训路径（distriktssköterska）</td>
+<td>构建iHomeCare专科护理认证和薪酬提升计划</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="103">10.3 关键差异与限制因素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>差异</th>
+<th>瑞典</th>
+<th>香港</th>
+<th>对iHomeCare的影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人口规模</td>
+<td>1,050万（地广人稀）</td>
+<td>750万（高度密集）</td>
+<td>香港的服务半径小，HaH物流成本可能低于瑞典</td>
+</tr>
+<tr>
+<td>居住模式</td>
+<td>独居老年人比例高</td>
+<td>多代同堂比例较高</td>
+<td>香港家属支持可能更充足</td>
+</tr>
+<tr>
+<td>数字素养</td>
+<td>极高（95%日常上网）</td>
+<td>高度智能手机普及（但老年人数字鸿沟存在）</td>
+<td>需同时推进家属教育和简化界面</td>
+</tr>
+<tr>
+<td>医护人员供给</td>
+<td>专科护士/GP短缺</td>
+<td>医生/护士均紧缺</td>
+<td>两地均需依赖任务转移（task-shifting）和数字赋能</td>
+</tr>
+<tr>
+<td>土地/住房</td>
+<td>住宅空间相对宽敞</td>
+<td>公屋/私人住宅空间有限</td>
+<td>HaH的物理可行性需评估——设备放置、隐私、感染控制</td>
+</tr>
+<tr>
+<td>气候条件</td>
+<td>冬季漫长，影响家访</td>
+<td>亚热带气候</td>
+<td>香港全年可家访，条件优于瑞典</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="104">10.4 政策建议要点（供参考）</h3>
+<p>基于瑞典经验，对iHomeCare的<strong>策略性建议</strong>：</p>
+<ol>
+<li><strong>明确&rdquo;居家医疗&rdquo;法律定义</strong>：区分居家护理（home care）、高级居家医疗（ASIH级）和急性期HaH的分级</li>
+<li><strong>建立支付保障</strong>：将居家医疗纳入公立医疗保险或政府资助体系，设置自付封顶</li>
+<li><strong>先试点后推广</strong>：参照Karolinska@home模式，先在1–2家医院试办数字+实体的急性期HaH</li>
+<li><strong>质量登记先行</strong>：参照瑞典安宁疗护登记，建立iHomeCare的效果指标追踪系统</li>
+<li><strong>专业教育配套</strong>：开设居家医疗专科护理培训课程，设立&rdquo;居家医疗专科护士&rdquo;认证</li>
+<li><strong>公私协作框架</strong>：公营负责标准制定和质量监控，私营提供竞争性服务</li>
+<li><strong>技术投资</strong>：优先解决EHR互操作性问题，构建统一居家医疗数据平台</li>
+</ol>
+<hr />
+<h2 id="_2">附录</h2>
+<h3 id="a">附录A：主要缩写对照表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>瑞典语/英文</th>
+<th>中文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASIH</td>
+<td>Avancerad sjukvård i hemmet</td>
+<td>高级居家医疗</td>
+</tr>
+<tr>
+<td>HaH</td>
+<td>Hospital at Home</td>
+<td>居家住院</td>
+</tr>
+<tr>
+<td>HSL</td>
+<td>Hälso- och sjukvårdslagen</td>
+<td>健康与医疗服务法</td>
+</tr>
+<tr>
+<td>IVO</td>
+<td>Inspektionen för vård och omsorg</td>
+<td>卫生与社会照护监察局</td>
+</tr>
+<tr>
+<td>Kommun</td>
+<td>Municipality</td>
+<td>市镇</td>
+</tr>
+<tr>
+<td>LOV</td>
+<td>Lagen om valfrihetssystem</td>
+<td>自由选择制度法</td>
+</tr>
+<tr>
+<td>LSS</td>
+<td>Lagen om stöd och service till vissa funktionshindrade</td>
+<td>特定功能障碍者支持与服务法</td>
+</tr>
+<tr>
+<td>NPÖ</td>
+<td>Nationell Patientöversikt</td>
+<td>国家患者概览</td>
+</tr>
+<tr>
+<td>Region</td>
+<td>Region / County Council</td>
+<td>地区（医疗管辖区域）</td>
+</tr>
+<tr>
+<td>SCB</td>
+<td>Statistiska centralbyrån</td>
+<td>瑞典统计局</td>
+</tr>
+<tr>
+<td>SIP</td>
+<td>Samordnad individuell plan</td>
+<td>协调性个体计划</td>
+</tr>
+<tr>
+<td>SKR</td>
+<td>Sveriges Kommuner och Regioner</td>
+<td>瑞典市县联合会</td>
+</tr>
+<tr>
+<td>SoL</td>
+<td>Socialtjänstlagen</td>
+<td>社会服务法</td>
+</tr>
+<tr>
+<td>SRPC</td>
+<td>Swedish Register of Palliative Care</td>
+<td>瑞典安宁疗护登记</td>
+</tr>
+<tr>
+<td>TLV</td>
+<td>Tandvårds- och läkemedelsförmånsverket</td>
+<td>牙科与药品福利局</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="b">附录B：主要数据来源</h3>
+<ul>
+<li><a href="https://www.socialstyrelsen.se/en/">Socialstyrelsen（国家卫生与福利委员会）</a></li>
+<li><a href="https://www.scb.se/en/finding-statistics/statistics-by-subject-area/national-accounts/">瑞典统计局（SCB）——健康账户数据</a></li>
+<li><a href="https://skr.se/">SKR（瑞典市县联合会）</a></li>
+<li><a href="https://www.oecd.org/en/publications/health-at-a-glance-2025_15a55280-en.html">OECD Health at a Glance 2025</a></li>
+<li><a href="https://eurohealthobservatory.who.int/publications/i/sweden-health-system-review-2023">WHO欧洲卫生观察——Sweden: Health System Review 2023</a></li>
+<li><a href="https://www.ivo.se/">IVO（卫生与社会照护监察局）</a></li>
+<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12170770">PMC——The healthcare system in Sweden (2025)</a></li>
+<li><a href="https://www.karolinskahospital.com/care-at-karolinska/tomorrows-healthcare/hospitalhome">Karolinska大学医院——Hospital@home</a></li>
+<li><a href="https://palliativregistret.se/">Svenska Palliativregistret（瑞典安宁疗护登记）</a></li>
+<li><a href="https://www.commonwealthfund.org/international-health-policy-center/countries/sweden">Commonwealth Fund——Sweden Health System Profile</a></li>
+<li><a href="https://nordicwelfare.org/">Nordic Welfare Centre / Nordic Council of Ministers 报告</a></li>
+</ul>
+<blockquote>
+<p><strong>说明</strong>：本报告提数据均来自上述公开机构的最新可获取版本。部分细分领域（如ASIH精确支出、急性期HaH精确患者数等）因公开统计粒度不足，标注为「估」（估算值）或标注来源。未标注数据来源的定性/定量判断基于上述权威来源的综合分析。（本报告遵循&rdquo;不编造数据&rdquo;原则——无法从公开来源核实的数据标记为 [待补充]。）</p>
+</blockquote>
+<hr />
+<p><em>报告完结</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

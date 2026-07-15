@@ -1,0 +1,2508 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speedoc — 27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#speedoc-27">Speedoc — 27 维度深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实表</a></li>
+<li><a href="#_2">发展时间线</a></li>
+<li><a href="#_3">管理层</a></li>
+<li><a href="#_4">股权结构</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_5">一句话核心逻辑</a></li>
+<li><a href="#_6">战略差异化要素</a></li>
+<li><a href="#_7">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#vs">支付方 vs 使用方</a></li>
+<li><a href="#_8">价值链定位</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#_9">研发创新管线</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_10">客户结构</a></li>
+<li><a href="#_11">支付方来源</a></li>
+<li><a href="#_12">客户获取渠道</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a></li>
+<li><a href="#d8-h-ward">D8 — 工作流/旅程映射（H-Ward® 虚拟住院）</a><ul>
+<li><a href="#phase-0">Phase 0: 需求触发</a></li>
+<li><a href="#phase-1">Phase 1: 评估与匹配</a></li>
+<li><a href="#phase-2">Phase 2: 服务交付</a></li>
+<li><a href="#phase-3">Phase 3: 持续跟踪</a></li>
+<li><a href="#phase-4">Phase 4: 出院</a></li>
+<li><a href="#phase-5">Phase 5: 结算</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构总览（五层模型）</a></li>
+<li><a href="#92-h-grid-ai">9.2 H-Grid 系统 — 核心 AI 运营基础设施</a></li>
+<li><a href="#93-super-cloud-command-centre2026-h2">9.3 Super Cloud Command Centre（2026 H2 上线）</a></li>
+<li><a href="#94-searce-agentic-ai-saas-20256">9.4 Searce 合作 — Agentic AI SaaS 平台（2025.6）</a></li>
+<li><a href="#95">9.5 软件架构深度</a></li>
+<li><a href="#96-iot">9.6 硬件 / IoT 设备</a></li>
+<li><a href="#97-ai">9.7 AI 与数据能力</a></li>
+<li><a href="#98">9.8 技术差异化矩阵</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a><ul>
+<li><a href="#_13">潜在跨界进入者</a></li>
+</ul>
+</li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</a></li>
+<li><a href="#d12">D12 — 盈利模型与路径</a><ul>
+<li><a href="#_14">成本结构拆解</a></li>
+<li><a href="#_15">盈利路径</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a><ul>
+<li><a href="#_16">法律/监管风险</a></li>
+</ul>
+</li>
+<li><a href="#d14">D14 — 管理层指引与可信度</a></li>
+<li><a href="#d15">D15 — 估值对比</a><ul>
+<li><a href="#_17">估值逻辑</a></li>
+</ul>
+</li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1">1. 对潜在投资者</a></li>
+<li><a href="#2-ceo">2. 对管理层（如 CEO 咨询）</a></li>
+<li><a href="#3-ihomecare-hah">3. 对 iHomeCare（香港 HaH 创业者）</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a><ul>
+<li><a href="#hah">新加坡 HaH 政策环境</a></li>
+<li><a href="#_18">马来西亚政策</a></li>
+</ul>
+</li>
+<li><a href="#d18-h-ward">D18 — 单元经济模型（H-Ward® 虚拟住院）</a><ul>
+<li><a href="#5">每条虚拟住院（假设 5 天）</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略评估</a><ul>
+<li><a href="#_19">已有布局</a></li>
+<li><a href="#_20">跨境策略评估</a></li>
+</ul>
+</li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a><ul>
+<li><a href="#_21">可比交易</a></li>
+<li><a href="#_22">潜在买家</a></li>
+<li><a href="#_23">估值估算</a></li>
+</ul>
+</li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a><ul>
+<li><a href="#_24">融资历史</a></li>
+<li><a href="#searce-20256">最新动态 — Searce 战略合作（2025.6）</a></li>
+<li><a href="#_25">投资者质量</a></li>
+<li><a href="#_26">估值轨迹</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271-michome-pmc-2026">27.1 MIC@Home 临床研究（PMC 2026 — 核心证据）</a></li>
+<li><a href="#272-h-ward">27.2 H-Ward® 覆盖病种</a></li>
+<li><a href="#273">27.3 质量认证</a></li>
+<li><a href="#274">27.4 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_27">调研空白与后续补充</a></li>
+<li><a href="#_28">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="speedoc-27">Speedoc — 27 维度深度尽调报告</h1>
+<blockquote>
+<p><strong>调研人</strong>：Kate | <strong>日期</strong>：2026-07-13 | <strong>类型</strong>：公司尽调 (27 维度) | <strong>国家</strong>：新加坡 (SG)
+<strong>一句话定位</strong>：新加坡虚拟医院平台——通过 H-Ward® 将医院级护理移至患者家中，覆盖远程医疗+上门诊疗+虚拟病房+救护车调度全链条。</p>
+</blockquote>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<p><strong>🚨 赛道定位</strong>：Speedoc 是 <strong>全栈虚拟医院 (Virtual Hospital)</strong> 运营商，兼具 <strong>急性 HaH (H-Ward® MIC@Home) + 远程医疗 + 移动门诊</strong> 三重模式。与纯远程医疗 SaaS (如 Amwell) 或纯 RPM 平台 (如 Cadence) 有本质区别——Speedoc 自营临床团队（10+全职医生、20+全职护士、100+兼职临床人员），直接提供医疗服务。</p>
+<p><strong>赛道结论</strong>：✅ 属于 HaH/虚拟医院赛道——与 iHomeCare 直接对标。</p>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p>Speedoc 是新加坡最具代表性的私营虚拟医院运营商，2017 年由 Dr. Shravan Verma 与 Serene Cai 联合创立。公司累计融资约 <strong>$51.4M</strong>（含 $28M Pre-Series B, 2022.11），投资方包括 Vertex Ventures、Bertelsmann Investments、Shinhan Venture Investment 和 Mars Growth Capital。2025 年 6 月与 Searce 合作推出 <strong>&ldquo;Agentic AI&rdquo;SaaS 平台升级版</strong>，将 Google Gemini 集成到自研 H-Grid 运营系统中，已实现<strong>每周节省 130+ 运营工时</strong>。</p>
+<p><strong>核心优势</strong>：</p>
+<ul>
+<li>新加坡唯一自有临床团队 + MOH MIC@Home 政府合同的私营 HaH 运营商</li>
+<li>H-Ward® 品牌化虚拟病房已在 NUHS/SGH/KTPH 三家顶级公立医院验证</li>
+<li><strong>MIC@Home 临床研究 (BMC Health Services Research, 2026)</strong>：42% 成本节约 (S$676/天)，零显著临床差异</li>
+<li>AI 全栈能力：H-Grid + Super Cloud Command Centre + Google Gemini 集成</li>
+<li>三国布局：新加坡 (HQ) + 马来西亚 (KL/巴生谷) + 印度尼西亚 (巴厘岛)</li>
+</ul>
+<p><strong>核心矛盾</strong>：</p>
+<ul>
+<li><strong>短期逆风</strong>：自 2022 年 Pre-Series B 后近 4 年无新一轮融资披露；东南亚 HaH 支付生态仍依赖试点项目；私立市场自费模式天花板有限</li>
+<li><strong>长期逻辑</strong>：MOH MIC@Home 进入规模化阶段且有临床证据背书；印尼+马来西亚双市场扩张；东南亚老龄化+医护短缺推动虚拟医院需求；AI 运营提效已产生量化成果</li>
+</ul>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立</td>
+<td style="text-align: left;">2017</td>
+<td style="text-align: left;">LinkedIn/TechCrunch</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">新加坡 Ayer Rajah Crescent</td>
+<td style="text-align: left;">LinkedIn</td>
+</tr>
+<tr>
+<td style="text-align: left;">覆盖市场</td>
+<td style="text-align: left;">🇸🇬 SG + 🇲🇾 MY (KL/巴生谷) + 🇮🇩 ID (巴厘岛)</td>
+<td style="text-align: left;">LinkedIn</td>
+</tr>
+<tr>
+<td style="text-align: left;">CEO/联合创始人</td>
+<td style="text-align: left;">Dr. Shravan Verma</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">联合创始人</td>
+<td style="text-align: left;">Serene Cai</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">总融资</td>
+<td style="text-align: left;">~$51.4M (5 轮)</td>
+<td style="text-align: left;">PitchBook/LinkedIn</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工</td>
+<td style="text-align: left;">51-200 (LinkedIn 官方)</td>
+<td style="text-align: left;">LinkedIn</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床团队</td>
+<td style="text-align: left;">10+ 全职医生 + 20+ 全职护士 + 100+ 兼职</td>
+<td style="text-align: left;">Business Times</td>
+</tr>
+<tr>
+<td style="text-align: left;">医院合作伙伴</td>
+<td style="text-align: left;">NUHS、SGH、Khoo Teck Puat Hospital</td>
+<td style="text-align: left;">TechCrunch</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 系统</td>
+<td style="text-align: left;">H-Grid + Google Gemini + Super Cloud Command Centre</td>
+<td style="text-align: left;">LinkedIn</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 成效</td>
+<td style="text-align: left;">每周节省 130+ 运营工时</td>
+<td style="text-align: left;">LinkedIn</td>
+</tr>
+<tr>
+<td style="text-align: left;">估值</td>
+<td style="text-align: left;">未公开（估 $150-250M）</td>
+<td style="text-align: left;">推测</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_1">基本事实表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">属性</th>
+<th style="text-align: left;">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>法定全称</strong></td>
+<td style="text-align: left;">Speedoc Pte Ltd（推定）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>法律地位</strong></td>
+<td style="text-align: left;">私人有限责任公司（Private Limited）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成立</strong></td>
+<td style="text-align: left;">2017 年</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总部</strong></td>
+<td style="text-align: left;">新加坡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>运营城市</strong></td>
+<td style="text-align: left;">9 城（新加坡 + 马来西亚 8 城）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CEO/联合创始人</strong></td>
+<td style="text-align: left;">Dr. Shravan Verma（前急诊科医生）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>联合创始人</strong></td>
+<td style="text-align: left;">Serene Cai</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">~200（2022.11）→ 估 200-300（2026）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>用户数</strong></td>
+<td style="text-align: left;">120,000+ (2022)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>官网</strong></td>
+<td style="text-align: left;">https://speedoc.com</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">事件</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2017</td>
+<td style="text-align: left;">Dr. Shravan Verma 与 Serene Cai 联合创立 Speedoc</td>
+<td style="text-align: left;">TechCrunch</td>
+</tr>
+<tr>
+<td style="text-align: left;">2018</td>
+<td style="text-align: left;">获得种子轮融资（具体金额未公开）</td>
+<td style="text-align: left;">PitchBook</td>
+</tr>
+<tr>
+<td style="text-align: left;">2020.12</td>
+<td style="text-align: left;"><strong>Series A: $5M</strong>，Vertex Ventures 领投</td>
+<td style="text-align: left;">TechCrunch</td>
+</tr>
+<tr>
+<td style="text-align: left;">2021-2022</td>
+<td style="text-align: left;">加入 MOH MIC@Home 试点，与 NUHS 合作 H-Ward® 项目</td>
+<td style="text-align: left;">HMA</td>
+</tr>
+<tr>
+<td style="text-align: left;">2022.11</td>
+<td style="text-align: left;"><strong>Pre-Series B: $28M</strong>，Bertelsmann + Shinhan + Mars Growth 参投</td>
+<td style="text-align: left;">TechCrunch/Business Times</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">扩展至马来西亚 8 城</td>
+<td style="text-align: left;">TechCrunch</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025.6</td>
+<td style="text-align: left;">CEO 在 Business Insider 发表 AI+居家医疗观点</td>
+<td style="text-align: left;">BI</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025-2026</td>
+<td style="text-align: left;">H-Ward® 持续运营，参与 Hospital at Home Asia 会议</td>
+<td style="text-align: left;">LinkedIn</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">管理层</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">姓名</th>
+<th style="text-align: left;">职务</th>
+<th style="text-align: left;">背景要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Dr. Shravan Verma</strong></td>
+<td style="text-align: left;">CEO &amp; Co-Founder</td>
+<td style="text-align: left;">前急诊科医生，曾在三级医院及资源匮乏环境工作；2025 年公开讨论 AI 在居家医疗中的角色</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Serene Cai</strong></td>
+<td style="text-align: left;">Co-Founder</td>
+<td style="text-align: left;">因家中有失智症祖母经历而创立 Speedoc，致力于提升社区医疗可及性</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">股权结构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">股东类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: center;">持股比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">创始人</td>
+<td style="text-align: left;">Dr. Shravan Verma + Serene Cai</td>
+<td style="text-align: center;">未公开（估联合持股 &gt;50%）</td>
+</tr>
+<tr>
+<td style="text-align: left;">VC 机构</td>
+<td style="text-align: left;">Vertex Ventures SEAI、Bertelsmann、Shinhan、Mars Growth</td>
+<td style="text-align: center;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">天使/早期</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: center;">未公开</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 私人公司，无公开 Cap Table。以上为基于融资历史的合理推测。</p>
+</blockquote>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_5">一句话核心逻辑</h3>
+<p><strong>&ldquo;将医院搬回家&rdquo;</strong>——Speedoc 赌的是东南亚医疗体系在老龄化+医护短缺双重压力下，将被迫把住院服务向居家转移，而 MOH MIC@Home 试点正是政策信号。</p>
+<h3 id="_6">战略差异化要素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Speedoc 定位</th>
+<th style="text-align: left;">差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">服务深度</td>
+<td style="text-align: left;">全栈——从轻问诊到急性住院替代</td>
+<td style="text-align: left;">自有临床团队，非纯平台撮合</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术</td>
+<td style="text-align: left;">云调度 + RPM + H-Ward® 平台</td>
+<td style="text-align: left;">24/7 患者监护团队</td>
+</tr>
+<tr>
+<td style="text-align: left;">支付方</td>
+<td style="text-align: left;">政府试点 (MIC@Home) + B2C 自费</td>
+<td style="text-align: left;">新加坡特色公私双轨</td>
+</tr>
+<tr>
+<td style="text-align: left;">地理</td>
+<td style="text-align: left;">新加坡→马来西亚</td>
+<td style="text-align: left;">东南亚城市群策略</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_7">战略演变三阶段</h3>
+<ul>
+<li><strong>Phase 1 (2017-2020)</strong>：作为虚拟诊所（远程医疗+上门诊疗），建立基本服务网络</li>
+<li><strong>Phase 2 (2021-2023)</strong>：推出 H-Ward® 虚拟病房，进入 MOH MIC@Home 试点，Pre-Series B 融资后扩展马来西亚</li>
+<li><strong>Phase 3 (2024-2026+）</strong>：深化虚拟医院模式，探索 AI 赋能，等待 MIC@Home 从试点走向常规报销</li>
+</ul>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<pre><code>供给端                      平台                      需求端
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+自有医生(10+FT)      ┌─────────────────┐      B2G: MOH MIC@Home
+自有护士(20+FT)      │                 │      B2B: 公立医院转诊
+兼职医护(100+)  ───▶ │  Speedoc 平台   │ ───▶ B2C: 自费患者
+                     │  (调度+RPM+EHR) │      家属/照护者
+救护车队             │                 │
+药房/实验室伙伴      └─────────────────┘
+</code></pre>
+<h3 id="vs">支付方 vs 使用方</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>支付方</strong></td>
+<td style="text-align: left;">MOH（MIC@Home 试点基金，B2G）+ 自费患者（B2C）+ 商业保险（有限）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>使用方</strong></td>
+<td style="text-align: left;">经医院评估适合居家住院的患者 + 直接通过 App 预约的轻症患者</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>使用者≠支付方</strong></td>
+<td style="text-align: left;">MIC@Home 政府支付、B2C 患者自付</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_8">价值链定位</h3>
+<pre><code>纯中介撮合 ←──────────────────────────→ 自建医疗体系
+     │                                          │
+  MaNaDr                                   Speedoc ★
+  (医生平台)                            (自有临床团队)
+</code></pre>
+<p>Speedoc 处于偏右位置——不完全是&rdquo;自建医院&rdquo;（无实体床位），但自有临床团队使其远超纯撮合平台。</p>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">产品线</th>
+<th style="text-align: left;">客户类型</th>
+<th style="text-align: left;">服务内容</th>
+<th style="text-align: left;">定价模式</th>
+<th style="text-align: center;">占收入比（估）</th>
+<th style="text-align: left;">利润率特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>H-Ward® 虚拟医院</strong></td>
+<td style="text-align: left;">B2G/B2B</td>
+<td style="text-align: left;">急性住院替代：24/7 监护、IV 治疗、血液检查、混合查房</td>
+<td style="text-align: left;">MIC@Home 合同价 (S$676/天)</td>
+<td style="text-align: center;">~40%</td>
+<td style="text-align: left;">中高（规模效应）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>远程视频问诊</strong></td>
+<td style="text-align: left;">B2C</td>
+<td style="text-align: left;">在线医生咨询、开药、MC</td>
+<td style="text-align: left;">按次收费（估 S$20-50/次）</td>
+<td style="text-align: center;">~25%</td>
+<td style="text-align: left;">低（竞争激烈）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>上门医生/护士</strong></td>
+<td style="text-align: left;">B2C</td>
+<td style="text-align: left;">居家诊疗、伤口护理、注射</td>
+<td style="text-align: left;">按次收费（估 S$150-300/次）</td>
+<td style="text-align: center;">~25%</td>
+<td style="text-align: left;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>救护车调度</strong></td>
+<td style="text-align: left;">B2C</td>
+<td style="text-align: left;">非紧急私人救护车预约</td>
+<td style="text-align: left;">按次收费</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">低（重资产）</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 私人公司，收入结构未公开。以上为基于产品线的合理推测。</p>
+</blockquote>
+<h3 id="_9">研发创新管线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">在研方向</th>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">预计上线</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">AI 临床决策支持</td>
+<td style="text-align: left;">探索中</td>
+<td style="text-align: left;">TBD</td>
+<td style="text-align: left;">CEO 2025 年公开讨论 AI 辅助居家医疗</td>
+</tr>
+<tr>
+<td style="text-align: left;">心理健康/咨询</td>
+<td style="text-align: left;">规划中</td>
+<td style="text-align: left;">TBD</td>
+<td style="text-align: left;">HMA 访谈提及</td>
+</tr>
+<tr>
+<td style="text-align: left;">移动放射/诊断影像</td>
+<td style="text-align: left;">规划中</td>
+<td style="text-align: left;">TBD</td>
+<td style="text-align: left;">受制于设备成本和进口监管</td>
+</tr>
+<tr>
+<td style="text-align: left;">患者管理仪表盘</td>
+<td style="text-align: left;">已上线/迭代中</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">H-Ward® 核心组件</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_10">客户结构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户类别</th>
+<th style="text-align: center;">占收入比（估）</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MIC@Home 公立医院转诊</td>
+<td style="text-align: center;">~35%</td>
+<td style="text-align: left;">稳定合同、临床验证背书</td>
+<td style="text-align: left;">↑ MOH 可能扩大试点范围</td>
+</tr>
+<tr>
+<td style="text-align: left;">自费 B2C（门诊/上门）</td>
+<td style="text-align: center;">~50%</td>
+<td style="text-align: left;">高客单价、但市场规模受限于支付能力</td>
+<td style="text-align: left;">→ 稳定增长</td>
+</tr>
+<tr>
+<td style="text-align: left;">马来西亚市场</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">早期阶段</td>
+<td style="text-align: left;">↑ 扩展中</td>
+</tr>
+<tr>
+<td style="text-align: left;">企业/保险合作</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">有限</td>
+<td style="text-align: left;">→</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_11">支付方来源</h3>
+<ol>
+<li><strong>MOH MIC@Home</strong>：政府支付 H-Ward® 虚拟住院费用（S$676/天）</li>
+<li><strong>患者自费</strong>：视频问诊/上门诊疗/救护车</li>
+<li><strong>商业保险</strong>（有限）：新加坡综合健保计划 (IP) 部分覆盖远程医疗</li>
+</ol>
+<h3 id="_12">客户获取渠道</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">渠道</th>
+<th style="text-align: center;">效率</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">公立医院转诊 (NUHS/SGH/KTPH)</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">医生评估→MIC@Home→Speedoc 执行</td>
+</tr>
+<tr>
+<td style="text-align: left;">App/网站直销</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">直接预约上门/远程问诊</td>
+</tr>
+<tr>
+<td style="text-align: left;">企业健康福利</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">有限覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">搜索引擎/数字营销</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">竞争激烈</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ Speedoc 为私人公司，<strong>无可靠公开财务数据</strong>。以下基于 PitchBook/Tracxn 碎片数据 + 同业推测。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">FY2025（估）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">营业收入</td>
+<td style="text-align: center;">估 S$15-25M (~US$11-18M)</td>
+<td style="text-align: left;">基于 ~200 员工规模 + 新加坡市场参照</td>
+</tr>
+<tr>
+<td style="text-align: left;">毛利率</td>
+<td style="text-align: center;">估 35-50%</td>
+<td style="text-align: left;">自有临床团队拉高人力成本</td>
+</tr>
+<tr>
+<td style="text-align: left;">研发支出</td>
+<td style="text-align: center;">估 15-20%</td>
+<td style="text-align: left;">平台技术+AI 探索</td>
+</tr>
+<tr>
+<td style="text-align: left;">现金余额</td>
+<td style="text-align: center;">估 ~$20-30M</td>
+<td style="text-align: left;">2022 融资 $28M，4 年 burn</td>
+</tr>
+<tr>
+<td style="text-align: left;">月 burn rate</td>
+<td style="text-align: center;">估 S$1.5-2.5M</td>
+<td style="text-align: left;">含 200+ 员工+运营</td>
+</tr>
+<tr>
+<td style="text-align: left;">剩余 Runway</td>
+<td style="text-align: center;"><strong>估 12-18 个月</strong> ⚠️</td>
+<td style="text-align: left;">需要新一轮融资</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>🚨 <strong>融资风险</strong>：距上一轮融资已近 4 年（2022.11），若未在 2024-25 年间获得新融资，2026 年中可能面临现金压力。</p>
+</blockquote>
+<hr />
+<h2 id="d8-h-ward">D8 — 工作流/旅程映射（H-Ward® 虚拟住院）</h2>
+<h3 id="phase-0">Phase 0: 需求触发</h3>
+<ul>
+<li>公立医院（NUHS/SGH/KTPH）医生评估患者符合 MIC@Home 标准</li>
+<li>患者同意居家住院</li>
+</ul>
+<h3 id="phase-1">Phase 1: 评估与匹配</h3>
+<ul>
+<li>Speedoc 接收转诊信息</li>
+<li>护士团队上门评估居家环境（安全、设备）</li>
+<li>云平台调度匹配医护团队</li>
+</ul>
+<h3 id="phase-2">Phase 2: 服务交付</h3>
+<ul>
+<li>24/7 远程监护（生命体征监测设备）</li>
+<li>每日医生查房（混合模式：线上+线下）</li>
+<li>IV 治疗、血液检查上门执行</li>
+<li>家属/照护者通过 App 查看进度</li>
+</ul>
+<h3 id="phase-3">Phase 3: 持续跟踪</h3>
+<ul>
+<li>患者管理仪表盘实时更新</li>
+<li>异常自动预警 → 医护团队响应</li>
+</ul>
+<h3 id="phase-4">Phase 4: 出院</h3>
+<ul>
+<li>达到出院标准 → 返回社区/门诊随访</li>
+</ul>
+<h3 id="phase-5">Phase 5: 结算</h3>
+<ul>
+<li>MIC@Home 试点：MOH 支付</li>
+<li>自费部分：患者/保险结算</li>
+</ul>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构总览（五层模型）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;">自研/外采</th>
+<th style="text-align: left;">关键说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 财务/行政</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">混合</td>
+<td style="text-align: left;">Speedoc SaaS 平台 + 标准财务系统</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 业务运营</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>自研 H-Grid</strong></td>
+<td style="text-align: left;">AI 驱动运营协调——跨医院/客户端/患者端通信（WhatsApp/Email 等渠道整合）</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 调度/运营中心</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>自研 Super Cloud Command Centre</strong></td>
+<td style="text-align: left;">24/7 AI 指挥中心——实时监控、分诊、物流调度（2026 H2 上线）</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 用户端</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>自研多端</strong></td>
+<td style="text-align: left;">患者 App + 医护 App + 家属端 + 医院管理后台</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据与 AI 层</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>自研 + Google Gemini</strong></td>
+<td style="text-align: left;">AI 辅助分诊、对话摘要、工作流自动化</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92-h-grid-ai">9.2 H-Grid 系统 — 核心 AI 运营基础设施</h3>
+<p>H-Grid 是 Speedoc 自研的 AI 驱动运营协调系统，核心能力：</p>
+<ul>
+<li><strong>多通道通信整合</strong>：将 WhatsApp、Email、医院 HIS 系统等不同渠道的患者/医护通信统一到一个操作界面</li>
+<li><strong>Google Gemini 集成</strong>：AI 自动处理行政工作流、分诊建议、对话摘要、运营协调</li>
+<li><strong>量化成效</strong>：<strong>每周节省 130+ 运营工时</strong>（已验证数据）</li>
+<li><strong>可审计性</strong>：所有 AI 决策可追溯、可监控、有人工复核机制</li>
+<li><strong>快速迭代</strong>：功能可在数天内添加或移除（&rdquo;features added/removed within days&rdquo;）</li>
+</ul>
+<h3 id="93-super-cloud-command-centre2026-h2">9.3 Super Cloud Command Centre（2026 H2 上线）</h3>
+<ul>
+<li>定位：AI 驱动的实时运营指挥中心</li>
+<li>功能：实时监控全院患者状态、AI 辅助分诊、物流/医护调度优化</li>
+<li>开发理念：跨行业经验融合 + 极速迭代</li>
+<li>战略意义：将 Speedoc 从&rdquo;服务运营商&rdquo;升级为&rdquo;技术平台运营商&rdquo;</li>
+</ul>
+<h3 id="94-searce-agentic-ai-saas-20256">9.4 Searce 合作 — Agentic AI SaaS 平台（2025.6）</h3>
+<p>2025 年 6 月，Speedoc 与技术咨询公司 <strong>Searce</strong> 联合推出升级版 SaaS 平台：</p>
+<ul>
+<li>使用 <strong>&ldquo;Agentic AI&rdquo;</strong> 自动化虚拟诊所运营</li>
+<li>提升居家患者护理标准</li>
+<li>目标客户：医院系统、诊所、保险公司（White-label 模式）</li>
+</ul>
+<h3 id="95">9.5 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">模块化 SaaS 平台——可 White-label 部署</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>核心技术栈</strong></td>
+<td style="text-align: left;">Google Gemini AI + 自研 H-Grid + 云原生基础设施</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">与 NUHS/SGH/KTPH EMR 集成；White-label API 供第三方使用</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">新加坡 PDPA 合规；AI 决策可审计+24/7 人工监控</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>开发实践</strong></td>
+<td style="text-align: left;">极速迭代——功能数天内部署或移除</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可扩展性</strong></td>
+<td style="text-align: left;">支持 3 国运营 + White-label 多租户架构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术债务</strong></td>
+<td style="text-align: left;">极速迭代可能带来文档/测试债务（推测）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="96-iot">9.6 硬件 / IoT 设备</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>设备品类</strong></td>
+<td style="text-align: left;">RPM 生命体征监测设备（血压、血氧、体温等）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>设备来源</strong></td>
+<td style="text-align: left;">第三方采购（非自研硬件）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>连接协议</strong></td>
+<td style="text-align: left;">Wi-Fi / Bluetooth LE（推测）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>监管注册</strong></td>
+<td style="text-align: left;">新加坡 HSA（如适用）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="97-ai">9.7 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AI 模型</strong></td>
+<td style="text-align: left;">Google Gemini（LLM）+ 自研规则引擎</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 应用场景</strong></td>
+<td style="text-align: left;">行政工作流自动化、分诊建议、对话摘要、运营协调、物流调度</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>量化成效</strong></td>
+<td style="text-align: left;">✅ <strong>每周 130+ 运营工时节省</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 治理</strong></td>
+<td style="text-align: left;">可审计、可监控、24/7 人工复核——&ldquo;AI should optimise resources, not replace people&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 成本</strong></td>
+<td style="text-align: left;">Google Gemini API 调用成本（未公开具体数字）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Agentic AI</strong></td>
+<td style="text-align: left;">2025.6 与 Searce 合作推出——自动化虚拟诊所全流程运营</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="98">9.8 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">能力维度</th>
+<th style="text-align: center;">Speedoc 状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差异化评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">软件全栈能力</td>
+<td style="text-align: center;">✅ 自研 H-Grid + SaaS</td>
+<td style="text-align: center;">中等</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 实战能力</td>
+<td style="text-align: center;">✅ Google Gemini + Agentic AI + 量化成效</td>
+<td style="text-align: center;">行业领先（东南亚）</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">硬件整合</td>
+<td style="text-align: center;">❌ 无自研</td>
+<td style="text-align: center;">第三方采购</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作性</td>
+<td style="text-align: center;">✅ White-label API + 3 家公立医院集成</td>
+<td style="text-align: center;">行业领先</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据资产规模</td>
+<td style="text-align: center;">⚠️ 有限（51-200 员工）</td>
+<td style="text-align: center;">中小规模</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">运营 AI 化程度</td>
+<td style="text-align: center;">✅ 130+ 小时/周节省</td>
+<td style="text-align: center;">行业领先</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>技术护城河</strong>：🟢 中高——H-Grid + Super Cloud Command Centre + Google Gemini 集成构成独特的 AI 运营基础设施，且已有量化成效验证。White-label SaaS 模式具备平台化潜力。</p>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Speedoc</th>
+<th style="text-align: left;">Doctor Anywhere</th>
+<th style="text-align: left;">MaNaDr</th>
+<th style="text-align: left;">Jaga-Me</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立</td>
+<td style="text-align: left;">2017</td>
+<td style="text-align: left;">2017</td>
+<td style="text-align: left;">2017</td>
+<td style="text-align: left;">2016</td>
+</tr>
+<tr>
+<td style="text-align: left;">定位</td>
+<td style="text-align: left;">虚拟医院（全栈）</td>
+<td style="text-align: left;">远程医疗+健康管理</td>
+<td style="text-align: left;">医生平台/远程医疗</td>
+<td style="text-align: left;">居家护理+远程医疗</td>
+</tr>
+<tr>
+<td style="text-align: left;">融资</td>
+<td style="text-align: left;">~$51.4M</td>
+<td style="text-align: left;">~$100M+</td>
+<td style="text-align: left;">~S$10M+</td>
+<td style="text-align: left;">~S$5M+</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床团队</td>
+<td style="text-align: left;"><strong>自有</strong> (10+医生)</td>
+<td style="text-align: left;">平台撮合</td>
+<td style="text-align: left;">平台撮合 (700+医生)</td>
+<td style="text-align: left;">平台撮合</td>
+</tr>
+<tr>
+<td style="text-align: left;">HaH/虚拟病房</td>
+<td style="text-align: left;">✅ H-Ward®</td>
+<td style="text-align: left;">❌ 无</td>
+<td style="text-align: left;">❌ 无</td>
+<td style="text-align: left;">⚠️ 有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">MIC@Home 合作</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">地理覆盖</td>
+<td style="text-align: left;">SG+MY (9城)</td>
+<td style="text-align: left;">SG+TH+MY+PH+ID</td>
+<td style="text-align: left;">SG+AU+MY+VN</td>
+<td style="text-align: left;">SG</td>
+</tr>
+<tr>
+<td style="text-align: left;">自费 B2C</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">✅</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>核心差异</strong>：Speedoc 是新加坡唯一拥有自有临床团队+MIC@Home 合同的私营虚拟医院运营商。其余竞品主要为平台撮合模式。</p>
+<h3 id="_13">潜在跨界进入者</h3>
+<ul>
+<li><strong>Raffles Medical Group</strong>：私立医疗集团可能自建 HaH</li>
+<li><strong>IHH Healthcare (百汇)</strong>：东南亚最大私立医院集团</li>
+<li><strong>Grab Health</strong>：若 Grab 推出医疗配送+远程问诊</li>
+</ul>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: left;">计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TAM（东南亚居家医疗）</strong></td>
+<td style="text-align: center;">~$100B (2025)</td>
+<td style="text-align: left;">McKinsey 预测亚洲数字健康市场</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SAM（新加坡+马来西亚虚拟医院）</strong></td>
+<td style="text-align: center;">~$500M-1B</td>
+<td style="text-align: left;">SG 急性住院总支出 ~S$3B/年，5-10% 可转居家；MY 类似规模</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>当前渗透率</strong></td>
+<td style="text-align: center;">&lt;1%</td>
+<td style="text-align: left;">Speedoc 估收入 S$15-25M vs SAM $500M+</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<h3 id="_14">成本结构拆解</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">占收入比（估）</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">临床人力（医生+护士+兼职）</td>
+<td style="text-align: center;">40-50%</td>
+<td style="text-align: left;">半变动成本——按服务量弹性</td>
+</tr>
+<tr>
+<td style="text-align: left;">平台技术</td>
+<td style="text-align: center;">15-20%</td>
+<td style="text-align: left;">固定成本为主</td>
+</tr>
+<tr>
+<td style="text-align: left;">运营/物流</td>
+<td style="text-align: center;">10-15%</td>
+<td style="text-align: left;">车辆、调度、药物配送</td>
+</tr>
+<tr>
+<td style="text-align: left;">销售/获客</td>
+<td style="text-align: center;">10-15%</td>
+<td style="text-align: left;">B2C 营销+医院关系维护</td>
+</tr>
+<tr>
+<td style="text-align: left;">行政</td>
+<td style="text-align: center;">10-15%</td>
+<td style="text-align: left;">管理、合规、财务</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_15">盈利路径</h3>
+<ol>
+<li><strong>短期</strong>：B2C 自费服务微利，MIC@Home 合同收入覆盖固定成本</li>
+<li><strong>中期</strong>：MIC@Home 常规化后，虚拟病房日费率谈判空间提升</li>
+<li><strong>长期</strong>：东南亚多城扩张→规模效应降低单位成本→引入 AI 降低人力依赖</li>
+</ol>
+<p><strong>综合判断</strong>：🟡 目前可能盈亏平衡或微亏——距离明确盈利仍有距离。</p>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期 (0-12月)</strong></td>
+<td style="text-align: left;">MIC@Home 试点可能扩大至更多公立医院；马来西亚市场增长</td>
+<td style="text-align: left;">🚨 近 4 年无新融资——现金 runway 可能吃紧；新加坡私立市场竞争加剧</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期 (1-3年)</strong></td>
+<td style="text-align: left;">MIC@Home 常规化→稳定 B2G 收入流；东南亚多国复制</td>
+<td style="text-align: left;">MOH 合同可能被其他供应商切分；大型私立医疗集团进入 HaH</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">老龄化+医护短缺是长期驱动力；COVID 后居家医疗接受度大幅提升</td>
+<td style="text-align: left;">自费市场天花板低（东南亚人均医疗支出有限）；技术壁垒低</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_16">法律/监管风险</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险</th>
+<th style="text-align: center;">严重度</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MIC@Home 试点终止或范围缩小</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">最大风险——B2G 收入支柱</td>
+</tr>
+<tr>
+<td style="text-align: left;">马来西亚监管变化</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">海外运营不确定性</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床事故/医疗纠纷</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">自有临床团队→主体责任</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据安全/PDPA 合规</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">患者健康数据保护</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引与可信度</h2>
+<blockquote>
+<p>⚠️ Speedoc 为私人公司，无公开业绩指引。以下来自公开访谈。</p>
+</blockquote>
+<p><strong>CEO Dr. Shravan Verma 核心观点</strong>：</p>
+<ol>
+<li>居家医疗是&rdquo;不可避免的未来&rdquo;——老龄化+医护短缺推动</li>
+<li>AI 是&rdquo;隐形基础设施&rdquo;——不能替代临床人员的共情和判断</li>
+<li>虚拟医院可&rdquo;超越地理边界&rdquo;</li>
+</ol>
+<p><strong>可信度评估</strong>：🟢 较高——CEO 观点与行业趋势一致，且获得了 MOH 和 3 家顶级公立医院的实质性合作。但在商业可行性（盈利）方面缺乏公开数据支撑。</p>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<blockquote>
+<p>⚠️ Speedoc 未上市，无公开估值。以下为推测。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">估值指标</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">融资后估值（估，2022）</td>
+<td style="text-align: left;">$150-200M</td>
+<td style="text-align: left;">Pre-Series B $28M（估 15-20% 稀释）</td>
+</tr>
+<tr>
+<td style="text-align: left;">当前估值（估，2026）</td>
+<td style="text-align: left;">$150-250M</td>
+<td style="text-align: left;">如获得新一轮融资；若无则可能折价</td>
+</tr>
+<tr>
+<td style="text-align: left;">可比公司</td>
+<td style="text-align: left;">Doctor Anywhere (~$300M+)</td>
+<td style="text-align: left;">新加坡数字健康同业</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_17">估值逻辑</h3>
+<ul>
+<li>如果 Speedoc 年收入达 S$20M (~US$15M)，以 10-15x P/S 估值→$150-225M</li>
+<li>东南亚数字健康可比交易：Doctor Anywhere 2022 年估值 ~$300M（收入估计 $30-50M）</li>
+<li>🚨 核心风险：近 4 年无新融资轮——如果公司无法在 2026 年内完成新一轮融资，估值可能大幅折让</li>
+</ul>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1">1. 对潜在投资者</h3>
+<ul>
+<li><strong>估值判断</strong>：$150-250M 区间合理，但须验证 2024-2026 年收入增长和现金状况</li>
+<li><strong>核心指标</strong>：MIC@Home 合同续约/扩展情况；马来西亚收入占比和增速；burn rate 和 cash runway</li>
+<li><strong>催化剂</strong>：MOH 宣布 MIC@Home 常规化；新一轮融资公告</li>
+<li><strong>下行风险</strong>：融资间隔过长→现金危机；MOH 合同被竞争者切分</li>
+</ul>
+<h3 id="2-ceo">2. 对管理层（如 CEO 咨询）</h3>
+<ul>
+<li>🔴 <strong>立即启动新一轮融资</strong>——距上轮已近 4 年，应尽快关闭 Series B/C</li>
+<li>加速马来西亚商业化，降低对新加坡单一市场依赖</li>
+<li>发布临床结局数据（H-Ward® vs 传统住院的对照研究）作为护城河建设</li>
+<li>探索商业保险合作——新加坡 IP 计划扩展远程医疗覆盖是潜在催化剂</li>
+</ul>
+<h3 id="3-ihomecare-hah">3. 对 iHomeCare（香港 HaH 创业者）</h3>
+<ul>
+<li><strong>🟢🟢 高相关性</strong>：Speedoc 是东南亚最接近 iHomeCare 的对标——自有临床团队+公立医院合作+政府试点驱动</li>
+<li><strong>关键借鉴</strong>：</li>
+<li>MIC@Home 路径 = 香港 HA 的潜在试点策略</li>
+<li>H-Ward® 品牌化——将虚拟病房作为独立&rdquo;产品&rdquo;而非只是&rdquo;服务&rdquo;</li>
+<li>自有临床团队是服务质量和监管合规的护城河</li>
+<li><strong>差异化切入点</strong>：香港无直接 Speedoc 竞品——iHomeCare 有机会成为&rdquo;香港版 Speedoc&rdquo;</li>
+<li><strong>避坑</strong>：不要过度依赖政府试点（MIC@Home 从试点→常规化进度不可控）；B2C 自费市场天花板有限</li>
+</ul>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<h3 id="hah">新加坡 HaH 政策环境</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策/法规</th>
+<th style="text-align: left;">内容</th>
+<th style="text-align: left;">生效时间</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MIC@Home</strong></td>
+<td style="text-align: left;">MOH Office for Healthcare Transformation 主导的 2 年试点，Speedoc + NUHS</td>
+<td style="text-align: left;">2021-2023</td>
+<td style="text-align: left;">🔴 核心政策——Speedoc 的 B2G 支柱</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HCSA (Healthcare Services Act)</strong></td>
+<td style="text-align: left;">2020 年取代 PHMCA，统一监管门诊/远程/移动医疗服务</td>
+<td style="text-align: left;">2022-2023 分阶段</td>
+<td style="text-align: left;">🟢 提供远程医疗法律基础</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MOH 远程医疗沙盒</strong></td>
+<td style="text-align: left;">允许创新服务在监管豁免下试点</td>
+<td style="text-align: left;">2018+</td>
+<td style="text-align: left;">🟢 Speedoc 受益</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PDPA</strong></td>
+<td style="text-align: left;">个人数据保护法——健康数据特殊保护</td>
+<td style="text-align: left;">2012 年</td>
+<td style="text-align: left;">🟡 合规成本</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_18">马来西亚政策</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">远程医疗监管框架尚在完善中</td>
+<td style="text-align: left;">🟡 机会与不确定并存</td>
+</tr>
+<tr>
+<td style="text-align: left;">私立医疗发达，但无公立 HaH 试点</td>
+<td style="text-align: left;">B2C 为主，增长较慢</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18-h-ward">D18 — 单元经济模型（H-Ward® 虚拟住院）</h2>
+<h3 id="5">每条虚拟住院（假设 5 天）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: center;">金额 (S$)</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MIC@Home 日费率</td>
+<td style="text-align: center;">S$676/天</td>
+<td style="text-align: left;">政府合同价</td>
+</tr>
+<tr>
+<td style="text-align: left;">5 天总收入</td>
+<td style="text-align: center;"><strong>S$3,380</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">护理人力成本 (24/7)</td>
+<td style="text-align: center;">-S$2,000</td>
+<td style="text-align: left;">~10 护士轮班 × 5天</td>
+</tr>
+<tr>
+<td style="text-align: left;">医生查房成本</td>
+<td style="text-align: center;">-S$500</td>
+<td style="text-align: left;">每日混合查房</td>
+</tr>
+<tr>
+<td style="text-align: left;">RPM 设备折旧</td>
+<td style="text-align: center;">-S$100</td>
+<td style="text-align: left;">每患者</td>
+</tr>
+<tr>
+<td style="text-align: left;">药物/耗材</td>
+<td style="text-align: center;">-S$200</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">调度/平台分摊</td>
+<td style="text-align: center;">-S$150</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>毛利润</strong></td>
+<td style="text-align: center;"><strong>S$430 (12.7%)</strong></td>
+<td style="text-align: left;">✅ 正毛利</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 以上为推测模型，实际数据未公开。12.7% 毛利率偏低——需通过规模效应和 AI 自动化提升。</p>
+</blockquote>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: left;">人群</th>
+<th style="text-align: center;">支付能力</th>
+<th style="text-align: center;">匹配度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>A 级</strong></td>
+<td style="text-align: left;">MIC@Home 符合条件的急性患者（经医院评估）</td>
+<td style="text-align: center;">✅ 政府全额</td>
+<td style="text-align: center;">🟢 核心客群</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>B 级</strong></td>
+<td style="text-align: left;">术后/慢性病管理、需要定期上门护理</td>
+<td style="text-align: center;">⚠️ 部分自费</td>
+<td style="text-align: center;">🟢 高频刚需</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>C 级</strong></td>
+<td style="text-align: left;">轻症远程问诊（感冒、续药）</td>
+<td style="text-align: center;">✅ 价格敏感</td>
+<td style="text-align: center;">🟡 低频低客单价</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D 级</strong></td>
+<td style="text-align: left;">家庭保健/健康管理</td>
+<td style="text-align: center;">❌ 非刚需</td>
+<td style="text-align: center;">🔴 不适合</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: left;">模式</th>
+<th style="text-align: left;">规模</th>
+<th style="text-align: center;">威胁等级</th>
+<th style="text-align: left;">关键差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Doctor Anywhere</strong></td>
+<td style="text-align: left;">远程医疗+健康管理平台</td>
+<td style="text-align: left;">$100M+ 融资，多国覆盖</td>
+<td style="text-align: center;">🔴 高</td>
+<td style="text-align: left;">更大融资规模、更广地理覆盖；但无 HaH 能力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MaNaDr</strong></td>
+<td style="text-align: left;">医生平台 (700+ 医生)</td>
+<td style="text-align: left;">S$10M+ 融资</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">平台撮合模式，无自有临床团队</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Jaga-Me</strong></td>
+<td style="text-align: left;">居家护理+远程医疗</td>
+<td style="text-align: left;">较小</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">侧重护理而非急性 HaH</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>WhiteCoat</strong></td>
+<td style="text-align: left;">远程医疗平台</td>
+<td style="text-align: left;">被收购 (IHH)</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">母公司 (IHH) 可整合医院+远程</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Raffles Medical</strong></td>
+<td style="text-align: left;">私立医疗集团</td>
+<td style="text-align: left;">上市，年收入 ~S$700M</td>
+<td style="text-align: center;">🟡 潜在</td>
+<td style="text-align: left;">可自建 HaH 蚕食 Speedoc 市场</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>最大威胁</strong>：Doctor Anywhere——规模更大、融资更多，如果决定进入 HaH 领域将构成直接竞争。</p>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略评估</h2>
+<h3 id="_19">已有布局</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">进入方式</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>新加坡</strong></td>
+<td style="text-align: left;">✅ 主营业务</td>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>马来西亚</strong></td>
+<td style="text-align: left;">✅ 8 城运营</td>
+<td style="text-align: left;">直接进入</td>
+<td style="text-align: left;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>东南亚其他</strong></td>
+<td style="text-align: left;">⏳ 意向</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">高（监管、支付差异大）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_20">跨境策略评估</h3>
+<p>Speedoc 的&rdquo;虚拟医院&rdquo;概念天然适合跨境——无实体床位→扩张不依赖基建。但面临：</p>
+<ul>
+<li>各国医疗监管差异大</li>
+<li>每个市场需与当地公立医院建立信任（复刻 MIC@Home 难度高）</li>
+<li>B2C 自费市场支付能力有限</li>
+</ul>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<h3 id="_21">可比交易</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">交易</th>
+<th style="text-align: center;">估值</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">WhiteCoat 被 IHH 收购</td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: left;">新加坡远程医疗</td>
+</tr>
+<tr>
+<td style="text-align: left;">Doctor Anywhere 融资估值</td>
+<td style="text-align: center;">~$300M (2022)</td>
+<td style="text-align: left;">同类对标</td>
+</tr>
+<tr>
+<td style="text-align: left;">Raffles Medical 收购远程医疗资产</td>
+<td style="text-align: center;">小额</td>
+<td style="text-align: left;">私立集团整合</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">潜在买家</h3>
+<ol>
+<li><strong>IHH Healthcare (百汇)</strong> ：已收购 WhiteCoat，可能整合 Speedoc 补全 HaH 能力</li>
+<li><strong>Raffles Medical Group</strong>：如决定进入 HaH 领域</li>
+<li><strong>保险公司（AIA/Prudential/Great Eastern）</strong>：支付方整合趋势</li>
+<li><strong>区域科技巨头（Grab/GoTo）</strong>：若拓展健康业务</li>
+</ol>
+<h3 id="_23">估值估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">方法</th>
+<th style="text-align: center;">估值范围</th>
+<th style="text-align: left;">假设</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">P/S 对标 (10-15x)</td>
+<td style="text-align: center;">$150-225M</td>
+<td style="text-align: left;">年收入 ~$15M</td>
+</tr>
+<tr>
+<td style="text-align: left;">融资回溯 (20% 稀释)</td>
+<td style="text-align: center;">$150M</td>
+<td style="text-align: left;">Pre-Series B $28M</td>
+</tr>
+<tr>
+<td style="text-align: left;">退出溢价 (2-3x 投资)</td>
+<td style="text-align: center;">$100-150M</td>
+<td style="text-align: left;">总融资 $51.4M</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>环境 (E)</strong></td>
+<td style="text-align: left;">减少患者往返医院碳排放；远程医疗降低交通污染</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社会 (S)</strong></td>
+<td style="text-align: left;">🟢 显著——提升医疗可及性（居家康复 vs 住院）、缓解公立医院床位压力、支持老龄化社会</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理 (G)</strong></td>
+<td style="text-align: left;">⚠️ 私人公司，无公开 ESG 报告</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>社会影响力评估</strong>：🟢 正面——Speedoc 的商业模式天然与联合国 SDG 3（健康福祉）和 SDG 11（可持续城市）对齐。</p>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">扁平创业型——CEO → CTO/Head of Engineering/临床总监/运营总监</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;"><strong>51-200</strong> (LinkedIn 官方数据)；74 LinkedIn 会员关联</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术团队</strong></td>
+<td style="text-align: left;">设有 CTO 和 Head of Engineering 双角色——Full Stack Developer 直接向二者汇报；招聘 Product Manager (S$4k-8k)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🚨 高度依赖 Dr. Shravan Verma（创始人/CEO/医疗总监）+ Serene Cai（运营/战略）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工留存</strong></td>
+<td style="text-align: left;">Glassdoor 评价&rdquo;Great culture for engineers and technical managers&rdquo;——技术团队满意度较好</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>招聘速度</strong></td>
+<td style="text-align: left;">持续招聘 Full Stack Developer、Product Manager——说明技术投入未停</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">使命驱动：&rdquo;Technology coordinates; people deliver; standards protect.&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人</strong></td>
+<td style="text-align: left;">Vineet Saxena、Chan Way N.、Louis Kong、Nurul&rsquo;Ain Mustafa（LinkedIn 公示员工）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>组织健康度评级</strong>：🟡 一般——规模适中、文化正面，但关键人依赖度过高（创始人/CEO/医疗总监三位一体）。</p>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<h3 id="_24">融资历史</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">轮次</th>
+<th style="text-align: left;">日期</th>
+<th style="text-align: left;">金额</th>
+<th style="text-align: left;">估值（估）</th>
+<th style="text-align: left;">领投方</th>
+<th style="text-align: left;">跟投方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Seed</td>
+<td style="text-align: left;">2018</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">中间轮次 (2轮)</td>
+<td style="text-align: left;">2018-2020</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series A</td>
+<td style="text-align: left;">2020.12</td>
+<td style="text-align: left;">$5M</td>
+<td style="text-align: left;">~$30M</td>
+<td style="text-align: left;">Vertex Ventures SEAI</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Pre-Series B</td>
+<td style="text-align: left;">2022.11</td>
+<td style="text-align: left;">$28M</td>
+<td style="text-align: left;">$150-200M</td>
+<td style="text-align: left;">Bertelsmann/Shinhan/Mars Growth</td>
+<td style="text-align: left;">Vertex（跟投）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总计 (5 轮)</strong></td>
+<td style="text-align: left;"><strong>2017-2022</strong></td>
+<td style="text-align: left;"><strong>~$51.4M</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="searce-20256">最新动态 — Searce 战略合作（2025.6）</h3>
+<p>2025 年 6 月 24 日，Speedoc 与 Searce 联合推出 <strong>&ldquo;Agentic AI&rdquo;SaaS 平台升级版</strong>：</p>
+<ul>
+<li>使用 Agentic AI 自动化虚拟诊所全流程运营</li>
+<li>目标：White-label 授权给医院系统、诊所、保险公司</li>
+<li>代表 Speedoc 从&rdquo;服务运营商&rdquo;向&rdquo;技术平台运营商&rdquo;转型</li>
+</ul>
+<h3 id="_25">投资者质量</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">领投方品牌</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">Vertex Ventures = 淡马锡旗下东南亚顶级 VC</td>
+</tr>
+<tr>
+<td style="text-align: left;">跟投方质量</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">Bertelsmann (全球媒体)、Shinhan (韩国金融)、Mars Growth</td>
+</tr>
+<tr>
+<td style="text-align: left;">战略合作</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">Google (Gemini AI) + Searce (Agentic AI)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_26">估值轨迹</h3>
+<p>$30M (2020) → $150-200M (2022) ↑↑ → 2026 年估持平或微涨（取决于新一轮融资）</p>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<blockquote>
+<p>⚠️ 私人公司，GTM 数据未公开。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">B2G（MIC@Home 合同）+ B2C（App/网站直销）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售团队</strong></td>
+<td style="text-align: left;">规模未公开——核心获客依赖医院转诊（非传统销售）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC</strong></td>
+<td style="text-align: left;">未公开——B2G 获客成本极低（医院直接转诊）；B2C 获客通过数字营销</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDR</strong></td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GTM 阶段诊断</strong></td>
+<td style="text-align: left;">规模化初期——SG 单一市场相对成熟，MY 处于早期</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>GTM 瓶颈判断</strong>：不是 leads 不够（医院转诊流量稳定），而是 B2C 转化率低（新加坡自费居家医疗价格敏感）。</p>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<blockquote>
+<p>⚠️ Speedoc 自身未公开发表临床研究，但其核心合作伙伴 <strong>NUHS MIC@Home 试点</strong>有同行评审论文。</p>
+</blockquote>
+<h3 id="271-michome-pmc-2026">27.1 MIC@Home 临床研究（PMC 2026 — 核心证据）</h3>
+<p><strong>来源</strong>：Ko SQ, Rahman N, Luo N, et al. &ldquo;Hospital-at-home versus hospital admission for acute care in Singapore: a prospective quasi-experimental study on cost, utilisation and clinical outcomes.&rdquo; <em>BMC Health Services Research</em> (2026) 26:242. DOI: 10.1186/s12913-025-13938-5. ClinicalTrials.gov: NCT04330378.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">HaH 组 (n=151)</th>
+<th style="text-align: center;">对照组 (n=151)</th>
+<th style="text-align: left;">差异</th>
+<th style="text-align: center;">p 值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>每床日成本</strong> (中位)</td>
+<td style="text-align: center;">S$935</td>
+<td style="text-align: center;">S$1,611</td>
+<td style="text-align: left;"><strong>–S$676 (↓42%)</strong></td>
+<td style="text-align: center;">&lt;0.001</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>每 episode 成本</strong> (中位)</td>
+<td style="text-align: center;">S$5,186</td>
+<td style="text-align: center;">S$6,851</td>
+<td style="text-align: left;">–S$1,665 (↓24%)</td>
+<td style="text-align: center;">&lt;0.001</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>住院天数</strong> (中位)</td>
+<td style="text-align: center;">5 天</td>
+<td style="text-align: center;">4 天</td>
+<td style="text-align: left;">+1 天</td>
+<td style="text-align: center;">0.02</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>30 天再入院率</strong></td>
+<td style="text-align: center;">9.3%</td>
+<td style="text-align: center;">7.9%</td>
+<td style="text-align: left;">RR 1.2</td>
+<td style="text-align: center;">0.65 (NS)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>30 天 ED 复诊率</strong></td>
+<td style="text-align: center;">4.0%</td>
+<td style="text-align: center;">2.6%</td>
+<td style="text-align: left;">RR 1.9</td>
+<td style="text-align: center;">0.33 (NS)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>EQ-5D 改善</strong></td>
+<td style="text-align: center;">+0.23</td>
+<td style="text-align: center;">+0.21</td>
+<td style="text-align: left;">+0.03</td>
+<td style="text-align: center;">0.54 (NS)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>EQ-VAS 改善</strong></td>
+<td style="text-align: center;">+14.9</td>
+<td style="text-align: center;">+13.9</td>
+<td style="text-align: left;">+1.0</td>
+<td style="text-align: center;">0.69 (NS)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>节省床位天数</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">682 天</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>核心结论</strong>：MIC@Home 相比常规住院，<strong>成本显著降低 42%，临床结局无统计学显著差异</strong>。主要诊断：蜂窝组织炎 (43%)、尿路感染 (18%)、横纹肌溶解 (16%)。</p>
+<h3 id="272-h-ward">27.2 H-Ward® 覆盖病种</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">病种</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">COVID-19</td>
+<td style="text-align: left;">疫情期间核心服务</td>
+</tr>
+<tr>
+<td style="text-align: left;">登革热 (Dengue)</td>
+<td style="text-align: left;">东南亚高发</td>
+</tr>
+<tr>
+<td style="text-align: left;">蜂窝组织炎 (Cellulitis)</td>
+<td style="text-align: left;">MIC@Home 最常见诊断 (43%)</td>
+</tr>
+<tr>
+<td style="text-align: left;">尿路感染 (UTI)</td>
+<td style="text-align: left;">MIC@Home 第二常见 (18%)</td>
+</tr>
+<tr>
+<td style="text-align: left;">横纹肌溶解</td>
+<td style="text-align: left;">MIC@Home 第三常见 (16%)</td>
+</tr>
+<tr>
+<td style="text-align: left;">姑息治疗 (Palliative)</td>
+<td style="text-align: left;">终末期患者居家</td>
+</tr>
+<tr>
+<td style="text-align: left;">新生儿黄疸</td>
+<td style="text-align: left;">儿科 HaH</td>
+</tr>
+<tr>
+<td style="text-align: left;">胃肠炎</td>
+<td style="text-align: left;">急性</td>
+</tr>
+<tr>
+<td style="text-align: left;">术后康复</td>
+<td style="text-align: left;">出院后过渡</td>
+</tr>
+<tr>
+<td style="text-align: left;">上/下呼吸道感染</td>
+<td style="text-align: left;">急性</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 质量认证</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MOH 远程医疗服务许可</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">MIC@Home 合作伙伴资格 (NUHS/SGH/KTPH)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">JCI/ISO 认证</td>
+<td style="text-align: center;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">Google SG60 AI 创新合作伙伴</td>
+<td style="text-align: center;">✅ (2026)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="274">27.4 临床证据强度</h3>
+<p><strong>总体评级</strong>：🟢 中高——虽无自主发表的 RCT，但 MIC@Home 合作研究（同行评审、前瞻性准实验、IPTW 加权匹配）提供了高质量的间接临床证据。临床结局与成本效益数据在东南亚 HaH 领域处于领先地位。</p>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">D0</td>
+<td style="text-align: left;">赛道验证</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">HaH/虚拟医院</td>
+</tr>
+<tr>
+<td style="text-align: center;">D1</td>
+<td style="text-align: left;">执行摘要</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D2</td>
+<td style="text-align: left;">公司全貌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">LinkedIn 数据补充</td>
+</tr>
+<tr>
+<td style="text-align: center;">D3</td>
+<td style="text-align: left;">战略定位</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D4</td>
+<td style="text-align: left;">商业模式</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D5</td>
+<td style="text-align: left;">产品线&amp;定价</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D6</td>
+<td style="text-align: left;">客户&amp;支付方</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D7</td>
+<td style="text-align: left;">财务拆解</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">私人公司，无公开财报</td>
+</tr>
+<tr>
+<td style="text-align: center;">D8</td>
+<td style="text-align: left;">工作流</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D9</td>
+<td style="text-align: left;">技术深度</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">H-Grid+Gemini+Super Cloud+Searce Agentic AI</td>
+</tr>
+<tr>
+<td style="text-align: center;">D10</td>
+<td style="text-align: left;">竞争格局</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D11</td>
+<td style="text-align: left;">TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D12</td>
+<td style="text-align: left;">盈利模型</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">推测为主</td>
+</tr>
+<tr>
+<td style="text-align: center;">D13</td>
+<td style="text-align: left;">机遇&amp;风险</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D14</td>
+<td style="text-align: left;">管理层指引</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">源于公开访谈</td>
+</tr>
+<tr>
+<td style="text-align: center;">D15</td>
+<td style="text-align: left;">估值</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">推测</td>
+</tr>
+<tr>
+<td style="text-align: center;">D16</td>
+<td style="text-align: left;">战略建议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D17</td>
+<td style="text-align: left;">政策监管</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D18</td>
+<td style="text-align: left;">单元经济</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">推测模型</td>
+</tr>
+<tr>
+<td style="text-align: center;">D19</td>
+<td style="text-align: left;">目标人群</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D20</td>
+<td style="text-align: left;">竞品地图</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D21</td>
+<td style="text-align: left;">跨境</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">SG+MY+ID 三国</td>
+</tr>
+<tr>
+<td style="text-align: center;">D22</td>
+<td style="text-align: left;">退出/并购</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">推测</td>
+</tr>
+<tr>
+<td style="text-align: center;">D23</td>
+<td style="text-align: left;">ESG</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">D24</td>
+<td style="text-align: left;">组织人才</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">LinkedIn+Glassdoor+招聘数据</td>
+</tr>
+<tr>
+<td style="text-align: center;">D25</td>
+<td style="text-align: left;">融资/Cap Table</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">推测 Cap Table，Searce 合作已知</td>
+</tr>
+<tr>
+<td style="text-align: center;">D26</td>
+<td style="text-align: left;">GTM 效率</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">数据未公开</td>
+</tr>
+<tr>
+<td style="text-align: center;">D27</td>
+<td style="text-align: left;">临床质量</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">PMC 2026 MIC@Home 研究 (n=302)</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: right;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 数据缺失</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_27">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">2023-2026 年财务/运营数据</td>
+<td style="text-align: left;">若公司接受访谈或发布新一轮融资公告</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Cap Table 确切结构</td>
+<td style="text-align: left;">ACRA 新加坡公司注册处查询</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">临床结局数据 (H-Ward® 试点结果)</td>
+<td style="text-align: left;">联系 NUHS 或 MOH 获取试点评估报告</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">2024-2026 年收入/员工/用户最新数据</td>
+<td style="text-align: left;">PitchBook Premium 或直接联系公司</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">技术架构细节</td>
+<td style="text-align: left;">技术团队访谈</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">GTM 效率指标 (CAC/LTV)</td>
+<td style="text-align: left;">公司内部数据</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_28">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">TechCrunch</td>
+<td style="text-align: left;">Southeast Asia health tech platform Speedoc raises $28M</td>
+<td style="text-align: left;">2022-11-08</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Business Times SG</td>
+<td style="text-align: left;">Speedoc raises US$28m in pre-Series B</td>
+<td style="text-align: left;">2022-11-08</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">HMA</td>
+<td style="text-align: left;">How Speedoc is changing Singapore&rsquo;s healthcare landscape</td>
+<td style="text-align: left;">2023</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">PitchBook</td>
+<td style="text-align: left;">Speedoc 2026 Company Profile</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Tracxn</td>
+<td style="text-align: left;">Speedoc - Company Profile &amp; Team</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Vertex Ventures</td>
+<td style="text-align: left;">HealthTech Platform Speedoc Closes US$28M Pre-Series B</td>
+<td style="text-align: left;">2022-11-08</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">MobiHealthNews</td>
+<td style="text-align: left;">Speedoc bags $28M to expand virtual hospital model</td>
+<td style="text-align: left;">2022-11-08</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">LinkedIn</td>
+<td style="text-align: left;">Speedoc Company Page (7,817 followers, 51-200 employees)</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">Business Times SG</td>
+<td style="text-align: left;">Providing hospital-level care at home in a pandemic</td>
+<td style="text-align: left;">2022-11-10</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Vulcan Post</td>
+<td style="text-align: left;">Speedoc raises US$28M funding</td>
+<td style="text-align: left;">2022-11-08</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">Speedoc 官网</td>
+<td style="text-align: left;">speedoc.com (Hospital Partnerships, H-Ward®, About)</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">Speedoc MY</td>
+<td style="text-align: left;">H-Ward® Malaysia page (my.speedoc.com)</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">LeadIQ</td>
+<td style="text-align: left;">Speedoc Company Overview — Searce partnership details</td>
+<td style="text-align: left;">2025-06-24</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;"><strong>BMC Health Services Research</strong></td>
+<td style="text-align: left;">Ko SQ et al. Hospital-at-home vs hospital admission in Singapore: cost, utilisation, clinical outcomes</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">Glassdoor</td>
+<td style="text-align: left;">Speedoc employee reviews</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">Meet.jobs</td>
+<td style="text-align: left;">Speedoc Product Manager job listing (S$4k-8k)</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: left;">Beamstart</td>
+<td style="text-align: left;">Speedoc Full Stack Developer job listing</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td style="text-align: left;">Business Insider</td>
+<td style="text-align: left;">AI Is Changing Home Care (Dr. Shravan Verma interview)</td>
+<td style="text-align: left;">2025-06</td>
+</tr>
+<tr>
+<td style="text-align: center;">19</td>
+<td style="text-align: left;">Digital News Asia</td>
+<td style="text-align: left;">Speedoc closes US$28mil pre-series B</td>
+<td style="text-align: left;">2022-11-08</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

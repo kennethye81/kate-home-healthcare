@@ -1,0 +1,1544 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HaH 居家药物与输液管理协议报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">HaH 居家药物与输液管理协议报告</a><ul>
+<li><a href="#9">执行摘要：9 项核心发现</a></li>
+<li><a href="#1-iv">1. IV 抗生素居家管理</a><ul>
+<li><a href="#11">1.1 抗生素选择标准</a></li>
+<li><a href="#12">1.2 给药装置对比</a></li>
+<li><a href="#13-tdm">1.3 治疗药物监测（TDM）频率</a></li>
+</ul>
+</li>
+<li><a href="#2">2. 居家利尿剂管理</a><ul>
+<li><a href="#21-iv">2.1 呋塞米 IV 居家方案</a></li>
+<li><a href="#22">2.2 体重监测方案</a></li>
+<li><a href="#23">2.3 电解质监测频率</a></li>
+</ul>
+</li>
+<li><a href="#3">3. 抗凝管理</a><ul>
+<li><a href="#31-lmwhdoac">3.1 LMWH→DOAC 过渡方案</a></li>
+<li><a href="#32-inr-xa">3.2 INR/抗 Xa 监测</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 药物配送物流</a><ul>
+<li><a href="#41-cardinal-health-velocarehah">4.1 Cardinal Health Velocare——HaH 物流标杆</a></li>
+<li><a href="#42">4.2 其他药品供应链模式</a></li>
+<li><a href="#43-chartis">4.3 Chartis 供应链框架</a></li>
+</ul>
+</li>
+<li><a href="#5-hah-vs">5. 药物错误率：HaH vs 住院</a><ul>
+<li><a href="#51">5.1 住院药物错误基线</a></li>
+<li><a href="#52-hah">5.2 HaH 场景药物错误数据</a></li>
+<li><a href="#53-hah">5.3 HaH 独特的药物安全风险</a></li>
+<li><a href="#54">5.4 关键结论</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 管制药物管理</a><ul>
+<li><a href="#61-hah">6.1 HaH 场景挑战</a></li>
+<li><a href="#62">6.2 安全协议设计</a></li>
+<li><a href="#63-shm">6.3 SHM 住院阿片类药物安全共识的居家延伸</a></li>
+<li><a href="#64">6.4 终末期/姑息治疗场景</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 药房集成</a><ul>
+<li><a href="#71-hah">7.1 临床药师在 HaH 中的角色</a></li>
+<li><a href="#72">7.2 远程药师审核模型</a></li>
+<li><a href="#73">7.3 三种药房集成模式的选择标准</a></li>
+<li><a href="#74-hah-5">7.4 HaH 药房操作的 5 个关键设计原则</a></li>
+</ul>
+</li>
+<li><a href="#8">8. 静脉通路管理</a><ul>
+<li><a href="#81-iv">8.1 三种 IV 通路的居家适用性</a></li>
+<li><a href="#82-piccmidline">8.2 PICC/Midline 居家护理标准</a></li>
+<li><a href="#83-ivpivc">8.3 外周 IV（PIVC）居家管理</a></li>
+<li><a href="#84-iv">8.4 居家 IV 通路的特殊考量</a></li>
+</ul>
+</li>
+<li><a href="#9-ihomecare">9. 对 iHomeCare 药事管理设计的建议</a><ul>
+<li><a href="#1">建议 1：药物管理系统架构</a></li>
+<li><a href="#2_1">建议 2：弹性泵优先策略</a></li>
+<li><a href="#3_1">建议 3：构建&rdquo;入院+出院&rdquo;双重药物重整流程</a></li>
+<li><a href="#4_1">建议 4：管制药物&rdquo;六道锁&rdquo;安全架构</a></li>
+<li><a href="#5tdm">建议 5：TDM 闭环管理</a></li>
+<li><a href="#6-cardinal-health-velocare">建议 6：与 Cardinal Health Velocare 或同等物流商集成</a></li>
+<li><a href="#7_1">建议 7：患者端给药确认机制</a></li>
+</ul>
+</li>
+<li><a href="#_1">附录：关键参考来源</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">HaH 居家药物与输液管理协议报告</h1>
+<p><strong>作者</strong>: Kenneth Ye
+<strong>日期</strong>: 2026年7月3日
+<strong>类型</strong>: 专题深度调研 / 药事管理操作协议
+<strong>覆盖范围</strong>: 美国 HaH 实践为主，辅以英国 NHS、澳大利亚 HITH、西班牙 HaD 参考</p>
+<hr />
+<h2 id="9">执行摘要：9 项核心发现</h2>
+<ol>
+<li><strong>IV 抗生素是 HaH 最成熟的药事场景</strong>：OPAT（门诊肠外抗菌治疗）已有 40+ 年历史，弹性泵连续输注是居家 β-内酰胺类抗生素的主流方案（优于电子泵的便利性）</li>
+<li><strong>居家利尿剂管理依赖于结构化体重/电解质监测</strong>：NHS 指南明确呋塞米 IV 方案——外周留置针最长保留 7 天，每 1–2 天监测电解质</li>
+<li><strong>LMWH→DOAC 过渡方案已标准化</strong>：HaH 场景常规使用 LMWH 桥接 5–10 天后切换 DOAC，无需常规抗 Xa 监测</li>
+<li><strong>Cardinal Health Velocare 是 HaH 物流标杆</strong>：1–2 小时最后一公里配送，与 Medically Home 战略合作，覆盖全美</li>
+<li><strong>HaH 药物错误率不高于住院</strong>：CMS 2024 报告 HaH 总体不良事件率更低（3.6% vs 5.1%）；但过渡期药物重整是最大风险点</li>
+<li><strong>管制药物居家管理需多道安全锁</strong>：专用处方系统 + 每日剂量限制 + 家属监督 + 定期清点</li>
+<li><strong>药房集成模型已收敛至三种模式</strong>：院内外包、自营专科药房、混合模型；ASHP 2022 Home Hospital Pharmacy Playbook 是行业标准</li>
+<li><strong>静脉通路管理以 PICC/Midline 为主</strong>：SASH 冲管法（盐水-给药-盐水-肝素）、每周换药换敷料、每日评估</li>
+<li><strong>对 iHomeCare 药事管理设计有 7 条可操作建议</strong>（见第 9 章）</li>
+</ol>
+<hr />
+<h2 id="1-iv">1. IV 抗生素居家管理</h2>
+<h3 id="11">1.1 抗生素选择标准</h3>
+<p>OPAT（Outpatient Parenteral Antimicrobial Therapy）是 HaH 中最成熟的药物管理场景。IDSA（美国感染病学会）OPAT 指南明确了适合居家 IV 给药的抗生素选择标准：</p>
+<p><strong>适合 OPAT 的抗生素类别</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: left;">代表药物</th>
+<th style="text-align: left;">给药方式</th>
+<th style="text-align: left;">稳定性（室温）</th>
+<th style="text-align: left;">监测要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>头孢菌素类</strong></td>
+<td style="text-align: left;">头孢曲松、头孢他啶</td>
+<td style="text-align: left;">间歇/连续输注</td>
+<td style="text-align: left;">24–48h</td>
+<td style="text-align: left;">CBC、CMP 每周</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>碳青霉烯类</strong></td>
+<td style="text-align: left;">厄他培南、美罗培南</td>
+<td style="text-align: left;">间歇/连续输注</td>
+<td style="text-align: left;">美罗培南 7 天（弹性泵）、厄他培南 24h</td>
+<td style="text-align: left;">CBC、CMP 每周</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>青霉素类</strong></td>
+<td style="text-align: left;">哌拉西林-他唑巴坦、萘夫西林</td>
+<td style="text-align: left;">连续输注为主</td>
+<td style="text-align: left;">7 天（电子泵）</td>
+<td style="text-align: left;">CBC、CMP 每周</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>糖肽类</strong></td>
+<td style="text-align: left;">万古霉素</td>
+<td style="text-align: left;">间歇输注</td>
+<td style="text-align: left;">24h（Curlin 泵）</td>
+<td style="text-align: left;"><strong>TDM 必须</strong>（AUC 或谷浓度）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>氨基糖苷类</strong></td>
+<td style="text-align: left;">庆大霉素、妥布霉素</td>
+<td style="text-align: left;">间歇输注（QD）</td>
+<td style="text-align: left;">稳定</td>
+<td style="text-align: left;"><strong>TDM 必须</strong> + 听力/前庭监测</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>脂肽类</strong></td>
+<td style="text-align: left;">达托霉素</td>
+<td style="text-align: left;">间歇输注</td>
+<td style="text-align: left;">稳定</td>
+<td style="text-align: left;">CPK 每周</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>噁唑烷酮类</strong></td>
+<td style="text-align: left;">利奈唑胺</td>
+<td style="text-align: left;">PO优先（生物利用度≈100%）</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">CBC 每周</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>不适合居家 IV 给药的抗生素</strong>：</p>
+<ul>
+<li>稳定性极短（亚胺培南需 4h 内使用）</li>
+<li>需严格控制输注速率的药物（某些抗真菌药）</li>
+<li>高风险过敏反应药物（首次给药应在院内完成）</li>
+</ul>
+<p><strong>选择标准</strong>（综合 Duke OPAT 方案 + Stanford OPAT Tip Sheet）：</p>
+<ol>
+<li>血流动力学稳定、无急性器官衰竭</li>
+<li>患者/照护者经培训可独立操作或接受家庭护士上门</li>
+<li>家庭环境符合无菌操作要求（清洁表面、冰箱储存）</li>
+<li>无活动性药物滥用史</li>
+<li>可靠的电话/视频随访条件</li>
+</ol>
+<h3 id="12">1.2 给药装置对比</h3>
+<p>HaH 场景中 IV 抗生素输注主要有两种装置：弹性泵（Elastomeric Pump）和电子泵（Electronic Pump）。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">弹性泵（Elastomeric）</th>
+<th style="text-align: left;">电子泵（Electronic/Curlin）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>原理</strong></td>
+<td style="text-align: left;">球囊弹性回缩驱动，被动输注</td>
+<td style="text-align: left;">电动马达驱动，主动输注</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>体积/重量</strong></td>
+<td style="text-align: left;">网球大小，轻量</td>
+<td style="text-align: left;">较大，需背包携带</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>操作难度</strong></td>
+<td style="text-align: left;">🟢 极低——患者自行连接即可</td>
+<td style="text-align: left;">🟡 需基础培训——设置流速</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>输注精度</strong></td>
+<td style="text-align: left;">±10–15%（温度依赖）</td>
+<td style="text-align: left;">±2–5%（精确控制）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>电池/电源</strong></td>
+<td style="text-align: left;">无需</td>
+<td style="text-align: left;">需充电/电池</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>噪音</strong></td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">有马达声</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>流速控制</strong></td>
+<td style="text-align: left;">固定（预设）</td>
+<td style="text-align: left;">可编程（多段流速）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成本/次</strong></td>
+<td style="text-align: left;">~$30–50</td>
+<td style="text-align: left;">~$150–250</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>复用性</strong></td>
+<td style="text-align: left;">一次性</td>
+<td style="text-align: left;">可复用（需消毒）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者满意度</strong></td>
+<td style="text-align: left;">更高（CHID Study 2017）</td>
+<td style="text-align: left;">一般</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>牛津 AHSN 2022 弹性泵推广文件</strong>（Oxford AHSN）总结了弹性泵的核心优势：</p>
+<ul>
+<li>24 小时连续输注：患者白天自由活动，无需频繁操作</li>
+<li>即插即用：预装药物的泵体由药房配送，患者只需连接 IV 导管</li>
+<li>降低感染风险：封闭系统，减少操作环节</li>
+<li>已覆盖药物：头孢曲松、哌拉西林-他唑巴坦、美罗培南、氟氯西林等</li>
+</ul>
+<p><strong>CHID（Comparing Home Infusion Devices）研究</strong>（SAHMRI, Australia）：</p>
+<ul>
+<li>设计：随机交叉试验，比较 Baxter Infusor（弹性）vs ambIT Continuous（电子泵）</li>
+<li>患者接受 4–7 天居家输注</li>
+<li>主要终点：患者和护士满意度——弹性泵组显著更优</li>
+</ul>
+<p><strong>现实世界数据</strong>：Babich et al.（2025, PMC）——意大利 1,934 个弹性泵 OPAT 天数的真实世界队列：</p>
+<ul>
+<li>中位治疗时长 22.9 天</li>
+<li>临床治愈率 85.5%</li>
+<li>结论：弹性泵 OPAT <strong>临床有效、耐受性好、经济优势明显</strong></li>
+</ul>
+<h3 id="13-tdm">1.3 治疗药物监测（TDM）频率</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">药物</th>
+<th style="text-align: left;">监测参数</th>
+<th style="text-align: left;">居家场景频率</th>
+<th style="text-align: left;">方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>万古霉素</strong></td>
+<td style="text-align: left;">AUC:MIC 或谷浓度</td>
+<td style="text-align: left;"><strong>每周 1 次</strong>（稳定后），Scr 上升时加密</td>
+<td style="text-align: left;">家庭护士抽血→实验室→远程药师解读</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>氨基糖苷类</strong></td>
+<td style="text-align: left;">谷浓度 + 峰浓度（传统）</td>
+<td style="text-align: left;"><strong>每周 1 次</strong>初始，之后按需</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>β-内酰胺类</strong></td>
+<td style="text-align: left;">通常不需要 TDM</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">监测 CBC、CMP、肾功能即可</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>达托霉素</strong></td>
+<td style="text-align: left;">CPK</td>
+<td style="text-align: left;">每周 1 次</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Duke OPAT 监测表</strong>（DUHS OPAT Administration Chart）是行业参照标准：</p>
+<ul>
+<li>β-内酰胺类：CBC-diff、CMP <strong>每周 1 次</strong></li>
+<li>万古霉素：药物浓度 <strong>每周 1 次</strong>或 Scr 上升时加密</li>
+<li>氨基糖苷类：药物浓度 + Scr 每周 2 次初始，稳定后每周 1 次</li>
+<li>达托霉素：CPK <strong>每周 1 次</strong></li>
+</ul>
+<p><strong>居家 TDM 的操作流程</strong>：</p>
+<ol>
+<li>家庭护士上门抽血（或患者到就近实验室）</li>
+<li>标本送检→实验室结果回传</li>
+<li>临床药师远程审阅→调整剂量建议</li>
+<li>医嘱系统更新→药房制备新剂量→配送至患者家中</li>
+</ol>
+<p><strong>NHIA 药师导向万古霉素给药研究</strong>：目前居家输注场景中药师驱动万古霉素给药方案的数据不足，但住院场景已证明药师导向方案可提升最优给药率、降低肾毒性、缩短疗程。</p>
+<hr />
+<h2 id="2">2. 居家利尿剂管理</h2>
+<h3 id="21-iv">2.1 呋塞米 IV 居家方案</h3>
+<p>心力衰竭失代偿是 HaH 的三大适应症之一（与肺炎、蜂窝织炎并列）。居家 IV 利尿剂管理的核心方案源自 NHS England 2025 年发布的《IV/SC 利尿剂心衰患者非住院场景给药指南》。</p>
+<p><strong>患者选择标准</strong>：</p>
+<ul>
+<li>轻中度容量超负荷（端坐呼吸、下肢水肿、体重增加 &gt;2kg/3 天）</li>
+<li>血流动力学稳定（SBP &gt;90 mmHg、HR &lt;100 bpm）</li>
+<li>无急性肾损伤（Scr 稳定或 &lt;30% 上升）</li>
+<li>电解质基本正常（K⁺ &gt;3.5 mmol/L）</li>
+<li>家庭环境支持每日体重监测和电话随访</li>
+</ul>
+<p><strong>给药方案</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">参数</th>
+<th style="text-align: left;">方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>初始剂量</strong></td>
+<td style="text-align: left;">口服日剂量的 1–2.5 倍 IV（如口服呋塞米 80mg/d → IV 80–200mg/d）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>给药频率</strong></td>
+<td style="text-align: left;">IV bolus QD–BID（单次 40–120mg），或连续输注（适用于利尿剂抵抗）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>疗程</strong></td>
+<td style="text-align: left;">通常 1–5 天，以体重下降 1–2kg/天为目标</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IV 通路</strong></td>
+<td style="text-align: left;">外周留置针（最长保留 7 天，若无感染/静脉炎征象）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>给药方式</strong></td>
+<td style="text-align: left;">IV bolus（家庭护士 / 经培训家属）或连续弹性泵输注</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>JACC Case Reports 2024</strong>：一例报告证明，晚期心衰患者在家中通过高剂量呋塞米连续输注（最高 480mg/24h）安全有效管理慢性充血。</p>
+<p><strong>Ruocco et al.（2026, JAHA）</strong>：连续 vs 间断袢利尿剂输注的 1:1 随机对照研究——72–120h 连续输注方案在心衰患者中安全可行。</p>
+<h3 id="22">2.2 体重监测方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">监测项</th>
+<th style="text-align: left;">频率</th>
+<th style="text-align: left;">方法</th>
+<th style="text-align: left;">触发干预阈值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>体重</strong></td>
+<td style="text-align: left;">每日清晨空腹</td>
+<td style="text-align: left;">同一体重秤、排尿后、穿轻便衣物</td>
+<td style="text-align: left;">24h 体重增加 &gt;1kg 或减少 &gt;2kg</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>尿量</strong></td>
+<td style="text-align: left;">每日记录</td>
+<td style="text-align: left;">量杯测量</td>
+<td style="text-align: left;">利尿后 &lt;500ml/6h → 利尿剂抵抗</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>水肿/呼吸困难</strong></td>
+<td style="text-align: left;">每日电话评估</td>
+<td style="text-align: left;">护士/医生远程问诊</td>
+<td style="text-align: left;">NYHA 级别恶化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>生命体征</strong></td>
+<td style="text-align: left;">每日 1–2 次</td>
+<td style="text-align: left;">RPM 可穿戴 + 手动确认</td>
+<td style="text-align: left;">SBP &lt;90、HR &gt;110、SpO₂ &lt;90%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="23">2.3 电解质监测频率</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">时间节点</th>
+<th style="text-align: left;">检查项目</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>治疗前（Day 0）</strong></td>
+<td style="text-align: left;">电解质全套 + Scr + BUN</td>
+<td style="text-align: left;">基线值</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Day 1–2</strong></td>
+<td style="text-align: left;">K⁺、Na⁺、Scr</td>
+<td style="text-align: left;">高剂量利尿后 24–48h</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Day 3–5</strong></td>
+<td style="text-align: left;">电解质全套 + Scr</td>
+<td style="text-align: left;">每隔 1–2 天至疗程结束</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>出院前</strong></td>
+<td style="text-align: left;">电解质全套 + Scr</td>
+<td style="text-align: left;">确认稳定后转口服利尿剂</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>出院后 7 天</strong></td>
+<td style="text-align: left;">电解质 + Scr</td>
+<td style="text-align: left;">确认口服方案稳定</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关键安全规则</strong>：</p>
+<ul>
+<li>K⁺ &lt;3.5 → 补钾后再利尿</li>
+<li>Scr 上升 &gt;30% → 暂停利尿、评估血容量</li>
+<li>呋塞米 &gt;200mg/d 无效 → 考虑加用噻嗪类利尿剂（序贯阻断）</li>
+</ul>
+<hr />
+<h2 id="3">3. 抗凝管理</h2>
+<h3 id="31-lmwhdoac">3.1 LMWH→DOAC 过渡方案</h3>
+<p>HaH 场景中最常见的抗凝模式是：住院期间启动 LMWH→出院后在 HaH 中完成过渡→转为长期 DOAC。</p>
+<p><strong>标准过渡流程</strong>（Queensland Australia Statewide Anticoagulant Guideline）：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">步骤</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>急性期</strong></td>
+<td style="text-align: left;">Day 0–5</td>
+<td style="text-align: left;">LMWH（依诺肝素 1mg/kg BID 或 1.5mg/kg QD）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>重叠期</strong></td>
+<td style="text-align: left;">Day 5–10</td>
+<td style="text-align: left;">LMWH + DOAC 同时给药 ≥5 天</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>切换点</strong></td>
+<td style="text-align: left;">Day 10+</td>
+<td style="text-align: left;">停 LMWH，继续 DOAC 至疗程结束</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>DOAC 选择与给药</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">DOAC</th>
+<th style="text-align: left;">VTE 治疗剂量</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>阿哌沙班</strong></td>
+<td style="text-align: left;">10mg BID ×7 天→5mg BID</td>
+<td style="text-align: left;">不需要 LMWH 导入期（直接口服方案）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利伐沙班</strong></td>
+<td style="text-align: left;">15mg BID ×21 天→20mg QD</td>
+<td style="text-align: left;">不需要 LMWH 导入期</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>艾多沙班</strong></td>
+<td style="text-align: left;">60mg QD（LMWH 导入 5–10 天后）</td>
+<td style="text-align: left;">必须 LMWH 导入</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>达比加群</strong></td>
+<td style="text-align: left;">150mg BID（LMWH 导入 5–10 天后）</td>
+<td style="text-align: left;">必须 LMWH 导入</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>HaH 场景中两个特殊考量</strong>：</p>
+<ol>
+<li><strong>阿哌沙班/利伐沙班可直接口服启动</strong>：省去 LMWH 注射环节，极大简化居家流程</li>
+<li><strong>LMWH 居家注射培训</strong>：家属/患者需经皮下注射培训（腹部轮换注射位点、浪费最小化）</li>
+</ol>
+<h3 id="32-inr-xa">3.2 INR/抗 Xa 监测</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">药物</th>
+<th style="text-align: left;">需监测？</th>
+<th style="text-align: left;">居家频率</th>
+<th style="text-align: left;">方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>华法林</strong></td>
+<td style="text-align: left;">✅ 必须（INR）</td>
+<td style="text-align: left;">初始每 1–3 天 → 稳定后每周 → 每 2–4 周</td>
+<td style="text-align: left;">指尖 INR 自测仪（如 CoaguChek）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LMWH</strong></td>
+<td style="text-align: left;">通常不需要</td>
+<td style="text-align: left;">仅特殊人群（孕妇、严重肾功能不全、肥胖&gt;150kg）需抗 Xa</td>
+<td style="text-align: left;">实验室送检</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DOAC</strong></td>
+<td style="text-align: left;">❌ 不需要常规监测</td>
+<td style="text-align: left;">仅特殊场景（急诊手术前、出血事件、疑似过量）测抗 Xa 水平</td>
+<td style="text-align: left;">实验室</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>普通肝素 IV</strong></td>
+<td style="text-align: left;">✅ 必须（aPTT/抗 Xa）</td>
+<td style="text-align: left;">HaH 场景几乎不使用——管理太复杂</td>
+<td style="text-align: left;">N/A</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>居家 INR 自测的证据</strong>（USC Journal）：</p>
+<ul>
+<li>患者自测（PST）或自我管理（PSM）可显著改善 TTR（治疗范围内时间百分比）</li>
+<li>较传统实验室监测提高 5–10% 的 TTR</li>
+<li>减少血栓和出血事件</li>
+</ul>
+<p><strong>HaH 推荐方案</strong>：</p>
+<ul>
+<li>如果患者已在使用华法林，继续 INR 自测 + 抗凝门诊远程管理</li>
+<li>如果新启动抗凝，优先选择阿哌沙班或利伐沙班——无需监测，简化居家流程</li>
+<li>LMWH 仅用于 DOAC 禁忌或过渡阶段</li>
+</ul>
+<hr />
+<h2 id="4">4. 药物配送物流</h2>
+<h3 id="41-cardinal-health-velocarehah">4.1 Cardinal Health Velocare——HaH 物流标杆</h3>
+<p><strong>Velocare 概述</strong>：</p>
+<ul>
+<li>2022 年 11 月 15 日由 Cardinal Health（NYSE: CAH）发布</li>
+<li>定位：医院级居家护理的供应链网络 + 最后一公里配送</li>
+<li>核心承诺：<strong>1–2 小时内将关键产品和服务送达患者家中</strong></li>
+</ul>
+<p><strong>运作模式（三步流程）</strong>：</p>
+<pre><code>Step 1: 下单（Order）
+   → 临床团队通过 Velocare 平台下单
+   → 指定患者所需药品/设备/RPM硬件
+
+Step 2: 集货（Fulfill）
+   → Velocare 配送中心（depot）完成拣货
+   → 冷链管理、无菌包装
+   → RPM 设备在 FDA 注册设施中清洁/检测/翻新
+
+Step 3: 配送（Deliver）
+   → Cardinal Health 专车配送
+   → 与患者/护理团队协调送达时间
+   → 1–2 小时窗口（城区）
+</code></pre>
+<p><strong>战略合作</strong>：与 <strong>Medically Home</strong> 战略合作，首个合作客户为 Medically Home 旗下某卫生系统。Medically Home 提供临床指挥中心 + 技术平台，Cardinal Health 提供物理供应链。</p>
+<p><strong>关键数据</strong>（2025 年视频发布）：</p>
+<ul>
+<li>Velocare 已服务 &ldquo;thousands of patients nationwide&rdquo;</li>
+<li>降低供应链成本，使 HaH 项目可规模化</li>
+<li>RPM 设备清洁/检测/翻新在 FDA 注册设施中进行</li>
+</ul>
+<h3 id="42">4.2 其他药品供应链模式</h3>
+<p>ASHP 2022 Home Hospital Pharmacy Playbook 总结了三种主流配送模式：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">模式</th>
+<th style="text-align: left;">运作方式</th>
+<th style="text-align: left;">优点</th>
+<th style="text-align: left;">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>外包模式（Outsourced）</strong></td>
+<td style="text-align: left;">合作院外药房 + 处方配送</td>
+<td style="text-align: left;">快速启动、无需自建</td>
+<td style="text-align: left;">不可 24/7 覆盖、控制力弱</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>自营模式（Health System Owned）</strong></td>
+<td style="text-align: left;">医院自营门诊/输注药房</td>
+<td style="text-align: left;">全控制、24/7 覆盖</td>
+<td style="text-align: left;">重资产、高前期投入</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>混合模式（Insourced/Outsourced）</strong></td>
+<td style="text-align: left;">院内药房制备+院外药房配送</td>
+<td style="text-align: left;">平衡</td>
+<td style="text-align: left;">接口复杂、需冗余设计</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>具体配送方式</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>口服药物</strong></td>
+<td style="text-align: left;">3–7 天供应量、多剂量包装、无需处方福利覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>输注药物</strong></td>
+<td style="text-align: left;">按稳定性确定供应天数（弹性泵 24h–7 天、电子泵 1–7 天）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>输液泵和耗材</strong></td>
+<td style="text-align: left;">随药物一起配送</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>管制药物</strong></td>
+<td style="text-align: left;">通过院外药房凭处方单独配送（另见第 6 章）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>配送人员</strong></td>
+<td style="text-align: left;">护士/急救员/专业物流人员（Cardinal Health）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>配送时间</strong></td>
+<td style="text-align: left;">新入院患者需在入院后 2–4h 内送达首剂药物</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>大型健康计划方的参与</strong>：</p>
+<ul>
+<li><strong>Optum Infusion Pharmacy</strong>（UnitedHealth Group）：全国性家庭输注药房网络，覆盖所有 50 州，强调 &ldquo;empathy and excellence&rdquo;</li>
+<li><strong>CVS Health / Coram</strong>：月均服务 50,000+ 家庭输注患者，提供从医院到家庭的无缝过渡</li>
+<li><strong>RWJBarnabas Health</strong>：系统内自营输注药房——从医院到家庭一站式管理</li>
+</ul>
+<h3 id="43-chartis">4.3 Chartis 供应链框架</h3>
+<p>Chartis 2024 年发布的 <em>Hospital at Home Supply Chain &amp; Logistics</em> 报告提出了 HaH 物流的四层模型：</p>
+<ol>
+<li><strong>采购层</strong>：标品 vs 定制，批量 vs 按需</li>
+<li><strong>库存管理层</strong>：中心仓库 → 卫星配送点 → 患者家中</li>
+<li><strong>运输层</strong>：冷链、GPS 追踪、实时 ETA</li>
+<li><strong>编排层</strong>：IT 系统整合——订单→拣货→配送→签收全链路可视化</li>
+</ol>
+<hr />
+<h2 id="5-hah-vs">5. 药物错误率：HaH vs 住院</h2>
+<h3 id="51">5.1 住院药物错误基线</h3>
+<p>美国住院场景药物错误基线数据：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">住院患者药物错误率</td>
+<td style="text-align: left;">1 次错误/患者/天</td>
+<td style="text-align: left;">IOM 2007</td>
+</tr>
+<tr>
+<td style="text-align: left;">可预防不良药物事件（pADE）</td>
+<td style="text-align: left;">8.5–16.9/100 入院</td>
+<td style="text-align: left;">系统综述</td>
+</tr>
+<tr>
+<td style="text-align: left;">药物错误导致 ADE 的占比</td>
+<td style="text-align: left;">27% 的 ADE 由药物错误导致</td>
+<td style="text-align: left;">JAMA Intern Med</td>
+</tr>
+<tr>
+<td style="text-align: left;">给药阶段错误占比</td>
+<td style="text-align: left;">11.5% 的药物剂量存在给药错误</td>
+<td style="text-align: left;">PMC 2015</td>
+</tr>
+<tr>
+<td style="text-align: left;">美国年度可预防 ADE 总成本</td>
+<td style="text-align: left;">$20–40 billion</td>
+<td style="text-align: left;">NCBI StatPearls 2024</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52-hah">5.2 HaH 场景药物错误数据</h3>
+<p><strong>直接对比数据稀缺</strong>——目前尚无专门比较 HaH vs 住院药物错误率的头对头 RCT。但可从安全性数据间接推断：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证据来源</th>
+<th style="text-align: left;">发现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>CMS 2024 AHCAH 报告</strong></td>
+<td style="text-align: left;">HaH 患者医院获得性并发症更少：3.6% vs 5.1%（含药物相关事件）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Levine et al. 2020 RCT</strong></td>
+<td style="text-align: left;">HaH 组不良事件无显著增加（n=91）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Caplan et al. 2012 Meta</strong></td>
+<td style="text-align: left;">61 项 RCT 汇总——HaH 安全性与住院等同或更优</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PSNet/ARHQ 系统综述</strong></td>
+<td style="text-align: left;">居家护理药物错误三大风险因素：过渡期文件、药物重整、照护者健康素养</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="53-hah">5.3 HaH 独特的药物安全风险</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险</th>
+<th style="text-align: left;">住院场景</th>
+<th style="text-align: left;">HaH 居家场景</th>
+<th style="text-align: left;">缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>过渡期药物差错</strong></td>
+<td style="text-align: left;">入院/转科时</td>
+<td style="text-align: left;"><strong>入院时+出院时双过渡</strong>（风险翻倍）</td>
+<td style="text-align: left;">药师主导的药物重整（入院+出院2次）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>给药错误</strong></td>
+<td style="text-align: left;">护士操作（受监督）</td>
+<td style="text-align: left;"><strong>患者/家属操作</strong>（无监督）</td>
+<td style="text-align: left;">回授法（Teach-back）确认理解、视频给药记录</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>药品储存</strong></td>
+<td style="text-align: left;">药房温控</td>
+<td style="text-align: left;"><strong>家庭冰箱/室温</strong></td>
+<td style="text-align: left;">配送时温度监控标签、家庭环境评估</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>药物漏服</strong></td>
+<td style="text-align: left;">护士按时给药</td>
+<td style="text-align: left;"><strong>遗忘/认知障碍</strong></td>
+<td style="text-align: left;">智能药盒+远程提醒、家属确认</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>多药并用</strong></td>
+<td style="text-align: left;">医嘱系统审查</td>
+<td style="text-align: left;"><strong>无系统级审查</strong></td>
+<td style="text-align: left;">临床药师远程药物审查（入院时+每周）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="54">5.4 关键结论</h3>
+<blockquote>
+<p><strong>HaH 的整体药物安全性至少不劣于住院场景。但风险分布不同——HaH 将部分风险从&rdquo;给药操作过程&rdquo;转移到&rdquo;过渡期信息丢失&rdquo;和&rdquo;患者/家属操作失误&rdquo;。缓解策略的核心是：药师全程嵌入 + 结构化过渡流程。</strong></p>
+</blockquote>
+<hr />
+<h2 id="6">6. 管制药物管理</h2>
+<h3 id="61-hah">6.1 HaH 场景挑战</h3>
+<p>阿片类镇痛药、苯二氮䓬类镇静剂等管制药物在居家管理中面临独特性挑战：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">挑战</th>
+<th style="text-align: left;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>转流风险</strong></td>
+<td style="text-align: left;">药物被家属/访客挪用（家庭环境无法控制谁接触药物）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>过量风险</strong></td>
+<td style="text-align: left;">缺乏住院级别的持续监测（SpO₂ 连续监测可部分缓解）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>储存安全</strong></td>
+<td style="text-align: left;">许多家庭没有带锁药柜</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>清点困难</strong></td>
+<td style="text-align: left;">无法像医院一样每次交班清点</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>处方管理</strong></td>
+<td style="text-align: left;">管制药物需特殊处方系统（EPCS——电子管制药物处方）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="62">6.2 安全协议设计</h3>
+<p>ASHP Home Hospital Pharmacy Playbook 明确指出：<strong>管制药物（Controlled Medications）应由院外药房通过处方单独配送。</strong></p>
+<p><strong>推荐的安全架构</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">安全层</th>
+<th style="text-align: left;">措施</th>
+<th style="text-align: left;">执行者</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>第 1 层：处方控制</strong></td>
+<td style="text-align: left;">EPCS 系统限制剂量和数量；每次不超过 3 天用量；如需延长需重新评估</td>
+<td style="text-align: left;">处方医师 + EPCS 系统</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>第 2 层：配送安全</strong></td>
+<td style="text-align: left;">签名签收、照片确认送达、实时 GPS 追踪</td>
+<td style="text-align: left;">Velocare / 物流方</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>第 3 层：储存安全</strong></td>
+<td style="text-align: left;">HaH 项目提供便携式带锁药箱；钥匙由指定照护者保管</td>
+<td style="text-align: left;">照护者</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>第 4 层：给药监督</strong></td>
+<td style="text-align: left;">每次给药需视频/电话确认（护士远程观察）；使用每日一次包装（blister pack）控制单次剂量</td>
+<td style="text-align: left;">家庭护士 / 远程</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>第 5 层：清点</strong></td>
+<td style="text-align: left;">每 3 天护士上门清点余量；与记录对比；差异 &gt;10% 触发审核</td>
+<td style="text-align: left;">家庭护士</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>第 6 层：监测</strong></td>
+<td style="text-align: left;">连续 SpO₂ 监测（Masimo SafetyNet / BioButton）+ 呼吸频率监测 → 呼吸频率 &lt;8/min 自动告警</td>
+<td style="text-align: left;">RPM 设备 + 指挥中心</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="63-shm">6.3 SHM 住院阿片类药物安全共识的居家延伸</h3>
+<p>Society of Hospital Medicine (SHM) 2018 共识的关键原则适用于 HaH：</p>
+<ul>
+<li><strong>非药物镇痛优先</strong>：冰敷、抬高、物理治疗</li>
+<li><strong>最小有效剂量、最短疗程</strong>：急性疼痛 ≤3 天阿片类、&gt;7 天需正式重新评估</li>
+<li><strong>POSS（Pasero Opioid-Induced Sedation Scale）</strong> 每次给药前评估镇静水平</li>
+<li><strong>共同决策</strong>：患者/家属需签字确认了解阿片类药物风险</li>
+</ul>
+<h3 id="64">6.4 终末期/姑息治疗场景</h3>
+<p>终末期 HaH 患者使用阿片类/镇静剂的安全标准放宽，但仍需：</p>
+<ul>
+<li>与家属/照护者签署书面管理协议</li>
+<li>药物存放于带锁箱中，明确每日最大剂量</li>
+<li>护士每周清点</li>
+<li>死亡后由 HaH 团队当天回收剩余管制药物</li>
+</ul>
+<hr />
+<h2 id="7">7. 药房集成</h2>
+<h3 id="71-hah">7.1 临床药师在 HaH 中的角色</h3>
+<p><strong>PMC 2024 年系统综述</strong>（&rdquo;The vital role of clinical pharmacy services within the hospital at home&rdquo;）明确了 HaH 药师的核心职能：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">职能</th>
+<th style="text-align: left;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>入院药物重整</strong></td>
+<td style="text-align: left;">住院→HaH 过渡时完成完整药物比对，识别遗漏、重复、相互作用</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家药物审查</strong></td>
+<td style="text-align: left;">入院后 24h 内视频连线完成居家药物审查</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>药物治疗方案优化</strong></td>
+<td style="text-align: left;">基于肾功能、肝功能、药物相互作用调整剂量</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>抗生素管理（ASP）</strong></td>
+<td style="text-align: left;">每周评估 IV→PO 转换机会、疗程合理性</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TDM 解读</strong></td>
+<td style="text-align: left;">远程解读万古霉素/氨基糖苷类血药浓度 → 剂量调整建议</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者教育</strong></td>
+<td style="text-align: left;">回授法确认患者/照护者理解给药方案</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>出院药物重整</strong></td>
+<td style="text-align: left;">HaH→常规护理过渡时的完整药物清单</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>JAPhA 2021</strong>（&rdquo;There&rsquo;s no place like home—Integrating a pharmacist into the HIH model&rdquo;）：</p>
+<ul>
+<li>药师在出院时和在出院后通过家庭视频连线完成 2 次药物重整</li>
+<li>药师比护士多识别 <strong>2–3 倍</strong>的药物差异</li>
+<li>每次药物差异纠正可避免的潜在 ADE 成本为 $200–$500</li>
+</ul>
+<h3 id="72">7.2 远程药师审核模型</h3>
+<p><strong>西班牙 Delphi 共识</strong>（Frontiers in Public Health, 2025）——首次构建了居家住院（Hospitalización a Domicilio, HaD）药学服务的标准化共识，覆盖 6 大领域：</p>
+<ol>
+<li><strong>药物调配</strong>：院内药房制备→配送到家</li>
+<li><strong>临床药学照护</strong>：远程药物审查 + TDM + 抗生素管理</li>
+<li><strong>风险管理</strong>：药物错误报告系统、药物警戒</li>
+<li><strong>沟通与患者教育</strong>：书面+视频+电话三层教育</li>
+<li><strong>居家抗肿瘤药物管理</strong>：化疗药居家管理专项协议</li>
+<li><strong>临床研究</strong>：HaH 药学服务效果评估</li>
+</ol>
+<p><strong>Cardinal Health Remote Pharmacy Services</strong> 是目前商业化最成熟的远程药师解决方案：</p>
+<ul>
+<li>服务 450+ 住院药房、700+ 零售药房</li>
+<li>年处理 800 万+ 条医嘱</li>
+<li>具备 30+ 项 ASHP 临床能力认证的药师团队</li>
+<li>提供 24/7 前瞻性药物审核（即给药前药师审查每一条医嘱）</li>
+</ul>
+<h3 id="73">7.3 三种药房集成模式的选择标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">模式</th>
+<th style="text-align: left;">适合场景</th>
+<th style="text-align: left;">不适合场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>外包模式</strong></td>
+<td style="text-align: left;">小型 HaH 项目（&lt;50 床位）、快速启动</td>
+<td style="text-align: left;">复杂药物方案多、需 24/7 覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>自营模式</strong></td>
+<td style="text-align: left;">大型学术医疗中心 HaH、多重药物方案</td>
+<td style="text-align: left;">预算有限、缺乏药师团队</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>混合模式</strong></td>
+<td style="text-align: left;">中型项目、希望保留核心控制力</td>
+<td style="text-align: left;">接口开发能力弱</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="74-hah-5">7.4 HaH 药房操作的 5 个关键设计原则</h3>
+<ol>
+<li><strong>&ldquo;Signed &amp; Held&rdquo; Phase of Care</strong>（ACCP 2023）：医嘱在患者返家前先进入&rdquo;签署但暂不执行&rdquo;阶段，药房提前制备——患者到家时药物已在途中</li>
+<li><strong>处方 vs 非处方路径</strong>：输注药物按非处方（cartfill 模式）配送——不受保险处方福利限制</li>
+<li><strong>24/7 冗余</strong>：夜间/周末需有备选药房（外包合同）</li>
+<li><strong>冷链管理</strong>：生物制剂/温度敏感药物需冷链箱 + 温度记录器</li>
+<li><strong>药房 EHR 集成</strong>：药房系统需与 HaH 电子病历双向同步——医嘱变更实时触发药房调整</li>
+</ol>
+<hr />
+<h2 id="8">8. 静脉通路管理</h2>
+<h3 id="81-iv">8.1 三种 IV 通路的居家适用性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">长度</th>
+<th style="text-align: left;">保留时间</th>
+<th style="text-align: left;">适合药物</th>
+<th style="text-align: left;">HaH 适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>外周 IV（PIVC）</strong></td>
+<td style="text-align: left;">短（~4cm）</td>
+<td style="text-align: left;">≤7 天（NHS 指南）</td>
+<td style="text-align: left;">呋塞米、间歇抗生素</td>
+<td style="text-align: left;">短期利尿（1–5 天）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中线导管（Midline）</strong></td>
+<td style="text-align: left;">中（8–25cm）</td>
+<td style="text-align: left;">2–4 周</td>
+<td style="text-align: left;">非发泡性抗生素、输液</td>
+<td style="text-align: left;">中等疗程抗生素（1–4 周）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PICC</strong></td>
+<td style="text-align: left;">长（50–60cm）</td>
+<td style="text-align: left;">数周–数月</td>
+<td style="text-align: left;">所有 IV 药物（含发泡性、TPN）</td>
+<td style="text-align: left;">长疗程抗生素（&gt;4 周）、化疗</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="82-piccmidline">8.2 PICC/Midline 居家护理标准</h3>
+<p>参考 CDC 血管内导管相关感染防控指南 + MSKCC PICC 护理手册 + UW Medicine PICC/Midline 教育材料：</p>
+<p><strong>每日护理清单</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">护理项目</th>
+<th style="text-align: left;">频率</th>
+<th style="text-align: left;">执行人</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>穿刺点评估</strong></td>
+<td style="text-align: left;">每日 1 次（透过透明敷料查看或触诊）</td>
+<td style="text-align: left;">患者/家属自检 + 护士每周上门评估</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>冲管</strong></td>
+<td style="text-align: left;">每次给药后 / 不使用期间每 12–24h</td>
+<td style="text-align: left;">患者/家属（经培训）/ 家庭护士</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>换药/换敷料</strong></td>
+<td style="text-align: left;">每 7 天或敷料潮湿/污染时立即更换</td>
+<td style="text-align: left;">家庭护士</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>输液接头更换</strong></td>
+<td style="text-align: left;">每 7 天</td>
+<td style="text-align: left;">家庭护士</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>冲管液</strong></td>
+<td style="text-align: left;">生理盐水（SASH 法的 S）</td>
+<td style="text-align: left;">预装注射器</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>封管液</strong></td>
+<td style="text-align: left;">肝素盐水（SASH 法的 H）或无肝素方案</td>
+<td style="text-align: left;">预装注射器</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>SASH 冲管法</strong>（居家标准操作）：</p>
+<pre><code>S - Saline（生理盐水冲洗）→ 5–10ml
+A - Administer（给药）
+S - Saline（生理盐水冲洗）→ 5–10ml
+H - Heparin（肝素封管）→ 3–5ml（100 units/ml）
+</code></pre>
+<p><strong>感染防控（CDC 核心建议的居家转化）</strong>：</p>
+<ul>
+<li>操作前用肥皂/酒精洗手液洗手 ≥20 秒</li>
+<li>操作前用酒精棉片擦拭输液接头 ≥15 秒（&rdquo;Scrub the Hub&rdquo;）</li>
+<li>无菌操作台面：用消毒湿巾清洁桌面</li>
+<li>透明半透敷料：每 7 天更换，潮湿/污染时立即更换</li>
+<li>洗澡时用防水保护套覆盖（淋浴可，盆浴/游泳禁止）</li>
+</ul>
+<h3 id="83-ivpivc">8.3 外周 IV（PIVC）居家管理</h3>
+<p>NHS England 2025 利尿剂指南提供了最详细的居家 PIVC 管理标准：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>留置时间</strong></td>
+<td style="text-align: left;">最长 7 天（无症状）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>每日评估（VIP 评分）</strong></td>
+<td style="text-align: left;">视觉外观（Visual）+ 触诊（Palpation）+ 患者症状</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>移除指征</strong></td>
+<td style="text-align: left;">VIP ≥2、疼痛、红肿、硬结、渗出液、堵塞</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>冲管</strong></td>
+<td style="text-align: left;">每 12–24h 生理盐水 5ml（不使用时）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>敷料</strong></td>
+<td style="text-align: left;">透明半透膜，7 天或潮湿/污染时更换</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>并发症处理</strong></td>
+<td style="text-align: left;">静脉炎→立即拔除、抬高、热敷；感染→拔除+通知医生</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="84-iv">8.4 居家 IV 通路的特殊考量</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">考量</th>
+<th style="text-align: left;">建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>培训</strong></td>
+<td style="text-align: left;">患者/家属需完成演示→回授→考核→签署能力确认四步培训</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>急救包</strong></td>
+<td style="text-align: left;">每个 PICC/Midline 患者家中配备 CVAD 急救包（纱布、胶带、备用接头、消毒巾）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>故障排除热线</strong></td>
+<td style="text-align: left;">24/7 护士热线解决导管堵塞、漏液、意外脱出等问题</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>意外拔管</strong></td>
+<td style="text-align: left;">培训家属在导管意外脱出时施压止血（10 分钟）+ 立即联系 HaH 团队</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>血栓预防</strong></td>
+<td style="text-align: left;">对 PICC 患者评估是否需要预防性抗凝</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="9-ihomecare">9. 对 iHomeCare 药事管理设计的建议</h2>
+<p>基于以上全球 HaH 药物管理最佳实践，针对 iHomeCare 药事管理模块提出以下设计建议：</p>
+<h3 id="1">建议 1：药物管理系统架构</h3>
+<pre><code>iHomeCare 药事管理平台
+├── 医嘱管理（CPOE + Signed &amp; Held Phase of Care）
+├── 药房接口（对接外包/自营/混合药房）
+├── 药物配送追踪（GPS + 签收确认 + 冷链日志）
+├── TDM 模块（实验室结果接入 → 药师解读 → 剂量调整 → 医嘱更新）
+├── 患者给药确认（APP 端拍照/扫码 + 时间戳）
+├── 管制药物追踪（清点记录 + 差异告警）
+└── 药物错误报告（结构化上报 → 根因分析 → 流程改进）
+</code></pre>
+<h3 id="2_1">建议 2：弹性泵优先策略</h3>
+<ul>
+<li>对于 β-内酰胺类抗生素（HaH 最常见的 IV 抗生素），优先选用弹性泵连续输注</li>
+<li>稳定性数据显示多数 β-内酰胺类在弹性泵中稳定 24h–7 天</li>
+<li>弹性泵操作门槛远低于电子泵，降低家属培训成本和操作错误风险</li>
+<li>若选择电子泵，限制为特定场景（需精确流速的药物）</li>
+</ul>
+<h3 id="3_1">建议 3：构建&rdquo;入院+出院&rdquo;双重药物重整流程</h3>
+<ul>
+<li><strong>入院药物重整</strong>（住院→HaH）：药师 24h 内完成，输出标准化&rdquo;居家药物清单&rdquo;</li>
+<li><strong>出院药物重整</strong>（HaH→常规护理）：药师在出院前 48h 完成，确保转回社区后无缝衔接</li>
+<li>每次药物重整都是降低错误率的最大杠杆——药师比护士多发现 2–3 倍的药物差异</li>
+</ul>
+<h3 id="4_1">建议 4：管制药物&rdquo;六道锁&rdquo;安全架构</h3>
+<p>将第 6 章描述的六层安全架构内嵌到 iHomeCare 系统中——从 EPCS 电子处方到 RPM 连续监测，每一层都是系统级而非依赖人员自觉性的硬约束。</p>
+<h3 id="5tdm">建议 5：TDM 闭环管理</h3>
+<ul>
+<li>实验室结果自动触发药师审阅任务</li>
+<li>异常值自动向处方医师推送告警</li>
+<li>剂量调整建议经医师确认后自动更新医嘱→药房收到新指令→制备新剂量→配送→患者 APP 收到用药变更通知</li>
+</ul>
+<h3 id="6-cardinal-health-velocare">建议 6：与 Cardinal Health Velocare 或同等物流商集成</h3>
+<ul>
+<li>若目标市场在美国，优先考虑与 Velocare API 集成——已有成熟的技术平台和全国配送网络</li>
+<li>若在其他市场，需寻找或自建最后一公里药品冷链配送能力</li>
+<li>核心 KPI：新入院患者首剂药物到达时间 ≤2–4 小时</li>
+</ul>
+<h3 id="7_1">建议 7：患者端给药确认机制</h3>
+<ul>
+<li>APP 端设计&rdquo;给药五确认&rdquo;界面：药物名称→剂量→途径→时间→患者身份</li>
+<li>要求条码扫描（药袋二维码）+ 患者腕带二维码双重扫描确认</li>
+<li>所有给药记录实时上传至指挥中心，异常延迟自动告警</li>
+</ul>
+<hr />
+<h2 id="_1">附录：关键参考来源</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">编号</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Oxford AHSN 2022 — Elastomeric Devices Delivering 24-hour IV Antibiotics</td>
+<td style="text-align: left;">实施指南</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">CHID Study (SAHMRI, Australia) — RCT comparing elastomeric vs electronic pumps</td>
+<td style="text-align: left;">RCT</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Babich et al. 2025 — Continuous infusion OPAT via elastomeric pumps: real-world Italian cohort (1,934 days)</td>
+<td style="text-align: left;">真实世界研究</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Duke OPAT Administration Chart (DUHS, updated 2023)</td>
+<td style="text-align: left;">临床协议</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Stanford OPAT Tip Sheet — SHC Bugs &amp; Drugs</td>
+<td style="text-align: left;">临床决策支持</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">NHS England 2025 — Guidelines for IV/SC Diuretics for HF Patients in Ambulatory Setting</td>
+<td style="text-align: left;">国家指南</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">Ruocco et al. 2026 (JAHA) — Continuous vs Intermittent Loop Diuretics</td>
+<td style="text-align: left;">RCT</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">JACC Case Reports 2024 — Managing Advanced HF at Home with Continuous IV Furosemide</td>
+<td style="text-align: left;">病例报告</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">Queensland Health 2026 — Statewide Anticoagulant Guideline</td>
+<td style="text-align: left;">州级指南</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">Cardinal Health — Velocare Distributed Supply Chain (2022–2025)</td>
+<td style="text-align: left;">企业资料</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">ASHP 2022 — Home Hospital Pharmacy Playbook</td>
+<td style="text-align: left;">行业标准</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">ACCP 2023 — Integration of Pharmacy Services for Hospital at Home</td>
+<td style="text-align: left;">学术海报</td>
+</tr>
+<tr>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">PMC 2024 — The Vital Role of Clinical Pharmacy Services in Home Hospital</td>
+<td style="text-align: left;">系统综述</td>
+</tr>
+<tr>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">Frontiers in Public Health 2025 — Spanish Delphi Consensus on HH Pharmacy Practice</td>
+<td style="text-align: left;">Delphi 共识</td>
+</tr>
+<tr>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">Chartis 2024 — Hospital at Home Supply Chain &amp; Logistics</td>
+<td style="text-align: left;">咨询报告</td>
+</tr>
+<tr>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">CMS 2024 — AHCAH Report to Congress</td>
+<td style="text-align: left;">联邦报告</td>
+</tr>
+<tr>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">SHM 2018 — Consensus Statement on Opioid Use in Hospitalized Adults</td>
+<td style="text-align: left;">学会共识</td>
+</tr>
+<tr>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">CDC — Intravascular Catheter-Related Infections Prevention Guidelines</td>
+<td style="text-align: left;">联邦指南</td>
+</tr>
+<tr>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">MSKCC — PICC Line Patient Education</td>
+<td style="text-align: left;">患者教育材料</td>
+</tr>
+<tr>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">NHIA — Pharmacist-Directed Vancomycin Dosing in Home Infusion</td>
+<td style="text-align: left;">质量改进研究</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><em>本报告基于截至 2026 年 7 月 3 日的公开文献和实践指南。所有药物管理方案应在具体临床场景中由执业药师和医师审核后实施。</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

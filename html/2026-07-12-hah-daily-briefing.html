@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>📰 HaH/居家医疗 每日资讯简报</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">📰 HaH/居家医疗 每日资讯简报</a><ul>
+<li><a href="#ma-ipo">💰 融资 / M&amp;A / IPO</a></li>
+<li><a href="#ai">🤖 新技术 / AI / 产品</a></li>
+<li><a href="#_1">💼 商业模式 / 政策 / 运营</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">📰 HaH/居家医疗 每日资讯简报</h1>
+<p><strong>日期</strong>: 2026-07-12
+<strong>数据源</strong>: Home Health Care News (HHCN) + DigitalHealth.London
+<strong>高相关文章</strong>: 22 篇</p>
+<hr />
+<h2 id="ma-ipo">💰 融资 / M&amp;A / IPO</h2>
+<ul>
+<li>
+<p><strong>Frontier Health raises $16 million to automate NHS administration</strong>
+  📅 2026-07-08 | 🔗 <a href="https://digitalhealth.london/frontier-health-raises-16-million-to-automate-nhs-administration">DH.London</a>
+  Frontier Health has raised a $16 million seed round led by Atomico to accelerate deployment of its AI-powered healthcare operations platform.</p>
+</li>
+<li>
+<p><strong>Investor Focus: Eka Ventures</strong>
+  📅 2026-07-10 | 🔗 <a href="https://digitalhealth.london/investor-focus-eka-ventures">DH.London</a>
+  In this Investor focus, Camilla Dolan, General Partner at Eka Ventures, explains the venture capital firm’s early-stage backing strategy.</p>
+</li>
+<li>
+<p><strong>Avid Health at Home Acquires Tech Medical Home Care Services, Enters 2 New States</strong>
+  📅 2026-07-07 | 🔗 <a href="https://homehealthcarenews.com/2026/07/avid-health-at-home-acquires-tech-medical-home-care-services-enters-2-new-states/">HHCN</a>
+  In-home care provider Avid Health at Home has acquired Tech Medical Home Care Services, a provider of home health and personal home care services. The</p>
+</li>
+<li>
+<p><strong>THENA Capital closes £45 million inaugural fund, backing five UK MedTech innovators</strong>
+  📅 2026-07-10 | 🔗 <a href="https://digitalhealth.london/thena-capital-closes-45-million-inaugural-fund-backing-five-uk-medtech-innovators">DH.London</a>
+  THENA Capital backs five MedTech firms after £45 million fund close, highlighting transatlantic growth ambitions.</p>
+</li>
+<li>
+<p><strong>HIN Investor Panel: The Paradox of Prevention</strong>
+  📅 2026-07-10 | 🔗 <a href="https://digitalhealth.london/hin-investor-panel-the-paradox-of-prevention">DH.London</a>
+  In this collaborative article, Anna King and Emma Greenwood outline the key themes from the roundtable discussion to enable further exploration.</p>
+</li>
+</ul>
+<hr />
+<h2 id="ai">🤖 新技术 / AI / 产品</h2>
+<ul>
+<li><strong>London launches landmark Life Sciences Strategy to become global leader in health innovation</strong>
+  📅 2026-07-10 | 🔗 <a href="https://digitalhealth.london/london-launches-landmark-life-sciences-strategy-to-become-global-leader-in-health-innovation">DH.London</a>
+  London has launched a Life Sciences Strategy, positioning the city as a global leader in health innovation.</li>
+</ul>
+<hr />
+<h2 id="_1">💼 商业模式 / 政策 / 运营</h2>
+<ul>
+<li>
+<p><strong>‘Sorely Needed:’ Home Health Leaders Weigh Relief, Lingering Risks In Proposed Payment Rule</strong>
+  📅 2026-07-07 | 🔗 <a href="https://homehealthcarenews.com/2026/07/sorely-needed-home-health-leaders-weigh-relief-lingering-risks-in-proposed-payment-rule/">HHCN</a>
+  The Centers for Medicare &amp; Medicaid Services’ (CMS) proposed home health payment rule for CY2027 is a mixed bag for providers and industry insiders, o</p>
+</li>
+<li>
+<p><strong>Innovator Spotlight: Flok Health</strong>
+  📅 2026-07-10 | 🔗 <a href="https://digitalhealth.london/innovator-spotlight-flok-health">DH.London</a>
+  Flok Health, an alumnus of the DigitalHealth.London Accelerator, secures Series A funding to scale AI-operated physiotherapy clinics across the NHS.</p>
+</li>
+<li>
+<p><strong>Dementia Trends Could Shrink Home Health Workforce, Flournoy Health Systems CEO Warns</strong>
+  📅 2026-07-09 | 🔗 <a href="https://homehealthcarenews.com/2026/07/dementia-trends-could-shrink-home-care-workforce-flournoy-health-systems-ceo/">HHCN</a>
+  Dementia and Alzheimer’s disease are projected to cost the United States $818 billion in 2026 — and an industry insider posits that the growing econom</p>
+</li>
+<li>
+<p><strong>6 Home Care Companies To Watch In 2026</strong>
+  📅 2026-07-10 | 🔗 <a href="https://homehealthcarenews.com/2026/07/6-home-care-companies-to-watch-in-2026/">HHCN</a>
+  Home care providers are navigating a changing environment in 2026, shaped by Medicaid pressures — including proposed 80-hour work requirements — heigh</p>
+</li>
+<li>
+<p><strong>PPL Reaches Proposed $162M Settlement With NY CDPAP Caregivers</strong>
+  📅 2026-07-06 | 🔗 <a href="https://homehealthcarenews.com/2026/07/ppl-proposed-162m-settlement-ny-cdpap-caregivers/">HHCN</a>
+  A federal judge has preliminarily approved a $162 million class action settlement to approximately 200,000 home care workers over alleged payroll and </p>
+</li>
+<li>
+<p><strong>Future Leader: Stephanie Aguilera, Regional Manager, Disability Services Operations, 24 Hour Home Care</strong>
+  📅 2026-07-09 | 🔗 <a href="https://homehealthcarenews.com/2026/07/future-leader-stephanie-aguilera-regional-manager-disability-services-operations-24-hour-home-care/">HHCN</a>
+  Stephanie Aguilera, Regional Manager, Disability Services Operations at 24 Hour Home Care, has been named to the Future Leaders Class of 2026 by Home </p>
+</li>
+<li>
+<p><strong>‘It’s Very Different Now’: How Bayada, Interim, Senior Helpers Drive Caregiver Retention</strong>
+  📅 2026-07-08 | 🔗 <a href="https://homehealthcarenews.com/2026/07/upskilling-coaching-useful-home-caregiver-retention-tools/">HHCN</a>
+  Providing near-peer coaching and upskilling opportunities keeps employees engaged and reduces early turnover, experts said on a recent HHCN webinar.</p>
+</li>
+<li>
+<p><strong>London named as Europe’s leading start-up ecosystem</strong>
+  📅 2026-07-10 | 🔗 <a href="https://digitalhealth.london/london-named-as-europes-leading-start-up-ecosystem">DH.London</a>
+  London ranks third globally in 2026 Startup Ecosystem Report, reinforcing innovation leadership.</p>
+</li>
+</ul>
+<hr />
+<p><em>自动生成于 2026-07-12 09:00 · Kate 知识库管线</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

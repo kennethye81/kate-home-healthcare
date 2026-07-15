@@ -1,0 +1,10 @@
+{
+  "_description": "实体注册表。公司、人物、政策、事件。每个实体可关联多条事实。",
+  "_version": "4.0.0",
+  "entities": {
+    "companies": [],
+    "people": [],
+    "policies": [],
+    "events": []
+  }
+}

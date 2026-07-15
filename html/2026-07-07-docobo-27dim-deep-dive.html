@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DOC@HOME (Docobo/Graphnet) — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#dochome-docobographnet-27">DOC@HOME (Docobo/Graphnet) — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 赛道验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4">D4 — 商业模式</a></li>
+<li><a href="#d5">D5 — 产品线</a></li>
+<li><a href="#d6">D6 — 客户</a></li>
+<li><a href="#d7">D7 — 财务</a></li>
+<li><a href="#d8">D8 — 工作流</a></li>
+<li><a href="#d9">D9 — 技术</a></li>
+<li><a href="#d10">D10 — 竞争格局</a></li>
+<li><a href="#d11-tamsam">D11 — TAM/SAM</a></li>
+<li><a href="#d12">D12 — 盈利模型</a></li>
+<li><a href="#d13">D13 — 风险矩阵</a></li>
+<li><a href="#d14">D14 — 管理层</a></li>
+<li><a href="#d15">D15 — 估值</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare</a></li>
+<li><a href="#d17">D17 — 政策</a></li>
+<li><a href="#d18">D18 — 单元经济</a></li>
+<li><a href="#d19">D19 — 客户细分</a></li>
+<li><a href="#d20">D20 — 竞品</a></li>
+<li><a href="#d21">D21 — 跨境</a></li>
+<li><a href="#d22">D22 — 退出</a></li>
+<li><a href="#d23-esg">D23 — ESG</a></li>
+<li><a href="#d24">D24 — 组织</a></li>
+<li><a href="#d25">D25 — 融资</a></li>
+<li><a href="#d26-gtm">D26 — GTM</a></li>
+<li><a href="#d27">D27 — 临床</a></li>
+<li><a href="#_1">调研空白</a></li>
+<li><a href="#v20">v2.0 完备性审计</a></li>
+<li><a href="#_2">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="dochome-docobographnet-27">DOC@HOME (Docobo/Graphnet) — 27 维度深度尽调</h1>
+<p><strong>调研人</strong>: Kate, VP Research | <strong>日期</strong>: 2026-07-07</p>
+<hr />
+<h2 id="d0">D0 — 赛道验证</h2>
+<p>✅ EPR 集成远程监测平台。NICE HTG697 收录。<strong>对 iHomeCare</strong>: 🟡 中等。</p>
+<h2 id="d1">D1 — 执行摘要</h2>
+<p>英国 Graphnet 集团旗下远程监测方案。与 EPR 深度集成是核心差异化。Buckinghamshire NHS Trust 虚拟病房试点使用。NICE HTG697 收录。</p>
+<h2 id="d2">D2 — 公司全貌</h2>
+<ul>
+<li>品牌: DOC@HOME (Docobo)</li>
+<li>母公司: Graphnet（英国医疗 IT 集团）</li>
+<li>赛道: EPR 集成远程监测</li>
+<li>NICE: HTG697 收录</li>
+</ul>
+<h2 id="d3">D3 — 战略定位</h2>
+<p>&ldquo;EPR 原生的远程监测&rdquo;——通过深度集成 Graphnet EPR，实现患者数据无缝流转，消除独立平台的&rdquo;数据孤岛&rdquo;问题。</p>
+<h2 id="d4">D4 — 商业模式</h2>
+<p>B2G (NHS)——SaaS 订阅（Graphnet 集团旗下）。核心差异化：EPR 集成是其他独立平台无法复制的优势。</p>
+<h2 id="d5">D5 — 产品线</h2>
+<p>① DOC@HOME 远程监测 ② EPR 集成数据流 ③ 患者 App ④ 临床仪表盘</p>
+<h2 id="d6">D6 — 客户</h2>
+<p>Buckinghamshire NHS Trust 等——使用 Graphnet EPR 的 Trust 是自然客户群。</p>
+<h2 id="d7">D7 — 财务</h2>
+<p>⚠️ Graphnet 集团旗下，未公开独立财务数据。</p>
+<h2 id="d8">D8 — 工作流</h2>
+<p>EPR 数据→远程监测配置→患者采集→数据回流 EPR→临床决策（闭环）</p>
+<h2 id="d9">D9 — 技术</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">核心差异化</td>
+<td style="text-align: left;">🟢🟢 EPR 深度集成——独立平台无法复制</td>
+</tr>
+<tr>
+<td style="text-align: left;">平台</td>
+<td style="text-align: left;">DOC@HOME 远程监测</td>
+</tr>
+<tr>
+<td style="text-align: left;">EPR</td>
+<td style="text-align: left;">Graphnet 集团 EPR</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI</td>
+<td style="text-align: left;">🟡 基础</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作</td>
+<td style="text-align: left;">EPR 原生集成（非 API 对接）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>技术护城河</strong>: 🟢🟢 <strong>强</strong>——EPR 原生集成是独立平台无法复制的结构性优势。</p>
+<h2 id="d10">D10 — 竞争格局</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: center;">威胁</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Doccla</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">全栈——但无 EPR 集成</td>
+</tr>
+<tr>
+<td style="text-align: left;">Clinitouch</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">独立平台</td>
+</tr>
+<tr>
+<td style="text-align: left;">Huma</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">AI 领先——但无 EPR</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d11-tamsam">D11 — TAM/SAM</h2>
+<p>英国 EPR 集成远程监测 ~£300-500M（Graphnet EPR 客户群内）</p>
+<h2 id="d12">D12 — 盈利模型</h2>
+<p>⚠️ Graphnet 集团旗下。推测作为 EPR 的增值模块，捆绑销售+单独许可。</p>
+<h2 id="d13">D13 — 风险矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">短期</td>
+<td style="text-align: left;">Graphnet EPR 客户群内交叉销售</td>
+<td style="text-align: left;">独立平台更灵活</td>
+</tr>
+<tr>
+<td style="text-align: left;">中长期</td>
+<td style="text-align: left;">从监测→AI 预测</td>
+<td style="text-align: left;">Graphnet 集团依赖</td>
+</tr>
+<tr>
+<td style="text-align: left;">结构性</td>
+<td style="text-align: left;">EPR 锁定效应</td>
+<td style="text-align: left;">若 NHS 更换 EPR→DOC@HOME 受影响</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d14">D14 — 管理层</h2>
+<p>⚠️ Graphnet 集团层面——未公开独立管理层。</p>
+<h2 id="d15">D15 — 估值</h2>
+<p>❌ 不适用——Graphnet 集团旗下。</p>
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare</h2>
+<p>EPR 深度集成 vs 独立平台——iHomeCare 在香港应优先与医管局 EHR 系统深度集成（类比 Graphnet 策略），而非做独立平台。</p>
+<h2 id="d17">D17 — 政策</h2>
+<p>NICE HTG697、NHS DTAC、Graphnet EPR 框架</p>
+<h2 id="d18">D18 — 单元经济</h2>
+<p>⚠️ 未公开</p>
+<h2 id="d19">D19 — 客户细分</h2>
+<p>Graphnet EPR 客户群内的 NHS Trust</p>
+<h2 id="d20">D20 — 竞品</h2>
+<p>Doccla/Clinitouch/Huma</p>
+<h2 id="d21">D21 — 跨境</h2>
+<p>🔴 英国本土（Graphnet EPR 客户群内）</p>
+<h2 id="d22">D22 — 退出</h2>
+<p>❌ 不适用</p>
+<h2 id="d23-esg">D23 — ESG</h2>
+<p>🟢 正面</p>
+<h2 id="d24">D24 — 组织</h2>
+<p>Graphnet 集团团队</p>
+<h2 id="d25">D25 — 融资</h2>
+<p>Graphnet 集团层面</p>
+<h2 id="d26-gtm">D26 — GTM</h2>
+<p>EPR 客户群内交叉销售——低 CAC</p>
+<h2 id="d27">D27 — 临床</h2>
+<p>NICE 收录 + Buckinghamshire 试点。具体临床效果数据未公开。</p>
+<hr />
+<h2 id="_1">调研空白</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">独立财务数据</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">临床效果数据</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Graphnet EPR 客户群内渗透率</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">独立团队规模</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="v20">v2.0 完备性审计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总计</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="_2">参考文献</h2>
+<ol>
+<li>NICE — HTG697</li>
+<li>Docobo/Graphnet 官方</li>
+<li>Buckinghamshire NHS Trust — 虚拟病房试点</li>
+</ol>
+<hr />
+<p><em>报告终</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

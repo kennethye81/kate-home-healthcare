@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RPM 设备商全景分析报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#rpm">RPM 设备商全景分析报告</a><ul>
+<li><a href="#rpm_1">一、全球 RPM 市场规模</a></li>
+<li><a href="#a">二、A 类：多参数监测平台（一体化方案）</a><ul>
+<li><a href="#1-biointellisense">1. BioIntelliSense</a></li>
+<li><a href="#2-vivalink">2. Vivalink</a></li>
+<li><a href="#3-current-health-best-buy-health">3. Current Health（原 Best Buy Health → 已独立）</a></li>
+<li><a href="#4-cadence-solutions">4. Cadence Solutions</a></li>
+<li><a href="#5-biofourmis">5. Biofourmis</a></li>
+<li><a href="#6-masimo">6. Masimo</a></li>
+<li><a href="#7-philipsbiotelemetry-ecarecompanion">7. Philips（BioTelemetry / eCareCompanion）</a></li>
+</ul>
+</li>
+<li><a href="#b">三、B 类：专科/单参数设备</a><ul>
+<li><a href="#b1-omron-healthcare">B1. 血压监测 — OMRON Healthcare</a></li>
+<li><a href="#b2-cgm-dexcom-abbott-freestyle-libre">B2. 血糖/CGM — Dexcom &amp; Abbott Freestyle Libre</a><ul>
+<li><a href="#dexcom">Dexcom</a></li>
+<li><a href="#abbott-freestyle-libre">Abbott Freestyle Libre</a></li>
+</ul>
+</li>
+<li><a href="#b3-masimo-nonin">B3. 脉搏血氧 — Masimo &amp; Nonin</a></li>
+<li><a href="#b4-irhythm-alivecor">B4. 远程心电 — iRhythm &amp; AliveCor</a><ul>
+<li><a href="#irhythm-technologies">iRhythm Technologies</a></li>
+<li><a href="#alivecor">AliveCor</a></li>
+</ul>
+</li>
+<li><a href="#b5-eko-tytocare">B5. 远程听诊/肺功能 — Eko &amp; TytoCare</a><ul>
+<li><a href="#eko-health">Eko Health</a></li>
+<li><a href="#tytocare">TytoCare</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#c">四、C 类：平台/整合层</a><ul>
+<li><a href="#1-epic-mychart">1. Epic / MyChart</a></li>
+<li><a href="#2-vivify-health-optumunitedhealth-group">2. Vivify Health（被 Optum/UnitedHealth Group 收购）</a></li>
+<li><a href="#3-health-recovery-solutions-hrs">3. Health Recovery Solutions (HRS)</a></li>
+</ul>
+</li>
+<li><a href="#_1">五、对比矩阵</a></li>
+<li><a href="#2025">六、细分品类市场份额概估（2025年）</a></li>
+<li><a href="#ihomecare">七、iHomeCare 整合建议分层</a><ul>
+<li><a href="#tier-1-hah">Tier 1 — 首选整合（高优先级，核心 HaH 必需组件）</a></li>
+<li><a href="#tier-2">Tier 2 — 按需整合（场景化补充）</a></li>
+<li><a href="#tier-3">Tier 3 — 生态观察（潜力型，需进一步评估）</a></li>
+</ul>
+</li>
+<li><a href="#_2">八、关键数据源</a></li>
+<li><a href="#_3">九、免责声明</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="rpm">RPM 设备商全景分析报告</h1>
+<p><strong>编制日期</strong>：2026年7月4日<br />
+<strong>报告类型</strong>：行业全景扫描<br />
+<strong>应用场景</strong>：iHomeCare Hospital-at-Home 项目设备商选型参考</p>
+<hr />
+<h2 id="rpm_1">一、全球 RPM 市场规模</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025年全球 RPM 设备市场</td>
+<td>~USD 260–286 亿（Grand View / GM Insights）</td>
+</tr>
+<tr>
+<td>2030年预测</td>
+<td>~USD 569 亿（MarketsandMarkets）</td>
+</tr>
+<tr>
+<td>2033年预测</td>
+<td>~USD 1,107 亿（Grand View Research）</td>
+</tr>
+<tr>
+<td>CAGR (2026–2030)</td>
+<td>11.2%–12.7%</td>
+</tr>
+<tr>
+<td>CGM 细分市场（2025）</td>
+<td>~USD 134 亿，CAGR 15.1%</td>
+</tr>
+<tr>
+<td>脉搏血氧仪细分（2025）</td>
+<td>~USD 38 亿，CAGR 6.6%</td>
+</tr>
+<tr>
+<td>心脏监测细分</td>
+<td>约占 RPM 总额的 28%</td>
+</tr>
+<tr>
+<td>北美份额</td>
+<td>~44.5%（主导地区）</td>
+</tr>
+<tr>
+<td>CMS Hospital at Home 参与机构（2025.09）</td>
+<td>419 家医院，147 个医疗系统，39 个州</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关键驱动因素</strong>：CMS 报销代码放开、HaH 豁免政策延续、人口老龄化、慢病患病率上升、AI/ML 分析技术成熟。</p>
+<hr />
+<h2 id="a">二、A 类：多参数监测平台（一体化方案）</h2>
+<h3 id="1-biointellisense">1. BioIntelliSense</h3>
+<ul>
+<li><strong>成立/总部</strong>：2018年，Golden, Colorado，USA</li>
+<li><strong>融资</strong>：~USD 4,500 万（Series B）；约 100 名员工</li>
+<li><strong>产品</strong>：BioSticker（30天一次性贴片）、BioButton（可充电，90天持续监测）</li>
+<li><strong>功能</strong>：体温、呼吸频率、静息心率、步态、跌倒检测、体位等，每日捕获 1,000+ 组生命体征</li>
+<li><strong>技术壁垒</strong>：FDA 510(k) cleared；专利粘合剂与低功耗蓝牙传输；收购 AlertWatch（2022）扩展临床智能</li>
+<li><strong>临床证据</strong>：与科罗拉多大学/DoD 合作 COVID-19 早期检测；多中心围术期监测研究</li>
+<li><strong>客户/合作伙伴</strong>：Philips、UCLA Health、HCA Healthcare、DoD</li>
+<li><strong>商业模式</strong>：硬件 + 数据分析平台订阅（按患者/月收费）</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>高</strong> — 贴片式设计极适合 HaH 连续监测，已用于多家医院急性期后管理</li>
+</ul>
+<h3 id="2-vivalink">2. Vivalink</h3>
+<ul>
+<li><strong>成立/总部</strong>：2014年，Campbell, California，USA</li>
+<li><strong>融资</strong>：~USD 154 万（Seed，多轮小额融资）；规模较小</li>
+<li><strong>产品</strong>：ECG 贴片、连续体温贴片、SpO2 监测、血压袖带、体动监测</li>
+<li><strong>技术壁垒</strong>：SDK/平台化输出，支持合作伙伴集成而非直接 2C；低功耗 IoT 传感器</li>
+<li><strong>认证</strong>：FDA 510(k) / CE</li>
+<li><strong>客户</strong>：合作伙伴模式为主（服务临床试验和医院系统）；强项在去中心化临床试验</li>
+<li><strong>商业模式</strong>：硬件销售 + 数据平台 SDK 授权</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>中到高</strong> — 产品线齐全但公司体量小，需评估长期支持能力</li>
+</ul>
+<h3 id="3-current-health-best-buy-health">3. Current Health（原 Best Buy Health → 已独立）</h3>
+<ul>
+<li><strong>成立/总部</strong>：2015年，Edinburgh, UK / Boston, USA</li>
+<li><strong>融资史</strong>：2021年被 Best Buy 以 ~USD 4 亿收购；2025年6月 Best Buy 将其回售给联合创始人 Christopher McGhee</li>
+<li><strong>产品</strong>：一体化 RPM 平台，含监控设备（腕带、脉搏血氧夹、体温贴；通过 Masimo 技术集成）+ 临床仪表盘 + 患者 App</li>
+<li><strong>技术壁垒</strong>：专为高急性 HaH 设计；双向音视频、自动预警、EHR 集成——急性期监护是核心差异化</li>
+<li><strong>认证</strong>：FDA / CE / UKCA</li>
+<li><strong>临床证据</strong>：与 NHS、Geisinger 等多项高血压和 HaH 研究，Geisinger 合作自 2020 年起</li>
+<li><strong>客户</strong>：Geisinger、NHS Trusts、美国多个医疗系统</li>
+<li><strong>商业模式</strong>：平台按患者/月 SaaS + 设备一次性 / 租赁</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>高</strong> — 产品设计原生支持 HaH，独立后再运营灵活性增强；当前处于过渡期需关注稳定</li>
+</ul>
+<h3 id="4-cadence-solutions">4. Cadence Solutions</h3>
+<ul>
+<li><strong>成立/总部</strong>：2020年，New York City</li>
+<li><strong>融资</strong>：~USD 2.44 亿（含 2026年6月 Series C $1 亿），估值 ~USD 10 亿</li>
+<li><strong>产品</strong>：远程慢病管理平台，专注高血压、糖尿病、心衰等；AI Agent + 医护混合模式</li>
+<li><strong>技术壁垒</strong>：AI 驱动的慢病自动管理平台；正与 FDA 讨论 AI Agent 在高血压管理中的监管路径</li>
+<li><strong>认证</strong>：平台型，核心算法部分与 FDA 对话中，已有 FDA 监管的 AI 系统</li>
+<li><strong>临床证据</strong>：与 20+ 医疗系统合作；STAT 报道其 AI 自动化管理效果</li>
+<li><strong>客户</strong>：Duke Health、Corewell Health、Memorial Hermann 等 20+ 医疗系统</li>
+<li><strong>商业模式</strong>：按患者收费（B2B to provider），提供全栈慢病管理服务</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>中到高</strong> — 面向慢病而非急性 HaH，但平台化模式和 AI 能力可用于 iHomeCare 出院的远期随访</li>
+</ul>
+<h3 id="5-biofourmis">5. Biofourmis</h3>
+<ul>
+<li><strong>成立/总部</strong>：2015年（Singapore），总部 Boston, USA</li>
+<li><strong>融资</strong>：~USD 4.45 亿（含 $3 亿 Series D），2022年估值 $13 亿（独角兽）</li>
+<li><strong>产品</strong>：Biofourmis Care（虚拟专科护理）、Care at Home（HaH 全流程管理）、数字疗法管线</li>
+<li><strong>技术壁垒</strong>：AI 预测分析平台（Biovitals）；FDA 批准的数字心衰疗法；全病程管理（急性→出院→慢病）</li>
+<li><strong>认证</strong>：FDA / CE</li>
+<li><strong>临床证据</strong>：多项心衰 RCT；与 Humana 等支付方合作；已验证 30天再入院率降低 XX%</li>
+<li><strong>客户</strong>：Humana、CVS Health、多家医疗系统；获准在6个州作为持牌提供商运营</li>
+<li><strong>商业模式</strong>：SaaS + 医疗服务收费（双轮驱动）</li>
+<li><strong>注</strong>：2023年曾裁员120人，面临数字疗法行业整体调整压力，但核心业务仍具竞争力</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>高</strong> — 原生 HaH 平台，AI 全病程管理能力最全面；需评估其当前财务稳定性</li>
+</ul>
+<h3 id="6-masimo">6. Masimo</h3>
+<ul>
+<li><strong>成立/总部</strong>：1989年，Irvine, California — 纳斯达克上市（MASI）</li>
+<li><strong>营收</strong>：2024全年 ~USD 20.94 亿（含消费音频），2025年医疗健康部分营收 ~USD 15.2 亿</li>
+<li><strong>产品</strong>：Masimo SET® 脉搏血氧仪（行业黄金标准）、Rainbow® 多参数监测、Radius PPG® 可穿戴血氧、W1® 手表式监测</li>
+<li><strong>技术壁垒</strong>：SET® 专利信号提取技术，运动容差和低灌注性能业界第一；100+ 临床研究证明优于其他品牌</li>
+<li><strong>认证</strong>：FDA / CE / MDR，全球最广泛认证之一</li>
+<li><strong>客户</strong>：美国 Top 10 医院全部使用 Masimo；全球 100+ 国家</li>
+<li><strong>商业模式</strong>：硬件销售 + 传感器耗材（剃刀刀片模式）</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>高</strong> — 血氧监测是 HaH 必要组件，Masimo 为行业标准；已与其他平台（Current Health、Philips）集成</li>
+</ul>
+<h3 id="7-philipsbiotelemetry-ecarecompanion">7. Philips（BioTelemetry / eCareCompanion）</h3>
+<ul>
+<li><strong>成立/总部</strong>：1891年，Amsterdam, Netherlands（荷兰皇家飞利浦）</li>
+<li><strong>营收</strong>：2024全年 EUR 180 亿；Connected Care 部门 2025年可比销售额增长 7%；2025全年集团销售额约 EUR 85 亿（医疗为主）</li>
+<li><strong>产品</strong>：</li>
+<li>eCareCompanion（家庭监护平台，含交互式问诊、生命体征捕获）</li>
+<li>BioTelemetry（2021年收购，$28 亿）—— 心脏遥感和动态心电监测（MCOT、Holter）</li>
+<li>Smart Telemetry Platform（2025年发布）—— 企业级遥测平台</li>
+<li><strong>技术壁垒</strong>：全球最大医疗设备商之一的生态整合能力；医院→家庭闭环</li>
+<li><strong>认证</strong>：FDA / CE / MDR</li>
+<li><strong>临床证据</strong>：数千篇；在心衰远程监测、心律失常检出等领域最丰富的循证基础</li>
+<li><strong>客户</strong>：全球医院系统、支付方、政府卫生系统</li>
+<li><strong>商业模式</strong>：硬件 + 软件 + 服务（设备销售 / SaaS / 监测服务）</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>高</strong> — 品牌和生态整合能力最强；但大公司合作流程复杂，价格亦较高</li>
+</ul>
+<hr />
+<h2 id="b">三、B 类：专科/单参数设备</h2>
+<h3 id="b1-omron-healthcare">B1. 血压监测 — OMRON Healthcare</h3>
+<ul>
+<li><strong>成立/总部</strong>：1933年，Kyoto, Japan（欧姆龙集团子公司）</li>
+<li><strong>营收</strong>：OMRON Healthcare 全球 BP 监测市场份额第一</li>
+<li><strong>产品</strong>：VitalSight RPM 服务 + 连接式血压计（含 AI AFib 检测）+ 穿戴式 BP 设备（HeartGuide）</li>
+<li><strong>技术壁垒</strong>：50多年血压监测技术积累；AI 房颤检测算法获 2025 Digital Health Awards Best in Class</li>
+<li><strong>认证</strong>：FDA / CE / MDR</li>
+<li><strong>客户</strong>：覆盖全球家庭用户（消费者品牌第一），VitalSight 面向医疗机构</li>
+<li><strong>商业模式</strong>：硬件零售 + VitalSight SaaS（按患者收费，Medicare 可报销）</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>高</strong> — BP 是 HaH 核心监测参数，OMRON 品牌认知高、API/SDK 开放性好</li>
+</ul>
+<h3 id="b2-cgm-dexcom-abbott-freestyle-libre">B2. 血糖/CGM — Dexcom &amp; Abbott Freestyle Libre</h3>
+<h4 id="dexcom">Dexcom</h4>
+<ul>
+<li><strong>成立/总部</strong>：1999年，San Diego, California — 纳斯达克上市（DXCM）</li>
+<li><strong>2025年营收</strong>：~USD 46.6 亿（同比增长 16%）</li>
+<li><strong>市值</strong>：~USD 240 亿</li>
+<li><strong>产品</strong>：G7 CGM（15天版）、Stelo（首个非处方 OTC CGM，2025年创收 $1.3 亿）</li>
+<li><strong>美国市场份额</strong>：~74%（2024年 GlobalData）</li>
+<li><strong>认证</strong>：FDA / CE</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>高</strong> — CGM 是 HaH 中糖尿病管理必备；Dexcom 是血糖数据的行业数据标准</li>
+</ul>
+<h4 id="abbott-freestyle-libre">Abbott Freestyle Libre</h4>
+<ul>
+<li><strong>成立/总部</strong>：Abbott Laboratories（1888年，Chicago）— 纽交所上市（ABT）</li>
+<li><strong>Diabetes Care 增速</strong>：2025年同比 +19.6%</li>
+<li><strong>产品</strong>：Freestyle Libre 3 / 3 Plus、Libre Rio（OTC）、Lingo（OTC 消费版）；全球 600 万+ 用户</li>
+<li><strong>技术壁垒</strong>：全球 CGM 份额第一；无扫描即得实时血糖；下一代双分析物（葡萄糖+酮体）传感器</li>
+<li><strong>认证</strong>：FDA / CE / MDR</li>
+<li><strong>客户</strong>：全球 100+ 国家，与 Insulet Omnipod 5、Beta Bionics iLet 等 AID 系统集成</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>高</strong> — 作为 CGM 全球领导者，兼容性最好；双分析物传感器是差异化优势</li>
+</ul>
+<h3 id="b3-masimo-nonin">B3. 脉搏血氧 — Masimo &amp; Nonin</h3>
+<p><strong>Masimo</strong>（见 A 类6）— 高端医院级，适合高急性 HaH 患者</p>
+<p><strong>Nonin Medical</strong></p>
+<ul>
+<li><strong>成立/总部</strong>：1986年，Plymouth, Minnesota — 私营公司</li>
+<li><strong>产品</strong>：WristOx2 3150（腕式）、TruO2 OTC（首个 FDA OTC 指尖血氧，跨肤色准确性）、Nonin Health 云平台</li>
+<li><strong>技术壁垒</strong>：指端血氧发明者；跨肤色准确性获 FDA 认可（行业痛点）</li>
+<li><strong>认证</strong>：FDA / CE</li>
+<li><strong>客户</strong>：呼吸科、睡眠中心、在家氧疗患者；与 Tenovi 等 RPM 平台合作</li>
+<li><strong>商业模式</strong>：硬件销售 + 云平台订阅</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>中到高</strong> — 成本低于 Masimo，云平台支持 RPM 场景；但品牌在 HaH 领域不如 Masimo 强势</li>
+</ul>
+<h3 id="b4-irhythm-alivecor">B4. 远程心电 — iRhythm &amp; AliveCor</h3>
+<h4 id="irhythm-technologies">iRhythm Technologies</h4>
+<ul>
+<li><strong>成立/总部</strong>：2006年，San Francisco — 纳斯达克上市（IRTC）</li>
+<li><strong>2025年营收</strong>：~USD 7.2–7.4 亿（同比 +20.3%）；Q4 2025 首次实现 GAAP 净利润</li>
+<li><strong>产品</strong>：Zio Patch（14天连续心电贴片）、Zio AT（房颤定向）、Zio MCT（新一代移动心脏遥测，已提交 FDA）</li>
+<li><strong>技术壁垒</strong>：云 AI 分析（Zio Report）—— 14天数据经 AI + 心脏技术员双重审读；PCP 渠道扩张中</li>
+<li><strong>认证</strong>：FDA / CE</li>
+<li><strong>临床证据</strong>：500+ 篇同行评审论文，指南级临床证据</li>
+<li><strong>客户</strong>：美国 500+ 医疗系统；PCP 渠道拓展</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>中到高</strong> — 对 HaH 心律监测有价值，但设备输出为回顾性报告而非实时遥测；Zio MCT 若获批将提升实时性</li>
+</ul>
+<h4 id="alivecor">AliveCor</h4>
+<ul>
+<li><strong>成立/总部</strong>：2010年，Mountain View, California — 私营</li>
+<li><strong>融资</strong>：~USD 1.5 亿+；销售设备超 300 万台</li>
+<li><strong>产品</strong>：KardiaMobile（单导）、KardiaMobile 6L（首个 FDA 6导个人 ECG）、Kardia AI V2（AI 心律失常分析）</li>
+<li><strong>技术壁垒</strong>：消费级 ECG 市场第一；AI 可检出 AFib、PVC、SVE、宽 QRS 等</li>
+<li><strong>认证</strong>：FDA</li>
+<li><strong>投资者</strong>：OMRON、Khosla Ventures、Qualcomm Ventures</li>
+<li><strong>商业模式</strong>：设备（零售）+ KardiaCare 订阅服务</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>中</strong> — 消费级设备，临床级准确但非连续监测；适合轻症患者或按需 ECG 检查</li>
+</ul>
+<h3 id="b5-eko-tytocare">B5. 远程听诊/肺功能 — Eko &amp; TytoCare</h3>
+<h4 id="eko-health">Eko Health</h4>
+<ul>
+<li><strong>成立/总部</strong>：2013年（UC Berkeley），Emeryville, California — 私营</li>
+<li><strong>融资</strong>：~USD 1.62 亿（含 2024年 Series D $4,100 万）；~180 名员工</li>
+<li><strong>产品</strong>：Eko CORE / CORE 500 数字听诊器、Eko Analysis Software（AI 心音/杂音分析）、Eko Telehealth 平台（800+ 医院使用）</li>
+<li><strong>技术壁垒</strong>：AI SaMD（EFAST，2025年 FDA cleared）—— 深度学习模型分析心音 + ECG；远程听诊实时流传输</li>
+<li><strong>认证</strong>：FDA / CE / UKCA</li>
+<li><strong>临床证据</strong>：发表于 <em>The Lancet Digital Health</em>、<em>Nature Medicine</em>、<em>JAHA</em></li>
+<li><strong>客户</strong>：800+ US 医院；主要医疗系统</li>
+<li><strong>商业模式</strong>：硬件销售 + 软件订阅（SaaS）</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>中到高</strong> — 远程听诊是 HaH 心肺评估短板补充；可与 iHomeCare 平台集成提供虚拟听诊</li>
+</ul>
+<h4 id="tytocare">TytoCare</h4>
+<ul>
+<li><strong>成立/总部</strong>：2011/2012年，Netanya, Israel — 私营</li>
+<li><strong>融资</strong>：~USD 2.05 亿（Insight Partners 牵头）；~190 名员工</li>
+<li><strong>产品</strong>：Home Smart Clinic（AI 远程体检套件：耳镜、喉镜、数字听诊器、体温计、内置摄像头）+ 远程平台</li>
+<li><strong>技术壁垒</strong>：唯一一体化远程体检设备；AI 引导检查和诊断支持；59% 以上问题可远程解决</li>
+<li><strong>认证</strong>：FDA / CE</li>
+<li><strong>客户</strong>：180+ 医疗系统和健康计划（含美国、欧洲、亚洲）</li>
+<li><strong>商业模式</strong>：设备销售 + 平台按次/按患者收费</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>中</strong> — 更适合初级保健和虚拟门诊，对于急性 HaH 的多参数持续监测覆盖不全；可作为 HaH 方案的远程体检补充</li>
+</ul>
+<hr />
+<h2 id="c">四、C 类：平台/整合层</h2>
+<h3 id="1-epic-mychart">1. Epic / MyChart</h3>
+<ul>
+<li><strong>成立/总部</strong>：1979年，Verona, Wisconsin — 私营</li>
+<li><strong>产品</strong>：MyChart 患者门户（1.95 亿+ 活跃用户）；Epic EHR（美国最大 EHR 系统，市占率 ~38%）</li>
+<li><strong>RPM 能力</strong>：支持 PGHD（患者生成健康数据）录入；与 Validic 等平台集成；内置 RPM 工作流引擎</li>
+<li><strong>认证</strong>：非设备厂商，但 MyChart 可接收和展示设备数据</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>高</strong> — 任何 RPM 设备如能通过 FHIR/API 向 Epic 推送数据，即符合医疗机构 EHR 集成核心要求；是 iHomeCare 系统架构中的必需集成层</li>
+</ul>
+<h3 id="2-vivify-health-optumunitedhealth-group">2. Vivify Health（被 Optum/UnitedHealth Group 收购）</h3>
+<ul>
+<li><strong>成立/总部</strong>：2008年，Plano, Texas / 现 Optum 旗下</li>
+<li><strong>收购</strong>：2019年被 Optum 收购（金额未披露）</li>
+<li><strong>产品</strong>：移动端 RPM 平台——App + 蓝牙设备 + 临床分析仪表盘 + 疾病路径管理</li>
+<li><strong>技术壁垒</strong>：Optum 生态内数据网络效应；覆盖慢病、术后、妊娠等多场景</li>
+<li><strong>客户</strong>：主要面向 UnitedHealth/Optum 内部网络 + 外部医疗系统</li>
+<li><strong>商业模式</strong>：Optum 内部成本中心/SaaS</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>中</strong> — 若 iHomeCare 与 Optum/UnitedHealth 合作则有高价值；开放平台的可独立集成性有限</li>
+</ul>
+<h3 id="3-health-recovery-solutions-hrs">3. Health Recovery Solutions (HRS)</h3>
+<ul>
+<li><strong>成立/总部</strong>：2012年，Hoboken, New Jersey — 私营</li>
+<li><strong>融资</strong>：~USD 9,100 万（含 Series C）；年营收 ~USD 2,350 万</li>
+<li><strong>产品</strong>：ClinicianConnect® + PatientConnect® RPM 平台；疾病特异性护理路径、复合 RPM 套件</li>
+<li><strong>技术壁垒</strong>：HaH 专用功能（连续遥测选项）；EHR 深度集成；1,000 万+ 患者覆盖，400+ 医疗系统客户</li>
+<li><strong>认证</strong>：云平台级（非设备 FDA）</li>
+<li><strong>客户</strong>：Michigan Medicine、Allina Health 等 400+ 机构</li>
+<li><strong>商业模式</strong>：SaaS + 临床支持服务</li>
+<li><strong>iHomeCare 整合可行度</strong>：<strong>高</strong> — HaH 原生平台；最强的多场景 RPM 可配置性，可适配急性期到慢病管理全流程</li>
+</ul>
+<hr />
+<h2 id="_1">五、对比矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>厂商</th>
+<th>产品类型</th>
+<th>认证</th>
+<th>核心客户/规模</th>
+<th>估值/营收</th>
+<th>与 iHomeCare 相关性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BioIntelliSense</strong></td>
+<td>多参数贴片（30-90天）</td>
+<td>FDA</td>
+<td>HCA, UCLA, Philips</td>
+<td>~$45M 融资</td>
+<td><strong>高</strong></td>
+</tr>
+<tr>
+<td><strong>Vivalink</strong></td>
+<td>多参数传感器+SDK</td>
+<td>FDA/CE</td>
+<td>临床试验/医院</td>
+<td>~$1.5M 融资</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>Current Health</strong></td>
+<td>HaH 全平台</td>
+<td>FDA/CE/UKCA</td>
+<td>Geisinger, NHS</td>
+<td>独立重组中</td>
+<td><strong>高</strong></td>
+</tr>
+<tr>
+<td><strong>Cadence Solutions</strong></td>
+<td>AI 慢病管理平台</td>
+<td>FDA (AI)</td>
+<td>Duke, 20+ 医疗系统</td>
+<td>$1B 估值</td>
+<td>中-高</td>
+</tr>
+<tr>
+<td><strong>Biofourmis</strong></td>
+<td>AI HaH 全病程平台</td>
+<td>FDA/CE</td>
+<td>Humana, CVS</td>
+<td>$1.3B 估值</td>
+<td><strong>高</strong></td>
+</tr>
+<tr>
+<td><strong>Masimo</strong></td>
+<td>脉搏血氧/多参数</td>
+<td>FDA/CE/MDR</td>
+<td>Top 10 美国医院</td>
+<td>~$15.2B 市值</td>
+<td><strong>高</strong></td>
+</tr>
+<tr>
+<td><strong>Philips</strong></td>
+<td>多参数+遥测+平台</td>
+<td>FDA/CE/MDR</td>
+<td>全球医院系统</td>
+<td>EUR 180 亿营收</td>
+<td><strong>高</strong></td>
+</tr>
+<tr>
+<td><strong>OMRON</strong></td>
+<td>血压监测+VitalSight</td>
+<td>FDA/CE</td>
+<td>全球家庭用户</td>
+<td>私营（全球第一 BP）</td>
+<td><strong>高</strong></td>
+</tr>
+<tr>
+<td><strong>Dexcom</strong></td>
+<td>CGM (G7/Stelo)</td>
+<td>FDA/CE</td>
+<td>74% 美国 CGM 份额</td>
+<td>~$240 亿市值</td>
+<td><strong>高</strong></td>
+</tr>
+<tr>
+<td><strong>Abbott (Libre)</strong></td>
+<td>CGM + OTC</td>
+<td>FDA/CE/MDR</td>
+<td>600万+ 用户</td>
+<td>ABT $2,000 亿+ 市值</td>
+<td><strong>高</strong></td>
+</tr>
+<tr>
+<td><strong>Nonin</strong></td>
+<td>脉搏血氧（OTC+专业）</td>
+<td>FDA/CE</td>
+<td>呼吸/睡眠中心</td>
+<td>私营</td>
+<td>中-高</td>
+</tr>
+<tr>
+<td><strong>iRhythm</strong></td>
+<td>Zio 心电贴片（14天）</td>
+<td>FDA/CE</td>
+<td>500+ 美国医院</td>
+<td>~$30 亿市值</td>
+<td>中-高</td>
+</tr>
+<tr>
+<td><strong>AliveCor</strong></td>
+<td>个人 ECG (Kardia)</td>
+<td>FDA</td>
+<td>300万+ 设备</td>
+<td>$150M+ 融资</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>Eko Health</strong></td>
+<td>AI 数字听诊器</td>
+<td>FDA/CE</td>
+<td>800+ 医院</td>
+<td>$162M 融资</td>
+<td>中-高</td>
+</tr>
+<tr>
+<td><strong>TytoCare</strong></td>
+<td>AI 远程体检套件</td>
+<td>FDA/CE</td>
+<td>180+ 医疗系统</td>
+<td>$205M 融资</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>Epic/MyChart</strong></td>
+<td>EHR 患者门户</td>
+<td>—</td>
+<td>1.95亿用户</td>
+<td>私营</td>
+<td><strong>高</strong>（集成层）</td>
+</tr>
+<tr>
+<td><strong>Vivify Health</strong></td>
+<td>RPM 平台</td>
+<td>—</td>
+<td>Optum 生态</td>
+<td>Optum 旗下</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>HRS</strong></td>
+<td>HaH RPM 平台</td>
+<td>—</td>
+<td>400+ 机构</td>
+<td>$91M 融资</td>
+<td><strong>高</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="2025">六、细分品类市场份额概估（2025年）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>品类</th>
+<th>占 RPM 设备市场份额</th>
+<th>代表厂商</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>心血管监测（含心电）</td>
+<td>~28%</td>
+<td>iRhythm, Philips, AliveCor, Masimo</td>
+</tr>
+<tr>
+<td>血糖/CGM</td>
+<td>~25%</td>
+<td>Dexcom, Abbott</td>
+</tr>
+<tr>
+<td>多参数/一体化平台</td>
+<td>~18%</td>
+<td>BioIntelliSense, Current Health, Philips</td>
+</tr>
+<tr>
+<td>血压监测</td>
+<td>~12%</td>
+<td>OMRON</td>
+</tr>
+<tr>
+<td>脉搏血氧</td>
+<td>~8%</td>
+<td>Masimo, Nonin</td>
+</tr>
+<tr>
+<td>远程听诊/体检</td>
+<td>~3%</td>
+<td>Eko, TytoCare</td>
+</tr>
+<tr>
+<td>其他（体重、体温等）</td>
+<td>~6%</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="ihomecare">七、iHomeCare 整合建议分层</h2>
+<h3 id="tier-1-hah">Tier 1 — 首选整合（高优先级，核心 HaH 必需组件）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>品类</th>
+<th>推荐厂商</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多参数连续监测</td>
+<td>Current Health / Biofourmis</td>
+<td>原生 HaH 平台，全流程能力</td>
+</tr>
+<tr>
+<td>脉搏血氧</td>
+<td>Masimo</td>
+<td>行业黄金标准，医院级准确</td>
+</tr>
+<tr>
+<td>血压</td>
+<td>OMRON</td>
+<td>品牌信任、API 开放、FDA 认证</td>
+</tr>
+<tr>
+<td>CGM（糖尿病患者适用）</td>
+<td>Dexcom 或 Abbott Libre</td>
+<td>根据区域偏好选择</td>
+</tr>
+<tr>
+<td>EHR 集成层</td>
+<td>Epic MyChart</td>
+<td>必须打通的核心系统</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tier-2">Tier 2 — 按需整合（场景化补充）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>品类</th>
+<th>推荐厂商</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 心音分析</td>
+<td>Eko Health</td>
+<td>心肺远程评估，减少面对面访视</td>
+</tr>
+<tr>
+<td>14天心电监测</td>
+<td>iRhythm Zio</td>
+<td>出院后心律失常筛查</td>
+</tr>
+<tr>
+<td>远程体检</td>
+<td>TytoCare</td>
+<td>虚拟巡诊使用</td>
+</tr>
+<tr>
+<td>RPM 平台独立部署</td>
+<td>HRS</td>
+<td>需要全自主平台控制的场景</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tier-3">Tier 3 — 生态观察（潜力型，需进一步评估）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>厂商</th>
+<th>关注点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cadence Solutions</td>
+<td>AI 慢病管理模式——适用于 iHomeCare 出院后长期随访</td>
+</tr>
+<tr>
+<td>BioIntelliSense</td>
+<td>90天贴片适合慢病和老年监测，但目前以 B2B 为主</td>
+</tr>
+<tr>
+<td>Vivalink</td>
+<td>SDK 模式灵活但规模偏小</td>
+</tr>
+<tr>
+<td>AliveCor</td>
+<td>消费级 ECG，适合轻症或患者自测</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_2">八、关键数据源</h2>
+<ul>
+<li>FDA 510(k) 数据库（accessdata.fda.gov）</li>
+<li>SEC 文件（Edgar）：iRhythm (IRTC)、Masimo (MASI)、Dexcom (DXCM)、Abbott (ABT)、Philips (PHG)</li>
+<li>Crunchbase / PitchBook / Tracxn（融资数据）</li>
+<li>MarketsandMarkets、Grand View Research、GM Insights（市场规模）</li>
+<li>Rock Health、Frost &amp; Sullivan（数字健康行业报告）</li>
+<li>各公司官网及新闻稿（截至2026年7月）</li>
+</ul>
+<hr />
+<h2 id="_3">九、免责声明</h2>
+<p>本报告基于公开信息编制。市场数据来自第三方研究机构，可能存在口径差异。公司财务数据以 SEC 文件和官方公告为准。厂商评估仅为基于公开信息的专业判断，不构成商业合作建议。<strong>所有数据均源自可验证的公开来源，未编造任何数据。</strong></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

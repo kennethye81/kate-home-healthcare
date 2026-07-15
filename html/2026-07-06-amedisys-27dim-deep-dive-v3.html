@@ -1,0 +1,2731 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amedisys — 27 维度深度尽调报告 v3.0</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#amedisys-27-v30">Amedisys — 27 维度深度尽调报告 v3.0</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a><ul>
+<li><a href="#_1">一句话定位</a></li>
+<li><a href="#strategic-tension">核心矛盾（Strategic Tension）</a></li>
+<li><a href="#_2">核心指标速览</a></li>
+</ul>
+</li>
+<li><a href="#d2">D2 — 公司全貌</a><ul>
+<li><a href="#_3">基本信息</a></li>
+<li><a href="#_4">收购链时间线</a></li>
+<li><a href="#_5">治理结构</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#unh-amedisys">UNH 收购 Amedisys 的战略逻辑</a></li>
+<li><a href="#amedisys-unh">Amedisys 在 UNH 体系中的角色</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式</a><ul>
+<li><a href="#fy2024">收入结构（收购前 FY2024）</a></li>
+<li><a href="#_6">商业模式图解</a></li>
+<li><a href="#_7">利润转移机制（核心洞察）</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线</a><ul>
+<li><a href="#home-health">Home Health（核心业务）</a></li>
+<li><a href="#hospice">Hospice（最高利润业务）</a></li>
+<li><a href="#palliative-care">Palliative Care（增长业务）</a></li>
+<li><a href="#contessa-healthhah-jv">Contessa Health（HaH JV——最具创新性业务）</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与市场</a><ul>
+<li><a href="#_8">患者画像</a></li>
+<li><a href="#_9">保险客户</a></li>
+<li><a href="#_10">市场覆盖</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 营收与财务</a><ul>
+<li><a href="#2025">2025年财务数据（退市前最后独立报告）</a></li>
+<li><a href="#_11">收购后财务（估）</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 — 工作流与运营流程</a><ul>
+<li><a href="#home-health_1">Home Health 患者流程</a></li>
+<li><a href="#hospice_1">Hospice 患者流程</a></li>
+<li><a href="#contessa-hah">Contessa HaH 患者流程</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 — 技术与数据</a><ul>
+<li><a href="#_12">技术栈深度评估</a></li>
+<li><a href="#_13">收购后的技术协同</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 商业模式深度分析</a><ul>
+<li><a href="#_14">商业模式画布</a></li>
+</ul>
+</li>
+<li><a href="#d11">D11 — 市场规模</a><ul>
+<li><a href="#tam">TAM 分析</a></li>
+<li><a href="#_15">市场份额</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型</a><ul>
+<li><a href="#_16">单元经济</a></li>
+<li><a href="#amedisys">Amedisys 盈利优势分析</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 政策与监管</a><ul>
+<li><a href="#_17">当前影响最大的政策</a></li>
+<li><a href="#doj">DOJ 反垄断和解详情</a></li>
+</ul>
+</li>
+<li><a href="#d14">D14 — 供应链与运营</a><ul>
+<li><a href="#_18">劳动力供应链</a></li>
+<li><a href="#_19">运营效率指标</a></li>
+</ul>
+</li>
+<li><a href="#d15">D15 — 管理层与治理</a><ul>
+<li><a href="#_20">管理层演变</a></li>
+<li><a href="#_21">关键管理层流失事件</a></li>
+</ul>
+</li>
+<li><a href="#d16">D16 — 退出与流动性</a><ul>
+<li><a href="#unh-33b">退出事件：UNH $3.3B 收购</a></li>
+<li><a href="#_22">退出价值分析</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 宏观与经济</a><ul>
+<li><a href="#amedisys_1">对 Amedisys 有重大影响的宏观因素</a></li>
+</ul>
+</li>
+<li><a href="#d18-esg">D18 — 环境与 ESG</a><ul>
+<li><a href="#esg">ESG 评估</a></li>
+<li><a href="#doj_1">DOJ 虚假证明事件详情</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 国际拓展</a></li>
+<li><a href="#d20">D20 — 资金规划</a><ul>
+<li><a href="#_23">收购前资本结构</a></li>
+<li><a href="#_24">收购后</a></li>
+</ul>
+</li>
+<li><a href="#d21">D21 — 增长引擎</a><ul>
+<li><a href="#_25">增长驱动力</a></li>
+<li><a href="#_26">增长挑战</a></li>
+</ul>
+</li>
+<li><a href="#d22">D22 — 协同效应</a><ul>
+<li><a href="#unh-amedisys_1">UNH 收购 Amedisys 的协同效益</a></li>
+</ul>
+</li>
+<li><a href="#d23">D23 — 风险全景</a><ul>
+<li><a href="#_27">风险矩阵</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才</a><ul>
+<li><a href="#_28">组织结构</a></li>
+<li><a href="#_29">人才挑战</a></li>
+</ul>
+</li>
+<li><a href="#d25-cap-table">D25 — 融资历史 / Cap Table</a></li>
+<li><a href="#d26-gtm">D26 — 销售与GTM效率</a><ul>
+<li><a href="#_30">患者获取渠道效率</a></li>
+<li><a href="#gtm">GTM 核心指标</a></li>
+</ul>
+</li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#cms">CMS 星级评分</a></li>
+<li><a href="#contessa">Contessa 临床证据</a></li>
+<li><a href="#_31">证据强度声明</a></li>
+</ul>
+</li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_32">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="amedisys-27-v30">Amedisys — 27 维度深度尽调报告 v3.0</h1>
+<p><strong>调研人：Kenneth Ye | 调研日期：2026-07-06 | 版本：v3.0（完整深度版）</strong>
+<strong>分类：Track B — 美国居家医疗+安宁疗护双巨头 | 现属：UnitedHealth Group/Optum</strong>
+<strong>原上市代码：NASDAQ: AMED（1982-2025）</strong></p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">验证项</th>
+<th style="text-align: left;">结论</th>
+<th style="text-align: left;">证据强度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">是否真正 HaH？</td>
+<td style="text-align: left;">🟡 <strong>部分是</strong>——核心为传统 Medicare Certified Home Health + Hospice；子公司 Contessa Health 运营 HaH JV 模式</td>
+<td style="text-align: left;">⭐⭐⭐ DOJ / CMS / SEC 多重确认</td>
+</tr>
+<tr>
+<td style="text-align: left;">实体类型</td>
+<td style="text-align: left;">🏢 原上市公司 NASDAQ:AMED → 2025.8 UNH/Optum 收购后退市，现为 UNH 全资子公司</td>
+<td style="text-align: left;">⭐⭐⭐ SEC Filing</td>
+</tr>
+<tr>
+<td style="text-align: left;">主营业务</td>
+<td style="text-align: left;"><strong>Home Health (42.3%利润率) + Hospice (48.7%利润率) + Palliative Care + Contessa HaH</strong></td>
+<td style="text-align: left;">⭐⭐⭐ 年报数据</td>
+</tr>
+<tr>
+<td style="text-align: left;">HH 行业地位</td>
+<td style="text-align: left;">收购前为美国 <strong>第二大</strong> 居家医疗公司（仅次于 LHC Group，两者均被 UNH 收购）</td>
+<td style="text-align: left;">⭐⭐⭐ DOJ 反垄断文件</td>
+</tr>
+<tr>
+<td style="text-align: left;">HaH 业务模式</td>
+<td style="text-align: left;">Contessa Health 采用 <strong>JV 合资模式</strong>——与卫生系统共担风险/利润，非自营临床团队</td>
+<td style="text-align: left;">⭐⭐⭐ Contessa 官网</td>
+</tr>
+<tr>
+<td style="text-align: left;">对 iHomeCare 相关性</td>
+<td style="text-align: left;">🟡 <strong>中等</strong>——Contessa 的 JV 风险共担模式是香港公私合作的最佳参照，但 Amedisys 主体（传统 HH）与 iHomeCare（急性 HaH）重叠有限</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<h3 id="_1">一句话定位</h3>
+<p><strong>Amedisys 是美国第二大居家医疗+安宁疗护服务商，2025年8月被 UnitedHealth Group 以 $3.3B 收购后退市，成为 UNH/Optum 垂直整合战略的核心一环。子公司 Contessa Health 运营 HaH JV 模式，与卫生系统共担风险。</strong></p>
+<h3 id="strategic-tension">核心矛盾（Strategic Tension）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">矛盾面</th>
+<th style="text-align: left;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>利好面</strong></td>
+<td style="text-align: left;">UNH 拥有 ~900 万 Medicare Advantage 会员，Amedisys 成为其内部 HH 供应商 → 保险端的 MLR（医疗损失率）优化潜力巨大</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利空面</strong></td>
+<td style="text-align: left;">DOJ 反垄断强制剥离 <strong>164 网点</strong>（19州/~$528M 年收入）→ 削弱了收购的规模效应；UNH 面临持续的反垄断政治压力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>整合风险</strong></td>
+<td style="text-align: left;">Amedisys 原 CEO Paul Kusserow（2023离职）后管理层动荡 + UNH 体系内部文化冲突</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>经营风险</strong></td>
+<td style="text-align: left;">PDGM 费率持续压缩，Medicare FFS 向 MA 转移，HH 行业面临劳动力成本上升</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">核心指标速览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">成立</td>
+<td style="text-align: left;">1982 / Baton Rouge, Louisiana</td>
+<td style="text-align: left;">1982</td>
+</tr>
+<tr>
+<td style="text-align: left;">上市→退市</td>
+<td style="text-align: left;">NASDAQ: AMED → 2025.8 退市</td>
+<td style="text-align: left;">2008-2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">收购方</td>
+<td style="text-align: left;">UnitedHealth Group/Optum</td>
+<td style="text-align: left;">2025.8</td>
+</tr>
+<tr>
+<td style="text-align: left;">收购价</td>
+<td style="text-align: left;"><strong>$3.3B 全现金（$101/股）</strong></td>
+<td style="text-align: left;">2025.8</td>
+</tr>
+<tr>
+<td style="text-align: left;">收购前收入</td>
+<td style="text-align: left;"><strong>~$2.2B</strong>（2024年年化）</td>
+<td style="text-align: left;">FY2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工数</td>
+<td style="text-align: left;"><strong>22,000+</strong></td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">HH 网点数</td>
+<td style="text-align: left;">收购前 ~500+ → DOJ 剥离后 ~350+（估）</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">HH 利润率</td>
+<td style="text-align: left;"><strong>42.3%</strong>（行业领先）</td>
+<td style="text-align: left;">FY2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hospice 利润率</td>
+<td style="text-align: left;"><strong>48.7%</strong>（极其强劲）</td>
+<td style="text-align: left;">FY2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">DOJ 剥离</td>
+<td style="text-align: left;">164 网点 / 19 州 / ~$528M 年收入</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">DOJ 罚款</td>
+<td style="text-align: left;">$1.1M（虚假证明）</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">Contessa HaH</td>
+<td style="text-align: left;">9+ JV 合作伙伴 / 30+ 健康计划 / 32K+ bed days</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">收购 P/E</td>
+<td style="text-align: left;">~22x</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">EV/EBITDA</td>
+<td style="text-align: left;">~15x</td>
+<td style="text-align: left;">2025</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌</h2>
+<h3 id="_3">基本信息</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>全称</strong></td>
+<td style="text-align: left;">Amedisys Inc.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成立</strong></td>
+<td style="text-align: left;">1982 年，由 William F. Borne 在 Louisiana 州 Baton Rouge 创立</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总部</strong></td>
+<td style="text-align: left;">Baton Rouge, Louisiana（收购后总部地位未变）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>上市历史</strong></td>
+<td style="text-align: left;">2008年 NASDAQ: AMED → 2025年8月退市</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>现任 CEO</strong></td>
+<td style="text-align: left;">收购后由 UNH/Optum 体系任命的管理团队（原 CEO Paul Kusserow 2023年离职）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工</strong></td>
+<td style="text-align: left;">22,000+（含 Contessa Health）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主营业务</strong></td>
+<td style="text-align: left;">Home Health / Hospice / Palliative Care / Contessa HaH</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>服务覆盖</strong></td>
+<td style="text-align: left;">收购前约 500+ 网点/38 州 → DOJ 剥离后约 350+ 网点/估</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">收购链时间线</h3>
+<pre><code>1982 ─→ William F. Borne 在 Baton Rouge 创立 Amedisys
+  │
+2008 ─→ NASDAQ 上市 (AMED)
+  │
+2015 ─→ Travis Messina 创立 Contessa Health (Nashville)
+  │
+2021 ─→ Amedisys 收购 Contessa Health（金额未公开，推测 $150-250M）
+  │        Contessa 模式：与卫生系统合资共担风险运营 HaH
+  │
+2023.6 ─→ UNH 宣布以 $3.3B ($101/股) 收购 Amedisys
+  │        └─ 同时期 UNH 已收购 LHC Group ($5.4B, 2023)
+  │        └─ 两笔交易合计 $8.7B → UNH 控制美国 HH 双巨头
+  │
+2023.9 ─→ Paul Kusserow 辞去 CEO → Chris Gerard 接任
+  │
+2023-2025 ─→ DOJ 反垄断审查
+  │        └─ 司法部联合多州检察长起诉阻止收购
+  │        └─ 指控：合并后 UNH 在 350+ 市场拥有过高 HH 份额
+  │        └─ 重点关注：HH 市场竞争减少→价格上涨+护士薪资压降
+  │
+2025.8 ─→ DOJ 和解+收购完成
+  │        └─ 强制剥离 164 网点/19 州/~$528M 年收入
+  │        └─ Amedisys 支付 $1.1M 虚假证明罚款
+  │        └─ 任命独立监督员监督剥离执行
+  │
+2025.8+ ─→ 整合进入 Optum 体系
+  │        └─ Amedisys + LHC Group 合并运营（UNH 旗下双品牌）
+  │        └─ Contessa Health 保持独立 JV 运营
+  │        └─ DOJ 剥离执行中
+</code></pre>
+<h3 id="_5">治理结构</h3>
+<p>收购后 Amedisys 不再保留独立董事会。治理通过 UNH/Optum 体系：</p>
+<ul>
+<li><strong>母公司</strong>：UnitedHealth Group (NYSE: UNH) — 市值 ~$450B</li>
+<li><strong>直接上级</strong>：Optum 部门（UNH 的健康服务分支）</li>
+<li><strong>同级兄弟公司</strong>：LHC Group（2023年收购的另一 HH 巨头）</li>
+<li><strong>子公司</strong>：Contessa Health（HaH JV 运营，保持品牌独立）</li>
+</ul>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="unh-amedisys">UNH 收购 Amedisys 的战略逻辑</h3>
+<p>UNH 的垂直整合战略是理解 Amedisys 价值的核心框架。收购 Amedisys 不是孤立的——它是 UNH 构建&rdquo;保险+医疗服务+药房+数据&rdquo;闭环的<strong>关键拼图</strong>：</p>
+<pre><code>UNH 垂直整合战略
+│
+├── 🏦 **保险层**：UnitedHealthcare（~9,000 万 MA 会员）
+│
+├── 🏥 **医疗服务层**：Optum Health
+│     ├── 初级护理：Optum Care（~10,000+ 医生）
+│     ├── 居家医疗：LHC Group ($5.4B) + Amedisys ($3.3B) = $8.7B
+│     │     └── 目标：控制美国 ~20% HH 市场
+│     ├── 手术中心：Surgical Care Affiliates
+│     └── 紧急护理：MedExpress
+│
+├── 💊 **药房层**：Optum Rx（~6,500 万会员的 PBM）
+│
+└── 📊 **数据层**：Optum Insight（健康数据分析）
+</code></pre>
+<h3 id="amedisys-unh">Amedisys 在 UNH 体系中的角色</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">角色</th>
+<th style="text-align: left;">重要性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MLR 优化</strong></td>
+<td style="text-align: left;">Amedisys 作为内部 HH 供应商 → UNH MA 会员的居家护理成本降低</td>
+<td style="text-align: left;">🔴 核心</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>价值付费</strong></td>
+<td style="text-align: left;">通过 Contessa HaH JV → 探索从 FFS 到价值付费的转型</td>
+<td style="text-align: left;">🔴 核心</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络控制</strong></td>
+<td style="text-align: left;">在 350+ 市场拥有自营 HH 网络 → 减少对外部 HH 供应商的依赖</td>
+<td style="text-align: left;">🟡 重要</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据闭环</strong></td>
+<td style="text-align: left;">Amedisys 临床数据 + UNH 理赔数据 → 更精准的风险分层和干预</td>
+<td style="text-align: left;">🟡 重要</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>品牌独立性</strong></td>
+<td style="text-align: left;">保持 Amedisys/LHC Group 双品牌 → 不引起 Medicare 受益人警觉</td>
+<td style="text-align: left;">🟢 战术</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d4">D4 — 商业模式</h2>
+<h3 id="fy2024">收入结构（收购前 FY2024）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">业务线</th>
+<th style="text-align: center;">收入占比</th>
+<th style="text-align: center;">利润率</th>
+<th style="text-align: left;">支付方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Home Health</strong></td>
+<td style="text-align: center;">~65%</td>
+<td style="text-align: center;"><strong>42.3%</strong></td>
+<td style="text-align: left;">Medicare FFS (PDGM) + MA</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hospice</strong></td>
+<td style="text-align: center;">~28%</td>
+<td style="text-align: center;"><strong>48.7%</strong></td>
+<td style="text-align: left;">Medicare Hospice Benefit</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Palliative Care</strong></td>
+<td style="text-align: center;">~4%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">MA / FFS / 商业保险</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Contessa HaH</strong></td>
+<td style="text-align: center;">~3%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">CMS ACHaH Waiver + MA</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_6">商业模式图解</h3>
+<pre><code>Amedisys 商业模型
+═══════════════════
+
+🏥 患者获取渠道
+├── 医院出院转诊（最大来源：~60%）
+├── 医生/专科诊所推荐（~25%）
+├── UNH MA 会员直接导流（收购后新增）
+└── 口碑/自我推荐（~15%）
+
+💰 支付模型（按业务线）
+│
+├── Home Health (PDGM)
+│   ├── 30天 episode 支付：$2,500-$4,000
+│   ├── 按患者临床特征分组（LUPAs, LUPA thresholds）
+│   └── 价值付费奖金/罚金（HH VBP）
+│
+├── Hospice (Medicare Hospice Benefit)
+│   ├── Per diem 支付：$200-$500/天（分 4 个 care level）
+│   ├── Routine Home Care: ~$200/天（占比 ~95%）
+│   └── General Inpatient: ~$800/天（占比 ~3%）
+│
+└── Contessa HaH (ACHaH Waiver)
+    ├── JV 利润分享（与卫生系统各 %）
+    ├── 支付来自 CMS ACHaH Waiver
+    └── 卫生系统 HaH → Amedisys 管理费用
+
+👥 服务交付
+├── 22,000+ 员工（RN, PT, OT, SW, HHA, 医师）
+├── 500+ 网点（收购前）→ ~350 + DOJ剥离后
+├── 日均患者：~50,000-60,000（估）
+└── 各网点本地化运营（州级监管合规）
+
+💵 利润结构
+├── HH EBITDA 利润率：42.3%（行业平均 ~35-38%）
+├── Hospice EBITDA 利润率：48.7%（行业最高梯队）
+└── UNH 整合后：真正的利润在保险端 MLR 优化
+</code></pre>
+<h3 id="_7">利润转移机制（核心洞察）</h3>
+<p>收购后 Amedisys 的利润计算<strong>不再是独立的 P&amp;L</strong>。真正的价值在于：</p>
+<pre><code>外部 HH 供应商 → Amedisys/UNH HH
+  市场价 $3,500/episode     内部价 $2,800/episode
+                                    ↓
+                          UNH MA 会员成本降低 $700/episode
+                                    ↓
+                          MLR 降低 → 承保利润提升
+                                    ↓
+                          即使 Amedisys 独立运营利润受 PDGM 压缩，
+                          UNH 整合端的 MLR 优化创造更大价值
+</code></pre>
+<hr />
+<h2 id="d5">D5 — 服务产品线</h2>
+<h3 id="home-health">Home Health（核心业务）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>定义</strong></td>
+<td style="text-align: left;">Medicare 认证的居家医疗——出院后患者在家中接受 skilled nursing, PT, OT, 社工服务</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>支付</strong></td>
+<td style="text-align: left;">Medicare FFS (PDGM) — 30天 episode 支付模型</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>收购前收入</strong></td>
+<td style="text-align: left;">~$1.4B（估，占整体的~65%）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HH 利润率</strong></td>
+<td style="text-align: left;"><strong>42.3%</strong> —— 高于行业平均 35-38%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网点数</strong></td>
+<td style="text-align: left;">~350+（收购前约 500+，DOJ 剥离 164 网点中的 HH 部分）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS 星级</strong></td>
+<td style="text-align: left;">4.3 星（行业平均 ~3.5-4.0 星）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>核心竞争力</strong></td>
+<td style="text-align: left;">临床操作效率 + PDGM 编码优化 + 患者获取成本低</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>PDGM 下 Amedisys 的优势：</strong></p>
+<ul>
+<li>30天 episode 支付平均 $2,500-$4,000（取决于临床分组）</li>
+<li>Amedisys 通过优化的编码和临床路径，在 PDGM 下保持高于行业平均的利润率</li>
+<li>UNH 收购后：保险公司+HH 网络闭环 → episode 成本可进一步压低</li>
+</ul>
+<h3 id="hospice">Hospice（最高利润业务）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>定义</strong></td>
+<td style="text-align: left;">Medicare Hospice Benefit——终末期患者的舒适护理（非治疗性）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>支付</strong></td>
+<td style="text-align: left;">Medicare Part A per diem——分 4 级 care level</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>收购前收入</strong></td>
+<td style="text-align: left;">~$600M（估，占~28%）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hospice 利润率</strong></td>
+<td style="text-align: left;"><strong>48.7%</strong> —— 极其强劲，行业最高梯队</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hospice 日均患者</strong></td>
+<td style="text-align: left;">~10,000-12,000（估）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>亮点</strong></td>
+<td style="text-align: left;">美国少数拥有 <strong>We Honor Veterans</strong> 最高级别认证的 HH 公司之一</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Hospice care level 及其 per diem（行业参考）：</strong>
+| Care Level | 支付方式 | 日费率（估） | Amedisys 占比 |
+|:-----------|:---------|:------------:|:-------------:|
+| Routine Home Care | Per diem | ~$200/天 | ~95% |
+| Continuous Home Care | Per diem | ~$950/天 | ~2% |
+| Inpatient Respite Care | Per diem | ~$470/天 | ~1% |
+| General Inpatient Care | Per diem | ~$800/天 | ~2% |</p>
+<h3 id="palliative-care">Palliative Care（增长业务）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>定义</strong></td>
+<td style="text-align: left;">姑息治疗——非终末期的症状管理和生活质量改善（与治疗性护理并行）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>支付</strong></td>
+<td style="text-align: left;">MA 价值付费 + FFS + 商业保险</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>阶段</strong></td>
+<td style="text-align: left;">仍在早期增长阶段，收入占比 ~4%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>增长潜力</strong></td>
+<td style="text-align: left;">随着 MA 覆盖扩大和人口老龄化，姑息治疗需求快速增长</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="contessa-healthhah-jv">Contessa Health（HaH JV——最具创新性业务）</h3>
+<p>详见 Contessa Health 独立 27 维度报告。核心要点：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>模式</strong></td>
+<td style="text-align: left;"><strong>JV 合资</strong>——与卫生系统共担风险/共享利润</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成立</strong></td>
+<td style="text-align: left;">2015 / Nashville / Travis Messina 创立</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>收购</strong></td>
+<td style="text-align: left;">Amedisys 于 2021 年收购（金额未公开）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>合作 JV</strong></td>
+<td style="text-align: left;">9+ 卫生系统合作伙伴</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>健康计划</strong></td>
+<td style="text-align: left;">30+</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>bed days</strong></td>
+<td style="text-align: left;">32K+/年</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>旗舰 JV</strong></td>
+<td style="text-align: left;">Mount Sinai (NY) / Marshfield Clinic (WI)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>服务</strong></td>
+<td style="text-align: left;">HaH + SNF-at-home + Palliative Care at Home</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>增长</strong></td>
+<td style="text-align: left;">31% YoY admissions（收购前）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d6">D6 — 客户与市场</h2>
+<h3 id="_8">患者画像</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Home Health</th>
+<th style="text-align: left;">Hospice</th>
+<th style="text-align: left;">Contessa HaH</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>平均年龄</strong></td>
+<td style="text-align: left;">78岁</td>
+<td style="text-align: left;">82岁</td>
+<td style="text-align: left;">75岁</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要诊断</strong></td>
+<td style="text-align: left;">心衰/COPD/关节置换/糖尿病/中风</td>
+<td style="text-align: left;">癌症/心衰/痴呆/COPD</td>
+<td style="text-align: left;">肺炎/心衰/COPD/UTI</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>支付方</strong></td>
+<td style="text-align: left;">Medicare FFS 60% / MA 35% / 其他 5%</td>
+<td style="text-align: left;">Medicare 95% / MA 5%</td>
+<td style="text-align: left;">CMS ACHaH 70% / MA 30%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>平均 episode 长度</strong></td>
+<td style="text-align: left;">30 天（PDGM 周期）</td>
+<td style="text-align: left;">90 天（中位存活期）</td>
+<td style="text-align: left;">7-14 天（急性期）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>转诊来源</strong></td>
+<td style="text-align: left;">医院出院 60% / 医生 25% / 其他 15%</td>
+<td style="text-align: left;">医生/家属 70% / 医院 30%</td>
+<td style="text-align: left;">ED/住院 90%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_9">保险客户</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户类型</th>
+<th style="text-align: center;">收入占比</th>
+<th style="text-align: left;">重要性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Medicare FFS</strong></td>
+<td style="text-align: center;">~55%</td>
+<td style="text-align: left;">🔴 核心——PDGM+Hospice 的主要支付方</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Medicare Advantage</strong></td>
+<td style="text-align: center;">~30%（增长中）</td>
+<td style="text-align: left;">🔴 核心——收购后 UNH 内部导流</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Medicaid</strong></td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">🟡 稳定但费率低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>商业保险</strong></td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">🟢 小但增长快</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_10">市场覆盖</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">收购前</th>
+<th style="text-align: center;">DOJ 剥离后（估）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">全美 HH 市场份额</td>
+<td style="text-align: center;">~8-10%</td>
+<td style="text-align: center;">~6-7%</td>
+</tr>
+<tr>
+<td style="text-align: left;">HH 网点数</td>
+<td style="text-align: center;">500+</td>
+<td style="text-align: center;">~350+</td>
+</tr>
+<tr>
+<td style="text-align: left;">覆盖州数</td>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;">35+</td>
+</tr>
+<tr>
+<td style="text-align: left;">日均 HH 患者</td>
+<td style="text-align: center;">~40,000-50,000</td>
+<td style="text-align: center;">~30,000-40,000</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 营收与财务</h2>
+<h3 id="2025">2025年财务数据（退市前最后独立报告）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Q1 2025</th>
+<th style="text-align: center;">Q2 2025（估）</th>
+<th style="text-align: center;">2024 FY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>营收</strong></td>
+<td style="text-align: center;"><strong>$594.8M</strong></td>
+<td style="text-align: center;">~$590-600M</td>
+<td style="text-align: center;">~$2.2B</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>YoY 增长</strong></td>
+<td style="text-align: center;">+<strong>4.1%</strong></td>
+<td style="text-align: center;">+~5%</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>净利润</strong></td>
+<td style="text-align: center;"><strong>$61.0M</strong>（含$16.8M并购费用+$48.1M权益法投资利得）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">~$180M</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>调整后净利润</strong></td>
+<td style="text-align: center;"><strong>$41.6M</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>调整后EPS</strong></td>
+<td style="text-align: center;"><strong>$1.25/股</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GAAP EPS</strong></td>
+<td style="text-align: center;"><strong>$1.84/股</strong>（含一次性项目）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>调整后EBITDA</strong></td>
+<td style="text-align: center;"><strong>$68.8M</strong>（+15% YoY）</td>
+<td style="text-align: center;">+~10% YoY</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HH 利润率</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>42.3%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hospice 利润率</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>48.7%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>并购相关费用</strong></td>
+<td style="text-align: center;">$16.8M</td>
+<td style="text-align: center;">持续</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>现金及现金等价物</strong></td>
+<td style="text-align: center;">~$100M+（估）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>长期债务</strong></td>
+<td style="text-align: center;">~$1.2B（估）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Q1 2025 关键背景：</strong></p>
+<ul>
+<li>营收 $594.8M 略低于市场预期 $596.22M（小幅 miss）</li>
+<li>调整后 EBITDA $68.8M → 对应调整后 EBITDA 利润率 ~11.6%</li>
+<li>净利润 $61.0M 同比增长 324%（但含$48.1M一次性权益法投资利得）</li>
+<li>剔除并购费用和一次性利得后的核心净利润约 $28-32M（估）</li>
+<li>并购相关费用 $16.8M → 反映 UNH 收购的推进成本</li>
+<li>公司因收购 pending 不举办 Q1 业绩会</li>
+<li>HH admissions 持续增长，Hospice census 稳定</li>
+</ul>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">收购参数</th>
+<th style="text-align: left;">数值</th>
+<th style="text-align: left;">行业基准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">收购价</td>
+<td style="text-align: left;"><strong>$3.3B</strong></td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">每股价格</td>
+<td style="text-align: left;">$101/股</td>
+<td style="text-align: left;">较宣布前溢价 ~20%</td>
+</tr>
+<tr>
+<td style="text-align: left;">EV/EBITDA</td>
+<td style="text-align: left;"><strong>~15x</strong></td>
+<td style="text-align: left;">HH 行业平均 12-14x</td>
+</tr>
+<tr>
+<td style="text-align: left;">P/E</td>
+<td style="text-align: left;"><strong>~22x</strong></td>
+<td style="text-align: left;">高于行业 PE</td>
+</tr>
+<tr>
+<td style="text-align: left;">DOJ 强制剥离价值</td>
+<td style="text-align: left;">~$528M/年收入</td>
+<td style="text-align: left;">约 $600-800M 企业价值（估）</td>
+</tr>
+<tr>
+<td style="text-align: left;">有效收购价（扣除剥离）</td>
+<td style="text-align: left;"><strong>~$2.5-2.7B</strong></td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">UNH 同时收购 LHC Group</td>
+<td style="text-align: left;">$5.4B</td>
+<td style="text-align: left;">合计 $8.7B 控制 HH 双巨头</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_11">收购后财务（估）</h3>
+<p>收购后 Amedisys 不再独立报告财务。以下为基于行业数据的推算：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">推算值</th>
+<th style="text-align: left;">方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Amedisys (UNH 内) 年收入</td>
+<td style="text-align: left;">~$1.7B（剥离后）</td>
+<td style="text-align: left;">$2.2B - $0.528B</td>
+</tr>
+<tr>
+<td style="text-align: left;">LHC Group (UNH 内) 年收入</td>
+<td style="text-align: left;">~$2.3B（估）</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">UNH 总 HH+Hospice 收入</td>
+<td style="text-align: left;"><strong>~$4B</strong></td>
+<td style="text-align: left;">全美最大 HH 运营体</td>
+</tr>
+<tr>
+<td style="text-align: left;">HH 内部转移定价节省</td>
+<td style="text-align: left;">~$700/episode</td>
+<td style="text-align: left;">UNH MA 端 MLR 优化</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8">D8 — 工作流与运营流程</h2>
+<h3 id="home-health_1">Home Health 患者流程</h3>
+<pre><code>入院触发
+   │
+   ├── 医院出院（60%）→ 转诊至 Amedisys 当地网点
+   │     └── 接受转诊 → 48小时内首次评估
+   │
+   ├── 医生推荐（25%）→ 医生/诊所发起
+   │     └── 确认 Medicare 资格 → 安排评估
+   │
+   └── 自荐/家属（15%）→ 电话/在线表格
+         └── 筛选 → 联系医生获取医嘱
+              ↓
+PDGM Episode 启动
+   ├── 注册评估（OASIS 数据收集）
+   ├── 制定护理计划（Physician signed）
+   ├── 服务交付（30天周期）
+   │     ├── Skilled Nursing (SN) → 伤口护理/用药/教育
+   │     ├── Physical Therapy (PT) → 康复/安全
+   │     ├── Occupational Therapy (OT) → ADL 训练
+   │     └── Social Work (SW) → 资源协调
+   ├── 中期评估（Day 14）
+   └── 出院/转 HOSPICE 或转 Episode 2
+</code></pre>
+<h3 id="hospice_1">Hospice 患者流程</h3>
+<pre><code>终末期诊断 → 医生证明 ≤6个月生命预期
+       ↓
+Hospice 入院评估 → 患者/家属选择 Hospice 而非治愈性治疗
+       ↓
+Care Plan 制定（MDT: RN+SW+Chaplain+Volunteer）
+       ↓
+Per diem 服务周期
+  ├── RN 定期访视（通常每周 2-3 次）
+  ├── HHA 个人护理（每日/按需）
+  ├── 社工/牧师支持
+  ├── 症状管理/用药
+  └── 家属支持/哀伤辅导
+       ↓
+患者去世 → 家属 bereavement 支持（13个月）
+</code></pre>
+<h3 id="contessa-hah">Contessa HaH 患者流程</h3>
+<pre><code>ED/住院 → 临床评估筛选（入排标准）
+       ↓
+符合条件 → Contessa JV 团队接触患者
+       ↓
+居家住院入组（CMS ACHaH Waiver）
+  ├── 设备部署（RPM + 输液泵等）
+  ├── 每日 RN 上门 + 虚拟查房
+  └── 医师每日远程查房
+       ↓
+出院（平均 LOS 7-14天）
+  ├── 恢复 → 出院
+  └── 转传统 HH → Amedisys HH 继续护理
+</code></pre>
+<hr />
+<h2 id="d9">D9 — 技术与数据</h2>
+<h3 id="_12">技术栈深度评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+<th style="text-align: left;">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>9.1 EHR/平台</strong></td>
+<td style="text-align: left;">🟡 行业标准</td>
+<td style="text-align: left;">使用标准 HH EHR（如 Epic/Meditech 的 HH 模块），非自研平台</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.2 Contessa 平台</strong></td>
+<td style="text-align: left;">✅ 专有</td>
+<td style="text-align: left;">Contessa 自有 HaH 运营平台（JV 共享给合作伙伴）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.3 调度/RPM</strong></td>
+<td style="text-align: left;">🟡 第三方为主</td>
+<td style="text-align: left;">使用行业标准 RPM 设备（非自研），UNH 收购后可接入 Optum 数据平台</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.4 数据分析</strong></td>
+<td style="text-align: left;">🟡 基础</td>
+<td style="text-align: left;">UNH 收购前基础分析能力；收购后受益于 Optum Insight 数据科学团队</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.5 AI 能力</strong></td>
+<td style="text-align: left;">❌ 无 FDA 认证 AI</td>
+<td style="text-align: left;">与 Biofourmis/Cadence 等 AI 公司不同，Amedisys 无自研 AI 产品</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.6 数据闭环</strong></td>
+<td style="text-align: left;">✅ 收购后强化</td>
+<td style="text-align: left;">UNH 体系内：临床数据 + 理赔数据 + 药房数据 → 全链路数据视图</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.7 差异化</strong></td>
+<td style="text-align: left;">🟡 运营效率</td>
+<td style="text-align: left;">Amedisys 的核心竞争力在运营执行（clinical ops, PDGM 编码优化），非技术壁垒</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_13">收购后的技术协同</h3>
+<pre><code>UNH 数据资产 ← → Amedisys 临床数据
+     │                    │
+     ├─ 理赔数据          ├─ OASIS 评估数据
+     ├─ 药房数据          ├─ 患者结局数据
+     ├─ MA 会员数据       ├─ 护理利用数据
+     └─ 网络数据          └─ 员工排班数据
+           ↓
+Optum Insight 分析引擎
+  ├── 患者风险分层 → 早期介入 → 降低住院
+  ├── HH episode 成本预测 → 定价优化
+  └── 护士排班优化 → 劳动力成本降低
+</code></pre>
+<hr />
+<h2 id="d10">D10 — 商业模式深度分析</h2>
+<h3 id="_14">商业模式画布</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">板块</th>
+<th style="text-align: left;">Amedisys（收购前）</th>
+<th style="text-align: left;">Amedisys（UNH 体系内）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>价值主张</strong></td>
+<td style="text-align: left;">临床高质量 HH+Hospice 服务，高于行业平均的 CMS 星级</td>
+<td style="text-align: left;">保险→HH 的无缝衔接，MLR 优化价值</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>客户细分</strong></td>
+<td style="text-align: left;">Medicare 受益人（65+）</td>
+<td style="text-align: left;">UNH MA 会员 + 外部 Medicare 受益人</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>渠道</strong></td>
+<td style="text-align: left;">医院转诊/医生推荐/UNH 内部（收购后）</td>
+<td style="text-align: left;">UNH MA 会员直接导流 + 传统转诊</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>收入来源</strong></td>
+<td style="text-align: left;">Medicare FFS (PDGM) + MA + Hospice per diem</td>
+<td style="text-align: left;">内部转移定价 + 外部 Medicare + MA</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键资源</strong></td>
+<td style="text-align: left;">22,000 员工 + 500+ 网点 + Contessa JV 协议</td>
+<td style="text-align: left;">+ UNH 资源/数据/MA 会员基数</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键活动</strong></td>
+<td style="text-align: left;">HH episode 管理 + Hospice 护理 + HaH JV</td>
+<td style="text-align: left;">垂直整合下的 HH 规模化运营</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键伙伴</strong></td>
+<td style="text-align: left;">医院/医生/UNH（收购后）</td>
+<td style="text-align: left;">UNH/Optum + Contessa JV 卫生系统</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成本结构</strong></td>
+<td style="text-align: left;">劳动力 60% + 行政 20% + 其他 20%</td>
+<td style="text-align: left;">劳动力 60% + 行政 15% + 其他 25%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>竞争壁垒</strong></td>
+<td style="text-align: left;">网点规模 + CMS 星级 + 运营效率</td>
+<td style="text-align: left;">+ UNH 保险网 + 数据资产</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11">D11 — 市场规模</h2>
+<h3 id="tam">TAM 分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">细分市场</th>
+<th style="text-align: center;">规模（2024）</th>
+<th style="text-align: center;">增长率</th>
+<th style="text-align: center;">2030 预估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>美国 Medicare HH 市场</strong></td>
+<td style="text-align: center;">~$100B+</td>
+<td style="text-align: center;">5-7% CAGR</td>
+<td style="text-align: center;">~$140B</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>美国 Hospice 市场</strong></td>
+<td style="text-align: center;">~$25B</td>
+<td style="text-align: center;">6-8% CAGR</td>
+<td style="text-align: center;">~$40B</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>美国 HaH 市场（急性）</strong></td>
+<td style="text-align: center;">~$22.8B</td>
+<td style="text-align: center;">30%+ CAGR</td>
+<td style="text-align: center;">~$1.16T（2034）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>美国 Palliative Care 市场</strong></td>
+<td style="text-align: center;">~$10B</td>
+<td style="text-align: center;">10%+ CAGR</td>
+<td style="text-align: center;">~$20B</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UNH 可触达 TAM（MA 会员 HH）</strong></td>
+<td style="text-align: center;">~$15-20B</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_15">市场份额</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">排名</th>
+<th style="text-align: left;">公司</th>
+<th style="text-align: center;">HH 份额</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>UNH (LHC Group + Amedisys)</strong></td>
+<td style="text-align: center;"><strong>~15-20%</strong></td>
+<td style="text-align: left;">行业双巨头</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">CenterWell / Humana</td>
+<td style="text-align: center;">~8-10%</td>
+<td style="text-align: left;">支付方自营</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Enhabit (EHC)</td>
+<td style="text-align: center;">~5-6%</td>
+<td style="text-align: left;">独立上市</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">BAYADA</td>
+<td style="text-align: center;">~3-4%</td>
+<td style="text-align: left;">非营利转营利</td>
+</tr>
+<tr>
+<td style="text-align: center;">其余</td>
+<td style="text-align: left;">数千家独立 HH 机构</td>
+<td style="text-align: center;">~60-65%</td>
+<td style="text-align: left;">极度分散</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型</h2>
+<h3 id="_16">单元经济</h3>
+<p><strong>Home Health PDGM Episode：</strong></p>
+<pre><code>收入（30天 episode）:        $2,500-4,000
+└── 临床成本（人力）:         -$1,000-1,500
+└── 行政/管理费用:           -$300-500
+└── 价值付费调整（+/LUPAs）:   -$200-+$500
+═══════════════════════════════════
+Episode 利润:                 $700-1,500（估）
+Episode EBITDA 利润率:         ~25-35%
+</code></pre>
+<p><strong>Hospice Per Diem（Routine Home Care）：</strong></p>
+<pre><code>日费率:                       ~$200
+└── RN 访视成本:             -$40-60
+└── HHA 个人护理:            -$30-50
+└── 用药/医疗耗材:           -$20-30
+└── 行政/管理:               -$10-20
+═══════════════════════════════════
+日利润:                       ~$50-100
+日利润率:                     ~25-50%
+</code></pre>
+<h3 id="amedisys">Amedisys 盈利优势分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">优势</th>
+<th style="text-align: left;">说明</th>
+<th style="text-align: left;">可持续性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>HH 42.3% 利润率</strong></td>
+<td style="text-align: left;">高于行业平均（35-38%），通过优化 PDGM 编码+临床路径实现</td>
+<td style="text-align: left;">🟡 PDGM 费率持续压缩，维持此水平的难度加大</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hospice 48.7% 利润率</strong></td>
+<td style="text-align: left;">行业最高梯队，得益于规模效应+品牌溢价</td>
+<td style="text-align: left;">🟡 监管持续加强（Hospice 欺诈调查增加）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UNH MLR 优化</strong></td>
+<td style="text-align: left;">收购后真正的利润在保险端——每 episode 节省 ~$700</td>
+<td style="text-align: left;">🟢 可持续（垂直整合的天然优势）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>规模效应</strong></td>
+<td style="text-align: left;">500+ 网点的集中采购+管理分摊</td>
+<td style="text-align: left;">🟢 可持续</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d13">D13 — 政策与监管</h2>
+<h3 id="_17">当前影响最大的政策</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策</th>
+<th style="text-align: left;">影响</th>
+<th style="text-align: left;">对 Amedisys 的风险/机遇</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>PDGM（Patient-Driven Groupings Model）</strong></td>
+<td style="text-align: left;">HH 价值付费的主支付模型</td>
+<td style="text-align: left;">🟡 费率每年 ~1-3% 压缩（CMS 预算中性规则）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HH VBP（Value-Based Purchasing）</strong></td>
+<td style="text-align: left;">HH 质量→奖金/罚金</td>
+<td style="text-align: left;">🟢 Amedisys 4.3 星 → 可获 VBP 奖金</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS ACHaH Waiver（延期至2030.9）</strong></td>
+<td style="text-align: left;">急性 HaH 的 Medicare 支付框架</td>
+<td style="text-align: left;">🟢 利好 Contessa HaH</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MA 费率调整</strong></td>
+<td style="text-align: left;">CMS 每年调整 MA 基准费率</td>
+<td style="text-align: left;">🟡 费率增长放缓 → UNH 更依赖 HH 内部降本</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DOJ 反垄断</strong></td>
+<td style="text-align: left;">Amedisys 被强制剥离 164 网点</td>
+<td style="text-align: left;">🔴 执行期监督+后续政治风险</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hospice 监管加强</strong></td>
+<td style="text-align: left;">更严格的资格认证+欺诈调查</td>
+<td style="text-align: left;">🟡 合规成本上升</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>联邦最低 staffing 标准</strong></td>
+<td style="text-align: left;">养老院/HH 员工配备要求</td>
+<td style="text-align: left;">🟡 劳动力成本压力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Medicare FFS→MA 转移</strong></td>
+<td style="text-align: left;">Medicare 受益人从 FFS 转向 MA</td>
+<td style="text-align: left;">🔴 FFS 费率更高→转向 MA 可能降低 Amedisys 外部收入</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="doj">DOJ 反垄断和解详情</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">条款</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>剥离数量</strong></td>
+<td style="text-align: left;">164 个 HH+Hospice 网点（含 1 个姑息治疗设施）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>涉及州数</strong></td>
+<td style="text-align: left;">19 个州</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>剥离年收入</strong></td>
+<td style="text-align: left;">~$528M</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>监督机制</strong></td>
+<td style="text-align: left;">独立监督员监督剥离执行和合规</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>附加条款</strong></td>
+<td style="text-align: left;">若剥离未获批准则追加剥离 8 个网点</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>民事罚款</strong></td>
+<td style="text-align: left;">Amedisys 支付 $1.1M 虚假证明罚款</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>培训要求</strong></td>
+<td style="text-align: left;">Amedisys 企业+现场领导层进行反垄断合规培训</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 供应链与运营</h2>
+<h3 id="_18">劳动力供应链</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: left;">数据</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>员工总数</strong></td>
+<td style="text-align: left;">22,000+</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RN（注册护士）</strong></td>
+<td style="text-align: left;">~8,000（估）</td>
+<td style="text-align: left;">🟡 全美 RN 短缺长期存在</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PT/OT（康复治疗师）</strong></td>
+<td style="text-align: left;">~3,000（估）</td>
+<td style="text-align: left;">🟡 供需平衡偏紧</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HHA（居家护理员）</strong></td>
+<td style="text-align: left;">~6,000（估）</td>
+<td style="text-align: left;">🔴 最低工资上涨+劳动力竞争</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>行政/管理</strong></td>
+<td style="text-align: left;">~5,000（估）</td>
+<td style="text-align: left;">🟢 稳定</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_19">运营效率指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Amedisys</th>
+<th style="text-align: center;">行业平均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>每次访视成本</strong></td>
+<td style="text-align: center;">~$150-200（估）</td>
+<td style="text-align: center;">~$160-220</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SN 每小时成本</strong></td>
+<td style="text-align: center;">~$65-75（估）</td>
+<td style="text-align: center;">~$60-80</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PT 每小时成本</strong></td>
+<td style="text-align: center;">~$75-85（估）</td>
+<td style="text-align: center;">~$70-90</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HH episode 平均长度</strong></td>
+<td style="text-align: center;">~28 天</td>
+<td style="text-align: center;">~30 天</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LUPA 率（低于阈值）</strong></td>
+<td style="text-align: center;">~8-10%（估）</td>
+<td style="text-align: center;">~12-15%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>急性住院转介率</strong></td>
+<td style="text-align: center;">~20-22%（估）</td>
+<td style="text-align: center;">~22-25%</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d15">D15 — 管理层与治理</h2>
+<h3 id="_20">管理层演变</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">时期</th>
+<th style="text-align: left;">CEO</th>
+<th style="text-align: left;">背景</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1982-2019</td>
+<td style="text-align: left;">William F. Borne</td>
+<td style="text-align: left;">创始人</td>
+<td style="text-align: left;">带领公司从小型地方 HH 发展到全国网络</td>
+</tr>
+<tr>
+<td style="text-align: left;">2019-2023.9</td>
+<td style="text-align: left;">Paul Kusserow</td>
+<td style="text-align: left;">前 Evolent Health CEO</td>
+<td style="text-align: left;">主导 Contessa 收购，战略转型</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023.9-2025.8</td>
+<td style="text-align: left;">Chris Gerard</td>
+<td style="text-align: left;">Amedisys 原 COO</td>
+<td style="text-align: left;">过渡期 CEO，主导 UNH 收购整合</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025.8+</td>
+<td style="text-align: left;">UNH/Optum 任命</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">收购后退市，UNH 体系内管理</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_21">关键管理层流失事件</h3>
+<pre><code>2023.9 Paul Kusserow 辞任 CEO
+  └─ 原因：收购期间管理层动荡
+  └─ 影响：战略方向的短暂不确定
+  └─ 接任：Chris Gerard（COO 升任）
+
+2025.1 Contessa 总裁 Travis Messina 离职
+  └─ 原因：UNH 收购后文化不匹配（推测）
+  └─ 影响：HaH JV 业务的创新动力可能弱化
+
+2025.8 UNH 收购完成 → Amedisys 退市
+  └─ 独立董事会解散 → UNH 治理框架
+  └─ 原高管团队部分留任，部分离任
+</code></pre>
+<hr />
+<h2 id="d16">D16 — 退出与流动性</h2>
+<h3 id="unh-33b">退出事件：UNH $3.3B 收购</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">退出参数</th>
+<th style="text-align: left;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>退出类型</strong></td>
+<td style="text-align: left;">战略收购（全现金）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>收购方</strong></td>
+<td style="text-align: left;">UnitedHealth Group / Optum</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>收购价</strong></td>
+<td style="text-align: left;">$3.3B（$101/股）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>溢价</strong></td>
+<td style="text-align: left;">~20% 较宣布前价格</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>P/E 倍数</strong></td>
+<td style="text-align: left;">~22x</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>EV/EBITDA</strong></td>
+<td style="text-align: left;">~15x</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>完成时间</strong></td>
+<td style="text-align: left;">2025年8月（从宣布到完成 ~2年）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>股东回报</strong></td>
+<td style="text-align: left;">全额现金退出（无需承担 UNH 股价风险）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>对 iHomeCare 启示</strong></td>
+<td style="text-align: left;">HH 行业最大退出事件之一——支付方垂直整合是可行的退出路径</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">退出价值分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">价值来源</th>
+<th style="text-align: left;">金额</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">UNH 支付总价</td>
+<td style="text-align: left;">$3.3B</td>
+</tr>
+<tr>
+<td style="text-align: left;">DOJ 剥离价值（估）</td>
+<td style="text-align: left;">~$600-800M</td>
+</tr>
+<tr>
+<td style="text-align: left;">有效收购价（扣除剥离）</td>
+<td style="text-align: left;">~$2.5-2.7B</td>
+</tr>
+<tr>
+<td style="text-align: left;">Amedisys 收购前年收入</td>
+<td style="text-align: left;">~$2.2B</td>
+</tr>
+<tr>
+<td style="text-align: left;">EV/收入倍数</td>
+<td style="text-align: left;">~1.5x</td>
+</tr>
+<tr>
+<td style="text-align: left;">EV/EBITDA（实际）</td>
+<td style="text-align: left;">~15x</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d17">D17 — 宏观与经济</h2>
+<h3 id="amedisys_1">对 Amedisys 有重大影响的宏观因素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">因素</th>
+<th style="text-align: left;">影响方向</th>
+<th style="text-align: left;">影响程度</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>人口老龄化</strong></td>
+<td style="text-align: left;">🟢 利好</td>
+<td style="text-align: left;">🔴 核心</td>
+<td style="text-align: left;">65+人口 ~5,600 万（2024）→ 8,000 万（2040）→ HH/Hospice 需求结构性增长</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Medicare FFS→MA 转移</strong></td>
+<td style="text-align: left;">🟡 中性</td>
+<td style="text-align: left;">🔴 核心</td>
+<td style="text-align: left;">~50% Medicare 受益人已在 MA → UNH 内部网络受益，但外部 FFS 患者减少</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利率环境</strong></td>
+<td style="text-align: left;">🟡 中性</td>
+<td style="text-align: left;">🟢 低</td>
+<td style="text-align: left;">Amedisys 无大量债务，利率影响有限</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>劳动力市场</strong></td>
+<td style="text-align: left;">🔴 利空</td>
+<td style="text-align: left;">🔴 核心</td>
+<td style="text-align: left;">RN 短缺 + 最低工资上涨 + 竞争加剧 → 劳动力成本持续上行</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>通胀</strong></td>
+<td style="text-align: left;">🔴 利空</td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">薪资通胀 + 医疗耗材成本上涨 → 利润率承压</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMS 预算压力</strong></td>
+<td style="text-align: left;">🔴 利空</td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">PDGM 费率持续压缩，Medicare 财务可持续性压力加大</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>政治/反垄断</strong></td>
+<td style="text-align: left;">🔴 利空</td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">DOJ 持续关注 UNH 市场力量，Amedisys 仍处于监督期</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18-esg">D18 — 环境与 ESG</h2>
+<h3 id="esg">ESG 评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评级</th>
+<th style="text-align: left;">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>环境（E）</strong></td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">医疗运营的碳足迹（车辆里程/办公楼能耗）——HH 的碳足迹低于机构护理</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社会（S）</strong></td>
+<td style="text-align: left;">🟢 正面</td>
+<td style="text-align: left;">为 50,000+ 居家患者提供服务；22,000 个就业岗位；Hospice 支持终末期患者</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理（G）</strong></td>
+<td style="text-align: left;">🔴 负面</td>
+<td style="text-align: left;"><strong>DOJ $1.1M 虚假证明罚款</strong> → 严重治理事故；反垄断合规问题</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="doj_1">DOJ 虚假证明事件详情</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">事项</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>违规行为</strong></td>
+<td style="text-align: left;">Amedisys 在 DOJ 调查中虚假证明已提供&rdquo;真实、正确、完整&rdquo;的文件</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>罚款金额</strong></td>
+<td style="text-align: left;">$1.1M</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>影响</strong></td>
+<td style="text-align: left;">损害公司信誉；反映收购过程中的合规文化问题</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>整改措施</strong></td>
+<td style="text-align: left;">要求对企业+现场领导层进行反垄断合规培训</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d19">D19 — 国际拓展</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">评估项</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>当前国际化</strong></td>
+<td style="text-align: left;">❌ <strong>无国际业务</strong>——Amedisys 完全聚焦美国市场</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>原因</strong></td>
+<td style="text-align: left;">美国 Medicare HH 市场规模大且有利可图 → 无国际化动力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Contessa HaH 的跨境启发</strong></td>
+<td style="text-align: left;">iHomeCare 可借鉴 JV 模式——与香港医院管理局/保险公司建立 JV</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>未来可能性</strong></td>
+<td style="text-align: left;">UNH 体系下国际拓展可能性低——UNH 自身也聚焦美国市场</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20">D20 — 资金规划</h2>
+<h3 id="_23">收购前资本结构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>长期债务</strong></td>
+<td style="text-align: left;">~$1.2B（收购前）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>现金流（运营）</strong></td>
+<td style="text-align: left;">~$350-400M/年</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAPEX</strong></td>
+<td style="text-align: left;">~$40-50M/年（轻资产模式）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>自由现金流</strong></td>
+<td style="text-align: left;">~$300-350M/年</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>债务/EBITDA</strong></td>
+<td style="text-align: left;">~2.5x（收购前）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_24">收购后</h3>
+<p>收购后 Amedisys 不再独立融资，资金需求由 UNH 集团统一调拨。</p>
+<hr />
+<h2 id="d21">D21 — 增长引擎</h2>
+<h3 id="_25">增长驱动力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">驱动因素</th>
+<th style="text-align: left;">增长潜力</th>
+<th style="text-align: left;">时间线</th>
+<th style="text-align: left;">确定性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>UNH MA 会员导流</strong></td>
+<td style="text-align: left;">🔴 核心</td>
+<td style="text-align: left;">收购后立即</td>
+<td style="text-align: left;">高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Contessa HaH 扩张</strong></td>
+<td style="text-align: left;">🔴 高增长</td>
+<td style="text-align: left;">2025+</td>
+<td style="text-align: left;">中（受 CMS Waiver 延期至2030利好）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HH VBP 奖金</strong></td>
+<td style="text-align: left;">🟡 中等</td>
+<td style="text-align: left;">持续</td>
+<td style="text-align: left;">中（取决于 CMS 星级维持）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hospice 人口增长</strong></td>
+<td style="text-align: left;">🟡 稳定</td>
+<td style="text-align: left;">长期</td>
+<td style="text-align: left;">高（老龄化结构性需求）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Palliative Care 扩展</strong></td>
+<td style="text-align: left;">🟡 早期</td>
+<td style="text-align: left;">2025-2030</td>
+<td style="text-align: left;">中（支付覆盖仍在完善）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UNH 内部成本优化</strong></td>
+<td style="text-align: left;">🟡 中等</td>
+<td style="text-align: left;">收购后持续</td>
+<td style="text-align: left;">高</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_26">增长挑战</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">挑战</th>
+<th style="text-align: left;">严重性</th>
+<th style="text-align: left;">缓解因素</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">DOJ 剥离 164 网点 → 收入规模缩减</td>
+<td style="text-align: left;">🔴 高</td>
+<td style="text-align: left;">剥离是必要的反垄断和解条件</td>
+</tr>
+<tr>
+<td style="text-align: left;">PDGM 费率压缩</td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">Amedisys 的运营效率高于行业平均</td>
+</tr>
+<tr>
+<td style="text-align: left;">劳动力短缺</td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">UNH 资源可支持有竞争力的薪酬</td>
+</tr>
+<tr>
+<td style="text-align: left;">UNH 整合不确定性</td>
+<td style="text-align: left;">🟡 中</td>
+<td style="text-align: left;">至今整合进展顺利</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d22">D22 — 协同效应</h2>
+<h3 id="unh-amedisys_1">UNH 收购 Amedisys 的协同效益</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">协同领域</th>
+<th style="text-align: center;">协同效益（估）</th>
+<th style="text-align: left;">实现时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>收入协同：MA 会员导流</strong></td>
+<td style="text-align: center;">+$200-500M</td>
+<td style="text-align: left;">2025-2027</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成本协同：临床数据整合</strong></td>
+<td style="text-align: center;">+$50-100M</td>
+<td style="text-align: left;">2025-2028</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成本协同：集中采购</strong></td>
+<td style="text-align: center;">+$20-50M</td>
+<td style="text-align: left;">2025-2027</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成本协同：后台合并</strong></td>
+<td style="text-align: center;">+$30-60M</td>
+<td style="text-align: left;">2025-2028</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MLR 优化（保险端）</strong></td>
+<td style="text-align: center;">+$100-300M</td>
+<td style="text-align: left;">即刻</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>合计协同效益（估）</strong></td>
+<td style="text-align: center;"><strong>+$400M-1B</strong></td>
+<td style="text-align: left;">2025-2030</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d23">D23 — 风险全景</h2>
+<h3 id="_27">风险矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险</th>
+<th style="text-align: center;">可能性</th>
+<th style="text-align: center;">影响</th>
+<th style="text-align: left;">缓释措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>DOJ 监督期合规失败</strong></td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🔴 极高</td>
+<td style="text-align: left;">独立监督员 + 强制培训</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UNH 进一步反垄断审查</strong></td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🔴 高</td>
+<td style="text-align: left;">政治风险（两党均关注医疗垄断）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PDGM 费率大幅压缩</strong></td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">运营效率领先 + UNH 内部价值</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Contessa HaH 增长放缓</strong></td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">CMS Waiver 延至 2030</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hospice 欺诈调查</strong></td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">行业风险——加强合规</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人才流失</strong></td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">UNH 薪酬竞争力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MA 费率削减</strong></td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">影响 UNH → 间接影响 Amedisys</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>劳动力短缺恶化</strong></td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">UNH 资源支持</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<h3 id="_28">组织结构</h3>
+<pre><code>UNH / Optum
+  │
+  ├── Optum Care（初级+专科医疗）
+  │
+  ├── Optum Health（居家+临终） ← Amedisys + LHC Group
+  │     ├── Amedisys（HH+Hospice+Palliative）
+  │     │     └── Contessa Health（HaH JV）
+  │     └── LHC Group（HH+Hospice）
+  │
+  ├── Optum Rx（药房）
+  └── Optum Insight（数据）
+</code></pre>
+<h3 id="_29">人才挑战</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">人才领域</th>
+<th style="text-align: left;">现状</th>
+<th style="text-align: left;">风险等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RN（注册护士）</strong></td>
+<td style="text-align: left;">全美 ~10 万 RN 缺口</td>
+<td style="text-align: left;">🔴</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HHA（居家护理员）</strong></td>
+<td style="text-align: left;">行业离职率 ~30-40%</td>
+<td style="text-align: left;">🔴</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>管理层</strong></td>
+<td style="text-align: left;">UNH 收购后部分流失</td>
+<td style="text-align: left;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Contessa 团队</strong></td>
+<td style="text-align: left;">创始人+总裁已离职</td>
+<td style="text-align: left;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d25-cap-table">D25 — 融资历史 / Cap Table</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">轮次/事件</th>
+<th style="text-align: left;">日期</th>
+<th style="text-align: left;">金额</th>
+<th style="text-align: left;">投资者/类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">公司创立</td>
+<td style="text-align: left;">1982</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">William F. Borne</td>
+</tr>
+<tr>
+<td style="text-align: left;">NASDAQ 上市</td>
+<td style="text-align: left;">2008</td>
+<td style="text-align: left;">~$100M（IPO）</td>
+<td style="text-align: left;">公开市场</td>
+</tr>
+<tr>
+<td style="text-align: left;">收购 Contessa Health</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: left;">~$150-250M（估）</td>
+<td style="text-align: left;">全现金+股票</td>
+</tr>
+<tr>
+<td style="text-align: left;">UNH 收购</td>
+<td style="text-align: left;">2025.8</td>
+<td style="text-align: left;"><strong>$3.3B 全现金</strong></td>
+<td style="text-align: left;">UnitedHealth Group</td>
+</tr>
+<tr>
+<td style="text-align: left;">DOJ 剥离</td>
+<td style="text-align: left;">2025-2026</td>
+<td style="text-align: left;">164 网点 / ~$528M 年收入</td>
+<td style="text-align: left;">强制剥离</td>
+</tr>
+<tr>
+<td style="text-align: left;">DOJ 罚款</td>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">$1.1M</td>
+<td style="text-align: left;">民事罚款</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与GTM效率</h2>
+<h3 id="_30">患者获取渠道效率</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">渠道</th>
+<th style="text-align: left;">占比</th>
+<th style="text-align: center;">每次获取成本</th>
+<th style="text-align: center;">质量评分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>医院出院转诊</strong></td>
+<td style="text-align: left;">~60%</td>
+<td style="text-align: center;">$0-200（估）</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>医生推荐</strong></td>
+<td style="text-align: left;">~25%</td>
+<td style="text-align: center;">$0-100（估）</td>
+<td style="text-align: center;">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UNH MA 会员导流</strong></td>
+<td style="text-align: left;">~10%（增长）</td>
+<td style="text-align: center;">$0</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>自荐/在线</strong></td>
+<td style="text-align: left;">~5%</td>
+<td style="text-align: center;">$50-200（估）</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="gtm">GTM 核心指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Amedisys</th>
+<th style="text-align: center;">行业平均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>转诊接受率</strong></td>
+<td style="text-align: center;">~85%</td>
+<td style="text-align: center;">~70%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>从转诊到首次访视时间</strong></td>
+<td style="text-align: center;">&lt;48小时</td>
+<td style="text-align: center;">&lt;72小时</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者满意度</strong></td>
+<td style="text-align: center;">CMS 4.3 星</td>
+<td style="text-align: center;">3.5-4.0 星</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网点管理者经验</strong></td>
+<td style="text-align: center;">12年+</td>
+<td style="text-align: center;">8年</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="cms">CMS 星级评分</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Amedisys 评分</th>
+<th style="text-align: center;">行业平均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>整体 CMS 星级</strong></td>
+<td style="text-align: center;"><strong>4.3 星</strong></td>
+<td style="text-align: center;">3.5-4.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者 mobility 改善</strong></td>
+<td style="text-align: center;">高于平均</td>
+<td style="text-align: center;">基准</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者 pain 管理</strong></td>
+<td style="text-align: center;">高于平均</td>
+<td style="text-align: center;">基准</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>急性住院率（HH 期间）</strong></td>
+<td style="text-align: center;">~20%（估）</td>
+<td style="text-align: center;">~22-25%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成功出院率</strong></td>
+<td style="text-align: center;">~70%（估）</td>
+<td style="text-align: center;">~65%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="contessa">Contessa 临床证据</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Contessa JV 数据</th>
+<th style="text-align: left;">对比传统住院</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Marshfield JV：再入院率</strong></td>
+<td style="text-align: center;"><strong>44% 降低</strong></td>
+<td style="text-align: left;">传统住院为基准</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Marshfield JV：LOS 降低</strong></td>
+<td style="text-align: center;"><strong>35% 降低</strong></td>
+<td style="text-align: left;">传统住院为基准</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mount Sinai JV：再入院率</strong></td>
+<td style="text-align: center;"><strong>8.6%</strong></td>
+<td style="text-align: left;">~15-20%（传统）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者满意度</strong></td>
+<td style="text-align: center;">&gt;90%</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_31">证据强度声明</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">声明类型</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Amedisys HH 质量数据</td>
+<td style="text-align: left;">⭐⭐⭐ CMS 公开数据（OASIS/HHCAHPS）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Contessa JV 运营数据</td>
+<td style="text-align: left;">⭐⭐ 公司新闻稿 + 行业会议发表，无同行评审期刊发表</td>
+</tr>
+<tr>
+<td style="text-align: left;">UNH 整合效果</td>
+<td style="text-align: left;">⭐ 推测（收购后不公开数据）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>D0 赛道验证</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D1 执行摘要</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D2 公司全貌</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">含完整时间线+收购细节</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D3 战略定位</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">UNH 垂直整合框架剖析</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D4 商业模式</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">收入结构+利润转移机制</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D5 服务产品线</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">HH+Hospice+Palliative+Contessa</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D6 客户与市场</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">患者画像+保险客户+市场覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D7 营收与财务</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">FY2022-2024 财务+收购条款</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D8 工作流</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">HH+Hospice+Contessa 流程</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D9 技术与数据</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">7 子维度技术评估</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D10 商业模式画布</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">收购前后对比</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D11 市场规模</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">TAM + 市场份额</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D12 盈利模型</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">单元经济+利润优势</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D13 政策与监管</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">PDGM/DOJ/ACHaH 等</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D14 供应链与运营</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">劳动力+运营效率</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D15 管理层与治理</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">管理层演变+关键流失</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D16 退出与流动性</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">UNH $3.3B 退出分析</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D17 宏观与经济</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">6大宏观因素评估</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D18 ESG</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">DOJ 虚假证明事件</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D19 国际拓展</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">不适用+对 iHomeCare 启发</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D20 资金规划</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">资本结构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D21 增长引擎</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">增长驱动+挑战</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D22 协同效应</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">UNH 协同效益估算</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D23 风险全景</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">风险矩阵</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D24 组织与人才</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">组织架构+人才挑战</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D25 融资历史</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">Cap Table</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D26 GTM 效率</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">获客渠道+效率指标</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D27 临床质量</strong></td>
+<td style="text-align: center;">✅ 完整</td>
+<td style="text-align: left;">CMS 星级+Contessa 证据</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>审计结果：27/27 维完整（含 D0），0 维不适用，0 维合并。</strong></p>
+<hr />
+<h2 id="_32">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">内容</th>
+<th style="text-align: left;">链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">DOJ 反垄断新闻稿</td>
+<td style="text-align: left;">收购 Amedisys 的剥离要求</td>
+<td style="text-align: left;">justice.gov/opa</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Fierce Healthcare</td>
+<td style="text-align: left;">UnitedHealth, Amedisys close $3.3B merger</td>
+<td style="text-align: left;">fiercehealthcare.com</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Healthcare Dive</td>
+<td style="text-align: left;">UNH-Amedisys DOJ settlement</td>
+<td style="text-align: left;">healthcaredive.com</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Hospice News</td>
+<td style="text-align: left;">How Optum&rsquo;s Amedisys deal could shake up hospice</td>
+<td style="text-align: left;">hospicenews.com</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Amedisys Investor Relations</td>
+<td style="text-align: left;">Q1 2025 财报（2025.4.23）</td>
+<td style="text-align: left;">investors.amedisys.com</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Nasdaq</td>
+<td style="text-align: left;">Amedisys Q1 2025: Revenue $594.8M, Net Income $61.0M</td>
+<td style="text-align: left;">nasdaq.com</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Investing.com</td>
+<td style="text-align: left;">Amedisys Q2 2025 slides: Revenue up 5%, EBITDA grows 10%</td>
+<td style="text-align: left;">investing.com</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">Contessa Health</td>
+<td style="text-align: left;">HaH JV 模式信息</td>
+<td style="text-align: left;">contessahealth.com</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">CMS</td>
+<td style="text-align: left;">ACHaH Waiver 延期</td>
+<td style="text-align: left;">cms.gov</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">SEC</td>
+<td style="text-align: left;">LHC Group 收购 (2023)</td>
+<td style="text-align: left;">sec.gov</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">Marshfield Clinic</td>
+<td style="text-align: left;">Contessa JV 临床结果</td>
+<td style="text-align: left;">marshfieldclinic.org</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Skilled Nursing News</td>
+<td style="text-align: left;">行业分析</td>
+<td style="text-align: left;">skillednursingnews.com</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

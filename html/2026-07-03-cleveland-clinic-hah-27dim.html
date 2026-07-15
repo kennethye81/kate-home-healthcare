@@ -1,0 +1,1529 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A7 Cleveland Clinic Hospital Care At Home — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#a7-cleveland-clinic-hospital-care-at-home-27">A7 Cleveland Clinic Hospital Care At Home — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线与治理）</a><ul>
+<li><a href="#_1">基本事实表</a></li>
+<li><a href="#_2">发展时间线</a></li>
+<li><a href="#_3">公司治理</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_4">一句话核心逻辑</a></li>
+<li><a href="#_5">战略差异化</a></li>
+<li><a href="#_6">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构</a><ul>
+<li><a href="#vs">支付方 vs 使用方</a></li>
+<li><a href="#_7">战略合作伙伴</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#_8">研发与创新管线</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_9">患者来源</a></li>
+<li><a href="#_10">支付方来源</a></li>
+<li><a href="#_11">品牌与声誉</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a></li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a></li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 平台架构</a></li>
+<li><a href="#92">9.2 软件</a></li>
+<li><a href="#93">9.3 硬件</a></li>
+<li><a href="#94-ai">9.4 AI 与数据分析</a></li>
+<li><a href="#95">9.5 技术差异化</a></li>
+<li><a href="#96">9.6 供应商风险</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争对标矩阵</a></li>
+<li><a href="#d11-tamsam">D11 — TAM/SAM 分析</a></li>
+<li><a href="#d12">D12 — 盈利/财务可持续性</a></li>
+<li><a href="#d13">D13 — 风险矩阵</a><ul>
+<li><a href="#012">短期风险（0–12 个月）</a></li>
+<li><a href="#13">中长期风险（1–3 年）</a></li>
+<li><a href="#_12">结构性风险</a></li>
+<li><a href="#_13">宏观风险</a></li>
+</ul>
+</li>
+<li><a href="#d14">D14 — 管理层指引</a><ul>
+<li><a href="#_14">关键信号</a></li>
+</ul>
+</li>
+<li><a href="#d15">D15 — 估值</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a></li>
+<li><a href="#d17">D17 — 政策与监管环境</a></li>
+<li><a href="#d18">D18 — 单元经济</a></li>
+<li><a href="#d19">D19 — 目标人群</a></li>
+<li><a href="#d20">D20 — 竞品地图</a></li>
+<li><a href="#d21">D21 — 跨境</a></li>
+<li><a href="#d22">D22 — 退出</a></li>
+<li><a href="#d23-esg">D23 — ESG</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资与资本结构</a></li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_15">调研空白与后续补充</a></li>
+<li><a href="#_16">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="a7-cleveland-clinic-hospital-care-at-home-27">A7 Cleveland Clinic Hospital Care At Home — 27 维度深度尽调</h1>
+<p><strong>调研人：Kenneth Ye</strong>
+<strong>调研日期：2026 年 7 月 3 日</strong>
+<strong>分类：卫生系统自有 HaH 项目 / Track A</strong>
+<strong>国家：美国（俄亥俄州克利夫兰 + 佛罗里达州）</strong></p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否真正 HaH？</td>
+<td>✅ <strong>是</strong>——CMS AHCAH Waiver 下运行</td>
+</tr>
+<tr>
+<td>实体类型</td>
+<td>🏥 卫生系统内部部门</td>
+</tr>
+<tr>
+<td>对 iHomeCare 相关性</td>
+<td>🟡 <strong>中</strong>——Top 5 品牌背书 + 从佛罗里达试点扩展的策略值得研究</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一句话定位</strong></td>
+<td>🏥 <strong>Top 5 医院的 HaH 项目</strong>——2023.4 从佛罗里达 Vero Beach 启动、逐步扩展至 5 家 FL 医院、ADC 24、累计 5,000+ 患者</td>
+</tr>
+<tr>
+<td><strong>核心矛盾</strong></td>
+<td>U.S. News #2 排名背书 vs. 相对较小的规模（ADC 24 vs Atrium 80–100）和仅佛罗里达的覆盖</td>
+</tr>
+<tr>
+<td><strong>启动</strong></td>
+<td>2023 年 4 月</td>
+</tr>
+<tr>
+<td><strong>ADC</strong></td>
+<td><strong>24</strong>（Becker&rsquo;s 报道&rdquo;最大之一&rdquo;）</td>
+</tr>
+<tr>
+<td><strong>累计患者</strong></td>
+<td>5,000+ (2026)</td>
+</tr>
+<tr>
+<td><strong>覆盖</strong></td>
+<td>5 家克利夫兰诊所佛罗里达医院</td>
+</tr>
+<tr>
+<td><strong>品牌</strong></td>
+<td>Hospital Care At Home℠</td>
+</tr>
+<tr>
+<td><strong>系统</strong></td>
+<td>Cleveland Clinic（U.S. News #2, 2025–2026）</td>
+</tr>
+<tr>
+<td><strong>总体判断</strong></td>
+<td>🟢 品牌力强大但在 HaH 运营上仍是&rdquo;追随者&rdquo;而非&rdquo;领导者&rdquo;。对 iHomeCare 的价值在于&rdquo;如何从单点试点逐步扩展&rdquo;的策略。</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线与治理）</h2>
+<h3 id="_1">基本事实表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>品牌</td>
+<td>Cleveland Clinic Hospital Care At Home℠</td>
+</tr>
+<tr>
+<td>系统</td>
+<td>Cleveland Clinic（全球 Top 5 医院）</td>
+</tr>
+<tr>
+<td>启动</td>
+<td>2023.4</td>
+</tr>
+<tr>
+<td>首站</td>
+<td>Indian River Hospital (Vero Beach, FL)</td>
+</tr>
+<tr>
+<td>扩展</td>
+<td>Tradition Hospital (2023.12) → 5 家 FL 医院 (2024)</td>
+</tr>
+<tr>
+<td>ADC</td>
+<td>24</td>
+</tr>
+<tr>
+<td>累计</td>
+<td>5,000+ 患者</td>
+</tr>
+<tr>
+<td>佛罗里达 CMO</td>
+<td>Richard Rothman, MD</td>
+</tr>
+<tr>
+<td>官网</td>
+<td>https://consultqd.clevelandclinic.org</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2023.4</td>
+<td>Vero Beach 试点启动</td>
+</tr>
+<tr>
+<td>2023.12</td>
+<td>扩展到 Tradition Hospital</td>
+</tr>
+<tr>
+<td>2024</td>
+<td>扩展到全 5 家佛罗里达医院</td>
+</tr>
+<tr>
+<td>2025+</td>
+<td>持续运营、减少再入院率</td>
+</tr>
+<tr>
+<td>2026</td>
+<td>5,000+ 累计患者</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">公司治理</h3>
+<blockquote>
+<p>⚠️ 不适用独立公司治理。HaH 为 Cleveland Clinic 佛罗里达区域内部部门，Richard Rothman, MD 为佛罗里达 CMO 领导该项目。决策层为 Cleveland Clinic Florida 领导团队 + 系统 C-suite。</p>
+</blockquote>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_4">一句话核心逻辑</h3>
+<p><strong>Cleveland Clinic 赌的是：用一个低调的、从佛罗里达单点启动的谨慎策略，证明 HaH 在顶级品牌系统内的可行性——然后逐步扩展到全系统。</strong></p>
+<h3 id="_5">战略差异化</h3>
+<ul>
+<li><strong>&ldquo;谨慎扩张&rdquo;策略</strong>：vs Atrium 的&rdquo;ALL IN&rdquo;——Cleveland Clinic 选择从佛罗里达一州一院开始，逐步扩展</li>
+<li><strong>品牌背书</strong>：U.S. News #2 排名——若 Cleveland Clinic 将 HaH 推广到俄亥俄主院区，将释放巨大信号</li>
+<li><strong>老年人群匹配</strong>：佛罗里达老年人口集中——天然适合 HaH 目标人群</li>
+<li><strong>追随者定位</strong>：2023 年才启动（vs 2020 Atrium / 1994 JHU / 2016 MGB）——行业后来者</li>
+</ul>
+<h3 id="_6">战略演变三阶段</h3>
+<ul>
+<li><strong>Phase 1 (2023.4–2023.12)</strong>：单点验证——Vero Beach → Tradition 扩展</li>
+<li><strong>Phase 2 (2024–2025)</strong>：区域扩展——全 5 家 FL 医院 + 突破 5,000 患者</li>
+<li><strong>Phase 3 (2026+）</strong>：潜在扩展至俄亥俄主院区？——未确认但有战略逻辑</li>
+</ul>
+<hr />
+<h2 id="d4">D4 — 商业模式架构</h2>
+<pre><code>Cleveland Clinic 卫生系统
+  │
+  ├── 俄亥俄主院区（Cleveland）
+  │     └── 尚未启动 HaH
+  │
+  └── 佛罗里达区域（5 家医院）
+        └── Hospital Care At Home℠
+              ├── ADC 24 / 累计 5,000+ 患者
+              ├── 技术: 「不可得」（推测标准 RPM + 远程医疗）
+              ├── 人力: Cleveland Clinic 雇员 MD/RN
+              └── 支付: CMS AHCAH Waiver + 商业保险
+</code></pre>
+<h3 id="vs">支付方 vs 使用方</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>实体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>支付方</strong></td>
+<td>Medicare FFS (CMS AHCAH Waiver) + 商业保险 + 部分 Medicare Advantage</td>
+</tr>
+<tr>
+<td><strong>使用方</strong></td>
+<td>佛罗里达老年急性患者</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_7">战略合作伙伴</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>伙伴</th>
+<th>角色</th>
+<th>健康度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>技术供应商</td>
+<td>「不可得」——推测标准 RPM 供应商</td>
+<td>「不可得」</td>
+</tr>
+<tr>
+<td>CMS</td>
+<td>支付方</td>
+<td>🟢</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>客户类型</th>
+<th>服务内容</th>
+<th>定价模式</th>
+<th>占 HaH 量估</th>
+<th>利润率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hospital Care At Home（急性 HaH）</strong></td>
+<td>佛罗里达老年急性患者</td>
+<td>RPM + 上门 MD/RN + IV/O2/实验室</td>
+<td>CMS AHCAH Waiver + 商业保险</td>
+<td><strong>100%</strong></td>
+<td>「不可得」</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_8">研发与创新管线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>在研项目</th>
+<th>阶段</th>
+<th>预计上线</th>
+<th>目标市场</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>扩展至俄亥俄主院区</td>
+<td>「未确认」——推测讨论中</td>
+<td>未定</td>
+<td>俄亥俄</td>
+</tr>
+<tr>
+<td>更多病种路径</td>
+<td>「不可得」</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_9">患者来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>占比估</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ED 直接入组</td>
+<td>「不可得」</td>
+<td>佛罗里达老年人群——平均年龄偏高</td>
+</tr>
+<tr>
+<td>住院转 HaH</td>
+<td>「不可得」</td>
+<td>—</td>
+</tr>
+<tr>
+<td>患者画像</td>
+<td>佛罗里达老年急性患者——非安全网属性（vs Mount Sinai）</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_10">支付方来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>支付方</th>
+<th>占比估</th>
+<th>趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Medicare FFS (AHCAH Waiver)</td>
+<td>~50–60%（估）</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>商业保险 / MA</td>
+<td>~40–50%（估）</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_11">品牌与声誉</h3>
+<ul>
+<li><strong>U.S. News #2 排名</strong>（全球最高之一）</li>
+<li>Cleveland Clinic = 全球最知名医疗品牌之一</li>
+<li>Hospital Care At Home℠ 商标化——品牌保护意识强</li>
+<li>Becker&rsquo;s 评为&rdquo;最大 HaH 项目之一&rdquo;</li>
+</ul>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ Cleveland Clinic 为非营利系统，HaH 财务不独立公开。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HaH 收入</strong></td>
+<td>「不可得」</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>每 episode 成本</strong></td>
+<td>「不可得」</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>vs 住院成本</strong></td>
+<td>「不可得」</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>系统级动机</strong></td>
+<td>床位释放 + 品牌创新 + 佛罗里达老年人口服务</td>
+<td>【推断】</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<pre><code>Phase 0: 识别
+  ED/住院 → 临床团队评估 HaH 适宜性
+  （标准 HaH 流程——具体入组标准未公开）
+  ▼
+Phase 1: 激活 (Day 0–1)
+  设备部署 (RPM) + 患者教育
+  首次上门 RN/MD 访问
+  ▼
+Phase 2: 日常管理 (Day 2–N)
+  · 24/7 RPM 监测
+  · RN/MD 上门查房
+  · IV/O2/实验室/药物管理
+  ▼
+Phase 3: 出院
+  临床稳定 → HaH 出院
+  设备回收 → 转 Cleveland Clinic 佛罗里达门诊
+</code></pre>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 平台架构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5. 财务</td>
+<td>⚠️</td>
+<td>Cleveland Clinic 系统财务集成</td>
+</tr>
+<tr>
+<td>4. 运营</td>
+<td>⚠️</td>
+<td>「不可得」——推测标准 RPM 平台</td>
+</tr>
+<tr>
+<td>3. 指挥中心</td>
+<td>⚠️</td>
+<td>「不可得」</td>
+</tr>
+<tr>
+<td>2. 用户端</td>
+<td>⚠️</td>
+<td>基础 RPM + 远程医疗</td>
+</tr>
+<tr>
+<td>1. 数据</td>
+<td>⚠️</td>
+<td>Cleveland Clinic Epic EHR 集成</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件</h3>
+<ul>
+<li>「不可得」——推测标准 RPM 平台（商业采购，非自研）</li>
+</ul>
+<h3 id="93">9.3 硬件</h3>
+<ul>
+<li>「不可得」——推测标准 RPM 设备（血压/血氧/体温等）</li>
+</ul>
+<h3 id="94-ai">9.4 AI 与数据分析</h3>
+<ul>
+<li>「不可得」——无公开 AI 在 HaH 中的使用</li>
+</ul>
+<h3 id="95">9.5 技术差异化</h3>
+<ul>
+<li>Cleveland Clinic 的 HaH 技术策略尚未公开——推测&rdquo;Fast-follower&rdquo;策略（等待市场验证后采用成熟方案）</li>
+</ul>
+<h3 id="96">9.6 供应商风险</h3>
+<ul>
+<li>不显著（无已知单一供应商依赖）</li>
+</ul>
+<hr />
+<h2 id="d10">D10 — 竞争对标矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Cleveland Clinic</th>
+<th>Atrium</th>
+<th>MGB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADC</td>
+<td><strong>24</strong></td>
+<td><strong>80–100</strong></td>
+<td>25–33</td>
+</tr>
+<tr>
+<td>启动</td>
+<td>2023</td>
+<td>2020</td>
+<td>2016</td>
+</tr>
+<tr>
+<td>覆盖</td>
+<td><strong>仅佛罗里达</strong></td>
+<td>北卡</td>
+<td>大波士顿</td>
+</tr>
+<tr>
+<td>系统排名</td>
+<td><strong>#2</strong></td>
+<td>Top</td>
+<td>Top 5</td>
+</tr>
+<tr>
+<td>主院区 HaH</td>
+<td>❌（仅佛罗里达）</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>其他扩展</td>
+<td>无</td>
+<td>儿科</td>
+<td>Continuing Care</td>
+</tr>
+<tr>
+<td>差异化</td>
+<td><strong>谨慎扩张策略</strong></td>
+<td>ALL IN + 儿科</td>
+<td>RCT 证据</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-tamsam">D11 — TAM/SAM 分析</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TAM（佛罗里达）</strong></td>
+<td>5 家 FL 医院服务区老年人口——TAM 可观（佛罗里达老年密度全美最高）</td>
+</tr>
+<tr>
+<td><strong>TAM（俄亥俄）</strong></td>
+<td>若扩展到主院区——Cleveland Clinic 俄亥俄系统服务区</td>
+</tr>
+<tr>
+<td><strong>当前渗透率</strong></td>
+<td>ADC 24 / 累计 5,000+ → 渗透率低</td>
+</tr>
+<tr>
+<td><strong>增长空间</strong></td>
+<td>巨大——但 Cleveland Clinic 的&rdquo;谨慎扩张&rdquo;策略可能限制近期增长</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利/财务可持续性</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>盈利模式</strong></td>
+<td>标准 HaH 经济——CMS AHCAH Waiver 支付 + 床位释放价值</td>
+</tr>
+<tr>
+<td><strong>可持续性</strong></td>
+<td>🟢 佛罗里达老年人口结构为 HaH 提供长期需求基础</td>
+</tr>
+<tr>
+<td><strong>关键假设</strong></td>
+<td>① CMS Waiver 延续 ② 俄亥俄主院区扩展意愿</td>
+</tr>
+<tr>
+<td><strong>限制因素</strong></td>
+<td>ADC 24 规模小——单位成本可能高于 Atrium（规模效应不足）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d13">D13 — 风险矩阵</h2>
+<h3 id="012">短期风险（0–12 个月）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险</th>
+<th>概率</th>
+<th>影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>仅佛罗里达覆盖——地理集中风险（飓风等自然灾害）</td>
+<td>🟢 低</td>
+<td>中</td>
+</tr>
+<tr>
+<td>ADC 24 规模不足以证明系统级价值</td>
+<td>🟡 中</td>
+<td>中</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="13">中长期风险（1–3 年）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险</th>
+<th>概率</th>
+<th>影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>俄亥俄主院区扩展决策不明确——HaH 可能停留在&rdquo;佛罗里达实验&rdquo;</td>
+<td>🟡 中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>COVID 后较晚进入 HaH——行业窗口可能收窄</td>
+<td>🟢 低</td>
+<td>中</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_12">结构性风险</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险</th>
+<th>概率</th>
+<th>影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cleveland Clinic 的品牌高期望 vs HaH 小规模——品牌风险（&rdquo;Top 2 医院为什么 HaH 这么小？&rdquo;）</td>
+<td>🟢 低</td>
+<td>低</td>
+</tr>
+<tr>
+<td>人才吸引——佛罗里达 vs 俄亥俄 vs 其他 HaH 雇主竞争</td>
+<td>🟡 中</td>
+<td>中</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_13">宏观风险</h3>
+<ul>
+<li>CMS AHCAH Waiver 终止：直接影响 HaH 支付</li>
+<li>佛罗里达州政策变动</li>
+</ul>
+<hr />
+<h2 id="d14">D14 — 管理层指引</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>姓名</th>
+<th>背景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>佛罗里达 CMO</strong></td>
+<td>Richard Rothman, MD</td>
+<td>Cleveland Clinic Florida 首席医学官，HaH 项目直接领导</td>
+</tr>
+<tr>
+<td><strong>系统 C-suite</strong></td>
+<td>「不可得」</td>
+<td>是否将 HaH 视为战略优先级——未公开</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_14">关键信号</h3>
+<ul>
+<li><strong>启动时间（2023.4）</strong>：COVID 后较晚——说明 HaH 非 COVID 紧急响应，而是审慎战略决策</li>
+<li><strong>从佛罗里达而非俄亥俄启动</strong>：可能因为佛罗里达老年人口更多、州政策友好、或作为&rdquo;远离总部&rdquo;的实验</li>
+<li><strong>未公开俄亥俄扩展时间表</strong>：可能意味着系统 C-suite 尚未做出 ALL IN 决策</li>
+</ul>
+<hr />
+<h2 id="d15">D15 — 估值</h2>
+<blockquote>
+<p>❌ <strong>不适用</strong>——Cleveland Clinic 为非营利系统，HaH 为内部部门，无独立估值。</p>
+</blockquote>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<ol>
+<li><strong>&ldquo;从单点试点→逐步扩展&rdquo;策略</strong>：iHomeCare 在香港启动时，可学习 Cleveland Clinic 的&rdquo;一个医院→多个医院→全区域&rdquo;渐进路径</li>
+<li><strong>选择正确的启动地点</strong>：Cleveland Clinic 选择佛罗里达（老年人口多）而非俄亥俄——iHomeCare 应选择香港最适合 HaH 的医院/区域作为启动点</li>
+<li><strong>品牌背书但不依赖品牌</strong>：Cleveland Clinic #2 排名不能自动让 HaH 成功——运营执行比品牌更重要</li>
+<li><strong>逐步公开临床数据</strong>：Cleveland Clinic 的&rdquo;减少再入院率&rdquo;未公开具体数字——iHomeCare 应从一开始就收集并发表数据</li>
+<li><strong>为扩展到&rdquo;主院区&rdquo;做好准备</strong>：Cleveland Clinic 的佛罗里达实验本质上是在为俄亥俄主院区做准备——iHomeCare 的初始项目应有&rdquo;可复制到全港&rdquo;的设计</li>
+</ol>
+<hr />
+<h2 id="d17">D17 — 政策与监管环境</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>政策维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>联邦</strong></td>
+<td>CMS AHCAH Waiver（延至 2030）</td>
+</tr>
+<tr>
+<td><strong>佛罗里达州</strong></td>
+<td>FL 州政策——老年人口密集州，推测 HaH 政策友好</td>
+</tr>
+<tr>
+<td><strong>俄亥俄州</strong></td>
+<td>若扩展——需 OH 州政策支持（未启动，未验证）</td>
+</tr>
+<tr>
+<td><strong>政策风险</strong></td>
+<td>CMS Waiver 终止 + FL 州政策变动</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济</h2>
+<blockquote>
+<p>⚠️ 「不可得」——Cleveland Clinic 不公开 HaH 财务数据。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>每 HaH episode 成本</strong></td>
+<td>「不可得」</td>
+</tr>
+<tr>
+<td><strong>vs 住院成本</strong></td>
+<td>「不可得」</td>
+</tr>
+<tr>
+<td><strong>规模效应</strong></td>
+<td>ADC 24 → 单位成本可能高于 Atrium (ADC 80–100)</td>
+</tr>
+<tr>
+<td><strong>主要成本</strong></td>
+<td>人力（MD/RN）+ 技术平台 + 设备</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d19">D19 — 目标人群</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>人群定义</strong></td>
+<td>佛罗里达老年急性患者——Cleveland Clinic 5 家 FL 医院服务区</td>
+</tr>
+<tr>
+<td><strong>年龄分布</strong></td>
+<td>「不可得」——佛罗里达老年密度全美最高，推测平均年龄 ≥70</td>
+</tr>
+<tr>
+<td><strong>病种</strong></td>
+<td>「不可得」——推测标准 HaH 病种（肺炎、心衰、COPD、蜂窝织炎等）</td>
+</tr>
+<tr>
+<td><strong>入组标准</strong></td>
+<td>「不可得」——推测标准 HaH 标准（稳定、居家安全、家庭支持）</td>
+</tr>
+<tr>
+<td><strong>特殊性</strong></td>
+<td>佛罗里达退休社区患者——较高的健康素养和家庭支持（vs 安全网人群）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20">D20 — 竞品地图</h2>
+<blockquote>
+<p>❌ <strong>不适用</strong>——卫生系统 HaH 项目之间非直接竞品。Cleveland Clinic 佛罗里达区域的&rdquo;竞品&rdquo;为同区域其他卫生系统的 HaH（如存在）。患者来源 100% 系统内——无直接获客竞争。</p>
+</blockquote>
+<hr />
+<h2 id="d21">D21 — 跨境</h2>
+<blockquote>
+<p>❌ <strong>不适用</strong>——Cleveland Clinic 为美国国内系统，HaH 运营仅限佛罗里达。Cleveland Clinic 有全球品牌（阿布扎比、伦敦等分院）但 HaH 未扩展至海外。</p>
+</blockquote>
+<hr />
+<h2 id="d22">D22 — 退出</h2>
+<blockquote>
+<p>❌ <strong>不适用</strong>——Cleveland Clinic HaH 为系统内部项目，无股权退出路径。若 Cleveland Clinic 停止佛罗里达 HaH，退出方式为停止接受新患者+设备回收+资源重新分配。</p>
+</blockquote>
+<hr />
+<h2 id="d23-esg">D23 — ESG</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>环境 (E)</strong></td>
+<td>🟢 HaH 减少患者+家属交通碳排放；减少实体医院能耗</td>
+</tr>
+<tr>
+<td><strong>社会 (S)</strong></td>
+<td>🟢 佛罗里达老年人口服务——改善老年医疗可及性</td>
+</tr>
+<tr>
+<td><strong>治理 (G)</strong></td>
+<td>🟢 Cleveland Clinic 治理标准高——HaH 继承系统治理</td>
+</tr>
+<tr>
+<td><strong>局限性</strong></td>
+<td>仅佛罗里达覆盖——对俄亥俄和其他州患者无直接 ESG 贡献</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>子维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>组织架构</strong></td>
+<td>Cleveland Clinic Florida → Hospital Care At Home（Richard Rothman 领导）</td>
+</tr>
+<tr>
+<td><strong>员工规模</strong></td>
+<td>「不可得」——基于 ADC 24 推算：~20–35 RN + ~5–10 MD/APP</td>
+</tr>
+<tr>
+<td><strong>关键人依赖</strong></td>
+<td>🟡 Richard Rothman, MD = 佛罗里达 CMO + HaH 领导——若离职可能影响项目连续性</td>
+</tr>
+<tr>
+<td><strong>文化</strong></td>
+<td>Cleveland Clinic 品牌文化——质量优先</td>
+</tr>
+<tr>
+<td><strong>人才竞争</strong></td>
+<td>佛罗里达医疗人才市场——竞争中等</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d25">D25 — 融资与资本结构</h2>
+<blockquote>
+<p>❌ <strong>不适用</strong>——Cleveland Clinic HaH 为系统内部项目，资金来源为 Cleveland Clinic 运营预算，无独立融资、无 Cap Table。</p>
+</blockquote>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<blockquote>
+<p>❌ <strong>不适用</strong>——Cleveland Clinic 的 HaH 项目 100% 从系统内获客（ED + 住院转诊），不对外&rdquo;销售&rdquo;。GTM 在这个语境下是系统内部临床文化变革——让佛罗里达的 ED 和住院医生愿意转诊到 HaH。</p>
+</blockquote>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="271">27.1 核心临床指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>30 天再入院率</td>
+<td>「减少」——但具体数字未公开发表</td>
+<td>Becker&rsquo;s / Consult QD</td>
+</tr>
+<tr>
+<td>死亡率</td>
+<td>「未公开」</td>
+<td>—</td>
+</tr>
+<tr>
+<td>患者满意度</td>
+<td>「未公开」</td>
+<td>—</td>
+</tr>
+<tr>
+<td>累计患者</td>
+<td>5,000+</td>
+<td>Cleveland Clinic FL Facebook 2026</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="272">27.2 质量认证</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>认证</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMS AHCAH Waiver</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>FL 州许可</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>证据</th>
+<th>数量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>同行评审论文</td>
+<td>0（未找到）</td>
+<td>❌ 无公开发表的 HaH 临床研究</td>
+</tr>
+<tr>
+<td>案例研究</td>
+<td>1+</td>
+<td>Consult QD (Cleveland Clinic 自有博客)</td>
+</tr>
+<tr>
+<td>媒体报道</td>
+<td>多</td>
+<td>Becker&rsquo;s、AHA、Distilinfo</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>证据强度</strong>：🟡 <strong>低-中</strong>——有运营数据和媒体报道，但无同行评审临床发表。与 MGB（RCT 级别）和 JHU（奠基性 RCT）差距巨大。</li>
+</ul>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>状态</th>
+<th>核心判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D0</td>
+<td>✅</td>
+<td>真实 HaH</td>
+</tr>
+<tr>
+<td>D1</td>
+<td>✅</td>
+<td>Top 5 品牌 + ADC 24 + 5,000+ 患者</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>✅</td>
+<td>完整事实+时间线+治理</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>✅</td>
+<td>谨慎扩张战略 + 三阶段</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>✅</td>
+<td>佛罗里达单区域架构</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>✅</td>
+<td>单一急性 HaH 产品线</td>
+</tr>
+<tr>
+<td>D6</td>
+<td>⚠️</td>
+<td>佛罗里达老年人群——细节不可得</td>
+</tr>
+<tr>
+<td>D7</td>
+<td>⚠️</td>
+<td>财务不独立公开</td>
+</tr>
+<tr>
+<td>D8</td>
+<td>⚠️</td>
+<td>标准 HaH 旅程——具体不可得</td>
+</tr>
+<tr>
+<td>D9</td>
+<td>⚠️</td>
+<td>技术细节不公开</td>
+</tr>
+<tr>
+<td>D10</td>
+<td>✅</td>
+<td>ADC 24 vs Atrium 80–100</td>
+</tr>
+<tr>
+<td>D11</td>
+<td>⚠️</td>
+<td>TAM 推算——老年人口基础好</td>
+</tr>
+<tr>
+<td>D12</td>
+<td>⚠️</td>
+<td>不可得</td>
+</tr>
+<tr>
+<td>D13</td>
+<td>✅</td>
+<td>地理集中 + 规模不足 + 俄亥俄扩展不确定</td>
+</tr>
+<tr>
+<td>D14</td>
+<td>✅</td>
+<td>Richard Rothman, MD = 佛罗里达 CMO</td>
+</tr>
+<tr>
+<td>D15</td>
+<td>❌</td>
+<td>不适用——非公司实体</td>
+</tr>
+<tr>
+<td>D16</td>
+<td>✅</td>
+<td>单点试点+逐步扩展五大借鉴</td>
+</tr>
+<tr>
+<td>D17</td>
+<td>✅</td>
+<td>CMS + FL 州</td>
+</tr>
+<tr>
+<td>D18</td>
+<td>⚠️</td>
+<td>不可得</td>
+</tr>
+<tr>
+<td>D19</td>
+<td>⚠️</td>
+<td>佛罗里达老年人群——细节不可得</td>
+</tr>
+<tr>
+<td>D20</td>
+<td>❌</td>
+<td>不适用——卫生系统非直接竞争</td>
+</tr>
+<tr>
+<td>D21</td>
+<td>❌</td>
+<td>不适用——无跨境</td>
+</tr>
+<tr>
+<td>D22</td>
+<td>❌</td>
+<td>不适用——无退出</td>
+</tr>
+<tr>
+<td>D23</td>
+<td>✅</td>
+<td>佛罗里达老年服务 ESG</td>
+</tr>
+<tr>
+<td>D24</td>
+<td>⚠️</td>
+<td>组织细节不可得</td>
+</tr>
+<tr>
+<td>D25</td>
+<td>❌</td>
+<td>不适用——无独立融资</td>
+</tr>
+<tr>
+<td>D26</td>
+<td>❌</td>
+<td>不适用——系统内获客</td>
+</tr>
+<tr>
+<td>D27</td>
+<td>⚠️</td>
+<td>&ldquo;减少再入院率&rdquo;但未公开发表具体数字</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_15">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>缺口</th>
+<th>补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>技术平台供应商</td>
+<td>行业会议或一手访谈</td>
+</tr>
+<tr>
+<td>2</td>
+<td>每 HaH episode 成本</td>
+<td>一手访谈</td>
+</tr>
+<tr>
+<td>3</td>
+<td>30 天再入院率具体数字</td>
+<td>Consult QD 跟踪或 Cleveland Clinic 学术发表</td>
+</tr>
+<tr>
+<td>4</td>
+<td>俄亥俄主院区扩展时间表</td>
+<td>Cleveland Clinic 战略公告跟踪</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HaH 团队规模和组成</td>
+<td>招聘信息追踪</td>
+</tr>
+<tr>
+<td>6</td>
+<td>具体入组标准/排除标准</td>
+<td>Cleveland Clinic 内部文件或行业案例研究</td>
+</tr>
+<tr>
+<td>7</td>
+<td>患者满意度数据</td>
+<td>一手访谈或 Cleveland Clinic 质量报告</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_16">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>来源</th>
+<th>标题</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Becker&rsquo;s Hospital Review</td>
+<td>Cleveland Clinic&rsquo;s Approach to HaH</td>
+<td>2026</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Consult QD</td>
+<td>Early Success Leads to HCAH Expansion</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Cleveland Clinic FL Facebook</td>
+<td>5,000+ patients milestone</td>
+<td>2026</td>
+</tr>
+<tr>
+<td>4</td>
+<td>LinkedIn</td>
+<td>Cleveland Clinic Expands HaH</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Distilinfo</td>
+<td>Hospital at Home Care New Expansion Era</td>
+<td>2026.4</td>
+</tr>
+<tr>
+<td>6</td>
+<td>AHA</td>
+<td>4 Providers Turning HaH into Juggernaut</td>
+<td>2026.3</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

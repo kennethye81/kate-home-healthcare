@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>四川省21市州长护险政策统计维度一览表</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#21">四川省21市州长护险政策统计维度一览表</a><ul>
+<li><a href="#_1">一、城市基本信息</a></li>
+<li><a href="#_2">二、筹资方式（百分比制——省级统一框架）</a></li>
+<li><a href="#_3">三、医保覆盖</a></li>
+<li><a href="#_4">四、待遇支付（全省统一最高支付标准——四省中最详细）</a></li>
+<li><a href="#_5">五、从业人员要求</a></li>
+<li><a href="#_6">六、全省覆盖进度</a></li>
+<li><a href="#_7">数据来源</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="21">四川省21市州长护险政策统计维度一览表</h1>
+<p><strong>数据截止</strong>：2026-07-06 | <strong>交叉验证</strong>：省级文件全文提取 + 多引擎搜索
+<strong>省级框架</strong>：《四川省建立长期护理保险制度实施方案》（川办发〔2026〕6号，2026-02-14印发）
+<strong>全省目标</strong>：2026年有条件统筹区启动 → 2027年全省全面实施 → 2028年多层次体系基本建成
+<strong>成都市</strong>：国家首批试点（2017年启动），3年过渡期向省级标准归并</p>
+<p><strong>核心特征</strong>：</p>
+<ul>
+<li>百分比制筹资——职工0.30%（单位0.15%+个人0.15%），居民0.20%起步→5年过渡到0.30%</li>
+<li><strong>全省统一待遇支付标准</strong>——四省中最细致（分三级失能×职工/居民）</li>
+<li>职工待遇：重度一级1,300元/月、二级1,400元/月、三级1,500元/月</li>
+<li>居民待遇：重度一级900元/月、二级1,000元/月、三级1,100元/月</li>
+<li>覆盖全人群（职工+城乡居民+灵活就业+18岁以下跟随参保）</li>
+<li>年度上限 ≤ 全省居民人均可支配收入50%</li>
+</ul>
+<hr />
+<h2 id="_1">一、城市基本信息</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">省份</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;">启动时间</th>
+<th style="text-align: center;">失能等级覆盖</th>
+<th style="text-align: center;">城乡一体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">成都市</td>
+<td style="text-align: center;">✅ 国家试点（过渡期）</td>
+<td style="text-align: center;">2017-07</td>
+<td style="text-align: center;">✅ 重度失能（三级细分）</td>
+<td style="text-align: center;">❌ 仅职工</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">自贡市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">泸州市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">绵阳市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">德阳市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">南充市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">内江市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">攀枝花市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">雅安市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">资阳市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">宜宾市</td>
+<td style="text-align: center;">🟡 运行中</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">广元市</td>
+<td style="text-align: center;">🟡 运行中</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">达州市</td>
+<td style="text-align: center;">🟡 运行中</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">阿坝州</td>
+<td style="text-align: center;">🟡 运行中</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">遂宁市</td>
+<td style="text-align: center;">🆕 征求意见稿阶段</td>
+<td style="text-align: center;">⏳ 2026</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">巴中市</td>
+<td style="text-align: center;">🆕 征求意见稿阶段</td>
+<td style="text-align: center;">⏳ 2026</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">广安市</td>
+<td style="text-align: center;">🟡 筹备中（第三方采购）</td>
+<td style="text-align: center;">⏳ 2026</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">甘孜州</td>
+<td style="text-align: center;">🟡 前期研究（课题已招标）</td>
+<td style="text-align: center;">⏳ 2026-2027</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">凉山州</td>
+<td style="text-align: center;">🟡 已纳入医保征缴</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">✅ 职工先行</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">乐山市</td>
+<td style="text-align: center;">⏳ 按省级部署推进</td>
+<td style="text-align: center;">⏳ 2026-2027</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">四川</td>
+<td style="text-align: left;">眉山市</td>
+<td style="text-align: center;">⏳ 按省级部署推进</td>
+<td style="text-align: center;">⏳ 2026-2027</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>推进模式</strong>：四川采用&rdquo;2026年有条件启动、2027年全面推开&rdquo;的两阶段模式。省方案（川办发〔2026〕6号）明确2026年&rdquo;有条件统筹区启动&rdquo;，2027年&rdquo;全省全面实施&rdquo;。
+成都市作为国家首批试点城市（2017年启动），需3年过渡期向省级标准归并。
+遂宁、巴中已有征求意见稿，进程靠前。广安正在采购第三方经办机构。甘孜已完成课题研究招标（前期准备阶段）。凉山2026年已纳入灵活就业人员医保征缴。
+乐山、眉山未查到城市级文件，按省级部署推进，预计2026-2027年启动。</p>
+</blockquote>
+<hr />
+<h2 id="_2">二、筹资方式（百分比制——省级统一框架）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">参保人群</th>
+<th style="text-align: left;">费率</th>
+<th style="text-align: left;">缴费基数</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">在职职工-单位</td>
+<td style="text-align: left;"><strong>0.15%</strong></td>
+<td style="text-align: left;">职工工资总额</td>
+<td style="text-align: left;">可从单位医保费率调整</td>
+</tr>
+<tr>
+<td style="text-align: left;">在职职工-个人</td>
+<td style="text-align: left;"><strong>0.15%</strong></td>
+<td style="text-align: left;">本人工资收入</td>
+<td style="text-align: left;">从个人账户扣缴</td>
+</tr>
+<tr>
+<td style="text-align: left;">退休人员</td>
+<td style="text-align: left;"><strong>0.15%</strong></td>
+<td style="text-align: left;">上年度本人基本养老金</td>
+<td style="text-align: left;">原单位不缴费</td>
+</tr>
+<tr>
+<td style="text-align: left;">城乡居民</td>
+<td style="text-align: left;"><strong>0.20%起步</strong>→5年过渡至0.30%</td>
+<td style="text-align: left;">全省居民人均可支配收入</td>
+<td style="text-align: left;">个人:政府=1:1</td>
+</tr>
+<tr>
+<td style="text-align: left;">灵活就业（职工费率）</td>
+<td style="text-align: left;"><strong>0.30%</strong></td>
+<td style="text-align: left;">全省社平工资60%</td>
+<td style="text-align: left;">选此路径享职工待遇</td>
+</tr>
+<tr>
+<td style="text-align: left;">灵活就业（居民费率）</td>
+<td style="text-align: left;">同城乡居民</td>
+<td style="text-align: left;">同城乡居民</td>
+<td style="text-align: left;">享受居民待遇</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>个人账户代缴</strong>：职工医保个人账户可用于本人及近亲属（配偶、父母、子女、兄弟姐妹、祖父母、外祖父母、孙子女、外孙子女）的长护险个人缴费。
+<strong>困难人群</strong>：特困人员全额资助，低保对象/防返贫致贫对象定额资助。</p>
+</blockquote>
+<hr />
+<h2 id="_3">三、医保覆盖</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">人群</th>
+<th style="text-align: left;">覆盖情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">职工医保</td>
+<td style="text-align: left;">✅ 全省统一（成都已有1,800+万人参保）</td>
+</tr>
+<tr>
+<td style="text-align: left;">城乡居民</td>
+<td style="text-align: left;">⏳ 逐步扩围，新启动城市按省级框架执行</td>
+</tr>
+<tr>
+<td style="text-align: left;">特殊群体</td>
+<td style="text-align: left;">18岁以下跟随父母参保；孤儿等视同参保</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_4">四、待遇支付（<strong>全省统一最高支付标准</strong>——四省中最详细）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">失能等级</th>
+<th style="text-align: center;">单位职工（元/月）</th>
+<th style="text-align: center;">城乡居民（元/月）</th>
+<th style="text-align: center;">支付比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">重度一级</td>
+<td style="text-align: center;"><strong>1,300</strong></td>
+<td style="text-align: center;"><strong>900</strong></td>
+<td style="text-align: center;">职工~70% / 居民~50%</td>
+</tr>
+<tr>
+<td style="text-align: center;">重度二级</td>
+<td style="text-align: center;"><strong>1,400</strong></td>
+<td style="text-align: center;"><strong>1,000</strong></td>
+<td style="text-align: center;">职工~70% / 居民~50%</td>
+</tr>
+<tr>
+<td style="text-align: center;">重度三级</td>
+<td style="text-align: center;"><strong>1,500</strong></td>
+<td style="text-align: center;"><strong>1,100</strong></td>
+<td style="text-align: center;">职工~70% / 居民~50%</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>其他待遇规则</strong>：
+- 年度上限 ≤ 全省居民人均可支配收入50%
+- 向居家和社区护理倾斜（支付比例上浮）
+- 基金不支付床位费、膳食费等非护理费用
+- 工伤保险生活护理费不重复享受</p>
+</blockquote>
+<p><strong>待遇等待期</strong>：</p>
+<ul>
+<li>未在启动时参保：需连续缴费2年以上+全额补缴</li>
+<li>断保&gt;3个月：固定等待期6个月，每多断1年+1个月</li>
+<li>可通过补缴修复等待期</li>
+</ul>
+<hr />
+<h2 id="_5">五、从业人员要求</h2>
+<p>执行国家《健康照护师（长期照护师）国家职业标准》。全省培训培养机制正在建立中。</p>
+<hr />
+<h2 id="_6">六、全省覆盖进度</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: center;">占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 已实施</td>
+<td style="text-align: center;">10市（成都/自贡/泸州/绵阳/德阳/南充/内江/攀枝花/雅安/资阳）</td>
+<td style="text-align: center;">47.6%</td>
+</tr>
+<tr>
+<td style="text-align: left;">🟡 运行中</td>
+<td style="text-align: center;">5市州（宜宾/广元/达州/阿坝/凉山）</td>
+<td style="text-align: center;">23.8%</td>
+</tr>
+<tr>
+<td style="text-align: left;">🆕 征求意见稿</td>
+<td style="text-align: center;">2市（遂宁/巴中）</td>
+<td style="text-align: center;">9.5%</td>
+</tr>
+<tr>
+<td style="text-align: left;">🟡 筹备中</td>
+<td style="text-align: center;">2市州（广安/甘孜）</td>
+<td style="text-align: center;">9.5%</td>
+</tr>
+<tr>
+<td style="text-align: left;">⏳ 按省级部署推进</td>
+<td style="text-align: center;">2市（乐山/眉山）</td>
+<td style="text-align: center;">9.5%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总计</strong></td>
+<td style="text-align: center;"><strong>21市州</strong></td>
+<td style="text-align: center;"><strong>100%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>注</strong>：城市分组为基于省级政策目标的合理推断。四川采用&rdquo;有条件启动&rdquo;的竞争性模式，2027年全省全面实施。</p>
+</blockquote>
+<hr />
+<h2 id="_7">数据来源</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">核心来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">省级方案全文</td>
+<td style="text-align: left;">四川省人民政府（sc.gov.cn, 川办发〔2026〕6号, 2026-02-14）</td>
+</tr>
+<tr>
+<td style="text-align: left;">成都市试点数据</td>
+<td style="text-align: left;">四川省人民政府方案文本提及</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,2632 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Current Health 23 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#current-health-23">Current Health 23 维度深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实表</a></li>
+<li><a href="#_2">发展时间线——过山车式轨迹</a></li>
+<li><a href="#_3">管理层（独立后）</a></li>
+<li><a href="#_4">股权结构</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_5">一句话核心逻辑</a></li>
+<li><a href="#best-buy-health">从&rdquo;Best Buy Health 生态梦&rdquo;到&rdquo;精简独立生存&rdquo;</a></li>
+<li><a href="#_6">战略差异化要素</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#vs">支付方 vs 使用方</a></li>
+<li><a href="#_7">价值链定位</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#_8">定价参照</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_9">已确认客户</a></li>
+<li><a href="#_10">关键问题</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a><ul>
+<li><a href="#_11">已知财务数据点</a></li>
+<li><a href="#_12">估值过山车</a></li>
+</ul>
+</li>
+<li><a href="#d8-mgb-home-hospital">D8 — 工作流/旅程映射（以 MGB Home Hospital 为例）</a><ul>
+<li><a href="#mgb-current-health">MGB 量化成果（Current Health 案例研究引用）</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 — 技术/平台架构（五层模型）</a><ul>
+<li><a href="#vs_1">技术差异化 vs 竞品</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a><ul>
+<li><a href="#hah">竞品对标矩阵（高急性 HaH 技术赋能赛道）</a></li>
+</ul>
+</li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势 (TAM/SAM)</a><ul>
+<li><a href="#_13">市场定位</a></li>
+<li><a href="#_14">增长推演（高度推测）</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型与路径</a><ul>
+<li><a href="#_15">当前状态</a></li>
+<li><a href="#_16">盈利路径</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a></li>
+<li><a href="#d14">D14 — 管理层指引</a><ul>
+<li><a href="#_17">创始人独立后公开发言</a></li>
+<li><a href="#_18">关键观察</a></li>
+</ul>
+</li>
+<li><a href="#d15">D15 — 估值对比</a><ul>
+<li><a href="#current-health">为什么 Current Health 估值倍数是三者中最低的？</a></li>
+</ul>
+</li>
+<li><a href="#d16">D16 — 战略建议</a><ul>
+<li><a href="#1">1. 对潜在投资者</a></li>
+<li><a href="#2-mcghee">2. 对管理层（McGhee）</a></li>
+<li><a href="#3-ihomecare">3. 对 iHomeCare</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a><ul>
+<li><a href="#biofourmiscadence">与前述 Biofourmis/Cadence 相同的美国政策环境</a></li>
+<li><a href="#current-health_1">与 Current Health 特别相关的政策动态</a></li>
+</ul>
+</li>
+<li><a href="#d18-mgb-hah">D18 — 单元经济模型（以 MGB HaH 为例推算）</a></li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略深度评估</a><ul>
+<li><a href="#_19">现有全球布局</a></li>
+<li><a href="#_20">国际扩展评估</a></li>
+</ul>
+</li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a><ul>
+<li><a href="#_21">独特背景</a></li>
+<li><a href="#_22">退出路径评估</a></li>
+<li><a href="#_23">潜在新买家</a></li>
+</ul>
+</li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a></li>
+<li><a href="#d9-ai">D9 扩展 — 技术深度评估（软件 · 硬件 · AI/数据）</a><ul>
+<li><a href="#91">9.1 平台架构总览（五层模型）— 补充</a></li>
+<li><a href="#92">9.2 软件架构深度</a></li>
+<li><a href="#93-iot">9.3 硬件 / IoT 设备</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+<li><a href="#96">9.6 技术风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才 🆕</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构 🆕</a><ul>
+<li><a href="#251">25.1 融资历史全览</a></li>
+<li><a href="#252-cap-table">25.2 Cap Table 深度分析</a></li>
+<li><a href="#253">25.3 现金状况</a></li>
+<li><a href="#254">25.4 投资者质量评估</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率 🆕</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局 🆕</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证体系</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#v20">v2.0 完备性审计</a></li>
+<li><a href="#_24">调研空白与后续补充</a></li>
+<li><a href="#_25">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="current-health-23">Current Health 23 维度深度尽调报告</h1>
+<p><strong>调研人：Kenneth Ye</strong>
+<strong>调研日期：2026 年 7 月 3 日</strong>
+<strong>分类：公司深度尽调 / HaH 技术赋能 &amp; RPM 平台</strong>
+<strong>国家：美国（总部波士顿，起源于英国爱丁堡）</strong></p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否真正 HaH？</td>
+<td>✅ <strong>是</strong>——高急性 HaH 技术平台，旗舰客户 MGB Home Hospital</td>
+</tr>
+<tr>
+<td>实体类型</td>
+<td>🏢 私有公司（2015 英国爱丁堡创立→总部波士顿）</td>
+</tr>
+<tr>
+<td>对 iHomeCare 相关性</td>
+<td>🟢 <strong>高</strong>——高急性专精 + 供应链外包 + &ldquo;绝不卖给零售巨头&rdquo;教训</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一句话定位</strong></td>
+<td>急性 HaH + 出院后 RPM 技术平台，经历了零售巨头 $400M 收购→$667M 减值→退回创始人的完整&rdquo;企业创新失败&rdquo;周期后重新独立</td>
+</tr>
+<tr>
+<td><strong>核心故事</strong></td>
+<td>2021 被 Best Buy 以 ~$400M（20x ARR）收购→ 整合失败 → 2025.6 售回创始人 Chris McGhee（推测&rdquo;pennies on the dollar&rdquo;）→ 重新聚焦高急性 HaH + Cardinal Health Velocare 供应链</td>
+</tr>
+<tr>
+<td><strong>创始/总部</strong></td>
+<td>2015 年于英国爱丁堡成立；当前总部波士顿</td>
+</tr>
+<tr>
+<td><strong>融资总额</strong></td>
+<td>收购前 ~$50M+（含 2021.4 Series B $43M）；收购后由 Best Buy 完全持有→ 2025.6 独立</td>
+</tr>
+<tr>
+<td><strong>收购时收入</strong></td>
+<td>~$20M ARR（2021；基于 Forbes 报道的 20x EV/Rev 推算）</td>
+</tr>
+<tr>
+<td><strong>当前收入</strong></td>
+<td>「无可靠公开数据源」（2025.6 刚独立）</td>
+</tr>
+<tr>
+<td><strong>当前员工</strong></td>
+<td>「不可得」（Best Buy 时期约数百人，独立时规模未知）</td>
+</tr>
+<tr>
+<td><strong>核心伙伴</strong></td>
+<td>Mass General Brigham（旗舰客户）、Cardinal Health Velocare（供应链）</td>
+</tr>
+<tr>
+<td><strong>总体判断</strong></td>
+<td>🔴/🟡 <strong>经典&rdquo;企业创新坟场&rdquo;案例</strong>。Best Buy 想从零售跨界医疗→购买了 Current Health→未能整合→4 年后认输出售。但对 iHomeCare 的 <strong>最大借鉴意义在于&rdquo;什么是错的&rdquo;</strong>：零售企业的文化、销售周期、监管容忍度与医疗科技完全不兼容。重新独立后的 Current Health 值得关注——回到创始人手中的精简版可能更具战斗力。</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_1">基本事实表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全称</td>
+<td>Current Health（原名 Current Health Ltd）</td>
+</tr>
+<tr>
+<td>成立时间</td>
+<td>2015 年</td>
+</tr>
+<tr>
+<td>创始地</td>
+<td>英国爱丁堡</td>
+</tr>
+<tr>
+<td>当前总部</td>
+<td>美国马萨诸塞州波士顿</td>
+</tr>
+<tr>
+<td>CEO / 联合创始人</td>
+<td>Christopher McGhee（2025.6 重新出任 CEO）</td>
+</tr>
+<tr>
+<td>上市状态</td>
+<td>私有（创始人回购后独立）</td>
+</tr>
+<tr>
+<td>行业分类</td>
+<td>数字健康 / HaH 技术平台 / RPM</td>
+</tr>
+<tr>
+<td>官网</td>
+<td>https://currenthealth.com</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线——过山车式轨迹</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2015</td>
+<td>Christopher McGhee 在英国爱丁堡创立 Current Health，最初聚焦医院 RPM</td>
+</tr>
+<tr>
+<td>2019–2020</td>
+<td>将业务重心转向美国市场 + 急性 HaH</td>
+</tr>
+<tr>
+<td>2021.4</td>
+<td><strong>$43M Series B</strong> 融资（投资者未公开），为收购前最大一轮</td>
+</tr>
+<tr>
+<td>2021.10–11</td>
+<td><strong>Best Buy 以 ~$400M 收购</strong>（约 20x ARR），成为 Best Buy Health 部门核心资产</td>
+</tr>
+<tr>
+<td>2021–2024</td>
+<td>在 Best Buy 体系内运营——整合困难、增速不及预期</td>
+</tr>
+<tr>
+<td>2025.2</td>
+<td>Best Buy Q1 FY2026 计提 <strong>$109M 健康业务重组费用，$667M 健康资产减值</strong></td>
+</tr>
+<tr>
+<td>2025.6</td>
+<td><strong>Best Buy 将 Current Health 售回创始人 Chris McGhee</strong>（交易金额未披露，推测大幅低于收购价）</td>
+</tr>
+<tr>
+<td>2025.6</td>
+<td>McGhee 宣布重新聚焦：① 高急性 HaH（非慢性管理）② Cardinal Health Velocare 供应链 ③ 建设&rdquo;全球最大 HaH 平台&rdquo;</td>
+</tr>
+<tr>
+<td>2025+</td>
+<td>独立后重建期——规模、团队、客户基础均大幅缩水</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">管理层（独立后）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>姓名</th>
+<th>职务</th>
+<th>背景要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Christopher McGhee</td>
+<td>CEO &amp; Co-Founder</td>
+<td>创始 CEO→Best Buy 收购后留任→Best Buy 售出后回购公司重新出任 CEO</td>
+</tr>
+<tr>
+<td>「其余管理团队」</td>
+<td>「不可得」</td>
+<td>独立后重建中</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">股权结构</h3>
+<ul>
+<li>2021.11–2025.6：Best Buy (NYSE: BBY) 100% 持有</li>
+<li>2025.6 起：创始人 Chris McGhee 持有多数股权（推测有外部投资伙伴，未公开）</li>
+</ul>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_5">一句话核心逻辑</h3>
+<p><strong>Current Health 当前赌的是：大型零售企业的医疗梦已碎（Best Buy、Walmart 健康中心均已退出），而独立、聚焦高急性 HaH 的技术平台 + Cardinal Health 供应链能填补市场空白。</strong></p>
+<h3 id="best-buy-health">从&rdquo;Best Buy Health 生态梦&rdquo;到&rdquo;精简独立生存&rdquo;</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>时期</th>
+<th>战略逻辑</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pre-Best Buy (2015–2021)</strong></td>
+<td>建设 All-in-one RPM+HaH 平台，快速扩展美国</td>
+<td>✅ 获得 MGB 等旗舰客户；$20M ARR</td>
+</tr>
+<tr>
+<td><strong>Best Buy 时代 (2021–2025)</strong></td>
+<td>成为 Best Buy &ldquo;从零售到健康&rdquo;转型的核心——技术+Geek Squad+门店网络</td>
+<td>❌ 完全失败。&rdquo;Geek Squad 送血压计&rdquo;的叙事未能转化为商业现实</td>
+</tr>
+<tr>
+<td><strong>独立后 (2025+)</strong></td>
+<td>精简、聚焦高急性 HaH、靠 Cardinal Health 解决供应链</td>
+<td>🟡 早期，执行有待验证</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_6">战略差异化要素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>独立后定位</th>
+<th>差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>技术焦点</td>
+<td><strong>高急性 HaH + 出院后 RPM</strong>（明确不做慢性管理）</td>
+<td>与 Cadence/Biofourmis 等形成赛道错位</td>
+</tr>
+<tr>
+<td>供应链</td>
+<td>Cardinal Health Velocare——&ldquo;最后一公里&rdquo;设备配送+安装+回收</td>
+<td>借用 Cardinal 的现有物流网络</td>
+</tr>
+<tr>
+<td>客户策略</td>
+<td>深度绑定 MGB + 少数精选卫生系统</td>
+<td>资源有限→聚焦 vs 广泛覆盖</td>
+</tr>
+<tr>
+<td>创始人驱动</td>
+<td>创始人回购→精简决策→避免&rdquo;企业创新官僚&rdquo;</td>
+<td><strong>最可防御的差异化</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<pre><code>┌───────────────────────────────────────┐
+│          Current Health 平台            │
+│                                         │
+│  ┌─────────────┐  ┌──────────────┐     │
+│  │ 可穿戴设备    │  │ AI 预警引擎   │     │
+│  │ (臂带+血氧等) │  │ (异常检测)    │     │
+│  └──────┬──────┘  └──────┬───────┘     │
+│         │                │              │
+│  ┌──────┴────────────────┴──────┐      │
+│  │   Clinician Dashboard        │      │
+│  │   + Patient App              │      │
+│  └──────────────┬───────────────┘      │
+│                 │                       │
+│  ┌──────────────┴───────────────┐      │
+│  │  Cardinal Health Velocare    │      │
+│  │  (设备配送+安装+回收)          │      │
+│  └──────────────────────────────┘      │
+└─────────────────┬─────────────────────┘
+                  │
+      ┌───────────┼───────────┐
+      ▼           ▼           ▼
+┌──────────┐ ┌───────┐ ┌──────────┐
+│卫生系统    │ │患者   │ │支付方     │
+│(MGB等)   │ │       │ │(Medicare)│
+└──────────┘ └───────┘ └──────────┘
+</code></pre>
+<h3 id="vs">支付方 vs 使用方</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>实体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>支付方</strong></td>
+<td>卫生系统合同（MGB 等）→ 最终来自 Medicare AHCAH Waiver</td>
+</tr>
+<tr>
+<td><strong>使用方</strong></td>
+<td>患者（可穿戴设备+App）+ 临床团队（Dashboard）</td>
+</tr>
+<tr>
+<td><strong>供应链</strong></td>
+<td>Cardinal Health Velocare（外包物流）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_7">价值链定位</h3>
+<pre><code>纯 SaaS ──── Current Health ──── 全栈护理
+               ↑
+         技术+供应链集成
+    (无自营临床团队——与Cadence的Medical Group形成对比)
+</code></pre>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>客户类型</th>
+<th>服务内容</th>
+<th>定价模式</th>
+<th>占收入估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hospital at Home 平台</strong></td>
+<td>卫生系统</td>
+<td>可穿戴设备+AI监测+Clinician Dashboard+Cardinal物流</td>
+<td>按合同 (per-episode 或捆绑)</td>
+<td>~70%（估）</td>
+</tr>
+<tr>
+<td><strong>Post-Acute RPM</strong></td>
+<td>卫生系统</td>
+<td>出院后远程监测</td>
+<td>捆绑在 HaH 合同中或单独 PMPM</td>
+<td>~20%（估）</td>
+</tr>
+<tr>
+<td><strong>Virtual Care 平台</strong></td>
+<td>卫生系统</td>
+<td>虚拟查房+视频+消息</td>
+<td>嵌入合同</td>
+<td>~10%（估）</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ Current Health 刚从 Best Buy 独立——所有产品线收入占比为推测。</p>
+</blockquote>
+<h3 id="_8">定价参照</h3>
+<ul>
+<li><strong>MGB 合同</strong>：作为 HaH 平台供应商，推测按 per-episode 或 per-bed-day 计费</li>
+<li><strong>Cardinal Velocare 捆绑</strong>：设备配送+安装+回收 → 推测嵌入整体合同价格</li>
+</ul>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_9">已确认客户</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>客户名称</th>
+<th>类型</th>
+<th>合作内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mass General Brigham</strong></td>
+<td>学术医疗中心（美国最大 HaH 项目之一）</td>
+<td>旗舰客户——Current Health 提供 HaH 技术平台；MGB Home Hospital 实现 200% 增长(15个月)，25,000+ bed days 节省</td>
+</tr>
+<tr>
+<td><strong>「其他客户」</strong></td>
+<td>「不可得」</td>
+<td>在 Best Buy 时期有多个客户但未公开披露；独立后客户基础大幅收缩</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_10">关键问题</h3>
+<ul>
+<li><strong>客户集中度极高</strong>——MGB 可能占 Current Health 收入的 60%+（【推算】基于 MGB 案例是唯一公开详细介绍的客户关系）</li>
+<li>独立后还需重建客户信任——Best Buy 出售可能引发的服务连续性担忧</li>
+<li>Cardinal Health 渠道尚未验证能否带来新客户</li>
+</ul>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<blockquote>
+<p>⚠️ Current Health 的财务在 Best Buy 时期完全隐藏在其年报中，独立后不再公开。</p>
+</blockquote>
+<h3 id="_11">已知财务数据点</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>来源</th>
+<th>可靠性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2021 ARR (收购时)</td>
+<td>~$20M</td>
+<td>Forbes 推算 (20x EV, $400M 收购价)</td>
+<td>🟡 间接推算</td>
+</tr>
+<tr>
+<td>收购价格</td>
+<td>~$400M</td>
+<td>CNBC/Forbes 2021.10</td>
+<td>🟢 确认</td>
+</tr>
+<tr>
+<td>Best Buy 健康业务减值</td>
+<td>$667M (2025)</td>
+<td>Best Buy SEC Filing</td>
+<td>🟢 确认</td>
+</tr>
+<tr>
+<td>重组费用</td>
+<td>$109M (Q1 FY2026)</td>
+<td>Best Buy SEC Filing</td>
+<td>🟢 确认</td>
+</tr>
+<tr>
+<td>售回创始人价格</td>
+<td>「未披露」</td>
+<td>—</td>
+<td>❌ 推测 &lt;&lt; $400M</td>
+</tr>
+<tr>
+<td>独立后收入</td>
+<td>「不可得」</td>
+<td>—</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_12">估值过山车</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>时间点</th>
+<th>估值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2021.10 (收购)</td>
+<td><strong>$400M</strong></td>
+<td>Best Buy 支付现金</td>
+</tr>
+<tr>
+<td>2021–2023</td>
+<td>维持或上升（Best Buy 继续投入）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2024–2025.2</td>
+<td>急剧下降</td>
+<td>$667M 减值暗示整个 Best Buy Health 投资被认定大幅贬值</td>
+</tr>
+<tr>
+<td>2025.6 (售回)</td>
+<td><strong>$20–60M（估）</strong></td>
+<td>【推算】创始人回购价通常远低于原始收购价，推测 $0–100M 区间</td>
+</tr>
+<tr>
+<td>独立后</td>
+<td>「不可得」</td>
+<td>取决于新投资者估值</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8-mgb-home-hospital">D8 — 工作流/旅程映射（以 MGB Home Hospital 为例）</h2>
+<pre><code>Phase 0: 入组
+  │  MGB 急诊/住院 → 临床团队评估 HaH 适合性
+  │  Current Health 平台接收 → 自动匹配护理路径
+  ▼
+Phase 1: 上线 (Day 0–1)
+  │  Cardinal Velocare 配送设备到患者家（可穿戴臂带+血氧+平板）
+  │  患者培训 + 首次 RN 上门
+  │  连续监测启动
+  ▼
+Phase 2: 急性管理 (Day 2–N)
+  │  Current Health AI 持续分析生命体征
+  │  每日虚拟 MD 查房 + 按需上门 RN
+  │  移动 X 光/超声/实验室
+  │  异常预警 → Clinician Dashboard
+  ▼
+Phase 3: 出院过渡
+  │  临床稳定 → 转入 Post-Acute RPM
+  │  Current Health 持续监测 30 天
+  ▼
+Phase 4: 完成
+  │  Cardinal Velocare 上门回收设备
+  │  数据归档到 MGB EHR
+</code></pre>
+<h3 id="mgb-current-health">MGB 量化成果（Current Health 案例研究引用）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HaH 增长</td>
+<td>200% (15 个月)</td>
+</tr>
+<tr>
+<td>覆盖社区</td>
+<td>72 个</td>
+</tr>
+<tr>
+<td>Bed days 节省</td>
+<td>25,000+</td>
+</tr>
+<tr>
+<td>再入院率</td>
+<td>&lt; 传统住院 1/3（MGB 内部数据）</td>
+</tr>
+<tr>
+<td>患者满意度</td>
+<td>高于传统住院</td>
+</tr>
+<tr>
+<td>意外死亡率</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9">D9 — 技术/平台架构（五层模型）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>状态</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>5. 财务/行政</strong></td>
+<td>⚠️</td>
+<td>「无公开信息」——刚独立，推测正在重建</td>
+</tr>
+<tr>
+<td><strong>4. 业务运营</strong></td>
+<td>✅</td>
+<td>与 Cardinal Velocare 集成 → 设备配送+安装+回收全流程自动化</td>
+</tr>
+<tr>
+<td><strong>3. 临床操作</strong></td>
+<td>✅</td>
+<td>AI 预警引擎→Clinician Dashboard；<strong>注意：Current Health 不自营临床团队</strong>——由卫生系统自己负责临床人力</td>
+</tr>
+<tr>
+<td><strong>2. 用户端</strong></td>
+<td>✅</td>
+<td><strong>Patient App</strong>（平板/手机）+ <strong>Clinician Dashboard</strong>（Web）+ 可穿戴臂带（FDA 认证医疗级，连续监测）</td>
+</tr>
+<tr>
+<td><strong>1. 数据层</strong></td>
+<td>✅</td>
+<td>AI 驱动的生理数据分析（心率、呼吸率、血氧、体温、活动量等）→ 异常检测 → 风险分层</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="vs_1">技术差异化 vs 竞品</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>能力</th>
+<th>Current Health</th>
+<th>Biofourmis</th>
+<th>Cadence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连续可穿戴监测</td>
+<td>✅</td>
+<td>✅</td>
+<td>⚠️（间歇性）</td>
+</tr>
+<tr>
+<td>FDA AI 认证</td>
+<td>❌</td>
+<td>✅ 510(k)</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>供应链集成</td>
+<td>✅ Cardinal Velocare</td>
+<td>⚠️ 自建</td>
+<td>⚠️ 自建</td>
+</tr>
+<tr>
+<td>自营临床团队</td>
+<td>❌</td>
+<td>✅（可配置）</td>
+<td>✅ Medical Group</td>
+</tr>
+<tr>
+<td>高急性 vs 慢性</td>
+<td>🟢 高急性 HaH</td>
+<td>🟡 全病程</td>
+<td>🔴 纯慢性 RPM</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<h3 id="hah">竞品对标矩阵（高急性 HaH 技术赋能赛道）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th><strong>Current Health</strong></th>
+<th><strong>Biofourmis</strong></th>
+<th><strong>DispatchHealth</strong></th>
+<th><strong>Contessa</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成立</td>
+<td>2015</td>
+<td>2015</td>
+<td>2013</td>
+<td>2015</td>
+</tr>
+<tr>
+<td>起源</td>
+<td>英国爱丁堡</td>
+<td>新加坡</td>
+<td>美国 Denver</td>
+<td>美国 Nashville</td>
+</tr>
+<tr>
+<td>高急性 HaH</td>
+<td>✅ 核心</td>
+<td>✅ 部分</td>
+<td>✅ 核心</td>
+<td>✅ 核心</td>
+</tr>
+<tr>
+<td>自营临床团队</td>
+<td>❌</td>
+<td>可配置</td>
+<td>✅</td>
+<td>✅ (JV)</td>
+</tr>
+<tr>
+<td>供应链</td>
+<td>Cardinal Velocare</td>
+<td>自建</td>
+<td>自建</td>
+<td>自建</td>
+</tr>
+<tr>
+<td>FDA AI</td>
+<td>❌</td>
+<td>✅ 510(k)</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>当前估值</td>
+<td>$30–100M（估）</td>
+<td>$250–500M</td>
+<td>私有</td>
+<td>在 UNH 内</td>
+</tr>
+<tr>
+<td>财务状况</td>
+<td>🟡 刚从 Best Buy 切割，重建中</td>
+<td>🟡 增长放缓</td>
+<td>🟡 合并整合</td>
+<td>🟢 UNH 资金</td>
+</tr>
+<tr>
+<td>CEO 稳定性</td>
+<td>🟢 创始人回购</td>
+<td>🟡 2023 离职</td>
+<td>🟡 合并后新 CEO</td>
+<td>🟡 管理层流失</td>
+</tr>
+<tr>
+<td><strong>关键风险</strong></td>
+<td>🔴 资源有限、客户集中</td>
+<td>🟡 估值压缩</td>
+<td>🟡 整合阵痛</td>
+<td>🟡 UNH 内优先级</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势 (TAM/SAM)</h2>
+<h3 id="_13">市场定位</h3>
+<ul>
+<li><strong>TAM</strong>：美国 HaH 技术赋能市场 ~$2–3B（2025）</li>
+<li><strong>SAM</strong>：Current Health 聚焦的高急性 HaH + 学术医疗中心</li>
+<li><strong>当前渗透率</strong>：「不可得」——独立后数据不透明</li>
+</ul>
+<h3 id="_14">增长推演（高度推测）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>估算 ARR</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2021</td>
+<td>~$20M</td>
+<td>收购时（Forbes 推算）</td>
+</tr>
+<tr>
+<td>2022–2023</td>
+<td>~$25–35M</td>
+<td>Best Buy 投入期——有一定增长</td>
+</tr>
+<tr>
+<td>2024</td>
+<td>停滞/下降</td>
+<td>Best Buy 健康业务重组→资源缩减</td>
+</tr>
+<tr>
+<td>2025 (独立后)</td>
+<td>~$15–25M（估）</td>
+<td>独立后裁员+客户流失→收入缩水</td>
+</tr>
+<tr>
+<td>2026E</td>
+<td>$20–35M（估）</td>
+<td>重建期，依赖 MGB 扩展+ Cardinal 渠道带来新客户</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<h3 id="_15">当前状态</h3>
+<ul>
+<li><strong>推测亏损</strong>——刚从 Best Buy 切出，失去大企业资源共享（HR、IT、法务）</li>
+<li><strong>独立后的成本结构变化</strong>：</li>
+<li>✅ 节省：Best Buy 企业 overhead（管理层级、Geek Squad 等协同幻觉成本）</li>
+<li>❌ 增加：需自建支持功能（独立法务、HR、财务）</li>
+</ul>
+<h3 id="_16">盈利路径</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>短期 (2025–2026)</strong></td>
+<td>精简团队→低 burn rate→生存优先而非增长</td>
+</tr>
+<tr>
+<td><strong>中期 (2027)</strong></td>
+<td>与 MGB 深化合同→扩展 1–2 个新卫生系统→达到 $30–40M ARR</td>
+</tr>
+<tr>
+<td><strong>长期 (2028+)</strong></td>
+<td>Cardinal 渠道贡献增量客户→接近盈亏平衡</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>机遇</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>短期 (0–12 个月)</strong></td>
+<td>① Cardinal Velocare 供应链=轻资产模式 ② MGB 深度绑定维持收入基本盘 ③ 创始人回归精简决策</td>
+<td>① 🔴 <strong>现金流极度紧张</strong>——Best Buy 售出可能附带极有限现金 ② MGB 若更换供应商则致命 ③ 团队大幅缩水，能力和 morale 未知</td>
+</tr>
+<tr>
+<td><strong>中长期 (1–3 年)</strong></td>
+<td>① HaH 市场确定性增强（CMS 延至 2030）② 精简团队效率高于 Best Buy 时期 ③ Cardinal 渠道可能带来 2–3 个新客户</td>
+<td>① 融资需求——若不能自给自足，需要在&rdquo;企业失败&rdquo;标签下重新融资→估值极低 ② 竞品（Biofourmis/DispatchHealth）规模和资源远超</td>
+</tr>
+<tr>
+<td><strong>结构性</strong></td>
+<td>① 创始人回购创造&rdquo;underdog&rdquo;叙事——在卫生系统采购中可能获得同情分</td>
+<td>① 🔴 <strong>&ldquo;零售巨头都做不成的医疗&rdquo;标签</strong>——可能影响客户和人才获取 ② 供应链依赖 Cardinal→对方议价权大</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引</h2>
+<h3 id="_17">创始人独立后公开发言</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>发言人</th>
+<th>场合</th>
+<th>核心指引</th>
+<th>可信度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chris McGhee</td>
+<td>STAT News (2025.6)</td>
+<td>聚焦&rdquo;home hospital offerings and other high-acuity care opportunities&rdquo;</td>
+<td>🟢 具体方向</td>
+</tr>
+<tr>
+<td>Chris McGhee</td>
+<td>Healthcare Brew (2025.8)</td>
+<td>&ldquo;focus on treating acute and complex patient populations as opposed to long-term chronic condition management&rdquo;</td>
+<td>🟢 与 Cadence/Biofourmis 赛道明确切割</td>
+</tr>
+<tr>
+<td>Chris McGhee</td>
+<td>LinkedIn (2025.6)</td>
+<td>目标是建设&rdquo;world&rsquo;s largest hospital-at-home platform&rdquo;</td>
+<td>🟡 宏大叙事——资源极为有限</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_18">关键观察</h3>
+<ul>
+<li>McGhee 的战略聚焦（高急性 → 不做慢性）是<strong>正确的赛道选择</strong>——慢性管理领域 Cadence、Livongo 等已激烈竞争</li>
+<li>&ldquo;世界最大 HaH 平台&rdquo;的叙事在当前资源下更像融资话术</li>
+<li><strong>需要观察的下一个关键信号</strong>：是否有新融资宣布（可能附带估值信息）</li>
+</ul>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>估值指标</th>
+<th>Current Health</th>
+<th>Biofourmis</th>
+<th>Cadence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>峰值估值</td>
+<td>$400M (2021)</td>
+<td>$1.3B (2022)</td>
+<td>$1.0B (2021)—估 $1.5–2.5B (2026)</td>
+</tr>
+<tr>
+<td>当前估值（估）</td>
+<td>$30–100M</td>
+<td>$250–500M</td>
+<td>$1.5–2.5B</td>
+</tr>
+<tr>
+<td>估值变化</td>
+<td>-90%+</td>
+<td>-60–80%</td>
+<td>+50–150%</td>
+</tr>
+<tr>
+<td>当前 ARR（估）</td>
+<td>$15–25M</td>
+<td>~$37.7M</td>
+<td>$58.1M</td>
+</tr>
+<tr>
+<td>隐含 EV/ARR</td>
+<td>~2–4x</td>
+<td>7–13x</td>
+<td>25–40x</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="current-health">为什么 Current Health 估值倍数是三者中最低的？</h3>
+<ol>
+<li><strong>&ldquo;企业创新失败&rdquo;标签</strong>——市场对从零售巨头切出的资产天然折价</li>
+<li><strong>不透明</strong>——独立后无任何公开财务数据</li>
+<li><strong>客户集中度</strong>——60%+ 依赖 MGB</li>
+<li><strong>资源有限</strong>——无新鲜融资，burn rate 不明</li>
+</ol>
+<hr />
+<h2 id="d16">D16 — 战略建议</h2>
+<h3 id="1">1. 对潜在投资者</h3>
+<ul>
+<li><strong>极度高风险/高不确定性</strong>。除非能以极低估值（$20–40M）进入并有明确路径验证，否则建议观望</li>
+<li><strong>核心催化剂</strong>：① 在 MGB 之外的第二个旗舰客户签约 ② Cardinal 渠道带来首个客户</li>
+</ul>
+<h3 id="2-mcghee">2. 对管理层（McGhee）</h3>
+<ol>
+<li><strong>公开您的融资计划</strong>——&ldquo;世界最大 HaH 平台&rdquo;需要资本，市场需要知道钱从哪来</li>
+<li><strong>多样化客户基础</strong>——MGB 集中度过高，至少需要 2–3 家独立卫生系统客户</li>
+<li><strong>考虑与 Biofourmis 差异化</strong>——Biofourmis 做&rdquo;全病程&rdquo;，Current Health 做&rdquo;高急性专精&rdquo;</li>
+<li><strong>Cardinal 合作需转化为具体客户</strong>——从&rdquo;合作宣布&rdquo;到&rdquo;签约客户&rdquo;是关键跨越</li>
+</ol>
+<h3 id="3-ihomecare">3. 对 iHomeCare</h3>
+<ul>
+<li><strong>Current Health 是对 iHomeCare 最具相关性的对标之一</strong>：</li>
+<li>✅ 同样是高急性 HaH 技术平台（非慢性 RPM）</li>
+<li>✅ 同样不自营临床团队（由卫生系统负责）</li>
+<li>✅ 同样聚焦与学术医疗中心的深度合作</li>
+<li><strong>最重要的教训</strong>：<strong>不要把公司卖给不懂医疗的巨头</strong>。Best Buy 的渠道（Geek Squad/门店）与医疗销售周期根本不在同一维度。</li>
+<li><strong>供应链外包模式值得借鉴</strong>：Cardinal Velocare → 香港可对标的是否有类似的医疗器械物流商？</li>
+</ul>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<h3 id="biofourmiscadence">与前述 Biofourmis/Cadence 相同的美国政策环境</h3>
+<ul>
+<li>CMS AHCAH Waiver 延至 2030.9 —— Current Health 最大市场驱动力</li>
+<li>Medicare RPM 编码支持出院后监测</li>
+<li>FDA 对 AI/ML SaMD 的框架——Current Health 当前无 FDA 认证（不如 Biofourmis）</li>
+</ul>
+<h3 id="current-health_1">与 Current Health 特别相关的政策动态</h3>
+<ul>
+<li><strong>Best Buy 退出健康领域</strong>：反映了非传统医疗企业进入医疗的政策/运营壁垒 → 进一步验证了&rdquo;医疗需要专业玩家&rdquo;的逻辑</li>
+</ul>
+<hr />
+<h2 id="d18-mgb-hah">D18 — 单元经济模型（以 MGB HaH 为例推算）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>估算金额/episode</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Current Health 平台费</strong></td>
+<td>$300–600</td>
+<td>MGB 合同价</td>
+</tr>
+<tr>
+<td>Cardinal Velocare 物流</td>
+<td>+$200–400</td>
+<td>设备配送+安装+回收</td>
+</tr>
+<tr>
+<td><strong>Current Health 净收入</strong></td>
+<td>$200–400</td>
+<td>扣除 Cardinal 分成</td>
+</tr>
+<tr>
+<td>减去：AI/云基础设施</td>
+<td>-$50–100</td>
+<td></td>
+</tr>
+<tr>
+<td>减去：客户支持</td>
+<td>-$30–50</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>每 episode 贡献毛利</strong></td>
+<td><strong>$100–250</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 以上均为行业对标推算，非 Current Health 公开定价。</p>
+</blockquote>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>特征</th>
+<th>Current Health 匹配度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A 级 — 学术医疗中心（MGB 型）</strong></td>
+<td>HaH 先锋、需要技术平台而非临床外包</td>
+<td>🟢 最高——这是 Current Health 的最佳客户画像</td>
+</tr>
+<tr>
+<td><strong>B 级 — 大型上市卫生系统（CHS 型）</strong></td>
+<td>需求类似但决策周期更长</td>
+<td>🟡 Cardinal 渠道可能覆盖</td>
+</tr>
+<tr>
+<td><strong>C 级 — 中型地区系统</strong></td>
+<td>可能需要更多白手套服务</td>
+<td>🔴 资源不足以服务</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>竞品</th>
+<th>赛道重叠</th>
+<th>Current Health vs 竞品</th>
+<th>威胁等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Biofourmis</strong></td>
+<td>高急性 HaH 技术平台</td>
+<td>Biofourmis 有 FDA AI + GE 渠道 → 全面碾压</td>
+<td>🔴 高</td>
+</tr>
+<tr>
+<td><strong>DispatchHealth</strong></td>
+<td>高急性 HaH（全栈）</td>
+<td>DispatchHealth = 自营护理交付 vs Current Health = 纯技术</td>
+<td>🟡 中（不同定位）</td>
+</tr>
+<tr>
+<td><strong>Contessa</strong></td>
+<td>HaH（JV 模式）</td>
+<td>Contessa = JV 运营 vs Current Health = SaaS</td>
+<td>🟡 中</td>
+</tr>
+<tr>
+<td><strong>Cadence</strong></td>
+<td>非直接（慢性 RPM）</td>
+<td>赛道不同——Current Health 不做慢性</td>
+<td>🟢 低</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略深度评估</h2>
+<h3 id="_19">现有全球布局</h3>
+<ul>
+<li><strong>英国爱丁堡</strong>：创始地——研发团队可能仍存在</li>
+<li><strong>美国波士顿</strong>：当前总部+核心市场</li>
+</ul>
+<h3 id="_20">国际扩展评估</h3>
+<ul>
+<li>McGhee 尚未提及任何跨境计划</li>
+<li>独立后资源极为有限——跨境扩展不现实</li>
+</ul>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<h3 id="_21">独特背景</h3>
+<ul>
+<li>Current Health 的&rdquo;退出&rdquo;已经发生（Best Buy 出售）。未来的退出路径取决于能否重建独立增长。</li>
+</ul>
+<h3 id="_22">退出路径评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>退出路径</th>
+<th>可能性</th>
+<th>预估估值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>再次被收购（战略买家）</strong></td>
+<td>🟡 中</td>
+<td>$50–150M（当前 ARR × 3–5x）</td>
+</tr>
+<tr>
+<td><strong>IPO</strong></td>
+<td>🔴 极低</td>
+<td>$100–200M（需要至少 3 年恢复增长）</td>
+</tr>
+<tr>
+<td><strong>保持私有/被合并</strong></td>
+<td>🟢 中高</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_23">潜在新买家</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>买家</th>
+<th>动机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cardinal Health</strong></td>
+<td>已有合作关系→垂直整合</td>
+</tr>
+<tr>
+<td><strong>Philips Healthcare</strong></td>
+<td>患者监测→HaH 延伸</td>
+</tr>
+<tr>
+<td><strong>Oracle/Cerner</strong></td>
+<td>EHR 内建 HaH 模块</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<blockquote>
+<p>⚠️ 刚从 Best Buy 独立——无独立 ESG 报告。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环境</td>
+<td>🟢 正面</td>
+<td>HaH 减少交通+医院能耗</td>
+</tr>
+<tr>
+<td>社会</td>
+<td>🟢 正面</td>
+<td>提高医疗可及性（MGB 覆盖 72 社区）</td>
+</tr>
+<tr>
+<td>治理</td>
+<td>🟡 中性</td>
+<td>创始人所有权集中=决策快但缺少制衡</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9-ai">D9 扩展 — 技术深度评估（软件 · 硬件 · AI/数据）</h2>
+<blockquote>
+<p>现有 D9 已覆盖五层架构概要。以下按 v2.0 27 维度模板补充 9.1–9.6 细化维度。</p>
+</blockquote>
+<h3 id="91">9.1 平台架构总览（五层模型）— 补充</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: center;">公司状态</th>
+<th style="text-align: center;">自研/外采/白标</th>
+<th>技术栈（已知/推测）</th>
+<th>关键说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 财务/行政</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">「不可得」</td>
+<td>「不可得」— 刚脱离 Best Buy 企业 ERP（推测 SAP/Oracle），独立后 ERP 未知</td>
+<td>从 Best Buy 切出后需重建独立财务/HR 系统</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 业务运营</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研 + Cardinal 集成</td>
+<td>自研临床运营平台 + Cardinal Velocare API 集成</td>
+<td>设备配送-安装-回收全流程自动化</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 临床操作</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研</td>
+<td>AI 预警引擎 → Clinician Dashboard（Web）→ 卫生系统 EHR 双向集成</td>
+<td>EHR 集成推测支持 Epic（MGB 使用 Epic）；是否支持 Cerner 未知</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 用户端（多端）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研</td>
+<td>Patient App（平板/手机）+ Clinician Dashboard（Web）+ 家属端（推测）</td>
+<td>FDA Class II 510(k) 认证；CE Mark Class IIa</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据与 AI 层</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">自研</td>
+<td>时序数据库（推测 InfluxDB/TimescaleDB）+ ML 推理引擎</td>
+<td>5 项生命体征连续采集 → 云端 AI 分析</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>端到端数据流</strong>：可穿戴臂带（Bluetooth LE）→ 患者平板/手机（4G/WiFi 中继）→ 云端平台 → AI 分析引擎 → Clinician Dashboard + EHR 双向同步</li>
+<li><strong>集成方式</strong>：推测 RESTful API + FHIR R4（MGB 使用 Epic EHR，已验证集成）</li>
+</ul>
+<h3 id="92">9.2 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">「不可得」— 无公开技术博客或工程分享。FDA 510(k) 文档显示系统为模块化设计（可穿戴+平台+Dashboard），推测微服务或模块化单体架构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要技术栈</strong></td>
+<td style="text-align: left;">「不可得」— 前端框架、后端语言、数据库选型均未公开。云平台推测 AWS 或 GCP（英国+美国双区域部署可能）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">✅ 已验证与 Epic EHR（MGB）集成。推测支持 FHIR R4、HL7 v2。是否支持 Cerner/Meditech 未知。⚠️ 单 EHR 验证→多 EHR 覆盖有额外集成成本</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">推测 HIPAA 合规 + 传输/静态加密。SOC2 / HITRUST / ISO 27001 认证状态「不可得」——独立后安全合规团队能力未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>软件 IP / 专利</strong></td>
+<td style="text-align: left;">「不可得」— 专利数量和覆盖范围未公开。已知 FDA 510(k) 编号 K210133 (2019)、K222550 (2022)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>开发实践</strong></td>
+<td style="text-align: left;">「不可得」— CI/CD、测试覆盖率、部署频率等信息均未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可扩展性</strong></td>
+<td style="text-align: left;">「不可得」— 多租户架构、并发用户上限、SLA 可用性承诺均未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术债务</strong></td>
+<td style="text-align: left;">🟡 Best Buy 时期 4 年企业整合 → 推测存在为适应 Best Buy 体系而做的架构妥协。独立后需评估是否需要重构核心平台</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件 / IoT 设备</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>设备品类</strong></td>
+<td style="text-align: left;">① <strong>自研可穿戴臂带</strong>（Current Wearable Health Monitoring System）：上臂佩戴，被动连续监测 5 项生命体征——心率（Pulse Rate）、血氧饱和度（SpO2）、呼吸率（Respiration Rate）、皮肤温度、运动/活动量。② 可接入第三方蓝牙设备（血压计、体重秤、血糖仪等——具体品牌型号未公开）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>设备来源</strong></td>
+<td style="text-align: left;">✅ <strong>自研硬件</strong>（非 OEM 白标，非第三方采购）——这是 Current Health 与 Biofourmis（也是自研）共有的差异化特征。FDA 510(k) 中制造商为 Current Health Ltd</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>连接协议</strong></td>
+<td style="text-align: left;">✅ Bluetooth LE（可穿戴→患者平板/手机）+ WiFi/4G（平板/手机→云端）。⚠️ 无蜂窝直连（LTE/5G）能力——依赖患者终端设备作为中继</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>边缘能力</strong></td>
+<td style="text-align: left;">「不可得」— 设备端是否具备预处理/离线缓存/断网续传能力未披露</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>供应链</strong></td>
+<td style="text-align: left;">「不可得」— 硬件制造伙伴、芯片供应商、地缘风险暴露未公开。⚠️ 独立后硬件供应链是否从 Best Buy 体系成功切出未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>硬件可靠性</strong></td>
+<td style="text-align: left;">「不可得」— 故障率、电池寿命（推测 24–48 小时，基于同类上臂医疗可穿戴设备）、校准频率均未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>监管注册</strong></td>
+<td style="text-align: left;">✅ <strong>FDA Class II 510(k)</strong>（K210133, 2019.2 首次 clearance；K222550, 2022.11 更新）——用于 post-acute 和远程患者监测，非 AI/ML SaMD 独立认证。✅ <strong>EU CE Mark Class IIa</strong>。❌ 无 NMPA（中国）注册</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>硬件成本结构</strong></td>
+<td style="text-align: left;">「不可得」— 单台 BOM 成本/采购价 vs 租赁定价/硬件毛利均未公开。独立后是否沿用 Best Buy 时期的硬件供应商未知</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AI 模型类型</strong></td>
+<td style="text-align: left;">「不可得」— Current Health 官网称使用&rdquo;AI 驱动的生理数据分析&rdquo;（异常检测、风险分层），但未公开具体模型架构。推测为传统机器学习模型（XGBoost/随机森林/时序异常检测），非 LLM/深度学习应用</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 应用场景</strong></td>
+<td style="text-align: left;">✅ 早期预警评分 (EWS)、临床恶化预测、再入院风险评估——基于 5 项生命体征的连续时序分析。⚠️ <strong>注意</strong>：AI 定位为&rdquo;辅助决策&rdquo;而非&rdquo;自主诊断&rdquo;——最终临床判断由卫生系统医护团队负责</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>训练数据</strong></td>
+<td style="text-align: left;">「不可得」— 数据来源（自有临床数据/MGB 数据/公开数据集）、样本量级、数据标注方式均未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>算法性能</strong></td>
+<td style="text-align: left;">「不可得」— AUC、灵敏度/特异度、PPV/NPV、预警前导时间（提前多少小时预警）、误报率等关键指标未公开。Current Health 案例研究仅提 MGB 整体成果（25K+ bed days saved, 0 意外死亡），但未归因于 AI 算法性能</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>临床验证</strong></td>
+<td style="text-align: left;">⚠️ <strong>弱</strong>。无独立同行评审论文证实 Current Health AI 算法性能。MGB Home Hospital 的整体临床成果有发表（但 MGB 使用多种工具，非仅 Current Health）。Current Health 官网案例研究属于市场材料，非学术证据</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 监管</strong></td>
+<td style="text-align: left;">❌ Current Health 的 FDA 510(k) <strong>并非 AI/ML SaMD 认证</strong>——510(k) 对象是生理监测系统（硬件+基础软件），未单独认证 AI 算法为医疗器械。与 Biofourmis 的 FDA-cleared AI 分析引擎（Biovitals Analytics Engine）形成关键差距</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 团队</strong></td>
+<td style="text-align: left;">「不可得」— 数据科学家/ML 工程师数量、核心人员背景（PhD/MD）均未公开。是否设有 CAIO 或等同角色未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据治理</strong></td>
+<td style="text-align: left;">「不可得」— 数据所有权（归属卫生系统 vs Current Health？）、患者同意机制、去标识化/匿名化流程、跨境数据传输（UK↔US）合规均未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可解释性</strong></td>
+<td style="text-align: left;">「不可得」— 是否提供模型决策解释、是否满足 HIPAA「可解释 AI」要求未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 成本</strong></td>
+<td style="text-align: left;">「不可得」— 推理成本/API 调用成本、GPU 基础设施投入、单位患者 AI 成本未公开</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>能力维度</th>
+<th style="text-align: center;">Current Health 状态</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差距</th>
+<th style="text-align: center;">差异化评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>软件全栈能力</td>
+<td style="text-align: center;">✅ 自研完整平台</td>
+<td style="text-align: center;">多数竞品自研</td>
+<td style="text-align: center;">持平</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>硬件整合/自研</td>
+<td style="text-align: center;">✅ 自研 FDA 认证臂带</td>
+<td style="text-align: center;">Biofourmis 自研 / Cadence 第三方</td>
+<td style="text-align: center;">领先大多数</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>AI 临床级能力</td>
+<td style="text-align: center;">⚠️ 有 AI 但无独立 FDA AI 认证</td>
+<td style="text-align: center;">Biofourmis 有 510(k) AI</td>
+<td style="text-align: center;">落后 Biofourmis</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>互操作性/集成</td>
+<td style="text-align: center;">✅ Epic FHIR 集成已验证</td>
+<td style="text-align: center;">行业标配</td>
+<td style="text-align: center;">持平</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td>数据资产规模</td>
+<td style="text-align: center;">「不可得」— 推测显著小于 Biofourmis</td>
+<td style="text-align: center;">Biofourmis 数年多国数据</td>
+<td style="text-align: center;">可能落后</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td>技术专利/IP 护城河</td>
+<td style="text-align: center;">「不可得」— 专利组合未公开</td>
+<td style="text-align: center;">竞品有明确专利布局</td>
+<td style="text-align: center;">未知</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>技术护城河总体评估</strong>：🟡 <strong>中等</strong>。自研硬件 + 已验证的 MGB Epic 集成构成一定壁垒，但 AI 缺乏独立 FDA 认证和同行评审证据，且技术细节极度不透明（独立后尚未重新建立技术品牌）。</li>
+<li><strong>技术竞争对标（vs Biofourmis）</strong>：Current Health 在硬件自研上与 Biofourmis 持平，但在 AI 监管认证、临床证据强度上显著落后。</li>
+</ul>
+<h3 id="96">9.6 技术风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险类别</th>
+<th>具体风险</th>
+<th style="text-align: center;">严重度</th>
+<th>缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 监管政策突变</td>
+<td>若 FDA 未来要求所有 AI 驱动的临床决策支持系统独立 510(k)，Current Health 面临合规成本+时间压力</td>
+<td style="text-align: center;">🟡</td>
+<td>当前 AI 定位为&rdquo;辅助&rdquo;而非&rdquo;决策&rdquo;——有一定缓冲</td>
+</tr>
+<tr>
+<td>硬件供应链断裂</td>
+<td>独立后硬件供应链是否从 Best Buy 体系切出？若原供应商随 Best Buy 切断，需重建</td>
+<td style="text-align: center;">🔴</td>
+<td>「不可得」——独立后硬件制造安排未知</td>
+</tr>
+<tr>
+<td>网络安全事件</td>
+<td>远程患者监测平台若被入侵→患者数据泄露+临床安全风险</td>
+<td style="text-align: center;">🟡</td>
+<td>推测 HIPAA 合规——但独立后安全团队规模和能力未知</td>
+</tr>
+<tr>
+<td>互操作性壁垒</td>
+<td>目前仅验证 Epic（MGB）。若进入 Cerner/Meditech 客户需额外集成开发</td>
+<td style="text-align: center;">🟡</td>
+<td>FHIR 标准降低部分壁垒——但每个 EHR 仍需定制</td>
+</tr>
+<tr>
+<td>技术团队流失</td>
+<td>Best Buy 出售→独立过程中核心技术人才可能离开</td>
+<td style="text-align: center;">🔴</td>
+<td>创始人回购可能保留核心团队——但无公开数据确认</td>
+</tr>
+<tr>
+<td>技术债爆发</td>
+<td>Best Buy 时期可能积累架构妥协→独立后重建成本</td>
+<td style="text-align: center;">🟡</td>
+<td>独立后精简产品线（聚焦高急性）可减少技术债面</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才 🆕</h2>
+<blockquote>
+<p>⚠️ Current Health 2025.6 刚从 Best Buy 独立，组织架构处于重建期，大量数据不可得。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>组织架构</strong></td>
+<td style="text-align: left;">「不可得」— 独立后组织架构未公开。Best Buy 时期 Current Health 作为 Best Buy Health 子部门运营，汇报线经过 Best Buy 管理层。独立后推测为扁平化创始人驱动结构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">⚠️ LinkedIn 显示 201–500 人（此数据可能为 Best Buy 时期遗留，未更新）。独立后实际规模推测 <strong>50–150 人</strong>【推算】——创始人回购通常伴随大幅裁员以降低 burn rate。确切数字「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人才密度</strong></td>
+<td style="text-align: left;">「不可得」— 工程师占比、PhD/MD 占比、核心团队平均从业年限均未公开。已知创始团队有英国爱丁堡大学背景</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关键人依赖</strong></td>
+<td style="text-align: left;">🔴 <strong>CEO Chris McGhee 极度关键人依赖</strong>——创始 CEO→Best Buy 售出→回购→重新出任 CEO。若 McGhee 离开，公司可能失去方向。其余关键人员（CTO/COO/临床负责人）「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工留存</strong></td>
+<td style="text-align: left;">「不可得」— 年化离职率、中位任职年限未知。⚠️ 经历了 Best Buy 收购→整合失败→出售→创始人回购的 4 年动荡，员工 morale 和留存必然受冲击</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>招聘速度</strong></td>
+<td style="text-align: left;">「不可得」— 独立后是否恢复招聘、关键岗位平均招聘周期未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>薪酬哲学</strong></td>
+<td style="text-align: left;">「不可得」— 现金 vs 期权比重未知。独立后推测以期权为主（现金紧张）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">🟡 Glassdoor 评分 <strong>3.6/5</strong>（31 条评价）——中等偏下。评价样本偏小且可能主要反映 Best Buy 时期体验，独立后文化可能不同。⚠️ 经历了&rdquo;收购-整合失败-出售&rdquo;的员工可能对管理层信任度偏低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>多元化与包容</strong></td>
+<td style="text-align: left;">「不可得」— 女性高管比例、DEI 政策未知</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>组织健康度综合评级</strong>：🔴 <strong>弱</strong>。经历 4 年企业并购动荡后独立，团队规模大幅缩水，创始人关键人依赖极高，文化处于重建期。</li>
+<li><strong>组织风险清单</strong>：
+  1. 🔴 <strong>过度依赖创始人 McGhee</strong>——公司 ≈ McGhee
+  2. 🔴 <strong>Best Buy 离职潮风险</strong>——独立过程中核心人才可能已离开
+  3. 🟡 <strong>文化重建不确定性</strong>——从大企业部门回到初创心态的转变可能不顺利
+  4. 🟡 <strong>招聘困难</strong>——&ldquo;Best Buy 失败&rdquo;标签可能影响人才吸引力</li>
+</ul>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构 🆕</h2>
+<blockquote>
+<p>⚠️ Current Health 2025.6 刚从 Best Buy 回购独立，资本结构处于&rdquo;硬重置&rdquo;状态。</p>
+</blockquote>
+<h3 id="251">25.1 融资历史全览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">轮次</th>
+<th style="text-align: left;">日期</th>
+<th style="text-align: left;">金额</th>
+<th style="text-align: left;">估值</th>
+<th style="text-align: left;">领投方</th>
+<th style="text-align: left;">跟投方</th>
+<th style="text-align: left;">融资用途</th>
+<th style="text-align: left;">关键条款</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">种子轮</td>
+<td style="text-align: left;">2015–2018</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">产品开发</td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series A</td>
+<td style="text-align: left;">~2019–2020</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">美国市场扩展</td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;">Series B</td>
+<td style="text-align: left;">2021.4</td>
+<td style="text-align: left;">$43M</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">「不可得」（未公开）</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">规模扩展</td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;">收购（Best Buy）</td>
+<td style="text-align: left;">2021.10–11</td>
+<td style="text-align: left;">~$400M</td>
+<td style="text-align: left;">$400M</td>
+<td style="text-align: left;">Best Buy (NYSE: BBY)</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">100% 收购</td>
+<td style="text-align: left;">全现金交易</td>
+</tr>
+<tr>
+<td style="text-align: left;">创始人回购</td>
+<td style="text-align: left;">2025.6</td>
+<td style="text-align: left;">「未披露」</td>
+<td style="text-align: left;">「不可得」</td>
+<td style="text-align: left;">Chris McGhee</td>
+<td style="text-align: left;">推测有外部投资伙伴（未公开）</td>
+<td style="text-align: left;">从 Best Buy 回购公司</td>
+<td style="text-align: left;">价格推测 &lt;&lt; $400M</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>累计总额</strong></td>
+<td style="text-align: left;">收购前融资 ~$50M+（含 $43M Series B）；收购 $400M；回购金额「未披露」</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>估值轨迹</strong>：2021 Series B（估 $100–200M）→ 2021.10 $400M 收购 ↑ → 2024–2025 $667M 减值 ↓ → 2025.6 回购（估 $20–60M）↓↓ → 独立后「不可得」</li>
+</ul>
+<h3 id="252-cap-table">25.2 Cap Table 深度分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">股东类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: center;">持股比例（估）</th>
+<th style="text-align: center;">是否有董事会席位</th>
+<th style="text-align: left;">退出历史</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">创始人/CEO</td>
+<td style="text-align: left;">Chris McGhee</td>
+<td style="text-align: center;">🟢 <strong>多数股权（推测 &gt;50%）</strong></td>
+<td style="text-align: center;">✅ CEO + 董事会控制</td>
+<td style="text-align: left;">Best Buy 出售中实现部分现金回报</td>
+</tr>
+<tr>
+<td style="text-align: left;">外部投资伙伴</td>
+<td style="text-align: left;">「未公开」</td>
+<td style="text-align: center;">🟡 推测少数股权（估 20–49%）</td>
+<td style="text-align: center;">「不可得」</td>
+<td style="text-align: left;">「不可得」</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工期权池</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">「不可得」</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">Best Buy 时期期权已清算；独立后新期权池规模未知</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>发行人持股</strong>：Chris McGhee 推测持有多数控制权（创始人回购+CEO）</li>
+<li><strong>员工期权池</strong>：独立后新设，占总股本比例、已授出/未授出均「不可得」</li>
+<li><strong>清算偏好</strong>：「不可得」——若有外部投资伙伴，其优先清算权条款未公开</li>
+<li><strong>反稀释条款</strong>：「不可得」</li>
+<li><strong>赎回条款</strong>：「不可得」</li>
+</ul>
+<h3 id="253">25.3 现金状况</h3>
+<ul>
+<li>最新现金余额：「不可得」</li>
+<li>月度 Burn Rate：「不可得」【推算】独立后精简团队（估 50–150 人），月 burn 推测 $0.5–1.5M</li>
+<li><strong>剩余 Runway（月）</strong>：「不可得」——取决于 Best Buy 出售时是否附带运营资金 + 是否有外部融资</li>
+<li>⚠️ <strong>关键不确定性</strong>：Best Buy 出售 Current Health 时是否提供过渡资金？若无，Current Health 可能在 6–12 个月内耗尽现金，需要立即融资</li>
+<li><strong>在未盈利状态下能否撑过 18 个月？</strong> 🔴 <strong>高度不确定</strong>——若 Best Buy 出售时未附带充足现金 + 无新融资注入，答案很可能为「否」</li>
+</ul>
+<h3 id="254">25.4 投资者质量评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">评估维度</th>
+<th style="text-align: center;">评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">领投方品牌</td>
+<td style="text-align: center;">🔴</td>
+<td style="text-align: left;">无 Tier 1 VC 参与独立后融资（或未披露）。创始人回购通常伴随&rdquo;非机构化&rdquo;资本结构</td>
+</tr>
+<tr>
+<td style="text-align: left;">投后参与度</td>
+<td style="text-align: center;">「不可得」</td>
+<td style="text-align: left;">外部投资伙伴身份未知→参与度无法评估</td>
+</tr>
+<tr>
+<td style="text-align: left;">后续跟投意愿</td>
+<td style="text-align: center;">「不可得」</td>
+<td style="text-align: left;">需等待首次独立融资信息披露</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率 🆕</h2>
+<blockquote>
+<p>⚠️ Current Health 独立后 GTM 处于重建期。从 Best Buy 时期的多客户覆盖缩为 MGB 单一客户依赖。</p>
+</blockquote>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">🔴 <strong>单客户深度绑定模式</strong>——以 MGB 为核心直销。Cardinal Health Velocare 定位为渠道伙伴，但尚未验证能带来新客户。无 PLG、无政府 GTM</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售团队结构</strong></td>
+<td style="text-align: left;">「不可得」— 独立后销售团队规模未知。推测极精简（5–15 人），以 CEO + 创始团队直接销售为主</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC（客户获取成本）</strong></td>
+<td style="text-align: left;">「不可得」— 卫生系统 HaH 平台销售周期长（6–18 个月），CAC 极高（推测 $200K–500K/health system）【推算】</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LTV/CAC 比</strong></td>
+<td style="text-align: left;">「不可得」— 以 MGB 级别合同（推测年合同 $2–5M）计算，若 CAC $300–500K，LTV/CAC 可能 ≥3x。但仅一个数据点，且问题在于能否获取第二个 MGB 级客户</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC 回收期</strong></td>
+<td style="text-align: left;">「不可得」— 推测 12–24 个月（卫生系统销售周期的自然结果）【推算】</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>平均销售周期</strong></td>
+<td style="text-align: left;">🟡 卫生系统 HaH 平台采购通常 6–18 个月。⚠️ Current Health 品牌受&rdquo;Best Buy 失败&rdquo;标签影响，可能延长决策周期</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>赢单率</strong></td>
+<td style="text-align: left;">「不可得」— 独立后无公开赢单案例（MGB 以外）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDR（净收入留存）</strong></td>
+<td style="text-align: left;">「不可得」— MGB 增长 200%/15 月暗示 NDR &gt;100%【推算】，但单一客户推断不可靠</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>渠道伙伴经济</strong></td>
+<td style="text-align: left;">🟡 Cardinal Health Velocare 合作：Cardinal 提供物流（配送+安装+回收），Current Health 提供技术平台。分成模式「不可得」。已签约客户数：<strong>0（公开已知）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>地推/线下获客</strong></td>
+<td style="text-align: left;">不适用——无线下销售团队</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>GTM 阶段诊断</strong>：🔴 <strong>重建初期（Pre-Product-Market Fit 重启）</strong>。从 Best Buy 时期的多客户覆盖缩为 MGB 单一客户。Cardinal 渠道尚未验证。</li>
+<li><strong>GTM 瓶颈判断</strong>：🔴 <strong>漏斗顶部严重不足</strong>——不是转化率问题，而是连 leads 都没有（除 MGB 外无公开客户）。独立后首要任务是证明能赢得第二个卫生系统客户。</li>
+</ul>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局 🆕</h2>
+<blockquote>
+<p>⚠️ Current Health 不自营临床团队——临床结果主要由卫生系统伙伴（如 MGB）的临床运营能力驱动。平台本身的增量临床贡献未经独立验证。</p>
+</blockquote>
+<h3 id="271">27.1 核心临床指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Current Health 相关数据</th>
+<th style="text-align: center;">对照标准</th>
+<th style="text-align: left;">数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>30 天再入院率</strong></td>
+<td style="text-align: center;">「不可得」— 案例研究仅称 &ldquo;lower-than-average readmissions&rdquo;，未公布具体数字。MGB Home Hospital 整体再入院率未单独归因于 Current Health 平台</td>
+<td style="text-align: center;">行业均值 ~15%（HaH 目标 &lt;10%）</td>
+<td style="text-align: left;">Current Health 官网案例研究（市场材料）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>不良事件率</strong></td>
+<td style="text-align: center;">「不可得」</td>
+<td style="text-align: center;">院内基线</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者满意度</strong></td>
+<td style="text-align: center;">「不可得」— MGB 案例称&rdquo;高于传统住院&rdquo;，无具体 NPS/HCAHPS 评分</td>
+<td style="text-align: center;">Press Ganey / HCAHPS 基准</td>
+<td style="text-align: left;">Current Health 官网案例研究</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>死亡率</strong></td>
+<td style="text-align: center;">✅ 0 意外死亡（MGB 案例，25,000+ bed days）</td>
+<td style="text-align: center;">风险调整后与院内等同</td>
+<td style="text-align: left;">Current Health 官网案例研究</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bed Days 节省</strong></td>
+<td style="text-align: center;">✅ 25,000+（MGB 案例，15 个月）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">Current Health 官网案例研究</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HaH 增长</strong></td>
+<td style="text-align: center;">✅ 200%（MGB，15 个月）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">Current Health 官网案例研究</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="272">27.2 质量认证体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">JCI</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: left;">适用于医疗服务机构——Current Health 是技术平台，非服务提供方</td>
+</tr>
+<tr>
+<td style="text-align: left;">NCQA</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: left;">URAC</td>
+<td style="text-align: center;">「不可得」</td>
+<td style="text-align: left;">远程医疗/健康管理认证——Current Health 是否申请未知</td>
+</tr>
+<tr>
+<td style="text-align: left;">ISO 13485</td>
+<td style="text-align: center;">「不可得」</td>
+<td style="text-align: left;">医疗器械质量管理体系——作为 FDA 510(k) 持证人，推测内部符合相关 QMS 要求，但正式认证状态未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">CMS Star Rating</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: left;">Current Health 不是 Medicare 计划，不适用</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证据类型</th>
+<th style="text-align: center;">Current Health 专属</th>
+<th style="text-align: left;">代表性研究</th>
+<th style="text-align: left;">发表期刊</th>
+<th style="text-align: center;">影响力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">RCT</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">前瞻性队列研究</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">回顾性分析</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">案例研究/白皮书</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MGB Home Hospital 案例研究（25K+ bed days, 0 意外死亡）</td>
+<td style="text-align: left;">Current Health 官网（非同行评审）</td>
+<td style="text-align: center;">🔴 低——市场材料</td>
+</tr>
+<tr>
+<td style="text-align: left;">间接证据（MGB HaH 整体）</td>
+<td style="text-align: center;">有</td>
+<td style="text-align: left;">MGB 研究者发表的 HaH 全国数据分析（2024.1，覆盖多中心）</td>
+<td style="text-align: left;">经 FierceHealthcare 报道（未确认原始期刊）</td>
+<td style="text-align: center;">🟡 中——证明 HaH 模式有效，但未单独归因于 Current Health 平台</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>证据强度总体评级</strong>：🔴 <strong>弱</strong>。Current Health 作为技术平台，其临床价值主张主要依赖 MGB 案例研究（市场材料），无独立同行评审论文、无 RCT、无前瞻性研究。与 Biofourmis（有 FDA AI 认证 + 同行评审证据）形成显著差距。</li>
+<li><strong>临床差异化</strong>：Current Health 宣称的差异化（低再入院率、0 意外死亡）来自 MGB 的整体 HaH 运营能力（临床团队的筛选、监测、响应），<strong>技术平台本身的增量临床贡献未经独立验证</strong>。</li>
+</ul>
+<hr />
+<h2 id="v20">v2.0 完备性审计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">D1 执行摘要</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D2 公司全貌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D3 战略定位</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D4 商业模式</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖（含 v2.0 伙伴生态）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D5 产品线 &amp; 定价</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D6 客户 &amp; 支付方</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D7 财务</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖（受限于独立后不透明）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D8 工作流</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D9 技术深度</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">🆕 v2.0 扩展完成（9.1–9.6）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D10 竞争格局</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D11 TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D12 盈利模型</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D13 机遇与风险</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖（含 v2.0 法律/宏观）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D14 管理层指引</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D15 估值对比</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D16 战略建议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D17 政策监管</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D18 单元经济</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D19 客户细分</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D20 竞品深度地图</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D21 跨境评估</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D22 退出/并购</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D23 ESG</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D24 组织与人才</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">🆕 新增——大量「不可得」（独立后不透明）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D25 融资与资本结构</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">🆕 新增——大量「不可得」（回购未披露）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D26 销售与 GTM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">🆕 新增——大量「不可得」（重建初期）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D27 临床质量</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">🆕 新增——证据弱（依赖 MGB 案例）</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ 完整覆盖</td>
+<td>27</td>
+</tr>
+<tr>
+<td>⚠️ 部分覆盖</td>
+<td>0</td>
+</tr>
+<tr>
+<td>❌ 数据缺失</td>
+<td>0（所有 27 维度均已覆盖——但 D24–D27 中大量子字段标注「不可得」）</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ <strong>关键发现</strong>：Current Health 的 v2.0 扩展覆盖在 D24–D27 新维度暴露出严重信息不对称——公司刚脱离 Best Buy 后，组织、融资、GTM、临床证据均极度不透明。<strong>这不是调研能力问题，而是公司本身的公开信息真空。</strong> 若需投资/合作决策，建议通过一手渠道（创始人访谈、行业会议）补充以下关键信息：
+1. 独立后实际员工数 + 核心团队留存名单
+2. 回购资金来源（自有资金 vs 外部投资 + 条款详情）
+3. MGB 之外的在谈/已签约客户
+4. AI 算法的独立临床验证计划</p>
+</blockquote>
+<hr />
+<h2 id="_24">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>缺口</th>
+<th>补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>独立后收入/患者量/员工数</strong></td>
+<td>跟踪 STAT/Healthcare Brew 后续报道</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>售回创始人的价格</strong></td>
+<td>若创始人融资则可能间接披露</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>MGB 合同续约状态</strong></td>
+<td>MGB 公开报告 / 行业会议</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Cardinal 合作签约客户数</strong></td>
+<td>Cardinal Health 季度电话会</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>独立后融资状态</strong></td>
+<td>Crunchbase/Pitchbook 跟踪</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>英国爱丁堡团队现状</strong></td>
+<td>英国公司注册处 (Companies House)</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Best Buy 时期的具体客户数</strong></td>
+<td>前员工访谈</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>AI/ML 技术栈详情</strong></td>
+<td>技术博客/专利检索</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Cardinal Velocare 合作的经济分成模式</strong></td>
+<td>行业分析师访谈</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>独立后的竞争定位</strong>——&ldquo;高急性专精&rdquo;能否与 Biofourmis 的&rdquo;全病程&rdquo;差异化成功？</td>
+<td>观察 2026–2027 客户签约动态</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_25">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>来源</th>
+<th>标题</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>CNBC</td>
+<td>Best Buy strikes deal to acquire U.K. health-care company Current Health</td>
+<td>2021.10</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Forbes</td>
+<td>Best Buy Ventures Into Healthcare, Paying $400 Million For Current Health</td>
+<td>2021.11</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Fierce Healthcare</td>
+<td>Best Buy sells Current Health back to co-founder</td>
+<td>2025.6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>STAT News</td>
+<td>After Best Buy sale, what&rsquo;s next for Current Health</td>
+<td>2025.6</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Healthcare Dive</td>
+<td>Best Buy divests home care firm Current Health</td>
+<td>2025.6</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Home Health Care News</td>
+<td>Best Buy Sells Current Health Back To Co-Founder, Former CEO</td>
+<td>2025.6</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Healthcare Brew</td>
+<td>Current Health CEO talks company plans after separating from Best Buy</td>
+<td>2025.8</td>
+</tr>
+<tr>
+<td>8</td>
+<td>MobiHealthNews</td>
+<td>Former Current Health CEO buys back company from Best Buy</td>
+<td>2025.6</td>
+</tr>
+<tr>
+<td>9</td>
+<td>TechTarget</td>
+<td>Best Buy sells Current Health back to former CEO</td>
+<td>2025.6</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HealthExec</td>
+<td>Best Buy Health sells at-home tech company back to founder</td>
+<td>2025.6</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Becker&rsquo;s Hospital Review</td>
+<td>Best Buy divests home care company it bought for $400M</td>
+<td>2025.6</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Current Health 官网</td>
+<td>Current Health taps Cardinal Health to scale Hospital at Home</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Cardinal Health Newsroom</td>
+<td>Current Health taps Cardinal Health to scale hospital-at-home</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Current Health 官网</td>
+<td>How Mass General Brigham Scaled Home Hospital (Case Study)</td>
+<td>2024/2025</td>
+</tr>
+<tr>
+<td>15</td>
+<td>LinkedIn / Lloyd Price</td>
+<td>HealthTech M&amp;A Case Study Series: Best Buy + Current Health</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Healthcare Digital</td>
+<td>Clinical Ambitions and Retail Realities: Analysis of Best Buy&rsquo;s Acquisition and Divestiture of Current Health</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Mercom Capital</td>
+<td>Best Buy Acquires Current Health for Undisclosed Amount</td>
+<td>2021</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Paragon Ventures</td>
+<td>Best Buy Acquires Current Health</td>
+<td>2021</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Current Health 官网</td>
+<td>Current Health and Cardinal Health Velocare</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>20</td>
+<td>LinkedIn / Chris McGhee</td>
+<td>CEO &amp; Co-Founder, Current Health (profile)</td>
+<td>2026</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

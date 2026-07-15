@@ -1,0 +1,3237 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bolton Clarke 27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#bolton-clarke-27">Bolton Clarke 27 维度深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌（含时间线）</a><ul>
+<li><a href="#_1">基本事实表</a></li>
+<li><a href="#_2">发展时间线</a></li>
+<li><a href="#_3">管理层</a></li>
+<li><a href="#_4">董事会</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_5">一句话核心逻辑</a></li>
+<li><a href="#_6">战略差异化要素</a></li>
+<li><a href="#_7">战略演变三阶段</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#_8">可视化架构</a></li>
+<li><a href="#vs">支付方 vs 使用方分离</a></li>
+<li><a href="#_9">价值链定位</a></li>
+<li><a href="#_10">战略合作伙伴生态</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线 &amp; 定价模式</a><ul>
+<li><a href="#_11">研发与创新管线</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_12">客户结构估算</a></li>
+<li><a href="#_13">客户获取渠道</a></li>
+<li><a href="#_14">品牌与声誉</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a><ul>
+<li><a href="#_15">核心财务概览</a></li>
+<li><a href="#_16">收入结构</a></li>
+<li><a href="#_17">利润表关键比率</a></li>
+<li><a href="#_18">资产负债表重点</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a><ul>
+<li><a href="#support-at-home">客户旅程（Support at Home 居家护理路径）</a></li>
+</ul>
+</li>
+<li><a href="#d9-ai">D9 — 技术深度评估（软件 · 硬件 · AI/数据）</a><ul>
+<li><a href="#91">9.1 平台架构总览（五层模型）</a></li>
+<li><a href="#92">9.2 软件架构深度</a></li>
+<li><a href="#93-iot">9.3 硬件/IoT设备</a></li>
+<li><a href="#94-ai">9.4 AI 与数据能力</a></li>
+<li><a href="#95">9.5 技术差异化矩阵</a></li>
+<li><a href="#96">9.6 技术风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局对标矩阵</a></li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</a><ul>
+<li><a href="#tam">澳大利亚养老护理市场 TAM</a></li>
+<li><a href="#bolton-clarke">Bolton Clarke 市场渗透率</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型与路径</a><ul>
+<li><a href="#_19">成本结构拆解</a></li>
+<li><a href="#_20">盈利路径分析</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a><ul>
+<li><a href="#_21">法律与诉讼</a></li>
+<li><a href="#_22">宏观敏感性</a></li>
+</ul>
+</li>
+<li><a href="#d14">D14 — 管理层指引</a><ul>
+<li><a href="#muggleton-20256">Muggleton 离职声明（2025.6）核心观点</a></li>
+<li><a href="#chretien-202571">Chretien 上任声明（2025.7.1）</a></li>
+<li><a href="#_23">指引可信度评估</a></li>
+</ul>
+</li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1">1. 对潜在投资者/合作方</a></li>
+<li><a href="#2-bolton-clarke">2. 对 Bolton Clarke 管理层的可执行建议</a></li>
+<li><a href="#3-ihomecare">3. 对竞对/新进入者（含 iHomeCare）</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a><ul>
+<li><a href="#_24">核心政策环境</a></li>
+<li><a href="#_25">关键监管机构</a></li>
+<li><a href="#muggleton-20256_1">Muggleton 的政策批评（2025.6 离职声明）</a></li>
+</ul>
+</li>
+<li><a href="#d18">D18 — 单元经济模型</a><ul>
+<li><a href="#hcp-level-3">居家护理典型单元（HCP Level 3，中等护理需求）</a></li>
+<li><a href="#_26">机构养老典型单元（每床位/年）</a></li>
+<li><a href="#_27">关键假设</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a><ul>
+<li><a href="#_28">已确认竞品</a></li>
+<li><a href="#trilogy-care">最大威胁分析——Trilogy Care</a></li>
+<li><a href="#_29">潜在跨界进入者</a></li>
+</ul>
+</li>
+<li><a href="#d21">D21 — 跨境/跨区域战略深度评估</a><ul>
+<li><a href="#bolton-clarke_1">Bolton Clarke 的国际足迹</a></li>
+<li><a href="#_30">跨境战略评估</a></li>
+</ul>
+</li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a></li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a><ul>
+<li><a href="#esg">ESG 披露状态</a></li>
+<li><a href="#_31">社会影响力量化</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才</a><ul>
+<li><a href="#_32">组织架构</a></li>
+<li><a href="#_33">员工规模</a></li>
+<li><a href="#_34">人才密度</a></li>
+<li><a href="#_35">关键人依赖</a></li>
+<li><a href="#_36">企业文化</a></li>
+</ul>
+</li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a></li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a><ul>
+<li><a href="#gtm">GTM 模式</a></li>
+<li><a href="#gtm_1">GTM 阶段诊断</a></li>
+<li><a href="#gtm_2">GTM 瓶颈判断</a></li>
+</ul>
+</li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证体系</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+<li><a href="#_37">临床差异化</a></li>
+</ul>
+</li>
+<li><a href="#d16-ihomecare_1">D16 — 对 iHomeCare 战略建议（独立章节）</a><ul>
+<li><a href="#_38">对潜在投资者</a></li>
+<li><a href="#bolton-clarke_2">对管理层（Bolton Clarke）</a></li>
+<li><a href="#ihomecare">对竞对/新进入者（iHomeCare）</a></li>
+</ul>
+</li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_39">调研空白与后续补充</a></li>
+<li><a href="#_40">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="bolton-clarke-27">Bolton Clarke 27 维度深度尽调报告</h1>
+<blockquote>
+<p><strong>报告日期</strong>：2026-07-11
+<strong>调研对象</strong>：Bolton Clarke（RSL Care RDNS Limited 集团）
+<strong>调研方法</strong>：多引擎聚合搜索（Tavily + Brave + Firecrawl + Bocha）+ 官方文件提取
+<strong>报告类型</strong>：独立公司 · 非营利组织（NFP）
+<strong>语言</strong>：简体中文</p>
+</blockquote>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<p><strong>验证结论</strong>：✅ Bolton Clarke 确认为澳大利亚最大的独立非营利养老护理服务商，核心赛道为 <strong>居家养老护理（Home Care / Support at Home）+ 机构养老（Residential Aged Care）+ 退休村（Retirement Living）</strong> 全谱系覆盖。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">核查项</th>
+<th style="text-align: left;">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">是否属于养老护理赛道</td>
+<td style="text-align: left;">✅ 是——澳大利亚 aged care 头部机构</td>
+</tr>
+<tr>
+<td style="text-align: left;">是否与 HaH（医院替代）直接竞争</td>
+<td style="text-align: left;">⚠️ 部分重叠——居家护理与 HaH 有服务边界交叉，但 Bolton Clarke 定位更偏长期照护而非急性替代</td>
+</tr>
+<tr>
+<td style="text-align: left;">对 iHomeCare 的相关性</td>
+<td style="text-align: left;">🟡 中等——居家护理运营模式可参考，但非直接技术竞品</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>一句话定位</strong>：Bolton Clarke 是澳大利亚最大独立非营利养老护理集团，拥有 140 年历史（1885–至今），FY2025 收入约 AUD 19.8 亿，16,000 名员工，88 家养老院 + 43 个退休村 + 日均 11,000 次居家护理访问，服务 130,000+ 人/年。</p>
+<p><strong>核心矛盾</strong>：NFP 非营利性质带来的信任壁垒 vs for-profit 竞争者（如 Trilogy、Australian Unity）在技术和效率上的追赶压力。在澳大利亚 Support at Home 改革和消费者选择制下，品牌信任是优势，但技术与运营效率差距是关键挑战。</p>
+<p><strong>关键数据速览</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">FY2025 数据</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">总收入</td>
+<td style="text-align: left;">~AUD 19.8 亿</td>
+<td style="text-align: left;">Muggleton 离职声明；IBISWorld 报 AUD 17.65 亿</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工数</td>
+<td style="text-align: left;">16,000</td>
+<td style="text-align: left;">2025 年 Senate 提交文件</td>
+</tr>
+<tr>
+<td style="text-align: left;">养老院</td>
+<td style="text-align: left;">88 家（8,719 床位）</td>
+<td style="text-align: left;">2025.6.30</td>
+</tr>
+<tr>
+<td style="text-align: left;">退休村</td>
+<td style="text-align: left;">43 个（2,763 单元）</td>
+<td style="text-align: left;">2025.6.30</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家护理日访问</td>
+<td style="text-align: left;">11,000 次/天</td>
+<td style="text-align: left;">2025 Senate 提交</td>
+</tr>
+<tr>
+<td style="text-align: left;">年服务人数</td>
+<td style="text-align: left;">130,000+</td>
+<td style="text-align: left;">Muggleton 离职声明</td>
+</tr>
+<tr>
+<td style="text-align: left;">FY24 居家护理拨款</td>
+<td style="text-align: left;">AUD 144.1M（#7）</td>
+<td style="text-align: left;">KPMG 2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">FY24 EBITDA</td>
+<td style="text-align: left;">AUD 126.4M (+11.5%)</td>
+<td style="text-align: left;">年报</td>
+</tr>
+<tr>
+<td style="text-align: left;">FY24 净利润</td>
+<td style="text-align: left;">AUD 193.5M</td>
+<td style="text-align: left;">年报（含非经常性项目）</td>
+</tr>
+<tr>
+<td style="text-align: left;">CEO</td>
+<td style="text-align: left;">Olivier Chretien（2025.7.1 起）</td>
+<td style="text-align: left;">前 InvoCare CEO</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>总体判断</strong>：Bolton Clarke 作为澳大利亚养老护理的「国家冠军」级 NFP，拥有不可复制的 RDNS 130 年品牌遗产和退伍军人护理根基。但在行业加速整合和技术升级的背景下，新任 CEO Olivier Chretien 面临从「规模扩张」转向「效率提升 + 技术升级」的战略转型任务。</p>
+<hr />
+<h2 id="d2">D2 — 公司全貌（含时间线）</h2>
+<h3 id="_1">基本事实表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">属性</th>
+<th style="text-align: left;">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>法定全称</strong></td>
+<td style="text-align: left;">RSL Care RDNS Limited (ACN 010 488 454)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>品牌名称</strong></td>
+<td style="text-align: left;">Bolton Clarke</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>法律地位</strong></td>
+<td style="text-align: left;">非营利公益组织（NFP），ACNC 注册慈善机构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>信托结构</strong></td>
+<td style="text-align: left;">RSL Care RDNS Limited 作为 RSL (QLD) War Veterans&rsquo; Homes Trust + Scartwater (Aged Care) Trust 的受托人</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成立时间</strong></td>
+<td style="text-align: left;">2015 年（RSL Care + RDNS 合并）；品牌更名 2017 年</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>历史起源</strong></td>
+<td style="text-align: left;">1885 年（Melbourne District Nursing Society → RDNS）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总部</strong></td>
+<td style="text-align: left;">布里斯班，昆士兰州</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工数</strong></td>
+<td style="text-align: left;">~16,000（2025）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CEO</strong></td>
+<td style="text-align: left;">Olivier Chretien MSc, MBA (INSEAD), AMP (Harvard), GAICD（2025.7.1 起）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>前 CEO</strong></td>
+<td style="text-align: left;">Stephen Muggleton（2011–2025.6.30，14 年任期）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>官网</strong></td>
+<td style="text-align: left;">https://www.boltonclarke.com.au/</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">发展时间线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">年份</th>
+<th style="text-align: left;">里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1885</td>
+<td style="text-align: left;">Melbourne District Nursing Society 成立——澳大利亚最早的居家护理机构，仅 1 名护士</td>
+</tr>
+<tr>
+<td style="text-align: left;">1898</td>
+<td style="text-align: left;">Collingwood 分支成立</td>
+</tr>
+<tr>
+<td style="text-align: left;">1906</td>
+<td style="text-align: left;">扩展到墨尔本远郊，使用自行车出行</td>
+</tr>
+<tr>
+<td style="text-align: left;">1916</td>
+<td style="text-align: left;">RSL (Returned &amp; Services League) Care 成立——退伍军人养老</td>
+</tr>
+<tr>
+<td style="text-align: left;">20 世纪</td>
+<td style="text-align: left;">RDNS（Royal District Nursing Service）成为澳大利亚居家护理的代名词</td>
+</tr>
+<tr>
+<td style="text-align: left;">2015</td>
+<td style="text-align: left;">RSL Care + RDNS 正式合并，创建澳大利亚最大 NFP 养老护理机构之一</td>
+</tr>
+<tr>
+<td style="text-align: left;">2017</td>
+<td style="text-align: left;">品牌更名为 Bolton Clarke（纪念 William Kinsey Bolton 和 Janet Clarke）；收购 Altura Learning</td>
+</tr>
+<tr>
+<td style="text-align: left;">2021</td>
+<td style="text-align: left;">合并 Acacia Living Group</td>
+</tr>
+<tr>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">收购 Allity Aged Care——行业最大养老交易之一</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">收购 McKenzie Aged Care Group（含 2 个退休村 + 9 个养老院）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">收购维多利亚州 4 个 RCA 退休村</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025.6.30</td>
+<td style="text-align: left;">Stephen Muggleton 退休，Olivier Chretien 接任</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025.7</td>
+<td style="text-align: left;">新 Aged Care Act 即将生效，Support at Home 改革推进</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_3">管理层</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">姓名</th>
+<th style="text-align: left;">职位</th>
+<th style="text-align: left;">背景要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Olivier Chretien</strong></td>
+<td style="text-align: left;">Group CEO（2025.7.1–）</td>
+<td style="text-align: left;">MSc, MBA (INSEAD), AMP (Harvard), GAICD；前 InvoCare CEO、Ramsay Health Care 高管、Wesfarmers、BCG</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Stephen Muggleton</strong></td>
+<td style="text-align: left;">前 Group CEO（2011–2025.6）</td>
+<td style="text-align: left;">14 年任期，完成 17 次并购，将收入从 ~3 亿推至 19.8 亿</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Deidre McGill</strong></td>
+<td style="text-align: left;">COO Home &amp; Community Support</td>
+<td style="text-align: left;">RN, BHlthSc, MSc Healthcare Mngt, GAICD, MACN</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Glenn Hancock</strong></td>
+<td style="text-align: left;">COO Residential Care</td>
+<td style="text-align: left;">BBus</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Brett Rice</strong></td>
+<td style="text-align: left;">COO Retirement Living</td>
+<td style="text-align: left;">BEc (Acc), CPA, GAICD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Megan Millman</strong></td>
+<td style="text-align: left;">CFO</td>
+<td style="text-align: left;">BCom, DipESG, FCA, GAICD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mel Leahy</strong></td>
+<td style="text-align: left;">Chief People Officer</td>
+<td style="text-align: left;">BA (Psychology &amp; Sociology), GDPA, GAICD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Kylie Crofts</strong></td>
+<td style="text-align: left;">Acting Chief Digital &amp; Innovation Officer</td>
+<td style="text-align: left;">BA</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>James Mantis</strong></td>
+<td style="text-align: left;">Chief Development &amp; Property Officer</td>
+<td style="text-align: left;">BCom, MProp</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Meredith Bird</strong></td>
+<td style="text-align: left;">EGM Brand, Marketing &amp; Communications</td>
+<td style="text-align: left;">MCom, PGDipEd, BA</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Susan Stewart</strong></td>
+<td style="text-align: left;">General Counsel &amp; Company Secretary</td>
+<td style="text-align: left;">LLB (Hons), LLM</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">董事会</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">姓名</th>
+<th style="text-align: left;">角色</th>
+<th style="text-align: left;">背景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Tony Crawford</strong></td>
+<td style="text-align: left;">主席</td>
+<td style="text-align: left;">BA, LLB, FAICD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Robert Lourey</strong></td>
+<td style="text-align: left;">董事</td>
+<td style="text-align: left;">BBus, GAICD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Susan Emerson</strong></td>
+<td style="text-align: left;">董事</td>
+<td style="text-align: left;">RN, GradDipNg (Aged Care), Masters Health Service Mngt, MACN, MAICD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Karen Orvad</strong></td>
+<td style="text-align: left;">董事</td>
+<td style="text-align: left;">B Comm (Accounting), MBA (Exec), CAANZ, GAICD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dean Matthews</strong></td>
+<td style="text-align: left;">董事</td>
+<td style="text-align: left;">Engineering Cert, B.CompSc, Grad Dip Mngt, AMP (Harvard), FAICD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Stuart Lummis</strong></td>
+<td style="text-align: left;">董事</td>
+<td style="text-align: left;">BEcon, GradDip Applied Fin &amp; Inv, FINSIA, FAICD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Helen Lea</strong></td>
+<td style="text-align: left;">董事（2025.8.6 起）</td>
+<td style="text-align: left;">MA (Ind Psych), FAHRI, GAICD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Assoc Prof Beverley Rowbotham AO</strong></td>
+<td style="text-align: left;">董事</td>
+<td style="text-align: left;">MBBS (Hons 1) MD, FRACP, FRCPA, FAICD</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>公司治理评估</strong>：NFP 结构下，董事会治理以社区利益为导向。8 名董事会成员中至少 2 名具有医疗临床背景（Emerson RN、Rowbotham MD），保证了临床治理的专业性。无关联交易披露问题，无重大治理丑闻记录。</p>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_5">一句话核心逻辑</h3>
+<p>Bolton Clarke 赌的是：<strong>在澳大利亚老龄化加速 + 政府养老改革（Support at Home）的大背景下，拥有 140 年品牌信任 + 全谱系服务能力 + 全国规模覆盖的 NFP 综合服务商，能够通过「一站式整合」捕获消费者选择制下的市场份额。</strong></p>
+<h3 id="_6">战略差异化要素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Bolton Clarke 定位</th>
+<th style="text-align: left;">差异化特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>品牌遗产</strong></td>
+<td style="text-align: left;">RDNS 140 年居家护理创始者</td>
+<td style="text-align: left;">不可复制的历史资产</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>退伍军人纽带</strong></td>
+<td style="text-align: left;">RSL Care 百年退伍军人服务</td>
+<td style="text-align: left;">DVA 深厚关系，独特客户群</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>服务谱系</strong></td>
+<td style="text-align: left;">居家+机构+退休村+临终+残障</td>
+<td style="text-align: left;">全生命周期一站式整合</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>规模</strong></td>
+<td style="text-align: left;">澳大利亚最大独立 NFP 养老机构</td>
+<td style="text-align: left;">FY2025 收入 ~19.8 亿</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NFP 身份</strong></td>
+<td style="text-align: left;">非营利，盈余再投资</td>
+<td style="text-align: left;">信任优势 vs for-profit 对手</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>国际化</strong></td>
+<td style="text-align: left;">AU + NZ + UK + Ireland + 中国 JV</td>
+<td style="text-align: left;">NFP 中少见</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_7">战略演变三阶段</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">核心战略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Phase 1: 创立合并</strong></td>
+<td style="text-align: left;">1885–2017</td>
+<td style="text-align: left;">RDNS 建立居家护理标准；RSL Care 服务退伍军人；2015 合并 + 2017 品牌统一</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Phase 2: 并购扩张</strong></td>
+<td style="text-align: left;">2017–2025</td>
+<td style="text-align: left;">17 次并购（Acacia → Allity → McKenzie → RCA）；从区域性 → 全国性平台；收入从 ~3 亿 → 19.8 亿</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Phase 3: 整合提效</strong></td>
+<td style="text-align: left;">2025–现在</td>
+<td style="text-align: left;">Olivier Chretien 接任；重心从「买规模」转向「提效率 + 技术升级 + 品牌整合」；Support at Home 改革窗口期</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<h3 id="_8">可视化架构</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────┐
+│                        支 付 方 层                                   │
+│  联邦 My Aged Care  │  DVA 退伍军人部  │  州卫生部  │  个人自付  │  慈善  │
+│     (~70-75%)       │     (~10%)       │  (~5%)    │  (~5-8%)  │ (~2-5%)│
+└──────────┬──────────┴──────┬───────────┴────┬───────┴────┬───────┴────┬───┘
+           │                 │                │            │            │
+           ▼                 ▼                ▼            ▼            ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                     Bolton Clarke 服务平台                            │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐               │
+│  │ Home &amp;       │  │ Residential  │  │ Retirement   │               │
+│  │ Community    │  │ Aged Care    │  │ Living       │               │
+│  │ Support      │  │ (88 家/8719  │  │ (43 村/2763  │               │
+│  │ (11000访/天) │  │  床位)       │  │  单元)       │               │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘               │
+│         │                 │                 │                        │
+│  ┌──────┴─────────────────┴─────────────────┴───────┐               │
+│  │           辅助服务层                                │               │
+│  │  临终关怀 │ NDIS 残障 │ 退伍军人专项 │ 健康教育 │ 研究创新    │               │
+│  └──────────────────────────────────────────────────┘               │
+└─────────────────────────────────────────────────────────────────────┘
+           │
+           ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                        客 户 端                                      │
+│  退伍军人及家庭  │  居家养老客户  │  养老院居民  │  退休村居民  │  NDIS  │
+│   (核心差异化)   │  (最大体量)    │  (高单价)    │  (独立生活)  │        │
+└─────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="vs">支付方 vs 使用方分离</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">支付方</th>
+<th style="text-align: left;">使用方</th>
+<th style="text-align: center;">支付比例（估）</th>
+<th style="text-align: left;">关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">联邦政府（Support at Home / 养老补贴）</td>
+<td style="text-align: left;">老年消费者</td>
+<td style="text-align: center;">~70-75%</td>
+<td style="text-align: left;">政府拨款，消费者部分共付</td>
+</tr>
+<tr>
+<td style="text-align: left;">DVA（退伍军人事务部）</td>
+<td style="text-align: left;">退伍军人及配偶</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">全额资助</td>
+</tr>
+<tr>
+<td style="text-align: left;">州卫生部</td>
+<td style="text-align: left;">社区护理需求者</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">合同制</td>
+</tr>
+<tr>
+<td style="text-align: left;">个人/家庭</td>
+<td style="text-align: left;">消费者自付部分</td>
+<td style="text-align: center;">~5-8%</td>
+<td style="text-align: left;">按收入和资产测试</td>
+</tr>
+<tr>
+<td style="text-align: left;">慈善捐赠</td>
+<td style="text-align: left;">全部客户群</td>
+<td style="text-align: center;">~2-5%</td>
+<td style="text-align: left;">NFP 慈善属性</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_9">价值链定位</h3>
+<pre><code>纯中介/平台  ──────────────────────────────→  自建全栈医疗体系
+
+  Mable      Five Good      Bolton Clarke      医院系统
+  (平台)      Friends         ◄─ 此处            (自建)
+              (平台+自营)
+
+Bolton Clarke 定位：**深度自营服务商**，拥有自有护理团队 + 自有物业（养老院/退休村），
+非平台模式。价值链控制度高，但资产重、扩张慢。
+</code></pre>
+<h3 id="_10">战略合作伙伴生态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">伙伴类别</th>
+<th style="text-align: left;">代表方</th>
+<th style="text-align: left;">合作性质</th>
+<th style="text-align: center;">收入贡献</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>政府/支付方</strong></td>
+<td style="text-align: left;">DVA、My Aged Care、州卫生部</td>
+<td style="text-align: left;">核心资助方</td>
+<td style="text-align: center;">~85-90%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RSL 联盟</strong></td>
+<td style="text-align: left;">Returned &amp; Services League</td>
+<td style="text-align: left;">历史关联、品牌背书</td>
+<td style="text-align: center;">间接</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Acacia/Allity/McKenzie/RCA</strong></td>
+<td style="text-align: left;">已收购整合</td>
+<td style="text-align: left;">已内化为自有资产</td>
+<td style="text-align: center;">已并入</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Altura Learning</strong></td>
+<td style="text-align: left;">教育培训</td>
+<td style="text-align: left;">自有教育平台</td>
+<td style="text-align: center;">辅助收入</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>EQT Foundation</strong></td>
+<td style="text-align: left;">慈善合作</td>
+<td style="text-align: left;">慈善捐赠、影响力投资</td>
+<td style="text-align: center;">辅助</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>研究机构</strong></td>
+<td style="text-align: left;">Bolton Clarke Research Institute</td>
+<td style="text-align: left;">内部研究</td>
+<td style="text-align: center;">N/A</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>伙伴集中度风险</strong>：🚨 极高——联邦政府拨款占收入 70-75%。任何政策变动（Support at Home 改革、拨款削减）直接影响收入基础。</p>
+<hr />
+<h2 id="d5">D5 — 服务产品线 &amp; 定价模式</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">产品线</th>
+<th style="text-align: left;">客户类型</th>
+<th style="text-align: left;">服务内容</th>
+<th style="text-align: left;">定价模式</th>
+<th style="text-align: center;">占收入（估）</th>
+<th style="text-align: left;">利润率特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>居家护理 (Home &amp; Community Support)</strong></td>
+<td style="text-align: left;">老年、残障</td>
+<td style="text-align: left;">个人护理、家政、膳食、交通、社交、健康管理、护理</td>
+<td style="text-align: left;">政府 HCP/Support at Home 拨款 + 个人共付</td>
+<td style="text-align: center;">~30%</td>
+<td style="text-align: left;">中-高（人力密集但灵活）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>机构养老 (Residential Aged Care)</strong></td>
+<td style="text-align: left;">高龄、失能</td>
+<td style="text-align: left;">24/7 护理、膳食、活动、医疗支持</td>
+<td style="text-align: left;">政府养老补贴 + 个人（按资产测试）</td>
+<td style="text-align: center;">~40%</td>
+<td style="text-align: left;">中（固定成本高）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>退休村 (Retirement Living)</strong></td>
+<td style="text-align: left;">独立生活老人</td>
+<td style="text-align: left;">独立单元、社区设施、可选服务</td>
+<td style="text-align: left;">入村费 + 月度管理费</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">中-高（资产增值）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>退伍军人专项</strong></td>
+<td style="text-align: left;">退伍军人及家庭</td>
+<td style="text-align: left;">DVA 资助的全方位护理</td>
+<td style="text-align: left;">DVA 全额资助</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDIS 残障支持</strong></td>
+<td style="text-align: left;">NDIS 参与者</td>
+<td style="text-align: left;">居家残障支持</td>
+<td style="text-align: left;">NDIS 计划拨款</td>
+<td style="text-align: center;">~3%</td>
+<td style="text-align: left;">低-中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>临终关怀/姑息治疗</strong></td>
+<td style="text-align: left;">终末期患者</td>
+<td style="text-align: left;">疼痛管理、心理支持、家属支持</td>
+<td style="text-align: left;">政府 + 个人</td>
+<td style="text-align: center;">~2%</td>
+<td style="text-align: left;">低</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_11">研发与创新管线</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">在研项目/功能</th>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Care Champions 项目</td>
+<td style="text-align: left;">✅ 已推广</td>
+<td style="text-align: left;">550+ 名照护冠军覆盖 88 家养老院</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bolton Clarke InTouch（数字连接）</td>
+<td style="text-align: left;">✅ 已上线</td>
+<td style="text-align: left;">APAC 创新奖 2020 获奖</td>
+</tr>
+<tr>
+<td style="text-align: left;">Digital Wallpaper（失智症环境设计）</td>
+<td style="text-align: left;">✅ 已上线</td>
+<td style="text-align: left;">2019 创新奖获奖</td>
+</tr>
+<tr>
+<td style="text-align: left;">CatPin 可穿戴设备</td>
+<td style="text-align: left;">✅ 已上线</td>
+<td style="text-align: left;">2019 产品创新奖</td>
+</tr>
+<tr>
+<td style="text-align: left;">HOW-R-U? 电话同伴支持</td>
+<td style="text-align: left;">✅ 已上线</td>
+<td style="text-align: left;">COVID 后持续</td>
+</tr>
+<tr>
+<td style="text-align: left;">Darlington Grandfriends 代际项目</td>
+<td style="text-align: left;">✅ 运行中</td>
+<td style="text-align: left;">2025 APAC 决赛入围</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>R&amp;D 评价</strong>：Bolton Clarke 的创新更多是服务模式和护理流程创新，而非深度技术 R&amp;D。设有 Bolton Clarke Research Institute (BCRI) 但规模有限。NFP 属性决定了其技术投入主要靠政府资助和慈善。</p>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_12">客户结构估算</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户类别</th>
+<th style="text-align: center;">收入占比（估）</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">机构养老居民</td>
+<td style="text-align: center;">~40%</td>
+<td style="text-align: left;">高依赖、长周期、稳定</td>
+<td style="text-align: left;">受政府床位控制，增长受限</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家护理客户</td>
+<td style="text-align: center;">~30%</td>
+<td style="text-align: left;">快速增长、消费者选择制</td>
+<td style="text-align: left;">Support at Home 改革最大受益方</td>
+</tr>
+<tr>
+<td style="text-align: left;">退休村居民</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">独立生活、资产敏感</td>
+<td style="text-align: left;">受房价周期影响</td>
+</tr>
+<tr>
+<td style="text-align: left;">退伍军人</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">DVA 全额资助、稳定</td>
+<td style="text-align: left;">人口老龄化推高需求</td>
+</tr>
+<tr>
+<td style="text-align: left;">NDIS/其他</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">政策驱动</td>
+<td style="text-align: left;">增长中</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_13">客户获取渠道</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">渠道</th>
+<th style="text-align: center;">效率评级</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">My Aged Care 政府系统</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">全国评估和转介系统，主渠道</td>
+</tr>
+<tr>
+<td style="text-align: left;">DVA 直接转介</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">退伍军人专属通道</td>
+</tr>
+<tr>
+<td style="text-align: left;">RDNS 品牌自然流量</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">140 年品牌知名度</td>
+</tr>
+<tr>
+<td style="text-align: left;">医院/GP 转介</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">出院后护理需求</td>
+</tr>
+<tr>
+<td style="text-align: left;">数字营销/官网</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">消费者选择制下日趋重要</td>
+</tr>
+<tr>
+<td style="text-align: left;">社区活动/口碑</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: left;">NFP 社区根基</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_14">品牌与声誉</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>NPS</strong></td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>雇主品牌</strong></td>
+<td style="text-align: left;">✅ Employer of Choice 认证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>媒体报道情绪</strong></td>
+<td style="text-align: left;">🟢 正面为主——行业领袖地位</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>创新获奖</strong></td>
+<td style="text-align: left;">APAC Eldercare Innovation Awards 多项（2019、2020、2025）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>重大声誉事件</strong></td>
+<td style="text-align: left;">无重大公开丑闻或消费者投诉爆发</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<h3 id="_15">核心财务概览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">FY2023</th>
+<th style="text-align: left;">FY2024</th>
+<th style="text-align: left;">FY2025（估）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">总收入</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">~AUD 17 亿+</td>
+<td style="text-align: left;">~AUD 19.8 亿（Muggleton）</td>
+</tr>
+<tr>
+<td style="text-align: left;">EBITDA</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">AUD 126.4M</td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">净利润</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">AUD 193.5M</td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">政府拨款（居家）</td>
+<td style="text-align: left;">未公开</td>
+<td style="text-align: left;">AUD 144.1M (#7)</td>
+<td style="text-align: left;">未公开</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ Bolton Clarke 为 NFP，不发布上市公司级别季报。以上数据来自 CEO 离职声明、IBISWorld、KPMG 报告等二手来源。FY2024 EBITDA 和净利润可能包含非经常性项目（资产重估、并购相关）。</p>
+</blockquote>
+<h3 id="_16">收入结构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: center;">估计占比</th>
+<th style="text-align: left;">趋势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">联邦政府（养老+居家）</td>
+<td style="text-align: center;">~70-75%</td>
+<td style="text-align: left;">稳定增长</td>
+</tr>
+<tr>
+<td style="text-align: left;">DVA</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: left;">缓慢增长</td>
+</tr>
+<tr>
+<td style="text-align: left;">个人自付</td>
+<td style="text-align: center;">~5-8%</td>
+<td style="text-align: left;">改革后可能上升</td>
+</tr>
+<tr>
+<td style="text-align: left;">州政府</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">稳定</td>
+</tr>
+<tr>
+<td style="text-align: left;">慈善/其他</td>
+<td style="text-align: center;">~2-5%</td>
+<td style="text-align: left;">波动</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_17">利润表关键比率</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">比率</th>
+<th style="text-align: center;">估计值</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">EBITDA 利润率</td>
+<td style="text-align: center;">~6-7%</td>
+<td style="text-align: left;">FY2024 约 126.4M / ~17-18 亿收入</td>
+</tr>
+<tr>
+<td style="text-align: left;">净利润率</td>
+<td style="text-align: center;">~10%+</td>
+<td style="text-align: left;">含非经常性收益（FY2024 193.5M）</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工成本/收入</td>
+<td style="text-align: center;">~65-70%</td>
+<td style="text-align: left;">劳动密集型行业特征</td>
+</tr>
+<tr>
+<td style="text-align: left;">政府拨款依赖度</td>
+<td style="text-align: center;">~85-90%</td>
+<td style="text-align: left;">🚨 极高</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_18">资产负债表重点</h3>
+<ul>
+<li>NFP 不公开完整资产负债表</li>
+<li>拥有大量自有物业（88 养老院 + 43 退休村），资产基础扎实</li>
+<li>并购驱动的商誉和无形资产可能较大</li>
+<li>信托结构（War Veterans&rsquo; Homes Trust + Scartwater Trust）提供了资产保护</li>
+</ul>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<h3 id="support-at-home">客户旅程（Support at Home 居家护理路径）</h3>
+<pre><code>Phase 0: 需求触发
+  ┌─────────────────────────────────────┐
+  │ 老年/家属意识到需要帮助               │
+  │ → 医院出院转介 / GP 建议 / 家人推动   │
+  └──────────────┬──────────────────────┘
+                 ▼
+Phase 1: 评估与准入
+  ┌─────────────────────────────────────┐
+  │ My Aged Care 全国评估 (ACAT/ RAS)     │
+  │ → 确定护理等级 → 分配 HCP 级别 1-4     │
+  │ → 消费者选择服务商 → 选择 Bolton Clarke │
+  └──────────────┬──────────────────────┘
+                 ▼
+Phase 2: 服务规划与匹配
+  ┌─────────────────────────────────────┐
+  │ Bolton Clarke 入户评估                │
+  │ → 制定个性化护理计划                   │
+  │ → 匹配护理团队（RN/PCW/辅助医疗）       │
+  │ → 确定服务频次和内容                   │
+  └──────────────┬──────────────────────┘
+                 ▼
+Phase 3: 服务交付
+  ┌─────────────────────────────────────┐
+  │ 日常居家护理访问                      │
+  │ (日均 11,000 次)                     │
+  │ 个人护理│ 药物管理│ 伤口护理│ 家政│ 交通  │
+  │ 社交支持│ 健康监测│ 康复训练│ 膳食      │
+  └──────────────┬──────────────────────┘
+                 ▼
+Phase 4: 监测与反馈
+  ┌─────────────────────────────────────┐
+  │ 移动护理系统记录每次访问               │
+  │ → 护理计划动态调整                    │
+  │ → 家属沟通（Care Champions 角色）       │
+  │ → 季度/年度再评估                     │
+  └──────────────┬──────────────────────┘
+                 ▼
+Phase 5: 结算与合规
+  ┌─────────────────────────────────────┐
+  │ 政府拨款结算（月度/季度）              │
+  │ → My Aged Care 合规报告               │
+  │ → 五星评级数据提交                    │
+  │ → ACNC 慈善合规                      │
+  └─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="d9-ai">D9 — 技术深度评估（软件 · 硬件 · AI/数据）</h2>
+<h3 id="91">9.1 平台架构总览（五层模型）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th style="text-align: left;">Bolton Clarke 状态</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5. 财务/行政</td>
+<td style="text-align: left;">✅ 有</td>
+<td style="text-align: left;">标准 NFP 财务系统（CFO Megan Millman 负责）</td>
+</tr>
+<tr>
+<td style="text-align: center;">4. 业务运营</td>
+<td style="text-align: left;">✅ 有</td>
+<td style="text-align: left;">养老院运营 + 居家护理调度系统</td>
+</tr>
+<tr>
+<td style="text-align: center;">3. 调度/运营中心</td>
+<td style="text-align: left;">⚠️ 基础</td>
+<td style="text-align: left;">支撑日均 11,000 次访问的调度能力</td>
+</tr>
+<tr>
+<td style="text-align: center;">2. 用户端</td>
+<td style="text-align: left;">⚠️ 部分</td>
+<td style="text-align: left;">官网 + InTouch 数字连接工具，无独立患者 App</td>
+</tr>
+<tr>
+<td style="text-align: center;">1. 数据与 AI 层</td>
+<td style="text-align: left;">❌ 弱</td>
+<td style="text-align: left;">无公开 AI/数据平台能力</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件架构深度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>架构模式</strong></td>
+<td style="text-align: left;">未公开——推测为传统企业 IT + 部分 SaaS 外采</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术栈</strong></td>
+<td style="text-align: left;">NFP 典型水平，设有 Acting Chief Digital &amp; Innovation Officer（Kylie Crofts）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>互操作性</strong></td>
+<td style="text-align: left;">需对接 My Aged Care 政府系统，EHR 标准未知</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>网络安全</strong></td>
+<td style="text-align: left;">遵循澳大利亚隐私法 + aged care 行业标准</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>开发实践</strong></td>
+<td style="text-align: left;">无公开信息——NFP 通常外包或外采而非自研</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可扩展性</strong></td>
+<td style="text-align: left;">通过并购整合 17 次，IT 整合是挑战</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术债务</strong></td>
+<td style="text-align: left;">🚨 17 次并购意味着多个遗留系统并存——2025 年「Heart of positive ageing」品牌统一可能伴随 IT 整合</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-iot">9.3 硬件/IoT设备</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>设备品类</strong></td>
+<td style="text-align: left;">CatPin 可穿戴设备（自研，2019 获奖）、Digital Wallpaper（失智症环境设计）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>设备来源</strong></td>
+<td style="text-align: left;">CatPin 为自研硬件创新；其余为第三方采购</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>连接协议</strong></td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>硬件定位</strong></td>
+<td style="text-align: left;">辅助创新，非核心业务</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94-ai">9.4 AI 与数据能力</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AI 能力</strong></td>
+<td style="text-align: left;">❌ 基本不适用——NFP 养老护理机构非 AI 驱动</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据资产</strong></td>
+<td style="text-align: left;">130,000 人/年的服务数据，但数据治理和利用程度不明</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 监管</strong></td>
+<td style="text-align: left;">不适用</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 团队</strong></td>
+<td style="text-align: left;">无公开 AI 团队——Acting CDIO 角色暗示数字团队规模有限</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="95">9.5 技术差异化矩阵</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">能力维度</th>
+<th style="text-align: center;">Bolton Clarke</th>
+<th style="text-align: center;">行业标准</th>
+<th style="text-align: center;">差异化评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">软件全栈能力</td>
+<td style="text-align: center;">❌ 弱</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td style="text-align: left;">硬件整合/自研</td>
+<td style="text-align: center;">⚠️ 部分（CatPin）</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 临床级能力</td>
+<td style="text-align: center;">❌ 无</td>
+<td style="text-align: center;">极低</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td style="text-align: left;">互操作性/集成</td>
+<td style="text-align: center;">⚠️ 基础</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据资产规模</td>
+<td style="text-align: center;">🟡 大但未利用</td>
+<td style="text-align: center;">中</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">创新获奖</td>
+<td style="text-align: center;">🟢 多项 APAC</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>技术护城河总体评估</strong>：Bolton Clarke 的技术壁垒来自 <strong>规模效应和品牌</strong>，而非技术本身。其「创新」更多是服务流程和护理模式创新（Care Champions、InTouch、HOW-R-U?），而非深度技术栈。新任 CEO Olivier Chretien 明确表示将「利用技术、创新和合作伙伴关系」推动增长——暗示技术投资将是 Phase 3 战略重点。</p>
+<h3 id="96">9.6 技术风险评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险类别</th>
+<th style="text-align: left;">具体风险</th>
+<th style="text-align: center;">严重度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">并购 IT 整合</td>
+<td style="text-align: left;">17 个遗留系统并存，数据孤岛</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术投入不足</td>
+<td style="text-align: left;">NFP 资金约束 vs for-profit 对手技术投资</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">网络安全</td>
+<td style="text-align: left;">大规模客户健康数据保护</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;">数字鸿沟</td>
+<td style="text-align: left;">客户群体老年化，数字工具渗透率低</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d10">D10 — 竞争格局对标矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Bolton Clarke</th>
+<th style="text-align: left;">Australian Unity</th>
+<th style="text-align: left;">HammondCare</th>
+<th style="text-align: left;">SilverChain</th>
+<th style="text-align: left;">Regis Healthcare</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>成立</strong></td>
+<td style="text-align: left;">1885/2015</td>
+<td style="text-align: left;">1840</td>
+<td style="text-align: left;">1932</td>
+<td style="text-align: left;">1905</td>
+<td style="text-align: left;">1994</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>法律地位</strong></td>
+<td style="text-align: left;">NFP</td>
+<td style="text-align: left;">Mutual (会员制)</td>
+<td style="text-align: left;">NFP (基督教)</td>
+<td style="text-align: left;">NFP</td>
+<td style="text-align: left;">For-Profit (ASX)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>员工</strong></td>
+<td style="text-align: left;">~16,000</td>
+<td style="text-align: left;">~7,000+</td>
+<td style="text-align: left;">~5,000+</td>
+<td style="text-align: left;">~4,000+</td>
+<td style="text-align: left;">~8,000+</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>FY24 收入</strong></td>
+<td style="text-align: left;">~19.8 亿</td>
+<td style="text-align: left;">~15 亿+</td>
+<td style="text-align: left;">~7 亿+</td>
+<td style="text-align: left;">~5 亿+</td>
+<td style="text-align: left;">~9.5 亿</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>养老院</strong></td>
+<td style="text-align: left;">88</td>
+<td style="text-align: left;">30+</td>
+<td style="text-align: left;">20+</td>
+<td style="text-align: left;">15+</td>
+<td style="text-align: left;">60+</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>退休村</strong></td>
+<td style="text-align: left;">43</td>
+<td style="text-align: left;">20+</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家护理</strong></td>
+<td style="text-align: left;">✅ (#7 HCP)</td>
+<td style="text-align: left;">✅ (#4-5 HCP)</td>
+<td style="text-align: left;">✅</td>
+<td style="text-align: left;">✅ (#2 HCP)</td>
+<td style="text-align: left;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>退伍军人专项</strong></td>
+<td style="text-align: left;">✅ 核心</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>国际化</strong></td>
+<td style="text-align: left;">NZ+UK+IE+CN</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">无</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>上市</strong></td>
+<td style="text-align: left;">❌ NFP</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">✅ ASX</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术评级</strong></td>
+<td style="text-align: left;">★★★</td>
+<td style="text-align: left;">★★★</td>
+<td style="text-align: left;">★★★</td>
+<td style="text-align: left;">★★★★</td>
+<td style="text-align: left;">★★★</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>品牌知名度</strong></td>
+<td style="text-align: left;">★★★★★</td>
+<td style="text-align: left;">★★★★</td>
+<td style="text-align: left;">★★★★</td>
+<td style="text-align: left;">★★★</td>
+<td style="text-align: left;">★★★</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>核心竞争差异</strong>：Bolton Clarke 在规模和全谱系覆盖上独树一帜（唯一同时拥有大规模养老院+退休村+居家护理+退伍军人专项+国际化的机构）。但其技术能力与 SilverChain 等有差距（SilverChain 较早投入技术创新）。</p>
+<hr />
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势（TAM/SAM）</h2>
+<h3 id="tam">澳大利亚养老护理市场 TAM</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: left;">计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TAM（总市场）</strong></td>
+<td style="text-align: center;">AUD 392 亿（FY25 政府支出）</td>
+<td style="text-align: left;">澳大利亚政府 FY25 养老支出 $392 亿 (KPMG 2026)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居家护理子市场</strong></td>
+<td style="text-align: center;">~AUD 90-100 亿</td>
+<td style="text-align: left;">My Aged Care HCP + Support at Home 拨款</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>机构养老子市场</strong></td>
+<td style="text-align: center;">~AUD 200 亿</td>
+<td style="text-align: left;">Residential aged care 政府补贴</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>退休村子市场</strong></td>
+<td style="text-align: center;">~AUD 50-80 亿</td>
+<td style="text-align: left;">含入村费和月度管理费</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="bolton-clarke">Bolton Clarke 市场渗透率</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场</th>
+<th style="text-align: left;">Bolton Clarke 收入</th>
+<th style="text-align: left;">市场总量</th>
+<th style="text-align: center;">渗透率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">居家护理（政府拨款）</td>
+<td style="text-align: left;">~AUD 144M</td>
+<td style="text-align: left;">~AUD 90-100 亿</td>
+<td style="text-align: center;">~1.5%</td>
+</tr>
+<tr>
+<td style="text-align: left;">机构养老</td>
+<td style="text-align: left;">~AUD 800M+</td>
+<td style="text-align: left;">~AUD 200 亿</td>
+<td style="text-align: center;">~4%</td>
+</tr>
+<tr>
+<td style="text-align: left;">退休村</td>
+<td style="text-align: left;">~AUD 300M</td>
+<td style="text-align: left;">~AUD 50-80 亿</td>
+<td style="text-align: center;">~4-5%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>增长驱动</strong>：</p>
+<ol>
+<li><strong>老龄化人口</strong>：65 岁以上人口从 440 万（2021）→ 660 万（2036）</li>
+<li><strong>Support at Home 改革</strong>：2025.7 起，居家护理包从 4 级改为更灵活的 Support at Home，释放积压需求</li>
+<li><strong>消费者选择制</strong>：消费者可以自主选择服务商，利于品牌强者</li>
+<li><strong>行业整合</strong>：小型独立运营商退出，大型 NFP 和 for-profit 集团受益</li>
+</ol>
+<hr />
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<h3 id="_19">成本结构拆解</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">占收入比（估）</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">员工薪酬</td>
+<td style="text-align: center;">~65-70%</td>
+<td style="text-align: left;">16,000 人，护理人员工资占大头</td>
+</tr>
+<tr>
+<td style="text-align: left;">物业/折旧</td>
+<td style="text-align: center;">~8-10%</td>
+<td style="text-align: left;">自有物业折旧，重资产</td>
+</tr>
+<tr>
+<td style="text-align: left;">食品/耗材</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">养老院膳食和医疗耗材</td>
+</tr>
+<tr>
+<td style="text-align: left;">行政/IT</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: left;">总部 + 区域管理费用</td>
+</tr>
+<tr>
+<td style="text-align: left;">其他运营</td>
+<td style="text-align: center;">~7-10%</td>
+<td style="text-align: left;">保险、合规、培训、交通</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_20">盈利路径分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">路径</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>规模效应</strong></td>
+<td style="text-align: left;">✅ 已实现——从 2015 年收入 ~3 亿到 2025 年 19.8 亿</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>定价权</strong></td>
+<td style="text-align: left;">❌ 受限——政府定价，个人共付有限</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>运营提效</strong></td>
+<td style="text-align: left;">🟡 进行中——Olivier Chretien 的 Phase 3 核心任务</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>资产增值</strong></td>
+<td style="text-align: left;">✅ 退休村土地增值贡献非经常性收益</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>多元化</strong></td>
+<td style="text-align: left;">✅ 国际化 + Altura Learning 教育平台</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>综合判断</strong>：作为 NFP，Bolton Clarke 不以利润最大化为目标。FY2024 净利润 AUD 193.5M（利润率 ~10%+）可能含资产重估等非现金项目。运营盈余用于再投资服务和收购。真正的「盈利」挑战在于：如何在政府拨款增长放缓（年增 9.6% vs 历史快增）和成本通胀（工资+合规）之间维持正向现金流。</p>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期（0-12 个月）</strong></td>
+<td style="text-align: left;">Support at Home 改革释放居家护理需求；新 Aged Care Act 增加确定性</td>
+<td style="text-align: left;">CEO 换届过渡风险；并购整合消化（17 次并购的文化/系统统一）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期（1-3 年）</strong></td>
+<td style="text-align: left;">人口老龄化需求刚性增长；品牌统一「Heart of positive ageing」提升认知</td>
+<td style="text-align: left;">for-profit 竞争者效率优势；政府拨款增长可能放缓；利率影响物业估值</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">NFP 信任壁垒不可复制；退伍军人护理垄断性地位；全谱系整合的一站式优势</td>
+<td style="text-align: left;">政府拨款依赖度 85-90%（政策风险）；劳动力短缺恶化；技术鸿沟扩大</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_21">法律与诉讼</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">案件/调查</th>
+<th style="text-align: left;">状态</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">养老护理质量委员会审计</td>
+<td style="text-align: left;">✅ 通过（Bolton Clarke Farnorha 2023.1 重认证）</td>
+<td style="text-align: left;">正面合规</td>
+</tr>
+<tr>
+<td style="text-align: left;">重大诉讼/丑闻</td>
+<td style="text-align: left;">无公开记录</td>
+<td style="text-align: left;">清洁</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">宏观敏感性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">宏观情景</th>
+<th style="text-align: center;">影响评估</th>
+<th style="text-align: left;">传导机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>经济衰退</strong></td>
+<td style="text-align: center;">🟢 低敏感</td>
+<td style="text-align: left;">政府拨款刚性，刚需服务</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>利率上升</strong></td>
+<td style="text-align: center;">🟡 中等</td>
+<td style="text-align: left;">影响物业估值和退休村销售</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>劳动力通胀</strong></td>
+<td style="text-align: center;">🔴 高</td>
+<td style="text-align: left;">65-70% 成本为人力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>汇率波动</strong></td>
+<td style="text-align: center;">🟢 低敏感</td>
+<td style="text-align: left;">收入基本澳元计价</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>疫情/大流行</strong></td>
+<td style="text-align: center;">🟢 正面</td>
+<td style="text-align: left;">推高居家护理需求，但运营成本增加</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引</h2>
+<h3 id="muggleton-20256">Muggleton 离职声明（2025.6）核心观点</h3>
+<ol>
+<li><strong>正面</strong>：17 次并购完成全国布局，130,000 人/年服务规模，Employer of Choice 认证维持</li>
+<li><strong>批评</strong>：政府过度依赖合规监管而非实质改善；养老护理拨款 vs 安宁疗护/医院拨款不公；现行拨款模式「奖励失能而非奖励功能恢复」</li>
+<li><strong>乐观</strong>：新 Aged Care Act 提供更坚实基础；当前卫生部长是「一代人中最有能力的」；新 CEO Olivier Chretien 带领新团队接棒</li>
+</ol>
+<h3 id="chretien-202571">Chretien 上任声明（2025.7.1）</h3>
+<blockquote>
+<p>&ldquo;I look forward to building on these strong foundations with our 16,000 team members, continuing to leverage technology, innovation and partnerships to grow the organisation sustainably.&rdquo;</p>
+</blockquote>
+<p><strong>信号解读</strong>：三个关键词——technology（技术）、innovation（创新）、partnerships（合作）。暗示 Phase 3 战略方向：不再主要靠并购扩张，而是通过技术提效 + 战略合作推动可持续增长。</p>
+<h3 id="_23">指引可信度评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">一致性</td>
+<td style="text-align: left;">✅ 两任 CEO 口径一致——规模扩张已完成，下一步是提效</td>
+</tr>
+<tr>
+<td style="text-align: left;">可实现性</td>
+<td style="text-align: left;">🟡 Chretien 来自 InvoCare / Ramsay Health Care 等商业机构，NFP 运营经验待验证</td>
+</tr>
+<tr>
+<td style="text-align: left;">风险</td>
+<td style="text-align: left;">Chretien 的「technology + innovation」路线需要资本投入，而 NFP 资金约束是天然瓶颈</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<p>❌ <strong>不适用</strong>——Bolton Clarke 为 NFP 非营利组织，不上市交易，无市值/估值数据。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">替代参考</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">同业上市公司 Regis Healthcare (ASX: REG)</td>
+<td style="text-align: left;">P/E ~15-20x（FY2024 参考），市值 ~AUD 10-15 亿</td>
+</tr>
+<tr>
+<td style="text-align: left;">行业交易倍数（养老院）</td>
+<td style="text-align: left;">EV/EBITDA ~10-14x（Australian M&amp;A 参考）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bolton Clarke 隐含倍数（若上市）</td>
+<td style="text-align: left;">以 FY2024 EBITDA 126.4M + 行业倍数 12x → 隐含 EV ~15 亿 +</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ 以上仅为学术推演，NFP 无退出/估值逻辑。</p>
+</blockquote>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1">1. 对潜在投资者/合作方</h3>
+<p><strong>判断</strong>：Bolton Clarke 非股权投资标的（NFP 不可投）。但作为澳大利亚最大的养老护理生态系统运营者，其运营数据和经验对 iHomeCare 有参考价值。</p>
+<p><strong>关注指标</strong>：</p>
+<ul>
+<li>居家护理日均访问 11,000 次 → 调度效率与人力匹配的运营模型</li>
+<li>550+ Care Champions → 护理质量提升的可复制方案</li>
+<li>Support at Home 改革后消费者选择制下的获客策略</li>
+</ul>
+<h3 id="2-bolton-clarke">2. 对 Bolton Clarke 管理层的可执行建议</h3>
+<ol>
+<li><strong>加速 IT 整合</strong>：17 次并购遗留的多系统问题必须在 12-18 个月内解决——统一 EHR/CRM/调度平台</li>
+<li><strong>投资数字化客户体验</strong>：消费者选择制下，客户体验（App、在线预订、透明度）将成为获客关键</li>
+<li><strong>开发轻资产居家护理模式</strong>：减少对自有物业的依赖，利用技术降低居家护理的单位成本</li>
+<li><strong>探索非政府收入来源</strong>：降低 85-90% 的政府拨款依赖，探索私人保险、自费高端服务线</li>
+</ol>
+<h3 id="3-ihomecare">3. 对竞对/新进入者（含 iHomeCare）</h3>
+<p><strong>壁垒评估</strong>：</p>
+<ul>
+<li>RDNS 品牌 + DVA 关系 + 88 养老院网络 = 🔴 极高进入壁垒</li>
+<li>但在居家护理技术平台层面，Bolton Clarke 的技术能力并不突出——技术型新进入者有差异化空间</li>
+</ul>
+<p><strong>差异化切入点</strong>：</p>
+<ul>
+<li>提供 Bolton Clarke 缺乏的 AI 驱动护理决策支持</li>
+<li>构建跨服务商的居家护理数据平台（Bolton Clarke 是天然大客户）</li>
+<li>在退伍军人护理数字化方面提供技术方案</li>
+</ul>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<h3 id="_24">核心政策环境</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策</th>
+<th style="text-align: left;">发布机构</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">对 Bolton Clarke 影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Aged Care Act 2024（新）</strong></td>
+<td style="text-align: left;">澳大利亚联邦议会</td>
+<td style="text-align: left;">2024 通过，2025.11 生效</td>
+<td style="text-align: left;">🟢 正面——提供更清晰的监管框架</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Support at Home 改革</strong></td>
+<td style="text-align: left;">联邦卫生部</td>
+<td style="text-align: left;">2025.7 启动</td>
+<td style="text-align: left;">🟢 最大正面——居家护理需求释放</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Royal Commission into Aged Care</strong></td>
+<td style="text-align: left;">皇家委员会</td>
+<td style="text-align: left;">2018-2021</td>
+<td style="text-align: left;">⚠️ 推高合规成本，但也淘汰劣质竞争者</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>五星评级制度</strong></td>
+<td style="text-align: left;">Aged Care Quality &amp; Safety Commission</td>
+<td style="text-align: left;">2022–现在</td>
+<td style="text-align: left;">🟢 利于有临床根基的大机构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NDIS 改革</strong></td>
+<td style="text-align: left;">NDIA</td>
+<td style="text-align: left;">持续</td>
+<td style="text-align: left;">🟢 残障护理增长机会</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ACNC 慈善监管</strong></td>
+<td style="text-align: left;">ACNC</td>
+<td style="text-align: left;">持续</td>
+<td style="text-align: left;">NFP 合规成本</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_25">关键监管机构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">机构</th>
+<th style="text-align: left;">监管范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Aged Care Quality &amp; Safety Commission</td>
+<td style="text-align: left;">养老护理质量、五星评级、审计</td>
+</tr>
+<tr>
+<td style="text-align: left;">ACNC (Australian Charities and Not-for-profits Commission)</td>
+<td style="text-align: left;">NFP 合规</td>
+</tr>
+<tr>
+<td style="text-align: left;">NDIS Quality &amp; Safeguards Commission</td>
+<td style="text-align: left;">NDIS 服务合规</td>
+</tr>
+<tr>
+<td style="text-align: left;">DVA</td>
+<td style="text-align: left;">退伍军人护理合同</td>
+</tr>
+<tr>
+<td style="text-align: left;">AHPRA</td>
+<td style="text-align: left;">护理人员注册</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="muggleton-20256_1">Muggleton 的政策批评（2025.6 离职声明）</h3>
+<blockquote>
+<p>&ldquo;Consecutive Governments think the best way to ameliorate risk is via more regulatory compliance&hellip; funding levels remain inequitable&hellip; we still have a perverse funding model that rewards immobility rather than holistic restorative care.&rdquo;</p>
+</blockquote>
+<p><strong>解读</strong>：Muggleton 指出了三个结构性矛盾——① 过度合规增加运营成本而无实质质量提升；② 养老护理 vs 安宁疗护/医院拨款不公；③ 现有拨款模型奖励「卧床不起」而非「功能恢复」。这三条批评揭示了澳大利亚养老护理行业的深层制度困境。</p>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<h3 id="hcp-level-3">居家护理典型单元（HCP Level 3，中等护理需求）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">金额（AUD/年）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>收入</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">政府 HCP Level 3 拨款</td>
+<td style="text-align: left;">~$40,000</td>
+<td style="text-align: left;">2025 年标准</td>
+</tr>
+<tr>
+<td style="text-align: left;">个人共付（若有）</td>
+<td style="text-align: left;">~$5,000-10,000</td>
+<td style="text-align: left;">按收入和资产测试</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总收入</strong></td>
+<td style="text-align: left;">~$45,000-50,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>成本</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">护理人员工资（含 on-cost）</td>
+<td style="text-align: left;">~$32,000-38,000</td>
+<td style="text-align: left;">70-80%</td>
+</tr>
+<tr>
+<td style="text-align: left;">交通成本</td>
+<td style="text-align: left;">~$2,000-3,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">管理/调度分摊</td>
+<td style="text-align: left;">~$5,000-7,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">合规/培训</td>
+<td style="text-align: left;">~$2,000-3,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总成本</strong></td>
+<td style="text-align: left;">~$41,000-51,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>单位盈余</strong></td>
+<td style="text-align: left;">~$0-4,000</td>
+<td style="text-align: left;">微利/盈亏平衡</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_26">机构养老典型单元（每床位/年）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">金额（AUD/年）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">政府养老补贴</td>
+<td style="text-align: left;">~$70,000-90,000</td>
+<td style="text-align: left;">ACFI/AN-ACC 分级</td>
+</tr>
+<tr>
+<td style="text-align: left;">个人贡献</td>
+<td style="text-align: left;">~$20,000-40,000</td>
+<td style="text-align: left;">含基本日常费 + 资产测试附加费</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总收入</strong></td>
+<td style="text-align: left;">~$90,000-130,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">护理人员成本</td>
+<td style="text-align: left;">~$55,000-75,000</td>
+<td style="text-align: left;">24/7 RN 覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">物业折旧/维护</td>
+<td style="text-align: left;">~$10,000-15,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">膳食/耗材</td>
+<td style="text-align: left;">~$8,000-12,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总成本</strong></td>
+<td style="text-align: left;">~$73,000-102,000</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>单位盈余</strong></td>
+<td style="text-align: left;">~$15,000-30,000</td>
+<td style="text-align: left;">机构养老利润高于居家</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_27">关键假设</h3>
+<ul>
+<li>护理人员时薪 AUD 30-45/h（含 penalty rates）</li>
+<li>居家护理客户平均每周 5-10 小时服务</li>
+<li>机构养老入住率 ~90-95%（行业基准）</li>
+</ul>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: left;">细分</th>
+<th style="text-align: center;">规模估算</th>
+<th style="text-align: center;">支付能力</th>
+<th style="text-align: center;">产品匹配度</th>
+<th style="text-align: left;">战略含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>A 级</strong></td>
+<td style="text-align: left;">退伍军人（DVA 全额资助）</td>
+<td style="text-align: center;">~50,000-80,000</td>
+<td style="text-align: center;">★★★★★（政府全付）</td>
+<td style="text-align: center;">★★★★★</td>
+<td style="text-align: left;">核心差异化客户群，守护优势</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B 级</strong></td>
+<td style="text-align: left;">中高资产退休人士（退休村+居家护理）</td>
+<td style="text-align: center;">~200,000-300,000</td>
+<td style="text-align: center;">★★★★</td>
+<td style="text-align: center;">★★★★★</td>
+<td style="text-align: left;">全谱系一站式最佳匹配</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>C 级</strong></td>
+<td style="text-align: left;">普通养老金领取者（政府拨款为主）</td>
+<td style="text-align: center;">~500,000+</td>
+<td style="text-align: center;">★★★</td>
+<td style="text-align: center;">★★★★</td>
+<td style="text-align: left;">体量最大但毛利最低</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D 级</strong></td>
+<td style="text-align: left;">NDIS 残障参与者</td>
+<td style="text-align: center;">~50,000-100,000</td>
+<td style="text-align: center;">★★★（NDIS 拨款）</td>
+<td style="text-align: center;">★★★</td>
+<td style="text-align: left;">增长市场但非核心</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<h3 id="_28">已确认竞品</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">名称</th>
+<th style="text-align: left;">模式</th>
+<th style="text-align: left;">规模</th>
+<th style="text-align: left;">差异化</th>
+<th style="text-align: center;">威胁等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>SilverChain</strong></td>
+<td style="text-align: left;">NFP</td>
+<td style="text-align: left;">#2 HCP 居家护理拨款</td>
+<td style="text-align: left;">技术创新领先（较早投入数字化）</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Australian Unity</strong></td>
+<td style="text-align: left;">Mutual 会员制</td>
+<td style="text-align: left;">~15 亿收入</td>
+<td style="text-align: left;">会员粘性 + 健康保险交叉销售</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HammondCare</strong></td>
+<td style="text-align: left;">NFP (基督教)</td>
+<td style="text-align: left;">~7 亿收入</td>
+<td style="text-align: left;">失智症和姑息治疗专科</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Regis Healthcare</strong></td>
+<td style="text-align: left;">For-Profit (ASX)</td>
+<td style="text-align: left;">60+ 养老院</td>
+<td style="text-align: left;">上市公司资本优势</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Trilogy Care</strong></td>
+<td style="text-align: left;">For-Profit</td>
+<td style="text-align: left;">快速增长</td>
+<td style="text-align: left;">自管模式，消费者自由选择</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Five Good Friends</strong></td>
+<td style="text-align: left;">平台+自营混合</td>
+<td style="text-align: left;">较小但增速快</td>
+<td style="text-align: left;">技术平台 + 社区模式</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="trilogy-care">最大威胁分析——Trilogy Care</h3>
+<p>Trilogy Care 代表了一种结构性威胁：<strong>自管居家护理（Self-Managed Home Care）</strong>。消费者直接管理自己的 HCP 预算，自行雇佣护理人员，Trilogy 提供平台和管理支持。这种模式的成本比 Bolton Clarke 低 20-30%，在消费者选择制下极具吸引力。</p>
+<h3 id="_29">潜在跨界进入者</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">代表</th>
+<th style="text-align: left;">威胁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>健康保险</strong></td>
+<td style="text-align: left;">Medibank, Bupa, HCF</td>
+<td style="text-align: left;">利用保险客户基础进入护理服务</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>科技平台</strong></td>
+<td style="text-align: left;">Mable, Hireup</td>
+<td style="text-align: left;">零工经济模式颠覆传统护理</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>地产开发商</strong></td>
+<td style="text-align: left;">Stockland, Lendlease</td>
+<td style="text-align: left;">退休村 + 护理的垂直整合</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>国际养老集团</strong></td>
+<td style="text-align: left;">日本/欧洲养老运营商</td>
+<td style="text-align: left;">资本和技术输入</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略深度评估</h2>
+<h3 id="bolton-clarke_1">Bolton Clarke 的国际足迹</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">国家/地区</th>
+<th style="text-align: left;">业务模式</th>
+<th style="text-align: left;">规模</th>
+<th style="text-align: left;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>新西兰</strong></td>
+<td style="text-align: left;">未详</td>
+<td style="text-align: left;">估计较小</td>
+<td style="text-align: left;">运营中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>英国</strong></td>
+<td style="text-align: left;">未详（推测与 Altura Learning 教育平台相关）</td>
+<td style="text-align: left;">估计较小</td>
+<td style="text-align: left;">运营中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>爱尔兰</strong></td>
+<td style="text-align: left;">未详</td>
+<td style="text-align: left;">估计较小</td>
+<td style="text-align: left;">运营中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中国</strong></td>
+<td style="text-align: left;">JV 运营 1,000 张机构养老床位</td>
+<td style="text-align: left;">中等</td>
+<td style="text-align: left;">运营中（2017 年报道，当前状态未确认）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_30">跨境战略评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>国际化深度</strong></td>
+<td style="text-align: left;">⚠️ 浅——国际收入占比估计 &lt;5%，主要是教育（Altura Learning）和小规模养老运营</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中国市场</strong></td>
+<td style="text-align: left;">🟡 2017 年曾高调宣布 1,000 床位 JV，但此后无后续报道——可能已经收缩或维持现状</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>跨境扩展能力</strong></td>
+<td style="text-align: left;">❌ 弱——NFP 养老护理高度依赖本地政府关系和品牌，跨国复制难度极大</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>对 iHomeCare 意义</strong></td>
+<td style="text-align: left;">低——Bolton Clarke 的国际化经验对 iHomeCare 参考价值有限</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<p>❌ <strong>不适用</strong>——Bolton Clarke 为 NFP 慈善信托结构（RSL Care RDNS Limited 作为 War Veterans&rsquo; Homes Trust + Scartwater Trust 的受托人），无法被收购或上市退出。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">替代参考</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">行业可比交易</td>
+<td style="text-align: left;">Allity 被 Bolton Clarke 收购（2022）——澳大利亚养老领域最大交易之一</td>
+</tr>
+<tr>
+<td style="text-align: left;">McKenzie Aged Care 被收购（2023）</td>
+<td style="text-align: left;">NFP 收购 for-profit，估值逻辑特殊</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bolton Clarke 作为收购方</td>
+<td style="text-align: left;">并购能力强劲（17 次），而非被收购对象</td>
+</tr>
+<tr>
+<td style="text-align: left;">如果 Bolton Clarke 被收购</td>
+<td style="text-align: left;">理论上不可行——信托结构 + 退伍军人资产受法律保护</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<h3 id="esg">ESG 披露状态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>E 环境</strong></td>
+<td style="text-align: left;">发布 Modern Slavery Statement 2024；养老护理为天然低碳模式</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S 社会</strong></td>
+<td style="text-align: left;">核心使命对齐——服务退伍军人、老年、残障等弱势群体；Employer of Choice 认证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>G 治理</strong></td>
+<td style="text-align: left;">NFP 信托结构，8 名董事会成员，独立治理；ACNC 慈善合规</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ESG 报告</strong></td>
+<td style="text-align: left;">无独立 ESG/可持续发展报告——NFP 年报中涵盖部分内容</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_31">社会影响力量化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">年服务人数</td>
+<td style="text-align: left;">130,000+</td>
+</tr>
+<tr>
+<td style="text-align: left;">退伍军人服务</td>
+<td style="text-align: left;">核心业务线（DVA 资助）</td>
+</tr>
+<tr>
+<td style="text-align: left;">慈善捐赠</td>
+<td style="text-align: left;">与 EQT Foundation 等合作</td>
+</tr>
+<tr>
+<td style="text-align: left;">社区教育</td>
+<td style="text-align: left;">Be Healthy and Active 项目</td>
+</tr>
+<tr>
+<td style="text-align: left;">心理健康</td>
+<td style="text-align: left;">Veteran Family Mental Wellbeing Series + HOW-R-U? 电话支持</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<h3 id="_32">组织架构</h3>
+<ul>
+<li><strong>汇报结构</strong>：职能制——Group CEO 下设 COO × 3（居家/机构/退休）+ CFO + CPO + CDIO + CDPO + EGM Brand + GC</li>
+<li><strong>管理层级</strong>：扁平化趋势——CEO 直接管理 9 个功能负责人</li>
+<li><strong>部门划分</strong>：按业务线（Home &amp; Community Support / Residential Care / Retirement Living）+ 职能线（财务/人事/数字/开发/品牌）</li>
+</ul>
+<h3 id="_33">员工规模</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">总人数</td>
+<td style="text-align: left;">~16,000（2025）</td>
+</tr>
+<tr>
+<td style="text-align: left;">14 年增长</td>
+<td style="text-align: left;">+11,000（从 ~5,000 到 16,000）</td>
+</tr>
+<tr>
+<td style="text-align: left;">构成</td>
+<td style="text-align: left;">RN 注册护士 + EN 登记护士 + PCW 个人护理员 + 辅助医疗 + 行政</td>
+</tr>
+<tr>
+<td style="text-align: left;">志愿者</td>
+<td style="text-align: left;">NFP 志愿者网络（规模未公开）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_34">人才密度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>高管背景</strong></td>
+<td style="text-align: left;">🟢 强——CEO 来自 BCG/Ramsay/InvoCare/Wesfarmers；CFO 具 ESG 背景；多位 GAICD 认证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>临床人才</strong></td>
+<td style="text-align: left;">🟢 强——COO 居家护理 Deidre McGill 为 RN + MSc；董事中有 RN 和 MD</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数字人才</strong></td>
+<td style="text-align: left;">⚠️ 弱——Acting CDIO（非正式任命），暗示数字领导力缺口</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>董事会质量</strong></td>
+<td style="text-align: left;">🟢 高——8 人涵盖法律/财务/工程/医学/HR 多学科</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_35">关键人依赖</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">风险</th>
+<th style="text-align: center;">严重度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CEO 过渡（Muggleton → Chretien）</td>
+<td style="text-align: center;">🟡 中——Muggleton 14 年任期，Chretien 需要证明自己</td>
+</tr>
+<tr>
+<td style="text-align: left;">CDIO 空缺（仅 Acting）</td>
+<td style="text-align: center;">🟡 中——数字战略缺乏长期领导</td>
+</tr>
+<tr>
+<td style="text-align: left;">COO 三人各管一摊</td>
+<td style="text-align: center;">🟢 低——分散风险</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_36">企业文化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Employer of Choice</td>
+<td style="text-align: left;">✅ 认证</td>
+</tr>
+<tr>
+<td style="text-align: left;">核心价值观</td>
+<td style="text-align: left;">&ldquo;Listen, Be kind, Be curious, Always safe, Always together&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;">Muggleton 离职评价</td>
+<td style="text-align: left;">&ldquo;Outstanding workplace health &amp; safety record&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;">Glassdoor</td>
+<td style="text-align: left;">未获取（Tavily 不可用）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<p>❌ <strong>不适用</strong>——Bolton Clarke 为 NFP 非营利组织，无股权融资历史。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">替代分析</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>法律结构</strong></td>
+<td style="text-align: left;">RSL Care RDNS Limited 作为受托人，管理 War Veterans&rsquo; Homes Trust + Scartwater Trust + RDNS Limited</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>资本来源</strong></td>
+<td style="text-align: left;">运营盈余再投资 + 政府拨款 + 债务融资（推测用于物业收购）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>并购资金来源</strong></td>
+<td style="text-align: left;">NFP 的并购能力来自运营现金流 + 债务 + 政府支持——17 次并购的资金结构未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>无 Cap Table</strong></td>
+<td style="text-align: left;">无股东、无期权池、无估值轨迹</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<h3 id="gtm">GTM 模式</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">政府系统获客为主（My Aged Care / DVA）+ 品牌自然流量 + 医院/GP 转介</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售团队</strong></td>
+<td style="text-align: left;">无传统销售团队——NFP 养老护理获客更接近「评估-匹配-准入」而非主动销售</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>营销投入</strong></td>
+<td style="text-align: left;">设有 EGM Brand, Marketing &amp; Communications（Meredith Bird），2025 年启动「Heart of positive ageing」品牌统一</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CAC</strong></td>
+<td style="text-align: left;">不适用传统 CAC 概念——主要获客成本是政府系统导航 + 入户评估</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="gtm_1">GTM 阶段诊断</h3>
+<p><strong>阶段</strong>：成熟运营期——品牌知名度高（RDNS 140 年），主要获客依赖政府系统。在消费者选择制（Support at Home 2025.7 起）下，需要从「被动接收转介」转向「主动消费者营销」——这是 Bolton Clarke 的历史弱项。</p>
+<h3 id="gtm_2">GTM 瓶颈判断</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">瓶颈位置</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>漏斗顶部</strong>（品牌认知）</td>
+<td style="text-align: left;">🟢 强——RDNS 品牌认知度极高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>漏斗中部</strong>（转化/选择）</td>
+<td style="text-align: left;">🟡 中——消费者选择制下需要提升客户体验和透明度</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>漏斗底部</strong>（留存/口碑）</td>
+<td style="text-align: left;">🟢 强——NFP 信任 + Care Champions 提升满意度</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="271">27.1 核心临床指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Bolton Clarke</th>
+<th style="text-align: center;">对照标准</th>
+<th style="text-align: left;">数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>五星评级</strong></td>
+<td style="text-align: center;">通过（Farnorha 2023 重认证）</td>
+<td style="text-align: center;">行业标准</td>
+<td style="text-align: left;">Aged Care Quality Commission</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>不良事件率</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: center;">行业均值</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NPS</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: center;">行业中位数 ~40</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>护理人员-居民比</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: center;">强制性最低标准</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ Bolton Clarke 不公开发布临床结局数据（NFP 年报中通常只有定性描述）。</p>
+</blockquote>
+<h3 id="272">27.2 质量认证体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Aged Care Quality Standards</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">强制合规</td>
+</tr>
+<tr>
+<td style="text-align: left;">五星评级</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">通过审计（Farnorha 案例 2023.1 重认证）</td>
+</tr>
+<tr>
+<td style="text-align: left;">ACNC 慈善注册</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">NFP 合规</td>
+</tr>
+<tr>
+<td style="text-align: left;">NDIS 注册</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">残障服务合规</td>
+</tr>
+<tr>
+<td style="text-align: left;">AHPRA 护理人员注册</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">所有 RN 必须注册</td>
+</tr>
+<tr>
+<td style="text-align: left;">DVA 退伍军人服务标准</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">退伍军人护理合规</td>
+</tr>
+<tr>
+<td style="text-align: left;">ISO / JCI</td>
+<td style="text-align: center;">未确认</td>
+<td style="text-align: left;">NFP 通常不追求国际认证</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证据类型</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">代表性案例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">RCT（随机对照试验）</td>
+<td style="text-align: center;">0（公开可见）</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">前瞻性/观察性研究</td>
+<td style="text-align: center;">少量</td>
+<td style="text-align: left;">Bolton Clarke Research Institute 研究</td>
+</tr>
+<tr>
+<td style="text-align: left;">创新项目评估</td>
+<td style="text-align: center;">多项</td>
+<td style="text-align: left;">Care Champions、HOW-R-U?、InTouch</td>
+</tr>
+<tr>
+<td style="text-align: left;">同行评审</td>
+<td style="text-align: center;">有限</td>
+<td style="text-align: left;">BCRI 学术产出</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>证据强度总体评级</strong>：🟡 中——有研究机构和创新项目，但缺乏公开发表的 RCT 级别临床证据。更多的实证来自运营数据和奖项认可而非同行评审研究。</p>
+<h3 id="_37">临床差异化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Bolton Clarke 优势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>居家护理临床传统</strong></td>
+<td style="text-align: left;">RDNS 140 年——澳大利亚居家护理标准制定者之一</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>退伍军人专科护理</strong></td>
+<td style="text-align: left;">DVA 专项服务，了解军事相关健康问题</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>临终关怀</strong></td>
+<td style="text-align: left;">姑息治疗能力（COO 居家护理 Deidre McGill MSc Healthcare Mngt）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>创新护理模式</strong></td>
+<td style="text-align: left;">Care Champions 提升客户体验，550+ 人覆盖 88 家养老院</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d16-ihomecare_1">D16 — 对 iHomeCare 战略建议（独立章节）</h2>
+<blockquote>
+<p>按模板要求独立列出，与 D1-D27 平行。</p>
+</blockquote>
+<h3 id="_38">对潜在投资者</h3>
+<ul>
+<li>Bolton Clarke 非股权投资标的（NFP 不可投）</li>
+<li>但其作为澳大利亚最大养老护理运营商的运营数据、规模效应、政策游说能力值得跟踪</li>
+<li>关键观察指标：Olivier Chretien 上任后的技术投资节奏、Support at Home 改革下市场份额变化</li>
+</ul>
+<h3 id="bolton-clarke_2">对管理层（Bolton Clarke）</h3>
+<ol>
+<li><strong>任命正式 CDIO</strong>：Acting CDIO 状态暗示数字领导力缺口，Chretien 的第一项人事决策应为招募有技术+医疗双重背景的 CDIO</li>
+<li><strong>启动核心 IT 整合项目</strong>：17 次并购遗留的系统孤岛是运营效率的最大瓶颈</li>
+<li><strong>建立消费者数字门户</strong>：在 Support at Home 消费者选择制下，客户需要一个 App/门户来管理服务、查看护理记录、预约变更</li>
+<li><strong>探索 AI 辅助护理决策</strong>：基于 130,000 人/年的数据积累，开发 AI 驱动的护理需求预测和资源调度</li>
+</ol>
+<h3 id="ihomecare">对竞对/新进入者（iHomeCare）</h3>
+<ol>
+<li><strong>技术差异化</strong>：Bolton Clarke 的技术能力远弱于其品牌和规模，技术型进入者在数字护理平台领域有很大空间</li>
+<li><strong>合作而非竞争</strong>：Bolton Clarke 可能是技术方案的理想大客户——其规模决定了升级技术栈的迫切性</li>
+<li><strong>退伍军人专科护理数字化</strong>：针对 DVA 市场的特殊需求（PTSD、军事相关疾病），提供定制化数字护理方案，利用 Bolton Clarke 的渠道</li>
+</ol>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">D0 赛道验证</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">确认为养老护理全谱系 NFP</td>
+</tr>
+<tr>
+<td style="text-align: left;">D1 执行摘要</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整</td>
+</tr>
+<tr>
+<td style="text-align: left;">D2 公司全貌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含完整时间线、管理层表、董事会</td>
+</tr>
+<tr>
+<td style="text-align: left;">D3 战略定位</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">三阶段战略演变</td>
+</tr>
+<tr>
+<td style="text-align: left;">D4 商业模式架构图</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含可视化架构图、支付方-使用方分离、伙伴生态</td>
+</tr>
+<tr>
+<td style="text-align: left;">D5 服务产品线 &amp; 定价</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">6 条产品线 + 研发创新管线</td>
+</tr>
+<tr>
+<td style="text-align: left;">D6 客户与支付方深度</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">客户结构 + 获客渠道 + 品牌声誉</td>
+</tr>
+<tr>
+<td style="text-align: left;">D7 财务深度拆解</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">NFP 不发布详细财报，基于二手来源估算</td>
+</tr>
+<tr>
+<td style="text-align: left;">D8 工作流/旅程映射</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整 6 阶段客户旅程</td>
+</tr>
+<tr>
+<td style="text-align: left;">D9 技术深度评估</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">9.1-9.6 全覆盖，含技术风险矩阵</td>
+</tr>
+<tr>
+<td style="text-align: left;">D10 竞争格局对标</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">6 家对标矩阵</td>
+</tr>
+<tr>
+<td style="text-align: left;">D11 TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">市场测算 + 渗透率</td>
+</tr>
+<tr>
+<td style="text-align: left;">D12 盈利模型</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">成本拆解 + 盈利路径</td>
+</tr>
+<tr>
+<td style="text-align: left;">D13 机遇与风险</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含法律诉讼 + 宏观敏感性</td>
+</tr>
+<tr>
+<td style="text-align: left;">D14 管理层指引</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">Muggleton + Chretien 双 CEO 指引分析</td>
+</tr>
+<tr>
+<td style="text-align: left;">D15 估值对比</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">NFP 不上市，无估值数据</td>
+</tr>
+<tr>
+<td style="text-align: left;">D16 战略建议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">投资人 + 管理层 + 竞对/新进入者三维度</td>
+</tr>
+<tr>
+<td style="text-align: left;">D17 政策与监管土壤</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">核心政策 + 监管机构 + Muggleton 政策批评</td>
+</tr>
+<tr>
+<td style="text-align: left;">D18 单元经济模型</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">居家护理 + 机构养老双模型</td>
+</tr>
+<tr>
+<td style="text-align: left;">D19 目标人群/客户细分</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">A/B/C/D 四级分层</td>
+</tr>
+<tr>
+<td style="text-align: left;">D20 竞品深度地图</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">6 家竞品 + 跨界进入者分析</td>
+</tr>
+<tr>
+<td style="text-align: left;">D21 跨境/跨区域</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">部分覆盖——国际数据有限（中国 JV 现状不明）</td>
+</tr>
+<tr>
+<td style="text-align: left;">D22 退出/并购价值</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">NFP 不可退出/被收购</td>
+</tr>
+<tr>
+<td style="text-align: left;">D23 ESG/社会影响力</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">含社会影响力量化</td>
+</tr>
+<tr>
+<td style="text-align: left;">D24 组织与人才</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">组织架构 + 人才密度 + 关键人依赖 + 文化</td>
+</tr>
+<tr>
+<td style="text-align: left;">D25 融资/Cap Table</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">NFP 无股权融资</td>
+</tr>
+<tr>
+<td style="text-align: left;">D26 GTM 效率</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">NFP 无传统销售团队，GTM 概念适配调整</td>
+</tr>
+<tr>
+<td style="text-align: left;">D27 临床质量</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">公开临床数据有限，NFP 年报以定性为主</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: right;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 完整覆盖</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️ 部分覆盖</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 数据缺失/不适用</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_39">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">FY2025 完整年报（含资产负债表、现金流）</td>
+<td style="text-align: left;">等待 Bolton Clarke 官网发布；或 ACNC 查询</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">居家护理具体客户数和 NPS</td>
+<td style="text-align: left;">行业报告（KPMG/IBISWorld）或直接联系</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">中国 JV 最新状态（2017 年后无公开报道）</td>
+<td style="text-align: left;">中文搜索「博顿克拉克 中国」</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">IT 系统和数字平台技术栈详情</td>
+<td style="text-align: left;">技术尽职调查或直接联系 CDIO</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">员工离职率和 Glassdoor 评分</td>
+<td style="text-align: left;">Glassdoor / Seek 雇主评价</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">临床结局数据（再入院率、不良事件率）</td>
+<td style="text-align: left;">直接联系或 AIHW 数据</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">17 次并购的财务条款和整合效果</td>
+<td style="text-align: left;">行业数据库或 ACNC 年报分析</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">新西兰/英国/爱尔兰业务的收入贡献</td>
+<td style="text-align: left;">国际业务年报（如存在）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_40">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Bolton Clarke 官网</td>
+<td style="text-align: left;">Year in Review 2025 (PDF)</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Bolton Clarke 官网</td>
+<td style="text-align: left;">RSL Care RDNS Limited FY25 Financial Report (PDF)</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Bolton Clarke 官网</td>
+<td style="text-align: left;">About Us / Innovation pages</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">IBISWorld</td>
+<td style="text-align: left;">RSL Care RDNS Limited Company Profile (revenue AUD 1.765B)</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">KPMG Australia</td>
+<td style="text-align: left;">Aged Care Sector Analysis and Report 2026</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">The Weekly Source</td>
+<td style="text-align: left;">Stephen Muggleton reflects on building Australia&rsquo;s largest NFP care provider</td>
+<td style="text-align: left;">2025.7</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">The Weekly Source</td>
+<td style="text-align: left;">Bolton Clarke announces Olivier Chretien as new Group CEO</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">Australian Ageing Agenda</td>
+<td style="text-align: left;">Bolton Clarke among innovation winners (13th APAC Awards)</td>
+<td style="text-align: left;">2025.4.15</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">Australian Ageing Agenda</td>
+<td style="text-align: left;">RSL Care + RDNS rebrands with &lsquo;ambitious target&rsquo;</td>
+<td style="text-align: left;">2017</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Inside Ageing</td>
+<td style="text-align: left;">Bolton Clarke appoints new Group CEO</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">LinkedIn (Olivier Chretien)</td>
+<td style="text-align: left;">#workmilestone #newrole #ceo post</td>
+<td style="text-align: left;">2025.7</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">LinkedIn (Stephen Muggleton)</td>
+<td style="text-align: left;">Final sign-off and reflection</td>
+<td style="text-align: left;">2025.6</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">Aged Care Quality &amp; Safety Commission</td>
+<td style="text-align: left;">Bolton Clarke Farnorha re-accreditation report</td>
+<td style="text-align: left;">2023.1.12</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">APH (Australian Parliament House)</td>
+<td style="text-align: left;">Senate Community Affairs Inquiry – Aged Care Service Delivery – Bolton Clarke Submission</td>
+<td style="text-align: left;">2025.8.22</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">Wikipedia</td>
+<td style="text-align: left;">Bolton Clarke</td>
+<td style="text-align: left;">持续更新</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">The Weekly Source</td>
+<td style="text-align: left;">Bolton Clarke to buy McKenzie Aged Care operations</td>
+<td style="text-align: left;">2023.2</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: left;">The Weekly Source</td>
+<td style="text-align: left;">NFP Bolton Clarke acquires private operator Allity</td>
+<td style="text-align: left;">2022.2</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td style="text-align: left;">The Weekly Source</td>
+<td style="text-align: left;">Making charitable sector mergers work: Bolton Clarke and Acacia Living Group</td>
+<td style="text-align: left;">2021.11</td>
+</tr>
+<tr>
+<td style="text-align: center;">19</td>
+<td style="text-align: left;">EQT Foundation</td>
+<td style="text-align: left;">Philanthropy and partnership to shape the future of care for Bolton Clarke</td>
+<td style="text-align: left;">2025.12.8</td>
+</tr>
+<tr>
+<td style="text-align: center;">20</td>
+<td style="text-align: left;">Bolton Clarke 官网</td>
+<td style="text-align: left;">Modern Slavery Statement 2024</td>
+<td style="text-align: left;">2024</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<blockquote>
+<p><strong>免责声明</strong>：Bolton Clarke 为非营利组织，不发布上市公司级别的财务和运营数据。本报告基于公开可得信息编制，部分维度（D7 财务、D27 临床）因数据可获得性限制为部分覆盖。&rdquo;无可靠公开数据源&rdquo;的标注表示需补充一手调研。</p>
+<p>📎 相关页面：[[Countries/澳大利亚/00-概览]] | [[SilverChain Group]] | [[HammondCare]] | [[Regis Healthcare]] | [[Australian Unity]]</p>
+</blockquote>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

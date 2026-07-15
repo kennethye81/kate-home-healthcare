@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中国 HaH 实践初探报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">中国 HaH 实践初探报告</a><ul>
+<li><a href="#_1">一、报告摘要</a></li>
+<li><a href="#_2">二、政策环境</a><ul>
+<li><a href="#21">2.1 顶层制度框架</a></li>
+<li><a href="#22-hah">2.2 与 HaH 的政策差距</a></li>
+</ul>
+</li>
+<li><a href="#_3">三、典型实践案例</a><ul>
+<li><a href="#31-13-16">3.1 深圳家庭病床：从 13 类到 16 类的持续扩容</a></li>
+<li><a href="#32-70">3.2 上海家庭病床：超大城市 70 年深耕</a></li>
+<li><a href="#33-wedoctor">3.3 微医（WeDoctor）：互联网医院的居家医疗延伸</a></li>
+<li><a href="#34">3.4 京东健康：&rdquo;护士到家&rdquo;的标准化探索</a></li>
+<li><a href="#35-5g">3.5 广东省第二人民医院 5G 智慧家庭病房</a></li>
+</ul>
+</li>
+<li><a href="#vs">四、支付模式：医保覆盖 vs 自费</a><ul>
+<li><a href="#41">4.1 医保覆盖部分</a></li>
+<li><a href="#42">4.2 自费部分</a></li>
+</ul>
+</li>
+<li><a href="#hah_1">五、技术平台：互联网医院的 HaH 潜力</a><ul>
+<li><a href="#51">5.1 基础设施现状</a></li>
+<li><a href="#52">5.2 关键能力缺口</a></li>
+</ul>
+</li>
+<li><a href="#hah_2">六、与香港的跨境 HaH 可能性</a><ul>
+<li><a href="#61">6.1 现有跨境医疗合作</a></li>
+<li><a href="#62-hah">6.2 跨境 HaH 场景分析</a></li>
+<li><a href="#63-hah">6.3 跨境 HaH 可行性评估</a></li>
+</ul>
+</li>
+<li><a href="#hah_3">七、核心局限：缺乏急性 HaH 的制度基础</a></li>
+<li><a href="#hah_4">八、中国 HaH 发展前景预判</a><ul>
+<li><a href="#81">8.1 有利因素</a></li>
+<li><a href="#82">8.2 制约因素</a></li>
+<li><a href="#83">8.3 可能的演进路径</a></li>
+</ul>
+</li>
+<li><a href="#_4">九、关键信源清单</a></li>
+<li><a href="#_5">十、后续调研建议</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">中国 HaH 实践初探报告</h1>
+<blockquote>
+<p><strong>调研日期</strong>：2026-07-03<br />
+<strong>调研类型</strong>：初探扫描（Initial Scan）<br />
+<strong>署名</strong>：Kenneth Ye<br />
+<strong>状态</strong>：初稿 v1.0  </p>
+</blockquote>
+<hr />
+<h2 id="_1">一、报告摘要</h2>
+<p>中国尚未建立国际通行的急性期 Hospital-at-Home（HaH）制度体系，但以&rdquo;家庭病床&rdquo;为核心的居家医疗服务已有多层次实践。本报告从政策环境、典型实践、支付模式、技术平台、跨境可能性及制度局限六个维度，扫描中国 HaH 相关实践的现状。</p>
+<p><strong>核心判断</strong>：中国现有居家医疗体系以慢病管理、康复护理、安宁疗护为核心功能定位，覆盖&rdquo;出院后延续照护&rdquo;和&rdquo;长期护理&rdquo;场景，但缺乏面向急性疾病（如肺炎、心衰急性加重、COPD 急性发作、蜂窝组织炎等）的居家住院替代服务——而这正是国际 HaH 模式的核心定义。当前实践可视为 HaH 的&rdquo;前导形态&rdquo;，为未来急性 HaH 的制度化建设提供了基础设施和经验积累。</p>
+<hr />
+<h2 id="_2">二、政策环境</h2>
+<h3 id="21">2.1 顶层制度框架</h3>
+<p>中国居家医疗的政策推进经历了三个阶段：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">关键政策</th>
+<th style="text-align: left;">核心内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>探索期</strong></td>
+<td style="text-align: left;">2019 年</td>
+<td style="text-align: left;">国家卫健委《&rdquo;互联网+护理服务&rdquo;试点工作方案》</td>
+<td style="text-align: left;">确定北京、天津、上海、江苏、浙江、广东 6 省市试点&rdquo;网约护士&rdquo;，以&rdquo;线上申请、线下服务&rdquo;模式提供居家护理 [T1-政府]</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>扩展期</strong></td>
+<td style="text-align: left;">2021 年</td>
+<td style="text-align: left;">国家卫健委进一步推进试点通知</td>
+<td style="text-align: left;">试点范围扩大至全国，要求建立完善价格和医保支付政策 [T1-政府]</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>规范化期</strong></td>
+<td style="text-align: left;">2026 年 5 月</td>
+<td style="text-align: left;">国家卫健委、国家中医药局《家庭病床服务指南（试行）》</td>
+<td style="text-align: left;">首个全国统一的家庭病床服务标准，明确 9 项服务内容、8 个服务流程环节、服务人员资质要求 [T1-政府]</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>配套支撑</strong></td>
+<td style="text-align: left;">2026 年 3 月</td>
+<td style="text-align: left;">国家医保局等三部门《关于医保支持基层医疗卫生服务发展的指导意见》</td>
+<td style="text-align: left;">明确家庭病床服务项目价格和费用结算规则，支持基层开展长期护理服务 [T1-政府]</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>标准细化</strong></td>
+<td style="text-align: left;">2026 年 6 月</td>
+<td style="text-align: left;">国家卫健委《家庭病床康复服务标准》（WS/T 893—2026）</td>
+<td style="text-align: left;">首个家庭病床康复服务的卫生行业标准 [T1-政府]</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>信源标注说明</strong>：<br />
+<code>[T1-政府]</code> = 官方政务源，可直接引用<br />
+<code>[T2-机构]</code> = 权威机构源，需交叉验证<br />
+<code>[T3-媒体]</code> = 行业媒体，仅供线索  </p>
+</blockquote>
+<h3 id="22-hah">2.2 与 HaH 的政策差距</h3>
+<p>《家庭病床服务指南（试行）》规定的服务对象需满足：</p>
+<blockquote>
+<p>&ldquo;诊断明确、病情稳定、需连续治疗、适合在居住场所检查、治疗、康复和护理的慢性病患者或失能（含失智）、高龄、残疾的患者&rdquo;</p>
+</blockquote>
+<p>同时明确<strong>排除</strong>&ldquo;病情不稳定&rdquo;及&rdquo;非危重症&rdquo;以外的患者。这意味着：</p>
+<ul>
+<li>❌ 急性感染（如肺炎、蜂窝组织炎）不在服务范围</li>
+<li>❌ 急性心衰加重、COPD 急性发作不在服务范围</li>
+<li>✅ 慢病稳定期管理、术后康复、安宁疗护在服务范围</li>
+</ul>
+<p><strong>结论</strong>：中国现行制度体系与 Johns Hopkins、Mass General Brigham 等主导的国际 HaH 模式存在结构性差异——中国家庭病床定位于&rdquo;慢病管理+延续照护&rdquo;而非&rdquo;急性住院替代&rdquo;。</p>
+<hr />
+<h2 id="_3">三、典型实践案例</h2>
+<h3 id="31-13-16">3.1 深圳家庭病床：从 13 类到 16 类的持续扩容</h3>
+<p><strong>背景</strong>：深圳自 2012 年起建立家庭病床制度，是全国最早系统推进的城市之一。</p>
+<p><strong>发展历程</strong>：</p>
+<ul>
+<li><strong>2021 年</strong>：《深圳市家庭病床管理办法》将服务对象扩至 <strong>13 类</strong> 人群，包括：长期卧床或身体衰弱患者、气管插管/造口患者、骨折/骨关节损伤需治疗患者、失智患者、安宁疗护患者等 [T1-政府]</li>
+<li><strong>2024 年</strong>：修订《办法》，服务对象进一步扩大至 <strong>16 类</strong>，全市家庭病床累计达 <strong>2.5 万张</strong>，全科医生总数突破 1 万人，5453 个家庭医生团队服务 760 万居民 [T1-政府]</li>
+<li><strong>医保支付</strong>：家庭病床医疗费用按<strong>住院医保待遇</strong>支付，报销比例最高达 <strong>95%</strong>，参保人建床期间费用可参照同级医院住院标准报销 [T1-政府]</li>
+<li><strong>建床周期</strong>：不超过 90 天，期满可续约</li>
+<li><strong>申请渠道</strong>：&rdquo;社康通&rdquo;微信小程序在线申请</li>
+</ul>
+<p><strong>HaH 相关性评估</strong>：⭐⭐⭐（中高）</p>
+<p>深圳模式在&rdquo;医保覆盖&rdquo;和&rdquo;服务规模&rdquo;维度最为接近 HaH 理念，但仍限于慢病/康复场景，未扩展至急性期。</p>
+<h3 id="32-70">3.2 上海家庭病床：超大城市 70 年深耕</h3>
+<p><strong>背景</strong>：上海家庭病床服务始于 20 世纪 50 年代，是中国历史最悠久、体系最成熟的居家医疗服务实践。</p>
+<p><strong>关键数据（2025 年）</strong> [T3-媒体]：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">家庭病床总量</td>
+<td style="text-align: left;"><strong>10.63 万张</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">近三年增幅</td>
+<td style="text-align: left;">+39.1%</td>
+</tr>
+<tr>
+<td style="text-align: left;">服务覆盖</td>
+<td style="text-align: left;">全市所有社区卫生服务中心</td>
+</tr>
+<tr>
+<td style="text-align: left;">90% 以上服务对象</td>
+<td style="text-align: left;">60 周岁及以上老年人</td>
+</tr>
+<tr>
+<td style="text-align: left;">80 岁以上占比</td>
+<td style="text-align: left;">约 35%</td>
+</tr>
+<tr>
+<td style="text-align: left;">医保月人均支出</td>
+<td style="text-align: left;">约 470 元</td>
+</tr>
+<tr>
+<td style="text-align: left;">社区病房月人均花费（对比）</td>
+<td style="text-align: left;">约 9000 元</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>9 大服务类别（2025 年起）</strong>：</p>
+<ol>
+<li>诊疗服务</li>
+<li>检验检查服务</li>
+<li>专科护理服务</li>
+<li>临床治疗服务</li>
+<li>中医服务</li>
+<li>康复理疗服务</li>
+<li>安宁疗护服务</li>
+<li>药学服务</li>
+<li>健康咨询指导</li>
+</ol>
+<p><strong>特色机制</strong>：</p>
+<ul>
+<li><strong>&ldquo;五床联动&rdquo;模式</strong>（静安区）：打通家庭病床、养老机构床位、医院住院床位、安宁疗护床位等资源壁垒，实现医养无缝衔接 [T1-政府]</li>
+<li><strong>三级质控网络</strong>：市-区-医疗机构三级质控体系，2019 年成立市级质量控制中心</li>
+<li><strong>电子病历全覆盖</strong>：数据同步对接居民电子健康档案</li>
+<li><strong>&ldquo;智慧家庭病床&rdquo;试点</strong>：居家智能健康监测 + 线上远程随访 + 线下上门诊疗融合模式</li>
+</ul>
+<p><strong>服务效果（2025 年）</strong>：</p>
+<ul>
+<li>撤床患者中，五成病情稳定、三成症状好转、一成以上达到临床治愈</li>
+<li>三类合计超九成</li>
+</ul>
+<p><strong>HaH 相关性评估</strong>：⭐⭐⭐⭐（高）</p>
+<p>上海在服务规模、制度成熟度、医保覆盖、质量控制等维度均为国内领先水平。其&rdquo;五床联动&rdquo;模式已具备多层级医疗资源衔接的 HaH 关键要素，但同样缺乏急性期服务。</p>
+<h3 id="33-wedoctor">3.3 微医（WeDoctor）：互联网医院的居家医疗延伸</h3>
+<p><strong>背景</strong>：微医成立于 2010 年，是中国最大的数字医疗服务平台之一，2015 年创建全国首家互联网医院——乌镇互联网医院。</p>
+<p><strong>关键数据</strong> [T2-机构]：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">实名注册用户</td>
+<td style="text-align: left;">2.6 亿</td>
+</tr>
+<tr>
+<td style="text-align: left;">连接医院</td>
+<td style="text-align: left;">7800+ 家</td>
+</tr>
+<tr>
+<td style="text-align: left;">覆盖三甲医院</td>
+<td style="text-align: left;">95% 以上</td>
+</tr>
+<tr>
+<td style="text-align: left;">注册医生</td>
+<td style="text-align: left;">36 万+</td>
+</tr>
+<tr>
+<td style="text-align: left;">旗下互联网医院</td>
+<td style="text-align: left;">30+ 家（其中 19 家打通医保支付）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>居家医疗相关实践</strong>：</p>
+<ol>
+<li><strong>上海微医互联网医院</strong>（2022 年起）：打通全市在线医保支付，疫情期间累计服务约 200 万人次，为重症慢病患者提供 7100+ 人次复诊购药及上门配送 [T3-媒体]</li>
+<li><strong>&ldquo;全国居家医疗保障平台&rdquo;</strong>（2022 年 12 月上线）：疫情期间满足患者居家问诊、远程就医需求</li>
+<li><strong>&ldquo;社区健康大使&rdquo;机制</strong>（上海创新）：近 2000 名志愿者以社区为基地，对接居民在线问诊和紧急用药</li>
+<li><strong>数字健共体</strong>：在山东、天津等地与大医院、基层医疗机构共建慢病管理体系</li>
+</ol>
+<p><strong>HaH 相关性评估</strong>：⭐⭐⭐（中高）</p>
+<p>微医的核心优势在于&rdquo;互联网+医疗&rdquo;平台能力，打通了在线复诊、医保支付、药品配送的闭环。但其居家服务以&rdquo;问诊+药品&rdquo;为主，缺乏医生上门查房和急性期监测——这正是 HaH 与互联网医疗的本质区别。</p>
+<h3 id="34">3.4 京东健康：&rdquo;护士到家&rdquo;的标准化探索</h3>
+<p><strong>背景</strong>：京东健康依托其电商物流体系，于 2024 年推出&rdquo;护士到家&rdquo;服务，是中国互联网巨头中最早系统化布局上门护理的平台。</p>
+<p><strong>服务概况</strong> [T3-媒体]：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">覆盖城市</td>
+<td style="text-align: left;">全国 400+ 城市</td>
+</tr>
+<tr>
+<td style="text-align: left;">服务项目</td>
+<td style="text-align: left;">伤口换药、采血打针、卧床护理、PICC 维护、管路护理、压疮褥疮护理等 20+ 种</td>
+</tr>
+<tr>
+<td style="text-align: left;">价格区间</td>
+<td style="text-align: left;">单次 59-299 元（不含上门费）</td>
+</tr>
+<tr>
+<td style="text-align: left;">响应时效</td>
+<td style="text-align: left;">最快 1 小时上门</td>
+</tr>
+<tr>
+<td style="text-align: left;">护士资质</td>
+<td style="text-align: left;">三甲医院 5 年以上工作经验，通过资质认证</td>
+</tr>
+<tr>
+<td style="text-align: left;">线下载体</td>
+<td style="text-align: left;">天津开设全国首家护士到家护理站，提供 100+ 项专业服务</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>与金牌护士战略合作</strong>：京东健康与&rdquo;金牌护士&rdquo;平台达成合作，整合执业护士资源，覆盖院后居家护理场景。</p>
+<p><strong>2026 年进展</strong>：推出&rdquo;医养结合&rdquo;照护服务，覆盖老年人、术后康复人群及住院患者，服务人员包括执业护士和执证护理员。</p>
+<p><strong>HaH 相关性评估</strong>：⭐⭐⭐（中高）</p>
+<p>京东健康的&rdquo;护士到家&rdquo;在标准化运营、响应速度和全国覆盖上领先，但其服务本质是&rdquo;护理&rdquo;而非&rdquo;医疗&rdquo;——缺乏医生的诊断、处方和治疗决策参与。这与 HaH 要求的&rdquo;以医生为核心的跨学科团队&rdquo;有明显差距。</p>
+<h3 id="35-5g">3.5 广东省第二人民医院 5G 智慧家庭病房</h3>
+<p><strong>背景</strong>：2022 年 8 月，广东省二医联合华为，建成全国首个基于华为鸿蒙（HarmonyOS）系统的 5G 智慧家庭病房。</p>
+<p><strong>技术特征</strong> [T3-媒体]：</p>
+<ul>
+<li>全屋智能设备：智能床垫监测心率/呼吸、智能马桶分析尿液、智能穿戴设备监测血压/血氧</li>
+<li>数据同步上传至统一平台，床旁平板电脑查阅</li>
+<li>打通医院病房与患者家庭的&rdquo;墙&rdquo;，实现医疗数据互联互通</li>
+<li>探索&rdquo;没有围墙的医院&rdquo;模式</li>
+</ul>
+<p><strong>JMIR 学术发表</strong>：该模式已发表在国际期刊 <em>JMIR mHealth and uHealth</em>（2024），题为 &ldquo;An Introduction to Smart Home Ward–Based Hospital-at-Home Care in China&rdquo;，表明中国智慧家庭病房实践已进入国际学术视野。</p>
+<p><strong>HaH 相关性评估</strong>：⭐⭐⭐⭐（高）</p>
+<p>该模式在技术架构上最接近国际 HaH 理念——通过 IoT 实现远程生理监测、数据回传和医护干预。但目前仍处于样板间/试点阶段，尚未大规模推广。</p>
+<hr />
+<h2 id="vs">四、支付模式：医保覆盖 vs 自费</h2>
+<h3 id="41">4.1 医保覆盖部分</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">支付方式</th>
+<th style="text-align: left;">报销水平</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">深圳家庭病床</td>
+<td style="text-align: left;">按住院待遇支付</td>
+<td style="text-align: left;">最高 95%</td>
+</tr>
+<tr>
+<td style="text-align: left;">上海家庭病床</td>
+<td style="text-align: left;">参照同级医院住院医保结算</td>
+<td style="text-align: left;">月人均支出约 470 元</td>
+</tr>
+<tr>
+<td style="text-align: left;">互联网复诊（19 地市）</td>
+<td style="text-align: left;">纳入医保支付</td>
+<td style="text-align: left;">各地标准不一</td>
+</tr>
+</tbody>
+</table></div>
+<p>国家医保局 2026 年 3 月《指导意见》明确：家庭病床服务项目价格和费用结算按医保规定执行，支持基层开展长期护理服务。2026 年 4 月进一步明确：家庭病床建床费、上门服务费等价格项目统一设立，上门医疗服务由医疗机构自主定价 [T1-政府]。</p>
+<h3 id="42">4.2 自费部分</h3>
+<ul>
+<li><strong>京东健康&rdquo;护士到家&rdquo;</strong>：纯自费，单次 59-299 元 + 上门费</li>
+<li><strong>互联网+护理服务（&rdquo;网约护士&rdquo;）</strong>：多数地区需自费，仅少数试点城市尝试纳入医保</li>
+<li><strong>长期护理保险</strong>：截至 2026 年，全国已有 49 个试点城市，但居家医疗护理的支付标准、服务包内容各地差异较大</li>
+</ul>
+<hr />
+<h2 id="hah_1">五、技术平台：互联网医院的 HaH 潜力</h2>
+<h3 id="51">5.1 基础设施现状</h3>
+<p>中国互联网医院建设已形成规模：</p>
+<ul>
+<li>全国互联网医院总数超 <strong>3000 家</strong>（截至 2024 年）</li>
+<li>广东 160+ 家入驻&rdquo;粤健通&rdquo;平台</li>
+<li>北京各主要三甲医院均已开通互联网诊疗</li>
+<li>微医、京东健康、阿里健康等第三方平台型互联网医院形成生态</li>
+</ul>
+<h3 id="52">5.2 关键能力缺口</h3>
+<p>对照国际 HaH 的技术要求，中国现有平台主要存在以下不足：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">HaH 能力要求</th>
+<th style="text-align: left;">现有水平</th>
+<th style="text-align: left;">缺口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">远程生理监测（连续生命体征）</td>
+<td style="text-align: left;">⚠️ 广东省二医 5G 智慧病房有试点</td>
+<td style="text-align: left;">未普及，仅样本级</td>
+</tr>
+<tr>
+<td style="text-align: left;">医生远程查房系统</td>
+<td style="text-align: left;">⚠️ 在线问诊有，但查房无</td>
+<td style="text-align: left;">缺乏结构化查房流程</td>
+</tr>
+<tr>
+<td style="text-align: left;">移动诊断设备（便携超声、POCT）</td>
+<td style="text-align: left;">⚠️ 基层配置率低</td>
+<td style="text-align: left;">需大规模采购</td>
+</tr>
+<tr>
+<td style="text-align: left;">紧急响应机制</td>
+<td style="text-align: left;">❌ 没有从家到急诊的快速通道</td>
+<td style="text-align: left;">核心安全缺口</td>
+</tr>
+<tr>
+<td style="text-align: left;">跨机构数据共享</td>
+<td style="text-align: left;">⚠️ 区域平台在建设</td>
+<td style="text-align: left;">省际/市际互认不足</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 辅助决策（早期预警评分等）</td>
+<td style="text-align: left;">⚠️ 部分 AI 助诊功能</td>
+<td style="text-align: left;">缺乏 HaH 专用预警模型</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="hah_2">六、与香港的跨境 HaH 可能性</h2>
+<h3 id="61">6.1 现有跨境医疗合作</h3>
+<p>粤港澳大湾区医疗融合已取得实质性进展：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策/项目</th>
+<th style="text-align: left;">时间</th>
+<th style="text-align: left;">核心内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">长者医疗券大湾区试点</td>
+<td style="text-align: left;">2024 年起</td>
+<td style="text-align: left;">覆盖大湾区 9 个内地城市 20 间指定医疗机构，惠及 178 万+ 长者</td>
+</tr>
+<tr>
+<td style="text-align: left;">支援大湾区病人先导计划</td>
+<td style="text-align: left;">2023 年起</td>
+<td style="text-align: left;">4400+ 名病人参与，累积诊症 12000+ 次，90% 以上患者认为便利</td>
+</tr>
+<tr>
+<td style="text-align: left;">前海医疗跨境数据空间</td>
+<td style="text-align: left;">2025 年 9 月</td>
+<td style="text-align: left;">首单港人北上就医即时保险理赔，理赔从数月缩短至即时结算</td>
+</tr>
+<tr>
+<td style="text-align: left;">广东首批国际医疗服务试点</td>
+<td style="text-align: left;">2026 年 3 月</td>
+<td style="text-align: left;">25 家试点医院启动六大举措，打通港澳居民跨境就医&rdquo;绿色通道&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;">港澳药械通</td>
+<td style="text-align: left;">持续扩展</td>
+<td style="text-align: left;">71 家指定医疗机构，获批药械 153 种</td>
+</tr>
+<tr>
+<td style="text-align: left;">医健通跨境健康纪录</td>
+<td style="text-align: left;">2025 年</td>
+<td style="text-align: left;">扩展至全港约 630 万用户</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="62-hah">6.2 跨境 HaH 场景分析</h3>
+<p>对港人北上居住的跨境居家医疗，存在两种可能场景：</p>
+<p><strong>场景 A：香港居民在深圳居住，由深圳医疗机构提供居家医疗</strong></p>
+<ul>
+<li>✅ 深圳家庭病床政策已成熟</li>
+<li>✅ 港人可参加内地医保（2019 年起）</li>
+<li>⚠️ 仅 8% 受访港人参与内地职工医保、5% 参与城乡居民医保（参保覆盖率低）</li>
+<li>⚠️ 跨境商保即时结算刚起步（前海试点）</li>
+</ul>
+<p><strong>场景 B：深圳医疗机构向香港居民提供跨境居家医疗</strong></p>
+<ul>
+<li>❌ 医护人员跨境执业许可问题</li>
+<li>❌ 药品跨境配送监管问题</li>
+<li>❌ 香港医管局与内地医疗系统的数据互通有限</li>
+</ul>
+<h3 id="63-hah">6.3 跨境 HaH 可行性评估</h3>
+<p><strong>短期（1-2 年）</strong>：⭐⭐（低）<br />
+目前跨境合作以&rdquo;港人北上就医&rdquo;为主，解决的是门诊和住院的跨境便利性问题。远程居家监测和急性期上门服务的技术设施、法律框架、支付体系均不成熟。</p>
+<p><strong>中期（3-5 年）</strong>：⭐⭐⭐（中）<br />
+随着前海数据空间模式推广、跨境保险直付机制成熟，深圳/珠海等地有可能率先试点面向港人的慢性病居家管理服务。</p>
+<p><strong>长期（5-10 年）</strong>：⭐⭐⭐⭐（中高）<br />
+如果中国建立急性 HaH 制度，深圳作为先行示范区可能成为跨境 HaH 的&rdquo;政策沙盒&rdquo;。</p>
+<hr />
+<h2 id="hah_3">七、核心局限：缺乏急性 HaH 的制度基础</h2>
+<p>与国际通行的 Hospital-at-Home 模式对比，中国现有体系存在以下结构性差异：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">国际 HaH 模式</th>
+<th style="text-align: left;">中国现行模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>目标人群</strong></td>
+<td style="text-align: left;">急性病患者（肺炎、心衰、COPD、蜂窝组织炎等）</td>
+<td style="text-align: left;">慢病稳定期、失能/半失能、术后康复、安宁疗护</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>核心功能</strong></td>
+<td style="text-align: left;">住院替代（admission avoidance）</td>
+<td style="text-align: left;">出院后延续照护（post-discharge）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>服务频次</strong></td>
+<td style="text-align: left;">医生每日访视 1 次、护士每日访视 2 次起</td>
+<td style="text-align: left;">查床每周 ≥1 次</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>紧急响应</strong></td>
+<td style="text-align: left;">24/7 紧急响应机制</td>
+<td style="text-align: left;">缺乏系统化急救通道</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>医保支付</strong></td>
+<td style="text-align: left;">按住院 DRG/Episodes 支付</td>
+<td style="text-align: left;">深圳/上海按住院支付，其他地区以门诊为主</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术装备</strong></td>
+<td style="text-align: left;">便携超声、POCT、远程生命体征监测</td>
+<td style="text-align: left;">智慧家庭病房（样板间）、基层设备不足</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>团队配置</strong></td>
+<td style="text-align: left;">跨学科团队（医生+护士+治疗师+药师+社工）</td>
+<td style="text-align: left;">医生+护士为主，药师/治疗师视条件配置</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cochrane 系统评价（2024）的结论是：对于特定老年人群，提供避免入院的居家医疗服务（HaH）可以作为住院的有效替代方案，对死亡率影响不大，但可提高满意度、降低入住养老院概率、降低成本 [T2-机构]。这一结论尚未在中国政策语境中得到体现——中国现有制度设计没有将&rdquo;避免入院&rdquo;作为家庭病床的核心功能定位。</p>
+<hr />
+<h2 id="hah_4">八、中国 HaH 发展前景预判</h2>
+<h3 id="81">8.1 有利因素</h3>
+<ul>
+<li>🔼 老龄化加速（60 岁以上 3.1 亿人，占比 22%）催生巨大居家医疗需求</li>
+<li>🔼 国家层面政策推进加速（2026 年密集出台家庭病床相关标准）</li>
+<li>🔼 互联网医院基础设施已形成规模</li>
+<li>🔼 5G/物联网技术能力全球领先（华为智慧病房等）</li>
+<li>🔼 深圳、上海已证明家庭病床的医保支付可行性</li>
+</ul>
+<h3 id="82">8.2 制约因素</h3>
+<ul>
+<li>🔽 基层医疗服务能力不足（全科医生、护士缺口大）</li>
+<li>🔽 缺乏急性 HaH 的制度设计和法律法规</li>
+<li>🔽 医疗责任险、风险分担机制不健全</li>
+<li>🔽 远程监测设备、移动诊断设备普及率低</li>
+<li>🔽 跨机构数据互认水平低</li>
+</ul>
+<h3 id="83">8.3 可能的演进路径</h3>
+<pre><code>阶段一（当前 → 2027）：家庭病床规范化推广
+  └─ 全国统一标准落地，服务覆盖面扩大
+  └─ 部分城市试点&quot;智慧家庭病床&quot;
+
+阶段二（2027 → 2030）：向亚急性过渡
+  └─ 深圳/上海/北京率先试点&quot;居家住院替代&quot;服务
+  └─ 扩展至轻症急性病种（如尿路感染、轻度肺炎）
+
+阶段三（2030+）：急性 HaH 制度化
+  └─ 中国版 HaH 服务指南出台
+  └─ 纳入医保住院支付体系
+</code></pre>
+<hr />
+<h2 id="_4">九、关键信源清单</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">信源层级</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">[T1-政府]</td>
+<td style="text-align: left;">国家卫健委《家庭病床服务指南（试行）》（2026.05）</td>
+<td style="text-align: left;">首个全国统一的家庭病床服务标准</td>
+</tr>
+<tr>
+<td style="text-align: left;">[T1-政府]</td>
+<td style="text-align: left;">国家医保局等三部委《关于医保支持基层医疗卫生服务发展的指导意见》（2026.03）</td>
+<td style="text-align: left;">家庭病床医保支付规则</td>
+</tr>
+<tr>
+<td style="text-align: left;">[T1-政府]</td>
+<td style="text-align: left;">国家卫健委《&rdquo;互联网+护理服务&rdquo;试点工作方案》（2019）</td>
+<td style="text-align: left;">网约护士制度起点</td>
+</tr>
+<tr>
+<td style="text-align: left;">[T1-政府]</td>
+<td style="text-align: left;">深圳市卫健委《深圳市家庭病床管理办法》</td>
+<td style="text-align: left;">深圳 16 类服务对象</td>
+</tr>
+<tr>
+<td style="text-align: left;">[T1-政府]</td>
+<td style="text-align: left;">上海市卫健委《上海市家庭病床服务工作规范》（2025 版）</td>
+<td style="text-align: left;">上海 9 类服务</td>
+</tr>
+<tr>
+<td style="text-align: left;">[T2-机构]</td>
+<td style="text-align: left;">Cochrane 系统评价：Admission avoidance hospital at home（2024）</td>
+<td style="text-align: left;">HaH 国际证据</td>
+</tr>
+<tr>
+<td style="text-align: left;">[T2-机构]</td>
+<td style="text-align: left;">JMIR: Smart Home Ward–Based Hospital-at-Home Care in China（2024）</td>
+<td style="text-align: left;">广东省二医 5G 智慧病房学术发表</td>
+</tr>
+<tr>
+<td style="text-align: left;">[T3-媒体]</td>
+<td style="text-align: left;">健康报/财新网/央广网等</td>
+<td style="text-align: left;">实践案例详情</td>
+</tr>
+<tr>
+<td style="text-align: left;">[T3-媒体]</td>
+<td style="text-align: left;">京东健康/微医公开资料</td>
+<td style="text-align: left;">企业服务数据</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_5">十、后续调研建议</h2>
+<ol>
+<li><strong>深圳家庭病床深度调研</strong>：访谈深圳卫健委/社康中心，获取 16 类病种的完整清单、服务量、效果数据</li>
+<li><strong>上海&rdquo;五床联动&rdquo;机制研究</strong>：以静安区为案例，分析医疗-养老资源衔接模式</li>
+<li><strong>京东健康护士到家用户数据</strong>：获取服务量、复购率、用户画像</li>
+<li><strong>香港-深圳跨境居家医疗可行性评估</strong>：与港大深圳医院、香港医管局访谈</li>
+<li><strong>中国 HaH 政策推进路径研究</strong>：访谈国家卫健委老龄健康司/基层司</li>
+</ol>
+<hr />
+<blockquote>
+<p><strong>调研方法论</strong>：本报告遵循 Kate 非英语权威数据源调研方法论——Tavily 主搜索 + Bocha 博查中文权威源搜索并行执行，信源按四层体系标注 [T1 政府 → T2 机构 → T3 媒体 → T4 禁用]。搜索关键词覆盖中国家庭病床、互联网+护理、微医居家医疗、京东护士到家、跨境医疗等 15+ 维度，共计获取有效信息源 40+ 条。  </p>
+<p><strong>局限性声明</strong>：本次为初探扫描，未进行一手访谈，部分企业数据来自公开报道而非经审计披露。微信公众平台内容未能直接导出（需扫码登录），政府 .gov.cn 页面因安全策略未能直接 web_extract，以搜索引擎摘要和间接来源替代。  </p>
+<p><strong>数据缺失</strong>：深圳 16 类病种完整清单、京东健康护士到家服务量、各地家庭病床服务量全国汇总数据。  </p>
+</blockquote>
+<hr />
+<p><em>报告完成日期：2026 年 7 月 3 日</em><br />
+<em>署名：Kenneth Ye</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

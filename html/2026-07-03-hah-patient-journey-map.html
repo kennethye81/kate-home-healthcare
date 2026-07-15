@@ -1,0 +1,1484 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HaH 患者旅程端到端映射报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">HaH 患者旅程端到端映射报告</a><ul>
+<li><a href="#_1">一、执行摘要</a></li>
+<li><a href="#_2">二、方法论与数据来源</a><ul>
+<li><a href="#21">2.1 数据来源</a></li>
+<li><a href="#22">2.2 合成方法</a></li>
+<li><a href="#23">2.3 关键假设</a></li>
+</ul>
+</li>
+<li><a href="#_3">三、全时间轴旅程映射</a><ul>
+<li><a href="#31-phase-0-day-1">3.1 Phase 0: 急诊识别与评估（Day -1）</a></li>
+<li><a href="#32-phase-1-day-0">3.2 Phase 1: 入院评估与激活（Day 0）</a></li>
+<li><a href="#33-phase-2-day-1-3">3.3 Phase 2: 急性期管理（Day 1-3）</a></li>
+<li><a href="#34-phase-3-day-4-7">3.4 Phase 3: 稳定期与康复管理（Day 4-7）</a></li>
+<li><a href="#35-phase-4-day-7">3.5 Phase 4: 过渡与出院（Day 7+）</a></li>
+<li><a href="#36-phase-5-30day-8-30">3.6 Phase 5: 30天随访与闭环（Day 8-30）</a></li>
+</ul>
+</li>
+<li><a href="#_4">四、三大入口路径对比</a><ul>
+<li><a href="#_5">关键数据</a></li>
+</ul>
+</li>
+<li><a href="#_6">五、照护者/家属并行旅程</a><ul>
+<li><a href="#51">5.1 照护者旅程的五个阶段</a></li>
+<li><a href="#52">5.2 现有项目的家属支持现状</a></li>
+<li><a href="#53">5.3 关键洞察</a></li>
+</ul>
+</li>
+<li><a href="#mot">六、患者体验关键时刻 (MoT)</a><ul>
+<li><a href="#61-mot">6.1 MoT 热力图</a></li>
+<li><a href="#62-mot">6.2 十大 MoT 详细描述</a></li>
+<li><a href="#63-mot">6.3 MoT 的脆弱性</a></li>
+</ul>
+</li>
+<li><a href="#_7">七、转化漏斗：识别→满意度</a><ul>
+<li><a href="#71">7.1 各级转化率与瓶颈分析</a></li>
+<li><a href="#72">7.2 漏斗关键洞察</a></li>
+</ul>
+</li>
+<li><a href="#_8">八、退出路径全景</a><ul>
+<li><a href="#81">8.1 退出路径详情</a></li>
+<li><a href="#82">8.2 升级回院的时机与安全机制</a></li>
+</ul>
+</li>
+<li><a href="#ihomecare">九、对 iHomeCare 患者体验设计的建议</a><ul>
+<li><a href="#91">9.1 十大设计原则</a></li>
+<li><a href="#92">9.2 患者体验设计路线图</a></li>
+<li><a href="#93-kpi">9.3 关键 KPI 建议</a></li>
+</ul>
+</li>
+<li><a href="#_9">十、参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">HaH 患者旅程端到端映射报告</h1>
+<p><strong>调研人：Kenneth Ye</strong>
+<strong>调研日期：2026 年 7 月 3 日</strong>
+<strong>数据来源：MGB Home Hospital、Atrium Health Hospital at Home、DispatchHealth Advanced Care</strong>
+<strong>版本：v1.0</strong></p>
+<hr />
+<h2 id="_1">一、执行摘要</h2>
+<p>本报告基于 MGB Home Hospital（全球最学术化的 HaH 项目）、Atrium Health Hospital at Home（全球最大规模，ADC 80-100）、DispatchHealth Advanced Care（最大独立纯 play 运营商）三者的公开患者旅程数据，合成一个<strong>通用 HaH 患者旅程模型</strong>。</p>
+<p><strong>核心发现：</strong></p>
+<ol>
+<li><strong>HaH 患者旅程与传统住院截然不同</strong>——从&rdquo;被动接受院内标准化流程&rdquo;变为&rdquo;主动参与居家个性化治疗&rdquo;。这种范式转换既是最大优势（满意度 93-98 NPS），也是最大挑战（患者/家属需承担更多自我管理责任）。</li>
+<li><strong>转化漏斗最窄点在&rdquo;筛选→同意&rdquo;阶段</strong>——临床筛选标准（O2≤4L、生命体征稳定、无72h内高级诊疗需求）叠加患者意愿，使许多潜在候选者未能入组。Atrium 经验显示 ED 直接入组占 40%，住院转 HaH 占 60%。</li>
+<li><strong>退出路径的临床安全性是关键信任基础</strong>——MGB 0 意外死亡、DispatchHealth 0 严重安全事件，证明 HaH 即使在需要升级回院时也是安全的。</li>
+<li><strong>照护者/家属的&rdquo;隐形负担&rdquo;是最大盲区</strong>——现有 HaH 项目的家属支持系统性设计不足。法国 HAD 研究显示家属角色多变，从日常协助到医疗决策参与，但缺乏结构化支持。</li>
+<li><strong>对 iHomeCare 的核心启示</strong>：患者体验 = 临床安全 × 技术便利 × 人文温度。三个维度缺一不可。</li>
+</ol>
+<hr />
+<h2 id="_2">二、方法论与数据来源</h2>
+<h3 id="21">2.1 数据来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源机构</th>
+<th style="text-align: left;">类型</th>
+<th style="text-align: center;">ADC</th>
+<th style="text-align: left;">关键数据点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MGB Home Hospital</strong></td>
+<td style="text-align: left;">学术医疗系统自营</td>
+<td style="text-align: center;">25-33</td>
+<td style="text-align: left;">RCT 证据、0 意外死亡、7% vs 23% 再入院率、Continuing Care 同团队模式</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Atrium Health HaH</strong></td>
+<td style="text-align: left;">大型医疗系统自营</td>
+<td style="text-align: center;">80-100</td>
+<td style="text-align: left;">月均患者 154→379 增长、儿科 HaH、Payer-agnostic、C-suite &ldquo;ALL IN&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DispatchHealth Advanced Care</strong></td>
+<td style="text-align: left;">独立纯 play 运营商</td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: left;">93 NPS、98% 满意度、58% ER 替代、0 安全事件、$5K-7K/例节省</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="22">2.2 合成方法</h3>
+<p>对三家机构的患者旅程进行横向对比，提取共性阶段和差异化特征。共性的归入&rdquo;通用模型&rdquo;，差异化的在具体阶段标注来源。此方法遵循 Kate 调研方法论中的多源交叉验证原则。</p>
+<h3 id="23">2.3 关键假设</h3>
+<ul>
+<li>所有定量数据以公开来源为准；未公开数据标注「不可得」</li>
+<li>通用模型中的时间轴基于急性内科 HaH 典型病程（2-7天）</li>
+<li>儿科 HaH（仅 Atrium 覆盖）在通用模型中不详细展开</li>
+</ul>
+<hr />
+<h2 id="_3">三、全时间轴旅程映射</h2>
+<pre><code>┌──────────────────────────────────────────────────────────────────────────┐
+│                    HaH 患者旅程 全时间轴总览                               │
+│                                                                          │
+│  Day -1          Day 0        Day 1-3       Day 4-7       Day 7+   Day30│
+│  ────────       ────────     ─────────     ─────────     ───────  ──────│
+│  │ 急诊识别 │ → │入院评估│ → │ 急性期  │ → │ 稳定期  │ → │过渡出院│→│随访 │
+│  │  ED评估  │   │ 筛选   │   │ 密集治疗 │   │ 康复管理 │   │ 转社区 │  │评估 │
+│  │ 转诊决策 │   │ 激活   │   │ 24/7监控 │   │ 减频上门 │   │ 设备回收│  │闭环 │
+│  └──────────┘   └────────┘   └──────────┘   └──────────┘   └────────┘  └─────┘
+│                                                                          │
+│  情感曲线: 焦虑────→ 不安────→ 适应──────→ 信心增长──→ 不舍/解脱──→ 满意  │
+│                (峰值焦虑)   (最大不确定性) (转折点)                        │
+└──────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="31-phase-0-day-1">3.1 Phase 0: 急诊识别与评估（Day -1）</h3>
+<p><strong>触发场景：患者到达医院 ED 或因急性症状就诊于住院部。</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">MGB Home Hospital</th>
+<th style="text-align: left;">Atrium Health HaH</th>
+<th style="text-align: left;">DispatchHealth</th>
+<th style="text-align: left;">通用模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>临床行动</strong></td>
+<td style="text-align: left;">ED 医生接诊，进行初步诊断和稳定治疗</td>
+<td style="text-align: left;">同左——标准 ED 路径</td>
+<td style="text-align: left;">⚡ 差异：患者可自行拨打热线/App请求上门（无需先到 ED）</td>
+<td style="text-align: left;">ED 医生接诊 → 初步诊断 + 稳定治疗</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>决策点</strong></td>
+<td style="text-align: left;">🔑 ED 医生判断是否需要住院 → 若需住院，评估 HaH 适宜性</td>
+<td style="text-align: left;">🔑 同左 + 住院部也可转诊 HaH</td>
+<td style="text-align: left;">🔑 远程评估（热线/App）→ 判断是否属于95% ER诊断范围</td>
+<td style="text-align: left;"><strong>是否需住院？若需住院，是否适合 HaH？</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>筛选标准</strong></td>
+<td style="text-align: left;">「未完整公开」推测与同行一致</td>
+<td style="text-align: left;">明确标准：O2≤4L、RR&lt;24、SBP&gt;90、SpO2&gt;92、72h内无高级诊疗需求</td>
+<td style="text-align: left;">病情属95% ER诊断 + 居家环境安全</td>
+<td style="text-align: left;">O2≤4L + 生命体征稳定 + 72h无高级需求 + 居家安全</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人员接触点</strong></td>
+<td style="text-align: left;">ED 医生、护士、Case Manager</td>
+<td style="text-align: left;">ED 医生、HaH 协调员</td>
+<td style="text-align: left;">DispatchHealth 临床团队（远程）</td>
+<td style="text-align: left;">ED 医生 → HaH 评估协调员</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术接触点</strong></td>
+<td style="text-align: left;">EHR 系统内 HaH 筛选工具</td>
+<td style="text-align: left;">EHR 筛选 + HaH 团队通知</td>
+<td style="text-align: left;">DispatchHealth App/热线 + 保险验证系统</td>
+<td style="text-align: left;">EHR 筛选 + 保险验证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据采集</strong></td>
+<td style="text-align: left;">生命体征、病史、诊断、保险信息</td>
+<td style="text-align: left;">同左 + SDOH 初步筛查</td>
+<td style="text-align: left;">自述症状 + 保险覆盖 + 地理范围</td>
+<td style="text-align: left;">生命体征 + 病史 + 保险 + 地理 + SDOH</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>痛点</strong></td>
+<td style="text-align: left;">⚠️ ED 医生可能不了解 HaH 或不愿转诊（&rdquo;试点心态&rdquo;风险）</td>
+<td style="text-align: left;">⚠️ ED 高负荷下 HaH 筛选可能被忽略</td>
+<td style="text-align: left;">⚠️ 患者需主动联系——认知度是关键瓶颈</td>
+<td style="text-align: left;"><strong>ED 医生的 HaH 意识和信任度是最大变量</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>Atrium 关键经验</strong>：C-suite &ldquo;ALL IN&rdquo; 心态是解决 Phase 0 瓶颈的前提——&ldquo;试点心态必死&rdquo;（HFMA NC 2024）。</p>
+</blockquote>
+<hr />
+<h3 id="32-phase-1-day-0">3.2 Phase 1: 入院评估与激活（Day 0）</h3>
+<p><strong>这是患者从&rdquo;传统住院路径&rdquo;切换到&rdquo;居家治疗路径&rdquo;的临界点——也是整个旅程中不确定性最高的阶段。</strong></p>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                      Day 0: 入院评估与激活                         │
+│                                                                  │
+│  ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐   │
+│  │ 正式筛选  │ → │ 知情同意  │ → │ 设备部署  │ → │ 首次上门  │   │
+│  │ HaH评估  │    │ 患者签字  │    │ RPM+平板  │    │ RN/急救员 │   │
+│  └──────────┘    └──────────┘    └──────────┘    └──────────┘   │
+│                                                                  │
+│  患者情感:  &quot;我真的可以在家治吗？&quot; ──→ &quot;这些设备怎么用？&quot;           │
+│             (犹豫、不安全感)           (技术焦虑)                   │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>临床行动</strong></td>
+<td style="text-align: left;">① HaH 临床团队最终评估筛选标准 → ② 主治医师与患者/家属沟通 HaH 方案 → ③ 获取知情同意并签署文件 → ④ 开具居家治疗医嘱（IV/O2/药物/PT/OT等）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>决策点</strong></td>
+<td style="text-align: left;">🔑 <strong>患者同意/拒绝</strong>——这是整个漏斗中最重要的单一决策点。影响因素：对HaH安全性的信任度、家属支持意愿、居家环境适宜性、数字素养</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术接触点</strong></td>
+<td style="text-align: left;">RPM设备配送（Current Health可穿戴臂带 / Medically Home 平板 + 第三方血压/血氧/体温）+ 双向音视频设备安装 + 指挥中心连接测试</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人员接触点</strong></td>
+<td style="text-align: left;">HaH协调员、主治医师、设备技术人员（Cardinal Velocare/MH物流）、首次上门RN/社区急救员</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>设备部署</strong></td>
+<td style="text-align: left;">Atrium: 平板 + RPM设备 + 双向视频；MGB: Current Health 臂带 + Cardinal配送；DispatchHealth: Medically Home平台设备 + 随车移动影像/实验室</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据采集</strong></td>
+<td style="text-align: left;">基线生命体征、完整用药清单、SDOH评估（家庭环境/照护者可用性/电话/紧急联系人）、数字素养评估</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>痛点</strong></td>
+<td style="text-align: left;">⚠️ <strong>设备安装焦虑</strong>——老年患者对技术设备不熟悉（MGB 研究特别关注老年队列） ⚠️ <strong>&ldquo;我被抛弃了吗？&rdquo;</strong>——部分患者感觉被医院&rdquo;赶回家&rdquo; ⚠️ <strong>家属的顾虑</strong>——&ldquo;如果半夜出事怎么办？&rdquo;</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>MGB 差异化</strong>：Home Hospital Continuing Care 由同一团队提供，消除转诊断点。</p>
+</blockquote>
+<hr />
+<h3 id="33-phase-2-day-1-3">3.3 Phase 2: 急性期管理（Day 1-3）</h3>
+<p><strong>HaH 的核心治疗阶段——临床密集度最高、技术监控最紧密、患者/家属心理适应期。</strong></p>
+<pre><code>┌─────────────────────────────────────────────────────────────────────┐
+│                    Day 1-3: 急性期日常节奏                              │
+│                                                                      │
+│  08:00  RN/社区急救员首次上门（生命体征 + 用药 + 评估）                  │
+│  10:00  MD 虚拟查房（视频）——&quot;医生今天怎么样？&quot;                         │
+│  12:00  IV/呼吸治疗/实验室（按需）                                     │
+│  14:00  RN/急救员第二次上门（如需）                                    │
+│  全天   24/7 指挥中心持续远程监控 + RPM 实时数据传输                     │
+│  全天   一键连接指挥中心按钮（患者平板/设备）                            │
+│                                                                      │
+│  患者情感:  担忧 → 适应 → &quot;原来真的可以&quot;（转折点通常在 Day 2-3）         │
+└─────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Atrium Health HaH</th>
+<th style="text-align: left;">DispatchHealth</th>
+<th style="text-align: left;">MGB Home Hospital</th>
+<th style="text-align: left;">通用模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>临床行动</strong></td>
+<td style="text-align: left;">每日2次上门（社区急救员/RN）+ MD每日虚拟查房 + IV/O2/呼吸治疗/EKG/实验室</td>
+<td style="text-align: left;">RN按需上门（频次基于病情）+ Hospitalist远程查房 + 移动影像/实验室 + PT/OT</td>
+<td style="text-align: left;">MD 虚拟查房 + 上门RN（MGB自雇）+ IV/O2/影像/实验室/PT/OT/社工/餐饮</td>
+<td style="text-align: left;"><strong>每日1-2次上门 + 每日MD虚拟查房 + 按需IV/实验室/影像/治疗</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人员接触点</strong></td>
+<td style="text-align: left;">社区急救员（Paramedic）+ RN + MD（虚拟）</td>
+<td style="text-align: left;">医师/PA/NP + RN + 技术员</td>
+<td style="text-align: left;">MGB 自雇医师/RN/NP/PA</td>
+<td style="text-align: left;">RN/急救员（上门）+ MD/NP/PA（虚拟）+ 指挥中心RN（远程）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术接触点</strong></td>
+<td style="text-align: left;">RPM设备 + 双向视频平板 + 24/7指挥中心监控</td>
+<td style="text-align: left;">Medically Home 平台 + 指挥中心 + 个性化报警阈值</td>
+<td style="text-align: left;">Current Health 可穿戴 + Clinician Dashboard + AI 预警</td>
+<td style="text-align: left;">RPM设备 + 视频平台 + 指挥中心</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据采集</strong></td>
+<td style="text-align: left;">每次上门：生命体征 + 症状评估 + 用药依从性；持续：RPM实时数据流</td>
+<td style="text-align: left;">每次上门：生命体征 + 体格检查 + POCT实验室；持续：远程监控</td>
+<td style="text-align: left;">Current Health 连续监测（HR/SpO2/活动/睡眠）+ 上门评估</td>
+<td style="text-align: left;"><strong>离散（上门采集）+ 连续（RPM流）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>决策点</strong></td>
+<td style="text-align: left;">🔑 <strong>继续居家 vs 升级回院</strong>——每日MD查房评估。触发升级条件：生命体征恶化、需高级影像/手术/ICU、患者/家属要求</td>
+<td style="text-align: left;">同左 + 个性化报警阈值自动触发升级评估</td>
+<td style="text-align: left;">同左 + AI 预警辅助决策（Current Health 算法）</td>
+<td style="text-align: left;">🔑 <strong>每日&rdquo;居家继续 vs 升级&rdquo;决策</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>痛点</strong></td>
+<td style="text-align: left;">⚠️ 社区急救员 vs RN 的临床判断差异 ⚠️ 设备连接问题（WiFi/蓝牙）</td>
+<td style="text-align: left;">⚠️ 影像能力出售后依赖第三方 ⚠️ 整合阵痛期（DispatchHealth+MH平台）</td>
+<td style="text-align: left;">⚠️ 设备佩戴舒适度（可穿戴臂带） ⚠️ 假警报导致不必要焦虑</td>
+<td style="text-align: left;"><strong>设备可靠性 + 升级路径清晰度 + 人力配置适当性</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>Atrium 人力模型创新</strong>：用社区急救员（Paramedic）替代部分 RN 上门，降低成本的同时不牺牲质量。对 iHomeCare 的人力配置有直接参考意义。</p>
+</blockquote>
+<hr />
+<h3 id="34-phase-3-day-4-7">3.4 Phase 3: 稳定期与康复管理（Day 4-7）</h3>
+<p><strong>临床密集度下降，患者从&rdquo;被治疗者&rdquo;转向&rdquo;主动康复者&rdquo;。</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>临床行动</strong></td>
+<td style="text-align: left;">上门频次降低（如从 2次/日→1次/日→隔日）；IV 逐渐停用转口服药物；PT/OT 康复治疗；营养/社工服务（MGB特色）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>人员接触点</strong></td>
+<td style="text-align: left;">RN/急救员（减频上门）+ MD（虚拟查房频率可能降至隔日）+ PT/OT/社工（按需）+ 指挥中心（持续）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术接触点</strong></td>
+<td style="text-align: left;">RPM 持续监测（报警阈值可能放宽）；视频查房；患者 App 自我报告症状</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据采集</strong></td>
+<td style="text-align: left;">康复指标（活动量/饮食/疼痛评分/功能恢复）+ 用药调整 + SDOH 深度跟进</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>决策点</strong></td>
+<td style="text-align: left;">🔑 <strong>出院时机判断</strong>——临床稳定 + 达到康复里程碑 → 准备出院计划</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>痛点</strong></td>
+<td style="text-align: left;">⚠️ <strong>&ldquo;我还好吗？&rdquo;</strong>——监控减频可能引发患者不安 ⚠️ <strong>家属疲劳</strong>——多日照护可能导致照护者倦怠 ⚠️ <strong>用药过渡</strong>——IV→口服转换可能出错</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>MGB 亮点</strong>：此阶段社工+餐饮服务介入，将 HaH 从纯医疗扩展为&rdquo;医疗+社会支持&rdquo;。DispatchHealth 32% 病例处理了SDOH（社会健康决定因素），说明社会因素在此阶段尤为关键。</p>
+</blockquote>
+<hr />
+<h3 id="35-phase-4-day-7">3.5 Phase 4: 过渡与出院（Day 7+）</h3>
+<p><strong>从 HaH 急性治疗&rdquo;毕业&rdquo;，进入社区/术后护理体系。</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">MGB</th>
+<th style="text-align: left;">Atrium</th>
+<th style="text-align: left;">DispatchHealth</th>
+<th style="text-align: left;">通用模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>出院标准</strong></td>
+<td style="text-align: left;">临床稳定 + 自主活动能力恢复</td>
+<td style="text-align: left;">临床稳定（同入院标准反向验证）</td>
+<td style="text-align: left;">临床稳定 + 治疗方案完成</td>
+<td style="text-align: left;">临床稳定 + 功能恢复</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>出院动作</strong></td>
+<td style="text-align: left;">出院总结 → 转 <strong>Home Hospital Continuing Care</strong>（同一团队！）</td>
+<td style="text-align: left;">设备回收 → 转 PCP / 必要时转 Atrium Continued Health</td>
+<td style="text-align: left;">设备回收 → 转 DispatchHealth Transitional Care（高风险患者）/ PCP / Home Health Agency</td>
+<td style="text-align: left;"><strong>设备回收 + 出院总结 + 转后续照护</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>核心差异化</strong></td>
+<td style="text-align: left;">🟢 <strong>同一团队负责急性期+出院后延续</strong>——消除转诊断点</td>
+<td style="text-align: left;">转 Atrium Continued Health（Advanced Care / Palliative Care）</td>
+<td style="text-align: left;">🟢 <strong>自有三层连续服务</strong>（ER替代→住院替代→过渡护理）</td>
+<td style="text-align: left;">出院后的衔接质量 = 防止再入院的关键</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者体验</strong></td>
+<td style="text-align: left;">&ldquo;还是同一个医生/护士，我放心&rdquo;</td>
+<td style="text-align: left;">&ldquo;转到另一个团队了…要重新适应&rdquo;</td>
+<td style="text-align: left;">&ldquo;他们还管我，太好了&rdquo;（过渡护理模式下）</td>
+<td style="text-align: left;">转诊衔接的&rdquo;信任连续性&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>痛点</strong></td>
+<td style="text-align: left;">⚠️ 同一团队虽好但可能资源紧张</td>
+<td style="text-align: left;">⚠️ 转诊信息传递可能丢失</td>
+<td style="text-align: left;">⚠️ 整合过渡（收购MH后）</td>
+<td style="text-align: left;"><strong>出院后衔接断裂是30天再入院的主要风险因子</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="36-phase-5-30day-8-30">3.6 Phase 5: 30天随访与闭环（Day 8-30）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>临床行动</strong></td>
+<td style="text-align: left;">PCP 随访（常规）+ HaH 团队随访电话/问卷 + Transitional Care 跟进（如入选）+ 用药依从性检查</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术接触点</strong></td>
+<td style="text-align: left;">电话随访 + 患者满意度问卷（HCAHPS/Press Ganey 类）+ 部分项目可能延长 RPM 监测</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据采集</strong></td>
+<td style="text-align: left;">30天再入院率、患者满意度/NPS、功能恢复评估、用药依从性</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>决策点</strong></td>
+<td style="text-align: left;">🔑 若再入院——分析原因（病情本身 vs 居家环境 vs 系统问题）→ 质量改进循环</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>闭环价值</strong></td>
+<td style="text-align: left;">MGB 7% vs 23% 传统住院再入院率、DispatchHealth 8.5% 再入院率——这些指标反馈到筛选标准和临床路径优化</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_4">四、三大入口路径对比</h2>
+<p>HaH 患者并非只有一种&rdquo;入口&rdquo;。三种主要入口路径在早期阶段存在显著差异。</p>
+<pre><code>                    患者入口路径对比
+
+   路径 A: ED→HaH                路径 B: 住院→HaH            路径 C: 社区→HaH
+   ──────────────               ──────────────              ──────────────
+   患者到ED就诊                  患者已住院治疗中              患者从社区被转诊
+   │                            │                           │
+   ├ 急诊医生初诊                ├ 住院医生评估               ├ PCP/Specialist识别
+   │                            │                           │
+   ├ 判断需住院                  ├ 判断可提前出院             ├ 联系HaH服务商
+   │                            │  转HaH完成治疗             │
+   ├ HaH筛选评估                 │                           ├ 远程/现场评估
+   │                            ├ HaH筛选评估                │
+   ├ 知情同意                   │                           ├ 知情同意
+   │                            ├ 知情同意                   │
+   ├ 设备部署+首次上门           ├ 从医院转运回家             ├ 设备部署+首次上门
+   │                            │  + 设备部署                 │
+   └ 进入Day 1-3急性期          └ 进入Day 1-3急性期          └ 进入Day 1-3急性期
+
+   占比(Atrium): ~40%            占比(Atrium): ~60%           占比: &lt;5%（DispatchHealth特有）
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">对比维度</th>
+<th style="text-align: left;">路径 A: ED→HaH</th>
+<th style="text-align: left;">路径 B: 住院→HaH</th>
+<th style="text-align: left;">路径 C: 社区转诊→HaH</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>适用场景</strong></td>
+<td style="text-align: left;">患者刚到ED，决定不住院直接回家治疗</td>
+<td style="text-align: left;">患者已住院1-2天，病情稳定可提前出院完成疗程</td>
+<td style="text-align: left;">社区PCP/Specialist/健康计划Case Manager识别患者需要住院级治疗</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要机构</strong></td>
+<td style="text-align: left;">Atrium (~40%), MGB</td>
+<td style="text-align: left;">Atrium (~60%), MGB</td>
+<td style="text-align: left;">DispatchHealth (核心模式)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>优势</strong></td>
+<td style="text-align: left;">✅ 完全避免住院（最高价值） ✅ 患者从未体验&rdquo;病床&rdquo;，无对比落差</td>
+<td style="text-align: left;">✅ 患者已稳定——风险更低 ✅ 医生有更多时间评估 ✅ 缩短住院日——释放床位</td>
+<td style="text-align: left;">✅ 最便捷——患者无需出门 ✅ 扩大HaH可及性（不止ED/住院）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>劣势</strong></td>
+<td style="text-align: left;">❌ ED环境下的快速决策压力大 ❌ 患者/家属来不及充分了解HaH</td>
+<td style="text-align: left;">❌ &ldquo;既然已住了两天，不如住完&rdquo;的心理惯性 ❌ 转运物流成本</td>
+<td style="text-align: left;">❌ 严重依赖社区医生的HaH认知 ❌ 没有ED/住院的&rdquo;筛选前&rdquo;评估 ❌ 误判风险更高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>核心决策挑战</strong></td>
+<td style="text-align: left;">&ldquo;在30分钟ED评估内，说服患者/家属信任一个全新模式&rdquo;</td>
+<td style="text-align: left;">&ldquo;证明提前出院+转HaH比继续住院更好&rdquo;</td>
+<td style="text-align: left;">&ldquo;谁来判断这真的比去医院安全？&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>患者情感</strong></td>
+<td style="text-align: left;">焦虑峰值最高——&ldquo;我不去病房？回家行吗？&rdquo;</td>
+<td style="text-align: left;">惊喜/疑虑混合——&ldquo;我可以提前回家了？&rdquo;</td>
+<td style="text-align: left;">便利感强，但也有&rdquo;他们真的能处理吗？&rdquo;的担忧</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>对 iHomeCare 的启示</strong></td>
+<td style="text-align: left;">需要简化的决策辅助工具（可视化对比&rdquo;医院 vs 居家&rdquo;）</td>
+<td style="text-align: left;">需要床位管理团队（自动识别可转HaH的住院患者）</td>
+<td style="text-align: left;">需要社区医生教育+标准化转诊协议</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_5">关键数据</h3>
+<ul>
+<li><strong>Atrium</strong>：ED 直接入组 ~40%，住院转 HaH ~60%。说明大多数 HaH 患者是先住院再转——这可能是更安全的路径，但也意味着&rdquo;完全避免住院&rdquo;的比例还有提升空间。</li>
+<li><strong>DispatchHealth</strong>：58% ER 替代率（即原本要去ER的患者58%完全避免了ER）。证明社区入口的高价值潜力。</li>
+<li><strong>MGB</strong>：目标将 10% 内科患者转移至 HaH——说明即使在成熟项目中，大部分合格患者仍未进入 HaH 路径。</li>
+</ul>
+<hr />
+<h2 id="_6">五、照护者/家属并行旅程</h2>
+<p><strong>照护者的旅程是 HaH 设计中最常被忽视的维度。</strong> 现有项目（MGB/Atrium/DispatchHealth）的公开数据中，针对家属/照护者的系统性设计极少——这本身就是一个重要发现。</p>
+<pre><code>         患者旅程与照护者旅程并行映射
+
+  患者:    Day-1  ED识别  │ Day0 入院激活 │ Day1-3 急性期 │ Day4-7 稳定  │ Day7+ 出院 │ Day30 随访
+          ───────→────────┼──────→────────┼──────→────────┼──────→───────┼─────→──────┼─────→─────
+
+  照护者:  接到电话：      │ 签署同意书？    │ 日常协助：      │ &quot;我还能撑多久？&quot;│ &quot;终于结束了&quot;│ &quot;他/她还好吗？&quot;
+          &quot;你家人要住院…   │ &quot;我能胜任吗？&quot;  │ 用药提醒         │ 照护者倦怠风险  │ 回归正常    │ 隐性焦虑
+           或者可以回家？&quot; │ 接受设备培训    │ 配合上门团队     │ 自己的事被搁置  │ 但身体已透支│ 
+          ───────────────→│───────────────→│───────────────→│───────────────→│───────────→│─────────→
+
+  照护者   震惊/担忧       │ 责任焦虑        │ 适应/压力上升   │ 疲惫/信心波动   │ 解脱/满足   │ 回顾/满足
+  情感:    &quot;真的可以吗？&quot;  │ &quot;这比我想的难&quot;  │ &quot;我成了护士？&quot; │ &quot;快结束了…吧？&quot;│ &quot;值得！&quot;    │ NPS打分
+</code></pre>
+<h3 id="51">5.1 照护者旅程的五个阶段</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">照护者任务</th>
+<th style="text-align: left;">情感状态</th>
+<th style="text-align: left;">风险点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Day -1: 被告知</strong></td>
+<td style="text-align: left;">接收信息——家人需要住院级治疗，但可以选择居家。通常是被动接收者。</td>
+<td style="text-align: left;">震惊、担忧、信息过载</td>
+<td style="text-align: left;">❌ 被排除在决策过程之外 ❌ 无法充分理解 HaH 的含义</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Day 0: 承诺</strong></td>
+<td style="text-align: left;">签字同意（有时需要家属签字）、接受设备培训、准备居家环境、请假/调整工作</td>
+<td style="text-align: left;">责任感 + 焦虑——&ldquo;我能胜任吗？&rdquo;</td>
+<td style="text-align: left;">❌ 未充分评估照护者能力 ❌ 照护者仓促承诺但后期无法持续</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Day 1-3: 承担</strong></td>
+<td style="text-align: left;">协助用药管理、配合上门团队、监测患者状况、与指挥中心沟通、处理紧急情况</td>
+<td style="text-align: left;">压力快速上升——&ldquo;我成了24/7护士&rdquo;</td>
+<td style="text-align: left;">❌ 照护者角色不清（护士？家人？管理员？） ❌ 自身体力/情绪透支被忽视</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Day 4-7: 疲惫</strong></td>
+<td style="text-align: left;">持续照护 + 自身的正常生活（工作/家庭）被搁置</td>
+<td style="text-align: left;">疲惫 + 信心波动——&ldquo;我还能撑多久？&rdquo;</td>
+<td style="text-align: left;">❌ 照护者倦怠是最常见的隐性退出原因 ❌ 可能影响患者康复（照护质量下降）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Day 7+: 回顾</strong></td>
+<td style="text-align: left;">恢复日常生活，反思经历</td>
+<td style="text-align: left;">解脱 + 满足/后悔——&ldquo;值得，但太累了&rdquo;</td>
+<td style="text-align: left;">❌ 无系统的照护者 debrief/支持 ❌ 长期心理影响未被关注</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52">5.2 现有项目的家属支持现状</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">机构</th>
+<th style="text-align: left;">家属支持设计</th>
+<th style="text-align: left;">评价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MGB</strong></td>
+<td style="text-align: left;">「不可得」是否系统化——已知有社工/餐饮服务，但具体面向家属的支持未公开</td>
+<td style="text-align: left;">⚠️ 可能部分覆盖但未系统化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Atrium</strong></td>
+<td style="text-align: left;">SDOH 筛查含&rdquo;家庭支持可用性&rdquo;——入组标准要求&rdquo;有能力配合或有居家支持&rdquo;</td>
+<td style="text-align: left;">⚠️ 将家属作为&rdquo;入组条件&rdquo;而非&rdquo;服务对象&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DispatchHealth</strong></td>
+<td style="text-align: left;">32% 病例处理 SDOH——可能间接覆盖家属需求</td>
+<td style="text-align: left;">⚠️ 以患者为中心的 SDOH 而非以家属为中心</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>法国 HAD 研究</strong></td>
+<td style="text-align: left;">照护者角色多变（日常助理→医疗决策参与→情感支持），存在&rdquo;隐性痛苦&rdquo;</td>
+<td style="text-align: left;">🔴 系统性缺失是全球普遍问题</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="53">5.3 关键洞察</h3>
+<blockquote>
+<p><strong>&ldquo;家属不是资源——家属也是用户。&rdquo;</strong> </p>
+<p>现有 HaH 项目将家属视为&rdquo;入组条件&rdquo;（有家属支持才能入组），但极少将家属视为独立的服务对象。照护者在 HaH 中承担的临床协助责任可能超过他们的能力或意愿——这是导致患者升级回院或退出 HaH 的隐性驱动因素。</p>
+</blockquote>
+<hr />
+<h2 id="mot">六、患者体验关键时刻 (MoT)</h2>
+<p><strong>MoT（Moments of Truth）是决定患者对 HaH 整体评价的关键瞬间。</strong> 基于三家机构的 NPS/满意度数据，识别出以下 10 个关键时刻。</p>
+<h3 id="61-mot">6.1 MoT 热力图</h3>
+<pre><code>情感强度
+  ▲
+  │  MoT-1 ●                         MoT-8 ●
+  │  &quot;我能在家治？&quot;                    &quot;我真不想他们走&quot;
+  │                                  MoT-5 ●
+  │  MoT-2 ●       MoT-4 ●          &quot;第一次睡好觉&quot;
+  │  &quot;他们真来了&quot;    &quot;医生在屏幕上！&quot;
+  │                                  MoT-7 ●
+  │              MoT-3 ●            &quot;我可以自己走了&quot;
+  │              &quot;这按钮是啥？&quot;
+  │                                        MoT-9 ●   MoT-10 ●
+  │  MoT-6 ●                              &quot;谢谢你们&quot;  &quot;我会推荐&quot;
+  │  &quot;我不用去ER了&quot;
+  │
+  └──────────────────────────────────────────────────────────→ 时间
+   Day-1      Day0      Day1        Day2-3      Day4-7     Day7+   Day30
+</code></pre>
+<h3 id="62-mot">6.2 十大 MoT 详细描述</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">MoT 名称</th>
+<th style="text-align: center;">发生时间</th>
+<th style="text-align: center;">情感</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">设计意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>MoT-1</strong></td>
+<td style="text-align: left;"><strong>&ldquo;我能在家治疗？&rdquo;</strong></td>
+<td style="text-align: center;">Day -1</td>
+<td style="text-align: center;">😨→🤔</td>
+<td style="text-align: left;">首次听说 HaH 选项的时刻。ED医生或协调员提出&rdquo;你可以选择在家治疗&rdquo;。</td>
+<td style="text-align: left;">🎯 <strong>第一印象窗口</strong>：若团队/工具在此刻无法清晰解释HaH的安全性和流程，患者可能直接拒绝。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>MoT-2</strong></td>
+<td style="text-align: left;"><strong>&ldquo;他们真的来了&rdquo;</strong></td>
+<td style="text-align: center;">Day 0</td>
+<td style="text-align: center;">🤔→😌</td>
+<td style="text-align: left;">首次上门——RN/急救员带着设备出现在家门口。从&rdquo;概念&rdquo;到&rdquo;现实&rdquo;的锚定瞬间。</td>
+<td style="text-align: left;">🎯 <strong>信任锚点</strong>：准时、专业、友好的首次上门比任何宣传都更有说服力。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>MoT-3</strong></td>
+<td style="text-align: left;"><strong>&ldquo;设备恐惧症&rdquo;</strong></td>
+<td style="text-align: center;">Day 0</td>
+<td style="text-align: center;">😰</td>
+<td style="text-align: left;">面对RPM设备（平板/可穿戴/血压计/血氧仪）——老年患者尤其焦虑。</td>
+<td style="text-align: left;">🎯 <strong>技术门槛</strong>：需要&rdquo;陪跑式&rdquo;而非&rdquo;手册式&rdquo;的设备引导。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>MoT-4</strong></td>
+<td style="text-align: left;"><strong>&ldquo;医生在屏幕上！&rdquo;</strong></td>
+<td style="text-align: center;">Day 1</td>
+<td style="text-align: center;">😲→😊</td>
+<td style="text-align: left;">首次MD虚拟查房——患者发现&rdquo;屏幕里的医生跟真的一样&rdquo;。</td>
+<td style="text-align: left;">🎯 <strong>临床权威数字化传递</strong>：虚拟查房的质量直接影响患者对HaH&rdquo;真医疗&rdquo;的认可。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>MoT-5</strong></td>
+<td style="text-align: left;"><strong>&ldquo;第一次睡好觉&rdquo;</strong></td>
+<td style="text-align: center;">Day 1-2 夜</td>
+<td style="text-align: center;">😊→😍</td>
+<td style="text-align: left;">在自己的床上睡觉——没有走廊噪音、没有凌晨抽血、没有室友打鼾。</td>
+<td style="text-align: left;">🎯 <strong>HaH vs 住院的核心差异化优势</strong>——这是满意度中&rdquo;舒适度&rdquo;维度的峰值。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>MoT-6</strong></td>
+<td style="text-align: left;"><strong>&ldquo;我不用去ER了&rdquo;</strong></td>
+<td style="text-align: center;">Day 2-3</td>
+<td style="text-align: center;">😌</td>
+<td style="text-align: left;">出现小问题→一键联系指挥中心→团队快速响应解决→避免了去ER。</td>
+<td style="text-align: left;">🎯 <strong>安全网验证</strong>：证明了HaH的&rdquo;升级保护&rdquo;不是纸上谈兵。DispatchHealth 25% 过渡期升级预防率体现了这一价值。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>MoT-7</strong></td>
+<td style="text-align: left;"><strong>&ldquo;我可以自己走了&rdquo;</strong></td>
+<td style="text-align: center;">Day 4-5</td>
+<td style="text-align: center;">😊→😄</td>
+<td style="text-align: left;">功能恢复的里程碑——从卧床到自主活动。</td>
+<td style="text-align: left;">🎯 <strong>康复实证</strong>：患者亲身感受到好转，比任何临床指标更有说服力。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>MoT-8</strong></td>
+<td style="text-align: left;"><strong>&ldquo;我真不希望他们走&rdquo;</strong></td>
+<td style="text-align: center;">Day 7</td>
+<td style="text-align: center;">😊→😢</td>
+<td style="text-align: left;">出院时对HaH团队的不舍。患者已建立深厚情感连接。</td>
+<td style="text-align: left;">🎯 <strong>情感依恋 = 品牌忠诚</strong>：93-98 的 NPS 根源在此——HaH 重建了医患关系的温度。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>MoT-9</strong></td>
+<td style="text-align: left;"><strong>&ldquo;谢谢你们&rdquo;</strong></td>
+<td style="text-align: center;">Day 7+</td>
+<td style="text-align: center;">😊😊</td>
+<td style="text-align: left;">出院后收到随访电话/问卷时，对 HaH 体验的整体评价。</td>
+<td style="text-align: left;">🎯 <strong>口碑传播窗口</strong>：满意的患者是 HaH 最好的推广者。</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>MoT-10</strong></td>
+<td style="text-align: left;"><strong>&ldquo;我会推荐给朋友&rdquo;</strong></td>
+<td style="text-align: center;">Day 30</td>
+<td style="text-align: center;">😍</td>
+<td style="text-align: left;">NPS 打分时刻——&ldquo;你会推荐 HaH 给亲友吗？&rdquo;</td>
+<td style="text-align: left;">🎯 <strong>NPS 的 MoT</strong>：DispatchHealth 93、DispatchHealth 98%满意度——这个数字的背后是一系列 MoT 的正向积累。</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="63-mot">6.3 MoT 的脆弱性</h3>
+<p>特别是以下 4 个 MoT 若处理不当，会产生<strong>不成比例的负面放大效应</strong>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">脆弱 MoT</th>
+<th style="text-align: left;">失败后果</th>
+<th style="text-align: left;">一次失败的影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MoT-2 首次上门迟到</td>
+<td style="text-align: left;">患者/家属的信任从 Day 0 就被动摇</td>
+<td style="text-align: left;">&ldquo;果然不靠谱&rdquo;——后续很难修复</td>
+</tr>
+<tr>
+<td style="text-align: left;">MoT-3 设备出问题</td>
+<td style="text-align: left;">老年患者可能完全放弃使用</td>
+<td style="text-align: left;">失去远程监控能力→被迫升级回院</td>
+</tr>
+<tr>
+<td style="text-align: left;">MoT-6 求救无响应</td>
+<td style="text-align: left;">患者感受到&rdquo;被抛弃&rdquo;→直接打911</td>
+<td style="text-align: left;">一次严重失败可能导致整个项目被质疑</td>
+</tr>
+<tr>
+<td style="text-align: left;">MoT-4 虚拟查房体验差</td>
+<td style="text-align: left;">患者怀疑&rdquo;医生有没有认真看&rdquo;</td>
+<td style="text-align: left;">动摇对HaH&rdquo;真医疗&rdquo;的信任</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_7">七、转化漏斗：识别→满意度</h2>
+<pre><code>        HaH 患者转化漏斗（基于 Atrium + DispatchHealth + MGB 数据合成）
+
+┌────────────────────────────────────────────────────────────────────┐
+│                                                                     │
+│  1. 识别 (Identify)                                                 │
+│     ├─ 所有到ED/住院的急性患者                                       │
+│     ├─ 临床筛选标准初步匹配                                          │
+│     └─ 漏斗宽度：100%（全部急性入院患者）                              │
+│                         ↓  ~30-50% 筛选通过                          │
+│  2. 筛选 (Screen)                                                   │
+│     ├─ 正式 HaH 适宜性评估                                           │
+│     ├─ O2≤4L, 生命体征稳定, 72h无高级需求, 居家安全, 家属支持         │
+│     └─ 漏斗宽度：~15-30% 通过                                        │
+│                         ↓  ~50-70% 患者同意                          │
+│  3. 同意 (Consent)                                                  │
+│     ├─ 患者/家属知情同意                                             │
+│     ├─ 🔑 最关键漏斗窄点——患者意愿是最不可控变量                      │
+│     └─ 漏斗宽度：~8-20% 同意                                         │
+│                         ↓  ~90%+ 成功入组                            │
+│  4. 入组 (Enroll)                                                   │
+│     ├─ 设备部署 + 首次上门 + 治疗启动                                │
+│     └─ 漏斗宽度：~7-18% 入组                                         │
+│                         ↓  ~85-95% 完成                              │
+│  5. 完成 (Complete)                                                 │
+│     ├─ 完成 HaH 治疗周期 → 临床稳定出院                              │
+│     ├─ MGB 7% 再入院 vs 23% 传统（出院后30天）                       │
+│     ├─ DispatchHealth 8.5% 再入院率                                  │
+│     └─ 漏斗宽度：~6-16% 完成                                         │
+│                         ↓  ~93-98% 满意                              │
+│  6. 满意 (Satisfaction)                                             │
+│     ├─ NPS 93 (DispatchHealth) / 98% 满意度                          │
+│     ├─ MGB 患者满意度 &gt; 传统住院                                     │
+│     └─ 漏斗终值：高满意度但低入组率                                   │
+│                                                                     │
+└────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="71">7.1 各级转化率与瓶颈分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">漏斗层级</th>
+<th style="text-align: center;">转化率（估）</th>
+<th style="text-align: left;">主要瓶颈</th>
+<th style="text-align: left;">提升杠杆</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>识别→筛选</strong></td>
+<td style="text-align: center;">30-50%</td>
+<td style="text-align: left;">临床医生对 HaH 的认知不足；筛选工具未嵌入 EHR 工作流</td>
+<td style="text-align: left;">ED/Hospitalist 教育 + EHR 内嵌 HaH 筛选提示</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>筛选→同意</strong></td>
+<td style="text-align: center;">50-70%</td>
+<td style="text-align: left;">🔴 <strong>患者/家属对 HaH 安全性的信任不足</strong>；&rdquo;在家治病&rdquo;的文化抗拒；数字素养</td>
+<td style="text-align: left;">患者决策辅助工具（可视化对比 &ldquo;医院vs居家&rdquo;）；已出院患者的视频 testimonial；家属咨询支持</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>同意→入组</strong></td>
+<td style="text-align: center;">90%+</td>
+<td style="text-align: left;">设备部署延迟；首次上门安排冲突</td>
+<td style="text-align: left;">物流优化（Cardinal Velocare 模式）；当日设备部署能力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>入组→完成</strong></td>
+<td style="text-align: center;">85-95%</td>
+<td style="text-align: left;">临床恶化需升级回院；患者/家属中途退出；AMA</td>
+<td style="text-align: left;">每日 MD 查房确保&rdquo;继续 vs 升级&rdquo;决策及时；家属支持干预</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>完成→满意</strong></td>
+<td style="text-align: center;">93-98%</td>
+<td style="text-align: left;">几乎无瓶颈——一旦完成，满意度极高</td>
+<td style="text-align: left;">保持——这是 HaH 最不需要担心的环节</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72">7.2 漏斗关键洞察</h3>
+<ol>
+<li><strong>最大瓶颈在&rdquo;同意&rdquo;而非&rdquo;筛选&rdquo;</strong> ——HaH 的临床安全性和满意度已经数据证明，但公众认知远远滞后。MGB 目标将 10% 内科患者转入 HaH（当前远低于此），说明扩大漏斗的关键是<strong>说服患者/家属</strong>，而非放宽临床标准。</li>
+<li><strong>&ldquo;完成→满意&rdquo;的极高转化率是 HaH 最强的武器</strong>——93-98% 满意度意味着一旦患者体验过，他们就是 HaH 最有力的推广者。策略应是&rdquo;让更多人体验第一次&rdquo;。</li>
+<li><strong>DispatchHealth 的社区入口（路径C）绕过了部分漏斗</strong>——患者主动联系而非被动筛选，改变了&rdquo;识别→筛选&rdquo;的动力方向。但代价是误判风险和更高的临床筛选压力。</li>
+</ol>
+<hr />
+<h2 id="_8">八、退出路径全景</h2>
+<p>HaH 住院并非只有&rdquo;完成治疗→出院&rdquo;这一种结局。以下是基于三家机构数据的完整退出路径谱系。</p>
+<pre><code>                    HaH 患者退出路径决策树
+
+                    患者进入 HaH (Day 0)
+                           │
+                           ├──────────────────────────────────────┐
+                           │                                      │
+                    临床持续改善                            临床恶化/无改善
+                           │                                      │
+                           ▼                                      ▼
+              ┌─────────────────────┐              ┌─────────────────────────┐
+              │  路径1: 完成治疗     │              │   升级评估               │
+              │  (85-95% 患者)      │              │   · 生命体征恶化          │
+              │                     │              │   · 需高级影像/手术       │
+              │  → 临床稳定         │              │   · 需ICU级别护理         │
+              │  → 达到出院标准     │              └───────────┬─────────────┘
+              │  → 设备回收         │                          │
+              │  → 转后续照护       │              ┌───────────┴───────────┐
+              └─────────┬───────────┘              │                       │
+                        │                  ┌───────┴───────┐     ┌────────┴────────┐
+                        ▼                  │ 路径2: 升级回院 │     │ 路径3: AMA      │
+              ┌─────────────────┐          │ (&lt;5-15% 患者)  │     │ (主动要求出院)   │
+              │ → PCP 随访       │          │                │     │                 │
+              │ → Continuing Care│          │ → 转运回ED/住院 │     │ → 患者/家属要求  │
+              │ → Transitional   │          │ → 安全数据:     │     │ → 有别于AMC     │
+              │   Care           │          │   MGB 0意外死亡 │     │ → 临床团队记录  │
+              │ → Home Health    │          │   DH 0安全事件  │     │   原因+随访     │
+              └─────────────────┘          └────────────────┘     └────────────────┘
+                                                       │
+                                              ┌────────┴────────┐
+                                              │ 路径4: 死亡      │
+                                              │ (极低,与基础病情│
+                                              │  相关非HaH导致)  │
+                                              │                 │
+                                              │ MGB: 0 意外死亡 │
+                                              │ DH: 0% 非预期   │
+                                              └────────────────┘
+</code></pre>
+<h3 id="81">8.1 退出路径详情</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">退出路径</th>
+<th style="text-align: center;">占比（估）</th>
+<th style="text-align: left;">触发条件</th>
+<th style="text-align: left;">关键数据</th>
+<th style="text-align: left;">患者/家属体验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>路径 1：完成治疗→出院</strong></td>
+<td style="text-align: center;">85-95%</td>
+<td style="text-align: left;">临床稳定 + 达到出院标准</td>
+<td style="text-align: left;">MGB 7% 30天再入院 (vs 23%传统)；DH 8.5% 再入院</td>
+<td style="text-align: left;">🟢 最理想——患者满意、系统获益</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>路径 2：升级回院</strong></td>
+<td style="text-align: center;">5-15%</td>
+<td style="text-align: left;">生命体征恶化、需高级诊疗/手术/ICU、家庭环境不安全、照护者无法胜任</td>
+<td style="text-align: left;">DH 25% 过渡期升级预防率（主动升级避免恶化）；0 严重安全事件</td>
+<td style="text-align: left;">🟡 虽非理想但证明了HaH的安全性——&ldquo;升级&rdquo;而非&rdquo;失败&rdquo;。DH 的 25% 升级预防率说明主动升级是系统设计的一部分</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>路径 3：AMA（Against Medical Advice）</strong></td>
+<td style="text-align: center;">&lt;3%</td>
+<td style="text-align: left;">患者/家属主动要求退出 HaH；与临床升级不同——这是意愿问题</td>
+<td style="text-align: left;">「不可得」——三家均未公开</td>
+<td style="text-align: left;">🔴 需追踪原因——是信任问题？家属负担过重？期望不匹配？</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>路径 4：死亡</strong></td>
+<td style="text-align: center;">极低</td>
+<td style="text-align: left;">基础疾病进展——非 HaH 治疗导致</td>
+<td style="text-align: left;">MGB: <strong>0 意外死亡</strong>；DH: <strong>0% 非预期死亡率</strong></td>
+<td style="text-align: left;">受控——与院内死亡率等同或更低</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="82">8.2 升级回院的时机与安全机制</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">机构</th>
+<th style="text-align: left;">升级决策机制</th>
+<th style="text-align: left;">升级触发标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Atrium</strong></td>
+<td style="text-align: left;">每日 MD 虚拟查房 + 24/7 RN 监控 + 指挥中心报警</td>
+<td style="text-align: left;">生命体征恶化超预设范围；需高级影像/手术；需 ICU 护理</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MGB</strong></td>
+<td style="text-align: left;">Current Health AI 预警 + 每日 MD 查房</td>
+<td style="text-align: left;">AI 早期预警 + 临床判断</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DispatchHealth</strong></td>
+<td style="text-align: left;">Medically Home 指挥中心 24/7 + 个性化报警阈值</td>
+<td style="text-align: left;">预设报警阈值 + 升级预防（25% 病例主动干预）</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>关键洞察</strong>：HaH 的&rdquo;安全&rdquo;不是指没有升级——而是<strong>升级被及时、正确地触发</strong>。0 意外死亡/0 安全事件的数据证明了三家机构的升级机制是有效的。HaH 升级回院不是&rdquo;失败&rdquo;，而是系统安全设计的正常组成部分。</p>
+</blockquote>
+<hr />
+<h2 id="ihomecare">九、对 iHomeCare 患者体验设计的建议</h2>
+<p>基于 MGB / Atrium / DispatchHealth 的综合分析，对 iHomeCare 的患者体验设计提出以下 10 条建议。</p>
+<h3 id="91">9.1 十大设计原则</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">原则</th>
+<th style="text-align: left;">来源参考</th>
+<th style="text-align: left;">具体建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>&ldquo;同一团队全程负责&rdquo;</strong></td>
+<td style="text-align: left;">MGB Continuing Care 模式</td>
+<td style="text-align: left;">急性期治疗和出院后延续由同一团队负责，消除转诊断点。患者信任建立后不要中断。</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>&ldquo;首次上门即信任锚点&rdquo;</strong></td>
+<td style="text-align: left;">MoT-2 的重要性</td>
+<td style="text-align: left;">首次上门必须准时+专业+友好。配备统一制服、标准化问候、30分钟设备引导（而非扔下手册就走）。</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>&ldquo;设备零门槛&rdquo;</strong></td>
+<td style="text-align: left;">MoT-3 设备恐惧症</td>
+<td style="text-align: left;">面向老年用户的设计：大字体/一键连接/语音引导/家属辅助模式。参考 Current Health 可穿戴臂带——自动采集，无需操作。</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>&ldquo;安全网可视化&rdquo;</strong></td>
+<td style="text-align: left;">MoT-6 求救无响应的恐惧</td>
+<td style="text-align: left;">患者/家属需要<strong>看到</strong>他们被监控着——一个明确的状态指示灯或屏幕显示&rdquo;指挥中心正在监控您&rdquo;。DispatchHealth 的个性化报警阈值值得借鉴。</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><strong>&ldquo;家属不是资源，是用户&rdquo;</strong></td>
+<td style="text-align: left;">第五节 照护者并行旅程</td>
+<td style="text-align: left;">为家属提供独立 App/通道：照护者负担自评、休息提醒、与指挥中心直接沟通。照护者倦怠=潜在升级回院触发。</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><strong>&ldquo;决策辅助而非决策替代&rdquo;</strong></td>
+<td style="text-align: left;">转化漏斗&rdquo;同意&rdquo;瓶颈</td>
+<td style="text-align: left;">建立简化的视觉决策辅助（infographic 对比 &ldquo;医院 vs 居家&rdquo; 在安全/舒适/成本/恢复速度四个维度的差异），降低患者/家属的决策焦虑。</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><strong>&ldquo;出院不是结束&rdquo;</strong></td>
+<td style="text-align: left;">3.5 过渡阶段</td>
+<td style="text-align: left;">出院后48小时内的跟进电话是防止再入院的最关键干预。MGB 7% 再入院率 vs 23% 传统的差距，很可能部分来自 Continuing Care 的同一团队模式。</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><strong>&ldquo;社区入口捷径&rdquo;</strong></td>
+<td style="text-align: left;">DispatchHealth 路径C</td>
+<td style="text-align: left;">建立社区医生/PCP 的标准化转诊协议，让患者不需要先到ED也能进入 HaH。58% ER 替代率证明了这一路径的巨大价值。</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><strong>&ldquo;虚拟查房要有温度&rdquo;</strong></td>
+<td style="text-align: left;">MoT-4</td>
+<td style="text-align: left;">MD 虚拟查房不应只是&rdquo;看着屏幕问问题&rdquo;——屏幕共享展示检验结果、虚拟&rdquo;白板&rdquo;画病理、结束时给患者一个明确的&rdquo;下一步&rdquo;。</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;"><strong>&ldquo;用患者 testimonial 销售 HaH&rdquo;</strong></td>
+<td style="text-align: left;">完成→满意 93-98%</td>
+<td style="text-align: left;">满意度最高的患者是最好的推广者。录制已出院患者的简短视频 testimonial，在 ED 筛选阶段播放给犹豫的患者/家属看。</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 患者体验设计路线图</h3>
+<pre><code>Phase 1: 基础安全性（先做）
+  ├─ 升级回院路径清晰化（患者/家属知道&quot;什么情况下会回医院&quot;）
+  ├─ 指挥中心一键连接（响应时间 &lt;5分钟）
+  └─ 设备安装引导标准化（30分钟陪跑式引导）
+
+Phase 2: 人性化体验（再做）
+  ├─ 家属独立支持通道
+  ├─ 虚拟查房体验优化（屏幕共享/可视化）
+  └─ 决策辅助工具（infographic + testimonial）
+
+Phase 3: 生态化闭环（终极）
+  ├─ 社区入口（PCP 转诊协议）
+  ├─ 同一团队全程负责（急性→延续→社区）
+  └─ 患者社区/Peer Support（已出院患者与新患者结对）
+</code></pre>
+<h3 id="93-kpi">9.3 关键 KPI 建议</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">KPI</th>
+<th style="text-align: center;">iHomeCare 目标</th>
+<th style="text-align: left;">参考基准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">患者 NPS</td>
+<td style="text-align: center;">≥70</td>
+<td style="text-align: left;">DH 93; 行业优秀 ≥50</td>
+</tr>
+<tr>
+<td style="text-align: left;">30 天再入院率</td>
+<td style="text-align: center;">&lt;10%</td>
+<td style="text-align: left;">MGB 7%; DH 8.5%; 传统 23%</td>
+</tr>
+<tr>
+<td style="text-align: left;">筛选→同意转化率</td>
+<td style="text-align: center;">&gt;60%</td>
+<td style="text-align: left;">当前行业估 50-70%</td>
+</tr>
+<tr>
+<td style="text-align: left;">首次上门准时率</td>
+<td style="text-align: center;">&gt;95%</td>
+<td style="text-align: left;">MoT-2 锚定信任</td>
+</tr>
+<tr>
+<td style="text-align: left;">升级回院率（安全网使用率）</td>
+<td style="text-align: center;">5-15%</td>
+<td style="text-align: left;">太低=筛选过严/不敢收, 太高=筛选过松</td>
+</tr>
+<tr>
+<td style="text-align: left;">家属 NPS</td>
+<td style="text-align: center;">≥60</td>
+<td style="text-align: left;">当前无行业基准——iHomeCare 可首创</td>
+</tr>
+<tr>
+<td style="text-align: left;">指挥中心响应时间</td>
+<td style="text-align: center;">&lt;3分钟</td>
+<td style="text-align: left;">HaH Users Group 推荐</td>
+</tr>
+<tr>
+<td style="text-align: left;">出院后48h随访完成率</td>
+<td style="text-align: center;">&gt;90%</td>
+<td style="text-align: left;">防止再入院最有效干预</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_9">十、参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题</th>
+<th style="text-align: center;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Kate / Kenneth Ye</td>
+<td style="text-align: left;">MGB Home Hospital 27 维度深度尽调</td>
+<td style="text-align: center;">2026.07.03</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Kate / Kenneth Ye</td>
+<td style="text-align: left;">Atrium Health Hospital at Home 27 维度深度尽调</td>
+<td style="text-align: center;">2026.07.03</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Kate / Kenneth Ye</td>
+<td style="text-align: left;">DispatchHealth 深度调研报告</td>
+<td style="text-align: center;">2026.06.28</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Current Health</td>
+<td style="text-align: left;">How MGB Scaled Home Hospital (Case Study)</td>
+<td style="text-align: center;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">HFMA</td>
+<td style="text-align: left;">Atrium Health Hospital at Home (North Carolina)</td>
+<td style="text-align: center;">2024.09</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">JAMA Network Open</td>
+<td style="text-align: left;">Scaling Hospital at Home Beyond Original Studies</td>
+<td style="text-align: center;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">AMA</td>
+<td style="text-align: left;">Future of Health Case Study: Atrium Health</td>
+<td style="text-align: center;">2024</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">DispatchHealth</td>
+<td style="text-align: left;">Advanced Care White Paper</td>
+<td style="text-align: center;">2025.09</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">AHA Market Scan</td>
+<td style="text-align: left;">4 Providers Turning Hospital-at-Home into a Care Delivery Transformation Juggernaut</td>
+<td style="text-align: center;">2026.03</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">PMC</td>
+<td style="text-align: left;">The Experience of Patients and Family Caregivers During Hospital-at-Home in France</td>
+<td style="text-align: center;">2019</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">DiMe / Digital Medicine Society</td>
+<td style="text-align: left;">Patient Journey Map — Advancing a Sustainable HaH Ecosystem at Scale</td>
+<td style="text-align: center;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">BMC Health Services Research</td>
+<td style="text-align: left;">Mapping the Landscape of HaH Care: A Validated Taxonomy</td>
+<td style="text-align: center;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">Patient Experience Journal</td>
+<td style="text-align: left;">Patients&rsquo; and Family Caregivers&rsquo; Experiences with a Newly Implemented HaH Program in British Columbia</td>
+<td style="text-align: center;">2023</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">HaH Users Group</td>
+<td style="text-align: left;">Family First: Prioritizing Caregivers in Hospital at Home (Event)</td>
+<td style="text-align: center;">2025</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">Annals of Internal Medicine</td>
+<td style="text-align: left;">MGB Home Hospital Readmission Rate Study (7% vs 23%)</td>
+<td style="text-align: center;">2024</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<blockquote>
+<p><strong>免责声明</strong>：本报告基于公开可获取的 MGB、Atrium Health、DispatchHealth 资料及 Kate 调研数据库。所有&rdquo;通用模型&rdquo;为三家机构的合成推导，不代表任何单一机构的官方患者旅程。所有标注「不可得」的数据需通过一手调研补充。</p>
+</blockquote>
+<p><strong>— Kenneth Ye · 2026 年 7 月 3 日</strong></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

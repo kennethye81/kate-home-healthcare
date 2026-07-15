@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>广西壮族自治区14市长护险政策统计维度一览表</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#14">广西壮族自治区14市长护险政策统计维度一览表</a><ul>
+<li><a href="#_1">一、城市基本信息</a></li>
+<li><a href="#_2">二、筹资方式（百分比制）</a></li>
+<li><a href="#_3">三、医保覆盖</a></li>
+<li><a href="#_4">四、待遇支付</a></li>
+<li><a href="#_5">五、从业人员要求（省级框架）</a></li>
+<li><a href="#_6">六、全省覆盖进度</a><ul>
+<li><a href="#_7">数据来源</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="14">广西壮族自治区14市长护险政策统计维度一览表</h1>
+<p><strong>数据截止</strong>：2026-07-06 | <strong>交叉验证</strong>：Bocha(&ndash;zh模式) + 政府官网直访 + 省级文件提取
+<strong>省级框架</strong>：《广西壮族自治区加快建立长期护理保险制度实施方案（征求意见稿）》（2025-11-17发布）
+<strong>省级文件进度</strong>：2025年11月征求意见，截至2026年7月尚未公布正式版。2026年底前全区覆盖。
+<strong>全区推进</strong>：广西财政厅2026-03-02信息披露——全区15个统筹地区已有7个建立长护险制度，其余2026年底前印发方案。</p>
+<p><strong>核心特征</strong>：</p>
+<ul>
+<li>⏳ 全省尚在推进全覆盖，已实施城市均以<strong>职工医保</strong>为主（仅北海已覆盖城乡居民）</li>
+<li>百分比制筹资——以职工医保缴费基数为基准</li>
+<li>重度失能三档细分（Ⅰ/Ⅱ/Ⅲ级），中度失能暂未覆盖</li>
+<li>贺州2018年自主试点→南宁2020国家试点→北海2025率先全覆盖→其余2026-2027推进</li>
+</ul>
+<hr />
+<h2 id="_1">一、城市基本信息</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">省份</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;">启动时间</th>
+<th style="text-align: center;">失能等级覆盖-重度</th>
+<th style="text-align: center;">失能等级覆盖-中度</th>
+<th style="text-align: center;">亲情照护</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">南宁市</td>
+<td style="text-align: center;">✅ 已实施（国家试点）</td>
+<td style="text-align: center;">2021-03-01</td>
+<td style="text-align: center;">✅（三档细分Ⅲ/Ⅱ/Ⅰ）</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">贺州市</td>
+<td style="text-align: center;">✅ 已实施（省自主试点）</td>
+<td style="text-align: center;">2018</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">北海市</td>
+<td style="text-align: center;">✅ 已实施（全覆盖）</td>
+<td style="text-align: center;">2025-06（职工）/2025-09（居民）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">柳州市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026-01</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">梧州市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026（梧政规〔2026〕1号）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">贵港市</td>
+<td style="text-align: center;">✅ 已实施</td>
+<td style="text-align: center;">2026（贵政办规〔2025〕9号）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">桂林市</td>
+<td style="text-align: center;">🆕 征求意见稿阶段</td>
+<td style="text-align: center;">⏳ 待定</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">钦州市</td>
+<td style="text-align: center;">⏳ 2026年底前印发方案</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">防城港市</td>
+<td style="text-align: center;">⏳ 2026年底前印发方案</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">玉林市</td>
+<td style="text-align: center;">⏳ 2026年底前印发方案</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">百色市</td>
+<td style="text-align: center;">⏳ 2026年底前印发方案</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">河池市</td>
+<td style="text-align: center;">⏳ 2026年底前印发方案</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">来宾市</td>
+<td style="text-align: center;">⏳ 2026年底前印发方案</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">崇左市</td>
+<td style="text-align: center;">⏳ 2026年底前印发方案</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>注</strong>：贺州市2018年率先开展先行试点，是全广西最早的长护险实践城市。
+广西15个统筹地区 = 14个设区市 + 1（自治区本级？），截至2026年3月已有7个建立制度。</p>
+</blockquote>
+<hr />
+<h2 id="_2">二、筹资方式（百分比制）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">省份</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: center;">在职职工-单位</th>
+<th style="text-align: center;">在职职工-个人</th>
+<th style="text-align: center;">退休人员</th>
+<th style="text-align: center;">灵活就业/失业</th>
+<th style="text-align: center;">城乡居民</th>
+<th style="text-align: center;">年筹资估算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">南宁市</td>
+<td style="text-align: center;">0.15%基数</td>
+<td style="text-align: center;">0.15%基数</td>
+<td style="text-align: center;">养老金0.15%</td>
+<td style="text-align: center;">0.30%</td>
+<td style="text-align: center;">❌ 未覆盖</td>
+<td style="text-align: center;">因人而异</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">贺州市</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">❌ 未覆盖</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">北海市</td>
+<td style="text-align: center;">按医保调整</td>
+<td style="text-align: center;">按医保调整</td>
+<td style="text-align: center;">按医保调整</td>
+<td style="text-align: center;">按医保调整</td>
+<td style="text-align: center;">✅ 已纳入</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">柳州市</td>
+<td style="text-align: center;">从医保费划转</td>
+<td style="text-align: center;">从医保费划转</td>
+<td style="text-align: center;">120元/年或10元/月</td>
+<td style="text-align: center;">149.16元/年</td>
+<td style="text-align: center;">❌ 未覆盖</td>
+<td style="text-align: center;">灵活就业约149元/年</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">梧州市</td>
+<td style="text-align: center;">调整单位费率</td>
+<td style="text-align: center;">按基数比例</td>
+<td style="text-align: center;">按养老金比例</td>
+<td style="text-align: center;">按基数比例</td>
+<td style="text-align: center;">❌ 未覆盖</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">贵港市</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">❌ 未覆盖</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">桂林市</td>
+<td style="text-align: center;">—⏳ 待方案</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">❌ 未覆盖</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">其余7市</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">—⏳ 待方案</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">❌ 未覆盖</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>注</strong>：广西全省采用百分比制——以职工医保缴费基数为基准（与华东固定金额制不同）。
+南宁模式为典型：在职单位0.15%+个人0.15%=合计0.30%；灵活就业全部0.30%；退休人员按养老金0.15%。
+柳州灵活就业人员长护险费用2026年为149.16元/年（从医保费划转）。</p>
+</blockquote>
+<hr />
+<h2 id="_3">三、医保覆盖</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">省份</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: center;">职工医保</th>
+<th style="text-align: center;">居民医保</th>
+<th style="text-align: center;">省直</th>
+<th style="text-align: center;">统一待遇城乡一体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">南宁市</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">贺州市</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">北海市</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">✅ <strong>全区率先</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">柳州市</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">梧州市</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">贵港市</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">桂林市</td>
+<td style="text-align: center;">⏳待实施</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td style="text-align: left;">其余7市</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;">⏳待实施</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>关键观察</strong>：北海市是广西唯一已覆盖城乡居民的城市（2025年9月启动），率先实现职工+居民全覆盖。
+南宁市仍仅覆盖职工医保参保人。自治区方案要求逐步将城乡居民纳入。</p>
+</blockquote>
+<hr />
+<h2 id="_4">四、待遇支付</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">省份</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: center;">支付模式</th>
+<th style="text-align: center;">居家月上限（元/月）</th>
+<th style="text-align: center;">机构护理标准</th>
+<th style="text-align: center;">基金报销比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">南宁市</td>
+<td style="text-align: center;">混合制</td>
+<td style="text-align: center;">生活照料737.5 + 医疗护理750 + 辅具362.5</td>
+<td style="text-align: center;">Ⅲ级66元/天、Ⅱ级62元/天、Ⅰ级57元/天</td>
+<td style="text-align: center;">按定额</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">贺州市</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">北海市</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">柳州市</td>
+<td style="text-align: center;">按定额</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">梧州市</td>
+<td style="text-align: center;">按定额</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">广西</td>
+<td style="text-align: left;">贵港市</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>南宁待遇详解</strong>：
+- <strong>居家护理</strong>：生活照料类最高737.5元/月，医疗护理类最高750元/月，辅助器具类最高362.5元/月
+- <strong>机构护理</strong>：按床日付费——重度Ⅲ级66元/天、Ⅱ级62元/天、Ⅰ级57元/天
+- 失能评估标准按国家统一执行，失能状态需持续6个月以上
+- 缴费要求：累计缴纳职工医保+长护险满1年</p>
+</blockquote>
+<hr />
+<h2 id="_5">五、从业人员要求（省级框架）</h2>
+<p>广西全省统一执行国家框架，尚未发现省级独立的从业人员资质认定细则。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">证书类型</th>
+<th style="text-align: left;">省级认定情况</th>
+<th style="text-align: center;">最低等级要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">长期照护师</td>
+<td style="text-align: left;">🔴 尚未发现省级单独认定文件</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">养老护理员</td>
+<td style="text-align: left;">参照国家职业标准执行</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">医疗护理员</td>
+<td style="text-align: left;">参照国家职业标准执行</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_6">六、全省覆盖进度</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: center;">占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ 已实施</td>
+<td style="text-align: center;">6市（南宁/贺州/北海/柳州/梧州/贵港）</td>
+<td style="text-align: center;">42.9%</td>
+</tr>
+<tr>
+<td style="text-align: left;">🆕 征求意见稿阶段</td>
+<td style="text-align: center;">1市（桂林）</td>
+<td style="text-align: center;">7.1%</td>
+</tr>
+<tr>
+<td style="text-align: left;">⏳ 2026年底前印发方案</td>
+<td style="text-align: center;">7市（钦州/防城港/玉林/百色/河池/来宾/崇左）</td>
+<td style="text-align: center;">50.0%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总计</strong></td>
+<td style="text-align: center;"><strong>14市</strong></td>
+<td style="text-align: center;"><strong>100%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_7">数据来源</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">核心来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">广西全区</td>
+<td style="text-align: left;">广西财政厅《广西财政综合施策 织密长期护理保险&rdquo;保障网&rdquo;》（czt.gxzf.gov.cn, 2026-03-02）</td>
+</tr>
+<tr>
+<td style="text-align: left;">南宁市</td>
+<td style="text-align: left;">ybj.nanning.gov.cn 政策直通车系列（2026）</td>
+</tr>
+<tr>
+<td style="text-align: left;">北海市</td>
+<td style="text-align: left;">北海新闻网（gxbhxww.cn, 2026-01）</td>
+</tr>
+<tr>
+<td style="text-align: left;">梧州市</td>
+<td style="text-align: left;">《建立梧州市长期护理保险制度实施方案》（梧政规〔2026〕1号）</td>
+</tr>
+<tr>
+<td style="text-align: left;">柳州市</td>
+<td style="text-align: left;">广西柳州市人民政府门户网站（liuzhou.gov.cn, 2025-12-01）</td>
+</tr>
+<tr>
+<td style="text-align: left;">贵港市</td>
+<td style="text-align: left;">《贵港市建立长期护理保险制度实施方案》（贵政办规〔2025〕9号）</td>
+</tr>
+<tr>
+<td style="text-align: left;">桂林市</td>
+<td style="text-align: left;">ybj.guilin.gov.cn 征求意见稿</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

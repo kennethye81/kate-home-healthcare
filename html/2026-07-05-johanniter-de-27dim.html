@@ -1,0 +1,4288 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Johanniter-Unfall-Hilfe e.V.（约翰尼特事故救援协会）27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#johanniter-unfall-hilfe-ev27">Johanniter-Unfall-Hilfe e.V.（约翰尼特事故救援协会）27 维度深度尽调报告</a><ul>
+<li><a href="#d0-pflegeversicherung">D0 — 赛道验证（德国 Pflegeversicherung 制度下的居家护理赛道）</a><ul>
+<li><a href="#_1">赛道规模与结构性验证</a></li>
+<li><a href="#_2">赛道结构特征</a></li>
+<li><a href="#_3">赛道特殊性（德语区）</a></li>
+<li><a href="#_4">赛道判断</a></li>
+</ul>
+</li>
+<li><a href="#d1">D1 — 执行摘要</a><ul>
+<li><a href="#johanniter-unfall-hilfe">Johanniter-Unfall-Hilfe 全景判断</a></li>
+<li><a href="#_5">核心判断</a></li>
+<li><a href="#_6">关键指标一览</a></li>
+</ul>
+</li>
+<li><a href="#d2">D2 — 企业概况</a><ul>
+<li><a href="#_7">基本信息</a></li>
+<li><a href="#_8">组织所属系统结构</a></li>
+<li><a href="#_9">历史沿革</a></li>
+<li><a href="#_10">组织使命与定位</a></li>
+</ul>
+</li>
+<li><a href="#d3">D3 — 战略定位</a><ul>
+<li><a href="#_11">核心战略：「非营利信任 × 社区扎根 × 多元化服务线」模型</a></li>
+<li><a href="#_12">竞争优劣势</a></li>
+<li><a href="#_13">战略演变方向</a></li>
+</ul>
+</li>
+<li><a href="#d4">D4 — 商业模式架构图</a><ul>
+<li><a href="#johanniter-unfall-hilfe_1">Johanniter-Unfall-Hilfe 居家护理商业模式图</a></li>
+<li><a href="#vs">支払者 vs 利用者の分离</a></li>
+<li><a href="#_14">商业模式核心特性</a></li>
+</ul>
+</li>
+<li><a href="#d5">D5 — 服务产品线与定价模式</a><ul>
+<li><a href="#_15">居家护理产品线一览</a></li>
+<li><a href="#pflegeversicherung-sachleistung">居家护理定价体系（Pflegeversicherung 实物给付Sachleistung）</a></li>
+<li><a href="#_16">其他服务定价</a></li>
+<li><a href="#_17">收益性矩阵（推定）</a></li>
+</ul>
+</li>
+<li><a href="#d6">D6 — 客户与支付方深度拆解</a><ul>
+<li><a href="#_18">支付方结构</a></li>
+<li><a href="#_19">利用者セグメント</a></li>
+<li><a href="#johanniter">Johanniter 独特的客户获取路径</a></li>
+<li><a href="#_20">客户获取成本比较（推定）</a></li>
+</ul>
+</li>
+<li><a href="#d7">D7 — 财务深度拆解</a><ul>
+<li><a href="#johanniter-unfall-hilfe_2">收入估算（Johanniter-Unfall-Hilfe 整体）</a></li>
+<li><a href="#190dienststellen">居家护理业务收入估算（~190个Dienststellen）</a></li>
+<li><a href="#_21">收益性分析（推定）</a></li>
+<li><a href="#_22">财务稳定性分析</a></li>
+<li><a href="#vs_1">财务特质（非营利 vs 营利性对比）</a></li>
+</ul>
+</li>
+<li><a href="#d8">D8 — 工作流/旅程映射</a><ul>
+<li><a href="#johanniter_1">Johanniter 居家护理客户旅程</a></li>
+<li><a href="#johanniter_2">Johanniter 运营特性</a></li>
+</ul>
+</li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#_23">当前技术栈（推定）</a></li>
+<li><a href="#beep-2026">BEEP 法（2026）技术影响</a></li>
+<li><a href="#_24">技术评估总结</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局</a><ul>
+<li><a href="#_25">德国居家护理竞争结构</a></li>
+<li><a href="#wohlfahrtsverbande">六大福利协会（Wohlfahrtsverbände）比较</a></li>
+<li><a href="#vs_2">营利性 vs 非营利竞争分析</a></li>
+</ul>
+</li>
+<li><a href="#d11">D11 — 收入构成与增长</a><ul>
+<li><a href="#tamsamsom">市场规模（TAM/SAM/SOM）</a></li>
+<li><a href="#_26">增长驱动因素</a></li>
+<li><a href="#_27">增长约束因素</a></li>
+</ul>
+</li>
+<li><a href="#d12">D12 — 盈利模型</a><ul>
+<li><a href="#ambulante-pflege-sachleistung">单位经济模型（居家护理——Ambulante Pflege Sachleistung）</a></li>
+<li><a href="#hausnotruf">Hausnotruf（紧急呼叫）—— 高利润订阅模型</a></li>
+<li><a href="#essen-auf-radern">送餐服务（Essen auf Rädern）—— 低利润但导流价值高</a></li>
+<li><a href="#_28">综合盈利结构分析</a></li>
+</ul>
+</li>
+<li><a href="#d13">D13 — 机遇与风险评估</a><ul>
+<li><a href="#opportunities">机遇（Opportunities）</a></li>
+<li><a href="#risks">风险（Risks）</a></li>
+<li><a href="#_29">综合风险评估</a></li>
+</ul>
+</li>
+<li><a href="#d14">D14 — 管理指引与市场预期</a><ul>
+<li><a href="#_30">管理结构</a></li>
+<li><a href="#_31">领导层特征</a></li>
+<li><a href="#_32">市场预期</a></li>
+</ul>
+</li>
+<li><a href="#d15">D15 — 估值对比</a><ul>
+<li><a href="#_33">⚠️ 非营利组织不适用传统估值 —— 此维度的分析框架</a></li>
+<li><a href="#pflegedienst-ma">德国 Pflegedienst M&amp;A 市场参考（推定）</a></li>
+<li><a href="#johanniter_3">Johanniter 居家护理业务的推定价值</a></li>
+</ul>
+</li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#johanniter_4">从 Johanniter 模式中可以学习的方向</a></li>
+<li><a href="#johanniter-ihomecare">Johanniter 与 iHomeCare 的相关性</a></li>
+</ul>
+</li>
+<li><a href="#d17-pflegeversicherung">D17 — 政策与监管土壤（德国 Pflegeversicherung）</a><ul>
+<li><a href="#_34">核心法律框架</a></li>
+<li><a href="#2025">居家护理相关给付标准（2025年）</a></li>
+<li><a href="#johanniter_5">Johanniter 相关制度特记</a></li>
+<li><a href="#2026">2026年关键改革</a></li>
+</ul>
+</li>
+<li><a href="#d18">D18 — 单元经济模型</a><ul>
+<li><a href="#sachleistung-pflegefachkraft-60">居家护理（Sachleistung）—— Pflegefachkraft 60分钟上门</a></li>
+<li><a href="#hausnotruf_1">Hausnotruf 紧急呼叫订阅</a></li>
+<li><a href="#essen-auf-radern_1">送餐服务（Essen auf Rädern）</a></li>
+<li><a href="#_35">整体经济总结</a></li>
+</ul>
+</li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a><ul>
+<li><a href="#_36">主要客户セグメント</a></li>
+<li><a href="#johanniter_6">Johanniter 的注力セグメント</a></li>
+</ul>
+</li>
+<li><a href="#d20">D20 — 竞品深度地图</a><ul>
+<li><a href="#_37">德国居家护理竞争分层</a></li>
+<li><a href="#johanniter-vs">Johanniter vs 主要竞争对手</a></li>
+<li><a href="#johanniter_7">Johanniter 的独特竞争位置</a></li>
+</ul>
+</li>
+<li><a href="#d21">D21 — 跨境/跨区域战略</a><ul>
+<li><a href="#johanniter_8">Johanniter 的国际存在</a></li>
+<li><a href="#_38">跨境战略特点</a></li>
+<li><a href="#_39">国际比较</a></li>
+</ul>
+</li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a><ul>
+<li><a href="#ev">⚠️ 非营利 e.V. —— 此维度基本不适用</a></li>
+<li><a href="#_40">更现实的&rdquo;转化&rdquo;场景</a></li>
+</ul>
+</li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a><ul>
+<li><a href="#environment">环境（Environment）</a></li>
+<li><a href="#social">社会（Social）—— 核心优势</a></li>
+<li><a href="#governance">治理（Governance）</a></li>
+<li><a href="#sdgs">SDGs 贡献</a></li>
+</ul>
+</li>
+<li><a href="#d24">D24 — 组织与人才</a><ul>
+<li><a href="#_41">组织结构</a></li>
+<li><a href="#_42">人才结构（推定）</a></li>
+<li><a href="#_43">人才战略挑战</a></li>
+<li><a href="#johanniter_9">Johanniter 的人才优势</a></li>
+</ul>
+</li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a><ul>
+<li><a href="#ev_1">⚠️ 非营利 e.V. 的特殊资本结构</a></li>
+<li><a href="#_44">资本配置方向（推定）</a></li>
+<li><a href="#_45">财务可持续性评估</a></li>
+</ul>
+</li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a><ul>
+<li><a href="#_46">客户获取渠道</a></li>
+<li><a href="#gtm">GTM 效率比较</a></li>
+<li><a href="#_47">品牌战略</a></li>
+<li><a href="#vs_3">品牌优势 vs 营利性机构</a></li>
+</ul>
+</li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#_48">质量管理体系</a></li>
+<li><a href="#_49">质量指标（推定）</a></li>
+<li><a href="#_50">临床/生活结局</a></li>
+<li><a href="#johanniter-vs_1">服务质量差异化（Johanniter vs 竞品）</a></li>
+<li><a href="#_51">未来质量提升方向</a></li>
+</ul>
+</li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a><ul>
+<li><a href="#_52">综合评估</a></li>
+</ul>
+</li>
+<li><a href="#web_search">调研空白与后续补充（web_search 利用不可による制約）</a><ul>
+<li><a href="#_53">推荐追加调查</a></li>
+</ul>
+</li>
+<li><a href="#_54">参考文献</a><ul>
+<li><a href="#_55">政策・制度ソース</a></li>
+<li><a href="#_56">統計・市場データソース</a></li>
+<li><a href="#_57">組織・企業ソース</a></li>
+<li><a href="#_58">既存研究ソース</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="johanniter-unfall-hilfe-ev27">Johanniter-Unfall-Hilfe e.V.（约翰尼特事故救援协会）27 维度深度尽调报告</h1>
+<p><strong>调研日期</strong>：2026-07-05
+<strong>报告编号</strong>：2026-07-05-johanniter-de-27dim
+<strong>分析方法</strong>：27 维度框架（v2.0）
+<strong>数据状态</strong>：基于公开可得信息及既有研究档案（德国 KB 体系）。web_search 工具因 API 中断未补充最新德文源数据。</p>
+<hr />
+<h2 id="d0-pflegeversicherung">D0 — 赛道验证（德国 Pflegeversicherung 制度下的居家护理赛道）</h2>
+<h3 id="_1">赛道规模与结构性验证</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>德国 Pflegebedürftige（2023年）</td>
+<td><strong>569 万人</strong>（其中 86%居家）</td>
+<td>Destatis Pflegestatistik 2023</td>
+</tr>
+<tr>
+<td>居家护理（Ambulante Pflege）人数</td>
+<td>~489 万人（居家照护）</td>
+<td>Destatis</td>
+</tr>
+<tr>
+<td>居家护理服务机构（2025年）</td>
+<td><strong>~17,938 家</strong> Pflegedienste</td>
+<td>Pflegemarkt.com 2025</td>
+</tr>
+<tr>
+<td>平均每家服务病人数</td>
+<td>~128 人</td>
+<td>Pflegemarkt.com 2025</td>
+</tr>
+<tr>
+<td>TOP 15 居家机构市场份额</td>
+<td><strong>仅 5.4%</strong>（极端分散）</td>
+<td>行业分析</td>
+</tr>
+<tr>
+<td>劳动力缺口（2049年乐观）</td>
+<td>−280,000 人</td>
+<td>Destatis</td>
+</tr>
+<tr>
+<td>劳动力缺口（2049年悲观）</td>
+<td>−690,000 人</td>
+<td>Destatis</td>
+</tr>
+<tr>
+<td>居家护理额外需求（2049年）</td>
+<td><strong>+180,000 人</strong>（+60%）</td>
+<td>Destatis</td>
+</tr>
+<tr>
+<td>Pflegeversicherung 保险料率</td>
+<td>3.6%（一般）/ 4.2%（无子女）</td>
+<td>BMG</td>
+</tr>
+<tr>
+<td>资金缺口（2026-2028年）</td>
+<td>~225 亿欧元</td>
+<td>BMG 改革方案</td>
+</tr>
+<tr>
+<td>居家护理现金给付（Pflegegrad 2-5）</td>
+<td>€347〜€990/月</td>
+<td>SGB XI</td>
+</tr>
+<tr>
+<td>居家护理实物给付（Pflegegrad 2-5）</td>
+<td>€796〜€2,299/月</td>
+<td>SGB XI</td>
+</tr>
+<tr>
+<td>护理人员总数（2024年）</td>
+<td>~172 万人</td>
+<td>Deutscher Pflegerat 2025</td>
+</tr>
+<tr>
+<td>居家护理从业人员</td>
+<td>~297,000 人（17%）</td>
+<td>Deutscher Pflegerat 2025</td>
+</tr>
+<tr>
+<td>护理人员中位数工资（月毛）</td>
+<td><strong>€4,048</strong>（全行业）</td>
+<td>Destatis 2025</td>
+</tr>
+<tr>
+<td>外籍护理人员占比</td>
+<td>2014年6% → 2024年18%</td>
+<td>Bundesagentur für Arbeit</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">赛道结构特征</h3>
+<ol>
+<li><strong>极端分散</strong>：前15家居家护理机构合计仅占5.4%市场份额，17,938家Pflegedienste中绝大多数为中小型机构。TOP 2（Home Instead Germany 和 Johanniter）合计份额不超过1-2%。</li>
+<li><strong>Pflegeversicherung 全覆盖</strong>：1995年施行的SGB XI长期护理保险覆盖全体法定医疗保险参保人，提供现金给付（Pflegegeld）和实物给付（Sachleistung）双重选项。</li>
+<li><strong>居家优先原则（ambulant vor stationär）</strong>：法律规定居家护理优先于机构护理，86%的Pflegebedürftige居家照护。</li>
+<li><strong>双轨给付体系</strong>：现金给付（家庭照护者直接领取）+ 实物服务（专业护理机构上门），可组合使用（Kombinationsleistung）。</li>
+<li><strong>非营利组织主导</strong>：德国社会福利体系由六大福利协会（Wohlfahrtsverbände）主导 —— Caritas（天主教）、Diakonie（新教）、Arbeiterwohlfahrt（工人福利）、Paritätischer、DRK（红十字会）、<strong>Johanniter（约翰尼特）</strong> 等。</li>
+<li><strong>人才为最大瓶颈</strong>：2049年缺口达28-69万人；居家护理额外需求+60%为各领域最高。</li>
+</ol>
+<h3 id="_3">赛道特殊性（德语区）</h3>
+<p>与日本（介護保険公定价格）、美国（Medicare/Medicaid+商业保险）不同，德国Pflegeversicherung具有以下独特性：</p>
+<ul>
+<li><strong>现金给付自由度极高</strong>：Pflegegeld可由家庭照护者自由支配，不需通过专业机构</li>
+<li><strong>非营利竞争传统</strong>：六大福利协会以非营利身份占据主导，营利性企业（如Home Instead Germany）正在加速渗透</li>
+<li><strong>Pflegegrad 1-5 评估制</strong>：以自立性障害（Selbstständigkeit）为核心评估维度，2017年改革后更精准</li>
+<li><strong>2026年重大改革</strong>：BEEP法扩大专业护理权限、QPR新质量体系2026年7月生效、资金缺口225亿欧元改革</li>
+</ul>
+<h3 id="_4">赛道判断</h3>
+<p><strong>✅ 德国居家护理赛道验证通过</strong> —— 全球前三老龄化国家（21% 65+），569万Pflegebedürftige且86%居家，TOP15仅5.4%意味着极端分散的整合机会。Johanniter 作为非营利 TOP 2 居家护理提供者，拥有结构性竞争优势（品牌信任+190个站点网络）。但非营利身份限制资本运作和并购扩张，是赛道内独特的&rdquo;双刃剑&rdquo;定位。</p>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<h3 id="johanniter-unfall-hilfe">Johanniter-Unfall-Hilfe 全景判断</h3>
+<p>Johanniter-Unfall-Hilfe e.V.（约翰尼特事故救援协会）是 <strong>德国 TOP 2 居家护理提供者</strong>（仅次于 Home Instead 的德国业务），同时也是德国六大福利协会（Wohlfahrtsverbände）之一。它隶属于新教约翰尼特骑士团（Johanniterorden），是一家拥有近百年历史的非营利慈善组织。</p>
+<p>核心业务覆盖 <strong>ambulante Pflege（居家护理）</strong>、<strong>Tagespflege（日间护理）</strong>、<strong>Essen auf Rädern（送餐服务）</strong>、<strong>Hausnotruf（紧急呼叫）</strong>，并延伸至 Rettungsdienst（急救服务）、Sanitätsdienst、Erste-Hilfe-Ausbildung（急救培训）、Krankenhäuser（医院）和 Pflegeheime（养老院）。</p>
+<h3 id="_5">核心判断</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th style="text-align: center;">评分</th>
+<th>评语</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>赛道质量</td>
+<td style="text-align: center;">🟢</td>
+<td>全球主要老龄化市场，Pflegeversicherung 提供双重给付稳定支付</td>
+</tr>
+<tr>
+<td>市场地位</td>
+<td style="text-align: center;">🟢</td>
+<td><strong>德国居家护理 TOP 2</strong>（仅次于 Home Instead Germany），~190站点</td>
+</tr>
+<tr>
+<td>商业模型</td>
+<td style="text-align: center;">🟡</td>
+<td>非营利模式→无股东回报压力但有资金分配效率挑战；多渠道收入分散风险</td>
+</tr>
+<tr>
+<td>财务健康</td>
+<td style="text-align: center;">🟡</td>
+<td>非营利组织财务不对外公开；公共资金+捐赠+自费收入；整体财务结构稳健但透明度有限</td>
+</tr>
+<tr>
+<td>增长前景</td>
+<td style="text-align: center;">🟡</td>
+<td>居家护理需求增长确定（人口+60%额外需求）但非营利扩张受资金约束</td>
+</tr>
+<tr>
+<td>组织独特性</td>
+<td style="text-align: center;">🟢</td>
+<td>近百年品牌信任+骑士团背景+六大福利协会地位→德国社会基础设施级存在</td>
+</tr>
+<tr>
+<td>对iHomeCare启示</td>
+<td style="text-align: center;">🟡</td>
+<td>非营利大规模居家护理运营模型可参考；但模式可复制性受制度环境约束</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_6">关键指标一览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>法律形式</td>
+<td><strong>e.V.</strong>（注册协会，gemeinnützig 非营利）</td>
+</tr>
+<tr>
+<td>所属组织</td>
+<td>Johanniterorden（约翰尼特骑士团，新教）</td>
+</tr>
+<tr>
+<td>创立</td>
+<td>1952年（前身可追溯至19世纪末）</td>
+</tr>
+<tr>
+<td>居家护理站点数</td>
+<td><strong>~190个</strong> ambulante Pflegedienste</td>
+</tr>
+<tr>
+<td>全组织员工数</td>
+<td><strong>~22,000人</strong>（所有业务线合计）</td>
+</tr>
+<tr>
+<td>年收入（组织整体）</td>
+<td><strong>&gt;€10亿（推定）</strong></td>
+</tr>
+<tr>
+<td>居家护理业务构成</td>
+<td>居家护理 + 日间护理 + 送餐 + 紧急呼叫</td>
+</tr>
+<tr>
+<td>其他业务</td>
+<td>急救服务、培训、医院、养老院、 hospice、儿童青少年援助</td>
+</tr>
+<tr>
+<td>竞争地位</td>
+<td><strong>居家护理 TOP 2</strong>（非营利领域 TOP 1）</td>
+</tr>
+<tr>
+<td>上市情况</td>
+<td>非上市（非营利协会结构）</td>
+</tr>
+<tr>
+<td>分支机构</td>
+<td>9个 Landesverbände（州协会）+ 若干 Bezirks-/Ortsverbände</td>
+</tr>
+<tr>
+<td>独立性</td>
+<td>法律上独立，但隶属于约翰尼特骑士团</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 企业概况</h2>
+<h3 id="_7">基本信息</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正式名称</td>
+<td>Johanniter-Unfall-Hilfe e.V.</td>
+</tr>
+<tr>
+<td>英文名称</td>
+<td>Johanniter Accident Assistance (Registered Association)</td>
+</tr>
+<tr>
+<td>所属系统</td>
+<td><strong>Johanniterorden</strong>（约翰尼特骑士团，新教-福音派基督教组织）</td>
+</tr>
+<tr>
+<td>创立年份</td>
+<td>1952年（正式注册为e.V.；前身急救服务可追溯至19世纪）</td>
+</tr>
+<tr>
+<td>法律形式</td>
+<td><strong>e.V.</strong>（Eingetragener Verein，注册协会）+ <strong>gemeinnützig</strong>（非营利公益）</td>
+</tr>
+<tr>
+<td>总部</td>
+<td>柏林（Bundesgeschäftsstelle）</td>
+</tr>
+<tr>
+<td>上市情况</td>
+<td>非上市，非营利</td>
+</tr>
+<tr>
+<td>全职员工数</td>
+<td><strong>~22,000人</strong>（2024年推定，所有业务线）</td>
+</tr>
+<tr>
+<td>志愿者数</td>
+<td><strong>~30,000人</strong>（推定）</td>
+</tr>
+<tr>
+<td>核心业务</td>
+<td>居家护理、急救服务、培训、养老院、医院、儿童援助、国际人道援助</td>
+</tr>
+<tr>
+<td>居家护理站点</td>
+<td><strong>~190个 Dienststellen（服务站）</strong></td>
+</tr>
+<tr>
+<td>财务透明度</td>
+<td><strong>🔴 低</strong>——非营利不公开详细财务报告</td>
+</tr>
+<tr>
+<td>收入来源</td>
+<td>GKV/PKV护理保险报销 + 自费 + 捐赠 + 政府补助</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_8">组织所属系统结构</h3>
+<pre><code>Johanniterorden（约翰尼特骑士团，新教）
+│
+├── Johanniter-Unfall-Hilfe e.V.（本报告主体）
+│   ├── 9 × Landesverbände（州协会）
+│   │   ├── Bezirksverbände（地区协会）
+│   │   │   └── Ortsverbände（地方协会）
+│   │   └── ~190 ambulante Pflegedienste
+│   ├── 其他服务线
+│   │   ├── Rettungsdienst（急救服务）
+│   │   ├── Sanitätsdienst（医疗救护站）
+│   │   ├── Erste-Hilfe-Ausbildung（急救培训）
+│   │   ├── Katastrophenschutz（灾难防护）
+│   │   ├── Krankenhäuser（医院）
+│   │   ├── Pflegeheime（养老院）
+│   │   ├── Hospiz（安宁疗护）
+│   │   ├── Kinder- und Jugendhilfe（儿童青少年援助）
+│   │   └── Internationale Hilfe（国际援助）
+│   └── Johanniter-Akademie（培训学院）
+│
+├── Johanniter GmbH（部分运营实体）
+│   └── 各子公司与运营实体
+│
+├── Johanniter-Schwesternschaft（约翰尼特护士团）
+│
+└── Johanniterorden-Stiftung（基金会）
+</code></pre>
+<h3 id="_9">历史沿革</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">时期</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1099年</td>
+<td>约翰尼特骑士团（Johanniterorden）在耶路撒冷成立（医院骑士团）</td>
+</tr>
+<tr>
+<td style="text-align: center;">16世纪</td>
+<td>宗教改革后，德国约翰尼特骑士团改宗新教（福音派）</td>
+</tr>
+<tr>
+<td style="text-align: center;">19世纪</td>
+<td>德国约翰尼特开始提供社会服务和急救服务</td>
+</tr>
+<tr>
+<td style="text-align: center;">1952年</td>
+<td><strong>Johanniter-Unfall-Hilfe e.V.</strong> 正式成立注册协会</td>
+</tr>
+<tr>
+<td style="text-align: center;">1960-80年代</td>
+<td>建立急救服务（Rettungsdienst）和急救培训体系</td>
+</tr>
+<tr>
+<td style="text-align: center;">1995年</td>
+<td><strong>Pflegeversicherung（SGB XI）</strong> 施行 → 居家护理业务大幅扩张</td>
+</tr>
+<tr>
+<td style="text-align: center;">2000年代</td>
+<td>居家护理站点网络扩展至~190个Dienststellen</td>
+</tr>
+<tr>
+<td style="text-align: center;">2010年代</td>
+<td>养老院（Pflegeheime）和医院运营扩展</td>
+</tr>
+<tr>
+<td style="text-align: center;">2020年</td>
+<td>COVID-19危机中发挥核心急救和护理作用</td>
+</tr>
+<tr>
+<td style="text-align: center;">2024年</td>
+<td>应对Pflegeversicherung资金危机+护理人才短缺挑战</td>
+</tr>
+<tr>
+<td style="text-align: center;">2026年</td>
+<td>BEEP法生效 → 护理专业人员权限扩大，QPR新质量体系7月生效</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_10">组织使命与定位</h3>
+<ul>
+<li><strong>使命</strong>：「Aus christlicher Nächstenliebe helfen wir Menschen in Not」（基于基督之爱，帮助有需要的人）</li>
+<li><strong>核心价值</strong>：非营利（Gemeinnützigkeit）、宗教渊源、社会服务基础设施角色</li>
+<li><strong>在德国社会中的定位</strong>：六大福利协会之一，急救（Rettungsdienst）领域的标志性品牌（黄色制服+白色十字）</li>
+<li><strong>差异点</strong>：</li>
+<li>① 近千年骑士团传统的品牌信任（德国最古老的社会组织之一）</li>
+<li>② 急救服务（Rettungsdienst）的全国覆盖→带来品牌曝光和公众认知</li>
+<li>③ 30,000+志愿者的社区渗透力</li>
+<li>④ 非营利身份→享受税收优惠+捐赠渠道+公共信任</li>
+<li>⑤ 六大福利协会内部协同（与Caritas/Diakonie/DRK等共享部分政策影响渠道）</li>
+</ul>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<h3 id="_11">核心战略：「非营利信任 × 社区扎根 × 多元化服务线」模型</h3>
+<p>Johanniter 的战略与 Home Instead Germany（特许经营营利模式）和纯营利性 Pflegedienste 有本质区别：</p>
+<ol>
+<li><strong>非营利信任驱动</strong>：作为六大福利协会和骑士团组织，Johanniter 在公众中享有极高的信任度——特别是在保守派和宗教背景家庭中的品牌偏好。</li>
+<li><strong>社区扎根</strong>：依托9个Landesverbände和全国30,000+志愿者的地方网络，Johanniter 在社区层面拥有任何营利性企业无法比拟的&rdquo;毛细血管&rdquo;渗透力。</li>
+<li><strong>服务线多元化</strong>：从急救→护理→养老院→医院→国际援助，全链条服务覆盖；居家护理可以从急救服务接触点导流客户。</li>
+<li><strong>志愿者+专业人员的混合模型</strong>：志愿者在社会服务中扮演重要角色（应急响应、社区活动、送餐服务等），大幅降低成本结构。</li>
+<li><strong>公共采购优势</strong>：在公共招标（如急救服务、灾害防护）中，非营利身份提供结构性竞争优势。</li>
+</ol>
+<h3 id="_12">竞争优劣势</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>品牌信任</strong></td>
+<td>🟢极高 — 近千年历史+骑士团+六大福利协会</td>
+<td>🟡 宗教渊源在世俗化社会可能成为部分人群的减分项</td>
+</tr>
+<tr>
+<td><strong>社区网络</strong></td>
+<td>🟢 30,000+志愿者+190个站点覆盖全德</td>
+<td>🟡 各州独立性强→全国统一战略执行难度大</td>
+</tr>
+<tr>
+<td><strong>资本结构</strong></td>
+<td>🟡 非营利→无股东回报压力</td>
+<td>🔴 缺乏资本市场融资能力→扩张受自有资金限制</td>
+</tr>
+<tr>
+<td><strong>并购能力</strong></td>
+<td>🔴 非营利身份不适合大规模M&amp;A</td>
+<td>🔴 无法通过股权融资收购其他Pflegedienste</td>
+</tr>
+<tr>
+<td><strong>人才竞争</strong></td>
+<td>🟡 品牌吸引力+使命感招聘</td>
+<td>🔴 薪资竞争力弱于营利性机构</td>
+</tr>
+<tr>
+<td><strong>数字转型</strong></td>
+<td>🟡 有Johanniter-Akademie培训体系</td>
+<td>🔴 大型传统非营利组织的数字化转型速度慢</td>
+</tr>
+<tr>
+<td><strong>政策影响</strong></td>
+<td>🟢 六大福利协会→政策倡导直接通道</td>
+<td>🟡 受政治环境变化影响（SPD/Grüne vs CDU政策偏好差异）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_13">战略演变方向</h3>
+<ol>
+<li><strong>数字化驱动</strong>：Hausnotruf（紧急呼叫）业务的数字升级（智能手表/跌倒检测等）</li>
+<li><strong>护理专业权限扩大</strong>：BEEP法2026年生效后，Johanniter的Pflegefachkräfte可执行更多医疗性任务</li>
+<li><strong>社区整合护理</strong>：通过190个站点提供&rdquo;居家护理+日间护理+送餐+紧急呼叫&rdquo;一站式服务</li>
+<li><strong>人才吸引</strong>：非营利使命感+学徒制（Ausbildung）吸引年轻人进入护理行业</li>
+<li><strong>营利性竞争应对</strong>：Home Instead Germany等营利性企业的扩张正在挤压非营利市场份额</li>
+</ol>
+<hr />
+<h2 id="d4">D4 — 商业模式架构图</h2>
+<h3 id="johanniter-unfall-hilfe_1">Johanniter-Unfall-Hilfe 居家护理商业模式图</h3>
+<pre><code>                    ┌───────────────────────────────────────────┐
+                    │      Pflegeversicherung（长期护理保险）      │
+                    │           SGB XI 法定 + 私人保险             │
+                    │    支付：现金给付(Pflegegeld) / 实物给付     │
+                    └──────────────────┬────────────────────────┘
+                                       │ SGB XI 报销
+                                       ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                  Johanniter-Unfall-Hilfe e.V.                      │
+│                                                                    │
+│  ┌──────────────────────────────────────────────────────────┐     │
+│  │              居家护理业务线（Ambulante Pflege）             │     │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐    │     │
+│  │  │Ambulante │ │Tages-   │ │Essen auf │ │Hausnotruf│    │     │
+│  │  │Pflege    │ │pflege   │ │Rädern    │ │紧急呼叫  │    │     │
+│  │  │居家护理  │ │日间护理  │ │送餐服务  │ │          │    │     │
+│  │  └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘    │     │
+│  │       │             │            │             │           │     │
+│  │  ┌────┴─────────────┴────────────┴─────────────┴──────┐  │     │
+│  │  │     ~190 个 Dienststellen（服务站）+ 各州/地区组织     │  │     │
+│  │  └────────────────────────────────────────────────────┘  │     │
+│  └──────────────────────────────────────────────────────────┘     │
+│                                                                    │
+│  ┌──────────────────────────────────────────────────────────┐     │
+│  │              其他业务线（协同效应）                        │     │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐    │     │
+│  │  │Rettungs- │ │Pflege-  │ │Kranken-  │ │Erste-Hilfe│    │     │
+│  │  │dienst    │ │heime    │ │häuser    │ │Ausbildung │    │     │
+│  │  │急救服务  │ │养老院    │ │医院      │ │急救培训   │    │     │
+│  │  └──────────┘ └──────────┘ └──────────┘ └──────────┘    │     │
+│  └──────────────────────────────────────────────────────────┘     │
+│                                                                    │
+│  ┌──────────────────────────────────────────────────────────┐     │
+│  │    30,000+ 志愿者（成本优势 + 社区渗透力）                │     │
+│  └──────────────────────────────────────────────────────────┘     │
+└──────────────────────────────────────────────────────────────────┘
+          ▲                                   │
+          │                                   │
+          │                                   ▼
+┌─────────┴──────────────────────────────────────────────────┐
+│                利用者（Pflegebedürftige 及其家庭）            │
+│           Pflegegrad 1-5 认定 + 自由选择现金/实物给付         │
+│           Pflegegeld 可支付给家庭照护者而非机构               │
+└───────────────────────────────────────────────────────────┘
+
+【Johanniter 独特的客户获取路径】
+Rettungsdienst 接触（如跌倒/急病呼叫）
+    ↓
+  后续居家护理需求产生
+    ↓
+  Johanniter 居家护理团队的主动接触
+    ↓
+  转变为长期居家护理客户
+</code></pre>
+<h3 id="vs">支払者 vs 利用者の分离</h3>
+<p>德国Pflegeversicherung的核心特性：</p>
+<ul>
+<li><strong>支払者</strong>：Pflegekasse（护理保险基金，隶属于法定/私人医疗保险）→ 向护理机构报销</li>
+<li><strong>利用者选择权</strong>：受益人可选择：</li>
+<li>① 全部实物给付（Sachleistung）→ Johanniter 等机构上门服务</li>
+<li>② 全部现金给付（Pflegegeld）→ 家庭照护者领取，自由使用</li>
+<li>③ 混合给付（Kombinationsleistung）→ 部分实物+部分现金</li>
+<li><strong>Johanniter 的收入来源构成（推定）</strong>：</li>
+<li>GKV/PKV护理保险报销（实物给付部分）：<strong>~70-80%</strong></li>
+<li>自费（居家护理中超出保险给付上限的部分）：<strong>~10-15%</strong></li>
+<li>捐赠与政府补助：<strong>~5-10%</strong></li>
+<li>其他服务收入：<strong>~5%</strong></li>
+</ul>
+<h3 id="_14">商业模式核心特性</h3>
+<ul>
+<li><strong>非营利不分配约束</strong>：盈余必须用于组织运营和再投资，不得分配给成员</li>
+<li><strong>多样化收入池</strong>：不依赖单一收入源（保险+自费+捐赠+政府补助）</li>
+<li><strong>志愿者成本杠杆</strong>：30,000+志愿者在急救、社区服务、行政支持等环节降低人力成本</li>
+<li><strong>公共采购护城河</strong>：在急救服务（Rettungsdienst）等领域，非营利组织享有实质性的准垄断地位</li>
+</ul>
+<hr />
+<h2 id="d5">D5 — 服务产品线与定价模式</h2>
+<h3 id="_15">居家护理产品线一览</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>内容</th>
+<th>支付形态</th>
+<th>Johanniter 的优势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ambulante Pflege（居家护理）</strong></td>
+<td>身体护理（Körperpflege/Ernährung/Mobilität）+ 家务协助（Hauswirtschaft）+ 护理咨询</td>
+<td>Pflegeversicherung 实物给付（Sachleistung）+ 自费</td>
+<td>品牌信任+190站点的全国覆盖</td>
+</tr>
+<tr>
+<td><strong>Tagespflege（日间护理）</strong></td>
+<td>白天在设施内接收护理+康复+社交活动；晚间回家</td>
+<td>Pflegeversicherung + 自费（食费/交通）</td>
+<td>机构护理和居家护理的桥梁服务</td>
+</tr>
+<tr>
+<td><strong>Essen auf Rädern（送餐服务）</strong></td>
+<td>每日热餐送到家（含特殊饮食需求）</td>
+<td><strong>自费</strong>（保险不覆盖；少数情况由Sozialhilfe补贴）</td>
+<td>品牌信任+物流网络协同</td>
+</tr>
+<tr>
+<td><strong>Hausnotruf（紧急呼叫）</strong></td>
+<td>24/7 紧急呼叫按钮/智能手表/跌倒检测</td>
+<td><strong>自费</strong>（月费约€15-35）</td>
+<td><strong>最核心差异化服务</strong>——急救服务的天然导流产品</td>
+</tr>
+<tr>
+<td><strong>Betreuungsleistungen（陪伴服务）</strong></td>
+<td>社交陪伴、散步、阅读、认知活动</td>
+<td>Pflegeversicherung（§45b SGB XI Entlastungsbetrag €131/月）</td>
+<td>志愿者网络可提供低成本陪伴</td>
+</tr>
+<tr>
+<td><strong>Pflegeberatung（护理咨询）</strong></td>
+<td>免费护理咨询（§7a/§37.3 SGB XI）</td>
+<td>Pflegekasse 报销</td>
+<td>非营利信任→中立咨询形象</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="pflegeversicherung-sachleistung">居家护理定价体系（Pflegeversicherung 实物给付Sachleistung）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">护理等级</th>
+<th style="text-align: center;">月实物给付上限（€）</th>
+<th style="text-align: center;">典型小时费率（推定的行业标准）</th>
+<th style="text-align: center;">自费部分（超上限后）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Pflegegrad 2</td>
+<td style="text-align: center;">€796/月</td>
+<td style="text-align: center;">€30-45/小时</td>
+<td style="text-align: center;">超上限部分自费</td>
+</tr>
+<tr>
+<td style="text-align: center;">Pflegegrad 3</td>
+<td style="text-align: center;">€1,417/月</td>
+<td style="text-align: center;">€30-45/小时</td>
+<td style="text-align: center;">超上限部分自费</td>
+</tr>
+<tr>
+<td style="text-align: center;">Pflegegrad 4</td>
+<td style="text-align: center;">€1,865/月</td>
+<td style="text-align: center;">€30-45/小时</td>
+<td style="text-align: center;">超上限部分自费</td>
+</tr>
+<tr>
+<td style="text-align: center;">Pflegegrad 5</td>
+<td style="text-align: center;">€2,299/月</td>
+<td style="text-align: center;">€30-45/小时</td>
+<td style="text-align: center;">超上限部分自费</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_16">其他服务定价</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>服务</th>
+<th>定价范围</th>
+<th>支付方</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Essen auf Rädern</strong></td>
+<td>€6-12/餐（税后）</td>
+<td>自费</td>
+<td>月套餐约€180-360</td>
+</tr>
+<tr>
+<td><strong>Hausnotruf Grundgerät</strong></td>
+<td>€15-25/月</td>
+<td>自费</td>
+<td>基础款（固定电话或SIM卡）</td>
+</tr>
+<tr>
+<td><strong>Hausnotruf Premium（智能手表/跌倒检测）</strong></td>
+<td>€25-45/月</td>
+<td>自费</td>
+<td>含GPS定位、跌倒检测、语音通话</td>
+</tr>
+<tr>
+<td><strong>Tagespflege（日均）</strong></td>
+<td>€50-80/天（自费部分约€15-25）</td>
+<td>Pflegeversicherung+自费</td>
+<td>含午餐+护理+交通</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_17">收益性矩阵（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>服务</th>
+<th style="text-align: center;">收入构成比（推定）</th>
+<th style="text-align: center;">利润率（推定）</th>
+<th style="text-align: center;">成长性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ambulante Pflege（居家护理-实物给付）</strong></td>
+<td style="text-align: center;"><strong>~35-45%</strong></td>
+<td style="text-align: center;">🟡 3-8%（受费率约束）</td>
+<td style="text-align: center;">🟢 需求稳定增长</td>
+</tr>
+<tr>
+<td><strong>Tagespflege（日间护理）</strong></td>
+<td style="text-align: center;">~10-15%</td>
+<td style="text-align: center;">🟡 5-10%</td>
+<td style="text-align: center;">🟡 稳定</td>
+</tr>
+<tr>
+<td><strong>Essen auf Rädern（送餐）</strong></td>
+<td style="text-align: center;">~8-12%</td>
+<td style="text-align: center;">🟡 5-10%</td>
+<td style="text-align: center;">🟡 稳定</td>
+</tr>
+<tr>
+<td><strong>Hausnotruf（紧急呼叫）</strong></td>
+<td style="text-align: center;">~5-8%</td>
+<td style="text-align: center;">🟢 <strong>15-25%</strong>（轻资产订阅模式）</td>
+<td style="text-align: center;">🟢 <strong>数字升级带来增长</strong></td>
+</tr>
+<tr>
+<td><strong>Rettungsdienst（急救服务）</strong></td>
+<td style="text-align: center;">~15-20%</td>
+<td style="text-align: center;">🟡 盈亏平衡（公共采购定价）</td>
+<td style="text-align: center;">🟡 稳定</td>
+</tr>
+<tr>
+<td><strong>其他（养老院/医院/培训）</strong></td>
+<td style="text-align: center;">~10-15%</td>
+<td style="text-align: center;">🟡 5-12%</td>
+<td style="text-align: center;">🟡 稳定</td>
+</tr>
+<tr>
+<td><strong>整体</strong></td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td style="text-align: center;"><strong>5-10%（推定）</strong></td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d6">D6 — 客户与支付方深度拆解</h2>
+<h3 id="_18">支付方结构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>支付方</th>
+<th style="text-align: center;">占比（推定）</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GKV/PKV Pflegeversicherung（法定/私人护理保险-实物给付）</strong></td>
+<td style="text-align: center;">~70-80%</td>
+<td>SGB XI 给付标准，全国统一费率上限</td>
+</tr>
+<tr>
+<td><strong>利用者自费（超保险上限部分+非保险服务）</strong></td>
+<td style="text-align: center;">~10-15%</td>
+<td>送餐、紧急呼叫、额外护理小时等</td>
+</tr>
+<tr>
+<td><strong>捐赠与政府补助</strong></td>
+<td style="text-align: center;">~5-10%</td>
+<td>非营利组织的特有收入源</td>
+</tr>
+<tr>
+<td><strong>Sozialhilfe（社会救助，针对低收入者）</strong></td>
+<td style="text-align: center;">~3-5%</td>
+<td>当个人无法承担自费部分时</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_19">利用者セグメント</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>セグメント</th>
+<th style="text-align: center;">比率（推定）</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pflegegrad 2-3 居家护理利用者</strong></td>
+<td style="text-align: center;">~40-50%</td>
+<td>Johanniter 的中核客户；每周3-7次上门护理（身体护理+家务）</td>
+</tr>
+<tr>
+<td><strong>Pflegegrad 4-5 重度居家护理利用者</strong></td>
+<td style="text-align: center;">~20-25%</td>
+<td>高频次上门（每日1-3次）；含夜间护理可能性</td>
+</tr>
+<tr>
+<td><strong>Tagespflege 利用者</strong></td>
+<td style="text-align: center;">~10-15%</td>
+<td>白天在设施接受护理，晚间回家；家庭照护者需要白天休息的群体</td>
+</tr>
+<tr>
+<td><strong>Essen auf Rädern 利用者</strong></td>
+<td style="text-align: center;">~15%</td>
+<td>多种年龄层（不限于Pflegegrad认定者）；自费客户的入门产品</td>
+</tr>
+<tr>
+<td><strong>Hausnotruf 利用者</strong></td>
+<td style="text-align: center;">~8-12%</td>
+<td>主要是独居老人或身体状况有风险者；高续订率、高利润率</td>
+</tr>
+<tr>
+<td><strong>Pflegegrad 1 仅护理咨询</strong></td>
+<td style="text-align: center;">~5%</td>
+<td>轻度失能但不需密集护理</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="johanniter">Johanniter 独特的客户获取路径</h3>
+<pre><code>【核心导流路径】
+① Rettungsdienst（急救）→ 现场接触潜在护理需求者 → 居家护理建议
+② Hausnotruf 客户 → 数字升级 → 产生额外护理需求 → 居家护理转化
+③ 社区活动/志愿者接触 → 发现未认定的护理需求 → 护理咨询 → 正式客户
+④ Kirche（教会）网络 → 教友推荐 → 信任驱动的客户获取
+⑤ 送餐服务 → 日常接触 → 发现护理需求变化 → 服务升级
+⑥ 医院出院后的过渡护理 → 短期居家护理 → 长期客户转化
+
+【对比营利性机构（如Home Instead）】
+- Home Instead 依赖数字营销+特许经营网络
+- Johanniter 依赖社区渗透+急救服务导流+教会网络
+ → Johanniter 的 CAC（客户获取成本）理论上更低
+</code></pre>
+<h3 id="_20">客户获取成本比较（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>渠道</th>
+<th style="text-align: center;">CAC 推定</th>
+<th>Johanniter 优势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rettungsdienst 导流</td>
+<td style="text-align: center;"><strong>极低</strong></td>
+<td>独有渠道，其他护理机构无法复制</td>
+</tr>
+<tr>
+<td>Hausnotruf 客户升级</td>
+<td style="text-align: center;"><strong>低</strong></td>
+<td>已有客户关系的交叉销售</td>
+</tr>
+<tr>
+<td>教会/社区网络</td>
+<td style="text-align: center;"><strong>极低</strong></td>
+<td>志愿者网络+社区扎根</td>
+</tr>
+<tr>
+<td>数字营销</td>
+<td style="text-align: center;"><strong>中-高</strong></td>
+<td>非营利组织在数字营销上通常弱于营利性机构</td>
+</tr>
+<tr>
+<td>医院出院转介</td>
+<td style="text-align: center;"><strong>低</strong></td>
+<td>与当地医院的合作关系</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 财务深度拆解</h2>
+<h3 id="johanniter-unfall-hilfe_2">收入估算（Johanniter-Unfall-Hilfe 整体）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align: center;">推定金额</th>
+<th style="text-align: center;">构成比</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>组织总收入</strong></td>
+<td style="text-align: center;"><strong>&gt;€10亿</strong></td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td>非营利不公开财务，基于行业参数估算</td>
+</tr>
+<tr>
+<td>Rettungsdienst（急救服务）</td>
+<td style="text-align: center;">~€2.5-3亿</td>
+<td style="text-align: center;">~25%</td>
+<td>公共招标合同定价</td>
+</tr>
+<tr>
+<td><strong>Ambulante Pflege（居家护理）</strong></td>
+<td style="text-align: center;"><strong>~€2-3亿</strong></td>
+<td style="text-align: center;"><strong>~20-25%</strong></td>
+<td><strong>核心居家业务</strong></td>
+</tr>
+<tr>
+<td>Pflegeheime（养老院）</td>
+<td style="text-align: center;">~€1.5-2亿</td>
+<td style="text-align: center;">~15%</td>
+<td>多家养老院运营</td>
+</tr>
+<tr>
+<td>Krankenhäuser（医院）</td>
+<td style="text-align: center;">~€1-1.5亿</td>
+<td style="text-align: center;">~10%</td>
+<td>部分地区的医院运营</td>
+</tr>
+<tr>
+<td>Tagespflege（日间护理）</td>
+<td style="text-align: center;">~€0.5-1亿</td>
+<td style="text-align: center;">~5%</td>
+<td></td>
+</tr>
+<tr>
+<td>Essen auf Rädern（送餐）</td>
+<td style="text-align: center;">~€0.5-1亿</td>
+<td style="text-align: center;">~5%</td>
+<td></td>
+</tr>
+<tr>
+<td>Hausnotruf（紧急呼叫）</td>
+<td style="text-align: center;">~€0.3-0.5亿</td>
+<td style="text-align: center;">~3%</td>
+<td>高利润订阅收入</td>
+</tr>
+<tr>
+<td>Ausbildung/Erste-Hilfe（培训）</td>
+<td style="text-align: center;">~€0.5-1亿</td>
+<td style="text-align: center;">~5%</td>
+<td></td>
+</tr>
+<tr>
+<td>其他+捐赠</td>
+<td style="text-align: center;">~€1-2亿</td>
+<td style="text-align: center;">~10%</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="190dienststellen">居家护理业务收入估算（~190个Dienststellen）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">推定值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">每站点平均年收入</td>
+<td style="text-align: center;">~€100-150万（推定）</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家护理总收入</td>
+<td style="text-align: center;">~€2-3亿（推定）</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家护理客户数（同时）</td>
+<td style="text-align: center;">~30,000-50,000人（推定）</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家护理总员工数（护理线）</td>
+<td style="text-align: center;">~5,000-8,000人（推定）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_21">收益性分析（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">推定值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整体营业利润</td>
+<td style="text-align: center;">盈亏平衡〜轻微正</td>
+<td>非营利宗旨：盈余≠最大化</td>
+</tr>
+<tr>
+<td>居家护理利润率（Sachleistung）</td>
+<td style="text-align: center;"><strong>3-8%</strong></td>
+<td>受制于GKV费率上限</td>
+</tr>
+<tr>
+<td>Hausnotruf 利润率</td>
+<td style="text-align: center;"><strong>15-25%</strong></td>
+<td>轻资产+订阅模式</td>
+</tr>
+<tr>
+<td>养老院利润率</td>
+<td style="text-align: center;">5-10%</td>
+<td>周期性受Pflegesatz谈判影响</td>
+</tr>
+<tr>
+<td>急救服务利润率</td>
+<td style="text-align: center;">近0%（按成本报销）</td>
+<td>公共采购的性质</td>
+</tr>
+<tr>
+<td>捐赠收入占比</td>
+<td style="text-align: center;">~5%</td>
+<td>相对稳定的非运营收入</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">财务稳定性分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">评价</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>收入稳定性</td>
+<td style="text-align: center;">🟢</td>
+<td>GKV/PKV 报销 + 公共采购合同提供稳定基本盘</td>
+</tr>
+<tr>
+<td>利润率</td>
+<td style="text-align: center;">🟡</td>
+<td>非营利约束→无利润最大化动机；部分服务（Hausnotruf）高利润补贴薄利服务</td>
+</tr>
+<tr>
+<td>财务透明度</td>
+<td style="text-align: center;">🔴</td>
+<td>非营利不公开详细财务报告 → 外部评估困难</td>
+</tr>
+<tr>
+<td>资本结构</td>
+<td style="text-align: center;">🟡</td>
+<td>无外部股权融资能力；依赖内部积累+政府补助+捐赠</td>
+</tr>
+<tr>
+<td>增长投资能力</td>
+<td style="text-align: center;">🟡</td>
+<td>扩张受自身现金流和捐赠限制；无股权/债券市场融资渠道</td>
+</tr>
+<tr>
+<td>风险缓释</td>
+<td style="text-align: center;">🟢</td>
+<td>服务线多元化（急救+护理+医院+养老院+培训）分散单一业务风险</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="vs_1">财务特质（非营利 vs 营利性对比）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th style="text-align: center;">Johanniter（非营利）</th>
+<th style="text-align: center;">Home Instead Germany（营利）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>收入目标</td>
+<td style="text-align: center;">成本覆盖+适度盈余再投资</td>
+<td style="text-align: center;">利润最大化</td>
+</tr>
+<tr>
+<td>资本来源</td>
+<td style="text-align: center;">内部积累+捐赠+政府</td>
+<td style="text-align: center;">特许经营费+股权融资+债务</td>
+</tr>
+<tr>
+<td>利润率导向</td>
+<td style="text-align: center;">满足运营需求即可</td>
+<td style="text-align: center;">追求最大化</td>
+</tr>
+<tr>
+<td>扩张模式</td>
+<td style="text-align: center;">有机增长+偶发资产收购</td>
+<td style="text-align: center;">特许经营+并购</td>
+</tr>
+<tr>
+<td>税务地位</td>
+<td style="text-align: center;">免税（gemeinnützig）</td>
+<td style="text-align: center;">正常纳税</td>
+</tr>
+<tr>
+<td>财务透明度</td>
+<td style="text-align: center;">低（不公开）</td>
+<td style="text-align: center;">中（母公司公开资料）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d8">D8 — 工作流/旅程映射</h2>
+<h3 id="johanniter_1">Johanniter 居家护理客户旅程</h3>
+<pre><code>【客户发现】
+  ① Rettungsdienst 现场接触（最大的独有导流渠道）
+     → 护理人员评估 → Johanniter 居家护理团队主动联系
+  ② Hausnotruf 客户 → 紧急情况发现 → 护理需求筛查
+  ③ 教会/社区推荐 → 信任驱动的客户介绍
+  ④ 医院出院管理 → 过渡护理转介
+  ⑤ 送餐服务日常接触 → 发现护理需求变化
+  ⑥ 口碑/家族推荐
+       │
+【初次评估】
+  Johanniter 的 Pflegefachkraft 上门免费评估
+    ├── Pflegegrad 认定（如尚未认定）：协助Medizinischer Dienst评估申请
+    ├── 护理需求范围明确（身体护理/家务/送餐/紧急呼叫）
+    └── 个性化护理计划制定（含现金/实物给付选择建议）
+       │
+【服务签约】
+  利用者选择：
+    ├── 纯实物给付（Sachleistung）→ 全部服务由Johanniter提供
+    ├── 混合给付（Kombination）→ 部分现金+部分Johanniter服务
+    └── 自费额外服务 → 超过Pflegeversicherung给付上限的部分
+       │
+【服务提供（持续）】
+  Ambulante Pflege：每日/每周多次上门 → 身体护理+家务+护理措施
+  Tagespflege：白天在设施 → 晚间回家
+  Essen auf Rädern：每日送餐
+  Hausnotruf：24/7 监控 + 紧急响应（Rettungsdienst联动）
+       │
+【评估与调整】
+  每半年一次标准复评（由Medizinischer Dienst或Pflegefachkraft）
+    └── 状态恶化 → 升级Pflegegrad → 增加服务频率/范围
+    └── 状态改善/Hausnotruf升级（智能手表等）
+       │
+【终止/过渡】
+    ├── 康复 → 服务减少/终止
+    ├── 转入养老院（Johanniter Pflegeheim）→ 内部转化
+    ├── 转入Hospiz（安宁疗护）
+    └── 临终护理
+</code></pre>
+<h3 id="johanniter_2">Johanniter 运营特性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>社区扎根型</strong></td>
+<td>190个Dienststellen + 各地Ortsverbände → 真正的&rdquo;毛细血管&rdquo;覆盖</td>
+</tr>
+<tr>
+<td><strong>急救导流独特</strong></td>
+<td>Rettungsdienst 是任何竞争对手无法复制的获客引擎</td>
+</tr>
+<tr>
+<td><strong>志愿者杠杆</strong></td>
+<td>30,000+志愿者在非核心环节降低成本</td>
+</tr>
+<tr>
+<td><strong>一站式服务</strong></td>
+<td>从紧急呼叫→居家护理→送餐→日间护理→养老院的全链条覆盖</td>
+</tr>
+<tr>
+<td><strong>各州自主运营</strong></td>
+<td>9个Landesverbände独立运营→灵活性高但全国标准化度低</td>
+</tr>
+<tr>
+<td><strong>内部转化链条</strong></td>
+<td>急救→居家护理→日间护理→养老院→安宁疗护的纵向一体化</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="_23">当前技术栈（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>技术领域</th>
+<th style="text-align: center;">成熟度</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hausnotruf 紧急呼叫系统</strong></td>
+<td style="text-align: center;">🟢 成熟</td>
+<td>传统紧急呼叫按钮+数字升级（智能手表/跌倒检测）</td>
+</tr>
+<tr>
+<td><strong>护理记录系统（Dokumentation）</strong></td>
+<td style="text-align: center;">🟡 中等</td>
+<td>电子护理记录（EDV-gestützte Pflegedokumentation）推进中</td>
+</tr>
+<tr>
+<td><strong>调度系统（Einsatzplanung）</strong></td>
+<td style="text-align: center;">🟡 中等</td>
+<td>居家护理排班系统（Tourenplanung）</td>
+</tr>
+<tr>
+<td><strong>Rettungsdienst 调度</strong></td>
+<td style="text-align: center;">🟢 成熟</td>
+<td>急救调度中心（Leitstelle）——全国领先水平</td>
+</tr>
+<tr>
+<td><strong>客户管理系统（CRM）</strong></td>
+<td style="text-align: center;">🟡 中等</td>
+<td>非营利机构通常不如营利性企业重视CRM</td>
+</tr>
+<tr>
+<td><strong>数字支付/账单</strong></td>
+<td style="text-align: center;">🟢 成熟</td>
+<td>与GKV/PKV Abrechnungszentren的电子对接</td>
+</tr>
+<tr>
+<td><strong>移动护理终端</strong></td>
+<td style="text-align: center;">🟡 推进中</td>
+<td>护理人员移动终端（Tablet/Smartphone）递推中</td>
+</tr>
+<tr>
+<td><strong>TI（Telematikinfrastruktur）接入</strong></td>
+<td style="text-align: center;">🟢 合规</td>
+<td>德国医疗数字基础设施的强制性接入已完成</td>
+</tr>
+<tr>
+<td><strong>远程护理（Telepflege）</strong></td>
+<td style="text-align: center;">🟡 初步</td>
+<td>视频护理咨询等——2026年BEEP法后有望加速</td>
+</tr>
+<tr>
+<td><strong>数据分析/AI</strong></td>
+<td style="text-align: center;">🔴 有限</td>
+<td>传统非营利组织在此领域通常落后于科技驱动型竞品</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="beep-2026">BEEP 法（2026）技术影响</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>技术领域</th>
+<th>BEEP后的变化</th>
+<th>Johanniter 的应对</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pflegefachkräfte 独立医疗措施</strong></td>
+<td>护理人员可独立执行部分医疗任务</td>
+<td>需要IT系统支持升级的权限管理和记录</td>
+</tr>
+<tr>
+<td><strong>Pflege-Apps 合法化</strong></td>
+<td>明确护理App的合法使用渠道</td>
+<td>Johanniter-Akademie可开发自有App</td>
+</tr>
+<tr>
+<td><strong>文档数字化推动</strong></td>
+<td>减少双轨记录</td>
+<td>推进电子化Dokumentation，减少纸质工作</td>
+</tr>
+<tr>
+<td><strong>QPR 2026年7月质量新体系</strong></td>
+<td>更注重结果质量（Ergebnisqualität）</td>
+<td>需要数据分析能力来追踪结果指标</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_24">技术评估总结</h3>
+<p><strong>评估：🟡 中等水平——在传统非营利机构中处于中上，但与科技驱动型竞品差距明显</strong></p>
+<ul>
+<li><strong>强项</strong>：Hausnotruf（数字升级+急救联动）是独特技术资产；Rettungsdienst调度系统全国领先</li>
+<li><strong>弱项</strong>：护理记录/CRM/数据分析落后于现代营利性机构；数字化投资受非营利财务约束</li>
+<li><strong>机遇</strong>：BEEP法推动远程护理合法化+QPR新质量体系要求数据驱动 → 推动数字化投资必行</li>
+<li><strong>威胁</strong>：Home Instead Germany 等营利性机构的技术投入力度更大</li>
+</ul>
+<hr />
+<h2 id="d10">D10 — 竞争格局</h2>
+<h3 id="_25">德国居家护理竞争结构</h3>
+<pre><code>【第1层：全国性机构（站点数100+）】
+  Home Instead Deutschland ── 特许经营，~250+站点，**营利 TOP 1**
+  Johanniter-Unfall-Hilfe ── ~190站点，**非营利 TOP 1**
+  Caritas（天主教）── 约500+站点，**非营利整体最大**
+  Diakonie（新教）── 约400+站点，**非营利第2**
+  AWO（工人福利）── 约300+站点
+  DRK（红十字会）── 约300+站点
+  Paritätischer ── 约200+站点
+
+【第2层：中大型营利性集团】
+  Ambulantis（瑞士控股）── 并购驱动
+  Kursana（Dussmann集团）
+  Alloheim Seniorenresidenzen
+  Cura Fresenius
+
+【第3层：区域中型机构】
+  各联邦州的区域性Pflegedienste
+  通常拥有5-30个站点
+
+【第4层：小型/微型机构】
+  约15,000+家
+  员工&lt;10人的小型Pflegedienst
+  占市场80%以上数量
+</code></pre>
+<h3 id="wohlfahrtsverbande">六大福利协会（Wohlfahrtsverbände）比较</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>协会</th>
+<th>宗教背景</th>
+<th style="text-align: center;">站点数（居家护理）</th>
+<th>核心特征</th>
+<th style="text-align: center;">对 Johanniter 的竞争关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Caritas（天主教）</strong></td>
+<td>天主教</td>
+<td style="text-align: center;">~500+</td>
+<td><strong>整体最大</strong>，全国最广泛的站点网络</td>
+<td style="text-align: center;">竞争+合作（政策倡导协同）</td>
+</tr>
+<tr>
+<td><strong>Diakonie（新教）</strong></td>
+<td>新教·福音派</td>
+<td style="text-align: center;">~400+</td>
+<td>与Johanniter同属新教系统</td>
+<td style="text-align: center;">竞争+协同（同一宗教体系）</td>
+</tr>
+<tr>
+<td><strong>AWO（工人福利）</strong></td>
+<td>无（SPD系）</td>
+<td style="text-align: center;">~300+</td>
+<td>政治团体（社民党）关联</td>
+<td style="text-align: center;">竞争（政治偏好差异）</td>
+</tr>
+<tr>
+<td><strong>DRK（红十字会）</strong></td>
+<td>无（人道主义）</td>
+<td style="text-align: center;">~300+</td>
+<td>急救领域与Johanniter直接竞争</td>
+<td style="text-align: center;"><strong>最直接竞争对手</strong>（急救+居家护理重叠大）</td>
+</tr>
+<tr>
+<td><strong>Johanniter（本报告）</strong></td>
+<td><strong>新教·约翰尼特</strong></td>
+<td style="text-align: center;"><strong>~190</strong></td>
+<td><strong>急救+居家护理的强势品牌</strong></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>Paritätischer</strong></td>
+<td>无</td>
+<td style="text-align: center;">~200+</td>
+<td>伞式组织（Dachverband），成员结构多样</td>
+<td style="text-align: center;">弱竞争</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="vs_2">营利性 vs 非营利竞争分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>比较维度</th>
+<th style="text-align: center;">非营利（Johanniter/DRK/Diakonie）</th>
+<th style="text-align: center;">营利（Home Instead/Ambulantis）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>市场份额</strong></td>
+<td style="text-align: center;">合计~50-60%（六大协会整体）</td>
+<td style="text-align: center;">合计~10-15%（快速增长中）</td>
+</tr>
+<tr>
+<td><strong>品牌信任</strong></td>
+<td style="text-align: center;">🟢 极高</td>
+<td style="text-align: center;">🟡 中等（德国消费者对营利性护理犹豫度高）</td>
+</tr>
+<tr>
+<td><strong>获取资本</strong></td>
+<td style="text-align: center;">🔴 受限（内部积累+捐赠）</td>
+<td style="text-align: center;">🟢 股权+债务融资</td>
+</tr>
+<tr>
+<td><strong>扩张速度</strong></td>
+<td style="text-align: center;">🔴 慢（有机增长）</td>
+<td style="text-align: center;">🟢 快（并购+特许经营）</td>
+</tr>
+<tr>
+<td><strong>价格竞争力</strong></td>
+<td style="text-align: center;">🟢 非营利定价通常低于营利</td>
+<td style="text-align: center;">🟡 定价可能高于非营利</td>
+</tr>
+<tr>
+<td><strong>服务质量</strong></td>
+<td style="text-align: center;">🟡 质量参差（各分散站点）</td>
+<td style="text-align: center;">🟢 标准化程度更高</td>
+</tr>
+<tr>
+<td><strong>政策影响力</strong></td>
+<td style="text-align: center;">🟢 六大协会的集体游说力</td>
+<td style="text-align: center;">🟡 弱</td>
+</tr>
+<tr>
+<td><strong>人才吸引力</strong></td>
+<td style="text-align: center;">🟡 使命感驱动</td>
+<td style="text-align: center;">🟡 薪资竞争力更强</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11">D11 — 收入构成与增长</h2>
+<h3 id="tamsamsom">市场规模（TAM/SAM/SOM）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">规模</th>
+<th style="text-align: center;">年率增长</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TAM</strong>：德国长期护理总支出</td>
+<td style="text-align: center;"><strong>&gt;€600亿/年</strong>（SGB XI + 自费）</td>
+<td style="text-align: center;">+3-5%（人口+通涨+给付提高）</td>
+</tr>
+<tr>
+<td><strong>SAM</strong>：居家护理（Ambulante Pflege）市场</td>
+<td style="text-align: center;"><strong>~€150-200亿/年</strong>（推定）</td>
+<td style="text-align: center;">+5-7%（居家优先政策推动）</td>
+</tr>
+<tr>
+<td><strong>SOM</strong>：Johanniter 居家护理可获取部分</td>
+<td style="text-align: center;"><strong>~€2-3亿（现）</strong></td>
+<td style="text-align: center;">+3-5%（组织增长+站点扩展）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_26">增长驱动因素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>驱动因素</th>
+<th style="text-align: center;">影响</th>
+<th style="text-align: center;">时间轴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>人口老龄化</strong></td>
+<td style="text-align: center;">569万→~700万（2035年）Pflegebedürftige的确定性增长</td>
+<td style="text-align: center;">长期</td>
+</tr>
+<tr>
+<td><strong>ambulant vor stationär 政策</strong></td>
+<td style="text-align: center;">居家护理优先于机构，推动居家市场份额上升</td>
+<td style="text-align: center;">长期</td>
+</tr>
+<tr>
+<td><strong>Home Instead 等营利性竞争</strong></td>
+<td style="text-align: center;">营利性企业扩张</td>
+<td style="text-align: center;">短期已发生</td>
+</tr>
+<tr>
+<td><strong>现金给付→实物给付切换趋势</strong></td>
+<td style="text-align: center;">随老龄化加深，更多家庭转向专业护理</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td><strong>Hausnotruf 数字升级</strong></td>
+<td style="text-align: center;">智能手表/跌倒检测等新产品线推动收入增长</td>
+<td style="text-align: center;">短期</td>
+</tr>
+<tr>
+<td><strong>BEEP法推动远程护理</strong></td>
+<td style="text-align: center;">远程护理合法化→服务线扩展</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td><strong>QPR质量体系2026</strong></td>
+<td style="text-align: center;">质量考核标准化→可能推动行业整合</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td><strong>Pflegeversicherung 资金危机</strong></td>
+<td style="text-align: center;">保险给付增长受预算约束→可能抑制行业收入增长</td>
+<td style="text-align: center;">短期-中期</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_27">增长约束因素</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>约束</th>
+<th style="text-align: center;">影响度</th>
+<th>缓释措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>护理人才短缺</strong></td>
+<td style="text-align: center;">🔴 <strong>致命</strong></td>
+<td>Ausbildung学徒制+外籍护理人员引进+数字化提效</td>
+</tr>
+<tr>
+<td><strong>非营利资本约束</strong></td>
+<td style="text-align: center;">🔴 <strong>严重</strong></td>
+<td>捐赠增加+政府补助+效率改善</td>
+</tr>
+<tr>
+<td><strong>GKV给付上限固定</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td>自费服务扩展（Hausnotruf/送餐/额外服务）</td>
+</tr>
+<tr>
+<td><strong>各州独立运营→全国协同效率低</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td>中央IT系统标准化（非容易的事）</td>
+</tr>
+<tr>
+<td><strong>营利性竞争者加速扩张</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td>强化品牌信任+社区扎根差异化</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型</h2>
+<h3 id="ambulante-pflege-sachleistung">单位经济模型（居家护理——Ambulante Pflege Sachleistung）</h3>
+<pre><code>【居家护理1次上门（Pflegefachkraft 60分钟）—— 推定】
+
+收入：
+  GKV Sachleistung 报销（约€35-45/小时）  = €40（平均）
+  自费（如有超时或额外服务）               = €5-10（平均）
+  ───────────────────────────────────
+  单次上门总收入                           = €45-50
+
+变动成本：
+  Pflegefachkraft 时薪（含雇主社保）        = €22-28
+  交通费（平均每次上门10km×€0.30）         = €3
+  消耗品（手套/消毒/护理用品）              = €2
+  ───────────────────────────────────
+  单次变动成本                             = €27-33
+
+贡献利润：
+  €45-50 - €27-33 = €12-23/次
+  贡献利润率 = 27-46%
+
+固定成本分摊（按次/站点运营成本）：
+  站点管理费（Leitung/Verwaltung）         = €5-8/次
+  培训/认证摊销                             = €1-2/次
+  ───────────────────────────────────
+  (推定)营业利润                            = €4-13/次
+  (推定)营业利润率                          = 8-26%
+</code></pre>
+<h3 id="hausnotruf">Hausnotruf（紧急呼叫）—— 高利润订阅模型</h3>
+<pre><code>【Hausnotruf Grundgerät（基础款）1客户/月】
+
+收入：
+  月订阅费（基础款）                      = €20/月
+  年合同续订率 &gt;90%
+
+变动成本（每月）：
+  设备折旧（一次性€200 ÷ 36个月）         = €5.6/月
+  SIM卡/通信费                            = €3/月
+  监控中心运营成本分摊                     = €5/月
+  ───────────────────────────────────
+  每月变动成本                             = €13.6/月
+
+每月贡献利润：                            = €6.4/月
+贡献利润率：                              = 32%
+
+LTV（3年）：€720收入 → €230利润
+[智能手表等高级版利润率更高]
+</code></pre>
+<h3 id="essen-auf-radern">送餐服务（Essen auf Rädern）—— 低利润但导流价值高</h3>
+<pre><code>【送餐服务 1餐/日/客户】
+
+收入：
+  每餐价格                                = €9（平均）
+  每日一餐，月22天                        = €198/月
+
+变动成本：
+  餐食制作成本                            = €4/餐
+  配送成本                                = €2/餐
+  包装/保温系统                           = €1/餐
+  ───────────────────────────────────
+  每餐变动成本                             = €7/餐
+
+每餐贡献利润                              = €2/餐
+贡献利润率                                = 22%
+
+【导流价值】送餐员工是发现客户护理需求变化的&quot;眼睛&quot;，每天进门的接触频次
+</code></pre>
+<h3 id="_28">综合盈利结构分析</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>业务线</th>
+<th style="text-align: center;">利润率</th>
+<th style="text-align: center;">占总收入比</th>
+<th style="text-align: center;">利润贡献占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>居家护理（Sachleistung）</td>
+<td style="text-align: center;">3-8%</td>
+<td style="text-align: center;">~40%</td>
+<td style="text-align: center;">~15-25%</td>
+</tr>
+<tr>
+<td>Hausnotruf（紧急呼叫）</td>
+<td style="text-align: center;">15-25%</td>
+<td style="text-align: center;">~5%</td>
+<td style="text-align: center;">~15-20%</td>
+</tr>
+<tr>
+<td>Tagespflege（日间护理）</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: center;">~12%</td>
+<td style="text-align: center;">~8-12%</td>
+</tr>
+<tr>
+<td>Essen auf Rädern（送餐）</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: center;">~5-8%</td>
+</tr>
+<tr>
+<td>养老院（Pflegeheime）</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: center;">~18%</td>
+<td style="text-align: center;">~15-20%</td>
+</tr>
+<tr>
+<td>其他（医院/培训/捐赠等）</td>
+<td style="text-align: center;">不定</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: center;">~25-30%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>结论：Hausnotruf 和捐赠是&rdquo;隐性高利润&rdquo;业务，补贴薄利的居家护理核心业务。整体运营在盈亏平衡线到轻微盈利之间。</strong></p>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估</h2>
+<h3 id="opportunities">机遇（Opportunities）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>机遇</th>
+<th style="text-align: center;">影响力</th>
+<th style="text-align: center;">概率</th>
+<th style="text-align: center;">优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hausnotruf 数字升级</strong>（智能手表/跌倒检测）</td>
+<td style="text-align: center;">🔥🔥🔥</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;"><strong>最优先（快速增长的高利润业务）</strong></td>
+</tr>
+<tr>
+<td><strong>人口老龄化→居家护理需求结构性增长</strong></td>
+<td style="text-align: center;">🔥🔥🔥</td>
+<td style="text-align: center;">🟢确定</td>
+<td style="text-align: center;">长期结构</td>
+</tr>
+<tr>
+<td><strong>BEEP法→护理人员权限扩展→服务增值</strong></td>
+<td style="text-align: center;">🔥🔥</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;">优先（2026年生效）</td>
+</tr>
+<tr>
+<td><strong>营利性企业加速扩张→六大协会抱团应对或推动政策</strong></td>
+<td style="text-align: center;">🔥🔥</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td><strong>QPR新质量体系→驱动行业整合→Johanniter可收购小型站点</strong></td>
+<td style="text-align: center;">🔥🔥</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td><strong>远程护理（Telepflege）合法化</strong></td>
+<td style="text-align: center;">🔥🔥</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td><strong>送餐服务的健康膳食升级</strong>（治疗性餐食）</td>
+<td style="text-align: center;">🔥</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td><strong>外籍护理人员引进政策</strong>（如印度/菲律宾）</td>
+<td style="text-align: center;">🔥</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td><strong>国际人道援助的品牌溢出效应</strong></td>
+<td style="text-align: center;">🔥</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">间接效应</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="risks">风险（Risks）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>风险</th>
+<th style="text-align: center;">影响力</th>
+<th style="text-align: center;">概率</th>
+<th style="text-align: center;">优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>护理人才短缺加剧</strong>（2049年缺口28-69万人）</td>
+<td style="text-align: center;">🔴致命</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;"><strong>最优先（行业最大风险）</strong></td>
+</tr>
+<tr>
+<td><strong>Pflegeversicherung 资金危机→给付紧缩</strong></td>
+<td style="text-align: center;">🔴高</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;"><strong>最优先（改革方案225亿缺口）</strong></td>
+</tr>
+<tr>
+<td><strong>Home Instead 等营利性企业持续侵蚀市场</strong></td>
+<td style="text-align: center;">🔴中</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;">短期-中期</td>
+</tr>
+<tr>
+<td><strong>老龄化→退休潮→Johanniter自身人才流失</strong></td>
+<td style="text-align: center;">🔴高</td>
+<td style="text-align: center;">🟢高</td>
+<td style="text-align: center;">短期-中期</td>
+</tr>
+<tr>
+<td><strong>数字化转型落后</strong> → 运营效率低于营利性竞争者</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+<tr>
+<td><strong>非营利组织治理挑战</strong>（各州独立性强的集权-分权平衡）</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">长期</td>
+</tr>
+<tr>
+<td><strong>世俗化趋势</strong> → 宗教背景在年轻世代中的吸引力下降</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">长期结构性</td>
+</tr>
+<tr>
+<td><strong>政治/政策变化</strong>（如SPD/Grüne政策对宗教型非营利不利）</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">🟡中</td>
+<td style="text-align: center;">中期</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_29">综合风险评估</h3>
+<p><strong>总评：🟡 中高风险</strong> — 行业人才危机和保险资金缺口是系统性问题，Johanniter 作为非营利组织在应对这两大挑战时处于结构性不利地位（无法通过股权融资或高薪竞争）。但品牌信任、社区扎根和六大协会的政策影响力提供了重要的缓冲机制。Hausnotruf 数字升级是最明确的利润增长点。</p>
+<hr />
+<h2 id="d14">D14 — 管理指引与市场预期</h2>
+<h3 id="_30">管理结构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>机构/角色</th>
+<th>职能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>全国层面</strong></td>
+<td>Bundesvorstand（联邦理事会）</td>
+<td>战略决策+整体治理</td>
+</tr>
+<tr>
+<td></td>
+<td>Bundesgeschäftsführung（联邦执行层）</td>
+<td>日常运营管理</td>
+</tr>
+<tr>
+<td></td>
+<td>Mitgliederversammlung（会员大会）</td>
+<td>最高决策机构</td>
+</tr>
+<tr>
+<td><strong>州层面</strong></td>
+<td>9×Landesvorstand（州理事会）</td>
+<td>各州事务治理</td>
+</tr>
+<tr>
+<td></td>
+<td>9×Landesgeschäftsführung（州执行层）</td>
+<td>各州运营执行</td>
+</tr>
+<tr>
+<td><strong>地方层面</strong></td>
+<td>Bezirks-/Ortsverbände（地区/地方协会）</td>
+<td>社区级服务交付</td>
+</tr>
+<tr>
+<td></td>
+<td>~190 个 Pflegedienstleitung（护理服务负责人）</td>
+<td>各站点护理管理</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_31">领导层特征</h3>
+<ul>
+<li>高层领导通常来自新教社会服务领域或急救医学背景</li>
+<li>各州理事会成员多为当地社会名流（神职人员、退休政要、商人等）</li>
+<li>非营利组织的管理层薪酬低于营利性企业同级别</li>
+<li>无公开披露的CEO薪酬、KPI或业绩目标</li>
+<li>治理结构偏向保守，决策链条较长（会员大会→理事会→执行层）</li>
+</ul>
+<h3 id="_32">市场预期</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">预期</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>居家护理收入增长</td>
+<td style="text-align: center;">年+3-5%（有机增长）</td>
+<td>人口+新站点开设</td>
+</tr>
+<tr>
+<td>Hausnotruf收入增长</td>
+<td style="text-align: center;">年+10-15%（数字升级推动）</td>
+<td>智能手表/跌倒检测等新产品</td>
+</tr>
+<tr>
+<td>利润率趋势</td>
+<td style="text-align: center;">稳中略降</td>
+<td>人才成本上涨快于GKV报销增长</td>
+</tr>
+<tr>
+<td>站点数增长</td>
+<td style="text-align: center;">+2-5%/年</td>
+<td>非营利扩张受资本约束</td>
+</tr>
+<tr>
+<td>数字化转型</td>
+<td style="text-align: center;">缓慢但不可避免</td>
+<td>传统非营利组织的数字步伐保守</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<h3 id="_33">⚠️ 非营利组织不适用传统估值 —— 此维度的分析框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>评估方法</th>
+<th style="text-align: center;">适用性</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P/E 倍数</strong></td>
+<td style="text-align: center;">❌ <strong>不适用</strong></td>
+<td>非营利无股东权益，无利润分配</td>
+</tr>
+<tr>
+<td><strong>EV/EBITDA</strong></td>
+<td style="text-align: center;">❌ 不适用</td>
+<td>非营利不计EBITDA作为核心指标</td>
+</tr>
+<tr>
+<td><strong>收入倍数</strong></td>
+<td style="text-align: center;">⚠️ 勉强适用</td>
+<td>可参照活跃的M&amp;A市场中类似非营利Pflegedienst的收购倍数</td>
+</tr>
+<tr>
+<td><strong>重置成本法</strong></td>
+<td style="text-align: center;">⚠️ 部分适用</td>
+<td>站点网络+品牌价值+客户关系的重置成本</td>
+</tr>
+<tr>
+<td><strong>DCF</strong></td>
+<td style="text-align: center;">⚠️ 部分适用（推定现金流）</td>
+<td>假设非营利目的的&rdquo;可持续运营现金流&rdquo;</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="pflegedienst-ma">德国 Pflegedienst M&amp;A 市场参考（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>交易类型</th>
+<th style="text-align: center;">倍数（收入）</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>小型Pflegedienst（&lt;10站点）</td>
+<td style="text-align: center;">0.5-0.8x 年收入</td>
+<td>常见于区域并购</td>
+</tr>
+<tr>
+<td>中型Pflegedienst（10-50站点）</td>
+<td style="text-align: center;">0.7-1.2x 年收入</td>
+<td>有品牌和客群溢价</td>
+</tr>
+<tr>
+<td>大型站点网络（100+站点）</td>
+<td style="text-align: center;"><strong>1.0-1.5x 年收入</strong></td>
+<td><strong>Johanniter 居家护理业务的参考范围</strong></td>
+</tr>
+<tr>
+<td>Hausnotruf 业务</td>
+<td style="text-align: center;">2.0-4.0x 年收入</td>
+<td>订阅模型轻资产，高利润</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="johanniter_3">Johanniter 居家护理业务的推定价值</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>评估方法</th>
+<th style="text-align: center;">推定值</th>
+<th>前提</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>收入倍数（1.0-1.5x）</td>
+<td style="text-align: center;">€2.0-4.5亿</td>
+<td>居家护理收入€2-3亿</td>
+</tr>
+<tr>
+<td>Hausnotruf 单独估值</td>
+<td style="text-align: center;">€6,000万-2亿</td>
+<td>订阅收入€3,000-5,000万 × 2-4x</td>
+</tr>
+<tr>
+<td>品牌+站点网络溢价</td>
+<td style="text-align: center;">+€0.5-1亿（推定）</td>
+<td>&ldquo;Johanniter&rdquo;品牌的非货币价值</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>推定Johanniter居家护理业务总价值：€2.5-6亿（约$3-7亿）</strong>
+<em>注：非营利法律结构使得实际交易几乎不可能发生</em></p>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="johanniter_4">从 Johanniter 模式中可以学习的方向</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>学习点</th>
+<th>iHomeCare 启示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>社区渗透式获客</strong></td>
+<td>德国非营利用急救服务/志愿者网络导流 → iHomeCare 可探索与社区医疗机构/消防/物业的导流合作</td>
+</tr>
+<tr>
+<td><strong>订阅式紧急呼叫</strong></td>
+<td>Hausnotruf 是高利润引流产品 → iHomeCare 可开发类似轻资产的&rdquo;紧急响应订阅&rdquo;</td>
+</tr>
+<tr>
+<td><strong>送餐→护理的接触频次杠杆</strong></td>
+<td>每日送餐→护理需求发现→服务升级 → iHomeCare 可考虑&rdquo;配送+健康检查&rdquo;的混合服务</td>
+</tr>
+<tr>
+<td><strong>非营利信任的品牌护城河</strong></td>
+<td>百年组织+社会服务传统 → iHomeCare 在中国市场需构建类似的信任机制（通过与三甲医院/社区联合品牌）</td>
+</tr>
+<tr>
+<td><strong>服务线多元化的收入稳定性</strong></td>
+<td>居家护理+日间护理+送餐+紧急呼叫的收入池分散风险 → iHomeCare 应从高端居家护理出发，逐步扩展产品线</td>
+</tr>
+<tr>
+<td><strong>志愿者网络的经济杠杆</strong></td>
+<td>30,000志愿者降低运营成本 → iHomeCare 可探索大学生志愿者/退休医护人员的社区参与模式</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="johanniter-ihomecare">Johanniter 与 iHomeCare 的相关性</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th style="text-align: center;">评估</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>投资对象作为标的</td>
+<td style="text-align: center;">🔴低</td>
+<td>非营利法律结构，不可购买</td>
+</tr>
+<tr>
+<td>合作伙伴可能性</td>
+<td style="text-align: center;">🟡中</td>
+<td>中德护理领域的知识交流可能（但优先度不高）</td>
+</tr>
+<tr>
+<td>竞争威胁</td>
+<td style="text-align: center;">🔴低</td>
+<td>德国市场限定，不进入中国</td>
+</tr>
+<tr>
+<td>战略参考价值</td>
+<td style="text-align: center;">🟢高</td>
+<td><strong>非营利大规模居家护理运营+社区渗透+多元化收入</strong>的模型有参考价值</td>
+</tr>
+<tr>
+<td>技术参考价值</td>
+<td style="text-align: center;">🟡中</td>
+<td>Hausnotruf 数字升级（紧急呼叫→智能设备）的产品逻辑有参考性</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>建议：Johanniter 模式的核心参考价值在于&rdquo;非营利社区扎根型居家护理的大规模运营方法论&rdquo;和&rdquo;Hausnotruf作为高利润引流产品的设计&rdquo;。iHomeCare 可将这些启示应用于中国市场定位——特别是在社区信任建设和订阅式紧急服务产品设计上。</strong></p>
+<hr />
+<h2 id="d17-pflegeversicherung">D17 — 政策与监管土壤（德国 Pflegeversicherung）</h2>
+<h3 id="_34">核心法律框架</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>制度要素</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>法律</strong></td>
+<td>SGB XI（Pflegeversicherung，1995年施行）</td>
+</tr>
+<tr>
+<td><strong>参保对象</strong></td>
+<td>全体法定医疗保险（GKV）参保人（自动参保）</td>
+</tr>
+<tr>
+<td><strong>保险人</strong></td>
+<td>Pflegekassen（护理保险基金，隶属于各Krankenkassen）</td>
+</tr>
+<tr>
+<td><strong>认定等级</strong></td>
+<td>Pflegegrad 1-5（2017年改革后以自立性障碍程度评估）</td>
+</tr>
+<tr>
+<td><strong>给付类型</strong></td>
+<td>Pflegegeld（现金）/ Sachleistung（实物）/ Kombination（混合）</td>
+</tr>
+<tr>
+<td><strong>居家优先原则</strong></td>
+<td>ambulant vor stationär（法律明确）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2025">居家护理相关给付标准（2025年）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">等级</th>
+<th style="text-align: center;">现金给付（Pflegegeld）</th>
+<th style="text-align: center;">实物给付（Sachleistung）</th>
+<th style="text-align: center;">Entlastungsbetrag（缓解津贴）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Pflegegrad 1</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">€131/月</td>
+</tr>
+<tr>
+<td style="text-align: center;">Pflegegrad 2</td>
+<td style="text-align: center;">€347/月</td>
+<td style="text-align: center;">€796/月</td>
+<td style="text-align: center;">€131/月</td>
+</tr>
+<tr>
+<td style="text-align: center;">Pflegegrad 3</td>
+<td style="text-align: center;">€599/月</td>
+<td style="text-align: center;">€1,417/月</td>
+<td style="text-align: center;">€131/月</td>
+</tr>
+<tr>
+<td style="text-align: center;">Pflegegrad 4</td>
+<td style="text-align: center;">€832/月</td>
+<td style="text-align: center;">€1,865/月</td>
+<td style="text-align: center;">€131/月</td>
+</tr>
+<tr>
+<td style="text-align: center;">Pflegegrad 5</td>
+<td style="text-align: center;">€990/月</td>
+<td style="text-align: center;">€2,299/月</td>
+<td style="text-align: center;">€131/月</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="johanniter_5">Johanniter 相关制度特记</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>制度要素</th>
+<th style="text-align: center;">Johanniter 影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ambulant vor stationär</strong></td>
+<td style="text-align: center;">法律推动居家护理优先 → 利好Johanniter的ambulante Pflege业务</td>
+</tr>
+<tr>
+<td><strong>Entlastungsbetrag（§45b）</strong></td>
+<td style="text-align: center;">可用于陪伴服务（Betreuungsleistungen）→ Johanniter可通过志愿者提供低成本服务</td>
+</tr>
+<tr>
+<td><strong>Hausnotruf 非保险覆盖</strong></td>
+<td style="text-align: center;">纯自费市场 → 高利润率但需客户直接付费</td>
+</tr>
+<tr>
+<td><strong>SGB V Telemonitoring（心衰远程监测自2021年）</strong></td>
+<td style="text-align: center;">与Hausnotruf的协同可能性</td>
+</tr>
+<tr>
+<td><strong>G-BA 2026年QPR新质量体系</strong></td>
+<td style="text-align: center;">结果质量考核标准化 → 质量驱动的小型站点淘汰有利Johanniter整合</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2026">2026年关键改革</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>改革</th>
+<th>内容</th>
+<th style="text-align: center;">Johanniter 影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BEEP法</strong>（2026年1月）</td>
+<td>护理专业权限扩大+去官僚化+远程护理合法化</td>
+<td style="text-align: center;">🟢 利好（可扩展服务范围+增强护理职业吸引力）</td>
+</tr>
+<tr>
+<td><strong>QPR新质量体系</strong>（2026年7月）</td>
+<td>结果质量导向+检查间隔延长（高质量站点2年一次）</td>
+<td style="text-align: center;">🟢 利好（Johanniter的质量水平通常高于小型站点）</td>
+</tr>
+<tr>
+<td><strong>资金缺口改革</strong>（2027年起）</td>
+<td>缴费基数提高+支出削减+附加费提高</td>
+<td style="text-align: center;">🟡 中（GKV给付增长受限→收入增长天花板）</td>
+</tr>
+<tr>
+<td><strong>全国统一护理助理培训</strong>（2027年）</td>
+<td>标准化Pflegehilfe培训</td>
+<td style="text-align: center;">🟡 中（增加人才供给但有过渡期挑战）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<h3 id="sachleistung-pflegefachkraft-60">居家护理（Sachleistung）—— Pflegefachkraft 60分钟上门</h3>
+<pre><code>【收入】
+  GKV Sachleistung 报销（全国费率谈判，各州略有差异）   = €40-45/次
+  利用者自费（如有额外服务）                           = €5-10/次
+  ─────────────────────────────────
+  单次收入                                            = €45-55
+
+【直接变动成本】
+  Pflegefachkraft 工资成本（含雇主部分社保）：
+    月总雇主义务（Fachkraft时薪€18-22 × 1.25（社保）) = €22.5-27.5/小时
+    上门时间：60分钟护理 + 30分钟交通 + 15分钟记录     = 1.75小时实际投入
+    实际工时薪资成本                                 = €39-48
+  但按&quot;护理时&quot;计费时，实际上每次上门通常有多个客户分配交通成本
+  单次上门的人员工资成本（分配后）                     = €22-28/次
+
+  交通费（每次上门~10km）                             = €3/次
+  消耗品（护理耗材）                                 = €2/次
+  ─────────────────────────────────
+  每次变动成本                                         = €27-33
+
+【贡献利润】
+  €45-55 - €27-33 = €12-22/次
+  贡献利润率 = 27-49%
+
+【固定成本分摊（每次）】
+  站点运营（Leitung/Verwaltung/Räume/IT）             = €5-8/次
+  培训/Johanniter-Akademie分摊                        = €1-2/次
+  ─────────────────────────────────
+  推定净利润                                          = €3-14/次
+  推定净利润率                                        = 7-25%（站点差异大）
+</code></pre>
+<h3 id="hausnotruf_1">Hausnotruf 紧急呼叫订阅</h3>
+<pre><code>【基础款（固定电话/SIM卡型）—— 1客户/月】
+
+收入：月费 €20
+变动成本：
+  设备摊销（€180 ÷ 36月）                              = €5.0/月
+  SIM卡/通信                                           = €3.0/月
+  监控中心成本分摊                                       = €5.0/月
+  客服支持                                              = €2.0/月
+  ─────────────────────────────────
+  月变动成本                                            = €15.0/月
+
+月贡献利润：                                            = €5.0/月
+月贡献利润率：                                          = 25%
+
+LTV（4年×€20/月 = €960收入 → €240利润）
+
+【智能手表高级款（含跌倒检测/GPS）—— 1客户/月】
+
+收入：月费 €35
+变动成本：
+  设备摊销（€300 ÷ 36月）                              = €8.3/月
+  eSIM/通信                                            = €5.0/月
+  监控中心成本分摊                                       = €6.0/月
+  客服+技术支持                                         = €3.0/月
+  ─────────────────────────────────
+  月变动成本                                            = €22.3/月
+
+月贡献利润：                                            = €12.7/月
+月贡献利润率：                                          = 36%
+
+LTV（4年×€35/月 = €1,680收入 → €610利润）
+</code></pre>
+<h3 id="essen-auf-radern_1">送餐服务（Essen auf Rädern）</h3>
+<pre><code>【1客户/日，月22餐制】
+
+收入：月 €198（€9/餐）
+变动成本：
+  餐食制作                                            = €4/餐 × 22 = €88/月
+  配送人工+车辆                                        = €2.5/餐 × 22 = €55/月
+  包装/保温                                           = €1/餐 × 22 = €22/月
+  ────────────────────────────────────
+  月变动成本                                           = €165/月
+
+月贡献利润：                                            = €33/月
+贡献利润率：                                            = 17%
+
+导流价值：送餐员每日接触→发现护理需求变化→导流到居家护理或Hausnotruf
+</code></pre>
+<h3 id="_35">整体经济总结</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>业务线</th>
+<th style="text-align: center;">利润率</th>
+<th style="text-align: center;">利润占比（推定）</th>
+<th>战略价值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>居家护理</td>
+<td style="text-align: center;">3-8%</td>
+<td style="text-align: center;">~40%</td>
+<td><strong>核心使命业务</strong>——品牌基础</td>
+</tr>
+<tr>
+<td>Hausnotruf</td>
+<td style="text-align: center;">15-25%</td>
+<td style="text-align: center;">~25%</td>
+<td><strong>利润引擎+数字升级增长点</strong></td>
+</tr>
+<tr>
+<td>送餐+日间护理</td>
+<td style="text-align: center;">5-10%</td>
+<td style="text-align: center;">~15%</td>
+<td>导流漏斗+客户接触频次</td>
+</tr>
+<tr>
+<td>捐赠+其他</td>
+<td style="text-align: center;">不定</td>
+<td style="text-align: center;">~20%</td>
+<td>非营利特色的补贴收入</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<h3 id="_36">主要客户セグメント</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>セグメント</th>
+<th style="text-align: center;">年龄</th>
+<th style="text-align: center;">Pflegegrad</th>
+<th>使用服务</th>
+<th style="text-align: center;">月支出（总）</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>居家护理轻度</strong>（Pflegegrad 2-3）</td>
+<td style="text-align: center;">75-85岁</td>
+<td style="text-align: center;">2-3</td>
+<td>每周3-5次上门身体护理+家务</td>
+<td style="text-align: center;">€500-1,000（保险+自费）</td>
+<td><strong>Johanniter中核客户</strong></td>
+</tr>
+<tr>
+<td><strong>居家护理重度</strong>（Pflegegrad 4-5）</td>
+<td style="text-align: center;">80-95岁</td>
+<td style="text-align: center;">4-5</td>
+<td>每日1-3次上门+夜间护理可能</td>
+<td style="text-align: center;">€1,500-2,500（保险+自费）</td>
+<td>高频次+高复杂度护理</td>
+</tr>
+<tr>
+<td><strong>日间护理利用者</strong></td>
+<td style="text-align: center;">75-90岁</td>
+<td style="text-align: center;">2-4</td>
+<td>白天设施护理+晚间回家</td>
+<td style="text-align: center;">€800-1,500</td>
+<td>家庭照护者需要白天休息</td>
+</tr>
+<tr>
+<td><strong>送餐利用者</strong></td>
+<td style="text-align: center;">70-95岁</td>
+<td style="text-align: center;">1-5（混合）</td>
+<td>每日热餐送到家</td>
+<td style="text-align: center;">€180-360（自费）</td>
+<td><strong>入门产品</strong>——不一定有正式护理需求</td>
+</tr>
+<tr>
+<td><strong>Hausnotruf利用者</strong></td>
+<td style="text-align: center;">70-95岁</td>
+<td style="text-align: center;">1-4</td>
+<td>24/7紧急呼叫+跌倒检测</td>
+<td style="text-align: center;">€15-45/月（自费）</td>
+<td><strong>独居老人</strong>*</td>
+</tr>
+<tr>
+<td><strong>混合利用者</strong>（全套方案）</td>
+<td style="text-align: center;">80-90岁</td>
+<td style="text-align: center;">2-4</td>
+<td>居家护理+送餐+紧急呼叫+日间</td>
+<td style="text-align: center;">€1,000-2,500</td>
+<td><strong>理想客户</strong>——全链条粘性</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="johanniter_6">Johanniter 的注力セグメント</h3>
+<ol>
+<li><strong>Pflegegrad 2-4 居家护理利用者（中核）</strong>：业务基本盘，GKV/PKV给付覆盖大部分成本</li>
+<li><strong>独居老人（Hausnotruf重点）</strong>：安全和通信需求驱动的高利润long-tail产品</li>
+<li><strong>送餐利用者→升级路径</strong>：无护理认定的自费客户→发现需求→导流到保险覆盖的居家护理</li>
+<li><strong>家庭照护者</strong>（间接受众）：Pflegegeld（现金给付）的家庭照护者群体→当他们需要解压时转向混合给付+Johanniter实物服务</li>
+</ol>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<h3 id="_37">德国居家护理竞争分层</h3>
+<pre><code>【第1层：非营利六大福利协会（合计市场份额~50-60%）】
+  Caritas（天主教）~500站点    ─ 站点最多
+  Diakonie（新教）~400站点     ─ 同属新教系统
+  AWO（工人福利）~300站点      ─ SPD倾向
+  DRK（红十字会）~300站点      ─ 急救领域直接竞争
+  Paritätischer ~200+站点      ─ 伞式组织
+  Johanniter ~190站点          ─ 本报告主体
+
+【第1.5层：营利性头部】
+  Home Instead Deutschland ~250+站点 ─ 特许经营，增长最快
+  Ambulantis（瑞士）~150站点         ─ 并购驱动
+
+【第2层：区域中型机构】
+  各州区域性Pflegedienste
+  通常5-30站点
+
+【第3层：小型/微型机构（15,000+家）】
+  员工&lt;10人的社区Pflegedienst
+  占市场数量80%+
+</code></pre>
+<h3 id="johanniter-vs">Johanniter vs 主要竞争对手</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>比较维度</th>
+<th style="text-align: center;"><strong>Johanniter</strong></th>
+<th style="text-align: center;"><strong>Home Instead DE</strong></th>
+<th style="text-align: center;"><strong>DRK（红十字会）</strong></th>
+<th style="text-align: center;"><strong>Caritas</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>站点数</td>
+<td style="text-align: center;">~190</td>
+<td style="text-align: center;">~250+</td>
+<td style="text-align: center;">~300+</td>
+<td style="text-align: center;">~500+</td>
+</tr>
+<tr>
+<td>法律形式</td>
+<td style="text-align: center;"><strong>非营利 e.V.</strong></td>
+<td style="text-align: center;"><strong>营利（特许经营）</strong></td>
+<td style="text-align: center;"><strong>非营利 e.V.</strong></td>
+<td style="text-align: center;"><strong>非营利 e.V.</strong></td>
+</tr>
+<tr>
+<td>宗教背景</td>
+<td style="text-align: center;">新教约翰尼特</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">无（人道主义）</td>
+<td style="text-align: center;">天主教</td>
+</tr>
+<tr>
+<td>急救服务</td>
+<td style="text-align: center;">🟢 <strong>有（强势）</strong></td>
+<td style="text-align: center;">🔴 无</td>
+<td style="text-align: center;">🟢 <strong>有（强势）</strong></td>
+<td style="text-align: center;">🔴 无</td>
+</tr>
+<tr>
+<td>Hausnotruf</td>
+<td style="text-align: center;">🟢 <strong>有（核心差异）</strong></td>
+<td style="text-align: center;">🔴 无</td>
+<td style="text-align: center;">🟡 有（但弱）</td>
+<td style="text-align: center;">🟡 有</td>
+</tr>
+<tr>
+<td>送餐服务</td>
+<td style="text-align: center;">🟢 有</td>
+<td style="text-align: center;">🔴 无</td>
+<td style="text-align: center;">🟢 有</td>
+<td style="text-align: center;">🟢 有</td>
+</tr>
+<tr>
+<td>养老院</td>
+<td style="text-align: center;">🟢 有</td>
+<td style="text-align: center;">🔴 无</td>
+<td style="text-align: center;">🟢 有</td>
+<td style="text-align: center;">🟢 有</td>
+</tr>
+<tr>
+<td>医院</td>
+<td style="text-align: center;">🟢 有</td>
+<td style="text-align: center;">🔴 无</td>
+<td style="text-align: center;">🟢 有</td>
+<td style="text-align: center;">🟢 有</td>
+</tr>
+<tr>
+<td>国际援助</td>
+<td style="text-align: center;">🟢 有</td>
+<td style="text-align: center;">🔴 无</td>
+<td style="text-align: center;">🟢 有</td>
+<td style="text-align: center;">🟢 有</td>
+</tr>
+<tr>
+<td>志愿者</td>
+<td style="text-align: center;"><strong>~30,000人</strong></td>
+<td style="text-align: center;">🔴 无</td>
+<td style="text-align: center;">~50,000+</td>
+<td style="text-align: center;">~50,000+</td>
+</tr>
+<tr>
+<td>增长模式</td>
+<td style="text-align: center;">有机+偶发资产收购</td>
+<td style="text-align: center;"><strong>特许经营快速扩张</strong></td>
+<td style="text-align: center;">有机</td>
+<td style="text-align: center;">有机</td>
+</tr>
+<tr>
+<td>数字营销力</td>
+<td style="text-align: center;">🔴 弱</td>
+<td style="text-align: center;">🟢 <strong>强</strong></td>
+<td style="text-align: center;">🔴 弱</td>
+<td style="text-align: center;">🔴 弱</td>
+</tr>
+<tr>
+<td>政策影响力</td>
+<td style="text-align: center;">🟢 <strong>六大协会之一</strong></td>
+<td style="text-align: center;">🔴 弱</td>
+<td style="text-align: center;">🟢 <strong>六大协会之一</strong></td>
+<td style="text-align: center;">🟢 <strong>六大协会之一</strong></td>
+</tr>
+<tr>
+<td>品牌信任度</td>
+<td style="text-align: center;">🟢 <strong>极高</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">🟢 <strong>极高</strong></td>
+<td style="text-align: center;">🟢 <strong>极高</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="johanniter_7">Johanniter 的独特竞争位置</h3>
+<ol>
+<li><strong>唯一同时拥有&rdquo;强势急救服务+居家护理+Hausnotruf&rdquo;的组合</strong> → 不可复制的获客引擎</li>
+<li><strong>非营利+宗教渊源提供天然信任滤镜</strong> → 在德国保守派/传统家庭中尤其强势</li>
+<li><strong>Home Instead 是最直接的威胁</strong>：特许经营模式的快速扩张正在侵蚀非营利协会的市场</li>
+<li><strong>DRK 是最接近的全方位竞争者</strong>：同样拥有急救+居家护理+Hausnotruf，且整体规模更大</li>
+<li><strong>六大协会之间是&rdquo;竞合&rdquo;关系</strong>：在具体站点争取客户时竞争，但在政策倡导上统一战线</li>
+</ol>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略</h2>
+<h3 id="johanniter_8">Johanniter 的国际存在</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>地区</th>
+<th>活动</th>
+<th style="text-align: center;">规模</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>德国本土</strong></td>
+<td>9个Landesverbände + ~190居家护理站点 + 急救/医院/养老院</td>
+<td style="text-align: center;"><strong>核心市场</strong></td>
+</tr>
+<tr>
+<td><strong>跨境（德国周边）</strong></td>
+<td>部分边境地区的服务延伸（如奥地利、瑞士、波兰边境地区）</td>
+<td style="text-align: center;">极小</td>
+</tr>
+<tr>
+<td><strong>国际人道援助</strong></td>
+<td>国际灾害救援（与Johanniter International合作）</td>
+<td style="text-align: center;">年度项目</td>
+</tr>
+<tr>
+<td><strong>Johanniter International</strong></td>
+<td>欧洲约翰尼特组织的联合网络（奥地利/英国/法国等）</td>
+<td style="text-align: center;">协作平台</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_38">跨境战略特点</h3>
+<ul>
+<li><strong>国内集中度高</strong>：&gt;95%的业务在德国境内</li>
+<li><strong>无系统性跨境居家护理扩张</strong>：与 Home Instead（全球特许经营网络）形成鲜明对比</li>
+<li><strong>国际活动限于人道援助</strong>：非商业性质，由政府资助的灾害救援项目</li>
+<li><strong>欧洲约翰尼特网络</strong>：在奥地利、英国等地的Johanniter姊妹机构之间有经验交流但无商业整合</li>
+</ul>
+<h3 id="_39">国际比较</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>企业</th>
+<th style="text-align: center;">国家</th>
+<th>居家护理模式</th>
+<th style="text-align: center;">国际扩张</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Johanniter</strong></td>
+<td style="text-align: center;">🇩🇪</td>
+<td>非营利六大协会</td>
+<td style="text-align: center;">🔴 国内集中</td>
+</tr>
+<tr>
+<td><strong>Home Instead</strong></td>
+<td style="text-align: center;">🇺🇸/🇩🇪</td>
+<td>营利性特许经营</td>
+<td style="text-align: center;">🟢 <strong>全球6+国家</strong></td>
+</tr>
+<tr>
+<td><strong>Bupa Care Services</strong></td>
+<td style="text-align: center;">🇬🇧</td>
+<td>营利性保险+护理</td>
+<td style="text-align: center;">🟢 全球</td>
+</tr>
+<tr>
+<td><strong>Korian</strong></td>
+<td style="text-align: center;">🇫🇷</td>
+<td>营利性设施+居家</td>
+<td style="text-align: center;">🟢 欧洲扩张</td>
+</tr>
+<tr>
+<td><strong>Caritas（国际）</strong></td>
+<td style="text-align: center;">🇩🇪/🌏</td>
+<td>非营利全球网络</td>
+<td style="text-align: center;">🟢 全球最大天主教慈善网络</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<h3 id="ev">⚠️ 非营利 e.V. —— 此维度基本不适用</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>评估要素</th>
+<th style="text-align: center;">结论</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>收购可能性</strong></td>
+<td style="text-align: center;">🔴 <strong>极低</strong></td>
+<td>e.V.法律结构无法被收购；非营利章程规定资产不得分配给成员</td>
+</tr>
+<tr>
+<td><strong>并购退出路径</strong></td>
+<td style="text-align: center;">❌ 不存在</td>
+<td>非营利无股东无退出路径</td>
+</tr>
+<tr>
+<td><strong>法律转化可能性</strong></td>
+<td style="text-align: center;">🔴 极低</td>
+<td>e.V.→gGmbH（非营利有限公司）的转化理论可能但极罕见，且通常不涉及控制权变更</td>
+</tr>
+<tr>
+<td><strong>资产剥离可能性</strong></td>
+<td style="text-align: center;">🟡 中</td>
+<td>个别Pflegedienst站点或Hausnotruf业务可能作为独立资产剥离</td>
+</tr>
+<tr>
+<td><strong>假设性收购估值</strong></td>
+<td style="text-align: center;">€2.5-6亿</td>
+<td>见D15的分析——理论价值但实际交易可能性低</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_40">更现实的&rdquo;转化&rdquo;场景</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>场景</th>
+<th style="text-align: center;">可能性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>组织内部重组</strong></td>
+<td style="text-align: center;">🟡 可能</td>
+<td>运营资产从e.V.转移至Johanniter GmbH（子公司）以实现更灵活的管理</td>
+</tr>
+<tr>
+<td><strong>个别站点转让</strong></td>
+<td style="text-align: center;">🟡 可能</td>
+<td>某个Landesverband将Pflegedienst转让给当地其他运营商</td>
+</tr>
+<tr>
+<td><strong>Hausnotruf业务剥离</strong></td>
+<td style="text-align: center;">🔴 低</td>
+<td>数字订阅业务虽有价值，但剥离有组织文化冲突</td>
+</tr>
+<tr>
+<td><strong>六大协会之间的资产重组</strong></td>
+<td style="text-align: center;">🔴 低</td>
+<td>历史上极少见</td>
+</tr>
+<tr>
+<td><strong>向营利性企业出售部分业务</strong></td>
+<td style="text-align: center;">🔴 极低</td>
+<td>非营利逻辑的根本冲突</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<h3 id="environment">环境（Environment）</h3>
+<ul>
+<li>急救服务（Rettungsdienst）的车队碳排放是主要环境考量（约2,000+辆救护车）</li>
+<li>居家护理的车辆交通（~190站点×多辆车）的碳足迹</li>
+<li>送餐服务的食品包装和物流碳足迹</li>
+<li>整体环境开示水平低（非营利通常不如上市公司重视ESG报告）</li>
+</ul>
+<h3 id="social">社会（Social）—— <strong>核心优势</strong></h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>社会影响</th>
+<th style="text-align: center;">评估</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>居家护理服务可达性</strong></td>
+<td style="text-align: center;">🟢高</td>
+<td>~190站点 + 送餐服务 + Hausnotruf → 覆盖大量偏远/城郊地区</td>
+</tr>
+<tr>
+<td><strong>非营利定价普惠性</strong></td>
+<td style="text-align: center;">🟢高</td>
+<td>非营利身份→定价不一定追求最大化→对中低收入者更友好</td>
+</tr>
+<tr>
+<td><strong>就业创造</strong></td>
+<td style="text-align: center;">🟢高</td>
+<td>~22,000员工 + 30,000志愿者 → 德国最大就业组织之一</td>
+</tr>
+<tr>
+<td><strong>志愿者参与的社区资本</strong></td>
+<td style="text-align: center;">🟢高</td>
+<td>30,000志愿者→社区凝聚力+社会资本</td>
+</tr>
+<tr>
+<td><strong>急救服务的社会基础设施作用</strong></td>
+<td style="text-align: center;">🟢高</td>
+<td>Rettungsdienst是德国公共医疗急救体系的支柱</td>
+</tr>
+<tr>
+<td><strong>灾害防护</strong></td>
+<td style="text-align: center;">🟢高</td>
+<td>Johanniter在Katastrophenschutz中的核心角色</td>
+</tr>
+<tr>
+<td><strong>国际人道援助</strong></td>
+<td style="text-align: center;">🟢高</td>
+<td>灾害救援和国际发展项目</td>
+</tr>
+<tr>
+<td><strong>护理人才发展</strong></td>
+<td style="text-align: center;">🟢高</td>
+<td>Johanniter-Akademie提供正规护理教育和持续培训</td>
+</tr>
+<tr>
+<td><strong>ESG/CSR开示</strong></td>
+<td style="text-align: center;">🟡中</td>
+<td>非营利组织通常有社会报告（Sozialbericht）但缺乏标准ESG框架</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="governance">治理（Governance）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th style="text-align: center;">评估</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>治理透明性</td>
+<td style="text-align: center;">🟡中</td>
+<td>会员大会→理事会→执行层的双重结构；各州独立性高</td>
+</tr>
+<tr>
+<td>财务管理透明性</td>
+<td style="text-align: center;">🔴低</td>
+<td>非营利不公开详细财务报告</td>
+</tr>
+<tr>
+<td>合规程度</td>
+<td style="text-align: center;">🟢高</td>
+<td>受SGB XI和Gemeinnützigkeitsrecht严格监管</td>
+</tr>
+<tr>
+<td>反腐败</td>
+<td style="text-align: center;">🟢高</td>
+<td>非营利组织在德国的合规监督较为严格</td>
+</tr>
+<tr>
+<td>各州自治与中央</td>
+<td style="text-align: center;">🟡中</td>
+<td>9个Landesverbände独立性强，全国治理统一性有挑战</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="sdgs">SDGs 贡献</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">SDG目标</th>
+<th style="text-align: center;">关联度</th>
+<th>贡献内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">3（健康与福祉）</td>
+<td style="text-align: center;">🟢直接</td>
+<td>急救+居家护理+医院+养老院的全链条健康服务</td>
+</tr>
+<tr>
+<td style="text-align: center;">4（优质教育）</td>
+<td style="text-align: center;">🟢直接</td>
+<td>Johanniter-Akademie + Erste-Hilfe-Ausbildung</td>
+</tr>
+<tr>
+<td style="text-align: center;">10（减少不平等）</td>
+<td style="text-align: center;">🟢间接</td>
+<td>非营利定价+社区扎根→弱势群体可达性</td>
+</tr>
+<tr>
+<td style="text-align: center;">11（可持续社区）</td>
+<td style="text-align: center;">🟢直接</td>
+<td>社区层面的护理服务+志愿者网络</td>
+</tr>
+<tr>
+<td style="text-align: center;">17（伙伴关系）</td>
+<td style="text-align: center;">🟢直接</td>
+<td>六大协会协同+国际Johanniter网络</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<h3 id="_41">组织结构</h3>
+<pre><code>Johanniter-Unfall-Hilfe e.V. （Bundesverband 柏林）
+│
+├── Landesverband 1…9（州协会×9）
+│   ├── Bezirksverband（地区协会）
+│   │   ├── Ortsverband（地方协会）
+│   │   │   ├── 急救服务站（Rettungswache）
+│   │   │   ├── 居家护理站（Pflegedienst）
+│   │   │   ├── 送餐服务
+│   │   │   └── Hausnotruf 本地客户
+│   │   ├── Pflegeheim（养老院）
+│   │   └── Tagespflege（日间护理中心）
+│   └── Johanniter-Akademie（州培训学院）
+│
+├── Johanniter GmbH（部分运营实体）
+│   ├── Krankenhäuser（医院）
+│   └── 部分服务运营公司
+│
+└── Johanniter International（国际援助部门）
+</code></pre>
+<h3 id="_42">人才结构（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>职业类型</th>
+<th style="text-align: center;">推定人数</th>
+<th>雇用形态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>居家护理Pflegefachkräfte</td>
+<td style="text-align: center;">~3,000-5,000</td>
+<td>全职+兼职混合</td>
+</tr>
+<tr>
+<td>居家护理Pflegehelfer</td>
+<td style="text-align: center;">~2,000-3,000</td>
+<td>兼职为主</td>
+</tr>
+<tr>
+<td>Rettungsdienst（急救人员）</td>
+<td style="text-align: center;">~4,000-6,000</td>
+<td>全职+志愿者混合</td>
+</tr>
+<tr>
+<td>养老院护理人员</td>
+<td style="text-align: center;">~2,000-3,000</td>
+<td>全职+兼职</td>
+</tr>
+<tr>
+<td>医院医护</td>
+<td style="text-align: center;">~1,500-2,500</td>
+<td>全职</td>
+</tr>
+<tr>
+<td>管理+行政</td>
+<td style="text-align: center;">~1,500-2,500</td>
+<td>全职</td>
+</tr>
+<tr>
+<td>Tagespflege+送餐+Hausnotruf</td>
+<td style="text-align: center;">~1,000-2,000</td>
+<td>兼职+全职混合</td>
+</tr>
+<tr>
+<td>培训/学院</td>
+<td style="text-align: center;">~300-500</td>
+<td>全职</td>
+</tr>
+<tr>
+<td><strong>员工总计</strong></td>
+<td style="text-align: center;"><strong>~15,000-22,000</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>志愿者</strong></td>
+<td style="text-align: center;"><strong>~30,000+</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_43">人才战略挑战</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>挑战</th>
+<th style="text-align: center;">严重度</th>
+<th>应对措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pflegefachkräfte 短缺</td>
+<td style="text-align: center;">🔴致命（行业共同）</td>
+<td>Ausbildung学徒制→每年培养新人才+外籍招聘</td>
+</tr>
+<tr>
+<td>兼职率高（~50%）</td>
+<td style="text-align: center;">🟡中</td>
+<td>全职化激励，但行业趋势难以逆转</td>
+</tr>
+<tr>
+<td>老龄化（41%护理人员≥50岁）</td>
+<td style="text-align: center;">🔴高</td>
+<td>10年内大规模退休潮→人才断层的根本风险</td>
+</tr>
+<tr>
+<td>外籍护理人员整合</td>
+<td style="text-align: center;">🟡中</td>
+<td>语言+Bildungsnachweis认证过程复杂</td>
+</tr>
+<tr>
+<td>志愿者维持</td>
+<td style="text-align: center;">🟡中</td>
+<td>年轻人志愿服务时间减少的趋势</td>
+</tr>
+<tr>
+<td>营利性机构的人才竞争</td>
+<td style="text-align: center;">🟡中</td>
+<td>非营利薪水竞争力弱于营利企业</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="johanniter_9">Johanniter 的人才优势</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>优势</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>使命感招聘</strong></td>
+<td>&ldquo;帮助他人&rdquo;的使命对部分求职者有强烈吸引力</td>
+</tr>
+<tr>
+<td><strong>Ausbildung 学徒制传统</strong></td>
+<td>德国双元制培训体系 → Johanniter-Akademie培养自有人才</td>
+</tr>
+<tr>
+<td><strong>组织规模</strong></td>
+<td>全国22,000员工 → 内部流动和职业发展可能性</td>
+</tr>
+<tr>
+<td><strong>多元化业务线</strong></td>
+<td>可在急救/护理/医院/培训之间转岗→留任优势</td>
+</tr>
+<tr>
+<td><strong>品牌吸引力</strong></td>
+<td>黄色制服+白色十字是社会认可度极高的视觉符号</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<h3 id="ev_1">⚠️ 非营利 e.V. 的特殊资本结构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>法律形式</td>
+<td><strong>e.V.</strong>（注册协会） + <strong>gemeinnützig</strong>（非营利公益）</td>
+</tr>
+<tr>
+<td>资本来源</td>
+<td>内部盈余 + 捐赠 + 政府补助 + 银行贷款</td>
+</tr>
+<tr>
+<td>股权融资</td>
+<td>❌ <strong>不可</strong>（非营利无股东）</td>
+</tr>
+<tr>
+<td>发行债券</td>
+<td>❌ <strong>通常不可</strong>（非公司形式）</td>
+</tr>
+<tr>
+<td>银行借款</td>
+<td>🟢 <strong>可</strong>（以组织资产担保+银行对非营利有专门贷款产品）</td>
+</tr>
+<tr>
+<td>政府补助</td>
+<td>🟢 <strong>可</strong>（针对培训、设施建设等特定项目）</td>
+</tr>
+<tr>
+<td>捐赠收入</td>
+<td>🟢 <strong>可</strong>（受捐+Beiträge von Mitgliedern）</td>
+</tr>
+<tr>
+<td>公共采购合同</td>
+<td>🟢 <strong>主要收入源</strong>（Rettungsdienst合同等）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_44">资本配置方向（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>投资方向</th>
+<th style="text-align: center;">推定年度投资额</th>
+<th>资金来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>急救车辆/设备更新</td>
+<td style="text-align: center;">€10-20M/年</td>
+<td>内部盈余+公共采购合同</td>
+</tr>
+<tr>
+<td>居家护理站点扩张</td>
+<td style="text-align: center;">€5-10M/年</td>
+<td>内部积累</td>
+</tr>
+<tr>
+<td>Hausnotruf 数字升级</td>
+<td style="text-align: center;">€3-5M/年</td>
+<td>内部积累+可能的部分补助</td>
+</tr>
+<tr>
+<td>养老院/设施维护</td>
+<td style="text-align: center;">€10-20M/年</td>
+<td>内部盈余+贷款</td>
+</tr>
+<tr>
+<td>IT/数字化</td>
+<td style="text-align: center;">€3-5M/年</td>
+<td>内部积累</td>
+</tr>
+<tr>
+<td>Johanniter-Akademie 培训</td>
+<td style="text-align: center;">€2-3M/年</td>
+<td>政府补助+自费</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_45">财务可持续性评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">评估</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>运营现金流</td>
+<td style="text-align: center;">🟢</td>
+<td>GKV报销+公共合同+自费收入的稳定现金流</td>
+</tr>
+<tr>
+<td>投资能力</td>
+<td style="text-align: center;">🟡</td>
+<td>受限（无法股权融资）；依赖内部积累和折旧</td>
+</tr>
+<tr>
+<td>债务水平</td>
+<td style="text-align: center;">🟢</td>
+<td>非营利通常保守负债</td>
+</tr>
+<tr>
+<td>资金灵活性</td>
+<td style="text-align: center;">🟡</td>
+<td>各州独立→资本在组织内重新分配效率低</td>
+</tr>
+<tr>
+<td>危机应对能力</td>
+<td style="text-align: center;">🟢</td>
+<td>多元化业务+捐赠缓冲→抗单一业务波动能力强</td>
+</tr>
+<tr>
+<td>数字化投资能力</td>
+<td style="text-align: center;">🟡</td>
+<td>传统非营利在技术投资上的速度慢于营利性企业</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<h3 id="_46">客户获取渠道</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>渠道</th>
+<th style="text-align: center;">占比（推定）</th>
+<th style="text-align: center;">CAC</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rettungsdienst（急救→居家护理导流）</strong></td>
+<td style="text-align: center;"><strong>~30-40%</strong></td>
+<td style="text-align: center;"><strong>极低</strong></td>
+<td><strong>Johanniter 独有</strong>——任何竞争对手无法复制；急救现场接触→护理需求发现→内部转介</td>
+</tr>
+<tr>
+<td><strong>Hausnotruf客户→居家护理升级</strong></td>
+<td style="text-align: center;">~15-20%</td>
+<td style="text-align: center;">低</td>
+<td>已有客户关系→向上销售</td>
+</tr>
+<tr>
+<td><strong>教会/社区推荐</strong></td>
+<td style="text-align: center;">~10-15%</td>
+<td style="text-align: center;">极低</td>
+<td>宗教网络+志愿者社区关系</td>
+</tr>
+<tr>
+<td><strong>送餐客户→护理升级</strong></td>
+<td style="text-align: center;">~5-10%</td>
+<td style="text-align: center;">低</td>
+<td>送餐员的每日接触→护理需求变化发现</td>
+</tr>
+<tr>
+<td><strong>医院出院转介</strong></td>
+<td style="text-align: center;">~10-15%</td>
+<td style="text-align: center;">低-中</td>
+<td>与当地医院的网络关系</td>
+</tr>
+<tr>
+<td><strong>口碑/家族/邻居推荐</strong></td>
+<td style="text-align: center;">~5-10%</td>
+<td style="text-align: center;">极低</td>
+<td>品牌信任驱动的自然推荐</td>
+</tr>
+<tr>
+<td><strong>数字/线上搜索</strong></td>
+<td style="text-align: center;">~3-5%</td>
+<td style="text-align: center;">中-高</td>
+<td><strong>弱项</strong>——Johanniter官网和服务搜索优化不如营利性机构</td>
+</tr>
+<tr>
+<td><strong>广告/媒体</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">高</td>
+<td>非营利通常不做大规模付费广告</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="gtm">GTM 效率比较</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Johanniter（推定）</th>
+<th style="text-align: center;">Home Instead（推定）</th>
+<th style="text-align: center;">行业平均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">客户获取成本（CAC）</td>
+<td style="text-align: center;"><strong>极低-低</strong>（≈€0-50）</td>
+<td style="text-align: center;">中-高（≈€50-200）</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td style="text-align: left;">急救导流占比</td>
+<td style="text-align: center;"><strong>30-40%</strong>（独有）</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">0%</td>
+</tr>
+<tr>
+<td style="text-align: left;">数字获客占比</td>
+<td style="text-align: center;">3-5%（弱）</td>
+<td style="text-align: center;">30-50%（强）</td>
+<td style="text-align: center;">10-20%</td>
+</tr>
+<tr>
+<td style="text-align: left;">客户续订率（居家护理）</td>
+<td style="text-align: center;">~85-90%</td>
+<td style="text-align: center;">~80-85%</td>
+<td style="text-align: center;">~80%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hausnotruf续订率</td>
+<td style="text-align: center;">&gt;90%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">送餐→居家护理转换率</td>
+<td style="text-align: center;">~5-10%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">LTV（居家护理客户）</td>
+<td style="text-align: center;">€10,000-30,000</td>
+<td style="text-align: center;">€15,000-40,000</td>
+<td style="text-align: center;">€10,000-20,000</td>
+</tr>
+<tr>
+<td style="text-align: left;">LTV/CAC（居家护理）</td>
+<td style="text-align: center;"><strong>&gt;100x</strong></td>
+<td style="text-align: center;">50-100x</td>
+<td style="text-align: center;">30-50x</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_47">品牌战略</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>品牌层次</th>
+<th>目标对象</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Johanniter</strong>（组织品牌）</td>
+<td>全国公众</td>
+<td>&ldquo;德国最受信任的社会服务机构之一&rdquo;——黄色制服+白色十字的视觉符号</td>
+</tr>
+<tr>
+<td><strong>Johanniter-Unfall-Hilfe</strong>（法律名称）</td>
+<td>合同方/政府/保险</td>
+<td>非营利+六大福利协会+骑士团传统</td>
+</tr>
+<tr>
+<td><strong>Johanniter Pflege</strong>（护理业务）</td>
+<td>护理需求者+家庭</td>
+<td>&ldquo;就近的专业护理&rdquo;——社区扎根的服务网络</td>
+</tr>
+<tr>
+<td><strong>Johanniter Hausnotruf</strong>（紧急呼叫）</td>
+<td>独居老人+有风险人群</td>
+<td>&ldquo;24/7安全守护&rdquo;——与Rettungsdienst联动的独特卖点</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="vs_3">品牌优势 vs 营利性机构</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th style="text-align: center;">Johanniter</th>
+<th style="text-align: center;">Home Instead DE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>品牌历史</td>
+<td style="text-align: center;">🟢 <strong>近千年传统的骑士团</strong>（1952年e.V.）</td>
+<td style="text-align: center;">🟡 1994年（美国创立）</td>
+</tr>
+<tr>
+<td>社会信任</td>
+<td style="text-align: center;">🟢 <strong>极高</strong>——六大协会+非营利</td>
+<td style="text-align: center;">🟡 中——美国特许经营品牌的信任转化</td>
+</tr>
+<tr>
+<td>视觉识别</td>
+<td style="text-align: center;">🟢 <strong>极高</strong>——黄色+白色十字是德国公共符号</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td>数字品牌</td>
+<td style="text-align: center;">🟡 弱</td>
+<td style="text-align: center;">🟢 <strong>强</strong>——数字营销投入大</td>
+</tr>
+<tr>
+<td>年轻世代认知</td>
+<td style="text-align: center;">🟡 中（传统组织印象）</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="_48">质量管理体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>法律依据</strong></td>
+<td>SGB XI + PTVS/PTVA（护理质量透明协议）</td>
+</tr>
+<tr>
+<td><strong>外部检查</strong></td>
+<td>MD（Medizinischer Dienst）定期质量检查 + QPR 2026年新体系</td>
+</tr>
+<tr>
+<td><strong>内部质量</strong></td>
+<td>各Landesverband内部的Qualitätsmanagement-System</td>
+</tr>
+<tr>
+<td><strong>QPR 2026（新体系）</strong></td>
+<td>7月起：结果质量导向指标（Ernährungszustand/Dekubitus/Schmerz/Freiheitseinschränkung）</td>
+</tr>
+<tr>
+<td><strong>Pflegefachkraft 资质</strong></td>
+<td>3年Ausbildung（双元制培训）+ 持续的Fortbildung</td>
+</tr>
+<tr>
+<td><strong>Dokumentation</strong></td>
+<td>Pflegedokumentation 法定记录 + 电子化推进中</td>
+</tr>
+<tr>
+<td><strong>Beschwerdemanagement</strong></td>
+<td>投诉管理机制（六大协会通常有较成熟流程）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_49">质量指标（推定）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Johanniter水準（推定）</th>
+<th style="text-align: center;">行业平均</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">居家护理客户满意度</td>
+<td style="text-align: center;">80-90%</td>
+<td style="text-align: center;">75-85%</td>
+<td>非营利品牌效应加分</td>
+</tr>
+<tr>
+<td style="text-align: left;">压疮（Dekubitus）发生率</td>
+<td style="text-align: center;">低</td>
+<td style="text-align: center;">低</td>
+<td>PRV标准化测量</td>
+</tr>
+<tr>
+<td style="text-align: left;">疼痛管理（Schmerzmanagement）</td>
+<td style="text-align: center;">🟢 良好</td>
+<td style="text-align: center;">中等</td>
+<td>2026年QPR重点指标</td>
+</tr>
+<tr>
+<td style="text-align: left;">自由限制使用率</td>
+<td style="text-align: center;">极低</td>
+<td style="text-align: center;">极低</td>
+<td>居家护理中几乎不存在</td>
+</tr>
+<tr>
+<td style="text-align: left;">营养状态维持率</td>
+<td style="text-align: center;">🟢 良好</td>
+<td style="text-align: center;">中等</td>
+<td>送餐服务+护理双重覆盖的优势</td>
+</tr>
+<tr>
+<td style="text-align: left;">紧急住院转化率</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">中</td>
+<td>居家护理不能完全替代医疗监护</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hausnotruf 响应时间</td>
+<td style="text-align: center;">&lt;2分钟（监控中心）</td>
+<td style="text-align: center;">—</td>
+<td>与Rettungsdienst联动</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理计划遵守率</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: center;">中</td>
+<td>六大协会的体系化管理</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_50">临床/生活结局</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>结局指标</th>
+<th style="text-align: center;">推定效果</th>
+<th>证据基础</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>居家生活持续时间延长</strong></td>
+<td style="text-align: center;">🟢 显著</td>
+<td>SGB XI的数据显示专业居家护理延长居家时间1-2年</td>
+</tr>
+<tr>
+<td><strong>养老院入住推迟</strong></td>
+<td style="text-align: center;">🟢 肯定</td>
+<td>ambulant vor stationär 政策+专业居家护理的复合效果</td>
+</tr>
+<tr>
+<td><strong>紧急呼叫的及时响应→不良事件减少</strong></td>
+<td style="text-align: center;">🟢 Hausnotruf+Rettungsdienst联动</td>
+<td>紧急呼叫→救护车→避免延误</td>
+</tr>
+<tr>
+<td><strong>家庭照护者负担减轻</strong></td>
+<td style="text-align: center;">🟢 实物给付+混合给付减轻家庭照护者压力</td>
+<td>行业公认</td>
+</tr>
+<tr>
+<td><strong>送餐服务的营养状态改善</strong></td>
+<td style="text-align: center;">🟢 有证据</td>
+<td>Malnutrition风险降低，特别是独居老人</td>
+</tr>
+<tr>
+<td><strong>养老院入住率</strong></td>
+<td style="text-align: center;">通过Tagespflege/居家护理延缓至少6-12个月（推定）</td>
+<td>政策目标与业界共识</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="johanniter-vs_1">服务质量差异化（Johanniter vs 竞品）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>质量维度</th>
+<th style="text-align: center;">Johanniter</th>
+<th style="text-align: center;">Home Instead</th>
+<th style="text-align: center;">小型Pflegedienst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pflegefachkraft 比率</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: center;">🟡 中（依赖Pflegehelfer）</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td>内部培训体系</td>
+<td style="text-align: center;">🟢 <strong>Johanniter-Akademie</strong></td>
+<td style="text-align: center;">🟡 特许经营总部培训</td>
+<td style="text-align: center;">🔴 有限</td>
+</tr>
+<tr>
+<td>质量检查合规率</td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: center;">🟡 中-高</td>
+<td style="text-align: center;">🟡 中（差异大）</td>
+</tr>
+<tr>
+<td>品牌信任→客户配合度</td>
+<td style="text-align: center;">🟢 高→更好结局</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">🟡 中</td>
+</tr>
+<tr>
+<td>与Rettungsdienst联动</td>
+<td style="text-align: center;">🟢 <strong>独有</strong> → 紧急情况无间隙</td>
+<td style="text-align: center;">🔴 无</td>
+<td style="text-align: center;">🔴 无</td>
+</tr>
+<tr>
+<td>数字化记录</td>
+<td style="text-align: center;">🟡 推进中</td>
+<td style="text-align: center;">🟢 通常更先进</td>
+<td style="text-align: center;">🔴 弱</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_51">未来质量提升方向</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>方向</th>
+<th style="text-align: center;">优先级</th>
+<th>措施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QPR 2026 结果质量体系适应</td>
+<td style="text-align: center;">🔥高</td>
+<td>建立标准化Ergebnisindikatoren数据采集和分析能力</td>
+</tr>
+<tr>
+<td>远程护理（Telepflege）质量保证</td>
+<td style="text-align: center;">🔥高</td>
+<td>BEEP法后建立远程护理的质量标准和协议</td>
+</tr>
+<tr>
+<td>送餐→营养状态追踪</td>
+<td style="text-align: center;">🟢高</td>
+<td>发挥送餐服务的独特优势→系统化营养不良筛查</td>
+</tr>
+<tr>
+<td>Hausnotruf→跌倒预防数据</td>
+<td style="text-align: center;">🟢高</td>
+<td>通过紧急呼叫数据优化预防策略</td>
+</tr>
+<tr>
+<td>Pflegefachkräfte 权限扩大后的质量监控</td>
+<td style="text-align: center;">🔥高</td>
+<td>BEEP法新权限的合规+效果追踪</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;">评级</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">D0</td>
+<td>赛道验证</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>德国Pflegeversicherung制度+居家护理赛道结构性分析</td>
+</tr>
+<tr>
+<td style="text-align: center;">D1</td>
+<td>执行摘要</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>全景判断+核心指标一览</td>
+</tr>
+<tr>
+<td style="text-align: center;">D2</td>
+<td>企业概况</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>非营利e.V.结构+骑士团历史+组织系统图</td>
+</tr>
+<tr>
+<td style="text-align: center;">D3</td>
+<td>战略定位</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>非营利信任×社区扎根×多元化服务线的独特战略</td>
+</tr>
+<tr>
+<td style="text-align: center;">D4</td>
+<td>商业模式架构图</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>急救导流+志愿者杠杆+Hausnotruf的商业模式图解</td>
+</tr>
+<tr>
+<td style="text-align: center;">D5</td>
+<td>服务产品线与定价模式</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>Sachleistung/Pflegegeld/Hausnotruf/送餐的全产品线定价</td>
+</tr>
+<tr>
+<td style="text-align: center;">D6</td>
+<td>客户与支付方深度拆解</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>现金/实物/混合给付三选一+急救导流渠道分析</td>
+</tr>
+<tr>
+<td style="text-align: center;">D7</td>
+<td>财务深度拆解</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟡</td>
+<td>非营利不公开财务→全部推定值+逻辑推导</td>
+</tr>
+<tr>
+<td style="text-align: center;">D8</td>
+<td>工作流/旅程映射</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>从Rettungsdienst触达到全链条服务的完整旅程</td>
+</tr>
+<tr>
+<td style="text-align: center;">D9</td>
+<td>技术深度评估</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>Hausnotruf数字升级+传统组织数字化转型困境</td>
+</tr>
+<tr>
+<td style="text-align: center;">D10</td>
+<td>竞争格局对标矩阵</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>六大协会对比+营利vs非营利分析+DRK直接竞争</td>
+</tr>
+<tr>
+<td style="text-align: center;">D11</td>
+<td>收入构成与增长趋势</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>TAM/SAM分析+增长驱动+约束因素</td>
+</tr>
+<tr>
+<td style="text-align: center;">D12</td>
+<td>盈利模型与路径</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>居家护理+Hausnotruf+送餐的三种单位经济模型</td>
+</tr>
+<tr>
+<td style="text-align: center;">D13</td>
+<td>机遇与风险评估矩阵</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>人才危机+资金缺口+数字升级机遇</td>
+</tr>
+<tr>
+<td style="text-align: center;">D14</td>
+<td>管理指引与市场预期</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟡</td>
+<td>非营利治理结构+决策链长+保守预期</td>
+</tr>
+<tr>
+<td style="text-align: center;">D15</td>
+<td>估值对比</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">⚠️</td>
+<td><strong>非营利不适用传统估值</strong>→推定价值+参考M&amp;A市场倍数</td>
+</tr>
+<tr>
+<td style="text-align: center;">D16</td>
+<td>对iHomeCare战略建议</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>社区渗透+Hausnotruf产品+志愿者杠杆的启示</td>
+</tr>
+<tr>
+<td style="text-align: center;">D17</td>
+<td>政策与监管土壤</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>SGB XI+2026改革（BEEP/QPR/资金缺口）</td>
+</tr>
+<tr>
+<td style="text-align: center;">D18</td>
+<td>单元经济模型</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>三种业务的Unit Economics详细分解</td>
+</tr>
+<tr>
+<td style="text-align: center;">D19</td>
+<td>目标人群/客户细分</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>Pflegegrad分层+送餐入门+Hausnotruf独居老人</td>
+</tr>
+<tr>
+<td style="text-align: center;">D20</td>
+<td>竞品深度地图</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>四大竞品分维度对比+急救服务独特位置</td>
+</tr>
+<tr>
+<td style="text-align: center;">D21</td>
+<td>跨境/跨区域战略</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>国内集中&gt;95%+人道援助的国际存在</td>
+</tr>
+<tr>
+<td style="text-align: center;">D22</td>
+<td>退出/并购价值分析</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">⚠️</td>
+<td><strong>非营利e.V.不可收购</strong>→推定价值+资产剥离可能性</td>
+</tr>
+<tr>
+<td style="text-align: center;">D23</td>
+<td>ESG/社会影响力</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>社会价值极高+环境挑战+治理透明性低</td>
+</tr>
+<tr>
+<td style="text-align: center;">D24</td>
+<td>组织与人才</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>22,000员工+30,000志愿者+老龄化人才危机</td>
+</tr>
+<tr>
+<td style="text-align: center;">D25</td>
+<td>融资历史与资本结构</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">⚠️</td>
+<td><strong>非营利无传统融资</strong>→内部积累+捐赠+政府补助</td>
+</tr>
+<tr>
+<td style="text-align: center;">D26</td>
+<td>销售与GTM效率</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>急救导流30-40%为核心差异化+LTV/CAC极高</td>
+</tr>
+<tr>
+<td style="text-align: center;">D27</td>
+<td>临床质量与患者结局</td>
+<td style="text-align: center;">✅ 完成</td>
+<td style="text-align: center;">🟢</td>
+<td>QPR 2026新体系+独有质量特性（急救联动+送餐）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_52">综合评估</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>评估项目</th>
+<th style="text-align: center;">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>完成度</strong></td>
+<td style="text-align: center;">27/27 维度（100%）</td>
+</tr>
+<tr>
+<td><strong>数据品质</strong></td>
+<td style="text-align: center;">🟡 部分推定值（非营利不公开财务+web_search API中断）</td>
+</tr>
+<tr>
+<td><strong>分析深度</strong></td>
+<td style="text-align: center;">🟢 非营利居家护理的运营逻辑+急救导流闭环+Hausnotruf经济模型</td>
+</tr>
+<tr>
+<td><strong>实用性</strong></td>
+<td style="text-align: center;">🟢 iHomeCare 可参考社区渗透型获客+高利润订阅产品（Hausnotruf）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="web_search">调研空白与后续补充（web_search 利用不可による制約）</h2>
+<ol>
+<li><strong>Johanniter-Unfall-Hilfe 最新の年次報告書（可能あればTätigkeitsbericht）</strong> → 正確な収入・事業所数・従業員数</li>
+<li><strong>各Landesverbandの個別の事業規模と事業構成比</strong> → 地域差の定量分析</li>
+<li><strong>Hausnotruf の正確な契約数とARPU</strong> → 収益性推定の精緻化</li>
+<li><strong>Rettungsdienst からPflegeへの実際のコンバージョン率</strong> → 導流効率の定量化</li>
+<li><strong>Johanniter-Akademie の教育プログラム詳細</strong> → 人材育成能力評価</li>
+<li><strong>Home Instead Deutschland の正確な市場シェアと成長率</strong></li>
+<li><strong>Pflegeversicherung 資金改革の具体的な影響シミュレーション</strong></li>
+<li><strong>QPR 2026 新品質指標詳細</strong> → 品質評価枠組みの正確な理解</li>
+</ol>
+<h3 id="_53">推荐追加调查</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">優先度</th>
+<th>調査項目</th>
+<th>情報源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">🔥高</td>
+<td>Johanniter 最新年次報告</td>
+<td>Johanniter Bundesverband ウェブサイト（https://www.johanniter.de/）</td>
+</tr>
+<tr>
+<td style="text-align: center;">🔥高</td>
+<td>Pflegemarkt.com 最新市場分析</td>
+<td>https://www.pflegemarkt.com/</td>
+</tr>
+<tr>
+<td style="text-align: center;">🔥高</td>
+<td>Destatis Pflegestatistik 2025 最新データ</td>
+<td>https://www.destatis.de/</td>
+</tr>
+<tr>
+<td style="text-align: center;">🟡中</td>
+<td>BEEP法/QPR 2026の詳細解説</td>
+<td>BMG/BfArM公式サイト</td>
+</tr>
+<tr>
+<td style="text-align: center;">🟡中</td>
+<td>Home Instead Deutschland の事業戦略</td>
+<td>同社ウェブサイト+業界ニュース</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_54">参考文献</h2>
+<h3 id="_55">政策・制度ソース</h3>
+<ol>
+<li>SGB XI — Soziale Pflegeversicherung（1995年施行、2026年改定）</li>
+<li>BEEP-Gesetz — BGBl. 2025（2026年1月1日生效）</li>
+<li>G-BA Beschluss 2020 — Herzinsuffizienz-Telemonitoring（心衰远程监测标准给付）</li>
+<li>BMG — Pflegereform 2026（改革方案）</li>
+<li>QPR 2026 — Qualitätsprüfungs-Richtlinien Teil 1a/b（ambulante Pflege）</li>
+</ol>
+<h3 id="_56">統計・市場データソース</h3>
+<ol start="6">
+<li>Destatis — Pflegestatistik 2023（569万Pflegebedürftige、86%居家）</li>
+<li>Destatis — Pflegekräftevorausberechnung 2049（2024年1月）</li>
+<li>Destatis — Bruttomonatsverdienste in Gesundheits- und Pflegeberufen（2025年5月）</li>
+<li>Deutscher Pflegerat — DPT25 Factsheet Pflege（2025年）</li>
+<li>Bundesagentur für Arbeit — Engpassanalyse Pflegeberufe（2026年）</li>
+<li>Pflegemarkt.com — Marktanalyse 2025（17,938家用护理机构）</li>
+<li>BARMER Pflegereport 2025</li>
+<li>WIdO — Pflege-Report（年次）</li>
+</ol>
+<h3 id="_57">組織・企業ソース</h3>
+<ol start="14">
+<li>Johanniter-Unfall-Hilfe e.V. 公式ウェブサイト（https://www.johanniter.de/）</li>
+<li>Johanniter International（https://www.johanniter.org/）</li>
+</ol>
+<h3 id="_58">既存研究ソース</h3>
+<ol start="16">
+<li>iHomeCare Research — 德国01-政策与法律法规（2026年7月）</li>
+<li>iHomeCare Research — 德国02-支付体系（2026年7月）</li>
+<li>iHomeCare Research — 德国04-RPM与技术设备（2026年7月）</li>
+<li>iHomeCare Research — 德国05-临床证据（2026年7月）</li>
+<li>iHomeCare Research — 德国06-劳动力市场（2026年7月）</li>
+<li>iHomeCare Research — 德国00-概览（2026年7月）</li>
+<li>iHomeCare Research — Home Instead 27维度深度尽调（2026年7月3日）</li>
+</ol>
+<hr />
+<p><strong>免責事項</strong>：本レポートは公開情報および既存の研究データに基づいて作成されています。Johanniter-Unfall-Hilfe e.V. は非営利組織であり詳細な財務情報を公開していないため、財務・事業規模に関する数値は業界データと組織規模の推定に基づきます。正確な数値は Johanniter 公式資料を参照ください。</p>
+<p><strong>作成者</strong>：iHomeCare Research, Kate（VP Research）
+<strong>作成日</strong>：2026年7月5日
+<strong>レポートID</strong>：2026-07-05-johanniter-de-27dim</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

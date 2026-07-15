@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>福建省9城长护险政策全量清单</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#9">福建省9城长护险政策全量清单</a><ul>
+<li><a href="#_1">省级概况</a><ul>
+<li><a href="#_2">全省推进时间表</a></li>
+</ul>
+</li>
+<li><a href="#1">一、已实施（1个）</a><ul>
+<li><a href="#202106">🔵 福州 — 国家第二批试点（2021.06起）</a></li>
+</ul>
+</li>
+<li><a href="#202631">二、2026年底前启动（3+1个）</a></li>
+<li><a href="#20274">三、2027年底前启动（4个）</a></li>
+<li><a href="#2028">四、2028年前全覆盖</a></li>
+<li><a href="#_3">五、全覆盖总结</a></li>
+<li><a href="#_4">福州核心参数汇总（全省标杆）</a></li>
+<li><a href="#ihomecare">对iHomeCare的战略意义</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="9">福建省9城长护险政策全量清单</h1>
+<p><strong>数据截止</strong>：2026年6月30日 | <strong>交叉验证</strong>：人民网 + 新华网 + 福建省政府网</p>
+<hr />
+<h2 id="_1">省级概况</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>省级方案</strong></td>
+<td style="text-align: left;">🟢 <strong>已发</strong> —《福建省建立长期护理保险制度实施方案》（闽政办〔2026〕14号）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>发布时间</strong></td>
+<td style="text-align: left;"><strong>2026年6月25日</strong>（<strong>刚刚发布</strong>）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>全省费率</strong></td>
+<td style="text-align: left;"><strong>0.3%</strong>（统一）；居民可从0.15%起步，5年过渡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>职工支付</strong></td>
+<td style="text-align: left;"><strong>70%</strong>（居家/社区可适当提高）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居民支付</strong></td>
+<td style="text-align: left;"><strong>50%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>年度上限</strong></td>
+<td style="text-align: left;">不超过统筹地区上年度城乡居民人均可支配收入的50%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>统筹层次</strong></td>
+<td style="text-align: left;">市地级&rdquo;六统一&rdquo;</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">全省推进时间表</h3>
+<pre><code>2026年底 ─ 省本级、厦门市、泉州市、三明市启动
+           厦门/泉州：覆盖职工+居民
+           三明：覆盖职工
+           福州：扩大至居民（原试点）
+
+2027年底 ─ 漳州市、莆田市、龙岩市、宁德市启动
+           覆盖职工
+
+2028年底 ─ 全省职工+居民全覆盖
+</code></pre>
+<hr />
+<h2 id="1">一、已实施（1个）</h2>
+<h3 id="202106">🔵 福州 — 国家第二批试点（2021.06起）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>试点启动</strong></td>
+<td style="text-align: left;">2021年6月1日</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>政策文件</strong></td>
+<td style="text-align: left;">《福州市长期护理保险实施细则》(2021)；《福州市深入推进长期护理保险制度试点实施方案》(2024)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>当前状态</strong></td>
+<td style="text-align: left;">2026年底前扩大至居民；原试点政策3年内过渡</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>缴费</strong>：
+| 人群 | 费率 | 缴费基数 | 方式 |
+|:----|:&mdash;:|:--------|:----|
+| 在职职工 | <strong>0.25%</strong> | 医保缴费基数 | 单位0.125%+个人0.125%（个账代扣） |
+| 退休人员 | <strong>0.125%</strong> | 平均养老金 | 个账划拨 |
+| 灵活就业人员 | 0.25% | 医保缴费基数 | 单位部分从医保划转 |</p>
+<p><strong>待遇</strong>：
+| 失能等级 | 护理方式 | 标准 | 基金支付 | 个人承担 | 月服务时长 |
+|:--------|:--------|:&mdash;:|:-------:|:-------:|:---------:|
+| 重度失能 | 居家护理 | 1,800元/月 | <strong>85%</strong> → 1,530元 | 270元 | ≥30小时 |
+| 重度失能 | 机构护理 | 1,800元/月 | <strong>75%</strong> → 1,350元 | 450元 | — |
+| 中度失能 | 居家护理 | 1,200元/月 | 同比例 | — | ≥20小时 |
+| 中度失能 | 机构护理 | 1,200元/月 | 同比例 | — | — |</p>
+<p><strong>核心运营数据</strong>（截至2026年4月）：</p>
+<ul>
+<li>基金结余：<strong>8亿元</strong></li>
+<li>累计享待遇：<strong>1.8万人+</strong></li>
+<li>定点护理机构：<strong>123家</strong></li>
+<li>护理员：<strong>2,900名</strong></li>
+<li>培训：<strong>37期 3,293人</strong></li>
+<li>养老机构定点：<strong>56家</strong>纳入</li>
+<li>监管特色：医保数据+公交出行数据交叉比对防骗保</li>
+</ul>
+<p><strong>来源</strong>：人民日报✅ 新华网✅ 福州晚报✅</p>
+<hr />
+<h2 id="202631">二、2026年底前启动（3+1个）</h2>
+<p><strong>省方案已发布，各市实施细则正在制定中</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">省方案要求</th>
+<th style="text-align: left;">覆盖范围</th>
+<th style="text-align: left;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>厦门</strong></td>
+<td style="text-align: left;">2026年底前启动</td>
+<td style="text-align: left;">职工+居民</td>
+<td style="text-align: left;">省方案刚发布，细则制定中</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>泉州</strong></td>
+<td style="text-align: left;">2026年底前启动</td>
+<td style="text-align: left;">职工+居民</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>三明</strong></td>
+<td style="text-align: left;">2026年底前启动</td>
+<td style="text-align: left;">职工</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;"><strong>省本级</strong></td>
+<td style="text-align: left;">2026年底前启动</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">同上</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="20274">三、2027年底前启动（4个）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">省方案要求</th>
+<th style="text-align: left;">覆盖范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><strong>漳州</strong></td>
+<td style="text-align: left;">2027年底前启动</td>
+<td style="text-align: left;">职工</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><strong>莆田</strong></td>
+<td style="text-align: left;">2027年底前启动</td>
+<td style="text-align: left;">职工</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><strong>龙岩</strong></td>
+<td style="text-align: left;">2027年底前启动</td>
+<td style="text-align: left;">职工</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><strong>宁德</strong></td>
+<td style="text-align: left;">2027年底前启动</td>
+<td style="text-align: left;">职工</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="2028">四、2028年前全覆盖</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><strong>南平</strong></td>
+<td style="text-align: left;">2028年底前全省职工+居民全覆盖</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_3">五、全覆盖总结</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">城市</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ <strong>已实施（试点）</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">福州(2021.06)</td>
+</tr>
+<tr>
+<td style="text-align: left;">🟢 <strong>2026年底前启动</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">省本级、厦门、泉州、三明</td>
+</tr>
+<tr>
+<td style="text-align: left;">🟡 <strong>2027年底前启动</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">漳州、莆田、龙岩、宁德</td>
+</tr>
+<tr>
+<td style="text-align: left;">⏳ <strong>2028年底前全覆盖</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">南平（含全省扩展）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>合计</strong></td>
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: left;">全省</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_4">福州核心参数汇总（全省标杆）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">参数</th>
+<th style="text-align: center;">福州</th>
+<th style="text-align: center;">省方案基准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">费率</td>
+<td style="text-align: center;"><strong>0.25%</strong>（低于省标）</td>
+<td style="text-align: center;">0.3%</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家重度报销</td>
+<td style="text-align: center;"><strong>85%</strong></td>
+<td style="text-align: center;">70%基准+倾斜</td>
+</tr>
+<tr>
+<td style="text-align: left;">机构重度报销</td>
+<td style="text-align: center;"><strong>75%</strong></td>
+<td style="text-align: center;">70%基准</td>
+</tr>
+<tr>
+<td style="text-align: left;">基金结余</td>
+<td style="text-align: center;">8亿元</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">人均年筹资</td>
+<td style="text-align: center;">~100元</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理员培训</td>
+<td style="text-align: center;">37期3293人</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="ihomecare">对iHomeCare的战略意义</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">城市</th>
+<th style="text-align: center;">优先级</th>
+<th style="text-align: left;">理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>福州</strong></td>
+<td style="text-align: center;">🟢 <strong>最高</strong></td>
+<td style="text-align: left;">5年成熟运行；居家85%报销全国最高；基金结余8亿元；<strong>2026年底扩至居民</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>厦门/泉州</strong></td>
+<td style="text-align: center;">🟢 <strong>高</strong></td>
+<td style="text-align: left;">2026年底前启动，覆盖职工+居民，是福建经济最发达城市</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>三明</strong></td>
+<td style="text-align: center;">🟡 中期</td>
+<td style="text-align: left;">2026年底前启动（仅职工）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>漳州/莆田/龙岩/宁德</strong></td>
+<td style="text-align: center;">🔵 关注</td>
+<td style="text-align: left;">2027年底前启动</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

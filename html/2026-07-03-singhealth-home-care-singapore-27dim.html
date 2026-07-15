@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S3 SingHealth Home Care (新加坡) — 27 维度深度尽调</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#s3-singhealth-home-care-27">S3 SingHealth Home Care (新加坡) — 27 维度深度尽调</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4">D4 — 商业模式</a></li>
+<li><a href="#d5">D5 — 服务产品线</a></li>
+<li><a href="#d6">D6 — 客户与支付方</a></li>
+<li><a href="#d7">D7 — 财务</a></li>
+<li><a href="#d8">D8 — 工作流</a></li>
+<li><a href="#d9">D9 — 技术</a></li>
+<li><a href="#d10">D10 — 竞争对标</a></li>
+<li><a href="#d11-tamsam">D11 — 收入构成与增长趋势 (TAM/SAM)</a></li>
+<li><a href="#d12">D12 — 盈利模型与路径</a></li>
+<li><a href="#d13">D13 — 风险</a></li>
+<li><a href="#d14">D14 — 管理层</a></li>
+<li><a href="#d15">D15 — 估值</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a></li>
+<li><a href="#d17">D17 — 政策</a></li>
+<li><a href="#d18">D18 — 单元经济模型</a></li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略深度评估</a></li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a></li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a></li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a></li>
+<li><a href="#v20">v2.0 完备性审计</a></li>
+<li><a href="#_1">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="s3-singhealth-home-care-27">S3 SingHealth Home Care (新加坡) — 27 维度深度尽调</h1>
+<p><strong>调研人：Kenneth Ye / 调研日期：2026.7.3 / 分类：Track S 新加坡 / 国家：新加坡</strong></p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否 HaH？</td>
+<td>🟡 部分是——含 SGH@Home(HaH)但整体是&rdquo;急症→社区→居家&rdquo;全链路整合网络</td>
+</tr>
+<tr>
+<td>实体类型</td>
+<td>🏥 新加坡最大公立集群的社区健康部门</td>
+</tr>
+<tr>
+<td>对 iHomeCare 相关性</td>
+<td>🔴 高——iHomeCare 理想形态不是孤立 HaH 公司而是整合进全链路的服务商</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>定位</strong>：🏢 新加坡最大医疗集群全链路——SGH@Home(HaH)+H2H(过渡)+SCH(社区医院×4)+SHP(综合诊所×10)+GP(Healthier SG)+<strong>WHO 世界首个社会处方合作中心</strong></p>
+<p><strong>核心差异化</strong>：Flow-Hold-Link 模型——急诊(Flow)→社区医院(Hold)→居家/GP(Link)——非单一 HaH 项目而是<strong>生态系统</strong>。WHO 社会处方中心为全球唯一。</p>
+<p><strong>系统规模</strong>：SGH+CGH+SKH+KKH+5 国家专科中心+4 社区医院+10 综合诊所——~200 万人口覆盖。<strong>判断</strong>：🟢 对 iHomeCare 的终极借鉴：HaH 不应是孤立项目。</p>
+<h2 id="d2">D2 — 公司全貌</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系统</td>
+<td>SingHealth——新加坡最大公立集群</td>
+</tr>
+<tr>
+<td>旗下</td>
+<td>SGH/CGH/SKH/KKH/NCCS/NHCS/SNEC/NDCS</td>
+</tr>
+<tr>
+<td>社区医院</td>
+<td>4 家 SCH（Outram/Sengkang/Eastern/Bright Vision）</td>
+</tr>
+<tr>
+<td>综合诊所</td>
+<td>10 家 SHP</td>
+</tr>
+<tr>
+<td>模式</td>
+<td>Flow-Hold-Link + Healthier SG + 社会处方</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>治理</strong>：❌ 不适用——公立系统，无独立公司治理。</p>
+</blockquote>
+<h2 id="d3">D3 — 战略定位</h2>
+<p><strong>Flow-Hold-Link 模型</strong>：</p>
+<pre><code>急诊(Flow): SGH/CGH/SKH ED
+  ↓
+社区(Hold): SGH@Home / SCH 4家 / HaNH
+  ↓
+居家(GP)(Link): H2H / SHP 10家 / GP(Healthier SG) / 社会处方
+</code></pre>
+<h2 id="d4">D4 — 商业模式</h2>
+<p>SingHealth 一站式全链路——患者从急诊入院→急性 HaH→社区医院康复→居家过渡→GP 随访，全在同一系统内完成。支付方：MediSave+MediShield+补贴（单一支付方）。</p>
+<h2 id="d5">D5 — 服务产品线</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>产品线</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SGH@Home (HaH)</td>
+<td>✅ 急性</td>
+</tr>
+<tr>
+<td>HaNH (护理院 HaH)</td>
+<td>✅ 独特</td>
+</tr>
+<tr>
+<td>H2H (过渡)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>SCH (社区医院)</td>
+<td>✅ 4 家</td>
+</tr>
+<tr>
+<td>SHP (综合诊所)</td>
+<td>✅ 10 家</td>
+</tr>
+<tr>
+<td>Healthier SG (GP 网络)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>社会处方</strong></td>
+<td>✅ <strong>WHO 合作中心</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d6">D6 — 客户与支付方</h2>
+<p>SingHealth 中部+东部 ~200 万人口。单一支付方（MediSave+MediShield+补贴）。</p>
+<h2 id="d7">D7 — 财务</h2>
+<blockquote>
+<p>⚠️ 公立非营利——财务不独立公开。全链路模式理论上比单点 HaH 更具系统级节省。</p>
+</blockquote>
+<h2 id="d8">D8 — 工作流</h2>
+<p>急症→SGH@Home→SCH 社区医院→H2H→SHP/GP→社会处方</p>
+<h2 id="d9">D9 — 技术</h2>
+<p>NGEMR (Epic) / Healthier SG IT / H2H 平台 / Dr HomeCura AI (A*STAR)</p>
+<h2 id="d10">D10 — 竞争对标</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>SingHealth</th>
+<th>NUHS</th>
+<th>NHG</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>范围</td>
+<td><strong>全链路(急症→社区→居家)</strong></td>
+<td>项目级</td>
+<td>项目级</td>
+</tr>
+<tr>
+<td>社区医院</td>
+<td>✅ 4 家</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>WHO 社会处方</td>
+<td>✅ <strong>全球首个</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d11-tamsam">D11 — 收入构成与增长趋势 (TAM/SAM)</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>市场层级</th>
+<th>估算</th>
+<th>逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TAM</td>
+<td>新加坡 65+ ~21%（2026，约 120 万）</td>
+<td>全民健保覆盖</td>
+</tr>
+<tr>
+<td>SAM</td>
+<td>SingHealth 集群 ~80 万老年人口</td>
+<td>集群人口 × 急性住院率</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d12">D12 — 盈利模型与路径</h2>
+<blockquote>
+<p>⚠️ 公立非营利——系统级成本节省为目标。全链路（HaH+社区医院+GP）理论上比单点 HaH 节省更多，但具体数字不公开。</p>
+</blockquote>
+<h2 id="d13">D13 — 风险</h2>
+<p>系统复杂度高→整合难度大。护理人力全国性短缺。</p>
+<h2 id="d14">D14 — 管理层</h2>
+<p>Dr Low Lian Leng——SingHealth 区域卫生主任/SGH@Home 联合领导/PMC 社区医院论文合著者。</p>
+<h2 id="d15">D15 — 估值</h2>
+<blockquote>
+<p>❌ 不适用。</p>
+</blockquote>
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<ol>
+<li><strong>全链路整合是终极形态</strong>：iHomeCare 不应是孤立公司，而应定位为&rdquo;HA 医院→社区→居家&rdquo;链路的居家执行者</li>
+<li><strong>Flow-Hold-Link 框架可直接翻译</strong>：香港 HA 急症(Flow)→社区医院/復康(Hold)→iHomeCare+GP(Link)</li>
+<li><strong>社会处方差异化</strong>：香港可借鉴 WHO 合作中心模式</li>
+</ol>
+<h2 id="d17">D17 — 政策</h2>
+<p>MOH MIC@Home 主流化 + Healthier SG + 社会处方 WHO 认证</p>
+<h2 id="d18">D18 — 单元经济模型</h2>
+<blockquote>
+<p>⚠️ 全链路比单点 HaH 节省更多，但具体数字不公开。</p>
+</blockquote>
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<p>✅ SingHealth 中部+东部集群 ~200 万人口（含大量老年人口）。</p>
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<blockquote>
+<p>❌ 不适用——新加坡公立系统间非竞争关系。</p>
+</blockquote>
+<h2 id="d21">D21 — 跨境/跨区域战略深度评估</h2>
+<blockquote>
+<p>❌ 不适用——仅服务新加坡本地。</p>
+</blockquote>
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<blockquote>
+<p>❌ 不适用——公立系统内部项目。</p>
+</blockquote>
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环境</td>
+<td>🟢 HaH 减碳</td>
+</tr>
+<tr>
+<td>社会</td>
+<td>🟢 <strong>WHO 社会处方合作中心</strong>——全球社会影响力标杆</td>
+</tr>
+<tr>
+<td>治理</td>
+<td>🟢 政府监管</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d24">D24 — 组织与人才</h2>
+<p>⚠️ 全链路→跨多部门协调。关键人：Dr Low Lian Leng。护理人力全国性短缺。</p>
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<blockquote>
+<p>❌ 不适用——政府预算拨款。</p>
+</blockquote>
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<blockquote>
+<p>❌ 不适用——100% 系统内转诊。</p>
+</blockquote>
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<p>⚠️ 依赖 SGH@Home 的证据链（Frontiers 2025 等）。全链路模式在系统层面减少再入院——具体数字未公开。</p>
+<h2 id="v20">v2.0 完备性审计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>16</td>
+</tr>
+<tr>
+<td>⚠️</td>
+<td>7</td>
+</tr>
+<tr>
+<td>❌ 不适用</td>
+<td>7</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="_1">参考文献</h2>
+<p>SingHealth/SGH/MOHT/WHO/PMC 社区医院论文</p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

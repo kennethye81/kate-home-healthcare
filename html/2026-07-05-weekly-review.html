@@ -1,0 +1,1111 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dean 周度复盘报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#dean">Dean 周度复盘报告</a><ul>
+<li><a href="#_1">一、考核全景概览</a></li>
+<li><a href="#629-73">二、上周逐日复盘（6/29 - 7/3）</a><ul>
+<li><a href="#629-50">📅 6/29（周一）| 半仓做多科创50 ✅</a></li>
+<li><a href="#630-50">📅 6/30（周二）| 科创50暴涨，浮盈逼近止盈 ✅</a></li>
+<li><a href="#71">📅 7/1（周三）| 完美止盈执行 ✅</a></li>
+<li><a href="#72">📅 7/2（周四）| 止损滑点 — 本周关键教训 ⚠️</a></li>
+<li><a href="#73">📅 7/3（周五）| 空仓观望 + 信号系统首日验证 ✅</a></li>
+</ul>
+</li>
+<li><a href="#_2">三、本周盈亏归因</a><ul>
+<li><a href="#_3">利润贡献</a></li>
+<li><a href="#_4">亏损贡献</a></li>
+<li><a href="#_5">净效应</a></li>
+</ul>
+</li>
+<li><a href="#_6">四、考核进度分析</a><ul>
+<li><a href="#_7">时间线</a></li>
+<li><a href="#_8">剩余目标</a></li>
+<li><a href="#_9">情景推演</a></li>
+</ul>
+</li>
+<li><a href="#_10">五、信号系统验证报告</a><ul>
+<li><a href="#7313">首日（7/3）13 个信号统计</a></li>
+<li><a href="#vs">偏多 vs 偏空分化</a></li>
+<li><a href="#_11">最佳/最差信号</a></li>
+<li><a href="#_12">待优化方向</a></li>
+</ul>
+</li>
+<li><a href="#_13">六、本周经验教训总结</a><ul>
+<li><a href="#_14">✅ 做对的</a></li>
+<li><a href="#_15">❌ 做错的</a></li>
+<li><a href="#_16">📊 规则执行审计</a></li>
+</ul>
+</li>
+<li><a href="#_17">七、知识库自我进化审计</a><ul>
+<li><a href="#_18">已完成的进化</a></li>
+<li><a href="#_19">待完成的进化</a></li>
+<li><a href="#_20">建议新增知识</a></li>
+</ul>
+</li>
+<li><a href="#76-710">八、下周预案（7/6 - 7/10）</a><ul>
+<li><a href="#_21">市场体制预判</a></li>
+<li><a href="#_22">三个场景预案</a></li>
+<li><a href="#_23">操作检查清单</a></li>
+</ul>
+</li>
+<li><a href="#_24">九、总结评级</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="dean">Dean 周度复盘报告</h1>
+<blockquote>
+<p><strong>报告周期</strong>：2026-06-29（周一）至 2026-07-03（周五）| 共 5 个交易日
+<strong>报告生成</strong>：2026-07-05（周日）
+<strong>数据来源</strong>：dean-challenge-log.md + dean-knowledge-base/ 全库</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、考核全景概览</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">数值</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">本金</td>
+<td style="text-align: center;">¥100,000</td>
+<td style="text-align: left;">初始资金</td>
+</tr>
+<tr>
+<td style="text-align: left;">当前净值</td>
+<td style="text-align: center;"><strong>¥102,296</strong></td>
+<td style="text-align: left;">7/3 收盘 <code>[腾讯行情]</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">累计收益</td>
+<td style="text-align: center;"><strong>+¥2,296（+2.30%）</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">目标收益</td>
+<td style="text-align: center;">+¥10,000（+10%）</td>
+<td style="text-align: left;">截止 7/24</td>
+</tr>
+<tr>
+<td style="text-align: left;">考核进度（收益）</td>
+<td style="text-align: center;"><strong>23.0%</strong></td>
+<td style="text-align: left;">仍需 +7.70%</td>
+</tr>
+<tr>
+<td style="text-align: left;">考核进度（时间）</td>
+<td style="text-align: center;"><strong>~34.8%</strong></td>
+<td style="text-align: left;">已过 8/23 个交易日</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>时间 vs 收益缺口</strong></td>
+<td style="text-align: center;"><strong>时间过 1/3，收益仅 1/4</strong> ⚠️</td>
+<td style="text-align: left;">下半年日均需 ~0.55% 才能达标</td>
+</tr>
+<tr>
+<td style="text-align: left;">最大回撤</td>
+<td style="text-align: center;"><strong>-1.14%</strong>（¥103,477↘¥102,296）</td>
+<td style="text-align: left;">✅ 远低于 -5% 容忍线</td>
+</tr>
+<tr>
+<td style="text-align: left;">ETF 交易胜率</td>
+<td style="text-align: center;"><strong>50%</strong>（1 盈 / 1 止损）</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>结论</strong>：第二周执行了完整的&rdquo;建仓→止盈→止损→空仓&rdquo;循环，操作纪律整体合格，但止损滑点造成了不必要的超额损失。下半年需显著提高攻击效率。</p>
+</blockquote>
+<hr />
+<h2 id="629-73">二、上周逐日复盘（6/29 - 7/3）</h2>
+<h3 id="629-50">📅 6/29（周一）| 半仓做多科创50 ✅</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>操作</strong></td>
+<td style="text-align: left;">卖 511990 ¥45,100 → 买 588000 科创50ETF 20,600 股 @¥2.175（45%仓位）</td>
+</tr>
+<tr>
+<td style="text-align: left;">收盘配置</td>
+<td style="text-align: left;">科创50 45% + GC001 ¥54,904 @1.775%</td>
+</tr>
+<tr>
+<td style="text-align: left;">当日净值</td>
+<td style="text-align: left;"><strong>¥103,012（+3.01%）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">关键决策</td>
+<td style="text-align: left;">科创50站上 MA5 且领涨+1.97%，通信/创业板弱势回避</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>评价</strong></td>
+<td style="text-align: left;">✅ 正确选品、半仓控制风险</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="630-50">📅 6/30（周二）| 科创50暴涨，浮盈逼近止盈 ✅</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">市场</td>
+<td style="text-align: left;">科创50 +3.85% 再度领涨，上证 +0.50%</td>
+</tr>
+<tr>
+<td style="text-align: left;">持仓收盘</td>
+<td style="text-align: left;">588000 @2.344（+4.27%），浮盈 <strong>+¥3,481（+7.77%）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">当日净值</td>
+<td style="text-align: left;"><strong>¥103,477（+0.50%）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">关键事件</td>
+<td style="text-align: left;">止盈线 2.35 盘中最高 2.349，<strong>仅差 0.001 未触发</strong> ⚡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>评价</strong></td>
+<td style="text-align: left;">✅ 持仓纪律 + 止盈预案清晰</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="71">📅 7/1（周三）| 完美止盈执行 ✅</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>操作</strong></td>
+<td style="text-align: left;">10:23 588000 涨至 2.387（+9.75%）→ <strong>卖出 10,300 股，锁利 +¥2,177</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">剩余仓位</td>
+<td style="text-align: left;">10,300 股，止损上移至 ¥2.25</td>
+</tr>
+<tr>
+<td style="text-align: left;">收盘</td>
+<td style="text-align: left;">科创50 回调 -2.48%，588000 收 2.290（-2.30%）</td>
+</tr>
+<tr>
+<td style="text-align: left;">当日净值</td>
+<td style="text-align: left;"><strong>¥103,360（-0.11%）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">现金管理</td>
+<td style="text-align: left;">GC001 ¥79,771 @1.470%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>评价</strong></td>
+<td style="text-align: left;">✅ <strong>本周最佳操作</strong> — 触价即执行，高抛 + 保留半仓</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72">📅 7/2（周四）| 止损滑点 — 本周关键教训 ⚠️</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">市场</td>
+<td style="text-align: left;"><strong>科技崩盘</strong>：科创50 -7.70%、半导体 -8.26%、通信 -8.40%，上证 -2.03%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>操作</strong></td>
+<td style="text-align: left;">11:36 588000 跌破 2.25 → 成交 @<strong>2.187</strong>，清仓止损</td>
+</tr>
+<tr>
+<td style="text-align: left;">亏损</td>
+<td style="text-align: left;">此笔亏损 ≈ <strong>-¥1,700</strong>（其中滑点 -2.8% ≈ -¥700）</td>
+</tr>
+<tr>
+<td style="text-align: left;">当日净值</td>
+<td style="text-align: left;"><strong>¥102,294（-1.03%）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">根因</td>
+<td style="text-align: left;">❌ <strong>未设预埋止损单</strong> → 价格瞬间跌穿止损线，人工操作严重延迟</td>
+</tr>
+<tr>
+<td style="text-align: left;">修正措施</td>
+<td style="text-align: left;">✅ 已写入规则 §3：所有买入同步登记预埋单；开盘前自动检查</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>评价</strong></td>
+<td style="text-align: left;">⚠️ 止损方向正确，但执行方式导致超额亏损</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="73">📅 7/3（周五）| 空仓观望 + 信号系统首日验证 ✅</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">市场</td>
+<td style="text-align: left;">结构性反弹：上证 +0.37%，军工 +3.58%、汽车 +5.04%、黄金 +2.32%</td>
+</tr>
+<tr>
+<td style="text-align: left;">持仓</td>
+<td style="text-align: left;">100% 现金（511990 场内货基 ¥102,296）</td>
+</tr>
+<tr>
+<td style="text-align: left;">当日净值</td>
+<td style="text-align: left;"><strong>¥102,296（+0.0025%）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">信号验证</td>
+<td style="text-align: left;">13 个信号，方向准确率 <strong>63.6%</strong>（偏多 75% ✅ / 偏空 33% ❌）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>评价</strong></td>
+<td style="text-align: left;">✅ 空仓决策正确（反弹结构分化，科技持续弱势）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_2">三、本周盈亏归因</h2>
+<h3 id="_3">利润贡献</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: center;">金额</th>
+<th style="text-align: center;">占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">🏆 588000 止盈（7/1 卖 10,300 股 @2.387）</td>
+<td style="text-align: center;"><strong>+¥2,177</strong></td>
+<td style="text-align: center;"><strong>94.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">GC001 逆回购利息（6/29 + 7/1 两笔）</td>
+<td style="text-align: center;">+¥7</td>
+<td style="text-align: center;">0.3%</td>
+</tr>
+<tr>
+<td style="text-align: left;">511990 货币基金收益</td>
+<td style="text-align: center;">+¥4</td>
+<td style="text-align: center;">0.2%</td>
+</tr>
+<tr>
+<td style="text-align: left;">活期利息</td>
+<td style="text-align: center;">+¥2</td>
+<td style="text-align: center;">0.1%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>本周总利润</strong></td>
+<td style="text-align: center;"><strong>≈+¥2,190</strong></td>
+<td style="text-align: center;"><strong>100%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_4">亏损贡献</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">来源</th>
+<th style="text-align: center;">金额</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">❌ 588000 止损亏损（7/2 卖 10,300 股 @2.187 vs 成本 2.175）</td>
+<td style="text-align: center;">≈-¥124（原始止损）</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ <strong>滑点损失</strong>（2.25 → 2.187，-2.8%）</td>
+<td style="text-align: center;"><strong>≈-¥700</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 手续费（ETF 佣金 ¥11.20+6.15+5.63 + GC001 佣金）</td>
+<td style="text-align: center;">-¥23</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>本周总亏损</strong></td>
+<td style="text-align: center;"><strong>≈-¥847</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_5">净效应</h3>
+<pre><code>本周净收益 ≈ +¥2,190 - ¥847 = +¥1,343（+1.34% from 周初 ¥100,004）
+</code></pre>
+<blockquote>
+<p><strong>核心洞察</strong>：如果 7/2 执行了预埋止损单（在 2.25 触发），亏损可控制在 -¥500 以内，本周收益将达 <strong>+1.70%</strong> 而非 +1.34%。</p>
+</blockquote>
+<hr />
+<h2 id="_6">四、考核进度分析</h2>
+<h3 id="_7">时间线</h3>
+<pre><code>6/24 ──┬── 6/28 (Week 1)    +0.004%
+       │
+6/29 ──┼── 7/3  (Week 2)    +2.30%  ← 本周
+       │
+7/6  ──┤── 7/10 (Week 3)    ？？？  ← 下周
+7/13 ──┤── 7/17 (Week 4)
+7/20 ──┤── 7/24 (Week 5)
+</code></pre>
+<h3 id="_8">剩余目标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">已过交易日</td>
+<td style="text-align: center;">8 / 23</td>
+</tr>
+<tr>
+<td style="text-align: left;">剩余交易日</td>
+<td style="text-align: center;"><strong>15 天</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">剩余目标收益</td>
+<td style="text-align: center;"><strong>+¥7,704（+7.70%）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">剩余日均所需收益</td>
+<td style="text-align: center;"><strong>+0.51% / 天</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">过去日均收益</td>
+<td style="text-align: center;"><strong>+0.29% / 天</strong>（含 Week1 基本为零）</td>
+</tr>
+<tr>
+<td style="text-align: left;">含 Week1 日均</td>
+<td style="text-align: center;"><strong>+0.29% / 天</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>结论</strong>：下半年需要将日均收益从 +0.29% 提升至 +0.51%。这在震荡市中需要每周出现 1-2 次+3%以上的&rdquo;大日&rdquo;。</p>
+</blockquote>
+<h3 id="_9">情景推演</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">情景</th>
+<th style="text-align: center;">周均收益</th>
+<th style="text-align: center;">剩余周数</th>
+<th style="text-align: center;">能否达标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">🟢 积极</td>
+<td style="text-align: center;">+2.5%/周</td>
+<td style="text-align: center;">3 周</td>
+<td style="text-align: center;">✅ （7.5% &gt; 7.70% 接近）</td>
+</tr>
+<tr>
+<td style="text-align: left;">🟡 中性</td>
+<td style="text-align: center;">+1.5%/周</td>
+<td style="text-align: center;">3 周</td>
+<td style="text-align: center;">⚠️ （4.5% &lt; 7.70%，不够）</td>
+</tr>
+<tr>
+<td style="text-align: left;">🔴 保守</td>
+<td style="text-align: center;">+0.5%/周</td>
+<td style="text-align: center;">3 周</td>
+<td style="text-align: center;">❌ （1.5% ≪ 7.70%）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>现实判断</strong>：需要 3 周中至少 2 周做到 +2.0% 以上收益。</p>
+<hr />
+<h2 id="_10">五、信号系统验证报告</h2>
+<h3 id="7313">首日（7/3）13 个信号统计</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: center;">比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">总信号数</td>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">100%</td>
+</tr>
+<tr>
+<td style="text-align: left;">✅ 方向正确</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">53.8%</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌ 方向错误</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">30.8%</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚪ 中性（涨幅不足 0.5%）</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">15.4%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>方向准确率</strong>（✅/✅+❌）</td>
+<td style="text-align: center;"><strong>63.6%</strong></td>
+<td style="text-align: center;"><strong>及格线以上</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="vs">偏多 vs 偏空分化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">方向</th>
+<th style="text-align: center;">准确率</th>
+<th style="text-align: left;">评价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">📈 偏多（8 个）</td>
+<td style="text-align: center;"><strong>75.0%（6/8）</strong> ✅</td>
+<td style="text-align: left;"><strong>可执行级别</strong>，可置信</td>
+</tr>
+<tr>
+<td style="text-align: left;">📉 偏空（3 个）</td>
+<td style="text-align: center;"><strong>33.3%（1/3）</strong> ❌</td>
+<td style="text-align: left;"><strong>需人工确认</strong>，勿直接执行</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_11">最佳/最差信号</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">排名</th>
+<th style="text-align: left;">ETF</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">涨跌幅</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">🥇</td>
+<td style="text-align: left;">汽车ETF 516110</td>
+<td style="text-align: center;">📈偏多</td>
+<td style="text-align: center;"><strong>+5.04%</strong></td>
+<td style="text-align: left;">出口+政策双驱动模型验证有效</td>
+</tr>
+<tr>
+<td style="text-align: center;">🥇</td>
+<td style="text-align: left;">消费ETF 510150</td>
+<td style="text-align: center;">📈偏多</td>
+<td style="text-align: center;"><strong>+1.89%</strong></td>
+<td style="text-align: left;">国补政策催化</td>
+</tr>
+<tr>
+<td style="text-align: center;">🥇</td>
+<td style="text-align: left;">煤炭ETF 515220</td>
+<td style="text-align: center;">📈偏多</td>
+<td style="text-align: center;"><strong>+1.09%</strong></td>
+<td style="text-align: left;">高股息防御+夏日需求</td>
+</tr>
+<tr>
+<td style="text-align: center;">🥇</td>
+<td style="text-align: left;">红利ETF 510880</td>
+<td style="text-align: center;">📈偏多</td>
+<td style="text-align: center;"><strong>+1.04%</strong></td>
+<td style="text-align: left;">大盘价值修复</td>
+</tr>
+<tr>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">黄金ETF 518880</td>
+<td style="text-align: center;">📉偏空</td>
+<td style="text-align: center;"><strong>+2.32%❗</strong></td>
+<td style="text-align: left;">地缘溢价大幅反向</td>
+</tr>
+<tr>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">有色金属ETF 512400</td>
+<td style="text-align: center;">📉偏空</td>
+<td style="text-align: center;"><strong>+0.64%</strong></td>
+<td style="text-align: left;">金属涨价预期支撑</td>
+</tr>
+<tr>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">科创50ETF 588000</td>
+<td style="text-align: center;">📈偏多</td>
+<td style="text-align: center;"><strong>-0.80%</strong></td>
+<td style="text-align: left;">科技链继续承压</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_12">待优化方向</h3>
+<ol>
+<li><strong>偏空信号关键词权重需要调整</strong> — 当前偏空信号大量反向</li>
+<li><strong>黄金/有色需引入地缘风险权重</strong> — NLP 正面/负面关键词无法捕捉地缘政治溢价</li>
+<li><strong>偏空阈值调整建议</strong>：黄金/有色偏空从 net&lt;0 调整为 net&lt;-2</li>
+</ol>
+<hr />
+<h2 id="_13">六、本周经验教训总结</h2>
+<h3 id="_14">✅ 做对的</h3>
+<ol>
+<li><strong>选品正确</strong>（6/29）：科创50 是唯一站上 MA5+领涨品种，正确选择</li>
+<li><strong>仓位控制合理</strong>：45%敞口留子弹，避免了 7/2 全仓暴露</li>
+<li><strong>止盈完美执行</strong>（7/1）：触价即卖，锁利 +¥2,177，果断不贪婪</li>
+<li><strong>空仓观望</strong>（7/3）：科技弱势时不追涨，保持纪律</li>
+<li><strong>现金管理零失误</strong>：511990 + GC001 切换无闲置资金</li>
+</ol>
+<h3 id="_15">❌ 做错的</h3>
+<ol>
+<li><strong>7/2 未设预埋止损单</strong> → 滑点 -2.8%（≈-¥700 额外损失）⚠️</li>
+<li><strong>买入后未同步登记止损预埋单</strong> → 违反交易规则 §3</li>
+<li><strong>止盈后止损上移未同步更新预埋登记</strong> → 延续问题</li>
+</ol>
+<h3 id="_16">📊 规则执行审计</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">规则</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">仓位管理（单标 ≤50%）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">45% 符合</td>
+</tr>
+<tr>
+<td style="text-align: left;">动态仓位（信号×技术）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">信号强度+技术条件全部满足</td>
+</tr>
+<tr>
+<td style="text-align: left;">止损预埋单</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">7/2 缺失，已修正规则</td>
+</tr>
+<tr>
+<td style="text-align: left;">现金管理（零闲置）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">100%执行</td>
+</tr>
+<tr>
+<td style="text-align: left;">信号触发（≥3条+净偏多）</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">首日验证，偏多可靠偏空待优化</td>
+</tr>
+<tr>
+<td style="text-align: left;">技术确认（MA5/量/相对强度）</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">6/29 全部满足</td>
+</tr>
+<tr>
+<td style="text-align: left;">避险日扫描</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">7/2 完成 21ETF 扫描</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_17">七、知识库自我进化审计</h2>
+<h3 id="_18">已完成的进化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">动作</th>
+<th style="text-align: left;">文件</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">回填 6/29-7/2 的体制记录</td>
+<td style="text-align: left;"><code>regime-mapping.md</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">止损预埋单强约束 + 开盘前自动检查规则</td>
+<td style="text-align: left;"><code>trading-rules.md §3</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">信号验证结论与军工/汽车/半导体新发现</td>
+<td style="text-align: left;"><code>sector-knowledge.md</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">7/2 止损滑点复盘</td>
+<td style="text-align: left;"><code>postmortems.md</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">避险日 14/21 ETF 抗跌扫描记录</td>
+<td style="text-align: left;"><code>riskoff-watchlist.md</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_19">待完成的进化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">动作</th>
+<th style="text-align: center;">优先级</th>
+<th style="text-align: center;">建议截止</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>地缘风险因子人工标注流程</strong> — 黄金/有色偏空信号需要引入地缘判断</td>
+<td style="text-align: center;">🔴 高</td>
+<td style="text-align: center;">7/7 周一前</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>偏空信号关键词权重重新校准</strong> — 当前偏空准确率仅 33%</td>
+<td style="text-align: center;">🔴 高</td>
+<td style="text-align: center;">7/8 周二前</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>止损预埋单检查脚本自动化</strong> — cron 每日 09:20 预埋单检查</td>
+<td style="text-align: center;">🟡 中</td>
+<td style="text-align: center;">7/9 周三前</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>设置 Dean 每周日自动生成周度复盘</strong> — 即本报告的自动化版本</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: center;">待定</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_20">建议新增知识</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">建议</th>
+<th style="text-align: left;">理由</th>
+<th style="text-align: left;">建议位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">军工板块异动跟踪规则</td>
+<td style="text-align: left;">科技崩盘后 Day2 军工可能是首选切换方向</td>
+<td style="text-align: left;"><code>sector-knowledge.md</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">汽车出口+政策双驱动模型</td>
+<td style="text-align: left;">连续验证有效，可提升策略权重</td>
+<td style="text-align: left;"><code>sector-knowledge.md</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">7/2 逆势飘红 7 品种追踪表</td>
+<td style="text-align: left;">体制切换后优先关注清单</td>
+<td style="text-align: left;"><code>riskoff-watchlist.md</code> 补充追踪列</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="76-710">八、下周预案（7/6 - 7/10）</h2>
+<h3 id="_21">市场体制预判</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">当前体制</th>
+<th style="text-align: left;">触发条件</th>
+<th style="text-align: left;">对应策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">⚡ 防御轮动（当前）</td>
+<td style="text-align: left;">科技弱 + 军工/汽车/黄金强</td>
+<td style="text-align: left;">优先观察抗跌品种</td>
+</tr>
+<tr>
+<td style="text-align: left;">可能切换 → 🟡 震荡</td>
+<td style="text-align: left;">上证企稳 3950-4100 缩量</td>
+<td style="text-align: left;">红利、电力、军工</td>
+</tr>
+<tr>
+<td style="text-align: left;">可能切换 → 🟢 全面反弹</td>
+<td style="text-align: left;">科技止跌 + 量能回升</td>
+<td style="text-align: left;">科创50/半导体信号扫描</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_22">三个场景预案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">场景</th>
+<th style="text-align: left;">操作</th>
+<th style="text-align: center;">仓位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">📈 <strong>企稳反弹</strong>：科技止跌 + 信号净偏多</td>
+<td style="text-align: left;">优先 7/2 逆势抗跌品种（黄金/有色/红利/汽车/军工）</td>
+<td style="text-align: center;">30-40%</td>
+</tr>
+<tr>
+<td style="text-align: center;">🟡 <strong>继续震荡</strong>：上证 3950-4100</td>
+<td style="text-align: left;">511990 持有，不急于入场，等待科创50/半导体止跌</td>
+<td style="text-align: center;">0%</td>
+</tr>
+<tr>
+<td style="text-align: center;">🔴 <strong>二次探底</strong>：上证跌破 4000</td>
+<td style="text-align: left;">511990 回避，记录抗跌品种，等待恐慌释放</td>
+<td style="text-align: center;">0%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_23">操作检查清单</h3>
+<ul>
+<li>[ ] 周一 08:00 检查 GC001 利率，如 &gt;1.5% 可配置部分现金</li>
+<li>[ ] 检查可转债申购日历（打新无需本金）</li>
+<li>[ ] 7/6 新规生效：盘后固定价格交易扩展到全 A 股+ETF；主板 ST 涨跌幅升至 10%</li>
+<li>[ ] 信号系统偏空信号优化前，偏空信号仅做参考，不做执行依据</li>
+</ul>
+<hr />
+<h2 id="_24">九、总结评级</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">评级</th>
+<th style="text-align: left;">一句话</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">🎯 交易执行</td>
+<td style="text-align: center;">⚡ <strong>B+</strong></td>
+<td style="text-align: left;">止盈完美，止损方向对但执行出错</td>
+</tr>
+<tr>
+<td style="text-align: left;">📊 仓位管理</td>
+<td style="text-align: center;">✅ <strong>A</strong></td>
+<td style="text-align: left;">45%敞口合理，控制风险得当</td>
+</tr>
+<tr>
+<td style="text-align: left;">💰 现金管理</td>
+<td style="text-align: center;">✅ <strong>A+</strong></td>
+<td style="text-align: left;">100%零闲置，511990+GC001切换无失误</td>
+</tr>
+<tr>
+<td style="text-align: left;">🔍 信号系统</td>
+<td style="text-align: center;">🟡 <strong>C+</strong></td>
+<td style="text-align: left;">首日验证，偏多可靠(75%)但偏空需大修</td>
+</tr>
+<tr>
+<td style="text-align: left;">🧠 知识库进化</td>
+<td style="text-align: center;">✅ <strong>A</strong></td>
+<td style="text-align: left;">5项已完成，2项待办</td>
+</tr>
+<tr>
+<td style="text-align: left;">📈 考核进度</td>
+<td style="text-align: center;">🟡 <strong>B-</strong></td>
+<td style="text-align: left;">时间过 1/3 收益 23%，下半年需要加速</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>一句话总结</strong>：第二周完成了一个完整的&rdquo;选品→建仓→浮盈→止盈→止损→空仓&rdquo;交易循环，净赚约 +¥1,343。止盈操作是本周最佳决策，止损滑点是本周最大教训。信号系统首日上线方向准确率 63.6%（偏多 75% 可执行），但偏空仅 33% 需紧急优化。下半年考核仍需日均 +0.51%，容错空间有限。</p>
+</blockquote>
+<hr />
+<p><em>报告结束 | 下次复盘：2026-07-12（周日）</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

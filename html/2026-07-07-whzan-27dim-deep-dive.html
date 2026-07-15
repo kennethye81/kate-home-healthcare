@@ -1,0 +1,1567 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Whzan (Solcom) — 27 维度公司深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#whzan-solcom-27">Whzan (Solcom) — 27 维度公司深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道真实性验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4">D4 — 商业模式</a></li>
+<li><a href="#d5">D5 — 产品线</a></li>
+<li><a href="#d6">D6 — 客户与支付方</a></li>
+<li><a href="#d7">D7 — 财务</a></li>
+<li><a href="#d8">D8 — 工作流</a></li>
+<li><a href="#d9">D9 — 技术深度评估</a><ul>
+<li><a href="#91">9.1 硬件</a></li>
+<li><a href="#92">9.2 软件</a></li>
+<li><a href="#93-ai">9.3 AI 能力</a></li>
+<li><a href="#95">9.5 技术差异化</a></li>
+</ul>
+</li>
+<li><a href="#d10">D10 — 竞争格局</a></li>
+<li><a href="#d11-tamsam">D11 — TAM/SAM/渗透率估算</a></li>
+<li><a href="#d12">D12 — 盈利模型</a></li>
+<li><a href="#d13">D13 — 机遇与风险评估矩阵</a></li>
+<li><a href="#d14">D14 — 管理层指引与可信度</a></li>
+<li><a href="#d15">D15 — 估值对比</a></li>
+<li><a href="#d16-ihomecare">D16 — 对 iHomeCare 战略建议</a><ul>
+<li><a href="#1">1. &ldquo;即开即用&rdquo;设备设计</a></li>
+<li><a href="#2">2. 非临床人员赋能 = 降低运营成本</a></li>
+<li><a href="#3">3. 硬件+软件一体化的粘性</a></li>
+<li><a href="#4-nhs">4. 小公司的 NHS 关系网络</a></li>
+<li><a href="#5">5. 纯硬件的天花板</a></li>
+</ul>
+</li>
+<li><a href="#d17">D17 — 政策与监管土壤</a></li>
+<li><a href="#d18">D18 — 单元经济模型</a></li>
+<li><a href="#d19">D19 — 目标人群/客户细分</a></li>
+<li><a href="#d20">D20 — 竞品深度地图</a></li>
+<li><a href="#d21">D21 — 跨境/跨区域战略</a></li>
+<li><a href="#d22">D22 — 退出/并购价值分析</a></li>
+<li><a href="#d23-esg">D23 — ESG / 社会影响力</a></li>
+<li><a href="#d24">D24 — 组织与人才</a></li>
+<li><a href="#d25">D25 — 融资历史与资本结构</a></li>
+<li><a href="#d26-gtm">D26 — 销售与 GTM 效率</a></li>
+<li><a href="#d27">D27 — 临床质量与患者结局</a><ul>
+<li><a href="#271">27.1 核心临床指标</a></li>
+<li><a href="#272">27.2 质量认证</a></li>
+<li><a href="#273">27.3 临床证据强度</a></li>
+</ul>
+</li>
+<li><a href="#_1">调研空白与后续补充</a></li>
+<li><a href="#v20-27">v2.0 完备性审计（27 维度）</a></li>
+<li><a href="#_2">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="whzan-solcom-27">Whzan (Solcom) — 27 维度公司深度尽调报告</h1>
+<p><strong>调研人</strong>: Kate, VP Research
+<strong>报告日期</strong>: 2026-07-07
+<strong>报告状态</strong>: 终稿</p>
+<hr />
+<h2 id="d0">D0 — 赛道真实性验证</h2>
+<p><strong>验证结论</strong>: ✅ Whzan 属于 <strong>虚拟病房/远程监测 IoT 技术平台</strong>赛道。</p>
+<p>Whzan（母公司 Solcom）提供 NHS 广泛部署的 Blue Box 硬件+软件一体化远程监测方案。纯技术平台供应商——不提供临床服务。NICE HTG697 评估收录，CQC 创新案例，G-Cloud 列名。</p>
+<ul>
+<li><strong>对 iHomeCare 的参考价值</strong>: 🟡 <strong>中等</strong> —— IoT 硬件+软件集成方案可参考，但纯技术平台模式与 iHomeCare 的全栈服务模式不同</li>
+</ul>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p><strong>一句话定位</strong>: Whzan 是英国 NHS 最早、最广泛部署的虚拟病房 IoT 硬件平台——Blue Box 一体化套件（平板+血压计+血氧仪+体温计）配合自研软件平台，支持非临床人员测量生命体征并自动生成 NEWS2 评分，实现&rdquo;护理院/居家→GP/医院&rdquo;的数据闭环。</p>
+<p><strong>关键数据速览</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">数据</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">母公司</td>
+<td style="text-align: left;">Solcom（工业自动化→数字健康）</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">创始人</td>
+<td style="text-align: left;">Keith Chessell</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">创立</td>
+<td style="text-align: left;">2011 年（首个 Blue Box 原型）</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">关键拐点</td>
+<td style="text-align: left;">2013 年发现护理院应用场景</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">患者增长</td>
+<td style="text-align: left;">2014 年起每年翻倍</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">2019 年收入占比</td>
+<td style="text-align: left;">Whzan = 2/3 of Solcom</td>
+<td style="text-align: left;">官方</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS 部署</td>
+<td style="text-align: left;">多 ICS/Trust（Surrey/BLMK/NENC 等）</td>
+<td style="text-align: left;">多方</td>
+</tr>
+<tr>
+<td style="text-align: left;">临床效果</td>
+<td style="text-align: left;">999 呼叫 -41%、住院 -53%、GP 访视 -36%</td>
+<td style="text-align: left;">Surrey Heartlands</td>
+</tr>
+<tr>
+<td style="text-align: left;">NICE 收录</td>
+<td style="text-align: left;">HTG697 虚拟病房技术评估</td>
+<td style="text-align: left;">NICE</td>
+</tr>
+<tr>
+<td style="text-align: left;">CQC 案例</td>
+<td style="text-align: left;">创新案例研究</td>
+<td style="text-align: left;">CQC</td>
+</tr>
+<tr>
+<td style="text-align: left;">G-Cloud</td>
+<td style="text-align: left;">数字市场列名</td>
+<td style="text-align: left;">UK Gov</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>总体判断</strong>: Whzan 是英国虚拟病房基础设施的&rdquo;老牌玩家&rdquo;——在 NHS 部署时间最长、案例最多。纯硬件+软件模式使其护城河较浅（竞品可复制），但 NHS 关系网络和品牌信任度构成软性壁垒。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌</h2>
+<p><strong>基本事实表</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">品牌名</td>
+<td style="text-align: left;">Whzan</td>
+</tr>
+<tr>
+<td style="text-align: left;">母公司</td>
+<td style="text-align: left;">Solcom Limited</td>
+</tr>
+<tr>
+<td style="text-align: left;">创始人</td>
+<td style="text-align: left;">Keith Chessell</td>
+</tr>
+<tr>
+<td style="text-align: left;">创立</td>
+<td style="text-align: left;">2011 年（胜出 NHS 资助后首个 Blue Box 原型）</td>
+</tr>
+<tr>
+<td style="text-align: left;">关键拐点</td>
+<td style="text-align: left;">2013 年——发现护理院是 Blue Box 的最佳应用场景</td>
+</tr>
+<tr>
+<td style="text-align: left;">总部</td>
+<td style="text-align: left;">英国</td>
+</tr>
+<tr>
+<td style="text-align: left;">员工规模</td>
+<td style="text-align: left;">未公开（小型公司——Solcom 整体规模）</td>
+</tr>
+<tr>
+<td style="text-align: left;">上市状态</td>
+<td style="text-align: left;">私人公司</td>
+</tr>
+<tr>
+<td style="text-align: left;">转型</td>
+<td style="text-align: left;">工业自动化系统 → 纯数字健康（2019 年 Whzan 占 2/3 收入，预计 90%）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>发展时间线</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">年份</th>
+<th style="text-align: left;">关键事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2011</td>
+<td style="text-align: left;">Keith Chessell 胜出 NHS 资助→首个 Blue Box 原型（纸板盒包装）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2013</td>
+<td style="text-align: left;">发现护理院是 Blue Box 的最佳应用场景</td>
+</tr>
+<tr>
+<td style="text-align: left;">2014</td>
+<td style="text-align: left;">患者数开始每年翻倍增长</td>
+</tr>
+<tr>
+<td style="text-align: left;">2018</td>
+<td style="text-align: left;">Whzan 从 Solcom 工业项目输血→自给自足</td>
+</tr>
+<tr>
+<td style="text-align: left;">2019</td>
+<td style="text-align: left;">Whzan 占 Solcom 收入 2/3</td>
+</tr>
+<tr>
+<td style="text-align: left;">2021</td>
+<td style="text-align: left;">预计达 100,000 患者</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023.10</td>
+<td style="text-align: left;">CQC 创新案例研究发表</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Surrey Heartlands 扩展至居家护理机构（从 50→60 Blue Box）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">NICE HTG697 虚拟病房技术评估收录</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025-2026</td>
+<td style="text-align: left;">BLMK ICS 172 套设备、123 护理地点、3,544 人</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>管理层</strong>: Keith Chessell（创始人）——工业自动化背景，从工业系统开发者转型数字健康。</p>
+<p><strong>股权结构</strong>: 私人公司 Solcom Limited 旗下，未公开。</p>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<p><strong>一句话核心逻辑</strong>: Whzan 赌的是&rdquo;让非临床人员能做临床级别的生命体征监测&rdquo;——Blue Box 的自动化 NEWS2 评分降低了护理院/居家护理的临床门槛，使护理院能在问题恶化前发现并干预，从而减少 999 呼叫和住院。</p>
+<p><strong>战略差异化</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Whzan</th>
+<th style="text-align: left;">竞品</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">模式</td>
+<td style="text-align: left;">纯硬件+软件 IoT</td>
+<td style="text-align: left;">Doccla（全栈+临床）、Huma（纯平台）</td>
+</tr>
+<tr>
+<td style="text-align: left;">硬件</td>
+<td style="text-align: left;">自有 Blue Box 套件</td>
+<td style="text-align: left;">多数竞品依赖第三方设备</td>
+</tr>
+<tr>
+<td style="text-align: left;">部署历史</td>
+<td style="text-align: left;">10+ 年 NHS 部署</td>
+<td style="text-align: left;">多数竞品 3-5 年</td>
+</tr>
+<tr>
+<td style="text-align: left;">非临床人员</td>
+<td style="text-align: left;">核心设计理念</td>
+<td style="text-align: left;">多数竞品面向临床人员</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d4">D4 — 商业模式</h2>
+<pre><code>护理院/居家护理机构
+    ↓ 购买/租赁 Blue Box
+Whzan 提供:
+  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+  │ Blue Box 硬件 │  │ 软件平台      │  │ 培训+支持    │
+  │ (平板+BP+SpO2│  │ (NEWS2+仪表盘)│  │              │
+  │  +Temp+HR)    │  │              │  │              │
+  └──────────────┘  └──────────────┘  └──────────────┘
+         ↓
+  ┌──────────────────────────────────────────────────┐
+  │ 护理院非临床人员测量→自动NEWS2→预警→GP/111/医院  │
+  └──────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>支付方</strong>: NHS ICS/Trust 采购（G-Cloud 框架）+ 护理院自购</p>
+<hr />
+<h2 id="d5">D5 — 产品线</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">产品</th>
+<th style="text-align: left;">客户</th>
+<th style="text-align: left;">功能</th>
+<th style="text-align: left;">定价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Blue Box</td>
+<td style="text-align: left;">护理院/居家护理</td>
+<td style="text-align: left;">平板+BP+SpO2+Temp+HR+NEWS2</td>
+<td style="text-align: left;">硬件+许可费</td>
+</tr>
+<tr>
+<td style="text-align: left;">Blue Box Lite</td>
+<td style="text-align: left;">居家患者</td>
+<td style="text-align: left;">患者自测 App</td>
+<td style="text-align: left;">含在许可费中</td>
+</tr>
+<tr>
+<td style="text-align: left;">软件平台</td>
+<td style="text-align: left;">NHS/护理院</td>
+<td style="text-align: left;">远程监测仪表盘+预警+互操作</td>
+<td style="text-align: left;">SaaS 订阅</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>互操作集成</strong>: EMIS、Adastra、Nourish、Panacea、PCS、Ally、Skyresponse</p>
+<hr />
+<h2 id="d6">D6 — 客户与支付方</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">客户</th>
+<th style="text-align: left;">代表</th>
+<th style="text-align: left;">部署规模</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NHS ICS</td>
+<td style="text-align: left;">Surrey Heartlands, BLMK, NENC</td>
+<td style="text-align: left;">50→172+ 套/ICS</td>
+</tr>
+<tr>
+<td style="text-align: left;">护理院</td>
+<td style="text-align: left;">Woking Homes 等</td>
+<td style="text-align: left;">数百家</td>
+</tr>
+<tr>
+<td style="text-align: left;">居家护理机构</td>
+<td style="text-align: left;">Surrey 5 家试点</td>
+<td style="text-align: left;">扩展中</td>
+</tr>
+<tr>
+<td style="text-align: left;">地方政府</td>
+<td style="text-align: left;">Sunderland Council</td>
+<td style="text-align: left;">早期采用者</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d7">D7 — 财务</h2>
+<blockquote>
+<p>⚠️ Whzan 为私人公司 Solcom 旗下，无公开独立财务数据。</p>
+</blockquote>
+<ul>
+<li>2019: Whzan = Solcom 收入 2/3</li>
+<li>预计: Whzan → 90% of Solcom</li>
+<li>融资: 自给自足——无公开外部融资（依靠 Solcom 工业项目输血至 2018 年）</li>
+</ul>
+<hr />
+<h2 id="d8">D8 — 工作流</h2>
+<p><strong>护理院 Blue Box 使用流程</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Phase</th>
+<th style="text-align: left;">动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Phase 1: 日常检测</td>
+<td style="text-align: left;">护理人员使用 Blue Box 测量生命体征</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 2: 自动评分</td>
+<td style="text-align: left;">系统自动计算 NEWS2 评分</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 3: 预警</td>
+<td style="text-align: left;">异常→系统标记→护理人员联系 GP/111</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 4: 数据共享</td>
+<td style="text-align: left;">数据自动发送至 GP 系统（如已集成 EMIS）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 5: 临床干预</td>
+<td style="text-align: left;">GP/社区团队根据数据决策</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d9">D9 — 技术深度评估</h2>
+<h3 id="91">9.1 硬件</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">设备</th>
+<th style="text-align: left;">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">平板电脑</td>
+<td style="text-align: left;">预装 Whzan 软件</td>
+</tr>
+<tr>
+<td style="text-align: left;">脉搏血氧仪</td>
+<td style="text-align: left;">SpO2 + HR</td>
+</tr>
+<tr>
+<td style="text-align: left;">血压计</td>
+<td style="text-align: left;">BP</td>
+</tr>
+<tr>
+<td style="text-align: left;">体温计</td>
+<td style="text-align: left;">体温</td>
+</tr>
+<tr>
+<td style="text-align: left;">定制便携箱</td>
+<td style="text-align: left;">Blue Box 品牌包装</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92">9.2 软件</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">功能</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NEWS2 自动评分</td>
+<td style="text-align: left;">核心差异化——非临床人员无需医学知识</td>
+</tr>
+<tr>
+<td style="text-align: left;">远程监测仪表盘</td>
+<td style="text-align: left;">临床团队实时查看</td>
+</tr>
+<tr>
+<td style="text-align: left;">多系统互操作</td>
+<td style="text-align: left;">EMIS/Adastra/Nourish 等 8+ 系统集成</td>
+</tr>
+<tr>
+<td style="text-align: left;">问卷/评估</td>
+<td style="text-align: left;">支持多种结构化评估</td>
+</tr>
+<tr>
+<td style="text-align: left;">Blue Box Lite</td>
+<td style="text-align: left;">患者自测 App</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="93-ai">9.3 AI 能力</h3>
+<p><strong>不适用。</strong> Whzan 是 IoT 硬件+软件平台，无公开 AI/ML 功能（NEWS2 是规则引擎，非 AI）。</p>
+<h3 id="95">9.5 技术差异化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">Whzan</th>
+<th style="text-align: center;">评级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">硬件+软件一体化</td>
+<td style="text-align: left;">🟢🟢 自有硬件</td>
+<td style="text-align: center;">领先</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS 部署历史</td>
+<td style="text-align: left;">🟢🟢 10+ 年</td>
+<td style="text-align: center;">最深</td>
+</tr>
+<tr>
+<td style="text-align: left;">非临床人员赋能</td>
+<td style="text-align: left;">🟢🟢 核心设计</td>
+<td style="text-align: center;">独特</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI</td>
+<td style="text-align: left;">❌ 无</td>
+<td style="text-align: center;">落后</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d10">D10 — 竞争格局</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: center;">硬件</th>
+<th style="text-align: center;">临床团队</th>
+<th style="text-align: center;">AI</th>
+<th style="text-align: left;">vs Whzan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Doccla</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">全栈竞争——Whzan 是纯技术</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Huma</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: left;">纯平台——Whzan 有硬件优势</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Clinitouch</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">纯软件——无硬件</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Isansys</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">可穿戴 vs Blue Box 套件</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-tamsam">D11 — TAM/SAM/渗透率估算</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">市场层级</th>
+<th style="text-align: center;">估算值</th>
+<th style="text-align: left;">计算逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TAM（英国护理院+居家护理 IoT 硬件）</strong></td>
+<td style="text-align: center;">~£300-500M</td>
+<td style="text-align: left;">~15,000 英国护理院 + ~10,000 居家护理机构 × £10-20K/套</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TAM（全球护理院远程监测硬件）</strong></td>
+<td style="text-align: center;">~$2-5B</td>
+<td style="text-align: left;">全球老龄化护理院市场</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SAM</strong></td>
+<td style="text-align: center;">~£100-200M</td>
+<td style="text-align: left;">英国 NHS 部署（G-Cloud 框架）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>当前渗透</strong></td>
+<td style="text-align: center;">未公开</td>
+<td style="text-align: left;">估 ~5-10% 英国护理院</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BLMK 部署</strong></td>
+<td style="text-align: center;">172 套 / 123 护理地点 / 3,544 人</td>
+<td style="text-align: left;">BLMK ICS 2024-2025</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d12">D12 — 盈利模型</h2>
+<blockquote>
+<p>⚠️ Whzan 为 Solcom 私人公司旗下，无公开独立财务数据。</p>
+</blockquote>
+<p><strong>成本结构推算</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">成本项</th>
+<th style="text-align: center;">占收入比（估）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">硬件制造成本（BOM）</td>
+<td style="text-align: center;">25-35%</td>
+<td style="text-align: left;">平板+传感器+定制箱</td>
+</tr>
+<tr>
+<td style="text-align: left;">软件开发/维护</td>
+<td style="text-align: center;">15-20%</td>
+<td style="text-align: left;">平台+互操作</td>
+</tr>
+<tr>
+<td style="text-align: left;">销售/培训/支持</td>
+<td style="text-align: center;">15-20%</td>
+<td style="text-align: left;">NHS 部署+人员培训</td>
+</tr>
+<tr>
+<td style="text-align: left;">管理</td>
+<td style="text-align: center;">10-15%</td>
+<td style="text-align: left;">小型公司</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>盈利判断</strong>: </p>
+<ul>
+<li>2018 年起无需 Solcom 工业项目输血——说明 Whzan 自身已实现盈利</li>
+<li>硬件+许可费模式→硬件销售一次性收入 + SaaS 订阅经常性收入</li>
+</ul>
+<hr />
+<h2 id="d13">D13 — 机遇与风险评估矩阵</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">机遇</th>
+<th style="text-align: left;">风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>短期</strong></td>
+<td style="text-align: left;">① 从 50→172 套的 ICB 扩展模式可复制到更多 ICS ② Blue Box Lite App 向居家护理扩展 ③ 从护理院→居家护理机构扩展</td>
+<td style="text-align: left;">① 纯硬件模式护城河浅——Doccla/Huma 可添加硬件套件 ② 缺乏 AI 能力 ③ 小型公司→大规模 NHS 采购的执行力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中长期</strong></td>
+<td style="text-align: left;">① 英国 15,000 护理院仅 ~5-10% 数字化→巨大扩展空间 ② 国际扩展（欧洲护理院市场）</td>
+<td style="text-align: left;">① NHS Online 全国统一平台可能挤出第三方硬件 ② 科技大厂（Apple/Google）可能推出消费级健康监测套装</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结构性</strong></td>
+<td style="text-align: left;">① 非临床人员赋能→降低护理院运营门槛 ② 10+ 年 NHS 品牌信任</td>
+<td style="text-align: left;">① 硬件商品化→价格竞争 ② 缺乏软件/AI 壁垒</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d14">D14 — 管理层指引与可信度</h2>
+<p><strong>创始人 Keith Chessell 可追溯的公开声明</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">声明</th>
+<th style="text-align: left;">验证</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">&ldquo;患者数自 2014 年起每年翻倍&rdquo;</td>
+<td style="text-align: left;">✅ 与 NHS 部署扩张趋势一致</td>
+</tr>
+<tr>
+<td style="text-align: left;">&ldquo;2021 年预计达 100,000 患者&rdquo;</td>
+<td style="text-align: left;">⚠️ 未独立验证</td>
+</tr>
+<tr>
+<td style="text-align: left;">&ldquo;Whzan 的成功来源于真正在乎 NHS Trust 和患者的最佳利益&rdquo;</td>
+<td style="text-align: left;">✅ CQC 案例和 Surrey/BLMK 证据支持</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>可信度</strong>: 🟢 高——作为 10+ 年 NHS 供应商，历史记录一致。</p>
+<hr />
+<h2 id="d15">D15 — 估值对比</h2>
+<p><strong>不适用。</strong> Whzan 为 Solcom 私人公司旗下部门，从未接受外部融资（自给自足）。无外部估值。如独立估值，基于硬件+SaaS 模式，可比倍数 3-6x 收入。</p>
+<hr />
+<h2 id="d16-ihomecare">D16 — 对 iHomeCare 战略建议</h2>
+<h3 id="1">1. &ldquo;即开即用&rdquo;设备设计</h3>
+<p>Whzan Blue Box 的成功核心之一是预配即用的体验——非临床人员无需技术培训就能操作。iHomeCare 的居家设备包应采用同样的&rdquo;0 学习成本&rdquo;设计。</p>
+<h3 id="2">2. 非临床人员赋能 = 降低运营成本</h3>
+<p>Whzan 证明：通过自动化 NEWS2 评分，护理院无需雇佣临床人员就能进行生命体征监测。iHomeCare 可以借鉴——让家属或初级护理人员完成基础数据采集，AI/规则引擎辅助临床判断。</p>
+<h3 id="3">3. 硬件+软件一体化的粘性</h3>
+<p>Whzan 的&rdquo;硬件+软件捆绑&rdquo;比纯软件 SaaS 更难被替换（物理设备已部署在现场）。iHomeCare 应考虑设备捆绑策略以提高客户粘性。</p>
+<h3 id="4-nhs">4. 小公司的 NHS 关系网络</h3>
+<p>Whzan 作为小型公司却能在多个 NHS ICS 部署，说明 NHS 采购不完全看公司规模——临床效果和关系网络同等重要。iHomeCare 即使初期规模小，仍可争取医管局试点。</p>
+<h3 id="5">5. 纯硬件的天花板</h3>
+<p>但 Whzan 的模式也警示：纯硬件+软件平台缺乏数据/AI/临床服务的护城河，长期可能被全栈玩家（Doccla/Cera）替代。iHomeCare 应走全栈模式。</p>
+<hr />
+<h2 id="d17">D17 — 政策与监管土壤</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">政策/监管</th>
+<th style="text-align: left;">内容</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">G-Cloud 14</td>
+<td style="text-align: left;">政府数字市场列名</td>
+<td style="text-align: left;">🟢 NHS 标准化采购通道</td>
+</tr>
+<tr>
+<td style="text-align: left;">NICE HTG697</td>
+<td style="text-align: left;">虚拟病房技术评估</td>
+<td style="text-align: left;">🟢 权威收录</td>
+</tr>
+<tr>
+<td style="text-align: left;">CQC 创新案例</td>
+<td style="text-align: left;">官方创新案例研究</td>
+<td style="text-align: left;">🟢 可信度背书</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS NEWS2</td>
+<td style="text-align: left;">国家早期预警评分标准</td>
+<td style="text-align: left;">🟢 Blue Box 原生支持</td>
+</tr>
+<tr>
+<td style="text-align: left;">NHS DSPT</td>
+<td style="text-align: left;">数据安全合规</td>
+<td style="text-align: left;">🟢</td>
+</tr>
+<tr>
+<td style="text-align: left;">MHRA</td>
+<td style="text-align: left;">医疗器械注册（推定 Class I/IIa）</td>
+<td style="text-align: left;">🟢</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d18">D18 — 单元经济模型</h2>
+<p><strong>Blue Box 典型部署单元经济（推测）</strong>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">项目</th>
+<th style="text-align: center;">金额（£）</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Blue Box 硬件套件售价</td>
+<td style="text-align: center;">£3,000-5,000</td>
+<td style="text-align: left;">一次性</td>
+</tr>
+<tr>
+<td style="text-align: left;">年度软件许可费</td>
+<td style="text-align: center;">£500-1,000/套/年</td>
+<td style="text-align: left;">经常性</td>
+</tr>
+<tr>
+<td style="text-align: left;">培训/支持</td>
+<td style="text-align: center;">£200-500/套</td>
+<td style="text-align: left;">一次性</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3 年总合同价值（TCV）</strong></td>
+<td style="text-align: center;"><strong>£5,000-8,000/套</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NHS 节省</strong>（Surrey 案例）</td>
+<td style="text-align: center;">999 呼叫 -41%、住院 -53%</td>
+<td style="text-align: left;">远超 Blue Box 成本</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d19">D19 — 目标人群/客户细分</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">层级</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: center;">数量（估）</th>
+<th style="text-align: center;">战略优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">A: NHS ICS 委托护理院</td>
+<td style="text-align: left;">护理院（residential/nursing homes）</td>
+<td style="text-align: center;">~15,000 UK</td>
+<td style="text-align: center;">🔴 核心</td>
+</tr>
+<tr>
+<td style="text-align: left;">B: 居家护理机构</td>
+<td style="text-align: left;">入户护理（domiciliary care）</td>
+<td style="text-align: center;">~10,000 UK</td>
+<td style="text-align: center;">🟢 扩展中</td>
+</tr>
+<tr>
+<td style="text-align: left;">C: 个体居家患者</td>
+<td style="text-align: left;">Blue Box Lite App</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">🟡 新兴</td>
+</tr>
+<tr>
+<td style="text-align: left;">D: 地方政府社会照护</td>
+<td style="text-align: left;">Sunderland Council 案例</td>
+<td style="text-align: center;">~150 UK</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d20">D20 — 竞品深度地图</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">竞品</th>
+<th style="text-align: center;">硬件</th>
+<th style="text-align: center;">临床</th>
+<th style="text-align: center;">AI</th>
+<th style="text-align: center;">威胁</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Doccla</strong></td>
+<td style="text-align: center;">✅ 全套</td>
+<td style="text-align: center;">✅ CQC</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">全栈竞争——Whzan 无临床团队</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Huma</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟢🟢</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">FDA Class II 平台——高端市场</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Clinitouch</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: left;">纯软件——非直接竞争</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Isansys</strong></td>
+<td style="text-align: center;">✅ 可穿戴</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: left;">可穿戴传感器——差异化硬件</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Current Health</strong></td>
+<td style="text-align: center;">✅ 可穿戴</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">🟢 低</td>
+<td style="text-align: left;">已退出 NHS</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Whzan 的差异化优势</strong>: 10+ 年 NHS 部署历史 + 护理院/非临床人员场景专精——这是竞品最难复制的。</p>
+<hr />
+<h2 id="d21">D21 — 跨境/跨区域战略</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">区域</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">机会</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">英国</td>
+<td style="text-align: center;">🟢 核心</td>
+<td style="text-align: left;">15,000 护理院 × ~5-10% 渗透</td>
+</tr>
+<tr>
+<td style="text-align: left;">欧洲</td>
+<td style="text-align: center;">🔴 未进入</td>
+<td style="text-align: left;">潜在——但需多语言/多监管</td>
+</tr>
+<tr>
+<td style="text-align: left;">美国</td>
+<td style="text-align: center;">🔴 未进入</td>
+<td style="text-align: left;">竞争激烈</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d22">D22 — 退出/并购价值分析</h2>
+<p><strong>不适用。</strong> Whzan 是 Solcom 内部部门，自给自足，无外部投资者，无退出压力。可能的退出路径：被大型医疗设备公司或 Doccla/Huma 等全栈平台收购（估值估 £20-50M）。</p>
+<hr />
+<h2 id="d23-esg">D23 — ESG / 社会影响力</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>环境</strong></td>
+<td style="text-align: left;">🟢 正面——减少 999 呼叫/救护车碳排放</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>社会</strong></td>
+<td style="text-align: left;">🟢🟢 正面——赋能非临床人员；减少住院；改善护理院居民生活质量</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>治理</strong></td>
+<td style="text-align: left;">🟡 小型私人公司——治理透明度有限</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d24">D24 — 组织与人才</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>员工规模</strong></td>
+<td style="text-align: left;">未公开——小型公司（Solcom 整体）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>创始人依赖</strong></td>
+<td style="text-align: left;">🔴 高——Keith Chessell 是灵魂人物</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>技术团队</strong></td>
+<td style="text-align: left;">小型——工业自动化背景→数字健康</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>企业文化</strong></td>
+<td style="text-align: left;">🟢 使命驱动——&ldquo;真正在乎 NHS 和患者的利益&rdquo;</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d25">D25 — 融资历史与资本结构</h2>
+<p><strong>自给自足。</strong> Whzan 从未接受外部融资——2018 年前由 Solcom 工业项目利润资助，2018 年后自身盈利。</p>
+<p><strong>无 Cap Table / 无投资者</strong> —— 完全创始人/母公司持有。</p>
+<hr />
+<h2 id="d26-gtm">D26 — 销售与 GTM 效率</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">子维度</th>
+<th style="text-align: left;">评估</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GTM 模式</strong></td>
+<td style="text-align: left;">B2G——NHS G-Cloud 框架 + ICS 创新基金试点</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>销售周期</strong></td>
+<td style="text-align: left;">NHS 试点→评估→扩展（6-18 个月）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>获客渠道</strong></td>
+<td style="text-align: left;">NHS 会议/展览 + G-Cloud + CQC 案例传播</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>扩展模式</strong></td>
+<td style="text-align: left;">试点→效果验证→扩展（Surrey: 50→60 套；BLMK: 172 套）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GTM 阶段</strong></td>
+<td style="text-align: left;">🟢 <strong>成熟扩展</strong>——10+ 年 NHS 部署经验</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d27">D27 — 临床质量与患者结局</h2>
+<h3 id="271">27.1 核心临床指标</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: center;">Whzan 数据</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>999 呼叫减少</strong></td>
+<td style="text-align: center;"><strong>-41%</strong></td>
+<td style="text-align: left;">Surrey Heartlands / Woking Homes (6 个月)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>住院减少</strong></td>
+<td style="text-align: center;"><strong>-53%</strong></td>
+<td style="text-align: left;">Surrey Heartlands / Woking Homes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GP 非计划访视减少</strong></td>
+<td style="text-align: center;"><strong>-36%</strong></td>
+<td style="text-align: left;">Surrey Heartlands / Woking Homes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NEWS2 准确性</strong></td>
+<td style="text-align: center;">自动化评分</td>
+<td style="text-align: left;">基于 NHS 标准 NEWS2 算法</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="272">27.2 质量认证</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">认证</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NHS DTAC</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">G-Cloud 14</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">CQC 创新案例</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;">CE 标志</td>
+<td style="text-align: center;">✅（推定——作为医疗器械在英国销售）</td>
+</tr>
+<tr>
+<td style="text-align: left;">MHRA 注册</td>
+<td style="text-align: center;">✅（推定）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="273">27.3 临床证据强度</h3>
+<p><strong>证据强度总体评级</strong>: 🟡 <strong>中等</strong>——Surrey Heartlands 案例数据令人印象深刻（-41% 999、-53% 住院），但为单中心观察性数据，缺乏 RCT 或同行评审发表。</p>
+<hr />
+<h2 id="_1">调研空白与后续补充</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">缺口</th>
+<th style="text-align: left;">补充路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">财务数据（收入/利润）</td>
+<td style="text-align: left;">Solcom 年报</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">总部署套数（全国）</td>
+<td style="text-align: left;">Whzan 官方</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Blue Box Lite 用户数</td>
+<td style="text-align: left;">Whzan 官方</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">国际扩展计划</td>
+<td style="text-align: left;">一手调研</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">员工规模</td>
+<td style="text-align: left;">LinkedIn/一手调研</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="v20-27">v2.0 完备性审计（27 维度）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">D0-D10</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">完整覆盖</td>
+</tr>
+<tr>
+<td style="text-align: left;">D11 — TAM/SAM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D12 — 盈利模型</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">私人公司</td>
+</tr>
+<tr>
+<td style="text-align: left;">D13 — 机遇与风险</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D14 — 管理层指引</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">有限公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">D15 — 估值</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">未公开——私人+自给自足</td>
+</tr>
+<tr>
+<td style="text-align: left;">D16 — 战略建议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D17 — 政策</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D18 — 单元经济</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: left;">未公开</td>
+</tr>
+<tr>
+<td style="text-align: left;">D19 — 客户细分</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D20 — 竞品</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D21 — 跨境</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">英国本土</td>
+</tr>
+<tr>
+<td style="text-align: left;">D22 — 退出</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: left;">自给自足私人公司</td>
+</tr>
+<tr>
+<td style="text-align: left;">D23 — ESG</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D24 — 组织</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D25 — 融资</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;">自给自足</td>
+</tr>
+<tr>
+<td style="text-align: left;">D26 — GTM</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">D27 — 临床</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;">⚠️</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: left;">❌</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总计</strong></td>
+<td style="text-align: center;"><strong>28</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_2">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">来源</th>
+<th style="text-align: left;">标题</th>
+<th style="text-align: left;">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Whzan 官方</td>
+<td style="text-align: left;">From cardboard box to Blue Box</td>
+<td style="text-align: left;">2021</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Whzan 官方</td>
+<td style="text-align: left;">Virtual Wards</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">CQC</td>
+<td style="text-align: left;">Whzan blue box: helping non-clinical staff take observations</td>
+<td style="text-align: left;">2023.10</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Skills for Care</td>
+<td style="text-align: left;">Surrey Heartlands ICB Whzan Blue Box case study</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">BLMK ICS</td>
+<td style="text-align: left;">Whzan Blue Box programme</td>
+<td style="text-align: left;">2025</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">NICE</td>
+<td style="text-align: left;">HTG697 Virtual ward platform technologies</td>
+<td style="text-align: left;">2024</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">Whzan 官方</td>
+<td style="text-align: left;">About Us</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Skyresponse</td>
+<td style="text-align: left;">Whzan ecosystem partner</td>
+<td style="text-align: left;">2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">NHS Digital</td>
+<td style="text-align: left;">G-Cloud 14 — Whzan Digital Health</td>
+<td style="text-align: left;">2026</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><em>报告终</em></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

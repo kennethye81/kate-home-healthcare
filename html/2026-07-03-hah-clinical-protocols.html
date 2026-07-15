@@ -1,0 +1,2023 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HaH 五病种临床协议库</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#hah">HaH 五病种临床协议库</a><ul>
+<li><a href="#_1">概述</a><ul>
+<li><a href="#hah-cms-ahcah-waiver">HaH 通用基础框架（CMS AHCAH Waiver 要求）</a></li>
+</ul>
+</li>
+<li><a href="#1-hf-adhf">1. 心力衰竭（HF / ADHF — 急性失代偿性心衰）</a><ul>
+<li><a href="#11">1.1 入排标准</a></li>
+<li><a href="#12">1.2 每日监护方案</a></li>
+<li><a href="#13">1.3 利尿剂方案</a></li>
+<li><a href="#14">1.4 升级触发（→ 转回实体医院）</a></li>
+<li><a href="#15">1.5 出院标准</a></li>
+<li><a href="#16-hf">1.6 HF 全流程标准化表格</a></li>
+</ul>
+</li>
+<li><a href="#2-copd">2. COPD 急性加重</a><ul>
+<li><a href="#21">2.1 入排标准</a></li>
+<li><a href="#22">2.2 每日监护方案</a></li>
+<li><a href="#23">2.3 治疗方案</a></li>
+<li><a href="#24">2.4 升级触发（→ 转回实体医院）</a></li>
+<li><a href="#25">2.5 出院标准</a></li>
+<li><a href="#26-copd">2.6 COPD 全流程标准化表格</a></li>
+</ul>
+</li>
+<li><a href="#3-cap">3. 社区获得性肺炎（CAP）</a><ul>
+<li><a href="#31">3.1 入排标准</a></li>
+<li><a href="#32-curb-65">3.2 CURB-65 评分体系</a></li>
+<li><a href="#33">3.3 每日监护方案</a></li>
+<li><a href="#34">3.4 抗生素方案</a></li>
+<li><a href="#35">3.5 升级触发（→ 转回实体医院）</a></li>
+<li><a href="#36">3.6 出院标准</a></li>
+<li><a href="#37-cap">3.7 CAP 全流程标准化表格</a></li>
+</ul>
+</li>
+<li><a href="#4-uti">4. 尿路感染（UTI / 肾盂肾炎）</a><ul>
+<li><a href="#41">4.1 入排标准</a></li>
+<li><a href="#42">4.2 每日监护方案</a></li>
+<li><a href="#43">4.3 抗生素方案</a></li>
+<li><a href="#44">4.4 败血症筛查体系</a></li>
+<li><a href="#45">4.5 升级触发（→ 转回实体医院）</a></li>
+<li><a href="#46">4.6 出院标准</a></li>
+<li><a href="#47-uti">4.7 UTI 全流程标准化表格</a></li>
+</ul>
+</li>
+<li><a href="#5-dvt">5. 深静脉血栓（DVT）</a><ul>
+<li><a href="#51">5.1 入排标准</a></li>
+<li><a href="#52">5.2 每日监护方案</a></li>
+<li><a href="#53">5.3 抗凝方案</a></li>
+<li><a href="#54-pe-hah">5.4 PE 排除流程（HaH 入组前必须完成）</a></li>
+<li><a href="#55">5.5 升级触发（→ 转回实体医院）</a></li>
+<li><a href="#56">5.6 出院标准</a></li>
+<li><a href="#57-dvt">5.7 DVT 全流程标准化表格</a></li>
+</ul>
+</li>
+<li><a href="#_2">通用应急升级路径（所有病种共享）</a></li>
+<li><a href="#_3">各病种证据强度与关键文献汇总</a></li>
+<li><a href="#_4">主要参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="hah">HaH 五病种临床协议库</h1>
+<p><strong>作者：Kenneth Ye</strong>
+<strong>日期：2026年7月3日</strong>
+<strong>版本：v1.0</strong>
+<strong>来源：Atrium Health / MGB / Mount Sinai / Kaiser Permanente / Johns Hopkins + 补充文献搜索</strong></p>
+<hr />
+<h2 id="_1">概述</h2>
+<p>本协议库基于五大美国 HaH 标杆项目（Atrium Health、MGB、Mount Sinai、Kaiser Permanente、Johns Hopkins）的公开资料及学术文献，按 CMS AHCAH Waiver 标准框架，构建心力衰竭、COPD 急性加重、社区获得性肺炎、尿路感染、深静脉血栓五个病种的标准化临床路径。每个病种覆盖<strong>入排标准 → Day 0 → Day 1 → Day 2 → Day 3 → 出院 → 随访</strong>全流程。</p>
+<h3 id="hah-cms-ahcah-waiver">HaH 通用基础框架（CMS AHCAH Waiver 要求）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>要求</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>面访频率</strong></td>
+<td>每日至少 2 次上门（RN 或社区急救员） + 每日医师访视（可远程）</td>
+</tr>
+<tr>
+<td><strong>24/7 联络</strong></td>
+<td>患者可随时联系临床团队</td>
+</tr>
+<tr>
+<td><strong>紧急响应</strong></td>
+<td>30 分钟内上门紧急服务</td>
+</tr>
+<tr>
+<td><strong>服务范围</strong></td>
+<td>IV 输液、O2、实验室、影像、药房、DME 均需在家提供</td>
+</tr>
+<tr>
+<td><strong>升级路径</strong></td>
+<td>所有病种均含明确升级触发标准→转回实体医院</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="1-hf-adhf">1. 心力衰竭（HF / ADHF — 急性失代偿性心衰）</h2>
+<blockquote>
+<p><strong>证据强度：🟢 强</strong> | 10+ RCT | Meta 分析显示延长至再入院时间、降低成本、改善 HRQoL | 来源：Caplan 2015 (PLOS ONE)、AHA Circ 2023、Cleveland Clinic JACC 2024</p>
+</blockquote>
+<h3 id="11">1.1 入排标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>纳入标准</th>
+<th>排除标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>诊断</strong></td>
+<td>急性失代偿性心衰（ADHF），需 IV 利尿剂治疗</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>血流动力学</strong></td>
+<td>SBP ≥90 mmHg；HR &lt;120 bpm</td>
+<td>SBP &lt;90 mmHg 或 HR ≥120 bpm 持续；心源性休克</td>
+</tr>
+<tr>
+<td><strong>呼吸</strong></td>
+<td>SpO2 ≥92%（≤4L O2）；RR &lt;24/min</td>
+<td>需 &gt;4L O2；严重呼吸窘迫</td>
+</tr>
+<tr>
+<td><strong>肾功能</strong></td>
+<td>Cr &lt;3.0 mg/dL 或稳定</td>
+<td>Cr &gt;3.0 或急性上升趋势；需要透析</td>
+</tr>
+<tr>
+<td><strong>电解质</strong></td>
+<td>K+ 3.5–5.5 mmol/L</td>
+<td>严重电解质紊乱</td>
+</tr>
+<tr>
+<td><strong>心脏</strong></td>
+<td>无急性缺血证据</td>
+<td>ACS / STEMI / 新发心律失常需持续监护</td>
+</tr>
+<tr>
+<td><strong>意识</strong></td>
+<td>清醒、定向力正常</td>
+<td>精神状态改变</td>
+</tr>
+<tr>
+<td><strong>社会</strong></td>
+<td>安全居家环境 + 可用电话/视频；患者配合或家庭支持</td>
+<td>无家可归、独居无支持、不安全环境</td>
+</tr>
+<tr>
+<td><strong>其他</strong></td>
+<td>72h 内无需高级诊疗/手术</td>
+<td>需正性肌力药/机械循环支持/手术</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="12">1.2 每日监护方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>频率</th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>体重</strong></td>
+<td><strong>每日 1 次（晨起空腹）</strong></td>
+<td>蓝牙体重秤→自动上传 RPM</td>
+</tr>
+<tr>
+<td><strong>出入量 (I/O)</strong></td>
+<td>每日记录</td>
+<td>患者/家属 + RN 核对</td>
+</tr>
+<tr>
+<td><strong>血压/心率</strong></td>
+<td>Q4–6h 清醒时</td>
+<td>自动血压计→RPM</td>
+</tr>
+<tr>
+<td><strong>SpO2</strong></td>
+<td>Q4–6h + PRN</td>
+<td>脉搏血氧仪→RPM</td>
+</tr>
+<tr>
+<td><strong>尿量</strong></td>
+<td>每次 IV 利尿剂后 2h/6h 评估</td>
+<td>RN 上门评估</td>
+</tr>
+<tr>
+<td><strong>BUN/Cr/K+</strong></td>
+<td><strong>Day 0–2: 每日；Day 3+: Q48h</strong></td>
+<td>家庭抽血/Point-of-Care</td>
+</tr>
+<tr>
+<td><strong>BNP/NT-proBNP</strong></td>
+<td>Day 0 + 出院前</td>
+<td>实验室</td>
+</tr>
+<tr>
+<td><strong>症状评估</strong></td>
+<td>每日 RN 访视时</td>
+<td>呼吸困难、端坐呼吸、水肿、JVP</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="13">1.3 利尿剂方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>初始剂量</strong></td>
+<td>IV 呋塞米 = 1–2.5× 门诊口服等效剂量（呋塞米初治患者：40–80 mg IV bolus）</td>
+</tr>
+<tr>
+<td><strong>评估节点</strong></td>
+<td>给药后 2h 尿量 &lt;300 mL → 剂量加倍；6h 尿量 &gt;1000 mL → 减量或维持</td>
+</tr>
+<tr>
+<td><strong>给药间隔</strong></td>
+<td>Q6–12h 视尿量反应调整</td>
+</tr>
+<tr>
+<td><strong>利尿剂抵抗</strong></td>
+<td>① 持续输注（替代 bolus）② 加用噻嗪类（甲苯噻嗪/氯噻嗪）③ 高渗盐水+大剂量呋塞米</td>
+</tr>
+<tr>
+<td><strong>电解质替代</strong></td>
+<td>K+ &lt;4.0 → 口服/IV 补钾；Mg²⁺ &lt;2.0 → 补镁</td>
+</tr>
+<tr>
+<td><strong>GDMT 优化</strong></td>
+<td>住院期间启动/滴定 ACEi/ARB/ARNI、β-blocker、MRA、SGLT2i（若血流动力学稳定）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="14">1.4 升级触发（→ 转回实体医院）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>🔴 升级标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>体重增加 &gt;1 kg/24h 超 2 天，且对利尿剂无反应</td>
+</tr>
+<tr>
+<td>SBP &lt;85 mmHg 持续</td>
+</tr>
+<tr>
+<td>Cr 较基线上升 &gt;0.5 mg/dL 或 &gt;30%</td>
+</tr>
+<tr>
+<td>SpO2 &lt;90% 需要 &gt;4L O2</td>
+</tr>
+<tr>
+<td>新发胸痛/缺血性 ECG 改变</td>
+</tr>
+<tr>
+<td>新发心律失常（AF RVR、VT）</td>
+</tr>
+<tr>
+<td>精神状态恶化</td>
+</tr>
+<tr>
+<td>患者/家属要求转院</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="15">1.5 出院标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>✅ 条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>达到临床血容量正常（无啰音、水肿消退、JVP 正常、体重稳定）</td>
+</tr>
+<tr>
+<td>血流动力学稳定 ≥24h（SBP ≥100, HR &lt;100）</td>
+</tr>
+<tr>
+<td>稳定在口服利尿剂 ≥24h</td>
+</tr>
+<tr>
+<td>肾功能/电解质稳定</td>
+</tr>
+<tr>
+<td>GDMT 启动或优化并耐受</td>
+</tr>
+<tr>
+<td>患者/家属完成教育（每日体重、限钠、用药依从性）</td>
+</tr>
+<tr>
+<td>随访安排：心衰门诊 7 天内</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="16-hf">1.6 HF 全流程标准化表格</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>关键行动</th>
+<th>监测</th>
+<th>药物</th>
+<th>里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入排</strong></td>
+<td>ED/住院评估；确认 HaH 适宜性；知情同意</td>
+<td>基线体重、BP、HR、SpO2、BUN/Cr/K+、BNP、ECG</td>
+<td>—</td>
+<td>入组 ✓</td>
+</tr>
+<tr>
+<td><strong>Day 0</strong></td>
+<td>RPM 设备部署 + 患者教育；首次 IV 利尿剂；首次 RN 上门</td>
+<td>2h/6h 尿量；给药后体重</td>
+<td>IV 呋塞米（1–2.5× 口服等效剂量）；电解质替代</td>
+<td>初始尿量反应评估</td>
+</tr>
+<tr>
+<td><strong>Day 1</strong></td>
+<td>MD 虚拟查房；RN 上门 2 次；调整利尿剂剂量</td>
+<td>晨起体重、BP、HR、SpO2、BUN/Cr/K+</td>
+<td>利尿剂调整 ± 噻嗪类；启动/调整 ACEi/β-blocker</td>
+<td>体重下降 ≥1 kg</td>
+</tr>
+<tr>
+<td><strong>Day 2</strong></td>
+<td>继续利尿；GDMT 滴定；评估升级风险</td>
+<td>体重、24h I/O、BP；若不稳定则查肾功</td>
+<td>利尿剂继续 ± 调整；GDMT 第二步</td>
+<td>脱离 IV → 试转口服利尿剂</td>
+</tr>
+<tr>
+<td><strong>Day 3</strong></td>
+<td>稳定在口服方案；出院教育；设备回收准备</td>
+<td>体重稳定（±0.5 kg vs 前日）、BP/HR 稳定</td>
+<td>口服呋塞米 → 门诊剂量确定；GDMT 完整方案</td>
+<td>出院 ✓</td>
+</tr>
+<tr>
+<td><strong>出院</strong></td>
+<td>设备回收；出院小结→PCP+心衰门诊</td>
+<td>—</td>
+<td>出院处方 7 天量；预约随访</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>随访</strong></td>
+<td>心衰门诊 7 天内；电话随访 48–72h</td>
+<td>体重、BP、用药依从性</td>
+<td>GDMT 持续优化</td>
+<td>90 天无再入院 ✓</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="2-copd">2. COPD 急性加重</h2>
+<blockquote>
+<p><strong>证据强度：🟢 强</strong> | 8+ RCT | 安全有效，但照护需求高于 HF | 来源：Davies 2000 (BMJ)、Hernandez 2003、UCSF Hospital Handbook</p>
+</blockquote>
+<h3 id="21">2.1 入排标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>纳入标准</th>
+<th>排除标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>诊断</strong></td>
+<td>中度 COPD 急性加重（呼吸困难加重 ± 痰量/脓性痰增加）</td>
+<td>严重肺炎为主要诊断</td>
+</tr>
+<tr>
+<td><strong>呼吸</strong></td>
+<td>SpO2 88–92% 可维持（≤4L O2 NC）；RR &lt;30/min</td>
+<td>pH &lt;7.30（急性呼吸性酸中毒）；需 NIV；RR &gt;30</td>
+</tr>
+<tr>
+<td><strong>氧合</strong></td>
+<td>≤4L NC 可维持</td>
+<td>需 &gt;4L O2 或 FiO2 &gt;40%</td>
+</tr>
+<tr>
+<td><strong>意识</strong></td>
+<td>清醒、无 CO2 麻醉</td>
+<td>嗜睡/意识模糊/CO2 麻醉</td>
+</tr>
+<tr>
+<td><strong>血流动力学</strong></td>
+<td>稳定</td>
+<td>不稳定/休克</td>
+</tr>
+<tr>
+<td><strong>社会</strong></td>
+<td>安全居家环境 + 家庭支持；电话</td>
+<td>独居无支持者</td>
+</tr>
+<tr>
+<td><strong>其他</strong></td>
+<td>能使用吸入器</td>
+<td>不能安全口服/吸入；严重合并症失代偿</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="22">2.2 每日监护方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>频率</th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SpO2</strong></td>
+<td>连续 + Q4h 记录</td>
+<td>脉搏血氧仪→RPM</td>
+</tr>
+<tr>
+<td><strong>呼吸频率</strong></td>
+<td>Q4h</td>
+<td>患者/RPM + RN 上门记录</td>
+</tr>
+<tr>
+<td><strong>呼吸困难评分</strong></td>
+<td>每日 RN 访视</td>
+<td>mMRC 或 Borg 评分</td>
+</tr>
+<tr>
+<td><strong>痰液性状</strong></td>
+<td>每日评估</td>
+<td>RN 观察颜色/量/黏稠度</td>
+</tr>
+<tr>
+<td><strong>ABG/VBG</strong></td>
+<td>Day 0；若临床恶化 PRN</td>
+<td>家庭抽血</td>
+</tr>
+<tr>
+<td><strong>PEFR</strong></td>
+<td>每日（若设备可用）</td>
+<td>峰流速仪</td>
+</tr>
+<tr>
+<td><strong>胸部听诊</strong></td>
+<td>每日 RN 访视</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="23">2.3 治疗方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>氧疗</strong></td>
+<td>靶 SpO2 <strong>88–92%</strong>（避免高氧→CO2 潴留风险）；鼻导管/文丘里面罩；若≥4L 仍缺氧→升级</td>
+</tr>
+<tr>
+<td><strong>支气管扩张剂</strong></td>
+<td>沙丁胺醇 2.5 mg + 异丙托溴铵 0.5 mg 雾化 Q4–6h（可按需增至 Q1–2h 严重时）→ 稳定后过渡至 MDI+储雾罐</td>
+</tr>
+<tr>
+<td><strong>全身糖皮质激素</strong></td>
+<td>泼尼松 40 mg PO 每日 × 5 天（或甲泼尼龙 IV 等效剂量）</td>
+</tr>
+<tr>
+<td><strong>抗生素</strong></td>
+<td>指征：脓性痰 + 呼吸困难加重 + 痰量增加中的 ≥2 项。首选：多西环素 100 mg BID 或 阿莫西林-克拉维酸 875/125 mg BID × 5–7 天；替代：阿奇霉素 500 mg 每日 × 3 天 或 呼吸喹诺酮</td>
+</tr>
+<tr>
+<td><strong>呼吸治疗师</strong></td>
+<td>上门评估（Day 0–1 + PRN）：吸入器技术教学、气道廓清技术（ACBT/Huff cough）、分泌物管理、氧疗装置确认、家庭 O2 评估</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="24">2.4 升级触发（→ 转回实体医院）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>🔴 升级标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pH &lt;7.30（急性呼吸性酸中毒恶化）</td>
+</tr>
+<tr>
+<td>SpO2 &lt;88% 需要 &gt;4L O2</td>
+</tr>
+<tr>
+<td>RR &gt;30 或呼吸肌疲劳/辅助肌使用加重</td>
+</tr>
+<tr>
+<td>意识水平下降（CO2 麻醉）</td>
+</tr>
+<tr>
+<td>需要 NIV 或机械通气</td>
+</tr>
+<tr>
+<td>血流动力学不稳定</td>
+</tr>
+<tr>
+<td>治疗 48h 后无改善</td>
+</tr>
+<tr>
+<td>新发心律失常/心肌缺血</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="25">2.5 出院标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>✅ 条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SpO2 ≥88–92% 稳定在基线 O2 水平</td>
+</tr>
+<tr>
+<td>呼吸困难恢复至基线水平</td>
+</tr>
+<tr>
+<td>痰液减少、颜色改善</td>
+</tr>
+<tr>
+<td>稳定在 MDI + 储雾罐（脱离雾化）</td>
+</tr>
+<tr>
+<td>吸入器技术经呼吸治疗师验证合格</td>
+</tr>
+<tr>
+<td>口服泼尼松完成疗程或转为吸入方案</td>
+</tr>
+<tr>
+<td>家庭 O2（若需）确认并配送到位</td>
+</tr>
+<tr>
+<td>患者/家属完成教育（识别恶化、行动计划）</td>
+</tr>
+<tr>
+<td>随访安排：呼吸科/PCP 7–14 天内</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="26-copd">2.6 COPD 全流程标准化表格</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>关键行动</th>
+<th>监测</th>
+<th>药物</th>
+<th>里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入排</strong></td>
+<td>ED/住院评估；ABG；排除肺炎/NIV 需求</td>
+<td>SpO2、RR、ABG、CXR</td>
+<td>—</td>
+<td>入组 ✓</td>
+</tr>
+<tr>
+<td><strong>Day 0</strong></td>
+<td>O2 启动（靶 88–92%）；首次雾化；首次泼尼松+抗生素；RPM 部署；呼吸治疗师上门</td>
+<td>SpO2 Q1h→Q4h；ABG 复查</td>
+<td>沙丁胺醇+异丙托溴铵雾化；泼尼松 40mg PO；抗生素</td>
+<td>初始治疗响应</td>
+</tr>
+<tr>
+<td><strong>Day 1</strong></td>
+<td>MD 虚拟查房；RN 上门 2 次；评估治疗反应；吸入器技术教学</td>
+<td>SpO2、RR、痰液、mMRC</td>
+<td>雾化 Q4–6h；泼尼松；抗生素</td>
+<td>痰液减少或呼吸改善</td>
+</tr>
+<tr>
+<td><strong>Day 2</strong></td>
+<td>过渡 MDI+储雾罐（如稳定）；O2 减量尝试；呼吸治疗师复评</td>
+<td>SpO2、RR、PEFR</td>
+<td>雾化→MDI 过渡；抗生素继续；泼尼松</td>
+<td>脱离高频雾化</td>
+</tr>
+<tr>
+<td><strong>Day 3</strong></td>
+<td>稳定在基线 O2；出院教育；设备回收准备</td>
+<td>稳定 SpO2 在基线水平</td>
+<td>过渡至维持吸入方案（LABA/LAMA/ICS）；口服激素减停准备</td>
+<td>出院 ✓</td>
+</tr>
+<tr>
+<td><strong>出院</strong></td>
+<td>家庭 O2 确认；设备回收；出院小结→PCP+呼吸科</td>
+<td>—</td>
+<td>出院处方；行动计划书面化</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>随访</strong></td>
+<td>呼吸科/PCP 7–14 天内；电话随访 48–72h</td>
+<td>症状、吸入器使用、行动计划执行</td>
+<td>维持吸入方案；肺康复转介</td>
+<td>90 天无急性加重 ✓</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="3-cap">3. 社区获得性肺炎（CAP）</h2>
+<blockquote>
+<p><strong>证据强度：🟡 中</strong> | 5+ 研究 | 证据提示安全，但结论审慎 | 来源：NICE 2023、Taiwan 2025 (Frontiers)、ATS/IDSA 2019 Guidelines</p>
+</blockquote>
+<h3 id="31">3.1 入排标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>纳入标准</th>
+<th>排除标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>诊断</strong></td>
+<td>临床+影像学确诊 CAP（CXR/CT 确认浸润）</td>
+<td>吸入性肺炎；脓胸；肺脓肿</td>
+</tr>
+<tr>
+<td><strong>严重度</strong></td>
+<td><strong>CURB-65 0–1</strong>（部分项目可接受 2 分但需密切监护）</td>
+<td>CURB-65 ≥3（≥3 分→住院，4–5→ICU）</td>
+</tr>
+<tr>
+<td><strong>呼吸</strong></td>
+<td>SpO2 ≥92%（≤3L O2）；RR &lt;25/min</td>
+<td>严重低氧血症；RR ≥30</td>
+</tr>
+<tr>
+<td><strong>血流动力学</strong></td>
+<td>稳定；SBP ≥90 mmHg</td>
+<td>脓毒性休克（MAP &lt;65, 乳酸 &gt;4 mmol/L）</td>
+</tr>
+<tr>
+<td><strong>口服能力</strong></td>
+<td>能安全口服药物/液体</td>
+<td>无法口服（呕吐/吞咽障碍）</td>
+</tr>
+<tr>
+<td><strong>意识</strong></td>
+<td>清醒</td>
+<td>新发意识模糊（CURB-65 C=1 且无其他失代偿因素时个体化评估）</td>
+</tr>
+<tr>
+<td><strong>社会</strong></td>
+<td>安全居家环境 + 支持系统</td>
+<td>独居无支持</td>
+</tr>
+<tr>
+<td><strong>其他</strong></td>
+<td>无免疫抑制（非粒细胞缺乏）</td>
+<td>严重免疫缺陷（ANC &lt;500）；多重耐药风险高</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="32-curb-65">3.2 CURB-65 评分体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>标准</th>
+<th>分值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>C</strong>onfusion（意识模糊）</td>
+<td>AMTS ≤8 或新发定向障碍</td>
+<td>+1</td>
+</tr>
+<tr>
+<td><strong>U</strong>rea（尿素）</td>
+<td>&gt;7 mmol/L (BUN &gt;20 mg/dL)</td>
+<td>+1</td>
+</tr>
+<tr>
+<td><strong>R</strong>espiratory rate（呼吸频率）</td>
+<td>≥30/min</td>
+<td>+1</td>
+</tr>
+<tr>
+<td><strong>B</strong>lood pressure（血压）</td>
+<td>SBP &lt;90 或 DBP ≤60</td>
+<td>+1</td>
+</tr>
+<tr>
+<td><strong>65</strong>（年龄）</td>
+<td>≥65 岁</td>
+<td>+1</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>评分</th>
+<th>30 天死亡率</th>
+<th>处置建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.7%</td>
+<td><strong>门诊/居家 HaH</strong> ✅</td>
+</tr>
+<tr>
+<td>1</td>
+<td>3.2%</td>
+<td><strong>居家 HaH</strong> ✅</td>
+</tr>
+<tr>
+<td>2</td>
+<td>13.0%</td>
+<td>住院或 HaH（需密切监护）⚠️</td>
+</tr>
+<tr>
+<td>3</td>
+<td>17.0%</td>
+<td>住院 🏥</td>
+</tr>
+<tr>
+<td>4–5</td>
+<td>41.5%</td>
+<td>ICU 🏥</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="33">3.3 每日监护方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>频率</th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SpO2</strong></td>
+<td>连续 + Q4h 记录</td>
+<td>脉搏血氧仪→RPM</td>
+</tr>
+<tr>
+<td><strong>体温</strong></td>
+<td>Q4–6h</td>
+<td>电子体温计→RPM</td>
+</tr>
+<tr>
+<td><strong>BP/HR</strong></td>
+<td>Q4–6h</td>
+<td>自动血压计→RPM</td>
+</tr>
+<tr>
+<td><strong>RR</strong></td>
+<td>Q4h</td>
+<td>患者/RPM + RN 上门记录</td>
+</tr>
+<tr>
+<td><strong>胸部听诊</strong></td>
+<td>每日 RN 访视</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>痰液性状</strong></td>
+<td>每日评估</td>
+<td>RN 观察</td>
+</tr>
+<tr>
+<td><strong>CRP/PCT</strong></td>
+<td>Day 0 + Day 3（若可及）</td>
+<td>家庭抽血（PCT 指导抗生素降级/停药）</td>
+</tr>
+<tr>
+<td><strong>CXR</strong></td>
+<td>Day 0（诊断）；若临床恶化 PRN</td>
+<td>便携 X 光或安排至影像中心</td>
+</tr>
+<tr>
+<td><strong>饮食/活动</strong></td>
+<td>每日评估</td>
+<td>食欲、口服摄入量、活动耐受</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="34">3.4 抗生素方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>严重度</th>
+<th>非 ICU（口服）</th>
+<th>非 ICU（IV→PO 切换）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一线</strong></td>
+<td>阿莫西林-克拉维酸 875/125 mg BID <strong>+</strong> 阿奇霉素 500 mg 每日；<strong>或</strong> 多西环素 100 mg BID</td>
+<td>头孢曲松 1–2g IV 每日 <strong>+</strong> 阿奇霉素 500 mg IV/PO 每日</td>
+</tr>
+<tr>
+<td><strong>替代</strong></td>
+<td>左氧氟沙星 750 mg 每日 <strong>或</strong> 莫西沙星 400 mg 每日（呼吸喹诺酮单药）</td>
+<td>呼吸喹诺酮（左氧氟沙星/莫西沙星）IV/PO</td>
+</tr>
+<tr>
+<td><strong>IV→PO 切换时机</strong></td>
+<td>临床稳定 + 能口服 ≥24h + 体温正常化趋势</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>总疗程</strong></td>
+<td>5–7 天（临床稳定 + 退热 ≥48–72h 后可停药）</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>MRSA/铜绿假单胞菌覆盖</strong></td>
+<td>仅当风险因素存在（既往 MRSA 感染/定植、近期住院+IV 抗生素、结构性肺病）→ 加用万古霉素或利奈唑胺 ± 抗假单胞 β-内酰胺</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="35">3.5 升级触发（→ 转回实体医院）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>🔴 升级标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CURB-65 评分增加 ≥1 分（或新发意识模糊）</td>
+</tr>
+<tr>
+<td>SpO2 &lt;90% 需要 &gt;3L O2</td>
+</tr>
+<tr>
+<td>脓毒性休克（SBP &lt;90, 乳酸 &gt;4）</td>
+</tr>
+<tr>
+<td>48–72h 后无临床改善（持续发热、症状恶化）</td>
+</tr>
+<tr>
+<td>脓胸/肺脓肿/胸腔积液进展</td>
+</tr>
+<tr>
+<td>无法口服抗生素（呕吐/胃肠道不耐受）</td>
+</tr>
+<tr>
+<td>急性肾损伤（Cr 翻倍或需要 RRT）</td>
+</tr>
+<tr>
+<td>新发房颤或心肌损伤</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="36">3.6 出院标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>✅ 条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>临床稳定 ≥24h（退热 ≥24h、SpO2 稳定、血流动力学正常）</td>
+</tr>
+<tr>
+<td>SpO2 ≥92% 脱离或最小 O2（≤2L）</td>
+</tr>
+<tr>
+<td>能口服药物 + 充分口服摄入</td>
+</tr>
+<tr>
+<td>口服抗生素方案确定</td>
+</tr>
+<tr>
+<td>随访 CXR 安排（6–8 周后，排除潜在肿块）</td>
+</tr>
+<tr>
+<td>患者/家属完成教育</td>
+</tr>
+<tr>
+<td>随访安排：PCP 7 天内</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="37-cap">3.7 CAP 全流程标准化表格</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>关键行动</th>
+<th>监测</th>
+<th>药物</th>
+<th>里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入排</strong></td>
+<td>CURB-65 评分；CXR 确认；血培养×2（住院级）；痰培养；尿抗原（军团菌+肺炎球菌）</td>
+<td>基线 SpO2、体温、BP、HR、RR、BUN、意识</td>
+<td>首剂抗生素（ED 尽快给予）</td>
+<td>入组 ✓</td>
+</tr>
+<tr>
+<td><strong>Day 0</strong></td>
+<td>RPM 部署；IV 通路建立；首剂 IV/PO 抗生素；RN 上门 2 次</td>
+<td>SpO2 Q2–4h、体温 Q4h、BP/HR Q4h</td>
+<td>IV 头孢曲松 + 阿奇霉素（或呼吸喹诺酮）</td>
+<td>抗生素启动</td>
+</tr>
+<tr>
+<td><strong>Day 1</strong></td>
+<td>MD 虚拟查房；评估治疗反应；IV→PO 切换评估</td>
+<td>SpO2、体温趋势、BP、RR、听诊、痰液</td>
+<td>静脉抗生素继续；评估 PO 切换</td>
+<td>体温下降或临床改善</td>
+</tr>
+<tr>
+<td><strong>Day 2</strong></td>
+<td>IV→PO 切换（若达标）；O2 减量</td>
+<td>SpO2、体温稳定、口服耐受</td>
+<td>口服抗生素方案（阿莫西林-克拉维酸 + 阿奇霉素 或 呼吸喹诺酮）</td>
+<td>IV 脱离</td>
+</tr>
+<tr>
+<td><strong>Day 3</strong></td>
+<td>稳定在口服；出院教育；随访 CXR 安排</td>
+<td>体温正常 ≥24h、SpO2 稳定</td>
+<td>口服抗生素继续（总疗程 5–7d）</td>
+<td>出院 ✓</td>
+</tr>
+<tr>
+<td><strong>出院</strong></td>
+<td>设备回收；出院小结→PCP；CXR 随访预约（6–8 周）</td>
+<td>—</td>
+<td>处方完整口服抗生素疗程</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>随访</strong></td>
+<td>PCP 7 天内；电话 48–72h；CXR 6–8 周复查</td>
+<td>症状缓解、口服耐受、活动恢复</td>
+<td>抗生素完成；戒烟咨询</td>
+<td>90 天无再入院 ✓</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-uti">4. 尿路感染（UTI / 肾盂肾炎）</h2>
+<blockquote>
+<p><strong>证据强度：🟡 中</strong> | 3+ 研究 | 老年人群有效，住院时间更短 | 来源：Taiwan 2025 (Frontiers)、IDSA 2025 cUTI Guidelines、StatPearls 2025</p>
+</blockquote>
+<h3 id="41">4.1 入排标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>纳入标准</th>
+<th>排除标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>诊断</strong></td>
+<td>复杂性 UTI / 肾盂肾炎（发热 + 腰痛/尿路症状 + 尿检异常）</td>
+<td>单纯性膀胱炎（不应在 HaH 层面管理）</td>
+</tr>
+<tr>
+<td><strong>血流动力学</strong></td>
+<td>稳定；SBP ≥90 mmHg；无休克</td>
+<td>脓毒性休克（MAP &lt;65、乳酸 &gt;4 mmol/L）</td>
+</tr>
+<tr>
+<td><strong>肾功能</strong></td>
+<td>稳定或轻度受损</td>
+<td>急性肾衰竭需要 RRT；阻塞性肾病</td>
+</tr>
+<tr>
+<td><strong>解剖</strong></td>
+<td>无脓肿/结石梗阻/气肿性肾盂肾炎（影像学排除）</td>
+<td>肾周脓肿、结石梗阻、气肿性感染、需要引流/手术</td>
+</tr>
+<tr>
+<td><strong>口服能力</strong></td>
+<td>能安全口服</td>
+<td>持续呕吐/无法口服</td>
+</tr>
+<tr>
+<td><strong>社会</strong></td>
+<td>安全居家 + 支持系统</td>
+<td>独居无支持</td>
+</tr>
+<tr>
+<td><strong>其他</strong></td>
+<td>非妊娠（妊娠肾盂肾炎需住院）</td>
+<td>妊娠；严重免疫缺陷</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="42">4.2 每日监护方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>频率</th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>体温</strong></td>
+<td>Q4–6h</td>
+<td>电子体温计→RPM</td>
+</tr>
+<tr>
+<td><strong>BP/HR</strong></td>
+<td>Q4–6h</td>
+<td>自动血压计→RPM</td>
+</tr>
+<tr>
+<td><strong>SpO2</strong></td>
+<td>Q4h</td>
+<td>脉搏血氧仪→RPM</td>
+</tr>
+<tr>
+<td><strong>尿量/性状</strong></td>
+<td>每日评估</td>
+<td>患者记录 + RN 核对</td>
+</tr>
+<tr>
+<td><strong>腰痛/症状</strong></td>
+<td>每日 RN 访视</td>
+<td>疼痛评分、排尿症状</td>
+</tr>
+<tr>
+<td><strong>BUN/Cr</strong></td>
+<td>Day 0 + Day 2</td>
+<td>家庭抽血</td>
+</tr>
+<tr>
+<td><strong>尿培养+药敏</strong></td>
+<td>Day 0（抗生素前留取）</td>
+<td>日中段尿→实验室</td>
+</tr>
+<tr>
+<td><strong>血培养×2</strong></td>
+<td>Day 0（发热≥38°C 患者）</td>
+<td>家庭抽血</td>
+</tr>
+<tr>
+<td><strong>乳酸</strong></td>
+<td>Day 0（若 qSOFA ≥1）</td>
+<td>Point-of-Care</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="43">4.3 抗生素方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>经验性 IV（初始）</strong></td>
+<td>头孢曲松 1–2g IV 每日（首选）；或 厄他培南 1g IV 每日（ESBL 风险）；或 哌拉西林-他唑巴坦 3.375–4.5g IV Q6h（假单胞菌风险）</td>
+</tr>
+<tr>
+<td><strong>PO 切换时机</strong></td>
+<td>退热 ≥24h + 临床改善 + 能口服 → PO 抗生素（药敏指导）</td>
+</tr>
+<tr>
+<td><strong>口服选择</strong></td>
+<td>环丙沙星 500mg BID（仅当药敏确认敏感）；或 TMP-SMX DS BID；或 头孢泊肟 200mg BID；或 阿莫西林-克拉维酸 875/125mg BID（仅当药敏确认）</td>
+</tr>
+<tr>
+<td><strong>总疗程</strong></td>
+<td>肾盂肾炎 7–10 天（IDSA 2025）；复杂性 UTI 7 天；氟喹诺酮可 5–7 天</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="44">4.4 败血症筛查体系</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>频率</th>
+<th>标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>qSOFA</strong></td>
+<td>Day 0；Day 1；若临床变化 PRN</td>
+<td>RR ≥22 + SBP ≤100 + GCS &lt;15 → ≥2 分为阳性→升级</td>
+</tr>
+<tr>
+<td><strong>乳酸</strong></td>
+<td>Day 0；若 qSOFA ≥1</td>
+<td>&gt;2 mmol/L → qSOFA 阳性→升级；&gt;4 mmol/L → 紧急性升级</td>
+</tr>
+<tr>
+<td><strong>血培养</strong></td>
+<td>Day 0（抗生素前）</td>
+<td>阳性→药敏指导 + 排除心内膜炎</td>
+</tr>
+<tr>
+<td><strong>SIRS 标准</strong></td>
+<td>辅助评估</td>
+<td>体温 &gt;38 或 &lt;36；HR &gt;90；RR &gt;20；WBC &gt;12 或 &lt;4</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="45">4.5 升级触发（→ 转回实体医院）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>🔴 升级标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>qSOFA ≥2（新发或持续）</td>
+</tr>
+<tr>
+<td>乳酸 &gt;4 mmol/L（脓毒性休克风险）</td>
+</tr>
+<tr>
+<td>SBP &lt;90 mmHg 或 MAP &lt;65 对液体复苏无反应</td>
+</tr>
+<tr>
+<td>持续发热 &gt;72h（抗生素失败）</td>
+</tr>
+<tr>
+<td>急性肾衰竭（Cr 翻倍或尿量 &lt;0.5 mL/kg/h × 6h）</td>
+</tr>
+<tr>
+<td>尿培养 ESBL / CRE / MDR → 需碳青霉烯或特殊抗生素 IV</td>
+</tr>
+<tr>
+<td>肾周脓肿/梗阻（影像学新发现）</td>
+</tr>
+<tr>
+<td>精神状态改变</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="46">4.6 出院标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>✅ 条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>退热 ≥24h</td>
+</tr>
+<tr>
+<td>临床症状改善（腰痛缓解、排尿症状减轻）</td>
+</tr>
+<tr>
+<td>血流动力学稳定</td>
+</tr>
+<tr>
+<td>口服抗生素耐受</td>
+</tr>
+<tr>
+<td>尿培养 + 药敏已回→抗生素方案既定</td>
+</tr>
+<tr>
+<td>肾功能稳定或恢复至基线</td>
+</tr>
+<tr>
+<td>患者/家属完成教育（抗生素依从性、复发识别）</td>
+</tr>
+<tr>
+<td>随访安排：PCP/泌尿科 7–14 天内</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="47-uti">4.7 UTI 全流程标准化表格</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>关键行动</th>
+<th>监测</th>
+<th>药物</th>
+<th>里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入排</strong></td>
+<td>尿培养+药敏（抗生素前）；血培养×2（发热者）；qSOFA+乳酸；排除脓肿/梗阻（超声/CT）</td>
+<td>基线体温、BP、HR、RR、BUN/Cr、意识</td>
+<td>—</td>
+<td>入组 ✓</td>
+</tr>
+<tr>
+<td><strong>Day 0</strong></td>
+<td>RPM 部署；IV 通路；首剂 IV 抗生素（培养后）；qSOFA+乳酸复查</td>
+<td>体温 Q4h、BP/HR Q4h、qSOFA</td>
+<td>IV 头孢曲松 1–2g 每日</td>
+<td>抗生素启动；败血症排除</td>
+</tr>
+<tr>
+<td><strong>Day 1</strong></td>
+<td>MD 虚拟查房；评估临床反应；qSOFA 复查；IV→PO 时机评估</td>
+<td>体温趋势、BP、HR、症状</td>
+<td>IV 抗生素继续</td>
+<td>体温下降 ≥1°C</td>
+</tr>
+<tr>
+<td><strong>Day 2</strong></td>
+<td>IV→PO 切换（若达标）；肾功复查；药敏指导调整</td>
+<td>体温、症状、BUN/Cr</td>
+<td>PO 抗生素（药敏指导）</td>
+<td>IV 脱离</td>
+</tr>
+<tr>
+<td><strong>Day 3</strong></td>
+<td>稳定在口服；出院教育；设备回收准备</td>
+<td>体温正常 ≥24h、BP/HR 稳定</td>
+<td>PO 抗生素继续（总疗程 7–10d）</td>
+<td>出院 ✓</td>
+</tr>
+<tr>
+<td><strong>出院</strong></td>
+<td>设备回收；出院小结→PCP；培养结果附送</td>
+<td>—</td>
+<td>处方完整口服抗生素疗程</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>随访</strong></td>
+<td>PCP/泌尿科 7–14 天；电话 48–72h；重复尿培养（若症状持续）</td>
+<td>症状、用药依从性</td>
+<td>抗生素完成；预防复发教育</td>
+<td>90 天无再入院 ✓</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="5-dvt">5. 深静脉血栓（DVT）</h2>
+<blockquote>
+<p><strong>证据强度：🟢 强</strong> | 5+ RCT | 家庭治疗安全，低风险患者结局等同或更优 | 来源：Cochrane DVT Review、ASH 2020 VTE Guidelines、SHM VTE Guide</p>
+</blockquote>
+<h3 id="51">5.1 入排标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>纳入标准</th>
+<th>排除标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>诊断</strong></td>
+<td>超声确诊急性近端（腘静脉及以上）或症状性远端 DVT</td>
+<td>无客观确诊影像</td>
+</tr>
+<tr>
+<td><strong>PE 状态</strong></td>
+<td><strong>必须排除 PE</strong>（见 5.4 PE 排除流程）</td>
+<td>大面积/高危 PE（血流动力学不稳定）；中危 PE（右室劳损+troponin+）</td>
+</tr>
+<tr>
+<td><strong>血流动力学</strong></td>
+<td>稳定</td>
+<td>不稳定（休克、低血压）</td>
+</tr>
+<tr>
+<td><strong>肾功能</strong></td>
+<td>CrCl ≥30 mL/min（若用 DOAC）</td>
+<td>CrCl &lt;30（DOAC 禁忌→LMWH/warfarin，需更高监护）</td>
+</tr>
+<tr>
+<td><strong>肝功能</strong></td>
+<td>正常或轻度异常</td>
+<td>严重肝病（INR 基线升高、Child-Pugh C）</td>
+</tr>
+<tr>
+<td><strong>出血风险</strong></td>
+<td>低出血风险</td>
+<td>活动性大出血；近期手术（14 天内）/创伤/颅内出血</td>
+</tr>
+<tr>
+<td><strong>血小板</strong></td>
+<td>≥50,000/µL</td>
+<td>&lt;50,000 或 HIT 病史</td>
+</tr>
+<tr>
+<td><strong>社会</strong></td>
+<td>安全居家 + 支持系统 + 能自我注射（若 LMWH）或口服依从性好</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>其他</strong></td>
+<td>非妊娠（妊娠 DVT→LMWH 全程+高危管理）</td>
+<td>肢体缺血/坏疽（股青肿）；癌症相关 VTE 需个体化</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52">5.2 每日监护方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>频率</th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>腿围/肿胀</strong></td>
+<td>每日 RN 上门测量</td>
+<td>皮尺标记处（髌骨上/下 10–15 cm）</td>
+</tr>
+<tr>
+<td><strong>疼痛评分</strong></td>
+<td>每日</td>
+<td>0–10 数字评分</td>
+</tr>
+<tr>
+<td><strong>皮肤颜色/温度</strong></td>
+<td>每日 RN 上门</td>
+<td>观察 + 触诊</td>
+</tr>
+<tr>
+<td><strong>INR</strong></td>
+<td><strong>仅华法林：Day 0 + Q1–3d 至稳定在 2–3，后 Q1–2 周</strong>（DOAC 无需监测）</td>
+<td>家庭抽血/Point-of-Care</td>
+</tr>
+<tr>
+<td><strong>血小板</strong></td>
+<td>Day 0 + Day 3–5（排除 HIT；仅 LMWH &gt;4 天者）</td>
+<td>抽血</td>
+</tr>
+<tr>
+<td><strong>CrCl</strong></td>
+<td>Day 0（DOAC 剂量确认）</td>
+<td>抽血</td>
+</tr>
+<tr>
+<td><strong>PE 症状</strong></td>
+<td>每次 RN 上门评估</td>
+<td>胸痛、呼吸困难、咯血、心动过速、SpO2</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="53">5.3 抗凝方案</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LMWH → DOAC（首选路径）</strong></td>
+<td>依诺肝素 1 mg/kg BID（或 1.5 mg/kg 每日）&rdquo;桥接&rdquo;1–3 天 → 转换为口服 DOAC</td>
+</tr>
+<tr>
+<td><strong>直接 DOAC（部分患者可选）</strong></td>
+<td><strong>阿哌沙班</strong>: 10 mg BID × 7 天 → 5 mg BID；<strong>利伐沙班</strong>: 15 mg BID × 21 天 → 20 mg 每日（进食时）；避免初始高负荷期在 HaH 启动→建议在 ED 首剂</td>
+</tr>
+<tr>
+<td><strong>LMWH 全程</strong></td>
+<td>仅妊娠、癌症相关 VTE、CrCl &lt;30：依诺肝素 1 mg/kg BID 持续整个治疗期</td>
+</tr>
+<tr>
+<td><strong>华法林（不首选）</strong></td>
+<td>仅 DOAC 禁忌/LMWH 不可用：华法林与 LMWH 重叠 ≥5 天→INR 2–3 连续 2 天→停 LMWH</td>
+</tr>
+<tr>
+<td><strong>DOAC 剂量调整</strong></td>
+<td>CrCl 30–50：阿哌沙班可全量，利伐沙班需评估；阿哌沙班减至 2.5 mg BID（若年龄 ≥80 或体重 ≤60 kg 或 Cr ≥1.5 中 ≥2 项）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="54-pe-hah">5.4 PE 排除流程（HaH 入组前必须完成）</h3>
+<pre><code>Step 1: PERC 评分（Pulmonary Embolism Rule-out Criteria）
+  ├── 年龄 ≥50? → 若 ≥50 PERC 不可用→Step 2
+  ├── HR ≥100?
+  ├── SpO2 &lt;95% on RA?
+  ├── 咯血?
+  ├── 雌激素使用?
+  ├── 既往 DVT/PE?
+  ├── 单侧下肢肿胀?
+  ├── 手术/创伤 4 周内?
+  └── 若 ≥1 项为是→Step 2；若 ALL 否→PE 已排除 ✅
+
+Step 2: Wells PE Score
+  ├── ≤4 (PE unlikely) + D-dimer 年龄校正正常→PE 已排除 ✅
+  └── &gt;4 (PE likely) 或 D-dimer ↑→CTPA 或 V/Q 扫描
+       ├── CTPA 阴性→PE 已排除 ✅
+       └── CTPA 阳性→评估 PE 严重度
+
+Step 3: PE 严重度评估
+  ├── 高危（血流动力学不稳定）→住院 🏥
+  ├── 中危（RV/LV &gt;1.0 + troponin ↑）→住院 🏥
+  └── 低危（PESI I–II 或 Hestia ≥1 阴性）→可考虑 HaH ⚠️
+</code></pre>
+<h3 id="55">5.5 升级触发（→ 转回实体医院）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>🔴 升级标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>临床疑似 PE（新发胸痛、呼吸困难、咯血、SpO2 下降、心动过速）</td>
+</tr>
+<tr>
+<td>腿痛/肿胀加重—→需排除血栓蔓延</td>
+</tr>
+<tr>
+<td>重大出血（消化道/颅内/肌肉内血肿）</td>
+</tr>
+<tr>
+<td>血小板计数下降 &gt;50% 或 新发血小板减少（疑似 HIT—→停 LMWH）</td>
+</tr>
+<tr>
+<td>肢体缺血征象（股青肿→需紧急介入）</td>
+</tr>
+<tr>
+<td>INR 超高（&gt;5 + 出血 或 &gt;10 无论出血与否）（仅华法林）</td>
+</tr>
+<tr>
+<td>CrCl 急性恶化（影响 DOAC 剂量安全性）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="56">5.6 出院标准</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>✅ 条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>稳定抗凝方案确定（DOAC/LMWH/华法林）</td>
+</tr>
+<tr>
+<td>若华法林：INR 2–3 连续 ≥2 天</td>
+</tr>
+<tr>
+<td>腿肿胀消退或稳定（腿围减少或不再增加）</td>
+</tr>
+<tr>
+<td>疼痛改善</td>
+</tr>
+<tr>
+<td>患者/家属完成教育（抗凝依从性、出血识别、压迫袜使用、复发性 VTE 识别）</td>
+</tr>
+<tr>
+<td>压迫袜（20–30 mmHg 膝下）已配发（症状性近端 DVT）</td>
+</tr>
+<tr>
+<td>抗凝药物供应确认（7–14 天量 + 后续处方）</td>
+</tr>
+<tr>
+<td>若华法林：INR 监测方案确认（家庭/门诊）</td>
+</tr>
+<tr>
+<td>腿围测量基线记录并提供随访用</td>
+</tr>
+<tr>
+<td>随访安排：PCP/血液科/抗凝门诊 7–14 天内</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="57-dvt">5.7 DVT 全流程标准化表格</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>关键行动</th>
+<th>监测</th>
+<th>药物</th>
+<th>里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入排</strong></td>
+<td>超声确诊；PERC+Wells PE 排除；CrCl/血小板/INR（基线）；家庭安全评估</td>
+<td>腿围基线、疼痛评分、BP、HR、SpO2（排除 PE）</td>
+<td>—</td>
+<td>入组 ✓</td>
+</tr>
+<tr>
+<td><strong>Day 0</strong></td>
+<td>RPM 部署；首剂 LMWH（依诺肝素）；PE 症状教育；压迫袜测量</td>
+<td>腿围、疼痛、PE 症状、INR（若华法林）</td>
+<td>依诺肝素 1mg/kg BID；若 DOAC 路径→首剂可与 LMWH 同日</td>
+<td>抗凝启动</td>
+</tr>
+<tr>
+<td><strong>Day 1</strong></td>
+<td>MD 虚拟查房；RN 上门 2 次；DOAC 转换启动（若稳定）；INR（若华法林）</td>
+<td>腿围趋势、疼痛、PE 症状、出血评估、血小板（若 LMWH &gt;3d）</td>
+<td>LMWH 继续；首剂 DOAC（若 DOAC 路径）</td>
+<td>腿肿开始消退</td>
+</tr>
+<tr>
+<td><strong>Day 2</strong></td>
+<td>抗凝方案稳定化；INR 跟踪（华法林）；活动指导</td>
+<td>腿围、疼痛、出血</td>
+<td>LMWH ± DOAC；华法林±LMWH 重叠</td>
+<td>疼痛明显改善</td>
+</tr>
+<tr>
+<td><strong>Day 3</strong></td>
+<td>稳定在口服方案；出院教育；设备回收准备</td>
+<td>腿围稳定、INR 达标（华法林）、无出血/PE</td>
+<td>DOAC 维持剂量（阿哌沙班 5mg BID / 利伐沙班 20mg 每日）；华法林</td>
+<td>出院 ✓</td>
+</tr>
+<tr>
+<td><strong>出院</strong></td>
+<td>设备回收；出院小结→PCP/抗凝门诊；抗凝卡发放</td>
+<td>—</td>
+<td>出院处方 7–14d 量；INR 监测方案（若华法林）</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>随访</strong></td>
+<td>PCP/抗凝门诊 7–14d；电话 48–72h；INR Q1–2 周×1 月后 Q4 周（华法林）</td>
+<td>腿围、症状、出血、INR</td>
+<td>抗凝继续 3–6 月（诱发 DVT 3 月/无端 DVT ≥3–6 月）；压迫袜 2 年</td>
+<td>90 天无复发/PE ✓</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_2">通用应急升级路径（所有病种共享）</h2>
+<pre><code>HaH 临床团队评估升级需求
+  │
+  ├── 🟡 非紧急 (2–4h 内处理)
+  │     └── MD 虚拟评估→方案调整→继续 HaH
+  │
+  ├── 🟠 紧急 (30min–2h)
+  │     └── 急救员/RN 上门→床旁评估→MD 决策→
+  │           ├── 可处理→继续 HaH + 加强监护
+  │           └── 不可处理→转实体 ED
+  │
+  └── 🔴 紧急 (立即 911/急救)
+        └── 指导家属呼叫急救→同步通知接收医院→
+              移交临床信息→ED 交接
+</code></pre>
+<hr />
+<h2 id="_3">各病种证据强度与关键文献汇总</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>病种</th>
+<th>证据强度</th>
+<th>关键 RCT/研究</th>
+<th>核心发现</th>
+<th>HaH 适宜性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HF/ADHF</strong></td>
+<td>🟢 强</td>
+<td>Caplan 2015 (PLOS ONE); AHA Circ 2023; Cleveland Clinic JACC 2024</td>
+<td>延长再入院时间 25%、降低成本、改善 HRQoL</td>
+<td>🔴 最高优先级</td>
+</tr>
+<tr>
+<td><strong>COPD</strong></td>
+<td>🟢 强</td>
+<td>Davies 2000 (BMJ); Hernandez 2003; UCSF Handbook</td>
+<td>安全有效，照护需求更高</td>
+<td>🔴 高优先级</td>
+</tr>
+<tr>
+<td><strong>CAP</strong></td>
+<td>🟡 中</td>
+<td>NICE 2023; Taiwan 2025 (Frontiers); ATS/IDSA 2019</td>
+<td>证据审慎乐观，需严格 PT 筛选</td>
+<td>🟡 选定患者</td>
+</tr>
+<tr>
+<td><strong>UTI</strong></td>
+<td>🟡 中</td>
+<td>Taiwan 2025 (Frontiers); IDSA 2025 Guidelines</td>
+<td>老年人有效，住院日更短</td>
+<td>🟡 选定患者</td>
+</tr>
+<tr>
+<td><strong>DVT</strong></td>
+<td>🟢 强</td>
+<td>Cochrane Review; ASH 2020; SHM VTE Guide</td>
+<td>HA 治疗安全，结局等同/更优</td>
+<td>🔴 高优先级</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_4">主要参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>来源</th>
+<th>标题</th>
+<th>年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Atrium Health / HFMA</td>
+<td>Atrium Health Hospital at Home (NC Case Study)</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>2</td>
+<td>MGB / Current Health</td>
+<td>How MGB Scaled Home Hospital (200% growth in 15 months)</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Mount Sinai / AHA</td>
+<td>Members in Action: Mount Sinai HaH (8.6% readmission)</td>
+<td>2021</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Kaiser Permanente / AJMC</td>
+<td>Advanced Care at Home at Scale in Integrated System (n=1,005)</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Johns Hopkins / Annals IM</td>
+<td>Hospital at Home: Feasibility and Outcomes (Leff et al.)</td>
+<td>2005</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Cleveland Clinic / JACC: HF</td>
+<td>Hospital-at-Home Care Model for HF Management</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>7</td>
+<td>CMS</td>
+<td>Report on the Study of the AHCAH Initiative</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>8</td>
+<td>JAMA Network Open</td>
+<td>Outcomes of HaH vs Traditional Inpatient (n=15,871)</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Caplan et al. / MJA</td>
+<td>A Meta-analysis of &ldquo;Hospital in the Home&rdquo; (61 RCT, n=6,992)</td>
+<td>2012</td>
+</tr>
+<tr>
+<td>10</td>
+<td>ATS/IDSA</td>
+<td>Diagnosis and Treatment of Adults with CAP (Clinical Practice Guideline)</td>
+<td>2019</td>
+</tr>
+<tr>
+<td>11</td>
+<td>IDSA</td>
+<td>Guideline Update on Complicated UTI</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>12</td>
+<td>ASH</td>
+<td>VTE Treatment Guidelines</td>
+<td>2020</td>
+</tr>
+<tr>
+<td>13</td>
+<td>NICE</td>
+<td>Pneumonia: Diagnosis and Management (NG250)</td>
+<td>2023</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Levine et al. / Annals IM</td>
+<td>Hospital-Level Care at Home for Acutely Ill Adults (RCT)</td>
+<td>2020</td>
+</tr>
+<tr>
+<td>15</td>
+<td>UCSF Hospital Handbook</td>
+<td>COPD Exacerbations Clinical Protocol</td>
+<td>2024</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><em>本协议库综合 Atrium Health、Mass General Brigham、Mount Sinai、Kaiser Permanente、Johns Hopkins 五大项目的公开临床路径，以及 ATS/IDSA/ASH/NICE 等国际临床指南。所有方案均为标准化参考框架，实际临床决策应由执业医师根据患者个体情况和本机构 protocol 制定。</em></p>
+<p><strong>署名：Kenneth Ye | 日期：2026-07-03 | 版本：v1.0</strong></p>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

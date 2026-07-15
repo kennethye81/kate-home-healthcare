@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>湖南省14市州长护险政策全量清单</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#14">湖南省14市州长护险政策全量清单</a><ul>
+<li><a href="#_1">省级概况</a><ul>
+<li><a href="#_2">全省推进时间表</a></li>
+</ul>
+</li>
+<li><a href="#1">一、已实施（1个）</a><ul>
+<li><a href="#202009">🔵 湘潭 — 国家第二批试点（2020.09起）</a></li>
+</ul>
+</li>
+<li><a href="#2026">二、2026年启动就业人群</a></li>
+<li><a href="#2027">三、2027年扩展覆盖</a></li>
+<li><a href="#2028">四、2028年全覆盖</a></li>
+<li><a href="#_3">五、全覆盖总结</a></li>
+<li><a href="#_4">湘潭核心参数（湖南标杆）</a></li>
+<li><a href="#ihomecare">对iHomeCare的战略意义</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="14">湖南省14市州长护险政策全量清单</h1>
+<p><strong>数据截止</strong>：2026年6月30日 | <strong>交叉验证</strong>：湖南省医保局 + 红网 + 华声在线</p>
+<hr />
+<h2 id="_1">省级概况</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>省级方案</strong></td>
+<td style="text-align: left;">🟡 <strong>征求意见稿阶段</strong> —《湖南省建立长期护理保险制度实施方案（征求意见稿）》</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>征求时间</strong></td>
+<td style="text-align: left;">2026年5月22日 — 6月21日（<strong>刚结束</strong>）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>全省费率</strong></td>
+<td style="text-align: left;"><strong>0.3%</strong>（统一）；居民0.15%起步，逐年+0.03%→5年过渡至0.3%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>职工支付</strong></td>
+<td style="text-align: left;"><strong>70%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>居民支付</strong></td>
+<td style="text-align: left;"><strong>50%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>年度上限</strong></td>
+<td style="text-align: left;">不超过全省上年度城乡居民人均可支配收入的50%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>统筹层次</strong></td>
+<td style="text-align: left;">地市级统筹</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>已发配套文件</strong></td>
+<td style="text-align: left;">《湖南省长期护理保险经办规程（试行）》(2026.04)；《湖南省长期护理保险护理服务机构定点管理实施细则（试行）》(2026)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="_2">全省推进时间表</h3>
+<pre><code>2026年 ─ 省本级及具备条件的统筹区启动就业人群
+         （单位职工、退休人员、灵活就业人员）
+
+2027年 ─ 扩大就业人群实施范围
+         具备条件的统筹区启动城乡居民
+
+2028年 ─ 全省所有统筹区全面实施长护险制度
+         年底前全省常住人口全覆盖
+</code></pre>
+<hr />
+<h2 id="1">一、已实施（1个）</h2>
+<h3 id="202009">🔵 湘潭 — 国家第二批试点（2020.09起）</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>试点启动</strong></td>
+<td style="text-align: left;">2020年9月（湖南唯一国家试点城市）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>实施文件</strong></td>
+<td style="text-align: left;">《湘潭市长期护理保险制度试点实施细则（试行）》</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>最新政策</strong></td>
+<td style="text-align: left;">《湘潭市人民政府关于延续优化实施长护险制度试点相关政策的通知》</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>核心运营数据</strong>（截至2026年2月）：
+| 指标 | 数据 |
+|:----|:----:|
+| 累计参保缴费 | <strong>51万人+</strong> |
+| 上门失能评估 | <strong>6,273人</strong> |
+| 享受待遇 | <strong>4,928人</strong> |
+| 基金累计支出 | <strong>1.09亿元</strong> |
+| 定点护理服务机构 | <strong>64家</strong> |
+| 新增就业岗位 | <strong>1,000+个</strong> |</p>
+<p><strong>来源</strong>：华声在线✅ 湘潭市政府✅</p>
+<hr />
+<h2 id="2026">二、2026年启动就业人群</h2>
+<p>省方案征求意见稿已结束(2026.06.21)，正式方案待发布。以下为&rdquo;省本级及具备条件的统筹区&rdquo;：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">省方案要求</th>
+<th style="text-align: left;">覆盖范围</th>
+<th style="text-align: left;">现状</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>湘潭</strong></td>
+<td style="text-align: left;">已试点运行（继续）</td>
+<td style="text-align: left;">职工（原有试点）</td>
+<td style="text-align: left;">✅ 已运行</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>长沙</strong></td>
+<td style="text-align: left;">2026省方案覆盖</td>
+<td style="text-align: left;">就业人群</td>
+<td style="text-align: left;">等待省方案正式发布</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>株洲</strong></td>
+<td style="text-align: left;">2026省方案覆盖（具备条件）</td>
+<td style="text-align: left;">就业人群</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>衡阳</strong></td>
+<td style="text-align: left;">2026省方案覆盖（具备条件）</td>
+<td style="text-align: left;">就业人群</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><strong>岳阳</strong></td>
+<td style="text-align: left;">2026省方案覆盖（具备条件）</td>
+<td style="text-align: left;">就业人群</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><strong>常德</strong></td>
+<td style="text-align: left;">2026省方案覆盖（具备条件）</td>
+<td style="text-align: left;">就业人群</td>
+<td style="text-align: left;">同上</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="2027">三、2027年扩展覆盖</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">城市</th>
+<th style="text-align: left;">省方案要求</th>
+<th style="text-align: left;">覆盖范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><strong>邵阳</strong></td>
+<td style="text-align: left;">2027年扩展</td>
+<td style="text-align: left;">扩大就业人群+启动城乡居民</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><strong>益阳</strong></td>
+<td style="text-align: left;">2027年扩展</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><strong>郴州</strong></td>
+<td style="text-align: left;">2027年扩展</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;"><strong>永州</strong></td>
+<td style="text-align: left;">2027年扩展</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;"><strong>怀化</strong></td>
+<td style="text-align: left;">2027年扩展</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;"><strong>娄底</strong></td>
+<td style="text-align: left;">2027年扩展</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;"><strong>湘西州</strong></td>
+<td style="text-align: left;">2027年扩展</td>
+<td style="text-align: left;">同上</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;"><strong>张家界</strong></td>
+<td style="text-align: left;">2027年扩展</td>
+<td style="text-align: left;">同上</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="2028">四、2028年全覆盖</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">目标</th>
+<th style="text-align: left;">全省所有统筹区全面实施</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">覆盖范围</td>
+<td style="text-align: left;">全省常住人口</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_3">五、全覆盖总结</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: left;">城市</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">✅ <strong>已实施（试点）</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">湘潭(2020.09，5年试点)</td>
+</tr>
+<tr>
+<td style="text-align: left;">🟢 <strong>2026年第一批启动</strong></td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">长沙、株洲、衡阳、岳阳、常德（+省本级）</td>
+</tr>
+<tr>
+<td style="text-align: left;">🟡 <strong>2027年扩展</strong></td>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">邵阳、益阳、郴州、永州、怀化、娄底、张家界（含湘西州）</td>
+</tr>
+<tr>
+<td style="text-align: left;">⏳ <strong>2028年全覆盖</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">全省常住人口</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>合计</strong></td>
+<td style="text-align: center;"><strong>14</strong></td>
+<td style="text-align: left;">全省</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_4">湘潭核心参数（湖南标杆）</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">参数</th>
+<th style="text-align: center;">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">参保人数</td>
+<td style="text-align: center;">51万人+</td>
+</tr>
+<tr>
+<td style="text-align: left;">享待遇人数</td>
+<td style="text-align: center;">4,928人</td>
+</tr>
+<tr>
+<td style="text-align: left;">定点机构</td>
+<td style="text-align: center;">64家</td>
+</tr>
+<tr>
+<td style="text-align: left;">累计支出</td>
+<td style="text-align: center;">1.09亿元</td>
+</tr>
+<tr>
+<td style="text-align: left;">就业带动</td>
+<td style="text-align: center;">1,000+岗位</td>
+</tr>
+<tr>
+<td style="text-align: left;">费率</td>
+<td style="text-align: center;">按国家标准</td>
+</tr>
+<tr>
+<td style="text-align: left;">评估通过率</td>
+<td style="text-align: center;">~78.6%（6273评估/4928享待遇）</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="ihomecare">对iHomeCare的战略意义</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: left;">城市</th>
+<th style="text-align: center;">优先级</th>
+<th style="text-align: left;">理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>长沙</strong></td>
+<td style="text-align: center;">🟢 <strong>高</strong></td>
+<td style="text-align: left;">省会，2026年首批启动，经济人口基数最大</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>湘潭</strong></td>
+<td style="text-align: center;">🟢 高</td>
+<td style="text-align: left;">5年成熟试点，64家定点已运行，模式可复制</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>株洲/衡阳/岳阳/常德</strong></td>
+<td style="text-align: center;">🟡 中期</td>
+<td style="text-align: left;">第一批启动城市，2026年省方案正式发布后即开放定点</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>
