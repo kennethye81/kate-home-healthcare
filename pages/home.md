@@ -61,6 +61,20 @@ last_updated: 2026-07-15T22:00:00+08:00
 
 ---
 
+## 🌏 国家快速入口
+
+| Tier 1 | Tier 2 | Tier 3 |
+|------|------|------|
+| [🇭🇰 香港](pages/hong-kong/overview.md) | [🇸🇬 新加坡](pages/global/新加坡/00-概览.md) | [🇰🇷 韩国](pages/global/韩国/00-概览.md) |
+| [🇯🇵 日本](pages/global/日本/00-概览.md) | [🇬🇧 英国](pages/global/英国/00-概览.md) | [🇫🇷 法国](pages/global/法国/00-概览.md) |
+| [🇩🇪 德国](pages/global/德国/00-概览.md) | [🇺🇸 美国](pages/global/美国/00-概览.md) | [🇳🇱 荷兰](pages/global/荷兰/00-概览.md) |
+| | [🇨🇳 中国](pages/global/中国/00-概览.md) | [🇸🇪 瑞典](pages/global/瑞典/00-概览.md) |
+| | [🇹🇼 台湾](pages/global/台湾/00-概览.md) | [🇨🇦 加拿大](pages/global/加拿大/00-概览.md) |
+| | [🇦🇺 澳大利亚](pages/global/澳大利亚/00-概览.md) | [🇮🇱 以色列](pages/global/以色列/00-概览.md) |
+| | | [🇧🇷 巴西](pages/global/巴西/00-概览.md) |
+
+---
+
 ## 🔗 快速入口
 
 - [📂 所有报告](reports/index.json)
