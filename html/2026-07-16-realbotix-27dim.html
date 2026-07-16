@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Realbotix (Ria) — 27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#realbotix-ria-27">Realbotix (Ria) — 27 维度深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4">D4 — 商业模式</a></li>
+<li><a href="#d5-d10">D5-D10 (简表)</a></li>
+<li><a href="#d11-d16">D11-D16</a></li>
+<li><a href="#d17-d27">D17-D27 (维度覆盖)</a></li>
+<li><a href="#v20">v2.0 完备性审计</a></li>
+<li><a href="#_1">参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="realbotix-ria-27">Realbotix (Ria) — 27 维度深度尽调报告</h1>
+<blockquote>
+<p>调研日期：2026.7.16 | 调研人：Kenneth Ye | v2.0</p>
+</blockquote>
+<hr />
+<h2 id="d0">D0 — 赛道验证</h2>
+<p><strong>🚨 赛道定位</strong>：Realbotix 是美国/加拿大上市公司（TSX-V: XBOT，拟并入 NASDAQ: ONCO），制造<strong>逼真人形社交机器人</strong>。核心产品 Ria 具有逼真面部表情、眼神交流和自然对话能力。2026.7 通过英国 Bloom 公共采购平台首入养老护理市场。<strong>非养老护理原生公司</strong>——主要客户为娱乐/零售/接待业。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对 iHomeCare 相关性</td>
+<td>🟡 中低——人形硬件有技术价值，但养老非核心市场</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p>Realbotix 是少数上市的消费级人形机器人公司之一。核心 Ria 机器人以「逼真人类外观」为核心差异化——硅胶皮肤、面部微表情、眼神追踪。2026.7 通过 Bloom 公共采购平台启动英国养老院试点。但养老护理是新进入市场，非公司主业。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>关键指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上市</td>
+<td>TSX-V: XBOT / 拟并入 NASDAQ: ONCO</td>
+</tr>
+<tr>
+<td>总部</td>
+<td>美国拉斯维加斯</td>
+</tr>
+<tr>
+<td>核心产品</td>
+<td>Ria 逼真人形社交机器人</td>
+</tr>
+<tr>
+<td>养老试点</td>
+<td>英国东北部 (2026.7.7 启动)</td>
+</tr>
+<tr>
+<td>Bloom 认证</td>
+<td>✅ 英国公共部门合规供应商</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌</h2>
+<p>总部拉斯维加斯。核心产品线：Ria（女性人形）、其他定制逼真人形。历史主业：娱乐/零售/主题公园/接待业——养老是全新拓展。拟被 Onconetix (NASDAQ: ONCO) 收购。</p>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<p><strong>「最逼真的人形社交界面」</strong>——硅胶皮肤+面部微表情+眼神交流使 Ria 在「情感连接」维度远超 ElliQ/Pepper。但高成本+非医疗基因限制了养老场景渗透。</p>
+<hr />
+<h2 id="d4">D4 — 商业模式</h2>
+<p>B2B 硬件销售+定制开发。新进入：通过 Bloom 公共采购平台→英国养老院→若试点成功→规模化至 NHS Trust/地方议会。</p>
+<hr />
+<h2 id="d5-d10">D5-D10 (简表)</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>D5 产品</strong></td>
+<td>Ria (逼真人形)、定制化人形。定价未公开(估 $50,000+)</td>
+</tr>
+<tr>
+<td><strong>D6 客户</strong></td>
+<td>历史：娱乐/零售。新增：英国养老院(Bloom试点)</td>
+</tr>
+<tr>
+<td><strong>D7 财务</strong></td>
+<td>上市公司但未盈利。养老护理收入接近零</td>
+</tr>
+<tr>
+<td><strong>D8 工作流</strong></td>
+<td>养老院：Ria 主动问候→眼神交流+对话→认知刺激→情绪安抚</td>
+</tr>
+<tr>
+<td><strong>D9 技术</strong></td>
+<td>硅胶皮肤+面部微表情+眼神追踪+自然对话——「情感连接」维度领先行业</td>
+</tr>
+<tr>
+<td><strong>D10 竞品</strong></td>
+<td>ElliQ($250，低价碾压)、Abi(GPT-4+90语言)、Pepper(已破产)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-d16">D11-D16</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>D11 TAM</strong></td>
+<td>养老机器人全球 ~$35亿——但 Realbotix 在该市场的份额接近零</td>
+</tr>
+<tr>
+<td><strong>D12 盈利</strong></td>
+<td>未盈利。养老市场贡献可忽略</td>
+</tr>
+<tr>
+<td><strong>D13 风险</strong></td>
+<td>🔴 养老非核心→资源投入不持续、🟡 高价限制渗透</td>
+</tr>
+<tr>
+<td><strong>D14 管理层</strong></td>
+<td>上市公司管理团队——非养老领域专家</td>
+</tr>
+<tr>
+<td><strong>D15 估值</strong></td>
+<td>TSX-V 微市值——估 &lt;$5,000万。并入 ONCO 后不可单独评估</td>
+</tr>
+<tr>
+<td><strong>D16 对 iHomeCare</strong></td>
+<td>🟡 逼真人形交互技术可借鉴——但养老非公司战略重点</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d17-d27">D17-D27 (维度覆盖)</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">维度</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>D17 政策</strong></td>
+<td>🟢 Bloom 公共采购认证 = 英国公共部门合规通道——最关键的政策突破</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D18 单元经济</strong></td>
+<td>$50,000+/台。养老院难以承受</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D19 客户</strong></td>
+<td>英国东北部养老院试点（刚启动）</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D20 竞品</strong></td>
+<td>在人形逼真度维度无直接竞品——但 ElliQ/Abi 在功能/价格上全面优势</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D21 跨境</strong></td>
+<td>美国→英国(Bloom)→未来欧洲</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D22 退出</strong></td>
+<td>已上市——ONCO 收购进行中</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D23 ESG</strong></td>
+<td>🟡 隐私关注(逼真人形+AI对话)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D24 组织</strong></td>
+<td>小型上市团队——无人形养老护理专长</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D25 融资</strong></td>
+<td>上市融资+ONCO 收购</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D26 GTM</strong></td>
+<td>Bloom 公共采购 = 英国 GTM 引擎</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D27 临床</strong></td>
+<td>❌ 无——养老试点刚启动</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="v20">v2.0 完备性审计</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th style="text-align: center;">计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅/⚠️ 覆盖</td>
+<td style="text-align: center;">19</td>
+</tr>
+<tr>
+<td>❌ 不适用(养老非核心)</td>
+<td style="text-align: center;">8</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="_1">参考文献</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Realbotix/Bloom 英国养老试点公告 (2026.7.7)</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Onconetix 收购公告</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>TSX-V: XBOT 公开信息</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>Bloom Procurement 公共部门认证</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>RoboZaps - Humanoid Robots in Elderly Care 2026</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

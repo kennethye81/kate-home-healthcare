@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Groove X (LOVOT) — 27 维度深度尽调报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --soft: #eef7f5;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .09), transparent 30%),
+        linear-gradient(180deg, #f3f7fa 0%, var(--bg) 360px, var(--bg) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .progress { position: fixed; inset: 0 auto auto 0; width: 0; height: 3px; z-index: 10; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+      backdrop-filter: blur(12px);
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .toc-panel ul { list-style: none; padding-left: 0; margin: 0; }
+    .toc-panel li { margin: 3px 0; }
+    .toc-panel ul ul { padding-left: 14px; margin-top: 3px; border-left: 1px solid var(--line); }
+    .toc-panel a {
+      display: block;
+      padding: 5px 6px;
+      border-radius: 6px;
+      color: #425466;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .toc-panel a:hover, .toc-panel a.active { background: var(--soft); color: var(--accent); text-decoration: none; }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid rgba(219, 226, 234, .9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    article { padding: 46px min(6vw, 76px) 68px; }
+    h1 {
+      margin: -46px min(-6vw, -76px) 34px;
+      padding: 58px min(6vw, 76px) 44px;
+      color: #fff;
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 52%, #1d4ed8 100%);
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.14;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 54px 0 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; color: #17324d; }
+    h4 { margin: 26px 0 10px; font-size: 17px; color: #344054; }
+    p { margin: 12px 0; }
+    strong { color: #0f172a; font-weight: 700; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    blockquote {
+      margin: 18px 0 24px;
+      padding: 12px 16px;
+      color: #475467;
+      background: var(--soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    ul, ol { padding-left: 1.35em; }
+    li { margin: 4px 0; }
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      table-layout: auto;
+    }
+    th, td {
+      min-width: 112px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      color: #0f172a;
+      background: #eef4f8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .08);
+      background: #fff;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #f1f5f9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    pre { overflow: auto; padding: 16px; background: #0f172a; color: #e5e7eb; border-radius: var(--radius); }
+    pre code { padding: 0; color: inherit; background: transparent; }
+    .mermaid {
+      margin: 26px 0 30px;
+      padding: 18px;
+      overflow-x: auto;
+      text-align: center;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .back-top {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
+      cursor: pointer;
+    }
+    .back-top.show { display: block; }
+    @media (max-width: 1020px) {
+      .layout { display: block; padding: 14px; }
+      .toc-panel { position: relative; top: 0; max-height: 280px; margin-bottom: 14px; }
+      article { padding: 28px 18px 42px; }
+      h1 { margin: -28px -18px 28px; padding: 38px 18px 32px; }
+      th, td { min-width: 120px; padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc-panel, .progress, .back-top { display: none !important; }
+      main { border: 0; box-shadow: none; }
+      article { padding: 0; }
+      h1 { margin: 0 0 24px; color: #111827; background: none; padding: 0; }
+      a { color: inherit; }
+      .table-scroll, table { page-break-inside: avoid; }
+      img, blockquote, pre { page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="layout">
+    <aside class="toc-panel" aria-label="目录">
+      <p class="toc-title">目录</p>
+      <div class="toc">
+<ul>
+<li><a href="#groove-x-lovot-27">Groove X (LOVOT) — 27 维度深度尽调报告</a><ul>
+<li><a href="#d0">D0 — 赛道验证</a></li>
+<li><a href="#d1">D1 — 执行摘要</a></li>
+<li><a href="#d2">D2 — 公司全貌</a></li>
+<li><a href="#d3">D3 — 战略定位</a></li>
+<li><a href="#d4-d10">D4-D10 (简表)</a></li>
+<li><a href="#d11-d27">D11-D27 (维度覆盖)</a></li>
+<li><a href="#v20-20-7">v2.0 完备性审计：✅/⚠️ 20 / ❌ 7 (养老非核心) | 参考文献已嵌入</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </aside>
+    <main>
+      <article>
+        <h1 id="groove-x-lovot-27">Groove X (LOVOT) — 27 维度深度尽调报告</h1>
+<blockquote>
+<p>2026.7.16 | Kenneth Ye | v2.0</p>
+</blockquote>
+<hr />
+<h2 id="d0">D0 — 赛道验证</h2>
+<p><strong>🚨 赛道定位</strong>：Groove X 是日本<strong>消费级情感陪伴机器人</strong>公司——LOVOT 是毛绒 AI 社交机器人，位于「消费电子」与「老年陪伴」的交界。非医疗、非养老护理原生——主要通过新加坡政府/学术研究进入老年场景。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对 iHomeCare 相关性</td>
+<td>🟢 中低——消费陪伴而非 HaH 护理</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d1">D1 — 执行摘要</h2>
+<p>LOVOT 是日本 Groove X 推出的消费级 AI 陪伴机器人——通过机器学习发展独特个性、毛绒外观+情感表达设计。在新加坡通过 SUSS+PCF Sparkle Care 研究（2026.1）、AWWA+Temasek Foundation 展示进入养老场景。淡马锡基金会发布首个研究：AI 社交机器人改善跨代福祉。JMIR Human Factors 期刊发表 LOVOT 独居老人研究。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总部</td>
+<td>🇯🇵 日本</td>
+</tr>
+<tr>
+<td>定价</td>
+<td>~S$14,000/台 (约 ¥140万)</td>
+</tr>
+<tr>
+<td>SUSS 研究</td>
+<td>2026.1 启动——4 中心/LOVOT+Kebbi</td>
+</tr>
+<tr>
+<td>AWWA 展示</td>
+<td>World Ageing Festival 2026</td>
+</tr>
+<tr>
+<td>临床证据</td>
+<td>JMIR Human Factors (2024)+SUSS 研究</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d2">D2 — 公司全貌</h2>
+<p>日本消费机器人公司。LOVOT = &ldquo;LOVE&rdquo; + &ldquo;ROBOT&rdquo;。设计理念：不是工具——是「被爱的对象」。搭载深度学习，随互动演化独特个性。约 ¥140 万/台——日本消费市场为主，新加坡养老是拓展场景。</p>
+<hr />
+<h2 id="d3">D3 — 战略定位</h2>
+<p><strong>「被爱的机器人」</strong>——非工具型陪伴。与 ElliQ（主动 AI 伴侣）、Pepper（功能型人形）根本不同——LOVOT 不解决问题，它只是「存在」。这种「无为」定位在养老场景中意外有效——不施压、不提醒、纯粹陪伴。</p>
+<hr />
+<h2 id="d4-d10">D4-D10 (简表)</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>D4 商业模式</strong></td>
+<td>消费硬件销售 (¥140 万/台) + 政府/学术合作。新加坡养老为拓展——非主营</td>
+</tr>
+<tr>
+<td><strong>D5 产品</strong></td>
+<td>LOVOT——唯一产品。深度学习个性+情感表达+触觉传感器+温度感应</td>
+</tr>
+<tr>
+<td><strong>D6 客户</strong></td>
+<td>日本消费者 (主)、新加坡 SUSS/AWWA/PCF Sparkle Care (养老拓展)</td>
+</tr>
+<tr>
+<td><strong>D7 财务</strong></td>
+<td>私企——未公开。消费机器人市场小众</td>
+</tr>
+<tr>
+<td><strong>D8 工作流</strong></td>
+<td>LOVOT 在家/养老中心：自主移动→识别主人→蹭腿/眼神交流→被抚摸响应→学习偏好</td>
+</tr>
+<tr>
+<td><strong>D9 技术</strong></td>
+<td>深度学习个性演化+触觉传感器+温度感应+情感表达。非 GPT 驱动——基于行为模型</td>
+</tr>
+<tr>
+<td><strong>D10 竞品</strong></td>
+<td>ElliQ ($250/AI 陪伴)、Paro ($6K/海豹)、Hyodol (ChatGPT/韩国)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="d11-d27">D11-D27 (维度覆盖)</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: center;">维度</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>D11 TAM</strong></td>
+<td>消费陪伴机器人 ~$5-8 亿。LOVOT 日本/新加坡份额极小</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D12 盈利</strong></td>
+<td>未公开。消费硬件+极贵定价 = 销量低</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D13 风险</strong></td>
+<td>🔴 ¥140万定价、🟡 养老非核心市场</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D14 管理层</strong></td>
+<td>Groove X 团队——日本消费机器人专家</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D15 估值</strong></td>
+<td>私企——未公开。融资 ~$50M+(估)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D16 对 iHomeCare</strong></td>
+<td>🟡 低——消费陪伴，非 HaH。但「被爱的机器人」设计哲学对老年产品设计有启发</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D17 政策</strong></td>
+<td>🟢 SUSS+Temasek Foundation+AWWA 新加坡政府支持</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D18 单元经济</strong></td>
+<td>¥140 万/台 BOM 估 ¥50-80 万。消费零售→非养老 B2B</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D19 客户</strong></td>
+<td>日本消费者+SUSS 4 中心+AWWA</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D20 竞品</strong></td>
+<td>ElliQ/Paro/Hyodol</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D21 跨境</strong></td>
+<td>日本→新加坡 (养老)+全球消费市场</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D22 退出</strong></td>
+<td>私企——可能被 Sony/SoftBank/消费电子公司收购</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D23 ESG</strong></td>
+<td>🟢 正面</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D24 组织</strong></td>
+<td>日本消费机器人团队</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D25 融资</strong></td>
+<td>~$50M+(估) VC</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D26 GTM</strong></td>
+<td>消费零售+政府合作(新加坡养老)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D27 临床</strong></td>
+<td>🟢 JMIR Human Factors (2024)+SUSS 2026 研究+Temasek Foundation 首个跨代福祉研究</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="v20-20-7">v2.0 完备性审计：✅/⚠️ 20 / ❌ 7 (养老非核心) | 参考文献已嵌入</h2>
+      </article>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="返回顶部">↑</button>
+  
+  
+  <script>
+    (() => {
+      const progress = document.querySelector('.progress');
+      const topBtn = document.querySelector('.back-top');
+      const links = [...document.querySelectorAll('.toc-panel a[href^="#"]')];
+      const headings = links
+        .map(a => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter(Boolean);
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = max > 0 ? `${scrollY / max * 100}%` : '0%';
+        if (topBtn) topBtn.classList.toggle('show', scrollY > innerHeight);
+
+        let current = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top <= 120) current = h;
+        }
+        links.forEach(a => a.classList.toggle('active', current && a.hash === `#${current.id}`));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      topBtn?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

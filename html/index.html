@@ -18,70 +18,1329 @@ header p { opacity: .85; font-size: 16px; }
 .card .info { flex: 1; min-width: 200px; }
 .card .name { font-weight: 600; color: #0f172a; }
 .card .meta { font-size: 13px; color: #64748b; margin-top: 4px; }
-.card .tag { display: inline-block; background: #dbeafe; color: #1d4ed8; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-right: 4px; }
-.card a { color: #0f766e; text-decoration: none; font-weight: 500; white-space: nowrap; }
-.card a:hover { text-decoration: underline; }
-.stats { max-width: 1200px; margin: 0 auto; padding: 8px 20px 0; color: #64748b; font-size: 14px; }
+.card .btn { background: #0f766e; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap; }
+.card .btn:hover { background: #0d6d63; }
 .hidden { display: none; }
+footer { text-align: center; padding: 32px; color: #94a3b8; font-size: 13px; }
 </style>
 </head>
 <body>
 <header>
-<h1>📱 Kate 知识库 · 研究报告</h1>
-<p>167 份报告 · 8 个国家/地区 · 自动生成于 2026-07-15 23:13</p>
+  <h1>📚 Kate 知识库</h1>
+  <p>182 份研究报告 · 更新于 2026-07-17 00:20</p>
 </header>
 <div class="controls">
-<input type="text" id="search" placeholder="🔍 搜索报告名称..." oninput="filter()">
-<select id="country" onchange="filter()">
-<option value="">🌏 所有国家</option>
-<option value="AU">AU</option><option value="BR">BR</option><option value="CN">CN</option><option value="DE">DE</option><option value="GLOBAL">GLOBAL</option><option value="HK">HK</option><option value="JP">JP</option><option value="SG">SG</option>
-</select>
-<select id="sort" onchange="filter()">
-<option value="date">📅 按日期（最新）</option>
-<option value="name">📋 按名称</option>
-<option value="size">📦 按大小</option>
-</select>
+  <input type="text" id="search" placeholder="🔍 搜索标题..." oninput="filter()">
+  <select id="countryFilter" onchange="filter()">
+    <option value="">🌍 所有国家</option>
+    <option value="US">🇺🇸 美国</option>
+    <option value="CN">🇨🇳 中国</option>
+    <option value="JP">🇯🇵 日本</option>
+    <option value="GB">🇬🇧 英国</option>
+    <option value="AU">🇦🇺 澳洲</option>
+    <option value="SG">🇸🇬 新加坡</option>
+    <option value="HK">🇭🇰 香港</option>
+    <option value="DE">🇩🇪 德国</option>
+  </select>
+  <select id="typeFilter" onchange="filter()">
+    <option value="">📄 所有类型</option>
+    <option value="company-dd">公司尽调</option>
+    <option value="market-landscape">市场全景</option>
+    <option value="research">研究报告</option>
+  </select>
 </div>
-<div class="stats" id="stats">167 份报告</div>
 <div class="list" id="list">
+    <div class="card" data-date="2026-07-16" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-us-elderly-care-robotics-market</div>
+        <div class="meta">2026-07-16 · US · company-dd</div>
+      </div>
+      <a href="2026-07-16-us-elderly-care-robotics-market.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="CN" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-ubtech</div>
+        <div class="meta">2026-07-16 · CN · company-dd</div>
+      </div>
+      <a href="2026-07-16-ubtech-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="JP" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-softbank-pepper</div>
+        <div class="meta">2026-07-16 · JP · company-dd</div>
+      </div>
+      <a href="2026-07-16-softbank-pepper-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="GB" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-robotics-for-good</div>
+        <div class="meta">2026-07-16 · GB · company-dd</div>
+      </div>
+      <a href="2026-07-16-robotics-for-good-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="GB" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-realbotix</div>
+        <div class="meta">2026-07-16 · GB · company-dd</div>
+      </div>
+      <a href="2026-07-16-realbotix-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-labrador-systems</div>
+        <div class="meta">2026-07-16 · US · company-dd</div>
+      </div>
+      <a href="2026-07-16-labrador-systems-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-intuition-robotics-elliq</div>
+        <div class="meta">2026-07-16 · US · company-dd</div>
+      </div>
+      <a href="2026-07-16-intuition-robotics-elliq-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="HA" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-hah-daily-briefing</div>
+        <div class="meta">2026-07-16 · HA · company-dd</div>
+      </div>
+      <a href="2026-07-16-hah-daily-briefing.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="SG" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-groove-x-lovot</div>
+        <div class="meta">2026-07-16 · SG · company-dd</div>
+      </div>
+      <a href="2026-07-16-groove-x-lovot-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="CN" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-fourier-intelligence</div>
+        <div class="meta">2026-07-16 · CN · company-dd</div>
+      </div>
+      <a href="2026-07-16-fourier-intelligence-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="SG" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-dex-lab</div>
+        <div class="meta">2026-07-16 · SG · company-dd</div>
+      </div>
+      <a href="2026-07-16-dex-lab-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="JP" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-cyberdyne</div>
+        <div class="meta">2026-07-16 · JP · company-dd</div>
+      </div>
+      <a href="2026-07-16-cyberdyne-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="GB" data-type="company-dd">
+      <div class="info">
+        <div class="name">Cera Genie机器人专项附录</div>
+        <div class="meta">2026-07-16 · GB · company-dd</div>
+      </div>
+      <a href="2026-07-16-cera-genie-appendix.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-16-andromeda-robotics</div>
+        <div class="meta">2026-07-16 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-16-andromeda-robotics-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-16" data-countries="US, CN, JP, SG, GB, AU" data-type="market-landscape">
+      <div class="info">
+        <div class="name">6国居家护理机器人市场全景对标</div>
+        <div class="meta">2026-07-16 · US, CN, JP, SG, GB, AU · market-landscape</div>
+      </div>
+      <a href="2026-07-16-6country-robotics-market-landscape.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="" data-countries="" data-type="">
+      <div class="info">
+        <div class="name">2026-07-15-hah-daily-briefing</div>
+        <div class="meta"> ·  · </div>
+      </div>
+      <a href="2026-07-15-hah-daily-briefing.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-15" data-countries="CN" data-type="research">
+      <div class="info">
+        <div class="name">中国四大直辖市长期护理保险政策深挖报告</div>
+        <div class="meta">2026-07-15 · CN · research</div>
+      </div>
+      <a href="2026-07-15-four-municipalities-ltci-deepdive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-14" data-countries="SG" data-type="company-dd">
+      <div class="info">
+        <div class="name">2026-07-14-speedoc-rosmead-valuation-ceo-briefing.html</div>
+        <div class="meta">2026-07-14 · SG · company-dd</div>
+      </div>
+      <a href="2026-07-14-speedoc-rosmead-valuation-ceo-briefing.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-14" data-countries="" data-type="research">
+      <div class="info">
+        <div class="name">2026-07-14-hah-daily-briefing.html</div>
+        <div class="meta">2026-07-14 ·  · research</div>
+      </div>
+      <a href="2026-07-14-hah-daily-briefing.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-13" data-countries="SG" data-type="company-dd">
+      <div class="info">
+        <div class="name">Speedoc — 新加坡虚拟医院平台（27 维度深度尽调）</div>
+        <div class="meta">2026-07-13 · SG · company-dd</div>
+      </div>
+      <a href="2026-07-13-speedoc-sg-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-13" data-countries="" data-type="research">
+      <div class="info">
+        <div class="name">2026-07-13-hah-daily-briefing.html</div>
+        <div class="meta">2026-07-13 ·  · research</div>
+      </div>
+      <a href="2026-07-13-hah-daily-briefing.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-12" data-countries="BR" data-type="research">
+      <div class="info">
+        <div class="name">📰 HaH/居家医疗 每日资讯简报</div>
+        <div class="meta">2026-07-12 · BR · research</div>
+      </div>
+      <a href="2026-07-12-hah-daily-briefing.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="CA, FR, IL, SE, US" data-type="company-dd">
+      <div class="info">
+        <div class="name">Yad Sarah 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · CA, FR, IL, SE, US · company-dd</div>
+      </div>
+      <a href="2026-07-11-yad-sarah-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="AU, CA" data-type="company-dd">
+      <div class="info">
+        <div class="name">Trilogy Care 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · AU, CA · company-dd</div>
+      </div>
+      <a href="2026-07-11-trilogy-care-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="KR" data-type="company-dd">
+      <div class="info">
+        <div class="name">SILWHON 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · KR · company-dd</div>
+      </div>
+      <a href="2026-07-11-silwhon-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="IL" data-type="company-dd">
+      <div class="info">
+        <div class="name">SilverChain Group — 27 维度深度尽调</div>
+        <div class="meta">2026-07-11 · IL · company-dd</div>
+      </div>
+      <a href="2026-07-11-silverchain-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="AU, CA, DE, IL, SE" data-type="company-dd">
+      <div class="info">
+        <div class="name">Santé Cie — 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · AU, CA, DE, IL, SE · company-dd</div>
+      </div>
+      <a href="2026-07-11-sante-cie-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">Regis Healthcare 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-11-regis-healthcare-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="CA, IL, SG, TW, US" data-type="company-dd">
+      <div class="info">
+        <div class="name">台大医院在宅医疗中心 — 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · CA, IL, SG, TW, US · company-dd</div>
+      </div>
+      <a href="2026-07-11-ntuh-home-hospital-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="CA, IL, SE, US" data-type="company-dd">
+      <div class="info">
+        <div class="name">iSavta 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · CA, IL, SE, US · company-dd</div>
+      </div>
+      <a href="2026-07-11-isavta-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="BR" data-type="company-dd">
+      <div class="info">
+        <div class="name">Home Doctor（巴西）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · BR · company-dd</div>
+      </div>
+      <a href="2026-07-11-home-doctor-br-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">HammondCare 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-11-hammondcare-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="BR" data-type="research">
+      <div class="info">
+        <div class="name">📰 HaH/居家医疗 每日资讯简报</div>
+        <div class="meta">2026-07-11 · BR · research</div>
+      </div>
+      <a href="2026-07-11-hah-daily-briefing.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="AU, CA" data-type="company-dd">
+      <div class="info">
+        <div class="name">Calvary Health Care — 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · AU, CA · company-dd</div>
+      </div>
+      <a href="2026-07-11-calvary-health-care-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="AU, CA" data-type="company-dd">
+      <div class="info">
+        <div class="name">Calvary Health Care 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · AU, CA · company-dd</div>
+      </div>
+      <a href="2026-07-11-calvary-health-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">Bolton Clarke 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-11-bolton-clarke-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="CA, DE, HK, IL, SE, US" data-type="company-dd">
+      <div class="info">
+        <div class="name">B'Lev Shalem 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · CA, DE, HK, IL, SE, US · company-dd</div>
+      </div>
+      <a href="2026-07-11-blev-shalem-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">Australian Unity 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-11-australian-unity-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-11" data-countries="SE" data-type="company-dd">
+      <div class="info">
+        <div class="name">Attendo 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-11 · SE · company-dd</div>
+      </div>
+      <a href="2026-07-11-attendo-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-10" data-countries="HK" data-type="company-dd">
+      <div class="info">
+        <div class="name">YDCare（易得康香港）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-10 · HK · company-dd</div>
+      </div>
+      <a href="2026-07-10-ydcare-hk-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-10" data-countries="HK" data-type="company-dd">
+      <div class="info">
+        <div class="name">QualityCare（卓健护理介绍所）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-10 · HK · company-dd</div>
+      </div>
+      <a href="2026-07-10-qualitycare-hk-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-10" data-countries="HK" data-type="company-dd">
+      <div class="info">
+        <div class="name">EDEN HOME 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-10 · HK · company-dd</div>
+      </div>
+      <a href="2026-07-10-eden-home-hk-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE, UK" data-type="company-dd">
+      <div class="info">
+        <div class="name">Whzan (Solcom) — 27 维度公司深度尽调报告</div>
+        <div class="meta">2026-07-07 · DE, UK · company-dd</div>
+      </div>
+      <a href="2026-07-07-whzan-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">Silver Chain Group (Silverchain) — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-07-silver-chain-au-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE, UK" data-type="company-dd">
+      <div class="info">
+        <div class="name">Luscii — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · DE, UK · company-dd</div>
+      </div>
+      <a href="2026-07-07-luscii-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE" data-type="company-dd">
+      <div class="info">
+        <div class="name">Lottie — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · DE · company-dd</div>
+      </div>
+      <a href="2026-07-07-lottie-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">KinCare — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-07-kincare-au-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE" data-type="company-dd">
+      <div class="info">
+        <div class="name">Isansys Lifecare — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · DE · company-dd</div>
+      </div>
+      <a href="2026-07-07-isansys-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE" data-type="company-dd">
+      <div class="info">
+        <div class="name">Inhealthcare — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · DE · company-dd</div>
+      </div>
+      <a href="2026-07-07-inhealthcare-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE, UK" data-type="company-dd">
+      <div class="info">
+        <div class="name">Huma — 27 维度公司深度尽调报告</div>
+        <div class="meta">2026-07-07 · DE, UK · company-dd</div>
+      </div>
+      <a href="2026-07-07-huma-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">Home Instead Australia — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-07-home-instead-au-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">HammondCare — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-07-hammondcare-au-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE, UK" data-type="company-dd">
+      <div class="info">
+        <div class="name">Feebris — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · DE, UK · company-dd</div>
+      </div>
+      <a href="2026-07-07-feebris-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE" data-type="company-dd">
+      <div class="info">
+        <div class="name">Elder — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · DE · company-dd</div>
+      </div>
+      <a href="2026-07-07-elder-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE" data-type="company-dd">
+      <div class="info">
+        <div class="name">DOC@HOME (Docobo/Graphnet) — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · DE · company-dd</div>
+      </div>
+      <a href="2026-07-07-docobo-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE, UK" data-type="company-dd">
+      <div class="info">
+        <div class="name">Doccla — 27 维度公司深度尽调报告</div>
+        <div class="meta">2026-07-07 · DE, UK · company-dd</div>
+      </div>
+      <a href="2026-07-07-doccla-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE, UK" data-type="company-dd">
+      <div class="info">
+        <div class="name">Clinitouch (Spirit Health) — 27 维度公司深度尽调报告</div>
+        <div class="meta">2026-07-07 · DE, UK · company-dd</div>
+      </div>
+      <a href="2026-07-07-clinitouch-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE, UK" data-type="company-dd">
+      <div class="info">
+        <div class="name">Cera — 27 维度公司深度尽调报告</div>
+        <div class="meta">2026-07-07 · DE, UK · company-dd</div>
+      </div>
+      <a href="2026-07-07-cera-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">Bupa Home Care Australia — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-07-bupa-home-care-au-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">Bolton Clarke — 27 维度深度尽调</div>
+        <div class="meta">2026-07-07 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-07-bolton-clarke-au-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-07" data-countries="DE, UK" data-type="company-dd">
+      <div class="info">
+        <div class="name">Birdie — 27 维度公司深度尽调报告</div>
+        <div class="meta">2026-07-07 · DE, UK · company-dd</div>
+      </div>
+      <a href="2026-07-07-birdie-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-06" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">云南省16州市长护险政策统计维度一览表</div>
+        <div class="meta">2026-07-06 · CN · data-table</div>
+      </div>
+      <a href="2026-07-06-yunnan-16-cities-ltci-stat-dimensions.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-06" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">四川省21市州长护险政策统计维度一览表</div>
+        <div class="meta">2026-07-06 · CN · data-table</div>
+      </div>
+      <a href="2026-07-06-sichuan-21-cities-ltci-stat-dimensions.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-06" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">湖南省14市州长护险政策统计维度一览表</div>
+        <div class="meta">2026-07-06 · CN · data-table</div>
+      </div>
+      <a href="2026-07-06-hunan-14-cities-ltci-stat-dimensions.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-06" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">湖北省17市州长护险政策统计维度一览表</div>
+        <div class="meta">2026-07-06 · CN · data-table</div>
+      </div>
+      <a href="2026-07-06-hubei-17-cities-ltci-stat-dimensions.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-06" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">贵州省9市州长护险政策统计维度一览表</div>
+        <div class="meta">2026-07-06 · CN · data-table</div>
+      </div>
+      <a href="2026-07-06-guizhou-9-cities-ltci-stat-dimensions.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-06" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">广西壮族自治区14市长护险政策统计维度一览表</div>
+        <div class="meta">2026-07-06 · CN · data-table</div>
+      </div>
+      <a href="2026-07-06-guangxi-14-cities-ltci-stat-dimensions.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-06" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">广东省21市长护险政策统计维度一览表</div>
+        <div class="meta">2026-07-06 · CN · data-table</div>
+      </div>
+      <a href="2026-07-06-guangdong-21-cities-ltci-stat-dimensions.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-06" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">Amedisys — 27 维度深度尽调报告 v3.0</div>
+        <div class="meta">2026-07-06 · US · company-dd</div>
+      </div>
+      <a href="2026-07-06-amedisys-27dim-deep-dive-v3.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">浙江省11市长护险政策统计维度一览表</div>
+        <div class="meta">2026-07-05 · CN · data-table</div>
+      </div>
+      <a href="2026-07-05-zhejiang-11-cities-ltci-stat-dimensions.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="CN" data-type="company-dd">
+      <div class="info">
+        <div class="name">易得康（YDCare）— 27 维度深度尽调</div>
+        <div class="meta">2026-07-05 · CN · company-dd</div>
+      </div>
+      <a href="2026-07-05-ydcare-cn-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="CN" data-type="company-dd">
+      <div class="info">
+        <div class="name">小橙长护（Xiaocheng Changhu）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · CN · company-dd</div>
+      </div>
+      <a href="2026-07-05-xiaocheng-cn-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="DE" data-type="research">
+      <div class="info">
+        <div class="name">Dean 周度复盘报告</div>
+        <div class="meta">2026-07-05 · DE · research</div>
+      </div>
+      <a href="2026-07-05-weekly-review.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="JP" data-type="company-dd">
+      <div class="info">
+        <div class="name">ツクイ（Tsukui Co., Ltd.）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · JP · company-dd</div>
+      </div>
+      <a href="2026-07-05-tsukui-jp-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="CN" data-type="company-dd">
+      <div class="info">
+        <div class="name">天与养老 (Tianyu) — 27 维度深度尽调</div>
+        <div class="meta">2026-07-05 · CN · company-dd</div>
+      </div>
+      <a href="2026-07-05-tianyu-cn-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="JP" data-type="company-dd">
+      <div class="info">
+        <div class="name">SOMPOケア（SOMPO Care Inc.）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · JP · company-dd</div>
+      </div>
+      <a href="2026-07-05-sompo-care-jp-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="CN" data-type="company-dd">
+      <div class="info">
+        <div class="name">璞缘养老（Puyuan）— 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · CN · company-dd</div>
+      </div>
+      <a href="2026-07-05-puyuan-cn-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="CN" data-type="company-dd">
+      <div class="info">
+        <div class="name">浙江普康 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · CN · company-dd</div>
+      </div>
+      <a href="2026-07-05-pukang-cn-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="JP" data-type="company-dd">
+      <div class="info">
+        <div class="name">ニチイ学館（Nichii Co., Ltd.）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · JP · company-dd</div>
+      </div>
+      <a href="2026-07-05-nichii-jp-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="DE" data-type="company-dd">
+      <div class="info">
+        <div class="name">Korian（Emeis）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · DE · company-dd</div>
+      </div>
+      <a href="2026-07-05-korian-de-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="DE" data-type="company-dd">
+      <div class="info">
+        <div class="name">Johanniter-Unfall-Hilfe e.V.（约翰尼特事故救援协会）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · DE · company-dd</div>
+      </div>
+      <a href="2026-07-05-johanniter-de-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">江苏省13市长护险政策统计维度一览表</div>
+        <div class="meta">2026-07-05 · CN · data-table</div>
+      </div>
+      <a href="2026-07-05-jiangsu-13-cities-ltci-stat-dimensions.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="BR" data-type="periodic">
+      <div class="info">
+        <div class="name">HaH 全球政策 RSS 监控简报</div>
+        <div class="meta">2026-07-05 · BR · periodic</div>
+      </div>
+      <a href="2026-07-05-hah-policy-rss-briefing.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="CN" data-type="company-dd">
+      <div class="info">
+        <div class="name">福寿康（Fushoukang）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · CN · company-dd</div>
+      </div>
+      <a href="2026-07-05-fushoukang-cn-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="DE" data-type="company-dd">
+      <div class="info">
+        <div class="name">Deutsche Fachpflege Gruppe — 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · DE · company-dd</div>
+      </div>
+      <a href="2026-07-05-deutsche-fachpflege-de-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-05" data-countries="JP" data-type="company-dd">
+      <div class="info">
+        <div class="name">ベネッセスタイルケア（Benesse Style Care）27 维度深度尽调报告</div>
+        <div class="meta">2026-07-05 · JP · company-dd</div>
+      </div>
+      <a href="2026-07-05-benesse-jp-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-04" data-countries="HK, SE" data-type="research">
+      <div class="info">
+        <div class="name">瑞典/北欧 居家医疗体系深度分析</div>
+        <div class="meta">2026-07-04 · HK, SE · research</div>
+      </div>
+      <a href="2026-07-04-sweden-hah-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-04" data-countries="DE" data-type="research">
+      <div class="info">
+        <div class="name">RPM 设备商全景分析报告</div>
+        <div class="meta">2026-07-04 · DE · research</div>
+      </div>
+      <a href="2026-07-04-rpm-device-landscape.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-04" data-countries="BR, CA, SE, US" data-type="research">
+      <div class="info">
+        <div class="name">支付方自建HaH策略深度分析</div>
+        <div class="meta">2026-07-04 · BR, CA, SE, US · research</div>
+      </div>
+      <a href="2026-07-04-payer-hah-strategy-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-04" data-countries="KR" data-type="research">
+      <div class="info">
+        <div class="name">韩国 HaH/居家医疗体系深度分析</div>
+        <div class="meta">2026-07-04 · KR · research</div>
+      </div>
+      <a href="2026-07-04-korea-hah-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-04" data-countries="IL" data-type="research">
+      <div class="info">
+        <div class="name">以色列 HaH/居家医疗体系深度分析</div>
+        <div class="meta">2026-07-04 · IL · research</div>
+      </div>
+      <a href="2026-07-04-israel-hah-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-04" data-countries="BR, CA, CN, DE, HK, IL, JP, KR, NL, SE, UK, US" data-type="research">
+      <div class="info">
+        <div class="name">全球居家护理劳动力市场分析</div>
+        <div class="meta">2026-07-04 · BR, CA, CN, DE, HK, IL, JP, KR, NL, SE, UK, US · research</div>
+      </div>
+      <a href="2026-07-04-global-hah-workforce-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-04" data-countries="BR, IL" data-type="research">
+      <div class="info">
+        <div class="name">巴西 居家医疗体系深度分析</div>
+        <div class="meta">2026-07-04 · BR, IL · research</div>
+      </div>
+      <a href="2026-07-04-brazil-hah-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-04" data-countries="KR" data-type="research">
+      <div class="info">
+        <div class="name">韩国 — 自动生成报告初稿</div>
+        <div class="meta">2026-07-04 · KR · research</div>
+      </div>
+      <a href="2026-07-04-auto-韩国.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="research">
+      <div class="info">
+        <div class="name">VA Home-Based Primary Care (HBPC) 深度分析报告</div>
+        <div class="meta">2026-07-03 · US · research</div>
+      </div>
+      <a href="2026-07-03-va-hbpc-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">A8 UChicago Medicine Hospital at Home — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-uchicago-medicine-hah-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="SG" data-type="company-dd">
+      <div class="info">
+        <div class="name">S3 SingHealth Home Care (新加坡) — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · SG · company-dd</div>
+      </div>
+      <a href="2026-07-03-singhealth-home-care-singapore-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="SG" data-type="research">
+      <div class="info">
+        <div class="name">新加坡 MOHT 监管沙盒模式深度分析：HaH 在亚洲的制度创新标杆</div>
+        <div class="meta">2026-07-03 · SG · research</div>
+      </div>
+      <a href="2026-07-03-singapore-moht-hah-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="BR, CA, DE, SE, SG, US" data-type="research">
+      <div class="info">
+        <div class="name">Signify Health 深度分析报告：支付方→HaH 转化漏斗的关键入口</div>
+        <div class="meta">2026-07-03 · BR, CA, DE, SE, SG, US · research</div>
+      </div>
+      <a href="2026-07-03-signify-health-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="SG" data-type="company-dd">
+      <div class="info">
+        <div class="name">S2 SGH@Home (新加坡) — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · SG · company-dd</div>
+      </div>
+      <a href="2026-07-03-sgh-at-home-singapore-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="AU, BR, CA, DE, FR, IL, US" data-type="research">
+      <div class="info">
+        <div class="name">儿科 Hospital-at-Home（HaH）系统性梳理报告</div>
+        <div class="meta">2026-07-03 · AU, BR, CA, DE, FR, IL, US · research</div>
+      </div>
+      <a href="2026-07-03-pediatric-hah-review.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="CA" data-type="research">
+      <div class="info">
+        <div class="name">Ontario Health atHome 深度分析报告</div>
+        <div class="meta">2026-07-03 · CA · research</div>
+      </div>
+      <a href="2026-07-03-ontario-health-athome.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="SG" data-type="company-dd">
+      <div class="info">
+        <div class="name">S1 NUHS@Home (新加坡) — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · SG · company-dd</div>
+      </div>
+      <a href="2026-07-03-nuhs-at-home-singapore-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="SG" data-type="company-dd">
+      <div class="info">
+        <div class="name">S4 NHG Health MIC@Home (新加坡) — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · SG · company-dd</div>
+      </div>
+      <a href="2026-07-03-nhg-health-mic-home-singapore-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">A4 Mount Sinai Hospital at Home — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-mount-sinai-hah-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">A2 Mass General Brigham Home Hospital — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-mgb-home-hospital-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">Medically Home — 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-medically-home-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">A3 Mayo Clinic Advanced Care at Home — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-mayo-clinic-hah-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">A5 Kaiser Permanente Care at Home — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-kaiser-permanente-hah-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">A6 Johns Hopkins Hospital at Home — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-johns-hopkins-hah-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="CA" data-type="research">
+      <div class="info">
+        <div class="name">iHomeCare 投资者级数据看板</div>
+        <div class="meta">2026-07-03 · CA · research</div>
+      </div>
+      <a href="2026-07-03-ihomecare-investor-dashboard.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">Honor Technology — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-honor-technology-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">B7 Home Instead (Honor Technology) — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-home-instead-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="BR, CA, HK, IL, SE, US" data-type="research">
+      <div class="info">
+        <div class="name">HaH 人力经济学模型</div>
+        <div class="meta">2026-07-03 · BR, CA, HK, IL, SE, US · research</div>
+      </div>
+      <a href="2026-07-03-hah-workforce-economics.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="CA, DE, SE, UK, US" data-type="research">
+      <div class="info">
+        <div class="name">HaH 技术互操作标准对比报告</div>
+        <div class="meta">2026-07-03 · CA, DE, SE, UK, US · research</div>
+      </div>
+      <a href="2026-07-03-hah-tech-interoperability.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="CA, IL, SE, US" data-type="research">
+      <div class="info">
+        <div class="name">HaH RPM 硬件层对比分析报告</div>
+        <div class="meta">2026-07-03 · CA, IL, SE, US · research</div>
+      </div>
+      <a href="2026-07-03-hah-rpm-hardware-comparison.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="BR, CA, DE, FR, IL, SE, SG, TW, US" data-type="research">
+      <div class="info">
+        <div class="name">HaH 质量指标对标框架报告</div>
+        <div class="meta">2026-07-03 · BR, CA, DE, FR, IL, SE, SG, TW, US · research</div>
+      </div>
+      <a href="2026-07-03-hah-quality-benchmarks.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="BR" data-type="periodic">
+      <div class="info">
+        <div class="name">HaH 全球政策 RSS 监控简报</div>
+        <div class="meta">2026-07-03 · BR · periodic</div>
+      </div>
+      <a href="2026-07-03-hah-policy-rss-briefing.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="AU, CA, DE, HK, JP, KR, SE, SG, TW, UK, US" data-type="research">
+      <div class="info">
+        <div class="name">HaH 全球支付模型跨国对比矩阵</div>
+        <div class="meta">2026-07-03 · AU, CA, DE, HK, JP, KR, SE, SG, TW, UK, US · research</div>
+      </div>
+      <a href="2026-07-03-hah-payment-matrix.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="CA, SE" data-type="research">
+      <div class="info">
+        <div class="name">HaH 患者旅程端到端映射报告</div>
+        <div class="meta">2026-07-03 · CA, SE · research</div>
+      </div>
+      <a href="2026-07-03-hah-patient-journey-map.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="AU, CA, DE, UK, US" data-type="research">
+      <div class="info">
+        <div class="name">HaH 居家药物与输液管理协议报告</div>
+        <div class="meta">2026-07-03 · AU, CA, DE, UK, US · research</div>
+      </div>
+      <a href="2026-07-03-hah-medication-management.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="CA" data-type="research">
+      <div class="info">
+        <div class="name">HaH 失败案例教训汇编：从废墟中学习</div>
+        <div class="meta">2026-07-03 · CA · research</div>
+      </div>
+      <a href="2026-07-03-hah-failure-casebook.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="CA, HK, SE, SG, US" data-type="research">
+      <div class="info">
+        <div class="name">HaH 五病种临床协议库</div>
+        <div class="meta">2026-07-03 · CA, HK, SE, SG, US · research</div>
+      </div>
+      <a href="2026-07-03-hah-clinical-protocols.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="BR, CA, DE, FR, IL, TW, US" data-type="research">
+      <div class="info">
+        <div class="name">Hospital-at-Home 临床证据系统性 Meta 分析报告</div>
+        <div class="meta">2026-07-03 · BR, CA, DE, FR, IL, TW, US · research</div>
+      </div>
+      <a href="2026-07-03-hah-clinical-evidence-meta.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="FR" data-type="research">
+      <div class="info">
+        <div class="name">法国 HAD（Hospitalisation à Domicile）体系深度分析报告</div>
+        <div class="meta">2026-07-03 · FR · research</div>
+      </div>
+      <a href="2026-07-03-france-had-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="UK, US" data-type="company-dd">
+      <div class="info">
+        <div class="name">Doccla 27 维度深度尽调报告</div>
+        <div class="meta">2026-07-03 · UK, US · company-dd</div>
+      </div>
+      <a href="2026-07-03-doccla-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US, UK" data-type="company-dd">
+      <div class="info">
+        <div class="name">Current Health 23 维度深度尽调报告</div>
+        <div class="meta">2026-07-03 · US, UK · company-dd</div>
+      </div>
+      <a href="2026-07-03-current-health-23dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">A7 Cleveland Clinic Hospital Care At Home — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-cleveland-clinic-hah-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="CN" data-type="research">
+      <div class="info">
+        <div class="name">中国 HaH 实践初探报告</div>
+        <div class="meta">2026-07-03 · CN · research</div>
+      </div>
+      <a href="2026-07-03-china-hah-initial-scan.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">B4 CenterWell Home Health (Humana) — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-centerwell-home-health-23dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">Cadence Solutions 23 维度深度尽调报告</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-cadence-23dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="NL" data-type="research">
+      <div class="info">
+        <div class="name">Buurtzorg 模式深度分析报告</div>
+        <div class="meta">2026-07-03 · NL · research</div>
+      </div>
+      <a href="2026-07-03-buurtzorg-model-analysis.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US, SG, IN" data-type="company-dd">
+      <div class="info">
+        <div class="name">Biofourmis 23 维度深度尽调报告</div>
+        <div class="meta">2026-07-03 · US, SG, IN · company-dd</div>
+      </div>
+      <a href="2026-07-03-biofourmis-23dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">B8 BAYADA Home Health Care — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-bayada-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">A1 Atrium Health Hospital at Home — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-atrium-health-hah-27dim.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">B5 Amwell (American Well) — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · US · company-dd</div>
+      </div>
+      <a href="2026-07-03-amwell-23dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">Amplar Health (Medibank) 深度分析报告</div>
+        <div class="meta">2026-07-03 · AU · company-dd</div>
+      </div>
+      <a href="2026-07-03-amplar-health-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-03" data-countries="CA, US, AU" data-type="company-dd">
+      <div class="info">
+        <div class="name">B6 AlayaCare — 27 维度深度尽调</div>
+        <div class="meta">2026-07-03 · CA, US, AU · company-dd</div>
+      </div>
+      <a href="2026-07-03-alayacare-27dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-07-02" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">Amedisys — 27 维度深度尽调</div>
+        <div class="meta">2026-07-02 · US · company-dd</div>
+      </div>
+      <a href="2026-07-02-amedisys-23dim-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">浙江省11市长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-zhejiang-11-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">云南省16州(市)长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-yunnan-16-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">天津市长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-tianjin-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">四川省21市(州)长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-sichuan-21-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">山西省11市长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-shanxi-11-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">上海市长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-shanghai-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">山东省16市长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-shandong-16-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">陕西省10市长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-shaanxi-10-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">青海省8市州长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-qinghai-8-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">宁夏5市长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-ningxia-5-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">内蒙古12盟市长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-neimenggu-12-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">辽宁省14市长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-liaoning-14-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">吉林省9市州长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-jilin-9-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">江西省11城长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-jiangxi-11-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">江苏省13市长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-jiangsu-13-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">湖南省14市州长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-hunan-14-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">湖北省13市州长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-hubei-13-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">河南省18市长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-henan-18-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">黑龙江省13市(地)长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-heilongjiang-13-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">河北省11市+雄安新区长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-hebei-14-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">海南省19市县(含三沙)长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-hainan-19-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="AU, CA, DE, FR, HK, IL, JP, SE, SG, TW, UK, US" data-type="periodic">
+      <div class="info">
+        <div class="name">HaH 全球政策周度预警报告</div>
+        <div class="meta">2026-06-30 · AU, CA, DE, FR, HK, IL, JP, SE, SG, TW, UK, US · periodic</div>
+      </div>
+      <a href="2026-06-30-hah-policy-alert.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">贵州省9市州长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-guizhou-9-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">广西壮族自治区14城长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-guangxi-14-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">广东省长期护理保险政策深度报告</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-guangdong-ltci-deepdive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="research">
+      <div class="info">
+        <div class="name">广东省21城长护险政策全量明细表</div>
+        <div class="meta">2026-06-30 · CN · research</div>
+      </div>
+      <a href="2026-06-30-guangdong-21-cities-table.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="periodic">
+      <div class="info">
+        <div class="name">广东省21城长期护理保险政策完整清单</div>
+        <div class="meta">2026-06-30 · CN · periodic</div>
+      </div>
+      <a href="2026-06-30-guangdong-21-cities-policy-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="research">
+      <div class="info">
+        <div class="name">广东省21城长护险政策全量明细表（交叉验证终版）</div>
+        <div class="meta">2026-06-30 · CN · research</div>
+      </div>
+      <a href="2026-06-30-guangdong-21-cities-final.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">甘肃省14市州长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-gansu-14-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">福建省9城长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-fujian-9-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">重庆市长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-chongqing-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">全国省级长护险政策图谱 — 交叉验证终版</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-china-ltci-province-matrix.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">全国长护险城市级政策图谱 — 三源交叉验证终版</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-china-ltci-full-city-matrix.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">北京长护险政策清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-beijing-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-30" data-countries="CN" data-type="data-table">
+      <div class="info">
+        <div class="name">安徽省16市长护险政策全量清单</div>
+        <div class="meta">2026-06-30 · CN · data-table</div>
+      </div>
+      <a href="2026-06-30-anhui-16-cities-ltci-list.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-29" data-countries="AU, CA, DE, FR, HK, IL, JP, SE, SG, TW, UK, US" data-type="periodic">
+      <div class="info">
+        <div class="name">HaH 全球政策周度预警报告</div>
+        <div class="meta">2026-06-29 · AU, CA, DE, FR, HK, IL, JP, SE, SG, TW, UK, US · periodic</div>
+      </div>
+      <a href="2026-06-29-hah-policy-alert.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-28" data-countries="HK" data-type="research">
+      <div class="info">
+        <div class="name">香港 Hospital-at-Home 战略规划 · P2 核心工作文件</div>
+        <div class="meta">2026-06-28 · HK · research</div>
+      </div>
+      <a href="2026-06-28-hk-hah-strategic-planning-p2.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-28" data-countries="HK" data-type="research">
+      <div class="info">
+        <div class="name">香港 Hospital-at-Home 战略规划 · P1 核心工作文件</div>
+        <div class="meta">2026-06-28 · HK · research</div>
+      </div>
+      <a href="2026-06-28-hk-hah-strategic-planning-p1.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-28" data-countries="HK" data-type="research">
+      <div class="info">
+        <div class="name">香港 Hospital-at-Home 战略规划 · P0 核心工作文件</div>
+        <div class="meta">2026-06-28 · HK · research</div>
+      </div>
+      <a href="2026-06-28-hk-hah-strategic-planning-p0.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-28" data-countries="HK" data-type="research">
+      <div class="info">
+        <div class="name">香港 Hospital-at-Home 战略规划 · P0 核心工作文件</div>
+        <div class="meta">2026-06-28 · HK · research</div>
+      </div>
+      <a href="2026-06-28-hk-hah-strategic-planning-p0-p1-merged.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-28" data-countries="HK" data-type="research">
+      <div class="info">
+        <div class="name">香港 Hospital-at-Home 战略规划 · P0 核心工作文件</div>
+        <div class="meta">2026-06-28 · HK · research</div>
+      </div>
+      <a href="2026-06-28-hk-hah-strategic-planning-full.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-28" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">DispatchHealth — 27 维度深度尽调</div>
+        <div class="meta">2026-06-28 · US · company-dd</div>
+      </div>
+      <a href="2026-06-28-dispatchhealth-deep-dive.html" class="btn">打开</a>
+    </div>
+    <div class="card" data-date="2026-06-28" data-countries="US" data-type="company-dd">
+      <div class="info">
+        <div class="name">Contessa Health — 27 维度深度尽调</div>
+        <div class="meta">2026-06-28 · US · company-dd</div>
+      </div>
+      <a href="2026-06-28-contessa-health-deep-dive.html" class="btn">打开</a>
+    </div>
 </div>
+<footer>Kate Knowledge Base · Kenneth Ye · 182 reports</footer>
 <script>
-const reports = [{"name": "2026-07-15-hah-daily-briefing", "file": "2026-07-15-hah-daily-briefing.html", "date": "2026-07-15", "size_kb": 14.0, "countries": ["GLOBAL"], "url": "2026-07-15-hah-daily-briefing.html"}, {"name": "2026-07-15-four-municipalities-ltci-deepdive", "file": "2026-07-15-four-municipalities-ltci-deepdive.html", "date": "2026-07-15", "size_kb": 23.6, "countries": ["GLOBAL"], "url": "2026-07-15-four-municipalities-ltci-deepdive.html"}, {"name": "2026-07-14-speedoc-rosmead-valuation-ceo-briefing", "file": "2026-07-14-speedoc-rosmead-valuation-ceo-briefing.html", "date": "2026-07-14", "size_kb": 42.2, "countries": ["GLOBAL"], "url": "2026-07-14-speedoc-rosmead-valuation-ceo-briefing.html"}, {"name": "2026-07-14-hah-daily-briefing", "file": "2026-07-14-hah-daily-briefing.html", "date": "2026-07-14", "size_kb": 14.0, "countries": ["GLOBAL"], "url": "2026-07-14-hah-daily-briefing.html"}, {"name": "2026-07-13-speedoc-sg-27dim", "file": "2026-07-13-speedoc-sg-27dim.html", "date": "2026-07-13", "size_kb": 90.1, "countries": ["SG"], "url": "2026-07-13-speedoc-sg-27dim.html"}, {"name": "2026-07-13-hah-daily-briefing", "file": "2026-07-13-hah-daily-briefing.html", "date": "2026-07-13", "size_kb": 14.0, "countries": ["GLOBAL"], "url": "2026-07-13-hah-daily-briefing.html"}, {"name": "2026-07-12-hah-daily-briefing", "file": "2026-07-12-hah-daily-briefing.html", "date": "2026-07-12", "size_kb": 14.0, "countries": ["GLOBAL"], "url": "2026-07-12-hah-daily-briefing.html"}, {"name": "2026-07-11-yad-sarah-27dim", "file": "2026-07-11-yad-sarah-27dim.html", "date": "2026-07-11", "size_kb": 106.9, "countries": ["GLOBAL"], "url": "2026-07-11-yad-sarah-27dim.html"}, {"name": "2026-07-11-trilogy-care-27dim", "file": "2026-07-11-trilogy-care-27dim.html", "date": "2026-07-11", "size_kb": 10.5, "countries": ["GLOBAL"], "url": "2026-07-11-trilogy-care-27dim.html"}, {"name": "2026-07-11-silwhon-27dim", "file": "2026-07-11-silwhon-27dim.html", "date": "2026-07-11", "size_kb": 10.0, "countries": ["GLOBAL"], "url": "2026-07-11-silwhon-27dim.html"}, {"name": "2026-07-11-silverchain-27dim", "file": "2026-07-11-silverchain-27dim.html", "date": "2026-07-11", "size_kb": 121.1, "countries": ["GLOBAL"], "url": "2026-07-11-silverchain-27dim.html"}, {"name": "2026-07-11-sante-cie-27dim", "file": "2026-07-11-sante-cie-27dim.html", "date": "2026-07-11", "size_kb": 99.7, "countries": ["GLOBAL"], "url": "2026-07-11-sante-cie-27dim.html"}, {"name": "2026-07-11-regis-healthcare-27dim", "file": "2026-07-11-regis-healthcare-27dim.html", "date": "2026-07-11", "size_kb": 11.4, "countries": ["GLOBAL"], "url": "2026-07-11-regis-healthcare-27dim.html"}, {"name": "2026-07-11-ntuh-home-hospital-27dim", "file": "2026-07-11-ntuh-home-hospital-27dim.html", "date": "2026-07-11", "size_kb": 114.0, "countries": ["GLOBAL"], "url": "2026-07-11-ntuh-home-hospital-27dim.html"}, {"name": "2026-07-11-isavta-27dim", "file": "2026-07-11-isavta-27dim.html", "date": "2026-07-11", "size_kb": 119.9, "countries": ["GLOBAL"], "url": "2026-07-11-isavta-27dim.html"}, {"name": "2026-07-11-home-doctor-br-27dim", "file": "2026-07-11-home-doctor-br-27dim.html", "date": "2026-07-11", "size_kb": 118.6, "countries": ["BR"], "url": "2026-07-11-home-doctor-br-27dim.html"}, {"name": "2026-07-11-hammondcare-27dim", "file": "2026-07-11-hammondcare-27dim.html", "date": "2026-07-11", "size_kb": 10.7, "countries": ["GLOBAL"], "url": "2026-07-11-hammondcare-27dim.html"}, {"name": "2026-07-11-hah-daily-briefing", "file": "2026-07-11-hah-daily-briefing.html", "date": "2026-07-11", "size_kb": 14.0, "countries": ["GLOBAL"], "url": "2026-07-11-hah-daily-briefing.html"}, {"name": "2026-07-11-calvary-health-care-27dim", "file": "2026-07-11-calvary-health-care-27dim.html", "date": "2026-07-11", "size_kb": 55.6, "countries": ["GLOBAL"], "url": "2026-07-11-calvary-health-care-27dim.html"}, {"name": "2026-07-11-calvary-health-27dim", "file": "2026-07-11-calvary-health-27dim.html", "date": "2026-07-11", "size_kb": 11.2, "countries": ["GLOBAL"], "url": "2026-07-11-calvary-health-27dim.html"}, {"name": "2026-07-11-bolton-clarke-27dim", "file": "2026-07-11-bolton-clarke-27dim.html", "date": "2026-07-11", "size_kb": 121.0, "countries": ["GLOBAL"], "url": "2026-07-11-bolton-clarke-27dim.html"}, {"name": "2026-07-11-blev-shalem-27dim", "file": "2026-07-11-blev-shalem-27dim.html", "date": "2026-07-11", "size_kb": 113.0, "countries": ["GLOBAL"], "url": "2026-07-11-blev-shalem-27dim.html"}, {"name": "2026-07-11-australian-unity-27dim", "file": "2026-07-11-australian-unity-27dim.html", "date": "2026-07-11", "size_kb": 11.9, "countries": ["GLOBAL"], "url": "2026-07-11-australian-unity-27dim.html"}, {"name": "2026-07-11-attendo-27dim", "file": "2026-07-11-attendo-27dim.html", "date": "2026-07-11", "size_kb": 10.9, "countries": ["GLOBAL"], "url": "2026-07-11-attendo-27dim.html"}, {"name": "2026-07-10-ydcare-hk-27dim", "file": "2026-07-10-ydcare-hk-27dim.html", "date": "2026-07-10", "size_kb": 48.4, "countries": ["HK"], "url": "2026-07-10-ydcare-hk-27dim.html"}, {"name": "2026-07-10-qualitycare-hk-27dim", "file": "2026-07-10-qualitycare-hk-27dim.html", "date": "2026-07-10", "size_kb": 49.7, "countries": ["HK"], "url": "2026-07-10-qualitycare-hk-27dim.html"}, {"name": "2026-07-10-eden-home-hk-27dim", "file": "2026-07-10-eden-home-hk-27dim.html", "date": "2026-07-10", "size_kb": 43.3, "countries": ["HK"], "url": "2026-07-10-eden-home-hk-27dim.html"}, {"name": "2026-07-07-whzan-27dim-deep-dive", "file": "2026-07-07-whzan-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 52.2, "countries": ["GLOBAL"], "url": "2026-07-07-whzan-27dim-deep-dive.html"}, {"name": "2026-07-07-silver-chain-au-27dim", "file": "2026-07-07-silver-chain-au-27dim.html", "date": "2026-07-07", "size_kb": 52.2, "countries": ["AU"], "url": "2026-07-07-silver-chain-au-27dim.html"}, {"name": "2026-07-07-luscii-27dim-deep-dive", "file": "2026-07-07-luscii-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 24.3, "countries": ["GLOBAL"], "url": "2026-07-07-luscii-27dim-deep-dive.html"}, {"name": "2026-07-07-lottie-27dim-deep-dive", "file": "2026-07-07-lottie-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 17.0, "countries": ["GLOBAL"], "url": "2026-07-07-lottie-27dim-deep-dive.html"}, {"name": "2026-07-07-kincare-au-27dim", "file": "2026-07-07-kincare-au-27dim.html", "date": "2026-07-07", "size_kb": 108.4, "countries": ["AU"], "url": "2026-07-07-kincare-au-27dim.html"}, {"name": "2026-07-07-isansys-27dim-deep-dive", "file": "2026-07-07-isansys-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 16.6, "countries": ["GLOBAL"], "url": "2026-07-07-isansys-27dim-deep-dive.html"}, {"name": "2026-07-07-inhealthcare-27dim-deep-dive", "file": "2026-07-07-inhealthcare-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 16.0, "countries": ["GLOBAL"], "url": "2026-07-07-inhealthcare-27dim-deep-dive.html"}, {"name": "2026-07-07-huma-27dim-deep-dive", "file": "2026-07-07-huma-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 86.0, "countries": ["GLOBAL"], "url": "2026-07-07-huma-27dim-deep-dive.html"}, {"name": "2026-07-07-home-instead-au-27dim", "file": "2026-07-07-home-instead-au-27dim.html", "date": "2026-07-07", "size_kb": 56.1, "countries": ["AU"], "url": "2026-07-07-home-instead-au-27dim.html"}, {"name": "2026-07-07-hammondcare-au-27dim", "file": "2026-07-07-hammondcare-au-27dim.html", "date": "2026-07-07", "size_kb": 82.5, "countries": ["AU"], "url": "2026-07-07-hammondcare-au-27dim.html"}, {"name": "2026-07-07-feebris-27dim-deep-dive", "file": "2026-07-07-feebris-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 25.1, "countries": ["GLOBAL"], "url": "2026-07-07-feebris-27dim-deep-dive.html"}, {"name": "2026-07-07-elder-27dim-deep-dive", "file": "2026-07-07-elder-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 16.5, "countries": ["GLOBAL"], "url": "2026-07-07-elder-27dim-deep-dive.html"}, {"name": "2026-07-07-docobo-27dim-deep-dive", "file": "2026-07-07-docobo-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 16.2, "countries": ["GLOBAL"], "url": "2026-07-07-docobo-27dim-deep-dive.html"}, {"name": "2026-07-07-doccla-27dim-deep-dive", "file": "2026-07-07-doccla-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 75.9, "countries": ["GLOBAL"], "url": "2026-07-07-doccla-27dim-deep-dive.html"}, {"name": "2026-07-07-clinitouch-27dim-deep-dive", "file": "2026-07-07-clinitouch-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 43.4, "countries": ["GLOBAL"], "url": "2026-07-07-clinitouch-27dim-deep-dive.html"}, {"name": "2026-07-07-cera-27dim-deep-dive", "file": "2026-07-07-cera-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 116.9, "countries": ["GLOBAL"], "url": "2026-07-07-cera-27dim-deep-dive.html"}, {"name": "2026-07-07-bupa-home-care-au-27dim", "file": "2026-07-07-bupa-home-care-au-27dim.html", "date": "2026-07-07", "size_kb": 77.6, "countries": ["AU"], "url": "2026-07-07-bupa-home-care-au-27dim.html"}, {"name": "2026-07-07-bolton-clarke-au-27dim", "file": "2026-07-07-bolton-clarke-au-27dim.html", "date": "2026-07-07", "size_kb": 53.0, "countries": ["AU"], "url": "2026-07-07-bolton-clarke-au-27dim.html"}, {"name": "2026-07-07-birdie-27dim-deep-dive", "file": "2026-07-07-birdie-27dim-deep-dive.html", "date": "2026-07-07", "size_kb": 91.4, "countries": ["GLOBAL"], "url": "2026-07-07-birdie-27dim-deep-dive.html"}, {"name": "2026-07-06-yunnan-16-cities-ltci-stat-dimensions", "file": "2026-07-06-yunnan-16-cities-ltci-stat-dimensions.html", "date": "2026-07-06", "size_kb": 20.0, "countries": ["GLOBAL"], "url": "2026-07-06-yunnan-16-cities-ltci-stat-dimensions.html"}, {"name": "2026-07-06-sichuan-21-cities-ltci-stat-dimensions", "file": "2026-07-06-sichuan-21-cities-ltci-stat-dimensions.html", "date": "2026-07-06", "size_kb": 23.2, "countries": ["GLOBAL"], "url": "2026-07-06-sichuan-21-cities-ltci-stat-dimensions.html"}, {"name": "2026-07-06-hunan-14-cities-ltci-stat-dimensions", "file": "2026-07-06-hunan-14-cities-ltci-stat-dimensions.html", "date": "2026-07-06", "size_kb": 20.2, "countries": ["GLOBAL"], "url": "2026-07-06-hunan-14-cities-ltci-stat-dimensions.html"}, {"name": "2026-07-06-hubei-17-cities-ltci-stat-dimensions", "file": "2026-07-06-hubei-17-cities-ltci-stat-dimensions.html", "date": "2026-07-06", "size_kb": 18.5, "countries": ["GLOBAL"], "url": "2026-07-06-hubei-17-cities-ltci-stat-dimensions.html"}, {"name": "2026-07-06-guizhou-9-cities-ltci-stat-dimensions", "file": "2026-07-06-guizhou-9-cities-ltci-stat-dimensions.html", "date": "2026-07-06", "size_kb": 18.1, "countries": ["GLOBAL"], "url": "2026-07-06-guizhou-9-cities-ltci-stat-dimensions.html"}, {"name": "2026-07-06-guangxi-14-cities-ltci-stat-dimensions", "file": "2026-07-06-guangxi-14-cities-ltci-stat-dimensions.html", "date": "2026-07-06", "size_kb": 27.3, "countries": ["GLOBAL"], "url": "2026-07-06-guangxi-14-cities-ltci-stat-dimensions.html"}, {"name": "2026-07-06-guangdong-21-cities-ltci-stat-dimensions", "file": "2026-07-06-guangdong-21-cities-ltci-stat-dimensions.html", "date": "2026-07-06", "size_kb": 27.3, "countries": ["GLOBAL"], "url": "2026-07-06-guangdong-21-cities-ltci-stat-dimensions.html"}, {"name": "2026-07-06-amedisys-27dim-deep-dive-v3", "file": "2026-07-06-amedisys-27dim-deep-dive-v3.html", "date": "2026-07-06", "size_kb": 94.8, "countries": ["GLOBAL"], "url": "2026-07-06-amedisys-27dim-deep-dive-v3.html"}, {"name": "2026-07-05-zhejiang-11-cities-ltci-stat-dimensions", "file": "2026-07-05-zhejiang-11-cities-ltci-stat-dimensions.html", "date": "2026-07-05", "size_kb": 32.7, "countries": ["GLOBAL"], "url": "2026-07-05-zhejiang-11-cities-ltci-stat-dimensions.html"}, {"name": "2026-07-05-ydcare-cn-27dim", "file": "2026-07-05-ydcare-cn-27dim.html", "date": "2026-07-05", "size_kb": 109.6, "countries": ["CN"], "url": "2026-07-05-ydcare-cn-27dim.html"}, {"name": "2026-07-05-xiaocheng-cn-27dim", "file": "2026-07-05-xiaocheng-cn-27dim.html", "date": "2026-07-05", "size_kb": 106.7, "countries": ["CN"], "url": "2026-07-05-xiaocheng-cn-27dim.html"}, {"name": "2026-07-05-weekly-review", "file": "2026-07-05-weekly-review.html", "date": "2026-07-05", "size_kb": 37.6, "countries": ["GLOBAL"], "url": "2026-07-05-weekly-review.html"}, {"name": "2026-07-05-tsukui-jp-27dim", "file": "2026-07-05-tsukui-jp-27dim.html", "date": "2026-07-05", "size_kb": 117.4, "countries": ["JP"], "url": "2026-07-05-tsukui-jp-27dim.html"}, {"name": "2026-07-05-tianyu-cn-27dim", "file": "2026-07-05-tianyu-cn-27dim.html", "date": "2026-07-05", "size_kb": 177.1, "countries": ["CN"], "url": "2026-07-05-tianyu-cn-27dim.html"}, {"name": "2026-07-05-sompo-care-jp-27dim", "file": "2026-07-05-sompo-care-jp-27dim.html", "date": "2026-07-05", "size_kb": 118.2, "countries": ["JP"], "url": "2026-07-05-sompo-care-jp-27dim.html"}, {"name": "2026-07-05-puyuan-cn-27dim", "file": "2026-07-05-puyuan-cn-27dim.html", "date": "2026-07-05", "size_kb": 178.9, "countries": ["CN"], "url": "2026-07-05-puyuan-cn-27dim.html"}, {"name": "2026-07-05-pukang-cn-27dim", "file": "2026-07-05-pukang-cn-27dim.html", "date": "2026-07-05", "size_kb": 79.3, "countries": ["CN"], "url": "2026-07-05-pukang-cn-27dim.html"}, {"name": "2026-07-05-nichii-jp-27dim", "file": "2026-07-05-nichii-jp-27dim.html", "date": "2026-07-05", "size_kb": 107.1, "countries": ["JP"], "url": "2026-07-05-nichii-jp-27dim.html"}, {"name": "2026-07-05-korian-de-27dim", "file": "2026-07-05-korian-de-27dim.html", "date": "2026-07-05", "size_kb": 119.6, "countries": ["DE"], "url": "2026-07-05-korian-de-27dim.html"}, {"name": "2026-07-05-johanniter-de-27dim", "file": "2026-07-05-johanniter-de-27dim.html", "date": "2026-07-05", "size_kb": 149.6, "countries": ["DE"], "url": "2026-07-05-johanniter-de-27dim.html"}, {"name": "2026-07-05-jiangsu-13-cities-ltci-stat-dimensions", "file": "2026-07-05-jiangsu-13-cities-ltci-stat-dimensions.html", "date": "2026-07-05", "size_kb": 35.1, "countries": ["GLOBAL"], "url": "2026-07-05-jiangsu-13-cities-ltci-stat-dimensions.html"}, {"name": "2026-07-05-hah-policy-rss-briefing", "file": "2026-07-05-hah-policy-rss-briefing.html", "date": "2026-07-05", "size_kb": 12.5, "countries": ["GLOBAL"], "url": "2026-07-05-hah-policy-rss-briefing.html"}, {"name": "2026-07-05-fushoukang-cn-27dim", "file": "2026-07-05-fushoukang-cn-27dim.html", "date": "2026-07-05", "size_kb": 110.8, "countries": ["CN"], "url": "2026-07-05-fushoukang-cn-27dim.html"}, {"name": "2026-07-05-deutsche-fachpflege-de-27dim", "file": "2026-07-05-deutsche-fachpflege-de-27dim.html", "date": "2026-07-05", "size_kb": 138.7, "countries": ["DE"], "url": "2026-07-05-deutsche-fachpflege-de-27dim.html"}, {"name": "2026-07-05-benesse-jp-27dim", "file": "2026-07-05-benesse-jp-27dim.html", "date": "2026-07-05", "size_kb": 138.4, "countries": ["JP"], "url": "2026-07-05-benesse-jp-27dim.html"}, {"name": "2026-07-04-sweden-hah-analysis", "file": "2026-07-04-sweden-hah-analysis.html", "date": "2026-07-04", "size_kb": 58.4, "countries": ["GLOBAL"], "url": "2026-07-04-sweden-hah-analysis.html"}, {"name": "2026-07-04-rpm-device-landscape", "file": "2026-07-04-rpm-device-landscape.html", "date": "2026-07-04", "size_kb": 36.6, "countries": ["GLOBAL"], "url": "2026-07-04-rpm-device-landscape.html"}, {"name": "2026-07-04-payer-hah-strategy-analysis", "file": "2026-07-04-payer-hah-strategy-analysis.html", "date": "2026-07-04", "size_kb": 35.5, "countries": ["GLOBAL"], "url": "2026-07-04-payer-hah-strategy-analysis.html"}, {"name": "2026-07-04-korea-hah-analysis", "file": "2026-07-04-korea-hah-analysis.html", "date": "2026-07-04", "size_kb": 55.0, "countries": ["GLOBAL"], "url": "2026-07-04-korea-hah-analysis.html"}, {"name": "2026-07-04-israel-hah-analysis", "file": "2026-07-04-israel-hah-analysis.html", "date": "2026-07-04", "size_kb": 44.6, "countries": ["GLOBAL"], "url": "2026-07-04-israel-hah-analysis.html"}, {"name": "2026-07-04-global-hah-workforce-analysis", "file": "2026-07-04-global-hah-workforce-analysis.html", "date": "2026-07-04", "size_kb": 39.5, "countries": ["GLOBAL"], "url": "2026-07-04-global-hah-workforce-analysis.html"}, {"name": "2026-07-04-brazil-hah-analysis", "file": "2026-07-04-brazil-hah-analysis.html", "date": "2026-07-04", "size_kb": 49.4, "countries": ["GLOBAL"], "url": "2026-07-04-brazil-hah-analysis.html"}, {"name": "2026-07-04-auto-韩国", "file": "2026-07-04-auto-韩国.html", "date": "2026-07-04", "size_kb": 10.8, "countries": ["GLOBAL"], "url": "2026-07-04-auto-韩国.html"}, {"name": "2026-07-03-va-hbpc-analysis", "file": "2026-07-03-va-hbpc-analysis.html", "date": "2026-07-03", "size_kb": 37.9, "countries": ["GLOBAL"], "url": "2026-07-03-va-hbpc-analysis.html"}, {"name": "2026-07-03-uchicago-medicine-hah-27dim", "file": "2026-07-03-uchicago-medicine-hah-27dim.html", "date": "2026-07-03", "size_kb": 40.3, "countries": ["GLOBAL"], "url": "2026-07-03-uchicago-medicine-hah-27dim.html"}, {"name": "2026-07-03-singhealth-home-care-singapore-27dim", "file": "2026-07-03-singhealth-home-care-singapore-27dim.html", "date": "2026-07-03", "size_kb": 17.4, "countries": ["GLOBAL"], "url": "2026-07-03-singhealth-home-care-singapore-27dim.html"}, {"name": "2026-07-03-singapore-moht-hah-analysis", "file": "2026-07-03-singapore-moht-hah-analysis.html", "date": "2026-07-03", "size_kb": 55.7, "countries": ["GLOBAL"], "url": "2026-07-03-singapore-moht-hah-analysis.html"}, {"name": "2026-07-03-signify-health-analysis", "file": "2026-07-03-signify-health-analysis.html", "date": "2026-07-03", "size_kb": 56.0, "countries": ["GLOBAL"], "url": "2026-07-03-signify-health-analysis.html"}, {"name": "2026-07-03-sgh-at-home-singapore-27dim", "file": "2026-07-03-sgh-at-home-singapore-27dim.html", "date": "2026-07-03", "size_kb": 18.6, "countries": ["GLOBAL"], "url": "2026-07-03-sgh-at-home-singapore-27dim.html"}, {"name": "2026-07-03-pediatric-hah-review", "file": "2026-07-03-pediatric-hah-review.html", "date": "2026-07-03", "size_kb": 56.3, "countries": ["GLOBAL"], "url": "2026-07-03-pediatric-hah-review.html"}, {"name": "2026-07-03-ontario-health-athome", "file": "2026-07-03-ontario-health-athome.html", "date": "2026-07-03", "size_kb": 54.8, "countries": ["GLOBAL"], "url": "2026-07-03-ontario-health-athome.html"}, {"name": "2026-07-03-nuhs-at-home-singapore-27dim", "file": "2026-07-03-nuhs-at-home-singapore-27dim.html", "date": "2026-07-03", "size_kb": 32.0, "countries": ["GLOBAL"], "url": "2026-07-03-nuhs-at-home-singapore-27dim.html"}, {"name": "2026-07-03-nhg-health-mic-home-singapore-27dim", "file": "2026-07-03-nhg-health-mic-home-singapore-27dim.html", "date": "2026-07-03", "size_kb": 16.9, "countries": ["GLOBAL"], "url": "2026-07-03-nhg-health-mic-home-singapore-27dim.html"}, {"name": "2026-07-03-mount-sinai-hah-27dim", "file": "2026-07-03-mount-sinai-hah-27dim.html", "date": "2026-07-03", "size_kb": 65.1, "countries": ["GLOBAL"], "url": "2026-07-03-mount-sinai-hah-27dim.html"}, {"name": "2026-07-03-mgb-home-hospital-27dim", "file": "2026-07-03-mgb-home-hospital-27dim.html", "date": "2026-07-03", "size_kb": 60.9, "countries": ["GLOBAL"], "url": "2026-07-03-mgb-home-hospital-27dim.html"}, {"name": "2026-07-03-medically-home-27dim", "file": "2026-07-03-medically-home-27dim.html", "date": "2026-07-03", "size_kb": 103.6, "countries": ["GLOBAL"], "url": "2026-07-03-medically-home-27dim.html"}, {"name": "2026-07-03-mayo-clinic-hah-27dim", "file": "2026-07-03-mayo-clinic-hah-27dim.html", "date": "2026-07-03", "size_kb": 59.3, "countries": ["GLOBAL"], "url": "2026-07-03-mayo-clinic-hah-27dim.html"}, {"name": "2026-07-03-kaiser-permanente-hah-27dim", "file": "2026-07-03-kaiser-permanente-hah-27dim.html", "date": "2026-07-03", "size_kb": 42.6, "countries": ["GLOBAL"], "url": "2026-07-03-kaiser-permanente-hah-27dim.html"}, {"name": "2026-07-03-johns-hopkins-hah-27dim", "file": "2026-07-03-johns-hopkins-hah-27dim.html", "date": "2026-07-03", "size_kb": 40.2, "countries": ["GLOBAL"], "url": "2026-07-03-johns-hopkins-hah-27dim.html"}, {"name": "2026-07-03-ihomecare-investor-dashboard", "file": "2026-07-03-ihomecare-investor-dashboard.html", "date": "2026-07-03", "size_kb": 55.7, "countries": ["GLOBAL"], "url": "2026-07-03-ihomecare-investor-dashboard.html"}, {"name": "2026-07-03-honor-technology-27dim-deep-dive", "file": "2026-07-03-honor-technology-27dim-deep-dive.html", "date": "2026-07-03", "size_kb": 13.8, "countries": ["GLOBAL"], "url": "2026-07-03-honor-technology-27dim-deep-dive.html"}, {"name": "2026-07-03-home-instead-27dim-deep-dive", "file": "2026-07-03-home-instead-27dim-deep-dive.html", "date": "2026-07-03", "size_kb": 17.4, "countries": ["GLOBAL"], "url": "2026-07-03-home-instead-27dim-deep-dive.html"}, {"name": "2026-07-03-hah-workforce-economics", "file": "2026-07-03-hah-workforce-economics.html", "date": "2026-07-03", "size_kb": 45.0, "countries": ["GLOBAL"], "url": "2026-07-03-hah-workforce-economics.html"}, {"name": "2026-07-03-hah-tech-interoperability", "file": "2026-07-03-hah-tech-interoperability.html", "date": "2026-07-03", "size_kb": 54.1, "countries": ["GLOBAL"], "url": "2026-07-03-hah-tech-interoperability.html"}, {"name": "2026-07-03-hah-rpm-hardware-comparison", "file": "2026-07-03-hah-rpm-hardware-comparison.html", "date": "2026-07-03", "size_kb": 50.9, "countries": ["GLOBAL"], "url": "2026-07-03-hah-rpm-hardware-comparison.html"}, {"name": "2026-07-03-hah-quality-benchmarks", "file": "2026-07-03-hah-quality-benchmarks.html", "date": "2026-07-03", "size_kb": 69.6, "countries": ["GLOBAL"], "url": "2026-07-03-hah-quality-benchmarks.html"}, {"name": "2026-07-03-hah-policy-rss-briefing", "file": "2026-07-03-hah-policy-rss-briefing.html", "date": "2026-07-03", "size_kb": 24.0, "countries": ["GLOBAL"], "url": "2026-07-03-hah-policy-rss-briefing.html"}, {"name": "2026-07-03-hah-payment-matrix", "file": "2026-07-03-hah-payment-matrix.html", "date": "2026-07-03", "size_kb": 44.1, "countries": ["GLOBAL"], "url": "2026-07-03-hah-payment-matrix.html"}, {"name": "2026-07-03-hah-patient-journey-map", "file": "2026-07-03-hah-patient-journey-map.html", "date": "2026-07-03", "size_kb": 78.2, "countries": ["GLOBAL"], "url": "2026-07-03-hah-patient-journey-map.html"}, {"name": "2026-07-03-hah-medication-management", "file": "2026-07-03-hah-medication-management.html", "date": "2026-07-03", "size_kb": 63.4, "countries": ["GLOBAL"], "url": "2026-07-03-hah-medication-management.html"}, {"name": "2026-07-03-hah-failure-casebook", "file": "2026-07-03-hah-failure-casebook.html", "date": "2026-07-03", "size_kb": 45.6, "countries": ["GLOBAL"], "url": "2026-07-03-hah-failure-casebook.html"}, {"name": "2026-07-03-hah-clinical-protocols", "file": "2026-07-03-hah-clinical-protocols.html", "date": "2026-07-03", "size_kb": 53.8, "countries": ["GLOBAL"], "url": "2026-07-03-hah-clinical-protocols.html"}, {"name": "2026-07-03-hah-clinical-evidence-meta", "file": "2026-07-03-hah-clinical-evidence-meta.html", "date": "2026-07-03", "size_kb": 57.4, "countries": ["GLOBAL"], "url": "2026-07-03-hah-clinical-evidence-meta.html"}, {"name": "2026-07-03-france-had-analysis", "file": "2026-07-03-france-had-analysis.html", "date": "2026-07-03", "size_kb": 44.1, "countries": ["GLOBAL"], "url": "2026-07-03-france-had-analysis.html"}, {"name": "2026-07-03-doccla-27dim", "file": "2026-07-03-doccla-27dim.html", "date": "2026-07-03", "size_kb": 114.3, "countries": ["GLOBAL"], "url": "2026-07-03-doccla-27dim.html"}, {"name": "2026-07-03-current-health-23dim-deep-dive", "file": "2026-07-03-current-health-23dim-deep-dive.html", "date": "2026-07-03", "size_kb": 88.8, "countries": ["GLOBAL"], "url": "2026-07-03-current-health-23dim-deep-dive.html"}, {"name": "2026-07-03-cleveland-clinic-hah-27dim", "file": "2026-07-03-cleveland-clinic-hah-27dim.html", "date": "2026-07-03", "size_kb": 38.4, "countries": ["GLOBAL"], "url": "2026-07-03-cleveland-clinic-hah-27dim.html"}, {"name": "2026-07-03-china-hah-initial-scan", "file": "2026-07-03-china-hah-initial-scan.html", "date": "2026-07-03", "size_kb": 38.8, "countries": ["GLOBAL"], "url": "2026-07-03-china-hah-initial-scan.html"}, {"name": "2026-07-03-centerwell-home-health-23dim-deep-dive", "file": "2026-07-03-centerwell-home-health-23dim-deep-dive.html", "date": "2026-07-03", "size_kb": 14.2, "countries": ["GLOBAL"], "url": "2026-07-03-centerwell-home-health-23dim-deep-dive.html"}, {"name": "2026-07-03-cadence-23dim-deep-dive", "file": "2026-07-03-cadence-23dim-deep-dive.html", "date": "2026-07-03", "size_kb": 95.5, "countries": ["GLOBAL"], "url": "2026-07-03-cadence-23dim-deep-dive.html"}, {"name": "2026-07-03-buurtzorg-model-analysis", "file": "2026-07-03-buurtzorg-model-analysis.html", "date": "2026-07-03", "size_kb": 49.8, "countries": ["GLOBAL"], "url": "2026-07-03-buurtzorg-model-analysis.html"}, {"name": "2026-07-03-biofourmis-23dim-deep-dive", "file": "2026-07-03-biofourmis-23dim-deep-dive.html", "date": "2026-07-03", "size_kb": 81.3, "countries": ["GLOBAL"], "url": "2026-07-03-biofourmis-23dim-deep-dive.html"}, {"name": "2026-07-03-bayada-27dim-deep-dive", "file": "2026-07-03-bayada-27dim-deep-dive.html", "date": "2026-07-03", "size_kb": 15.6, "countries": ["GLOBAL"], "url": "2026-07-03-bayada-27dim-deep-dive.html"}, {"name": "2026-07-03-atrium-health-hah-27dim", "file": "2026-07-03-atrium-health-hah-27dim.html", "date": "2026-07-03", "size_kb": 65.7, "countries": ["GLOBAL"], "url": "2026-07-03-atrium-health-hah-27dim.html"}, {"name": "2026-07-03-amwell-23dim-deep-dive", "file": "2026-07-03-amwell-23dim-deep-dive.html", "date": "2026-07-03", "size_kb": 14.3, "countries": ["GLOBAL"], "url": "2026-07-03-amwell-23dim-deep-dive.html"}, {"name": "2026-07-03-amplar-health-deep-dive", "file": "2026-07-03-amplar-health-deep-dive.html", "date": "2026-07-03", "size_kb": 52.6, "countries": ["GLOBAL"], "url": "2026-07-03-amplar-health-deep-dive.html"}, {"name": "2026-07-03-alayacare-27dim-deep-dive", "file": "2026-07-03-alayacare-27dim-deep-dive.html", "date": "2026-07-03", "size_kb": 13.7, "countries": ["GLOBAL"], "url": "2026-07-03-alayacare-27dim-deep-dive.html"}, {"name": "2026-07-02-amedisys-23dim-deep-dive", "file": "2026-07-02-amedisys-23dim-deep-dive.html", "date": "2026-07-02", "size_kb": 17.0, "countries": ["GLOBAL"], "url": "2026-07-02-amedisys-23dim-deep-dive.html"}, {"name": "2026-06-30-zhejiang-11-cities-ltci-list", "file": "2026-06-30-zhejiang-11-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 14.2, "countries": ["GLOBAL"], "url": "2026-06-30-zhejiang-11-cities-ltci-list.html"}, {"name": "2026-06-30-yunnan-16-cities-ltci-list", "file": "2026-06-30-yunnan-16-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 19.4, "countries": ["GLOBAL"], "url": "2026-06-30-yunnan-16-cities-ltci-list.html"}, {"name": "2026-06-30-tianjin-ltci-list", "file": "2026-06-30-tianjin-ltci-list.html", "date": "2026-06-30", "size_kb": 13.1, "countries": ["GLOBAL"], "url": "2026-06-30-tianjin-ltci-list.html"}, {"name": "2026-06-30-sichuan-21-cities-ltci-list", "file": "2026-06-30-sichuan-21-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 20.8, "countries": ["GLOBAL"], "url": "2026-06-30-sichuan-21-cities-ltci-list.html"}, {"name": "2026-06-30-shanxi-11-cities-ltci-list", "file": "2026-06-30-shanxi-11-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 13.5, "countries": ["GLOBAL"], "url": "2026-06-30-shanxi-11-cities-ltci-list.html"}, {"name": "2026-06-30-shanghai-ltci-list", "file": "2026-06-30-shanghai-ltci-list.html", "date": "2026-06-30", "size_kb": 14.8, "countries": ["GLOBAL"], "url": "2026-06-30-shanghai-ltci-list.html"}, {"name": "2026-06-30-shandong-16-cities-ltci-list", "file": "2026-06-30-shandong-16-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 17.1, "countries": ["GLOBAL"], "url": "2026-06-30-shandong-16-cities-ltci-list.html"}, {"name": "2026-06-30-shaanxi-10-cities-ltci-list", "file": "2026-06-30-shaanxi-10-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 12.7, "countries": ["GLOBAL"], "url": "2026-06-30-shaanxi-10-cities-ltci-list.html"}, {"name": "2026-06-30-qinghai-8-cities-ltci-list", "file": "2026-06-30-qinghai-8-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 11.0, "countries": ["GLOBAL"], "url": "2026-06-30-qinghai-8-cities-ltci-list.html"}, {"name": "2026-06-30-ningxia-5-cities-ltci-list", "file": "2026-06-30-ningxia-5-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 9.8, "countries": ["GLOBAL"], "url": "2026-06-30-ningxia-5-cities-ltci-list.html"}, {"name": "2026-06-30-neimenggu-12-cities-ltci-list", "file": "2026-06-30-neimenggu-12-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 13.2, "countries": ["GLOBAL"], "url": "2026-06-30-neimenggu-12-cities-ltci-list.html"}, {"name": "2026-06-30-liaoning-14-cities-ltci-list", "file": "2026-06-30-liaoning-14-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 11.2, "countries": ["GLOBAL"], "url": "2026-06-30-liaoning-14-cities-ltci-list.html"}, {"name": "2026-06-30-jilin-9-cities-ltci-list", "file": "2026-06-30-jilin-9-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 10.5, "countries": ["GLOBAL"], "url": "2026-06-30-jilin-9-cities-ltci-list.html"}, {"name": "2026-06-30-jiangxi-11-cities-ltci-list", "file": "2026-06-30-jiangxi-11-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 19.5, "countries": ["GLOBAL"], "url": "2026-06-30-jiangxi-11-cities-ltci-list.html"}, {"name": "2026-06-30-jiangsu-13-cities-ltci-list", "file": "2026-06-30-jiangsu-13-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 15.5, "countries": ["GLOBAL"], "url": "2026-06-30-jiangsu-13-cities-ltci-list.html"}, {"name": "2026-06-30-hunan-14-cities-ltci-list", "file": "2026-06-30-hunan-14-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 19.6, "countries": ["GLOBAL"], "url": "2026-06-30-hunan-14-cities-ltci-list.html"}, {"name": "2026-06-30-hubei-13-cities-ltci-list", "file": "2026-06-30-hubei-13-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 15.1, "countries": ["GLOBAL"], "url": "2026-06-30-hubei-13-cities-ltci-list.html"}, {"name": "2026-06-30-henan-18-cities-ltci-list", "file": "2026-06-30-henan-18-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 14.2, "countries": ["GLOBAL"], "url": "2026-06-30-henan-18-cities-ltci-list.html"}, {"name": "2026-06-30-heilongjiang-13-cities-ltci-list", "file": "2026-06-30-heilongjiang-13-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 12.9, "countries": ["GLOBAL"], "url": "2026-06-30-heilongjiang-13-cities-ltci-list.html"}, {"name": "2026-06-30-hebei-14-cities-ltci-list", "file": "2026-06-30-hebei-14-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 15.7, "countries": ["GLOBAL"], "url": "2026-06-30-hebei-14-cities-ltci-list.html"}, {"name": "2026-06-30-hainan-19-cities-ltci-list", "file": "2026-06-30-hainan-19-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 13.1, "countries": ["GLOBAL"], "url": "2026-06-30-hainan-19-cities-ltci-list.html"}, {"name": "2026-06-30-hah-policy-alert", "file": "2026-06-30-hah-policy-alert.html", "date": "2026-06-30", "size_kb": 24.7, "countries": ["GLOBAL"], "url": "2026-06-30-hah-policy-alert.html"}, {"name": "2026-06-30-guizhou-9-cities-ltci-list", "file": "2026-06-30-guizhou-9-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 16.0, "countries": ["GLOBAL"], "url": "2026-06-30-guizhou-9-cities-ltci-list.html"}, {"name": "2026-06-30-guangxi-14-cities-ltci-list", "file": "2026-06-30-guangxi-14-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 17.6, "countries": ["GLOBAL"], "url": "2026-06-30-guangxi-14-cities-ltci-list.html"}, {"name": "2026-06-30-guangdong-ltci-deepdive", "file": "2026-06-30-guangdong-ltci-deepdive.html", "date": "2026-06-30", "size_kb": 23.5, "countries": ["GLOBAL"], "url": "2026-06-30-guangdong-ltci-deepdive.html"}, {"name": "2026-06-30-guangdong-21-cities-table", "file": "2026-06-30-guangdong-21-cities-table.html", "date": "2026-06-30", "size_kb": 18.6, "countries": ["GLOBAL"], "url": "2026-06-30-guangdong-21-cities-table.html"}, {"name": "2026-06-30-guangdong-21-cities-policy-list", "file": "2026-06-30-guangdong-21-cities-policy-list.html", "date": "2026-06-30", "size_kb": 20.0, "countries": ["GLOBAL"], "url": "2026-06-30-guangdong-21-cities-policy-list.html"}, {"name": "2026-06-30-guangdong-21-cities-final", "file": "2026-06-30-guangdong-21-cities-final.html", "date": "2026-06-30", "size_kb": 18.2, "countries": ["GLOBAL"], "url": "2026-06-30-guangdong-21-cities-final.html"}, {"name": "2026-06-30-gansu-14-cities-ltci-list", "file": "2026-06-30-gansu-14-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 11.4, "countries": ["GLOBAL"], "url": "2026-06-30-gansu-14-cities-ltci-list.html"}, {"name": "2026-06-30-fujian-9-cities-ltci-list", "file": "2026-06-30-fujian-9-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 19.4, "countries": ["GLOBAL"], "url": "2026-06-30-fujian-9-cities-ltci-list.html"}, {"name": "2026-06-30-chongqing-ltci-list", "file": "2026-06-30-chongqing-ltci-list.html", "date": "2026-06-30", "size_kb": 10.9, "countries": ["GLOBAL"], "url": "2026-06-30-chongqing-ltci-list.html"}, {"name": "2026-06-30-china-ltci-province-matrix", "file": "2026-06-30-china-ltci-province-matrix.html", "date": "2026-06-30", "size_kb": 20.1, "countries": ["GLOBAL"], "url": "2026-06-30-china-ltci-province-matrix.html"}, {"name": "2026-06-30-china-ltci-full-city-matrix", "file": "2026-06-30-china-ltci-full-city-matrix.html", "date": "2026-06-30", "size_kb": 40.3, "countries": ["GLOBAL"], "url": "2026-06-30-china-ltci-full-city-matrix.html"}, {"name": "2026-06-30-beijing-ltci-list", "file": "2026-06-30-beijing-ltci-list.html", "date": "2026-06-30", "size_kb": 10.7, "countries": ["GLOBAL"], "url": "2026-06-30-beijing-ltci-list.html"}, {"name": "2026-06-30-anhui-16-cities-ltci-list", "file": "2026-06-30-anhui-16-cities-ltci-list.html", "date": "2026-06-30", "size_kb": 11.3, "countries": ["GLOBAL"], "url": "2026-06-30-anhui-16-cities-ltci-list.html"}, {"name": "2026-06-29-hah-policy-alert", "file": "2026-06-29-hah-policy-alert.html", "date": "2026-06-29", "size_kb": 24.4, "countries": ["GLOBAL"], "url": "2026-06-29-hah-policy-alert.html"}, {"name": "2026-06-28-hk-hah-strategic-planning-p2", "file": "2026-06-28-hk-hah-strategic-planning-p2.html", "date": "2026-06-28", "size_kb": 59.0, "countries": ["HK"], "url": "2026-06-28-hk-hah-strategic-planning-p2.html"}, {"name": "2026-06-28-hk-hah-strategic-planning-p1", "file": "2026-06-28-hk-hah-strategic-planning-p1.html", "date": "2026-06-28", "size_kb": 59.7, "countries": ["HK"], "url": "2026-06-28-hk-hah-strategic-planning-p1.html"}, {"name": "2026-06-28-hk-hah-strategic-planning-p0", "file": "2026-06-28-hk-hah-strategic-planning-p0.html", "date": "2026-06-28", "size_kb": 55.1, "countries": ["HK"], "url": "2026-06-28-hk-hah-strategic-planning-p0.html"}, {"name": "2026-06-28-hk-hah-strategic-planning-p0-p1-merged", "file": "2026-06-28-hk-hah-strategic-planning-p0-p1-merged.html", "date": "2026-06-28", "size_kb": 107.0, "countries": ["HK"], "url": "2026-06-28-hk-hah-strategic-planning-p0-p1-merged.html"}, {"name": "2026-06-28-hk-hah-strategic-planning-full", "file": "2026-06-28-hk-hah-strategic-planning-full.html", "date": "2026-06-28", "size_kb": 158.0, "countries": ["HK"], "url": "2026-06-28-hk-hah-strategic-planning-full.html"}, {"name": "2026-06-28-dispatchhealth-deep-dive", "file": "2026-06-28-dispatchhealth-deep-dive.html", "date": "2026-06-28", "size_kb": 18.6, "countries": ["GLOBAL"], "url": "2026-06-28-dispatchhealth-deep-dive.html"}, {"name": "2026-06-28-contessa-health-deep-dive", "file": "2026-06-28-contessa-health-deep-dive.html", "date": "2026-06-28", "size_kb": 16.2, "countries": ["GLOBAL"], "url": "2026-06-28-contessa-health-deep-dive.html"}];
-const list = document.getElementById('list');
-const stats = document.getElementById('stats');
-const search = document.getElementById('search');
-const country = document.getElementById('country');
-const sort = document.getElementById('sort');
-
-function render(filtered) {
-    list.innerHTML = filtered.map(r => `
-<div class="card">
-<div class="info">
-<div class="name">${r.name}</div>
-<div class="meta">${r.date} · ${r.size_kb}KB · ${r.countries.map(c => `<span class="tag">${c}</span>`).join(' ')}</div>
-</div>
-<a href="${r.url}" target="_blank">查看报告 →</a>
-</div>`).join('');
-    stats.textContent = `${filtered.length} 份报告`;
-}
-
 function filter() {
-    let filtered = [...reports];
-    const q = search.value.toLowerCase();
-    const c = country.value;
-    const s = sort.value;
-
-    if (q) filtered = filtered.filter(r => r.name.toLowerCase().includes(q));
-    if (c) filtered = filtered.filter(r => r.countries.includes(c));
-
-    if (s === 'name') filtered.sort((a,b) => a.name.localeCompare(b.name));
-    else if (s === 'size') filtered.sort((a,b) => b.size_kb - a.size_kb);
-    else filtered.sort((a,b) => b.date.localeCompare(a.date));
-
-    render(filtered);
+  const q = document.getElementById('search').value.toLowerCase();
+  const country = document.getElementById('countryFilter').value;
+  const type = document.getElementById('typeFilter').value;
+  document.querySelectorAll('.card').forEach(c => {
+    const text = c.textContent.toLowerCase();
+    const cCountry = c.dataset.countries || '';
+    const cType = c.dataset.type || '';
+    const matchSearch = !q || text.includes(q);
+    const matchCountry = !country || cCountry.includes(country);
+    const matchType = !type || cType.includes(type);
+    c.classList.toggle('hidden', !(matchSearch && matchCountry && matchType));
+  });
 }
-
-render(reports);
 </script>
 </body>
 </html>
