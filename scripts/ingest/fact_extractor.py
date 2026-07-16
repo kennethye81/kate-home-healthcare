@@ -62,6 +62,29 @@ METRICS = [
     (r'(?:增长|增速|growth|CAGR)[：:＝=]?\s*([\d,.]+)\s*%', 'growth_rate'),
     # 医院/网点数
     (r'(?:网点|医院|诊所|网点数|locations|sites|branches)[：:＝=]?\s*([\d,]+)\s*(个|家)?', 'locations'),
+    # === 新增：支付 ===
+    (r'(?:Sachleistung|Pflegegeld|介護給付|訪問介護|訪問看護|CCSV|社区券)[：:＝=]?\s*[\$€¥]?\s*([\d,]+\.?\d*)\s*(元|円|€|USD|EUR|JPY|HKD|/月|/次|/日)?', 'payment_detail'),
+    (r'(?:保险料|保険料|premium|contribution.rate)[：:＝=]?\s*([\d,.]+)\s*%', 'premium_rate'),
+    (r'[\$€¥]([\d,]+\.?\d*)\s*(万|亿|M|B|K)?\s*(?:/月|/次|per.month)', 'payment_amount_currency'),
+    # === 新增：临床 ===
+    (r'(?:患者|patient|受診|利用者)[数数量]?[：:＝=]?\s*([\d,]+\.?\d*)\s*(万|人|M|K)?', 'patient_count'),
+    (r'(?:bed.day|住院日|病床日|在院日数)[：:＝=]?\s*([\d,]+\.?\d*)\s*(日|天)?', 'bed_days'),
+    (r'(?:再入院率|readmission|再入院)[：:＝=]?\s*([\d,.]+)\s*%', 'readmission_rate'),
+    (r'(?:满意度|NPS|satisfaction)[：:＝=]?\s*([\d,.]+)\s*%?', 'satisfaction'),
+    (r'(?:死亡率|mortality)[：:＝=]?\s*([\d,.]+)\s*%', 'mortality_rate'),
+    (r'(?:急诊|ER|emergency)[：:＝=]?\s*([\d,.]+)\s*%?(?:减少|降低|削減)', 'er_reduction'),
+    # === 新增：劳动力 ===
+    (r'(?:护士|看護師|nurse|护理员|介護士)[数数量]?[：:＝=]?\s*([\d,]+\.?\d*)\s*(万|人|名)?', 'nurse_count'),
+    (r'(?:平均工资|平均給与|薪资|salary)[：:＝=]?\s*[\$€¥]?\s*([\d,]+\.?\d*)\s*(万|元|円|USD|/月|/年)?', 'avg_salary'),
+    (r'(?:65[＋+]|老龄化|高齢化率|aging.rate)[：:＝=]?\s*([\d,.]+)\s*%', 'aging_rate'),
+    # === 新增：政策 ===
+    (r'(?:GDP占比|GDP.share|対GDP)[：:＝=]?\s*([\d,.]+)\s*%', 'gdp_share'),
+    (r'(?:预算|予算|budget)[：:＝=]?\s*[\$€¥]?\s*([\d,]+\.?\d*)\s*(万|亿|M|B|K|円)?', 'budget'),
+    (r'(?:施行|実施|enacted|effective)[：:＝=]?\s*(\d{4})', 'policy_year'),
+    (r'(?:住院率|入院率|hospitalization.rate)[：:＝=]?\s*([\d,.]+)\s*%', 'hospitalization_rate'),
+    (r'(?:床位|病床|beds)[数数量]?[：:＝=]?\s*([\d,]+\.?\d*)\s*(万|张|床)?', 'bed_count'),
+    # === 新增：表格行（| 指标名 | 数值 | 的格式）===
+    (r'^\|.*?(?:支付|給付|保险费率|介護報酬|Pflegesatz).*?\|.*?([\d,]+\.?\d*).*?\|', 'table_payment'),
 ]
 
 def extract_from_report(filepath):
@@ -74,7 +97,7 @@ def extract_from_report(filepath):
     
     facts = []
     for pattern, metric_type in METRICS:
-        for m in re.finditer(pattern, text, re.IGNORECASE):
+        for m in re.finditer(pattern, text, re.IGNORECASE | re.MULTILINE):
             raw_value = m.group(0).strip()
             # 清理
             raw_value = re.sub(r'[\*\_`]', '', raw_value)
