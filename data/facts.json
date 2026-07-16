@@ -1,6 +1,43 @@
 {
-  "_description": "Kate 知识库事实库。每条事实标注来源报告、数据点、更新时间。",
+  "_description": "Kate 知识库 Ground Truth 数据库",
   "_version": "4.0.0",
-  "_created": "2026-07-15",
-  "facts": []
+  "_updated": "2026-07-15",
+  "facts": [
+    {
+      "report": "2026-07-05-deutsche-fachpflege-de-27dim.md",
+      "type": "revenue",
+      "value": "收入：€9,000",
+      "source_line": 590
+    },
+    {
+      "report": "2026-07-05-deutsche-fachpflege-de-27dim.md",
+      "type": "revenue",
+      "value": "收入：€5,000",
+      "source_line": 622
+    },
+    {
+      "report": "2026-07-05-deutsche-fachpflege-de-27dim.md",
+      "type": "revenue",
+      "value": "收入：€12,000",
+      "source_line": 844
+    },
+    {
+      "report": "2026-07-05-deutsche-fachpflege-de-27dim.md",
+      "type": "revenue",
+      "value": "收入：€5,824",
+      "source_line": 876
+    },
+    {
+      "report": "2026-07-05-deutsche-fachpflege-de-27dim.md",
+      "type": "revenue",
+      "value": "收入：€7,000",
+      "source_line": 901
+    },
+    {
+      "report": "2026-07-05-deutsche-fachpflege-de-27dim.md",
+      "type": "revenue",
+      "value": "收入：€56,000",
+      "source_line": 902
+    }
+  ]
 }
