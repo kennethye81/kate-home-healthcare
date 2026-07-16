@@ -185,6 +185,14 @@
   },
   "active": "45e9e10576ae0d86",
   "lastOpenFiles": [
+    "pages/compare/timeline.md",
+    "pages/compare/payment.md",
+    "pages/compare/market.md",
+    "pages/compare/companies.md",
+    "pages/compare",
+    "scripts/publish/generate_compare.py",
+    "scripts/publish/generate_home.py",
+    "scripts/ingest/fact_extractor.py",
     "data/top10_reports.json",
     "pages/global/新加坡/00-概览.md",
     "Home.md",
@@ -210,16 +218,8 @@
     "pages/global/英国/03-头部机构/Luscii.md",
     "pages/global/英国/03-头部机构/Lottie.md",
     "pages/global/英国/03-头部机构/Isansys.md",
-    "pages/global/英国/03-头部机构/Inhealthcare.md",
-    "pages/global/英国/03-头部机构/Huma.md",
-    "pages/global/英国/03-头部机构/Feebris.md",
     "pages/global/韩国/03-头部机构",
     "pages/global/荷兰/03-头部机构",
-    "pages/global/英国/03-头部机构",
-    "pages/global/美国/03-头部机构",
-    "pages/global/瑞典/03-头部机构",
-    "pages/global/澳大利亚/03-头部机构",
-    "pages/global/法国/03-头部机构",
-    "pages/global/日本/03-头部机构"
+    "pages/global/英国/03-头部机构"
   ]
 }
