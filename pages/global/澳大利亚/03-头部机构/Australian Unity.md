@@ -1,9 +1,10 @@
 ---
-tags: [澳大利亚, 公司, 居家护理, 机构养老, 互助制, #1市场份额]
-created: 2026-07-07
-updated: 2026-07-11
-aliases: [Australian Unity, myHomecare]
-parent: "[[Countries/澳大利亚/00-概览]]"
+title: "Australian Unity"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # Australian Unity
@@ -16,4 +17,4 @@ parent: "[[Countries/澳大利亚/00-概览]]"
 - 机构养老: $253.3M segment | 入住率 96.6%
 - PHI保单: 158,431 | FUMAA: $15.2B
 
-📊 完整报告: [[reports/2026-07-11-australian-unity-27dim.md|27维度深度尽调]]
+📊 完整报告: reports/国家/澳大利亚/2026-07-11-australian-unity-27dim.md|27维度深度尽调

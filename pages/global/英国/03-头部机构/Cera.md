@@ -1,9 +1,11 @@
 ---
-tags: [机构, 英国, Home Healthcare, AI, 全栈服务, 独角兽]
-created: 2026-07-07
-aliases: [Cera, Cera Care, 英国最大HealthTech]
+title: "Cera"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
-# Cera — 英国（欧洲）最大 HealthTech 公司
 
 > **赛道**: 全栈居家医疗+AI | **模式**: B2G (NHS+地方政府)+B2C 自费
 
@@ -14,3 +16,8 @@ aliases: [Cera, Cera Care, 英国最大HealthTech]
 - 盈利: EBITDA+/FCF+ | 融资: ~$571M | AI: 300B+数据点 | CQC: Good
 
 **对iHomeCare:** 🟢🟢🟢 最高——0→$500M完整剧本+政府合同锁定+AI运营提效+数据飞轮+技术许可轻国际化
+
+
+reports/国家/英国/2026-07-07-cera-27dim-deep-dive.md|英国概览
+
+../00-概览|← 英国概览

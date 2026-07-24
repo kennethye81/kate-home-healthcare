@@ -1,8 +1,10 @@
 ---
-tags: [新加坡, HaH, 居家医疗, SGH, SingHealth, 头部机构]
-created: 2026-07-05
-updated: 2026-07-05
-aliases: [SGH@Home, Singapore General Hospital@Home]
+title: "SGH@Home"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # SGH@Home
@@ -17,4 +19,9 @@ aliases: [SGH@Home, Singapore General Hospital@Home]
 - AI 分诊 Dr HomeCura（A*STAR 联合开发）
 - SGH：新加坡最古老（1821）最大旗舰医院
 
-**完整报告**：[[reports/2026-07-03-sgh-at-home-singapore-27dim.md|SGH@Home 27维度尽调报告]]
+**完整报告**：reports/国家/新加坡/2026-07-03-sgh-at-home-singapore-27dim.md|SGH@Home 27维度尽调报告
+
+
+../00-概览|← 新加坡概览
+
+../00-概览|← 新加坡概览

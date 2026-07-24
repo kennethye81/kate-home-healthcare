@@ -1,9 +1,11 @@
 ---
-tags: [机构, 英国, RPM, 远程监测, NHS, Virtual Ward]
-created: 2026-07-07
-aliases: [Clinitouch, Spirit Health]
+title: "Clinitouch"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
-# Clinitouch (Spirit Health) — 英国最早 RPM 技术平台
 
 > **赛道**: 远程患者监测 (RPM) 技术平台 | **模式**: B2G (NHS)+B2B (全球合作伙伴)
 
@@ -20,3 +22,8 @@ aliases: [Clinitouch, Spirit Health]
 
 ## 对 iHomeCare 的参考价值
 - 🟡 中等——15年NHS持久力+轻模式可借鉴（纯平台护城河浅）
+
+
+reports/国家/英国/2026-07-07-clinitouch-27dim-deep-dive.md|英国概览
+
+../00-概览|← 英国概览

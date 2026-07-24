@@ -1,9 +1,10 @@
 ---
-tags: [澳大利亚, 公司, HaH, HITH, NFP, 天主教, 医院]
-created: 2026-07-07
-updated: 2026-07-07
-aliases: [Calvary Health Care, Little Company of Mary Health Care, Calvary]
-parent: [[Countries/澳大利亚/00-概览]]
+title: "Calvary Health Care"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # Calvary Health Care
@@ -18,5 +19,5 @@ parent: [[Countries/澳大利亚/00-概览]]
 - 员工：~12,000+ |
 - CEO：Martin Bowles (National CEO) |
 
-**数据来源：** [[reports/2026-07-11-calvary-health-care-27dim.md|Calvary Health Care 27维度深度尽调|完整 27 维度报告]]
-相关：[[../00-概览|澳大利亚居家医疗概览]]
+**数据来源：** reports/国家/澳大利亚/2026-07-11-calvary-health-care-27dim.md|Calvary Health Care 27维度深度尽调|完整 27 维度报告
+相关：../00-概览|澳大利亚居家医疗概览

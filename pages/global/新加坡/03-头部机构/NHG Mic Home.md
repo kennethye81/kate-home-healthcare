@@ -1,8 +1,10 @@
 ---
-tags: [新加坡, HaH, 居家医疗, NHG, 头部机构]
-created: 2026-07-05
-updated: 2026-07-05
-aliases: [NHG Health MIC@Home, NHG MIC@Home, Yishun Health Medical Home]
+title: "NHG Mic Home"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # NHG Mic Home
@@ -17,4 +19,7 @@ aliases: [NHG Health MIC@Home, NHG MIC@Home, Yishun Health Medical Home]
 - 2026.8.21 主办全国 H@H Scientific Symposium
 - 所属 NHG 覆盖中部+北部约 150 万人口
 
-**完整报告**：[[reports/2026-07-03-nhg-health-mic-home-singapore-27dim.md|NHG MIC@Home 27维度尽调报告]]
+**完整报告**：reports/国家/新加坡/2026-07-03-nhg-health-mic-home-singapore-27dim.md|NHG MIC@Home 27维度尽调报告
+
+
+../00-概览|← 新加坡概览

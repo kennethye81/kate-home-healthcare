@@ -1,9 +1,10 @@
 ---
-tags: [澳大利亚, 公司, ASX, Home Care, Residential Care, For-profit]
-created: 2026-07-07
-updated: 2026-07-07
-aliases: [Regis Healthcare, ASX:REG, Regis Aged Care]
-parent: [[Countries/澳大利亚/00-概览]]
+title: "Regis Healthcare"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # Regis Healthcare
@@ -19,4 +20,4 @@ parent: [[Countries/澳大利亚/00-概览]]
 - 员工：~9,000+ |
 - CEO：Linda Mellors (CEO & Managing Director) |
 
-**数据来源：** [[reports/2026-07-11-regis-healthcare-27dim.md|Regis Healthcare 27维度深度尽调|完整 27 维度报告]]
+**数据来源：** reports/国家/澳大利亚/2026-07-11-regis-healthcare-27dim.md|Regis Healthcare 27维度深度尽调|完整 27 维度报告

@@ -1,9 +1,11 @@
 ---
-tags: [机构, 英国, RPM, 可穿戴, 远程监测]
-created: 2026-07-07
-aliases: [Isansys Lifecare, Isansys]
+title: "Isansys"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
-# Isansys Lifecare — 英国可穿戴监测
 
 > **赛道**: 可穿戴传感器 + 远程监测平台 | **模式**: B2B (NHS+全球)
 
@@ -18,4 +20,7 @@ aliases: [Isansys Lifecare, Isansys]
 ## 对 iHomeCare 的参考价值
 - 🟡 中等 —— 自研硬件路径 vs 集成第三方设备，可作为设备策略参照
 
-> 📄 详见: [[reports/2026-07-07-isansys-27dim-deep-dive.md|27维深度报告 ✅]]
+> 📄 详见: reports/国家/英国/2026-07-07-isansys-27dim-deep-dive.md|27维深度报告 ✅
+
+
+../00-概览|← 英国概览

@@ -1,9 +1,11 @@
 ---
-tags: [机构, 英国, Virtual Ward, IoT, 远程监测, NHS]
-created: 2026-07-07
-aliases: [Whzan, Solcom, Blue Box]
+title: "Whzan"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
-# Whzan (Solcom) — NHS 虚拟病房 IoT 硬件平台
 
 > **赛道**: 虚拟病房 IoT 硬件+软件技术平台 | **模式**: B2G (NHS)
 
@@ -20,3 +22,8 @@ aliases: [Whzan, Solcom, Blue Box]
 
 ## 对 iHomeCare 的参考价值
 - 🟡 中等——即开即用设备+非临床赋能可借鉴（纯硬件护城河浅）
+
+
+reports/国家/英国/2026-07-07-whzan-27dim-deep-dive.md|英国概览
+
+../00-概览|← 英国概览

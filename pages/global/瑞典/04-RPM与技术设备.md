@@ -1,167 +1,164 @@
 ---
-tags: [国家, 瑞典, RPM, 技术设备]
-created: 2026-07-04
-updated: 2026-07-05
-aliases: [瑞典 RPM, 瑞典 远程监测]
+type: entity
+tags: [sweden, tier-3, technology, RPM, eHealth]
+created: 2026-07-24
+updated: 2026-07-24
+aliases: [Sweden RPM, 瑞典远程监测, välfärdsteknik]
 ---
 
-# 瑞典 — RPM 与技术设备
+# 🇸🇪 瑞典 RPM 与福利技术（Välfärdsteknik）
 
-## 一、瑞典远程医疗市场概况
+## 一、瑞典 eHealth 战略框架
 
-瑞典是全球数字化程度最高的医疗市场之一。2025 年瑞典的 eHealth 战略（Vision e-hälsa 2025）已基本实现预期目标，远程患者监测（RPM）和虚拟病房进入大规模扩张阶段。[^1][^2]
+### 1.1 Vision eHealth 2025
 
-### 1.1 市场规模
+瑞典国家数字健康战略 **Vision e-hälsa 2025（2025年电子健康愿景）** 由政府和 SKR（瑞典市政和区域协会）于 2016 年联合制定，目标是：
 
-| 指标 | 数据 | 年份/来源 |
-|------|------|----------|
-| 医疗卫生 GDP 占比 | **11.2%**（约 7,190 亿 SEK） | 2024 (SCB) |
-| RPM/虚拟病房市场 | 早期阶段（约 0.01–0.04% 总支出），**年增长率 >20%** | 2024–25 估算 |
-| 远程监测设备渗透率（居家护理） | 约 60–70% 接受者使用基本警报系统 | 2024 (Socialstyrelsen) |
-| 1177.se 年访问量 | 近 **1,500 万次** | 2024–25 |
-| BankID 数字身份覆盖率 | >95% 成年人口 | 2025 |
+> "到 2025 年，瑞典将成为世界上最好的利用数字化和 eHealth 机会的国家，使人们更容易实现良好、平等、高效的健康和福利，并发展和加强自身的健康资源。"
 
-### 1.2 增长驱动因素
+**三大行动领域**：
+1. **个体参与**（Individen som medskapare）——公民可访问并参与管理自己的健康数据
+2. **知识驱动的照护**（Kunskapsbaserad vård och omsorg）——基于数据和证据
+3. **标准化与互操作性**——全国统一标准，打破信息系统孤岛
 
-1. **人口老龄化**：≥80 岁人口预计从 2025 年约 58 万增至 2035 年约 80 万 [^3]
-2. **医院床位紧张**：瑞典每 10 万人口仅约 **190 张病床**（欧盟最低之一），倒逼服务居家化 [^4]
-3. **数字基础设施成熟**：全国电子健康记录（EHR）、1177.se 门户、BankID 数字身份全覆盖
-4. **政治意愿**：SKR（瑞典市县联合会）将居家医疗列为首要战略方向 [^5]
-5. **成本压力**：住院日成本约 10,000–15,000 SEK vs 居家医疗约 3,000–5,000 SEK/天 [^6]
+（来源：OECD Digital Public Policy; DigitalHealthUptake.eu; Swedish eHealth Agency）
 
----
+### 1.2 实施进展与后续规划
 
-## 二、Välfärdsteknik（福祉技术）政策框架
+- 截至 2025 年，该战略在诸多指标上取得了进展，但区域间差异大
+- **2025 年后持续规划**：虽然名称指向 2025，数字化工作持续进行，新的长期战略正在制定中
+- **Swedish eHealth Agency（E-hälsomyndigheten）** 负责推进国家级 eHealth 基础设施建设
 
-瑞典的 **Välfärdsteknik**（福祉技术）政策框架是国家应对老龄化社会的核心战略之一，由 Socialstyrelsen 和 SKR 联合推动。[^5]
+## 二、福利技术（Välfärdsteknik）——核心应用
 
-### 2.1 政策沿革
+### 2.1 概念与定义
 
-| 年份 | 里程碑 |
-|------|--------|
-| **2006** | 首次将 IT 在医疗中的应用写入国家卫生政策 |
-| **2016** | Vision e-hälsa 2025 发布——政府与 SKR 联合制定 |
-| **2017** | 成立 E-hälsomyndigheten（电子健康局，国家 eHealth 协调机构） |
-| **2018** | 协调出院法实施，推动出院后居家数字化监测 |
-| **2020** | COVID-19 大幅加速远程医疗采纳 |
-| **2022** | 卫生和社会事务监察局（IVO）发布居家数字监测安全指南 |
-| **2025** | Vision e-hälsa 2025 基本完成，进入下一阶段规划 |
+**Välfärdsteknik（福利技术）** 是瑞典老年照护数字化的核心概念，指"在照护中使用的、旨在维持或提高安全性、活动能力、参与度或独立性的数字技术"。它涵盖从简单的安全警报到先进的远程监测系统。
 
-### 2.2 Välfärdsteknik 的核心技术类别
+### 2.2 数字安全警报（Trygghetslarm / Digitala trygghetslarm）
 
-| 技术类别 | 瑞典语 | 应用场景 | 渗透率 |
-|---------|--------|---------|--------|
-| 社交警报/应急呼叫系统 | trygghetslarm | 跌倒检测、日常求助 | 高（约 60–70%） |
-| 远程药物分配器 | påminnelsedispenser | 多重用药患者用药管理 | 中 |
-| 智能环境传感器 | sensorteknik (rörelse, dörr, säng) | 活动监测、认知障碍预警 | 中度增长 |
-| 视频访视系统 | videobesök | 远程护理、GP 视频问诊 | 高增长（COVID 后加速） |
-| 可穿戴监测设备 | bärbar teknik för vitalparametrar | 心率、血压、血氧、体温 | 早期阶段 |
-| 远程居家透析监测 | Peritonealdialys med fjärrövervakning | 腹膜透析患者管理 | 特定人群 |
-| 跌倒预防可穿戴 | fallpreventionsenheter | 高风险老年人警示 | 早期阶段 |
+**最广泛部署的福利技术**：
 
-### 2.3 数字健康基础设施
+- **覆盖率**：约 **85%** 的瑞典市政部署了数字安全警报系统（来源：Socialstyrelsen, 2024）
+- **功能**：老年人佩戴手腕/项链式按钮，按下后呼叫照护人员
+- **数字化升级**：从模拟电话线到 IP 数字系统，可实现更丰富的功能（跌倒检测、GPS 定位）
+- **GPS 个人警报（GPS-larm）**：2024年报告显示越来越多市政提供 GPS 功能，使认知症老年人可安全地在社区中活动，触发警报时照护人员能精准定位
+- **月费**：大多数市政收取 SEK 200-400/月
 
-**1177.se 国家健康门户**：
-- 瑞典最广泛使用的健康平台（年访问量近 1,500 万次）
-- 功能：在线预约、处方续方、健康信息、电子病历查询、视频问诊
-- 所有居民可通过 **BankID** 登录访问个人电子健康记录 [^2]
+（来源：Socialstyrelsen 2020, 2024; Nordic Welfare Centre 2024; PMC 2024）
 
-**全国电子健康记录（EHR）互操作性**：
-- **Nationell Patientöversikt (NPÖ)**：允许跨 Region 医疗卫生人员查看患者信息
-- 瑞典在 EHR 互操作性方面走在欧盟前列
-- 但 Kommun/Region 间的数据共享仍是瓶颈
+### 2.3 远程监测（Remote Patient Monitoring / Distansmonitorering）
 
-**国家质量登记系统**：
-- 全球最完备体系之一，居家医疗领域包括：Svenska Palliativregistret（安宁疗护）、Senior Alert（老年预防）、Swedevox（氧疗）、Riksstroke（卒中）等
-- 这些登记系统与 RPM 设备数据对接，形成闭环质量改进 [^7]
+远程监测在瑞典老年照护中处于 **快速增长阶段**：
 
----
+- **适用人群**：慢性病患者（心力衰竭、COPD、糖尿病）、术后出院患者、认知症老人
+- **监测参数**：生命体征（血压、心率、血氧）、体重、血糖、用药依从性
+- **模式**：护士远程审查数据 + 必要时上门随访
+- **区域差异**：斯德哥尔摩、哥德堡等大城市进展较快，偏远市政较慢
 
-## 三、主要 RPM 设备与技术供应商
+### 2.4 电子居家照护（eHomecare / e-hemtjänst）
 
-### 3.1 公共部门主导
+**代表性技术**：
 
-| 提供者 | Region | 居家医疗/RPM 项目 |
-|--------|--------|------------------|
-| **Karolinska 大学医院** | Stockholm | Karolinska@home（数字+实体混合虚拟病房，2024 启动） |
-| **Sahlgrenska 大学医院** | Västra Götaland | 规模较大的 ASIH 和居家监测项目 |
-| **Skåne 大学医院** | Skåne | 南部最大居家医疗服务提供者 |
-| **Norrlands 大学医院** | Västerbotten | 北部偏远地区远程居家医疗创新方案 |
+- **摄像头夜间巡查（Tillsyn via kamera / nattkamera）**：替代夜间人工上门巡查，市政照护人员通过摄像头远程查看老人是否安好。减少夜间扰眠、节省人力
+- **Giraffe 移动视频电话**：专门的视频通话设备，操作极简（一键接听），使老年人可与照护人员/家属视频连线
+- **用药机器人（Läkemedelsrobot）**：自动分药和提醒设备（如 Medido, Evondos）
 
-### 3.2 主要私营供应商
+（来源：AccessH.org 2024: "How Technology is Revolutionizing Homecare in Sweden"）
 
-| 供应商 | 业务领域 | 市场地位 |
-|--------|---------|---------|
-| **Capio**（Ramsay Santé 旗下） | 居家医护、ASIH 服务 | 在多个 Region 运营 |
-| **Aleris** | 居家医疗、安宁疗护 | 中大型私营提供者 |
-| **Attendo** | 养老和居家护理 | 北欧最大养老/居家护理集团之一（主要在 Kommun 层面） |
-| **Cura** | 安宁疗护、高级居家医疗 | 专业化私营提供者 |
-| **Humana** | 个人援助、居家护理 | 多 Region 运营 |
-| **Vardaga** | 居家护理、特别住宅 | 聚焦老年人服务 |
+### 2.5 认知症照护技术
 
-### 3.3 提供者结构
+- **GPS 定位设备**：帮助认知症老人安全地在社区行走
+- **数字日历和提醒设备**：辅助日常生活安排
+- **社交机器人**（如海豹机器人 Paro）在一些市政使用
+- **2024 年研究**指出，认知症人士获取福利技术信息的渠道和可获得性仍存在问题（来源：Tsertsidis et al. 2025, Disability and Rehabilitation: Assistive Technology）
 
-| 类型 | 占比（估） | 特点 |
-|------|-----------|------|
-| Region 自营 | ~70–75% | 通过医院 ASIH 团队直接提供服务 |
-| 私营（签约/受委托） | ~20–25% | 通过 LOV（自由选择制度）或传统采购签约 |
-| 私营（纯自费补充） | <5% | 主要是补充性私人医疗服务 |
+## 三、国家数字基础设施
 
-> 初级保健中私营比例约 35–40%（大城市如斯德哥尔摩可达 60%），但居家医疗/ASIH 中的私营比例较低。急性期 HaH 由于需要与医院信息系统深度整合，目前仍以 Region 自营为主。[^8]
+### 3.1 全国患者门户——1177.se
 
----
+**1177 Vårdguiden（1177 医疗指南）** 是瑞典全国统一的数字医疗入口：
 
-## 四、RPM 互操作性与技术标准
+- 提供在线预约、处方续方、检验结果查询、视频问诊等功能
+- 约 **41%** 的瑞典人口已设立个人账户（2017年数据，2024年估计显著提升）
+- 全国所有 21 个区域统一接入
+- 与电子健康记录（EHR）系统互联
 
-### 4.1 国家互操作性框架
+### 3.2 电子健康记录（Electronic Health Records / EHR）
 
-瑞典的医疗 IT 互操作性由 **E-hälsomyndigheten** 协调，遵循以下标准：
+- **2018 年 3 月起**，所有公民可在线访问自己的完整电子健康记录（Journalen）
+- 瑞典使用 **多种不同的 EHR 系统**（如 Cambio COSMIC, Cerner Millennium 等），导致互操作性问题
+- **国家健康信息交换平台（Nationell tjänsteplattform）** 提供跨系统的连接点
+- Inera AB（由 SKR 所有）负责协调全国数字健康基础设施
 
-| 标准/框架 | 说明 |
-|-----------|------|
-| **HL7 FHIR** | 瑞典国家 eHealth 战略推荐的互操作性标准 |
-| **NPÖ**（Nationell Patientöversikt） | 跨 Region 患者信息共享平台 |
-| **1177.se API** | 开放数字健康服务接口 |
-| **BankID 集成** | 全国统一的患者身份认证 |
-| **Socialstyrelsen 编码标准** | ICD-10-SE、KVÅ（医疗操作编码）、SNOMED CT 部分采纳 |
+### 3.3 国家药物清单（Nationella läkemedelslistan）
 
-### 4.2 远程监测领域的主要挑战
+- 瑞典 eHealth Agency 正在推进全国统一药物清单
+- 提供所有处方的集中视图，改善用药安全，减少药物相互作用风险
+- 在居家照护场景中尤为关键——许多老年人多药并用
 
-- Kommun/Region 间的数据共享仍存在接口障碍
-- 护士需要登录多个不互联的系统——增加了行政负担 [^6]
-- 缺乏统一的 RPM 设备数据标准——各 Region 采购不同品牌设备
-- IVO 2023–24 年报告特别指出：数字监测中的数据保护和知情同意需要加强 [^9]
+## 四、数字护理（Digital Vård）
 
----
+### 4.1 概念与增长
 
-## 五、Karolinska@home 技术方案
+**Digital vård（数字护理）** 指通过数字渠道提供的医疗咨询和服务：
 
-Karolinska@home 是瑞典最具标志性的虚拟病房项目，也是 RPM 技术在急性期 HaH 中应用的成功案例。[^10]
+- **视频问诊（Videomöte med läkare）**：Kry, Doktor.se, Min Doktor 等平台
+- **文本咨询（Chattbaserad vård）**：异步文本交流
+- **AI 症状评估**：初步症状分析和分诊
+- 区域也建立了自己的数字护理服务
 
-**技术栈**：
-- **患者端**：集成可穿戴生命体征监测设备（心率、血压、血氧、体温） + 移动应用
-- **传输层**：4G/5G（瑞典 5G 基础设施正加速铺设）
-- **中心监控站**：Karolinska 医院内 24/7 实时数据监控
-- **医生远程查房**：通过视频系统每日 1–2 次
-- **护士上门**：每日 1–2 次嵌入式家访
+### 4.2 与居家照护的整合
 
-**研发合作**：Karolinska 大学医院与 **皇家理工学院（KTH）** 合作开发 [^10]
+数字护理平台正在越来越多地与居家照护整合：
+- 护士可通过视频远程评估居家老年人的状况变化
+- 减少了不必要的急诊就医
+- **挑战**：数字护理可能导致服务碎片化——线上/线下服务脱节
 
----
+## 五、实施挑战与问题
 
-## 参考资料
+### 5.1 数字鸿沟（Digital Divide）
 
-[^1]: Vision e-hälsa 2025 — Swedish Government / SKR. https://ehalsa2025.se/
-[^2]: 1177.se — Sveriges sjukvårdsinformation på webben. https://www.1177.se/
-[^3]: SCB — Sveriges framtida befolkning 2024–2060. https://www.scb.se/
-[^4]: OECD Health at a Glance 2025 — Hospital beds indicators.
-[^5]: SKR — Välfärdsteknik och e-hälsa. https://skr.se/
-[^6]: 瑞典/北欧 居家医疗体系深度分析（2026-07-04）. /Users/kennethye/workspace/kate-knowledge-base/reports/2026-07-04-sweden-hah-analysis.md
-[^7]: Svenska Palliativregistret. https://palliativregistret.se/
-[^8]: WHO European Health Observatory — Sweden: Health System Review 2023. https://eurohealthobservatory.who.int/publications/i/sweden-health-system-review-2023
-[^9]: IVO — Inspektionen för vård och omsorg. https://www.ivo.se/
-[^10]: Karolinska University Hospital — Hospital@home. https://www.karolinskahospital.com/care-at-karolinska/tomorrows-healthcare/hospitalhome
+- 高龄老年人数字素养低，可能无法有效使用新技术
+- 经济差异：低收入老年人可能缺乏智能设备和互联网接入
+- **方案**：市政照护人员辅助操作、简化设备（如 Giraffe 一键视频电话）
 
-> 📎 相关专题报告：[[Topics/RPM设备商全景.md]]
+### 5.2 市政间差异
 
-本页面最后更新：2026-07-05
+- 大市政（斯德哥尔摩、哥德堡、马尔默）数字化程度高，偏远小市政落后
+- 缺乏全国统一的技术采购和部署标准
+
+### 5.3 伦理与隐私
+
+- 摄像头监测引发隐私关切——谁有权查看、数据存储时间
+- GPS 追踪带来监控 vs 自由的权衡（尤其对认知症人士）
+- 研究人员指出需关注"良好照护与不良影响"的平衡（来源：Lydahl et al. 2023, PMC）
+
+### 5.4 证据基础薄弱
+
+- 许多福利技术的临床效果和成本效益尚未得到充分验证
+- Socialstyrelsen 和 SBU 正在推动更多系统评估
+- 技术采购决策往往基于供应商宣传而非严谨证据
+
+## 六、未来趋势
+
+1. **AI 和预测分析**：利用机器学习和传感器数据预测跌倒、健康恶化
+2. **从试点到规模化**：将成功的市政试点复制到全国
+3. **整合数字与实体照护**：打破 "digital vård" 和 "fysisk vård" 的壁垒
+4. **新 eHealth 战略**：2025 年后的下一阶段战略已在规划中
+5. **跨境数字健康**：欧盟层面的 EHDS（European Health Data Space）法规将推动跨国数据流通
+
+> 📎 [[00-概览]] | [[01-政策与法律法规]] | [[02-支付体系]] | [[05-临床证据]] | [[06-劳动力市场]]
+
+## 参考文献
+
+1. Vision e-hälsa 2025 — Swedish Government & SKR (2016)
+2. OECD Digital Public Policy — Vision for eHealth up to 2025 (SWE1538)
+3. Swedish eHealth Agency (E-hälsomyndigheten) — Government.se
+4. Socialstyrelsen (2024) — Welfare technology in municipalities
+5. Nordic Welfare Centre (2024) — Quantitative follow-up of welfare technology implementation
+6. AccessH.org (2024) — "How Technology is Revolutionizing Homecare in Sweden" (Åsa Löwing presentation)
+7. Lydahl D. et al. (2023) — "Good care and adverse effects: Exploring the use of social alarms in home care." PMC
+8. Tsertsidis A. et al. (2025) — "Examining the availability of information on welfare technologies for people living with dementia in Sweden." Disability and Rehabilitation: AT
+
+**本页面最后更新：2026-07-24**

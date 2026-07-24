@@ -1,9 +1,10 @@
 ---
-tags: [澳大利亚, 公司, HaH, HITH, 虚拟护理, For-profit, Medibank]
-created: 2026-07-07
-updated: 2026-07-07
-aliases: [Amplar Health, Medibank Health Solutions]
-parent: [[Countries/澳大利亚/00-概览]]
+title: "Amplar Health"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # Amplar Health
@@ -18,5 +19,5 @@ parent: [[Countries/澳大利亚/00-概览]]
 - 员工：未单独披露（Medibank 集团 ~4,700人） |
 - CEO：Medibank Group CEO: David Koczkar; Amplar Health 运营负责人隶属集团管理层 |
 
-**数据来源：** [[reports/2026-07-03-amplar-health-deep-dive.md|Amplar Health 27维度深度尽调|完整 27 维度报告]]
-相关：[[../00-概览|澳大利亚居家医疗概览]]
+**数据来源：** reports/国家/澳大利亚/2026-07-03-amplar-health-deep-dive.md|Amplar Health 27维度深度尽调|完整 27 维度报告
+相关：../00-概览|澳大利亚居家医疗概览

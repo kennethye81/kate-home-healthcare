@@ -1,136 +1,102 @@
 ---
-auto_generated: true
-generated_at: 2026-07-16
-total_facts: 577
+type: navigation
+tags: [home, navigation, dashboard]
+created: 2026-07-23
+updated: 2026-07-23
+aliases: [首页, Dashboard, 知识库首页]
 ---
 
-# 🌏 全球居家医疗知识图谱
+# 🏥 居家医疗 & Hospital at Home 全球知识库
 
-> 167 份深度报告 · 17 个国家 · 577 条结构化数据 · 持续更新
-
----
-
-## 📊 核心指标跨国对比
-
-### 💳 支付数据
-| 国家 | 💳 支付数据 | 来源 |
-|------|------|------|
-| 🇯🇵 日本 | | 介護報酬改定率（2024年度） | +1.59%（実質+2.04%） | | — |
-| 🇩🇪 德国 | | D6 | 客户与支付方深度拆解 | ✅ 完成 | 🟢 | Fachpflege 独特的医院 B2B2C 获客模型分析 | — |
-| 🇸🇬 新加坡 | | 支付定价 | 0 | | — |
-| 🇬🇧 英国 | | 职工支付比例 | 70% | | — |
-| 🇺🇸 美国 | | 支付定价 | 0 | | — |
-| 🇭🇰 香港 | | 支付方 | ①CCSV社区券（政府资助60-95%）②长者/家属自费 | | — |
-| 🇨🇳 中国 | | 职工支付 | 70%（居家/社区可适当提高） | | — |
-| 🇦🇺 澳大利亚 | | Tier 5 — 自费客户 | 非政府资助，私人支付 | 品牌搜索/转诊 | $15,000–50,000 | | — |
-| 🇰🇷 韩国 | | 保险费率 | 2026年：工资的7.19%（雇员基准） | | — |
-| 🇫🇷 法国 | | 支付方 | Assurance Maladie（法国国家医保）——100% 报销处方 PSAD 服务 | | — |
-| 🇮🇱 以色列 | | Bituach Leumi（NII） | 护理津贴（现金或实物）——间接支付给家庭，非 iSavta | 0%（间接 | — |
-| 🇧🇷 巴西 | | 累计转移支付（2011-2023） | ~R$ 5.2 B | | — |
-
-### 📈 公司收入
-| 国家 | 📈 公司收入 | 来源 |
-|------|------|------|
-| 🇯🇵 日本 | 收入70 | — |
-| 🇩🇪 德国 | 收入：€9,000 | — |
-| 🇸🇬 新加坡 | 收入
-3. | — |
-| 🇬🇧 英国 | 收入50 | — |
-| 🇺🇸 美国 | 收入 $249M | — |
-| 🇭🇰 香港 | 收入 7,440万 | — |
-| 🇨🇳 中国 | 收入50 | — |
-| 🇦🇺 澳大利亚 | 收入 $8 | — |
-| 🇫🇷 法国 | 收入50 | — |
-| 🇮🇱 以色列 | 收入 $0.6 | — |
-
-### 💳 支付货币金额
-| 国家 | 💳 支付货币金额 | 来源 |
-|------|------|------|
-| 🇯🇵 日本 | ¥310,000/月 | — |
-| 🇩🇪 德国 | €990/月 | — |
-| 🇺🇸 美国 | $5M/月 | — |
-| 🇭🇰 香港 | $10,824/月 | — |
-| 🇨🇳 中国 | ¥2,250/月 | — |
-| 🇮🇱 以色列 | $20/次 | — |
-
-### 👤 覆盖人数
-| 国家 | 👤 覆盖人数 | 来源 |
-|------|------|------|
-| 🇯🇵 日本 | 覆盖40 | — |
-| 🇩🇪 德国 | 覆盖60 | — |
-| 🇸🇬 新加坡 | 覆盖 8 | — |
-| 🇬🇧 英国 | 覆盖5 | — |
-| 🇺🇸 美国 | 覆盖 23 | — |
-| 🇭🇰 香港 | 覆盖 190 | — |
-| 🇨🇳 中国 | 参保359 | — |
-| 🇦🇺 澳大利亚 | 覆盖 88 | — |
-| 🇳🇱 荷兰 | 覆盖 18 | — |
-| 🇮🇱 以色列 | 覆盖3,374 | — |
-
-### 💵 融资额
-| 国家 | 💵 融资额 | 来源 |
-|------|------|------|
-| 🇸🇬 新加坡 | 融资 $160M | — |
-| 🇬🇧 英国 | Funding, | — |
-| 🇺🇸 美国 | 融资 $43M | — |
-| 🇨🇳 中国 | 融资 ¥3 | — |
-| 🇮🇱 以色列 | 融资 $500K | — |
-
-### 🏷️ 估值
-| 国家 | 🏷️ 估值 | 来源 |
-|------|------|------|
-| 🇸🇬 新加坡 | 估值 $1.7B | — |
-| 🇬🇧 英国 | 估值 $250 | — |
-| 🇺🇸 美国 | 估值
-$700M | — |
-| 🇭🇰 香港 | 估值 $8 | — |
-| 🇨🇳 中国 | 估值¥20 | — |
-| 🇦🇺 澳大利亚 | 估值
-2. | — |
-| 🇮🇱 以色列 | 估值 $2 | — |
-
-### 🚀 增长率
-| 国家 | 🚀 增长率 | 来源 |
-|------|------|------|
-| 🇬🇧 英国 | CAGR 25.67% | — |
-| 🇺🇸 美国 | CAGR 48.9% | — |
-| 🇨🇳 中国 | 增长20% | — |
-| 🇦🇺 澳大利亚 | 增长 30% | — |
-| 🇰🇷 韩国 | CAGR 16.3% | — |
-
-### 🏢 网点数
-| 国家 | 🏢 网点数 | 来源 |
-|------|------|------|
-| 🇸🇬 新加坡 | 医院, | — |
-| 🇬🇧 英国 | 医院, | — |
-| 🇺🇸 美国 | 医院24 | — |
-| 🇨🇳 中国 | 医院 5 | — |
-| 🇦🇺 澳大利亚 | 医院 8,144 | — |
-| 🇮🇱 以色列 | 诊所1 | — |
+|> **iHomeCare 战略情报系统** · 9 国家 · 68 家头部机构 · 136 份深度报告
+> 专注 Home Healthcare / Hospital-at-HaH / Healthcare Tech
 
 ---
 
-## 🌏 按国家探索
+## 🌍 按国家探索
 
-| Tier 1 | Tier 2 | Tier 3 |
-|------|------|------|
-| [🇭🇰 香港](pages/hong-kong/overview.md) | [🇸🇬 新加坡](pages/global/新加坡/00-概览.md) | [🇰🇷 韩国](pages/global/韩国/00-概览.md) |
-| [🇯🇵 日本](pages/global/日本/00-概览.md) | [🇬🇧 英国](pages/global/英国/00-概览.md) | [🇫🇷 法国](pages/global/法国/00-概览.md) |
-| [🇩🇪 德国](pages/global/德国/00-概览.md) | [🇺🇸 美国](pages/global/美国/00-概览.md) | [🇳🇱 荷兰](pages/global/荷兰/00-概览.md) |
-| | [🇨🇳 中国](pages/global/中国/00-概览.md) | [🇸🇪 瑞典](pages/global/瑞典/00-概览.md) |
-| | [🇹🇼 台湾](pages/global/台湾/00-概览.md) | [🇨🇦 加拿大](pages/global/加拿大/00-概览.md) |
-| | [🇦🇺 澳大利亚](pages/global/澳大利亚/00-概览.md) | [🇮🇱 以色列](pages/global/以色列/00-概览.md) |
-| | | [🇧🇷 巴西](pages/global/巴西/00-概览.md) |
+| Tier | 国家 | 对标价值 |
+|:----:|------|---------|
+|| 🔴 **最相似** | 🇭🇰 [香港](pages/global/香港/00-概览.md) · 🇸🇬 [新加坡](pages/global/新加坡/00-概览.md) · 🇹🇼 [台湾](pages/global/台湾/00-概览.md) · 🇬🇧 [英国](pages/global/英国/00-概览.md) | 城市型 · 单一支付方 · 政府驱动 |
+|| 🟡 **部分相似** | 🇯🇵 [日本](pages/global/日本/00-概览.md) · 🇦🇺 [澳大利亚](pages/global/澳大利亚/00-概览.md) · 🇨🇳 [中国](pages/global/中国/00-概览.md) | 亚洲 · 长护险全国建制 · 政策密集期 |
+|| 🟠 **有限重叠** | 🇨🇦 [加拿大](pages/global/加拿大/00-概览.md) | 社区护理标杆 |
+|| ⚪ **结构性差异** | 🇺🇸 [美国](pages/global/美国/00-概览.md) | 多支付方 · HaH 最大市场 |
 
 ---
 
-## 📂 跨国对比矩阵
+## 📊 跨国对比
 
-- [支付体系对比 →](pages/compare/payment.md)
-- [政策时间线对比 →](pages/compare/timeline.md)
-- [头部公司对比 →](pages/compare/companies.md)
-- [市场规模对比 →](pages/compare/market.md)
+| 维度 | 说明 |
+|------|------|
+| [支付体系对比](pages/compare/payment.md) | 8 国支付方 · 共付比例 · 自付上限 |
+| [政策时间线对比](pages/compare/timeline.md) | 各国 HaH 关键立法时间轴 |
+| [头部公司对比](pages/compare/companies.md) | 68 家跨市场对标 |
+| [市场规模对比](pages/compare/market.md) | TAM · 渗透率 · 增长率横向比较 |
 
 ---
 
-> 🤖 自动生成于 2026-07-16 · 数据源: data/facts.json (577 条)
+## 🏷️ 专题研究
+
+### 临床与证据
+[居家用药管理](topics/clinical/居家用药管理.md)
+
+### 经济与支付
+[价值矩阵](topics/economics/价值矩阵.md) · [支付方策略](topics/economics/支付方策略分析.md) · [OECD 数据](topics/economics/OECD数据.md)
+
+### 技术与设备
+[RPM 配置参考](topics/tech/) · [技术互操作](topics/tech/技术互操作.md)
+
+### 劳动力
+[人力经济学](topics/workforce/) · [居家医疗劳动力市场](topics/workforce/)
+
+### 战略与案例
+[战略规划](topics/strategy/战略规划.md) · [启动路径](topics/strategy/启动路径.md) · [失败案例](topics/strategy/失败案例.md) · [创新药政策协同](topics/strategy/创新药政策与居家医疗协同.md) · [政策 RSS 监控](topics/strategy/政策RSS监控.md)
+
+### 每日动态
+[每日资讯](topics/每日资讯.md)
+
+---
+
+## 🏢 头部机构快速索引
+
+| 地区 | 代表性机构 |
+|------|-----------|
+| 🇺🇸 美国 | [DispatchHealth](pages/global/美国/03-头部机构/DispatchHealth.md) · [Contessa](pages/global/美国/03-头部机构/Contessa.md) · [Amedisys](pages/global/美国/03-头部机构/Amedisys.md) · [Honor](pages/global/美国/03-头部机构/Honor.md) · [MayoClinic](pages/global/美国/03-头部机构/MayoClinic.md) · … **25 家** |
+| 🇬🇧 英国 | [Cera](pages/global/英国/03-头部机构/Cera.md) · [Birdie](pages/global/英国/03-头部机构/Birdie.md) · [Doccla](pages/global/英国/03-头部机构/Doccla.md) · [Huma](pages/global/英国/03-头部机构/Huma.md) · … **13 家** |
+| 🇦🇺 澳大利亚 | [SilverChain](pages/global/澳大利亚/03-头部机构/SilverChain%20Group.md) · [Bolton Clarke](pages/global/澳大利亚/03-头部机构/Bolton%20Clarke.md) · [HammondCare](pages/global/澳大利亚/03-头部机构/HammondCare.md) · … **12 家** |
+| 🇭🇰 香港 | [QualityCare](pages/global/香港/03-头部机构/QualityCare.md) · [Evercare](pages/global/香港/03-头部机构/Evercare.md) · [Bamboos](pages/global/香港/03-头部机构/Bamboos百本医护.md) · [YDCare](pages/global/香港/03-头部机构/YDCare.md) · [EDEN](pages/global/香港/03-头部机构/EDEN.md) — **5 家** |
+| 🇸🇬 新加坡 | [Speedoc](pages/global/新加坡/03-头部机构/Speedoc.md) · … **5 家** |
+| 🇯🇵 日本 | ニチイ · SOMPOケア · ベネッセ · ツクイ — **4 家** |
+| 🇨🇦 加拿大 | [Ontario atHome](pages/global/加拿大/03-头部机构/Ontario%20Health%20atHome.md) · **2 家** |
+
+---
+
+## 📁 目录结构
+
+```
+kate-home-healthcare/
+├── Home.md              ← 首页
+├── config.yaml          ← Wiki 配置
+├── Updates.md           ← 变更日志
+├── topics/              ← 跨国家专题研究
+│   ├── clinical/        ← 临床证据、用药管理
+│   ├── economics/       ← 支付、价值、市场数据
+│   ├── tech/            ← RPM、互操作标准
+│   ├── workforce/       ← 劳动力市场
+│   └── strategy/        ← 规划、案例、RSS监控
+├── pages/
+│   ├── global/          ← 16 个国家页（各含 6 维分析）
+│   ├── compare/         ← 跨国对比矩阵
+│   ├── daily/           ← 每日简报历史
+│   └── templates/       ← 页面创建模板
+└── reports/             ← 136 份深度调研报告
+```
+
+---
+
+## 📐 模板
+[新国家](pages/templates/新国家.md) · [新公司](pages/templates/新公司.md) · [新主题](pages/templates/新主题.md)
+
+---
+
+> 首页 · [变更日志](Updates.md) · [配置](config.yaml)

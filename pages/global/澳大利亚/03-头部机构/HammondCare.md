@@ -1,9 +1,10 @@
 ---
-tags: [澳大利亚, 公司, Home Care, 失智症, NFP, 基督教]
-created: 2026-07-07
-updated: 2026-07-07
-aliases: [HammondCare, Hammond Care]
-parent: [[Countries/澳大利亚/00-概览]]
+title: "HammondCare"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # HammondCare
@@ -19,4 +20,4 @@ parent: [[Countries/澳大利亚/00-概览]]
 - 员工：~5,000+ |
 - CEO：Andrew Thorburn (前 NAB CEO) |
 
-**数据来源：** [[reports/2026-07-11-hammondcare-27dim.md|HammondCare 27维度深度尽调|完整 27 维度报告]]
+**数据来源：** reports/国家/澳大利亚/2026-07-11-hammondcare-27dim.md|HammondCare 27维度深度尽调|完整 27 维度报告

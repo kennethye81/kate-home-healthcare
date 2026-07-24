@@ -1,21 +1,27 @@
 ---
-tags: ["公司", "美国", "礼宾医疗"]
-created: 2026-07-03
-updated: 2026-07-04
-aliases: [Sollis, Sollis Health, Priority Private Care]
+title: "Sollis Health"
+type: company
+country: "美国"
+tags: ["美国", "公司", "急诊", "会员制", "私有"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # Sollis Health（美国）
 
-**业务形态：** 会员制礼宾急诊医疗服务（24/7急诊级诊断能力，非居家医疗机构）
+**业务形态：** 会员制 24/7 急诊礼宾——ER 级诊断（CT/超声/MRI）+ 零等待 + VIP 转诊
 **所在国家：** 美国
 
 ## 关键数据
-- 会员数：17,000+；中心数量：13个（纽约、加州、佛罗里达）
-- 2025年ARR：$1.623亿；Series B投后估值$4.869亿
-- 年费：Signature $3,500/年，Family $10,000+/年起
-- 平均候诊时间：3.5分钟（传统ER为3.5小时），可处理~90%传统ER病症
+- 融资 ~$48M（Series B $33M · Foresite 领投 · 2024.12）
+- 12+ 中心 · 4 市场（NYC/LA/Hamptons/南佛州）
+- 会员 3x+ 增长（自 2021 Series A）
+- 美国 concierge medicine 市场 $7.35B→$19.84B（2035）
 
-**数据来源：** [[reports/2026-06-26-sollis-health-091e/report.md|完整 27 维度深度尽调报告]]
+**完整报告：** [[reports/国家/美国/2026-07-24-sollis-health-us-27dim.md|27 维度深度尽调 →]]
 
-相关：[[../00-概览|美国HaH概览]]
+## 最新动态
+- 2026.07.24: 27 维度深度尽调完成（496 行，28/28 维）——对 iHomeCare 借鉴评分 🟢🟡 3/10（三家中最低，模式差异大）
+- 2024.12: $33M Series B，Foresite Capital 领投
+
+[[../00-概览|← 美国概览]]

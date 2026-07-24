@@ -1,9 +1,11 @@
 ---
-tags: [机构, 荷兰, 英国, Virtual Ward, NHS]
-created: 2026-07-07
-aliases: [Luscii, Luscii Healthtech]
+title: "Luscii"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
-# Luscii — 荷兰虚拟病房平台（英国部署）
 
 > **赛道**: Virtual Ward 技术平台 | **模式**: B2G (NHS+欧洲多国)
 
@@ -19,3 +21,7 @@ aliases: [Luscii, Luscii Healthtech]
 
 ## 对 iHomeCare 的参考价值
 - 🟢 高 —— 欧洲跨境扩张的参考案例（荷兰 → 英国 NHS 市场进入策略）
+
+reports/国家/英国/2026-07-07-luscii-27dim-deep-dive.md|英国概览
+
+../00-概览|← 英国概览

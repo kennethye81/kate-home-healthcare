@@ -1,21 +1,16 @@
 ---
-tags: ["公司", "美国", "居家医疗运营"]
-created: 2026-07-03
-updated: 2026-07-06
-aliases: [Contessa, Amedisys, HaH]
+title: "Contessa"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
-# Contessa（美国）
+**关键数字**：
+- 9+ 卫生系统合资伙伴，覆盖多州
+- Mount Sinai JV：8.6% 再入院率，显著低于行业平均
+- Marshfield JV：44% 再入院率降幅
+- UNH 通过 $3.3B 收购 Amedisys 间接控股（2025）
 
-**业务形态：** Hospital at Home（居家医院）项目运营——合资（JV）模式，与卫生系统共担风险/共享利润
-**所在国家：** 美国
-
-## 关键数据
-- 规模：9+合资项目 / 30+健康计划 / 32,000+住院天数
-- 旗舰合作：Mount Sinai（HaH+康复+姑息）、Marshfield Clinic（再入院率降低44%）
-- 母公司：2021年Amedisys收购→2025年随Amedisys进入Optum/UnitedHealth Group
-- 收购价：Amedisys整体33亿美元；DOJ要求剥离164个网点/5.28亿美元年收入
-
-**数据来源：** [[reports/2026-06-28-contessa-health-deep-dive.md|完整 27 维度深度尽调报告]]
-
-## 最新动态
+reports/国家/美国/2026-07-21-contessa-health-27dim-deep-dive.md

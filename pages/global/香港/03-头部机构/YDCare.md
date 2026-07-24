@@ -1,8 +1,10 @@
 ---
-tags: ["公司", "香港", "居家医疗平台"]
-created: 2026-07-03
-updated: 2026-07-10
-aliases: [YDCare HK, YD Care Hong Kong]
+title: "YDCare"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # YDCare 香港（易得康香港）
@@ -18,4 +20,6 @@ aliases: [YDCare HK, YD Care Hong Kong]
 
 **核心特征**：「临床最深」的香港居家护理——十大专科+护士经理制+自建人才供应链，集团跨境优势独一无二
 
-**完整报告**：[[reports/2026-07-10-ydcare-hk-27dim.md|YDCare 27维度深度尽调]]
+**完整报告**：reports/国家/香港/2026-07-10-ydcare-hk-27dim.md|YDCare 27维度深度尽调
+
+../00-概览|← 香港概览

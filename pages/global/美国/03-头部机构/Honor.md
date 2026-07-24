@@ -1,22 +1,17 @@
-|---
-|tags: ["Companies", "Honor Technology 27维"]
-|created: 2026-07-03
-|updated: 2026-07-03
-|aliases: [Honor Technology 27维度]
-|---
+---
+title: "Honor"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
+---
 
-# Honor Technology 27维度深度尽调
+硅谷居家照护技术平台。2014创立，2021收购Home Instead(全球最大照护品牌)。全球1,200+网点/12+国/100K+护理员。
 
-**数据来源：** [[reports/2026-07-03-honor-technology-27dim-deep-dive.md|Honor Technology 27维度深度尽调]]
+**关键数据**：
+- 估值 $1.3B / 2024平台收入 $197.6M
+- 总融资 $625M($325M股权+$300M债务) / 1,000员工
+- AI匹配引擎(100+因素) / 80M+小时照护/年 / 100K+老年人/月
 
-## 关键发现
-
-- 硅谷技术平台收购全球最大居家照护特许经营——'科技吃掉传统'经典案例
-- $625M+融资($325M股权+$300M债务)/$1.25B估值(2021)/$2.1B+合并收入
-- 核心模式='技术平台×线下网络'乘法——非医疗/非HaH
-- $300M收购杠杆债务是最大财务风险
-- 对iHomeCare借鉴:'技术×线下'整合模式+使命驱动品牌叙事
-
-## 详细报告
-
-👉 完整 27 维度深度分析：`reports/2026-07-03-honor-technology-27dim-deep-dive.md`
+reports/国家/美国/2026-07-21-honor-technology-27dim-deep-dive.md

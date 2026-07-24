@@ -1,21 +1,21 @@
 ---
-tags: [机构, 英国, Digital Health, Virtual Ward, NHS]
-created: 2026-07-07
-aliases: [Inhealthcare, Inhealthcare Digital Health]
+tags:
+  - 公司
+  - 英国
+  - RPM
+  - 虚拟病房
+  - NHS
+created: 2026-07-22
+updated: 2026-07-22
+aliases:
+  - Inhealthcare
 ---
-# Inhealthcare — NHS 数字健康平台
+# Inhealthcare
 
-> **赛道**: Digital Health 平台 + Virtual Ward | **模式**: B2G (NHS)
+英国最大独立 RPM + 虚拟病房技术供应商。被 ResMed (NYSE:RMD) 收购。50+ NHS Trusts + Scotland 全国协议。
 
-## 核心定位
-英国主要 NHS 数字健康平台供应商。远程监测、虚拟病房、数字健康评估一体化。NICE HTG697 评估收录。
+**关键数据**：
+- 400 万+ 患者激活 / 10+ 临床路径 / ResMed $4.7B 母公司
+- HSJ 年度供应商奖 2025 / Norfolk -38% bed days
 
-## 关键数据
-- **总部**: 英国
-- **NHS 部署**: 多个 NHS Trust
-- **核心功能**: 远程监测平台 + 虚拟病房工作流 + 数字健康评估
-- **合规**: NHS DTAC + CE 标志
-- **NICE 收录**: HTG697 评估收录
-
-## 对 iHomeCare 的参考价值
-- 🟡 中等 —— "老牌 NHS 供应商"模式参照
+reports/国家/英国/2026-07-22-inhealthcare-27dim-deep-dive.md|← 英国概览

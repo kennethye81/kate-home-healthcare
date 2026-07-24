@@ -1,24 +1,24 @@
 {
   "main": {
-    "id": "45a00e884def7c41",
+    "id": "startup",
     "type": "split",
     "children": [
       {
-        "id": "419f473147e88506",
+        "id": "ac043303e69ba20f",
         "type": "tabs",
         "children": [
           {
-            "id": "45e9e10576ae0d86",
+            "id": "f215889c10610fd9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Home.md",
+                "file": "pages/对比分析/01-支付对比.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Home"
+              "title": "01-支付对比"
             }
           }
         ]
@@ -27,28 +27,28 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "a42dfb4752c81c32",
+    "id": "sidebar",
     "type": "split",
     "children": [
       {
-        "id": "70536b85c6621913",
+        "id": "577f7dafde7ec385",
         "type": "tabs",
         "children": [
           {
-            "id": "564d2bd23a997251",
+            "id": "2862be82b8e4da4b",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": true
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
             }
           },
           {
-            "id": "650d1ea136d47614",
+            "id": "6a5e5b436aa14d5e",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -65,7 +65,7 @@
             }
           },
           {
-            "id": "8ff92b87cf3b5cfe",
+            "id": "dd9b526473237e9b",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -78,99 +78,42 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 298.5
   },
   "right": {
-    "id": "acba5b804a8278e9",
+    "id": "8875b45b367a99ec",
     "type": "split",
     "children": [
       {
-        "id": "9729060dffb21348",
+        "id": "b196741a08fdbc71",
         "type": "tabs",
         "children": [
           {
-            "id": "c42a68c4b7a06411",
+            "id": "8e811147fee78966",
             "type": "leaf",
             "state": {
-              "type": "backlink",
-              "state": {
-                "file": "README.md",
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
-              },
-              "icon": "links-coming-in",
-              "title": "README 的反向链接列表"
+              "type": "custom-frames-hermes",
+              "state": {},
+              "icon": "documents",
+              "title": "Hermes"
             }
           },
           {
-            "id": "507df3420b7ff2b7",
+            "id": "d6ce7448f21369ce",
             "type": "leaf",
             "state": {
-              "type": "outgoing-link",
-              "state": {
-                "file": "README.md",
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              },
-              "icon": "links-going-out",
-              "title": "README 的出链列表"
-            }
-          },
-          {
-            "id": "7121a515591d43be",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-tags",
-              "title": "标签"
-            }
-          },
-          {
-            "id": "891b9f5d85f1ee2e",
-            "type": "leaf",
-            "state": {
-              "type": "all-properties",
-              "state": {
-                "sortOrder": "frequency",
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-archive",
-              "title": "添加笔记属性"
-            }
-          },
-          {
-            "id": "738bb471a5acd45e",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "README.md",
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "README 的大纲"
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 529.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -180,46 +123,55 @@
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
-      "bases:新建数据库": false
+      "bases:新建数据库": false,
+      "nutstore-sync:开始同步": false,
+      "nutstore-sync:停止同步": false,
+      "nutstore-sync:打开 Chatbox": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "obsidian-day-planner:Open Timeline": false,
+      "obsidian-day-planner:Open Multi-Day View": false,
+      "project-manager:Project manager": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "45e9e10576ae0d86",
+  "active": "f215889c10610fd9",
   "lastOpenFiles": [
-    "pages/compare/timeline.md",
-    "pages/compare/payment.md",
-    "pages/compare/market.md",
-    "pages/compare/companies.md",
-    "pages/compare",
-    "scripts/publish/generate_compare.py",
-    "scripts/publish/generate_home.py",
-    "scripts/ingest/fact_extractor.py",
-    "data/top10_reports.json",
-    "pages/global/新加坡/00-概览.md",
-    "Home.md",
-    "pages/global/中国/00-概览.md",
-    "README.md",
-    "pages/hong-kong/overview.md",
-    "pages/global/香港/03-头部机构/EDEN.md",
-    "pages/global/香港/03-头部机构/YDCare.md",
-    "pages/global/香港/03-头部机构/QualityCare.md",
-    "pages/global/香港/03-头部机构/Evercare.md",
-    "pages/global/香港/03-头部机构/Bamboos百本医护.md",
-    "pages/global/香港/06-劳动力市场.md",
-    "pages/global/香港/05-临床证据.md",
-    "pages/global/香港/04-RPM与技术设备.md",
-    "pages/global/香港/03-头部机构",
-    "pages/global/香港/02-支付体系.md",
-    "pages/global/香港/01-政策与法律法规.md",
-    "pages/global/香港/00-概览.md",
-    "pages/global/香港",
-    "pages/global/韩国/03-头部机构/SILWHON.md",
-    "pages/global/荷兰/03-头部机构/Buurtzorg.md",
-    "pages/global/英国/03-头部机构/Whzan.md",
-    "pages/global/英国/03-头部机构/Luscii.md",
-    "pages/global/英国/03-头部机构/Lottie.md",
-    "pages/global/英国/03-头部机构/Isansys.md",
-    "pages/global/韩国/03-头部机构",
+    "2026-07-24.md",
+    "pages/global/瑞典/06-劳动力市场.md",
+    "pages/对比分析/01-支付对比.md",
+    "pages/global/瑞典/05-临床证据.md",
+    "pages/global/以色列/06-劳动力市场.md",
+    "pages/global/以色列/05-临床证据.md",
+    "pages/global/瑞典/04-RPM与技术设备.md",
+    "pages/global/瑞典/02-支付体系.md",
+    "pages/global/以色列/04-RPM与技术设备.md",
+    "pages/global/法国/06-劳动力市场.md",
+    "pages/global/法国/04-RPM与技术设备.md",
+    "pages/global/法国/05-临床证据.md",
+    "pages/global/瑞典/01-政策与法律法规.md",
+    "pages/global/以色列/02-支付体系.md",
+    "pages/global/瑞典/00-概览.md",
+    "pages/global/以色列/01-政策与法律法规.md",
+    "pages/global/法国/02-支付体系.md",
+    "pages/global/法国/01-政策与法律法规.md",
+    "pages/global/德国/06-劳动力市场.md",
+    "pages/global/德国/05-临床证据.md",
+    "pages/global/以色列/00-概览.md",
+    "pages/global/法国/00-概览.md",
+    "pages/global/巴西/06-劳动力市场.md",
+    "pages/global/德国/02-支付体系.md",
+    "pages/global/德国/04-RPM与技术设备.md",
+    "pages/global/荷兰/05-临床证据.md",
+    "Projects",
+    "copilot/copilot-custom-prompts",
+    "copilot",
     "pages/global/荷兰/03-头部机构",
-    "pages/global/英国/03-头部机构"
+    "pages/global/荷兰",
+    "pages/global/瑞典/03-头部机构",
+    "pages/global/瑞典",
+    "pages/global/法国/03-头部机构",
+    "pages/global/法国",
+    "pages/global/巴西/03-头部机构",
+    "未命名.canvas"
   ]
 }

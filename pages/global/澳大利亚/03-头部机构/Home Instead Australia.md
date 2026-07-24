@@ -1,8 +1,10 @@
 ---
-tags: [澳大利亚, 公司, Home Care]
-created: 2026-07-13
-updated: 2026-07-13
-aliases: [Home Instead Australia]
+title: "Home Instead Australia"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # Home Instead Australia
@@ -12,6 +14,6 @@ aliases: [Home Instead Australia]
 
 ## 关键数据
 
-**数据来源：** [[reports/2026-07-07-home-instead-au-27dim.md|完整 27 维度报告]]
+**数据来源：** reports/国家/澳大利亚/2026-07-07-home-instead-au-27dim.md|完整 27 维度报告
 
-相关：[[../00-概览|澳大利亚居家医疗概览]]
+相关：../00-概览|澳大利亚居家医疗概览

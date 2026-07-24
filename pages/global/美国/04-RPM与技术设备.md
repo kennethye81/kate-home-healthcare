@@ -1,15 +1,6 @@
----
-tags: [国家, 美国, RPM, 技术设备]
-created: 2026-07-05
-updated: 2026-07-12
-aliases: [美国 RPM, 美国 远程监测]
----
-
 # 美国 — RPM 与技术设备
 
 > 本页面覆盖美国远程患者监测（RPM）设备市场规模、CMS 报销码、主要供应商、FDA 监管框架及 EHR 互操作性标准。
-
----
 
 ## 市场规模
 
@@ -25,8 +16,6 @@ aliases: [美国 RPM, 美国 远程监测]
 全球 RPM 市场在 2024 年约为 277.2 亿美元，预计到 2030 年达到 569.4 亿美元（CAGR 12.7%）。美国市场约占全球市场的 50% 以上。
 
 **来源：** MarketsandMarkets, "Remote Patient Monitoring Market Global Forecast to 2030" (2025)
-
----
 
 ## CMS RPM 报销码（Billing Codes）
 
@@ -62,8 +51,6 @@ CMS 自 2018 年起将 RPM 纳入 Medicare Physician Fee Schedule。以下为截
 
 **来源：** CMS 2025 Final Rule; Smart Meter 2025 RPM Billing Summary
 
----
-
 ## 主要 RPM 设备与平台供应商
 
 | 供应商 | 核心产品 / 平台 | 重点领域 |
@@ -83,8 +70,6 @@ CMS 自 2018 年起将 RPM 纳入 Medicare Physician Fee Schedule。以下为截
 
 **来源：** RPM Leadership Council Public Announcement (2025)
 
----
-
 ## FDA 监管框架
 
 FDA 将 RPM 设备作为**医疗器械**进行监管，根据风险水平分类：
@@ -102,8 +87,6 @@ FDA 将 RPM 设备作为**医疗器械**进行监管，根据风险水平分类�
 - 后疫情时代，FDA 发布了针对**非侵入式远程监测设备**的永久性执法政策
 
 **来源：** FDA "Medical Device Safety and the 510(k) Clearance Process"; Tenovi "FDA Language Around RPM Devices" (2023); FDA CDRH Breakthrough Devices Data
-
----
 
 ## EHR 互操作性与 FHIR
 
@@ -136,11 +119,11 @@ FHIR 互操作性使 RPM 数据（血压、血氧、体重、心率等）能够�
 - 实时临床决策支持（CDS Hooks）
 - 质量指标自动上报（如 CMS AHCAH 要求的数据报告）
 
----
-
 ## 最新动态
 
 - **2026-07-05:** 本页面首次填充 — 覆盖市场规模、CMS 报销码、供应商全景、FDA 监管及 FHIR 互操作性标准。
 - 2026-07-12: **Vega Health and Baptist Health Bring Actionable AI to Hospital at Home**——Vega Health与Baptist Health合作将AI引入居家医院模式，为长期协作奠定基础，提升患者监测和临床决策效率（来源：[Yahoo Finance](https://news.google.com/rss/articles/CBMimAFBVV95cUxPQnpTNGtCX2xuemtFcE1nR0hrbk9STnhydHREVFU3bnFfcEp0cEFYTVAtb0JJUEtNUUZ3TlRXZ3lpMEh0cTlCVkVObms2dFp5Y1FGei03VWRzMFMxaVJaSDFSZEE2ZmpLeDVUM095dFpwVTdBZ0dUVUk4Ti04Z2ZzYl9mNjRwMG43WjdySVVyTHVjdWdSOEhvTQ?oc=5)）
 
 本页面最后更新：**2026-07-05**
+
+

@@ -1,9 +1,11 @@
 ---
-tags: [机构, 英国, Digital Health, Virtual Ward, AI, 独角兽]
-created: 2026-07-07
-aliases: [Huma, Huma Health]
+title: "Huma"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
-# Huma — 英国数字健康独角兽
 
 > **赛道**: Digital Health 平台（GenAI+远程监测+临床研究） | **模式**: B2B (NHS+药企)
 
@@ -18,4 +20,7 @@ aliases: [Huma, Huma Health]
 - **认证**: FDA II + EU MDR IIb + Saudi FDA C
 - **覆盖**: 3000+ 医院 / 1.8M 活跃用户 / 70+ 国家
 
-> 📄 详见: [[reports/2026-07-07-huma-27dim-deep-dive.md|27维深度报告 ✅]]
+> 📄 详见: reports/国家/英国/2026-07-07-huma-27dim-deep-dive.md|27维深度报告 ✅
+
+
+../00-概览|← 英国概览

@@ -1,9 +1,11 @@
 ---
-tags: [机构, 英国, Home Care, SaaS, AI, 数字化护理]
-created: 2026-07-07
-aliases: [Birdie, Birdie Care]
+title: "Birdie"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
-# Birdie — 英国居家护理 SaaS 平台
 
 > **赛道**: 居家护理 SaaS + AI | **模式**: B2B (护理机构)
 
@@ -21,3 +23,7 @@ aliases: [Birdie, Birdie Care]
 
 ## 对 iHomeCare 的参考价值
 - 🟢🟢 高 —— 统一数据模型是 AI 前提；社区是隐形护城河
+
+reports/国家/英国/2026-07-07-birdie-27dim-deep-dive.md|英国概览
+
+../00-概览|← 英国概览

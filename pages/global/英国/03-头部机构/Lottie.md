@@ -1,9 +1,11 @@
 ---
-tags: [机构, 英国, Care Marketplace, 护理平台, Digital Health]
-created: 2026-07-07
-aliases: [Lottie, Lottie Care]
+title: "Lottie"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
-# Lottie — 英国护理数字平台
 
 > **赛道**: 护理院/居家护理数字撮合平台 | **模式**: B2C (消费者)
 
@@ -19,4 +21,7 @@ aliases: [Lottie, Lottie Care]
 ## 对 iHomeCare 的参考价值
 - 🟡 中 —— 消费者端数字平台体验 + 供给侧数字化
 
-> 📄 详见: [[reports/2026-07-07-lottie-27dim-deep-dive.md|27维深度报告 ✅]]
+> 📄 详见: reports/国家/英国/2026-07-07-lottie-27dim-deep-dive.md|27维深度报告 ✅
+
+
+../00-概览|← 英国概览

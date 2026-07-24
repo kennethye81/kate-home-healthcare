@@ -1,8 +1,10 @@
 ---
-tags: ["公司", "香港", "高端护理"]
-created: 2026-07-03
-updated: 2026-07-10
-aliases: [QualityCare, QHMS Nursing Agency, 卓健护理介绍所]
+title: "QualityCare"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # QualityCare 卓健护理介绍所（香港）
@@ -18,4 +20,6 @@ aliases: [QualityCare, QHMS Nursing Agency, 卓健护理介绍所]
 
 **核心特征**：「保险+医疗+居家护理」三层闭环——香港唯一实现保险直付的护理机构
 
-**完整报告**：[[reports/2026-07-10-qualitycare-hk-27dim.md|QualityCare 27维度深度尽调]]
+**完整报告**：reports/国家/香港/2026-07-10-qualitycare-hk-27dim.md|QualityCare 27维度深度尽调
+
+../00-概览|← 香港概览

@@ -1,9 +1,10 @@
 ---
-tags: [澳大利亚, 公司, Home Care, For-profit, 自管模式, 颠覆者]
-created: 2026-07-07
-updated: 2026-07-07
-aliases: [Trilogy Care]
-parent: [[Countries/澳大利亚/00-概览]]
+title: "Trilogy Care"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # Trilogy Care
@@ -19,4 +20,4 @@ parent: [[Countries/澳大利亚/00-概览]]
 - 员工：未公开（增长快速） |
 - CEO：未公开 |
 
-**数据来源：** [[reports/2026-07-11-trilogy-care-27dim.md|Trilogy Care 27维度深度尽调|完整 27 维度报告]]
+**数据来源：** reports/国家/澳大利亚/2026-07-11-trilogy-care-27dim.md|Trilogy Care 27维度深度尽调|完整 27 维度报告

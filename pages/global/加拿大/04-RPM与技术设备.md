@@ -1,10 +1,3 @@
----
-tags: [国家, 加拿大, RPM, 技术设备]
-created: 2026-07-04
-updated: 2026-07-05
-aliases: [加拿大 RPM, 加拿大 远程监测]
----
-
 # 加拿大 — RPM 与技术设备
 
 ## 1. 远程患者监测（RPM）市场概况
@@ -92,4 +85,6 @@ OTN 是加拿大规模最大、最成熟的省级远程医疗网络，成立于 
 
 **来源：** PMC/NIH PubMed 检索 "telemonitoring Canada"; CIHR 资助项目数据库; 各大学研究门户。
 
-> 📎 相关专题报告：[[Topics/RPM设备商全景.md]]
+> 📎 相关专题报告：pages/topics/RPM设备商全景.md
+
+

@@ -1,8 +1,10 @@
 ---
-tags: ["公司", "日本", "居家护理", "介护保险", "损保系"]
-created: 2026-07-05
-updated: 2026-07-05
-aliases: [SOMPOケア, SOMPO Care, そんぽの家, SOMPO WaMi]
+title: "SOMPOケア"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # SOMPOケア（SOMPO Care Inc.）
@@ -17,6 +19,6 @@ aliases: [SOMPOケア, SOMPO Care, そんぽの家, SOMPO WaMi]
 - 服务网点数：约470据点（其中そんぽの家约200+设施）
 - 核心优势：保险×介护协同战略（SOMPO保险数据库导流、行业唯一）
 
-**数据来源：** [[reports/2026-07-05-sompo-care-jp-27dim.md|完整 27 维度深度尽调报告]]
+**数据来源：** reports/国家/日本/2026-07-05-sompo-care-jp-27dim.md|完整 27 维度深度尽调报告
 
-相关：[[../00-概览|日本HaH概览]]
+相关：../00-概览|日本HaH概览

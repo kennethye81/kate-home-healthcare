@@ -1,22 +1,19 @@
 ---
-tags: ["Companies", "Buurtzorg 模式深度分析报告"]
-created: 2026-07-03
-updated: 2026-07-06
-aliases: [Buurtzorg 模式]
+aliases: [Buurtzorg]
+tags: [荷兰, 居家医疗, 头部机构]
+created: 2026-07-24
 ---
 
-# Buurtzorg 模式深度分析报告
+# Buurtzorg
 
-**数据来源：** [[reports/2026-07-03-buurtzorg-model-analysis.md|Buurtzorg 模式深度分析报告]]
+**14,000+ 人，0 个中层管理者**。
 
-## 关键发现
+## 关键数据
+- Jos de Blok 的论断是革命性的：将护理的决策权还给护士。他认为社区护士的专业能力和自主性被管理架构系统性地压制了，而恢复护士自治能同时提升护理质量、降低成本、提高员工满意度。
+- - 服务整个组织 14,000+ 员工——比例约 1:280
 
-（报告中暂无提取的关键发现）
-
-## 详细报告
-
-👉 完整 27 维度深度分析：`reports/2026-07-03-buurtzorg-model-analysis.md`
+## 完整报告
+[[reports/国家/荷兰/2026-07-03-buurtzorg-model-analysis.md|完整27维尽调报告 →]]
 
 ## 最新动态
-
-- 2026-07-06: Euronews 专题报道 Buurtzorg "荷兰 proximity healthcare 革命"——以自主管理团队和去官僚化模式引领全球居家护理创新（来源：[Euronews](https://www.euronews.com/my-europe/2026/06/26/buurtzorg-the-dutch-proximity-health-care-revolution)）
+- 报告生成于 2026-07，待后续更新

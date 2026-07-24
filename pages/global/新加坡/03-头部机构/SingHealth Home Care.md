@@ -1,8 +1,10 @@
 ---
-tags: [新加坡, 居家医疗, SingHealth, 全链路, 头部机构]
-created: 2026-07-05
-updated: 2026-07-05
-aliases: [SingHealth Home Care, SingHealth社区健康, SingHealth全链路居家]
+title: "SingHealth Home Care"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # SingHealth Home Care
@@ -17,4 +19,7 @@ aliases: [SingHealth Home Care, SingHealth社区健康, SingHealth全链路居�
 - WHO 世界首个社会处方合作中心（全球唯一）
 - Flow-Hold-Link：急诊→社区医院→居家/GP 全链路
 
-**完整报告**：[[reports/2026-07-03-singhealth-home-care-singapore-27dim.md|SingHealth Home Care 27维度尽调报告]]
+**完整报告**：reports/国家/新加坡/2026-07-03-singhealth-home-care-singapore-27dim.md|SingHealth Home Care 27维度尽调报告
+
+
+../00-概览|← 新加坡概览

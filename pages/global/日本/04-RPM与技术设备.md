@@ -1,11 +1,3 @@
----
-tags: [国家, 日本, RPM, 技术设备]
-created: 2026-07-04
-updated: 2026-07-12
-ingested: 2026-07-12
-aliases: [日本 RPM, 日本 远程监测]
----
-
 # 日本 — RPM 与技术设备
 
 ## 一、日本远程监护（RPM）市场概况
@@ -97,8 +89,8 @@ aliases: [日本 RPM, 日本 远程监测]
 - 2026-07-10: **カナミックネットワークが「看護DXアワード2026」にて「訪問看護部門賞」を受賞**——Kanamic Network凭其访问看护数字化转型成果获得2026年护理DX大奖「访问看护部门奖」（来源：[PR TIMES](https://news.google.com/rss/articles/CBMiakFVX3lxTE1tWW1SU2lQZHdfcXdKNC1fb3pRS2w1c21BNUR0ekRZUWJVZ1dSWHFubkhrV3Y2U0d5Z1dBcjcxWDBWUWZCQkdnWXU1U21FMUFEWE1MRHI4NWpKMVdwMWhZczZjX2l3VFRnTEE?oc=5)）
 - 2026-07-12: **訪問看護専用電子カルテ「iBow」累計患者数100万人突破**——eWeLL公司开发的访问护理专用电子病历系统iBow（已在知识库中记录）累计患者数突破100万人，反映日本访问护理数字化加速趋势（来源：[PR TIMES](https://news.google.com/rss/articles/CBMiakFVX3lxTE9DeUpzdmtMQkxMTjlNMUFxV2YtNFZmTHBmLXVkMEVWNjRiWnptYU05eURPa05sVURERE1XM0VWbzgtaUdKVjdUMVMxS3NVUm00TkZZNWxnX2wydDNLWEcyLWFtT1BqOU9YNlE?oc=5)）
 
-> 📎 相关专题报告：[[Topics/RPM设备商全景.md]]
-
----
+> 📎 相关专题报告：pages/topics/RPM设备商全景.md
 
 **本页面最后更新：2026-07-05**
+
+

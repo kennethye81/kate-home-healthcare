@@ -1,9 +1,11 @@
 ---
-tags: [机构, 英国, Virtual Ward, EPR集成, NHS]
-created: 2026-07-07
-aliases: [Docobo, Graphnet, DOC@HOME]
+title: "DOC@HOME"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
-# DOC@HOME (Docobo/Graphnet) — EPR 集成远程监测
 
 > **赛道**: EPR 集成远程监测 | **模式**: B2G (NHS)
 
@@ -19,3 +21,5 @@ aliases: [Docobo, Graphnet, DOC@HOME]
 
 ## 对 iHomeCare 的参考价值
 - 🟡 中等 —— EPR 深度集成模式 vs 独立平台模式的战略选择借鉴
+
+../03-头部机构/Docobo|Docobo 报告 · ../00-概览|英国概览

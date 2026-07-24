@@ -1,13 +1,15 @@
 ---
-tags: ["Companies", "Mass General Brigham"]
-created: 2026-07-03
-updated: 2026-07-08
-aliases: [Mass General Brigham Home Hosp]
+title: "MassGeneralBrigham"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # Mass General Brigham Home Hospital (Track A2)
 
-**数据来源：** [[reports/2026-07-03-mgb-home-hospital-27dim.md|Mass General Brigham Home Hospital (Track A2)]]
+**数据来源：** reports/国家/美国/2026-07-03-mgb-home-hospital-27dim.md|Mass General Brigham Home Hospital (Track A2)
 
 ## 关键发现
 

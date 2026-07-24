@@ -1,8 +1,10 @@
 ---
-tags: ["公司", "美国", "居家医疗派遣"]
-created: 2026-07-03
-updated: 2026-07-06
-aliases: [DispatchHealth, DH]
+title: "Dispatch"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # DispatchHealth（美国）
@@ -16,4 +18,4 @@ aliases: [DispatchHealth, DH]
 - 临床质量：意外死亡率0%、患者NPS +93、30天再入院率9.3%
 - 每案例节省：ER替代$1,400+，住院替代$5,000-7,000
 
-**完整报告**：[[reports/2026-06-28-dispatchhealth-deep-dive.md|DispatchHealth 深度尽调]]
+**完整报告**：reports/国家/美国/2026-07-21-dispatchhealth-27dim-deep-dive.md|DispatchHealth 深度尽调

@@ -1,9 +1,10 @@
 ---
-tags: [澳大利亚, 养老护理, NFP, 退伍军人, RDNS, Home Care, Residential Aged Care]
-created: 2026-07-07
-updated: 2026-07-11
-aliases: [Bolton Clarke, RSL Care, Royal District Nursing Service]
-parent: [[Countries/澳大利亚/00-概览]]
+title: "Bolton Clarke"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # Bolton Clarke
@@ -17,5 +18,5 @@ parent: [[Countries/澳大利亚/00-概览]]
 | 居家护理拨款排名 | #7 (AUD 144.1M, KPMG 2026) |
 | 核心壁垒 | RDNS 140 年品牌 + DVA 退伍军人关系 |
 
-[[reports/2026-07-11-bolton-clarke-27dim.md|完整 27 维尽调报告（2026.07.11）]]
+reports/国家/澳大利亚/2026-07-11-bolton-clarke-27dim.md|完整 27 维尽调报告（2026.07.11）
 > 📎 相关页面：[[SilverChain Group]] | [[HammondCare]] | [[Regis Healthcare]] | [[Australian Unity]]

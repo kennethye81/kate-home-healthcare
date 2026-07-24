@@ -1,10 +1,3 @@
----
-tags: [国家, 英国, RPM, 技术设备]
-created: 2026-07-04
-updated: 2026-07-05
-aliases: [英国 RPM, 英国 远程监测]
----
-
 # 英国 — RPM 与技术设备
 
 ## 一、NHS Virtual Ward 技术栈全景
@@ -22,8 +15,6 @@ aliases: [英国 RPM, 英国 远程监测]
 **Doccla 为英国虚拟病房最大供应商**，覆盖超 60% 的 NHS Integrated Care Board（ICB），服务 11 个欧洲国家，2024 年 9 月完成 £35M Series B（Lakestar 领投）。[^1]
 
 其他主要供应商还包括 Inhealthcare、Kinetik Wellbeing、Florence（Generated Health）、Access Group 等。[^2]
-
----
 
 ## 二、NHS England 远程监测框架
 
@@ -49,8 +40,6 @@ NHS 远程患者监测（RPM）的技术基础设施以三大数字服务为核�
 - Doccla 等供应商与 EMIS Health（英国最大 GP 系统供应商）集成
 - 实现虚拟病房数据与 NHS EHR 系统的双向流动
 
----
-
 ## 三、NHS 数字健康安全标准（NHSX / NHS England）
 
 ### 3.1 DCB0129 与 DCB0160
@@ -70,8 +59,6 @@ NHS 远程患者监测（RPM）的技术基础设施以三大数字服务为核�
 - 数据安全与保护工具包，是 NHS 所有组织及其技术供应商的强制安全合规要求
 - 每年评估，覆盖数据治理、网络安全、信息治理等维度
 
----
-
 ## 四、NICE 对 RPM 技术的评估指南
 
 ### 4.1 NICE Evidence Standards Framework（ESF）for Digital Health Technologies
@@ -88,8 +75,6 @@ NHS 远程患者监测（RPM）的技术基础设施以三大数字服务为核�
 - NICE 对具体 RPM 产品（如心衰远程监测、COPD 远程监测）进行单项技术评估（Technology Appraisal）
 - NICE 指南（NG系列）涵盖远程监测在多个疾病路径中的应用推荐
 
----
-
 ## 五、NHS Long Term Plan 对数字化居家医疗的投资
 
 - 2019 年发布的 NHS Long Term Plan 明确将数字化和居家照护作为核心战略方向 [^11]
@@ -98,8 +83,6 @@ NHS 远程患者监测（RPM）的技术基础设施以三大数字服务为核�
 - NHS 2024/25 运营规划指南要求维持虚拟病房容量、优化占用率至 **80% 以上** [^13]
 - 英国政府 2025 年宣布七项 NHS 数字项目共享 **£7.4 亿** 投资 [^14]
 - 2025 年 1 月，卫生大臣 Wes Streeting 提出三大改革方向：「从医院到社区、从治疗到预防、从模拟到数字」[^15]
-
----
 
 ## 六、5G 远程医疗试验
 
@@ -117,18 +100,14 @@ NHS 远程患者监测（RPM）的技术基础设施以三大数字服务为核�
 - Rural Connected Communities 项目投资 £3,000 万用于农村 5G 研发（含远程医疗应用）
 - 5G 被视为 NHS 远程监测的底层连接基础设施，尤其适合农村和移动医疗场景
 
----
-
 ## 七、NHS 采购框架
 
 - **G-Cloud 14**：Doccla 上架 NHS 官方云采购框架，定价透明化
 - **NHS England Virtual Ward Operational Framework**：2024 年发布，定义虚拟病房的核心服务组件、质量标准、数据采集要求，要求各 ICB 统一执行 [^13]
 
----
-
 ## 参考资料
 
-[^1]: Doccla 27 维度深度尽调报告（报告日期：2026-07-03）. /Users/kennethye/workspace/kate-knowledge-base/reports/2026-07-03-doccla-27dim/report.md
+[^1]: Doccla 27 维度深度尽调报告（报告日期：2026-07-03）. /Users/kennethye/workspace/kate-home-healthcare/reports/2026-07-03-doccla-27dim/report.md
 [^2]: Best Virtual Ward Providers in the UK — The Access Group. https://www.theaccessgroup.com/en-gb/blog/hsc-best-virtual-ward-providers-in-the-uk
 [^3]: NHS App — Google Play / NHS England. https://www.nhs.uk/nhs-app/
 [^4]: NHS Login — Websites and apps you can access. https://www.nhs.uk/nhs-services/nhs-login/websites-and-apps-you-can-access-with-nhs-login
@@ -147,6 +126,13 @@ NHS 远程患者监测（RPM）的技术基础设施以三大数字服务为核�
 [^17]: Liverpool 5G Health & Social Care Testbed Extended — Blu Wireless. https://www.bluwireless.com/insight/news/liverpool-5g-health-social-care-testbed-extended-for-a-year-with-1-48m-in-extra-funding
 [^18]: 5G Testbeds and Trials Programme: Complete List of 5G Projects — GOV.UK. https://www.gov.uk/guidance/5g-testbeds-and-trials-programme-complete-list-of-5g-projects
 
-> 📎 相关专题报告：[[Topics/RPM设备商全景.md]]
+> 📎 相关专题报告：pages/topics/RPM设备商全景.md
 
 本页面最后更新：2026-07-05
+
+
+
+
+## 相关页面
+
+../../专题/RPM设备商全景|RPM 设备商 · ../../专题/技术互操作|技术互操作

@@ -1,3 +1,12 @@
+---
+title: "MountSinai"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
+---
+
 |---
 |tags: ["Companies", "Mount Sinai Hospital"]
 |created: 2026-07-03
@@ -7,7 +16,7 @@
 
 # Mount Sinai Hospital at Home (Track A4)
 
-**数据来源：** [[reports/2026-07-03-mount-sinai-hah-27dim.md|Mount Sinai Hospital at Home (Track A4)]]
+**数据来源：** reports/国家/美国/2026-07-03-mount-sinai-hah-27dim.md|Mount Sinai Hospital at Home (Track A4)
 
 ## 关键发现
 
@@ -17,4 +26,4 @@
 
 ## 详细报告
 
-👉 完整 27 维度深度分析：`reports/2026-07-03-mount-sinai-hah-27dim.md`
+👉 完整 27 维度深度分析：`reports/国家/美国/2026-07-03-mount-sinai-hah-27dim.md`

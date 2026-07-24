@@ -1,9 +1,10 @@
 ---
-tags: [澳大利亚, 公司, Home Care, HITH, NFP, 复杂护理]
-created: 2026-07-07
-updated: 2026-07-11
-aliases: [SilverChain, Silver Chain Group, RDNS SA, Royal District Nursing Service, KinCare]
-parent: [[Countries/澳大利亚/00-概览]]
+title: "SilverChain Group"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
 
 # SilverChain Group
@@ -15,6 +16,6 @@ parent: [[Countries/澳大利亚/00-概览]]
 - CEO Dale Fisher AM | 董事会主席 Haydn Chrystal
 - 核心壁垒：130 年品牌 + 复杂临床能力 + 西澳偏远地区覆盖
 
-📄 **完整报告**：[[reports/2026-07-11-silverchain-27dim.md|27 维度深度尽调（2026-07-11）]]
+📄 **完整报告**：reports/国家/澳大利亚/2026-07-11-silverchain-27dim.md|27 维度深度尽调（2026-07-11）
 
 > 📎 相关：[[Amplar Health]] [[HammondCare]] [[Bolton Clarke]] [[Regis Healthcare]]

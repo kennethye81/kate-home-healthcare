@@ -1,9 +1,11 @@
 ---
-tags: [机构, 英国, Virtual Ward, HaH, 全栈服务, NHS]
-created: 2026-07-07
-aliases: [Doccla, Virtual Ward]
+title: "Doccla"
+type: company
+country: "global"
+tags: ["global", "company"]
+created: 2026-07-23
+updated: 2026-07-24
 ---
-# Doccla — 欧洲领先全栈虚拟病房/HaH 服务商
 
 > **赛道**: 全栈虚拟病房/Hospital-at-Home | **模式**: B2G (NHS+欧洲)
 
@@ -20,3 +22,7 @@ aliases: [Doccla, Virtual Ward]
 ## 对 iHomeCare 的参考价值
 - 🟢🟢🟢 **最高** —— 全球最接近 iHomeCare 的对标：急性 HaH + 自有临床 + 政府合同
 - "预配设备盒"模式 + "£3 换 £1"ROI 叙事 + Cap Table 控制权保留
+
+reports/国家/英国/2026-07-03-doccla-27dim.md|英国概览
+
+../00-概览|← 英国概览

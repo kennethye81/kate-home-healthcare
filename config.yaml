@@ -1,47 +1,42 @@
-# Kate 知识库 v4.0 配置
-# 2026-07-15 · 从零重建
+# Kate 知识库 v5.0 配置
+# 2026-07-23 · 重构为专注 HaH/Healthcare Tech 的 wiki
 
-# === 全局 ===
 vault:
   name: "Kate 知识库 · 居家医疗全球研究"
-  home_country: "hong-kong"         # iHomeCare 总部所在地
+  home_country: "hong-kong"
   default_language: "zh"
 
-# === 国家优先级 ===
+# 国家优先级（按与香港市场相似度 · 16 国）
 countries:
-  tier_1: ["hong-kong", "japan", "germany"]      # 首页展示
-  tier_2: ["singapore", "uk", "us", "china", "taiwan", "australia"]
-  tier_3: ["korea", "france", "netherlands", "sweden", "canada", "israel", "brazil"]  # 归档
+  tier_1: ["hong-kong", "singapore", "taiwan", "uk"]
+  tier_2: ["japan", "australia", "china"]
+  tier_3: ["canada", "korea", "netherlands"]
+  tier_4: ["us", "germany", "france", "sweden", "israel", "brazil"]
 
-# === 报告 ===
+# 专题分类
+topics:
+  clinical: "topics/clinical/"
+  economics: "topics/economics/"
+  tech: "topics/tech/"
+  workforce: "topics/workforce/"
+  strategy: "topics/strategy/"
+  daily: "topics/每日资讯.md"
+
+# 报告
 reports:
   source_dir: "reports/"
   naming_pattern: "YYYY-MM-DD-{company}-27dim.md"
   index_file: "reports/index.json"
 
-# === HTML 出版 ===
-publish:
-  html_output_dir: "html/"
-  default_params: "--embed-images --with-js --title-style comfortable"
-  auto_convert_on_new_report: true
-  freshness_check: true
-  generate_index: true
-
-# === 数据 ===
+# 数据
 data:
   facts_file: "data/facts.json"
   entities_file: "data/entities.json"
   insights_file: "data/insights.json"
   sources_file: "data/sources.json"
 
-# === Cron ===
+# Cron
 cron:
-  rss_monitor: "every 6h"           # RSS → facts
-  daily_briefing: "0 9 * * *"       # 每日简报 → home
-  freshness_check: "0 9 * * 1"      # 周一数据新鲜度扫描
-
-# === Quartz ===
-quartz:
-  source_dir: "pages/"
-  output_dir: "quartz/public/"
-  include_html: true                 # 也发布 HTML 报告
+  rss_monitor: "every 6h"
+  daily_briefing: "0 9 * * *"
+  freshness_check: "0 9 * * 1"
