@@ -16,4 +16,4 @@ updated: 2026-07-24
 - **区域架构：** 6 个区域团队（Central, East, North East, North West, Toronto, West）
 - **服务提供方：** Bayshore, SE Health, Paramed, VON 等营利/非营利 SPO
 
-**数据来源：** reports/国家/加拿大/2026-07-03-ontario-health-athome.md|完整报告
+**数据来源：** [[reports/国家/加拿大/2026-07-03-ontario-health-athome.md|完整报告]]

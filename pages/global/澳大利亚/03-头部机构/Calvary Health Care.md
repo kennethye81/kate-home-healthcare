@@ -19,5 +19,5 @@ updated: 2026-07-24
 - 员工：~12,000+ |
 - CEO：Martin Bowles (National CEO) |
 
-**数据来源：** reports/国家/澳大利亚/2026-07-11-calvary-health-care-27dim.md|Calvary Health Care 27维度深度尽调|完整 27 维度报告
+**数据来源：** [[reports/国家/澳大利亚/2026-07-11-calvary-health-care-27dim.md|Calvary]] Health Care 27维度深度尽调|完整 27 维度报告
 相关：../00-概览|澳大利亚居家医疗概览

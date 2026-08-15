@@ -24,6 +24,6 @@ updated: 2026-07-24
 - 🟡 中等——15年NHS持久力+轻模式可借鉴（纯平台护城河浅）
 
 
-reports/国家/英国/2026-07-07-clinitouch-27dim-deep-dive.md|英国概览
+[[reports/国家/英国/2026-07-07-clinitouch-27dim-deep-dive.md|英国概览]]
 
 ../00-概览|← 英国概览

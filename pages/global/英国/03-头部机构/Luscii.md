@@ -22,6 +22,6 @@ updated: 2026-07-24
 ## 对 iHomeCare 的参考价值
 - 🟢 高 —— 欧洲跨境扩张的参考案例（荷兰 → 英国 NHS 市场进入策略）
 
-reports/国家/英国/2026-07-07-luscii-27dim-deep-dive.md|英国概览
+[[reports/国家/英国/2026-07-07-luscii-27dim-deep-dive.md|英国概览]]
 
 ../00-概览|← 英国概览

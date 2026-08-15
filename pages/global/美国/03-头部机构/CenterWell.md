@@ -16,7 +16,7 @@ updated: 2026-07-24
 
 # CenterWell Home Health (Humana) 23维度深度尽调
 
-**数据来源：** reports/国家/美国/2026-07-03-centerwell-home-health-23dim-deep-dive.md|CenterWell Home Health (Humana) 23维度深度尽调
+**数据来源：** [[reports/国家/美国/2026-07-03-centerwell-home-health-23dim-deep-dive.md|CenterWell]] Home Health (Humana) 23维度深度尽调
 
 ## 关键发现
 
@@ -28,4 +28,4 @@ updated: 2026-07-24
 
 ## 详细报告
 
-👉 完整 27 维度深度分析：`reports/国家/美国/2026-07-03-centerwell-home-health-23dim-deep-dive.md`
+👉 完整 27 维度深度分析：[[reports/国家/美国/2026-07-03-centerwell-home-health-23dim-deep-dive.md]]

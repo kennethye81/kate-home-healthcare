@@ -14,7 +14,7 @@ updated: 2026-07-24
 - NHS GP IT Futures + MESH 双认证
 - 客户: Kent/Liverpool/East London/Tameside 等
 
-reports/国家/英国/2026-07-22-docobo-27dim-deep-dive.md完整 27 维度报告
+[[reports/国家/英国/2026-07-22-docobo-27dim-deep-dive.md|完整]] 27 维度报告
 
 
 ../00-概览|← 英国概览

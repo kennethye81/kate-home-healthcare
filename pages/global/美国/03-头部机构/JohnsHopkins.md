@@ -16,7 +16,7 @@ updated: 2026-07-24
 
 # Johns Hopkins Hospital at Home (Track A6)
 
-**数据来源：** reports/国家/美国/2026-07-03-johns-hopkins-hah-27dim.md|Johns Hopkins Hospital at Home (Track A6)
+**数据来源：** [[reports/国家/美国/2026-07-03-johns-hopkins-hah-27dim.md|Johns]] Hopkins Hospital at Home (Track A6)
 
 ## 关键发现
 
@@ -26,4 +26,4 @@ updated: 2026-07-24
 
 ## 详细报告
 
-👉 完整 27 维度深度分析：`reports/国家/美国/2026-07-03-johns-hopkins-hah-27dim.md`
+👉 完整 27 维度深度分析：[[reports/国家/美国/2026-07-03-johns-hopkins-hah-27dim.md]]

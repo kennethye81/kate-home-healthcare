@@ -19,4 +19,4 @@ updated: 2026-08-02
 - **2026-Q1**：BrightSpring 的 Amedisys 收购网点在2026年实现增值（Accretive），BrightSpring Q4收入近$3.6M，同比增长近30%（来源：Home Health Care News）
 - **2026-05**：Pennant 考虑通过合资/并购继续整合 Amedisys 剥离资产（来源：Home Health Care News）
 
-reports/国家/美国/2026-07-06-amedysys-27dim-deep-dive-v3.md|完整 27 维度报告
+[[reports/国家/美国/2026-07-06-amedisys-27dim-deep-dive-v3.md|完整]] 27 维度报告

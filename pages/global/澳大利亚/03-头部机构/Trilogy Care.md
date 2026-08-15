@@ -20,4 +20,4 @@ updated: 2026-07-24
 - 员工：未公开（增长快速） |
 - CEO：未公开 |
 
-**数据来源：** reports/国家/澳大利亚/2026-07-11-trilogy-care-27dim.md|Trilogy Care 27维度深度尽调|完整 27 维度报告
+**数据来源：** [[reports/国家/澳大利亚/2026-07-11-trilogy-care-27dim.md|Trilogy]] Care 27维度深度尽调|完整 27 维度报告

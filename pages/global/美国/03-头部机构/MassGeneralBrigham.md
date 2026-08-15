@@ -9,7 +9,7 @@ updated: 2026-07-24
 
 # Mass General Brigham Home Hospital (Track A2)
 
-**数据来源：** reports/国家/美国/2026-07-03-mgb-home-hospital-27dim.md|Mass General Brigham Home Hospital (Track A2)
+**数据来源：** [[reports/国家/美国/2026-07-03-mgb-home-hospital-27dim.md|Mass]] General Brigham Home Hospital (Track A2)
 
 ## 关键发现
 

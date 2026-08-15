@@ -19,7 +19,7 @@ updated: 2026-07-24
 - COVID Virtual Ward 500+ 患者 / 3,500+ bed days
 - 临床证据：成本低 19%（PMC 准实验）
 
-**完整报告**：reports/国家/新加坡/2026-07-03-nuhs-at-home-singapore-27dim.md|NUHS@Home 27维度尽调报告
+**完整报告**：[[reports/国家/新加坡/2026-07-03-nuhs-at-home-singapore-27dim.md|NUHS@Home]] 27维度尽调报告
 
 
 ../00-概览|← 新加坡概览

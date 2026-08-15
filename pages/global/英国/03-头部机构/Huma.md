@@ -20,7 +20,7 @@ updated: 2026-07-24
 - **认证**: FDA II + EU MDR IIb + Saudi FDA C
 - **覆盖**: 3000+ 医院 / 1.8M 活跃用户 / 70+ 国家
 
-> 📄 详见: reports/国家/英国/2026-07-07-huma-27dim-deep-dive.md|27维深度报告 ✅
+> 📄 详见: [[reports/国家/英国/2026-07-07-huma-27dim-deep-dive.md|27维深度报告]] ✅
 
 
 ../00-概览|← 英国概览

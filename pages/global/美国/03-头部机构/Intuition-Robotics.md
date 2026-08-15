@@ -20,4 +20,4 @@ updated: 2026-07-24
 
 **iHomeCare 相关性**: 🟡 中低——非临床 HaH 竞品，但患者参与层设计可借鉴
 
-**完整报告**: reports/国家/美国/2026-07-16-intuition-robotics-elliq-27dim.md|27 维度深度尽调 →
+**完整报告**: [[reports/国家/美国/2026-07-16-intuition-robotics-elliq-27dim.md|27]] 维度深度尽调 →

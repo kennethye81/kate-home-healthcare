@@ -18,4 +18,4 @@ aliases:
 - 350K+ 天护理 / 300+ 城镇 / "每 12 天=一个护理院容量"
 - 住家护理 -33% 跌倒 / -46% 髋部骨折 vs 护理院
 
-reports/国家/英国/2026-07-22-elder-27dim-deep-dive.md|← 英国概览
+[[reports/国家/英国/2026-07-22-elder-27dim-deep-dive.md|←]] 英国概览

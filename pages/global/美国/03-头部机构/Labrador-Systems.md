@@ -21,4 +21,4 @@ updated: 2026-07-24
 
 **iHomeCare 相关性**: 🟡 中——底层 SLAM 搬运技术可借鉴，但非临床 HaH 竞品
 
-**完整报告**: reports/国家/美国/2026-07-16-labrador-systems-27dim.md|27 维度深度尽调 →
+**完整报告**: [[reports/国家/美国/2026-07-16-labrador-systems-27dim.md|27]] 维度深度尽调 →

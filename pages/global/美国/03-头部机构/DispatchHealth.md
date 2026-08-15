@@ -14,4 +14,4 @@ updated: 2026-07-24
 - 总融资 $700M+（峰值估值 $1.7B）
 - 合并后 2,200+ 员工 / ~40 卫生系统伙伴 / 50+ 健康计划
 
-reports/国家/美国/2026-07-21-dispatchhealth-27dim-deep-dive.md
+[[reports/国家/美国/2026-07-21-dispatchhealth-27dim-deep-dive.md]]

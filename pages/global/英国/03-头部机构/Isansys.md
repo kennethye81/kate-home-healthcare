@@ -20,7 +20,7 @@ updated: 2026-07-24
 ## 对 iHomeCare 的参考价值
 - 🟡 中等 —— 自研硬件路径 vs 集成第三方设备，可作为设备策略参照
 
-> 📄 详见: reports/国家/英国/2026-07-07-isansys-27dim-deep-dive.md|27维深度报告 ✅
+> 📄 详见: [[reports/国家/英国/2026-07-07-isansys-27dim-deep-dive.md|27维深度报告]] ✅
 
 
 ../00-概览|← 英国概览

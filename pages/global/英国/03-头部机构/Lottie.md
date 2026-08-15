@@ -21,7 +21,7 @@ updated: 2026-07-24
 ## 对 iHomeCare 的参考价值
 - 🟡 中 —— 消费者端数字平台体验 + 供给侧数字化
 
-> 📄 详见: reports/国家/英国/2026-07-07-lottie-27dim-deep-dive.md|27维深度报告 ✅
+> 📄 详见: [[reports/国家/英国/2026-07-07-lottie-27dim-deep-dive.md|27维深度报告]] ✅
 
 
 ../00-概览|← 英国概览

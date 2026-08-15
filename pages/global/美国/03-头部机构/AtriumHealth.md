@@ -16,7 +16,7 @@ updated: 2026-07-24
 
 # Atrium Health Hospital at Home (Track A1)
 
-**数据来源：** reports/国家/美国/2026-07-03-atrium-health-hah-27dim.md|Atrium Health Hospital at Home (Track A1)
+**数据来源：** [[reports/国家/美国/2026-07-03-atrium-health-hah-27dim.md|Atrium]] Health Hospital at Home (Track A1)
 
 ## 关键发现
 
@@ -28,4 +28,4 @@ updated: 2026-07-24
 
 ## 详细报告
 
-👉 完整 27 维度深度分析：`reports/国家/美国/2026-07-03-atrium-health-hah-27dim.md`
+👉 完整 27 维度深度分析：[[reports/国家/美国/2026-07-03-atrium-health-hah-27dim.md]]

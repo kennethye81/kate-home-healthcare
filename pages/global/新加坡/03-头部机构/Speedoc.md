@@ -22,7 +22,7 @@ updated: 2026-07-24
 - 合作医院：NUHS / SGH / Khoo Teck Puat Hospital
 - FY2025：收入 SGD 7.54M (+18.8% YoY) | 贡献利润率 87.3% | Clean EBITDA –SGD 0.13M (近盈亏平衡) | H2 5/6月正向EBITDA
 
-**数据来源：** reports/国家/新加坡/2026-07-13-speedoc-sg-27dim.md | reports/国家/新加坡/2026-07-14-speedoc-rosmead-valuation-ceo-briefing.md
+**数据来源：** [[reports/国家/新加坡/2026-07-13-speedoc-sg-27dim.md]] | [[reports/国家/新加坡/2026-07-14-speedoc-rosmead-valuation-ceo-briefing.md]]
 
 对 iHomeCare: 🟢🟢 高——AI 运营+政府试点+临床证据的东南亚 HaH 标杆
 

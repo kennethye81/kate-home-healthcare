@@ -24,6 +24,6 @@ updated: 2026-07-24
 ## 对 iHomeCare 的参考价值
 - 🟢🟢 高 —— 统一数据模型是 AI 前提；社区是隐形护城河
 
-reports/国家/英国/2026-07-07-birdie-27dim-deep-dive.md|英国概览
+[[reports/国家/英国/2026-07-07-birdie-27dim-deep-dive.md|英国概览]]
 
 ../00-概览|← 英国概览

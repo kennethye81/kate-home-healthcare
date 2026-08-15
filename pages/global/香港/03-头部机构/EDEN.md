@@ -20,6 +20,6 @@ updated: 2026-07-24
 
 **核心特征**：小型传统安老服务商，深耕 CCSV 社区券市场，零数字化
 
-**完整报告**：reports/国家/香港/2026-07-10-eden-home-hk-27dim.md|EDEN HOME 27维度深度尽调
+**完整报告**：[[reports/国家/香港/2026-07-10-eden-home-hk-27dim.md|EDEN]] HOME 27维度深度尽调
 
 ../00-概览|← 香港概览

@@ -16,7 +16,7 @@ updated: 2026-07-24
 
 # BAYADA Home Health Care 27维度深度尽调
 
-**数据来源：** reports/国家/美国/2026-07-22-bayada-27dim-deep-dive.md|BAYADA Home Health Care 27维度深度尽调
+**数据来源：** [[reports/国家/美国/2026-07-22-bayada-27dim-deep-dive.md|BAYADA]] Home Health Care 27维度深度尽调
 
 ## 关键发现
 
@@ -28,4 +28,4 @@ updated: 2026-07-24
 
 ## 详细报告
 
-👉 完整 27 维度深度分析：`reports/国家/美国/2026-07-22-bayada-27dim-deep-dive.md`
+👉 完整 27 维度深度分析：[[reports/国家/美国/2026-07-22-bayada-27dim-deep-dive.md]]

@@ -23,6 +23,6 @@ updated: 2026-08-02
 - **2026**：Cera的预测性AI工具在NHS全面推广，可预测患者跌倒风险准确率达97%，已扩展至预测病毒传播（来源：Healthcare Today, NHS England）
 - **2026**：NHS Shared Business Services 推出标准化「Virtual Wards and Hospital at Home」采购框架，消除区域供应商碎片化，Cera作为主要供应商受益（来源：Healthcare Digital）
 
-reports/国家/英国/2026-07-07-cera-27dim-deep-dive.md|英国概览
+[[reports/国家/英国/2026-07-07-cera-27dim-deep-dive.md|英国概览]]
 
 ../00-概览|← 英国概览

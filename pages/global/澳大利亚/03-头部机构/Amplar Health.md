@@ -19,5 +19,5 @@ updated: 2026-07-24
 - 员工：未单独披露（Medibank 集团 ~4,700人） |
 - CEO：Medibank Group CEO: David Koczkar; Amplar Health 运营负责人隶属集团管理层 |
 
-**数据来源：** reports/国家/澳大利亚/2026-07-03-amplar-health-deep-dive.md|Amplar Health 27维度深度尽调|完整 27 维度报告
+**数据来源：** [[reports/国家/澳大利亚/2026-07-03-amplar-health-deep-dive.md|Amplar]] Health 27维度深度尽调|完整 27 维度报告
 相关：../00-概览|澳大利亚居家医疗概览

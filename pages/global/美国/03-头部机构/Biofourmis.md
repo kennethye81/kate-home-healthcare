@@ -16,7 +16,7 @@ updated: 2026-07-24
 
 # Biofourmis 23维度深度尽调
 
-**数据来源：** reports/国家/美国/2026-07-03-biofourmis-23dim-deep-dive.md|Biofourmis 23维度深度尽调
+**数据来源：** [[reports/国家/美国/2026-07-03-biofourmis-23dim-deep-dive.md|Biofourmis]] 23维度深度尽调
 
 ## 关键发现
 
@@ -28,4 +28,4 @@ updated: 2026-07-24
 
 ## 详细报告
 
-👉 完整 27 维度深度分析：`reports/国家/美国/2026-07-03-biofourmis-23dim-deep-dive.md`
+👉 完整 27 维度深度分析：[[reports/国家/美国/2026-07-03-biofourmis-23dim-deep-dive.md]]

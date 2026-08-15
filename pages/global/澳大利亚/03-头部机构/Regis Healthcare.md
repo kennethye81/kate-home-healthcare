@@ -20,4 +20,4 @@ updated: 2026-07-24
 - 员工：~9,000+ |
 - CEO：Linda Mellors (CEO & Managing Director) |
 
-**数据来源：** reports/国家/澳大利亚/2026-07-11-regis-healthcare-27dim.md|Regis Healthcare 27维度深度尽调|完整 27 维度报告
+**数据来源：** [[reports/国家/澳大利亚/2026-07-11-regis-healthcare-27dim.md|Regis]] Healthcare 27维度深度尽调|完整 27 维度报告

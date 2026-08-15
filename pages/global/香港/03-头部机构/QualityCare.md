@@ -20,6 +20,6 @@ updated: 2026-07-24
 
 **核心特征**：「保险+医疗+居家护理」三层闭环——香港唯一实现保险直付的护理机构
 
-**完整报告**：reports/国家/香港/2026-07-10-qualitycare-hk-27dim.md|QualityCare 27维度深度尽调
+**完整报告**：[[reports/国家/香港/2026-07-10-qualitycare-hk-27dim.md|QualityCare]] 27维度深度尽调
 
 ../00-概览|← 香港概览

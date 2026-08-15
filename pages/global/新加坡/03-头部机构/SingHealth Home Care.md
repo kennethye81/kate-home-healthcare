@@ -19,7 +19,7 @@ updated: 2026-07-24
 - WHO 世界首个社会处方合作中心（全球唯一）
 - Flow-Hold-Link：急诊→社区医院→居家/GP 全链路
 
-**完整报告**：reports/国家/新加坡/2026-07-03-singhealth-home-care-singapore-27dim.md|SingHealth Home Care 27维度尽调报告
+**完整报告**：[[reports/国家/新加坡/2026-07-03-singhealth-home-care-singapore-27dim.md|SingHealth]] Home Care 27维度尽调报告
 
 
 ../00-概览|← 新加坡概览

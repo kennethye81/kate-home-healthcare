@@ -18,4 +18,4 @@ updated: 2026-08-02
 - **2026**：Contessa发布「医院居家五年路线图」，聚焦Acute Hospital Care at Home Waiver的延期（2年 vs 5年），获Advanced Care at Home Coalition及行业利益相关方大力支持（来源：Contessa Health官网）
 - **2026-07**：Option Care Health 与 Amedisys（Contessa母公司）宣布合并，居家高 acuity 护理版图进一步整合（来源：Option Care Health投资者公告）
 
-reports/国家/美国/2026-07-21-contessa-health-27dim-deep-dive.md
+[[reports/国家/美国/2026-07-21-contessa-health-27dim-deep-dive.md]]

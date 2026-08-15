@@ -16,7 +16,7 @@ updated: 2026-07-24
 
 # Signify Health 深度分析报告：支付方→HaH 转化漏斗的关键入口
 
-**数据来源：** reports/国家/美国/2026-07-03-signify-health-analysis.md|Signify Health 深度分析报告：支付方→HaH 转化漏斗的关键入口
+**数据来源：** [[reports/国家/美国/2026-07-03-signify-health-analysis.md|Signify]] Health 深度分析报告：支付方→HaH 转化漏斗的关键入口
 
 ## 关键发现
 
@@ -24,4 +24,4 @@ updated: 2026-07-24
 
 ## 详细报告
 
-👉 完整 27 维度深度分析：`reports/国家/美国/2026-07-03-signify-health-analysis.md`
+👉 完整 27 维度深度分析：[[reports/国家/美国/2026-07-03-signify-health-analysis.md]]
