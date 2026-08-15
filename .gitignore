@@ -1,0 +1,13 @@
+# 缓存与插件文件（备份排除）
+.DS_Store
+.obsidian/
+.smart-env/
+.claudian/
+.trash/
+
+# 脚本/临时
+scripts/
+*.tmp
+
+# 大体积非内容（如原始素材可保留则注释）
+# raw/assets 保留（含图片等知识资产）
