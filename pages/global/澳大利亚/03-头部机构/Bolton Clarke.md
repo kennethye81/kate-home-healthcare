@@ -19,4 +19,4 @@ updated: 2026-07-24
 | 核心壁垒 | RDNS 140 年品牌 + DVA 退伍军人关系 |
 
 reports/国家/澳大利亚/2026-07-11-bolton-clarke-27dim.md|完整 27 维尽调报告（2026.07.11）
-> 📎 相关页面：[[SilverChain Group]] | [[HammondCare]] | [[Regis Healthcare]] | [[Australian Unity]]
+> 📎 相关页面：[[./SilverChain Group]] | [[./HammondCare]] | [[./Regis Healthcare]] | [[./Australian Unity]]

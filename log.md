@@ -4,6 +4,74 @@
 > 格式：`## [YYYY-MM-DD] action | subject`
 > Actions: create, update, ingest, query, lint, archive, delete
 
+## [2026-08-01] ingest | 🇨🇳 中国 每日情报监控（4维度）
+- 🇨🇳 4 维度（政策/行业/技术/M&A）× 8引擎并行中搜索，~80条结果
+- P0: 长护险省级大规模落地加速——青海/辽宁/湖南/贵州4省密集发布实施方案
+- P0: 贵州黔府办发〔2026〕11号全文入库（费率0.3%，2028年底全覆盖）
+- P0: 湖南征求意见稿全文入库（3年三步走）
+- P1: 泰州孝馨智慧家庭养老获长护险资质（智慧养老×长护险耦合案例）
+- P1: 中研网报告：智慧养老行业并购重组窗口期
+- 新增 raw: 3篇
+- 更新: pages/global/中国/01-政策与法律法规.md（+5项省级落地里程碑）
+- 新增: pages/daily/2026-08-01-china-briefing.md
+
+## [2026-07-29] ingest | 🇬🇧 英国 每日情报监控（4维度）
+- 🇬🇧 4 维度（政策/行业/技术/M&A）× 8引擎并行搜索，72+条结果
+- P0: NHS Virtual Wards Operational Framework正式发布（PRN01289）
+- P1: SMART虚拟病房80→120张+24/7运营，年底200床目标
+- P1: Nelson Advisors虚拟病房五年战略预测（2026-2031）
+- P2: Doccla AI虚拟病房数据（住院-61%, GP预约-89%, 非选择性入院-39%）
+- P2: Grant Thornton Q1 UK医疗M&A 114笔（+37% YoY）
+- P3: UK Parliament POST发布虚拟病房研究简报PN-0744
+- 新增 raw: 7篇
+- 更新: pages/global/英国/00-概览.md + 01-政策与法律法规.md
+- 新增: pages/daily/2026-07-29-uk-briefing.md
+- 更新: Updates.md
+
+## [2026-07-28] ingest | 🇯🇵 日本 + 🇹🇼 台湾 每日情报监控（4维度）
+|- 🇯🇵 4 维度（政策/行业/技术/M&A）× 8引擎并行搜索，约67条结果
+|- P0: 2026年度介護報酬臨時改定6月施行——訪問介護28.7%、訪問看護1.8%加算新設
+|- P1: 訪問看護ステーション最新データ13選（社保審第259回）——19,314事業所、収支差率10.3%
+|- P1: 診療報酬改定2026在宅医療——重症患者要件・D to P with N新設
+|- P2: 予防型介護DX——未病管理+非拘束センシング+空間センシングのハイブリッド
+|- P3: 2026年介護M&A動向——業界再編加速
+|- 新增 raw: 3篇日本（GemMed+ビジケア+Liquid Design）
+|- 新增 raw: 3篇台湾（行政院長照3.0+津台洽谈会+US商務部遠距医療報告）
+|- 更新: pages/global/日本/00-概览.md（+5条目）
+|- 更新: pages/global/日本/01-政策与法律法规.md（+2026報酬詳細+診療報酬改定）
+|- 更新: pages/global/台湾/00-概览.md（+4条目）
+|- 更新: pages/global/台湾/01-政策与法律法规.md（+長照3.0章節）
+|- 新增: pages/daily/2026-07-28-japan-briefing.md
+|- 新增: pages/daily/2026-07-28-taiwan-briefing.md
+|- 更新: Updates.md（+9条目）
+|- 🇹🇼 中文--zh模式将「台湾」误解析为「台州」→改用英语搜索改善
+
+## [2026-07-31] ingest | 🇺🇸 US Daily Intelligence Monitoring
+- 4-dimension search: policy, industry, technology, M&A
+- 6 raw articles saved (CMS AHCAH data release, RPM/RTM/AI codes, HHCN trends, Hendon Q2 M&A, Capstone sector update, Galen Growth funding)
+- Updated: pages/global/美国/00-概览.md (+5 entries), pages/global/美国/01-政策与法律法规.md (+3 entries)
+- Created: pages/daily/2026-07-31-us-briefing.md
+- Updated: Updates.md
+
+## [2026-07-30] ingest | 🇦🇺 澳大利亚 + 🇨🇦 加拿大 每日情报监控（4维度）
+|- 🇦🇺 4 维度（政策/行业/技术/M&A）× --fast 多引擎搜索，59条结果
+|- 🇨🇦 4 维度（政策/行业/技术/M&A）× --fast 多引擎搜索，53条结果
+|- P0: 🇦🇺 Support at Home Program全面取代Home Care Packages（新Aged Care Act生效）
+|- P1: 🇦🇺 CHA敦促加速HITH资金改革
+|- P1: 🇦🇺 居家医疗市场规模 USD 12.9B→USD 28.0B(2034), CAGR 8.71%
+|- P1: 🇦🇺 Telehealth并购AUD 16亿（2026-02）；ANZ早期5笔交易合计$1.8亿
+|- P2: 🇦🇺 患者监测市场 USD 1.4B→USD 3.3B(2034), CAGR 9.22%
+|- P0: 🇨🇦 Connected Care for Canadians Act推出（联邦健康信息互通立法）
+|- P1: 🇨🇦 居家护理行业 CAGR 6.3%（2021-2026, IBISWorld）
+|- P1: 🇨🇦 Q1 2026居家护理并购6笔（环比翻倍）；2025全年+40.5% YoY
+|- P1: 🇨🇦 WELL Health收购Equinoxe（魁北克居家护理）
+|- P2: 🇨🇦 RPM市场2026年$39.6亿，AI居家监测加速
+|- web_extract不可用（432错误），全文基于搜索snippets重构
+|- 新增 raw: 17篇（AU 8篇 + CA 9篇）
+|- 更新: pages/global/澳大利亚/00-概览.md（+5条目）
+|- 更新: pages/global/加拿大/00-概览.md（+5条目）+ 01-政策.md（+Connected Care Act）
+|- 新增: pages/daily/2026-07-30-australia-briefing.md + 2026-07-30-canada-briefing.md
+
 ## [2026-07-24] ingest | 🇺🇸 美国每日情报监控 — 第二轮补充入库
 - 新发现4篇高价值素材，追加入库
 - P1: Homecare Homebase报告：63.3%拒绝转诊，RN离职率25.46%，护工34%，个人护理>70%
@@ -113,3 +181,36 @@
 - 更新新加坡概览页：telehealth 61% 渗透率、Healthier SG、38% 缺家庭医生
 - 更新澳大利亚概览页：医生临床体验数据（90%/45%/35%）
 - 深度分析见下文
+
+## [2026-07-25] ingest | 🇨🇳 中国每日情报监控（4维度）
+- 4 维度（政策/行业/技术/投资）× Bocha (--zh) 搜索，128 条目 → 筛选入库 14 条核心信息
+- **P0：** 8省2026年Q2密集发布长护险实施方案——青海（青政办〔2026〕12号）、山西（费率0.3%,居民首年0.15%）、贵州（黔府办发〔2026〕11号）、江西、辽宁、河南（三年递进模式）、湖南、甘肃
+- **P1：** 全国银发经济企业近20万家，2025年同比增长23.95%（经济日报/全国组织机构统一社会信用代码数据服务中心）
+- **P1：** 国家长护险数字化平台「云护计划」正式启动（2026-07-16），物联网+AI 监控服务全过程
+- **P2：** 中研普华预计智慧养老行业进入整合期，头部企业通过并购扩大市场份额
+- 新增 raw: 6篇（山西方案+河南时间表+多省汇总+云护计划+银发经济企业+并购报告）
+- 更新: pages/global/中国/01-政策与法律法规.md（+各省实施方案详情表+时间表差异分析）
+- 更新: pages/global/中国/00-概览.md（+2条最新动态+修复死链接3处）
+- 新增: pages/daily/2026-07-25-China-briefing.md
+- 修复: pages/global/中国/01-政策与法律法规.md 死链接3处（../../ → `reports`/`topics`/`pages`）
+
+## [2026-07-26] query | Weekly Summary 2026-07-20 ~ 2026-07-26
+- 本周监控覆盖：SG+HK（RSS）→ JP+TW（RSS）→ UK（HHCN+DHL）→ AU+CA（跳过，v5.0重构占用）→ US（4维×7引擎，95条→22条入库）→ China（4维×Bocha --zh，128条→14条入库）
+- **P0 最高：** 中国8省LTCI方案密集发布 + CMS提议禁止第三方RPM供应商计费（2027医师费用表草案）
+- **P1：** 美国Q2 M&A量降价升（GA $30亿 + Kinderhook $11亿）、AHCAH豁免延长至2030年
+- **P1：** 中国云护计划启动、银发经济企业近20万家
+- **报告产出：** Bamboos 2293.HK × Evercare × Sollis Health 三份27dim尽调（2026-07-24）
+- **结构更新：** v5.0 重构——llm-wiki初始化、SCHEMA.md+index.md+log.md创建、topics/重组为5子分类、运维文档清理
+- 新增 raw: 15篇（US 9篇 + China 6篇）
+- 更新: 7个国家页面 + 3期简报 + Home.md死链修复
+
+## [2026-07-27] ingest | 🇸🇬 新加坡 + 🇭🇰 香港 每日情报监控
+- **🇸🇬 政策：** MIC@Home扩大至全岛所有政府重组医院（CNA）、MOH社区护理薪资修订（ST）、医疗人力20%增长目标（ST）
+- **🇸🇬 技术：** NHG Health AI驱动居家护理生态（HMA）
+- **🇸🇬 M&A：** iWOW科技S$11.2M收购The Gentle Group（ST）
+- **🇭🇰 政策：** 院舍修订条例2026年10月生效（HCP新职级）、2026-27预算案安老服务券扩容、照顾者支援措施进展（LegCo）
+- **🇭🇰 技术：** SCHSA智能跌倒侦测系统试点500户
+- **🇭🇰 M&A：** 嘉涛（香港）控股2026年全年业绩利润增长56%
+- 新增 raw: 10篇（SG 5篇 + HK 5篇）
+- 更新: SG 00-概览 + 01-政策 + HK 00-概览 + 01-政策
+- 新增: pages/daily/2026-07-27-sg-briefing.md + hk-briefing.md

@@ -18,4 +18,4 @@ updated: 2026-07-24
 
 📄 **完整报告**：reports/国家/澳大利亚/2026-07-11-silverchain-27dim.md|27 维度深度尽调（2026-07-11）
 
-> 📎 相关：[[Amplar Health]] [[HammondCare]] [[Bolton Clarke]] [[Regis Healthcare]]
+> 📎 相关：[[./Amplar Health]] [[./HammondCare]] [[./Bolton Clarke]] [[./Regis Healthcare]]

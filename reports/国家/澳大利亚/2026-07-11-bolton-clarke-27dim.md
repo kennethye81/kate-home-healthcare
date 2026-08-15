@@ -1012,4 +1012,4 @@ Trilogy Care 代表了一种结构性威胁：**自管居家护理（Self-Manage
 
 > **免责声明**：Bolton Clarke 为非营利组织，不发布上市公司级别的财务和运营数据。本报告基于公开可得信息编制，部分维度（D7 财务、D27 临床）因数据可获得性限制为部分覆盖。"无可靠公开数据源"的标注表示需补充一手调研。
 
-> 📎 相关页面：[[pages/global/澳大利亚/00-概览]] | [[SilverChain Group]] | [[HammondCare]] | [[Regis Healthcare]] | [[Australian Unity]]
+> 📎 相关页面：[[pages/global/澳大利亚/00-概览]] | [[./SilverChain Group]] | [[./HammondCare]] | [[./Regis Healthcare]] | [[./Australian Unity]]

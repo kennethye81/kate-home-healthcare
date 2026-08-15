@@ -1011,4 +1011,4 @@ search_engines: tavily+brave+bocha+firecrawl
 
 > **免责声明**：SilverChain Group 为非营利组织，不发布上市公司级别的财务报告。本报告基于公开可得信息编制，部分维度数据为基于 IBISWorld/行业对标/年报摘要的合理推断。财务数据请以 ACNC 年度信息声明和 SilverChain 官方年报为准。报告日期：2026-07-11。
 
-> 📎 相关报告：[[Bolton Clarke]] [[HammondCare]] [[Regis Healthcare]] [[Amplar Health]]
+> 📎 相关报告：[[./Bolton Clarke]] [[./HammondCare]] [[./Regis Healthcare]] [[./Amplar Health]]
