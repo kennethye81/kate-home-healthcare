@@ -4,6 +4,14 @@
 > 格式：`## [YYYY-MM-DD] action | subject`
 > Actions: create, update, ingest, query, lint, archive, delete
 
+## [2026-08-15] archive | 知识库结构修复（专题/对比/报告归位 + 残留清理）
+- 🔧 pages/专题/（13 专题）→ topics/；pages/对比分析/（4 对比）→ pages/compare/
+- 🧹 删除 Topics/ 空壳、System/Lint/、pages/国家/、Projects/、空文件启动路径
+- 📦 6 robotics 27dim 报告归位 reports/国家/{国}/（澳/新/中/日/美/英）
+- 🔗 29 处 wikilink 旧路径引用修复，0 断裂
+- 🛡️ macOS 大小写不敏感误删事故，git 100% 恢复，数据零丢失
+- 保留: copilot/ scripts/ daily-brief/ 主题/（跨国家专题）专题/（项目文档）
+
 ## [2026-08-01] ingest | 🇨🇳 中国 每日情报监控（4维度）
 - 🇨🇳 4 维度（政策/行业/技术/M&A）× 8引擎并行中搜索，~80条结果
 - P0: 长护险省级大规模落地加速——青海/辽宁/湖南/贵州4省密集发布实施方案

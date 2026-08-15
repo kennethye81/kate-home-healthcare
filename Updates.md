@@ -1,5 +1,13 @@
 # 变更日志
 
+## 2026-08-15 · 知识库结构修复（两次会话）
+- **🔧 结构漂移修复**：专题内容 `pages/专题/`（13 文件）→ 标准 `topics/`；对比内容 `pages/对比分析/`（4 文件）→ 标准 `pages/compare/`
+- **🧹 残留清理**：删除 `Topics/` 空壳、`System/Lint/`（Graph View 污染源）、`pages/国家/` 空目录、`Projects/` 空目录、空文件 `pages/topics/启动路径.md`
+- **📦 报告归位**：6 个 robotics 27dim 报告 `reports/主题/` → `reports/国家/{国}/`（澳大利亚/新加坡/中国/日本/美国/英国）
+- **🔗 wikilink 修复**：29 处旧路径引用全部更新（`[[pages/专题/`→`[[topics/`，`[[pages/对比分析/`→`[[pages/compare/`）
+- **🛡️ 事故记录**：修复期间 macOS 大小写不敏感导致 `rm -rf Topics/` 误删 `topics/`，git checkout 100% 恢复，数据零丢失；已固化防复发规则
+- 保留：`copilot/`（插件自定义 prompts）、`scripts/`、`reports/daily-brief-*`（活跃 cron 输出）、`reports/主题/`（跨国家专题）、`reports/专题/`（项目文档）
+
 ## 2026-08-03 · 每日情报监控（RSS自动扫描）
 - **🇯🇵 日本**（+2条目）：厚生劳动省发布「年轻人工作与育儿平衡意识调查（速报）」；厚生劳动省招聘任期制职员（感染症对策课）（来源：[MHLW](https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kodomo/shokuba_kosodate/jigyou_ryouritsu/topics/tp100618-1_00008.html)）
 - **🇬🇧 英国**（+2条目）：NHS数万青少年两周内获MenB疫苗保护；NHS邀请50万男性参与前列腺癌研究项目（来源：[NHS England](https://www.england.nhs.uk/)）
